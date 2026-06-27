@@ -15,6 +15,8 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.School
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -251,28 +253,60 @@ fun TopicSelectionContent(
 
             Spacer(Modifier.height(12.dp))
 
-            // ── Search Bar ──
-            OutlinedTextField(
+            // ── Search Bar (Custom compact styling) ──
+            var isSearchFocused by remember { mutableStateOf(false) }
+            BasicTextField(
                 value = state.topicSearchQuery,
                 onValueChange = { viewModel.onTopicSearchChange(it) },
-                placeholder = { Text("Tìm kiếm chủ đề...", fontSize = 13.sp, color = colors.hintText) },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(10.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = levelColor,
-                    unfocusedBorderColor = colors.border,
-                    focusedContainerColor = colors.surface,
-                    unfocusedContainerColor = colors.surface,
-                    cursorColor = levelColor
+                textStyle = androidx.compose.ui.text.TextStyle(
+                    color = colors.mainText,
+                    fontSize = 13.sp
                 ),
                 singleLine = true,
-                leadingIcon = {
-                    Icon(Icons.Default.Search, null, modifier = Modifier.size(18.dp), tint = colors.hintText)
-                },
-                trailingIcon = {
-                    if (state.topicSearchQuery.isNotEmpty()) {
-                        IconButton(onClick = { viewModel.onTopicSearchChange("") }) {
-                            Icon(Icons.Default.Close, null, modifier = Modifier.size(14.dp), tint = colors.hintText)
+                cursorBrush = androidx.compose.ui.graphics.SolidColor(levelColor),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(38.dp)
+                    .onFocusChanged { isSearchFocused = it.isFocused }
+                    .background(colors.surface, RoundedCornerShape(8.dp))
+                    .border(
+                        1.dp,
+                        if (isSearchFocused) levelColor else colors.border,
+                        RoundedCornerShape(8.dp)
+                    ),
+                decorationBox = { innerTextField ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp),
+                            tint = colors.hintText
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Box(modifier = Modifier.weight(1f)) {
+                            if (state.topicSearchQuery.isEmpty()) {
+                                Text(
+                                    text = "Tìm kiếm chủ đề...",
+                                    color = colors.hintText,
+                                    fontSize = 13.sp
+                                )
+                            }
+                            innerTextField()
+                        }
+                        if (state.topicSearchQuery.isNotEmpty()) {
+                            Icon(
+                                imageVector = Icons.Default.Close,
+                                contentDescription = "Clear",
+                                modifier = Modifier
+                                    .size(16.dp)
+                                    .clickable { viewModel.onTopicSearchChange("") },
+                                tint = colors.hintText
+                            )
                         }
                     }
                 }
