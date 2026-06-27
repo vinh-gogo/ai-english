@@ -149,14 +149,14 @@ fun TopicSelectionContent(
 
             Spacer(Modifier.height(12.dp))
 
-            // ── Carousel Card (styled with current active topic's original level color) ──
+            // ── Carousel Card (styled with active level color) ──
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(110.dp),
                 shape = RoundedCornerShape(16.dp),
                 colors = CardDefaults.cardColors(containerColor = colors.surface),
-                border = BorderStroke(1.dp, currentTopicColor.copy(alpha = 0.4f))
+                border = BorderStroke(1.dp, levelColor.copy(alpha = 0.3f))
             ) {
                 Row(
                     modifier = Modifier.fillMaxSize(),
@@ -182,12 +182,29 @@ fun TopicSelectionContent(
                             val ci = filteredTopics.indexOfFirst { it.first == selectedIdx }
                             if (ci != -1) "${ci + 1} / ${filteredTopics.size}" else "1 / 1"
                         }
-                        Text(
-                            "CHỦ ĐỀ $localIndexText (Gốc: $currentTopicLevel)",
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = currentTopicColor
-                        )
+                        
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                "CHỦ ĐỀ $localIndexText",
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = levelColor
+                            )
+                            Spacer(Modifier.width(6.dp))
+                            Surface(
+                                shape = RoundedCornerShape(4.dp),
+                                color = currentTopicColor.copy(alpha = 0.15f)
+                            ) {
+                                Text(
+                                    text = if (currentTopicLevel == "900") ">900" else currentTopicLevel,
+                                    fontSize = 9.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = currentTopicColor,
+                                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
+                                )
+                            }
+                        }
+                        
                         Spacer(Modifier.height(4.dp))
                         Text(
                             currentTopic?.name ?: "",
