@@ -128,22 +128,37 @@ fun LessonContent(
                 )
                 Spacer(Modifier.height(6.dp))
 
-                // Token chips in FlowRow
+                // Token chips in FlowRow (no cards/borders, clean wraps like Sensei AI)
                 FlowRow(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     sentence.tokens.forEach { token ->
-                        Card(
-                            colors = CardDefaults.cardColors(containerColor = colors.surfaceElevated),
-                            shape = RoundedCornerShape(8.dp),
-                            border = BorderStroke(1.dp, colors.border)
+                        Column(
+                            modifier = Modifier.padding(vertical = 4.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Column(modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp)) {
-                                Text(token.word, color = colors.mainText, fontSize = 13.sp, fontWeight = FontWeight.Bold)
-                                if (token.phonetic.isNotEmpty()) Text(token.phonetic, color = colors.accent, fontSize = 10.sp)
-                                if (token.partOfSpeech.isNotEmpty()) Text(token.partOfSpeech, color = colors.hintText, fontSize = 10.sp, fontStyle = FontStyle.Italic)
+                            Text(
+                                text = token.word,
+                                color = colors.mainText,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                            if (token.phonetic.isNotEmpty()) {
+                                Text(
+                                    text = token.phonetic,
+                                    color = colors.accent,
+                                    fontSize = 10.sp
+                                )
+                            }
+                            if (token.partOfSpeech.isNotEmpty()) {
+                                Text(
+                                    text = token.partOfSpeech,
+                                    color = colors.hintText,
+                                    fontSize = 9.sp,
+                                    fontStyle = FontStyle.Italic
+                                )
                             }
                         }
                     }
