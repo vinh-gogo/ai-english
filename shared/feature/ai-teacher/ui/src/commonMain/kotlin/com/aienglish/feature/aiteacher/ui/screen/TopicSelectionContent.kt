@@ -44,6 +44,24 @@ fun getLevelColor(levelCode: String, colors: AppColors): Color {
     }
 }
 
+fun getCompatibleLevels(activeLevel: String): List<String> {
+    return when (activeLevel) {
+        // CEFR
+        "A1" -> listOf("A1")
+        "A2" -> listOf("A1", "A2")
+        "B1" -> listOf("A1", "A2", "B1")
+        "B2" -> listOf("A1", "A2", "B1", "B2")
+        "C1" -> listOf("A1", "A2", "B1", "B2", "C1")
+        "C2" -> listOf("A1", "A2", "B1", "B2", "C1", "C2")
+        // TOEIC
+        "300" -> listOf("300")
+        "500" -> listOf("300", "500")
+        "700" -> listOf("300", "500", "700")
+        "900" -> listOf("300", "500", "700", "900")
+        else -> listOf(activeLevel)
+    }
+}
+
 @Composable
 fun TopicSelectionContent(
     state: TeacherUiState,
@@ -53,15 +71,26 @@ fun TopicSelectionContent(
     val listState = rememberLazyListState()
     val selectedIdx = state.selectedTopicIndex
 
-    // Determine current level code
+    // Determine current level code and target color
     val activeLevelCode = if (state.levelType == LevelType.CEFR) state.selectedCefrLevel else state.selectedToeicLevel
     val levelColor = getLevelColor(activeLevelCode, colors)
 
-    // Filter topics: only show topics matching current level AND containing search query
-    val filteredTopics = remember(activeLevelCode, state.topicSearchQuery) {
+    // Lower level topic inheritance logic
+    val compatibleLevels = remember(activeLevelCode) { getCompatibleLevels(activeLevelCode) }
+
+    // Filter topics: show topics matching compatible levels AND containing search query
+    val filteredTopics = remember(compatibleLevels, state.topicSearchQuery) {
         Topics.list.mapIndexed { i, t -> i to t }
-            .filter { it.second.levelCode == activeLevelCode && it.second.name.contains(state.topicSearchQuery, ignoreCase = true) }
+            .filter { pair ->
+                pair.second.levelCode in compatibleLevels &&
+                pair.second.name.contains(state.topicSearchQuery, ignoreCase = true)
+            }
     }
+
+    // Determine current selected topic details for custom coloring
+    val currentTopic = remember(selectedIdx) { Topics.list.getOrNull(selectedIdx) }
+    val currentTopicLevel = currentTopic?.levelCode ?: activeLevelCode
+    val currentTopicColor = getLevelColor(currentTopicLevel, colors)
 
     // Auto-scroll when selection changes
     LaunchedEffect(selectedIdx) {
@@ -111,23 +140,23 @@ fun TopicSelectionContent(
                 color = colors.mainText
             )
             Text(
-                "Mỗi trình độ sở hữu một bộ chủ đề luyện dịch riêng biệt",
-                fontSize = 13.sp,
+                "Trình độ cao kế thừa và có thể luyện tập các chủ đề của cấp độ dưới",
+                fontSize = 12.sp,
                 color = colors.mutedText,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 12.dp)
             )
 
             Spacer(Modifier.height(12.dp))
 
-            // ── Carousel Card (giống Sensei AI, styled with Level Color) ──
+            // ── Carousel Card (styled with current active topic's original level color) ──
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(110.dp),
                 shape = RoundedCornerShape(16.dp),
                 colors = CardDefaults.cardColors(containerColor = colors.surface),
-                border = BorderStroke(1.dp, levelColor.copy(alpha = 0.3f))
+                border = BorderStroke(1.dp, currentTopicColor.copy(alpha = 0.4f))
             ) {
                 Row(
                     modifier = Modifier.fillMaxSize(),
@@ -154,14 +183,14 @@ fun TopicSelectionContent(
                             if (ci != -1) "${ci + 1} / ${filteredTopics.size}" else "1 / 1"
                         }
                         Text(
-                            "CHỦ ĐỀ $localIndexText (${activeLevelCode})",
+                            "CHỦ ĐỀ $localIndexText (Gốc: $currentTopicLevel)",
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
-                            color = levelColor
+                            color = currentTopicColor
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
-                            Topics.list.getOrNull(selectedIdx)?.name ?: "",
+                            currentTopic?.name ?: "",
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Bold,
                             color = colors.mainText,
@@ -355,7 +384,7 @@ fun TopicSelectionContent(
 
             // Chips label
             Text(
-                if (state.topicSearchQuery.isEmpty()) "Chủ đề luyện thi phù hợp trình độ ($activeLevelCode)"
+                if (state.topicSearchQuery.isEmpty()) "Chủ đề luyện thi sẵn có cho trình độ ($activeLevelCode)"
                 else "Kết quả tìm kiếm (${filteredTopics.size})",
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
@@ -365,7 +394,7 @@ fun TopicSelectionContent(
 
             Spacer(Modifier.height(6.dp))
 
-            // ── LazyRow topic chips (giống Sensei AI, styled with Level Color) ──
+            // ── LazyRow topic chips (styled with their own level color) ──
             if (filteredTopics.isEmpty()) {
                 Box(
                     modifier = Modifier.fillMaxWidth().height(48.dp),
@@ -383,11 +412,12 @@ fun TopicSelectionContent(
                         val idx = pair.first
                         val topic = pair.second
                         val isSelected = idx == selectedIdx
+                        val chipLevelColor = getLevelColor(topic.levelCode, colors)
                         Surface(
                             modifier = Modifier.clickable { viewModel.onTopicIndexSelected(idx) },
                             shape = RoundedCornerShape(12.dp),
-                            color = if (isSelected) levelColor else colors.surface,
-                            border = BorderStroke(1.dp, if (isSelected) levelColor else colors.border)
+                            color = if (isSelected) chipLevelColor else colors.surface,
+                            border = BorderStroke(1.dp, if (isSelected) chipLevelColor else chipLevelColor.copy(alpha = 0.4f))
                         ) {
                             Text(
                                 "${i + 1}. ${topic.name}",
