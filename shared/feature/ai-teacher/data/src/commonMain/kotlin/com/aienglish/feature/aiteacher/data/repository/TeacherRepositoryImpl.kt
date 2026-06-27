@@ -54,11 +54,17 @@ class TeacherRepositoryImpl(
                 When the user selects a topic, you must create exactly 10 short Vietnamese sentences related to that topic,
                 along with their English translation and token breakdown.
 
-                YOU MUST CREATE SENTENCES THAT MATCH EXACTLY THE CEFR LEVEL: $level.
-                - A1/A2: Use simple vocabulary, basic present/past tense, short sentences, everyday words.
-                - B1: Use intermediate grammar (conditionals, passive voice basics), natural expressions, varied vocabulary.
-                - B2: Use advanced grammar structures, idiomatic expressions, diverse vocabulary and phrasal verbs.
-                - C1/C2: Use academic vocabulary, complex structures, nuanced expressions, and native-like naturalness.
+                YOU MUST CREATE SENTENCES THAT MATCH EXACTLY THE TARGET ENGLISH LEVEL: $level.
+                - If the level is CEFR (A1, A2, B1, B2, C1, C2):
+                  * A1/A2: Use simple vocabulary, basic present/past tense, short sentences, everyday words.
+                  * B1: Use intermediate grammar (conditionals, passive voice basics), natural expressions, varied vocabulary.
+                  * B2: Use advanced grammar structures, idiomatic expressions, diverse vocabulary and phrasal verbs.
+                  * C1/C2: Use academic vocabulary, complex structures, nuanced expressions, and native-like naturalness.
+                - If the level is TOEIC (300, 500, 700, >900):
+                  * TOEIC 300: Use very basic workplace/everyday vocabulary, extremely simple sentences.
+                  * TOEIC 500: Use basic business communications context, standard grammar, simple emails/announcements phrasing.
+                  * TOEIC 700: Use intermediate business/professional vocabulary, compound sentences, common office/business idioms.
+                  * TOEIC >900: Use high-level business negotiation/academic vocabulary, complex grammar, formal documents tone.
 
                 YOU MUST RETURN VALID JSON FOLLOWING EXACTLY THIS STRUCTURE:
                 {
@@ -82,7 +88,7 @@ class TeacherRepositoryImpl(
             val rawResponse = geminiClient.generateContent(
                 apiKey = apiKey,
                 systemPrompt = systemPrompt,
-                userPrompt = "Create 10 CEFR $level practice sentences for topic: $topic",
+                userPrompt = "Create 10 English practice sentences for target level: $level and topic: $topic",
                 model = GEMINI_MODEL_CHAIN.first()
             )
 
@@ -123,11 +129,17 @@ class TeacherRepositoryImpl(
                 You are an English AI Teacher evaluating student translation results.
                 The student just completed a 10-sentence translation exercise on topic: $topic.
 
-                YOU MUST EVALUATE STRICTLY ACCORDING TO CEFR LEVEL: $level.
-                - A1/A2: Accept simple phrasing, focus on basic grammar correctness. Be encouraging and supportive.
-                - B1: Check for proper use of tenses, prepositions, and natural phrasing. Moderate strictness.
-                - B2: Require accurate idiomatic expressions, correct use of phrasal verbs, and varied vocabulary.
-                - C1/C2: Require near-native fluency, academic register, precise word choice, and natural complex sentences.
+                YOU MUST EVALUATE STRICTLY ACCORDING TO THE TARGET LEVEL: $level.
+                - If the level is CEFR (A1, A2, B1, B2, C1, C2):
+                  * A1/A2: Accept simple phrasing, focus on basic grammar correctness. Be encouraging and supportive.
+                  * B1: Check for proper use of tenses, prepositions, and natural phrasing. Moderate strictness.
+                  * B2: Require accurate idiomatic expressions, correct use of phrasal verbs, and varied vocabulary.
+                  * C1/C2: Require near-native fluency, academic register, precise word choice, and natural complex sentences.
+                - If the level is TOEIC (300, 500, 700, >900):
+                  * TOEIC 300: Check for basic understanding, accept very simple grammar, be highly encouraging.
+                  * TOEIC 500: Check for business environment vocabulary, basic grammar correctness.
+                  * TOEIC 700: Look for intermediate business vocabulary, appropriate business expressions.
+                  * TOEIC >900: Require flawless grammar, advanced vocabulary, and professional business tone.
 
                 Student's results:
                 $reports
@@ -175,14 +187,14 @@ class TeacherRepositoryImpl(
             val systemPrompt = """
                 You are an English AI Teacher - a professional and caring instructor.
                 Your task is to explain in detail the grammar, vocabulary, and usage of an English sentence,
-                tailored to the student's CEFR target level: $level.
+                tailored to the student's target level: $level.
 
                 Sentence information:
                 - Original Vietnamese: $vietnamese
                 - Target English: $targetEnglish
                 - Student's answer: ${userAnswer.ifBlank { "(Student skipped this sentence)" }}
 
-                Explanation requirements (adjusted for CEFR $level):
+                Explanation requirements (adjusted for target level $level):
                 1. Evaluate whether the student's answer is grammatically correct and natural.
                 2. Compare with the target English, point out strengths or errors (grammar, word order, vocabulary, tone).
                 3. If the student answered correctly, praise briefly and explain the grammar structures at $level depth.

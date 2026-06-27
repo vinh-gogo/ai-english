@@ -19,6 +19,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -26,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.AppColors
 import com.aienglish.feature.aiteacher.domain.model.Topics
+import com.aienglish.feature.aiteacher.ui.viewmodel.LevelType
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherUiState
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
 
@@ -243,39 +245,116 @@ fun TopicSelectionContent(
                 }
             }
 
-            Spacer(Modifier.height(16.dp))
-
-            // ── CEFR Level Selector (giống JLPT selector của Sensei AI) ──
-            Text(
-                "Trình độ CEFR mục tiêu",
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold,
-                color = colors.mutedText,
-                modifier = Modifier.align(Alignment.Start)
-            )
-            Spacer(Modifier.height(8.dp))
+            // ── Target Level System (CEFR / TOEIC Selector) ──
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(6.dp)
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                listOf("A1", "A2", "B1", "B2", "C1", "C2").forEach { level ->
-                    val isSelected = level == state.selectedCefrLevel
-                    Surface(
-                        modifier = Modifier.weight(1f).clickable { viewModel.onCefrLevelSelected(level) },
-                        shape = RoundedCornerShape(12.dp),
-                        color = if (isSelected) colors.accent else colors.surface,
-                        border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
+                Text(
+                    "Thang điểm mục tiêu",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = colors.mutedText
+                )
+
+                // Tab-like selector for CEFR vs TOEIC
+                Row(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(colors.surfaceElevated)
+                        .padding(2.dp)
+                ) {
+                    val isCefr = state.levelType == LevelType.CEFR
+                    // CEFR Tab
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(if (isCefr) colors.accent else Color.Transparent)
+                            .clickable { viewModel.onLevelTypeSelected(LevelType.CEFR) }
+                            .padding(horizontal = 12.dp, vertical = 4.dp),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Box(
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
-                            contentAlignment = Alignment.Center
+                        Text(
+                            "CEFR",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = if (isCefr) Color.White else colors.mutedText
+                        )
+                    }
+                    // TOEIC Tab
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(if (!isCefr) colors.accent else Color.Transparent)
+                            .clickable { viewModel.onLevelTypeSelected(LevelType.TOEIC) }
+                            .padding(horizontal = 12.dp, vertical = 4.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            "TOEIC",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = if (!isCefr) Color.White else colors.mutedText
+                        )
+                    }
+                }
+            }
+
+            Spacer(Modifier.height(8.dp))
+
+            // Render Level Buttons based on selected LevelType
+            if (state.levelType == LevelType.CEFR) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    listOf("A1", "A2", "B1", "B2", "C1", "C2").forEach { level ->
+                        val isSelected = level == state.selectedCefrLevel
+                        Surface(
+                            modifier = Modifier.weight(1f).clickable { viewModel.onCefrLevelSelected(level) },
+                            shape = RoundedCornerShape(12.dp),
+                            color = if (isSelected) colors.accent else colors.surface,
+                            border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
                         ) {
-                            Text(
-                                level,
-                                color = if (isSelected) Color.White else colors.mainText,
-                                fontSize = 13.sp,
-                                fontWeight = FontWeight.Bold
-                            )
+                            Box(
+                                modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    level,
+                                    color = if (isSelected) Color.White else colors.mainText,
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+                    }
+                }
+            } else {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    listOf("300", "500", "700", ">900").forEach { level ->
+                        val isSelected = level == state.selectedToeicLevel
+                        Surface(
+                            modifier = Modifier.weight(1f).clickable { viewModel.onToeicLevelSelected(level) },
+                            shape = RoundedCornerShape(12.dp),
+                            color = if (isSelected) colors.accent else colors.surface,
+                            border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
+                        ) {
+                            Box(
+                                modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    level,
+                                    color = if (isSelected) Color.White else colors.mainText,
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
                         }
                     }
                 }

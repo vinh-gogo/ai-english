@@ -10,11 +10,17 @@ import com.aienglish.feature.aiteacher.domain.model.Topics
 import com.aienglish.feature.aiteacher.domain.repository.HistoryRepository
 import kotlinx.coroutines.launch
 
+enum class LevelType {
+    CEFR, TOEIC
+}
+
 data class TeacherUiState(
     // Topic selection
     val selectedTopicIndex: Int = 0,
     val topicSearchQuery: String = "",
+    val levelType: LevelType = LevelType.CEFR,
     val selectedCefrLevel: String = "B1",
+    val selectedToeicLevel: String = "500",
 
     // Lesson state
     val isGeneratingLesson: Boolean = false,
@@ -35,6 +41,7 @@ data class TeacherUiState(
     val error: String? = null
 ) {
     val selectedTopic: String get() = Topics.list.getOrNull(selectedTopicIndex) ?: ""
+    val selectedLevelText: String get() = if (levelType == LevelType.CEFR) selectedCefrLevel else "TOEIC $selectedToeicLevel"
 }
 
 class TeacherViewModel(
@@ -50,7 +57,9 @@ class TeacherViewModel(
     // ── Topic Selection ──
     fun onTopicIndexSelected(index: Int) = setState { copy(selectedTopicIndex = index) }
     fun onTopicSearchChange(query: String) = setState { copy(topicSearchQuery = query) }
+    fun onLevelTypeSelected(type: LevelType) = setState { copy(levelType = type) }
     fun onCefrLevelSelected(level: String) = setState { copy(selectedCefrLevel = level) }
+    fun onToeicLevelSelected(level: String) = setState { copy(selectedToeicLevel = level) }
 
     // ── Lesson Navigation ──
     fun onAnswerChanged(index: Int, answer: String) = setState {
@@ -60,7 +69,7 @@ class TeacherViewModel(
     fun onCheckAnswer(index: Int) {
         val state = currentState
         val lesson = state.lesson ?: return
-        val level = state.selectedCefrLevel
+        val level = state.selectedLevelText
         val sentence = lesson.sentences.getOrNull(index) ?: return
         val userAnswer = state.userAnswers[index] ?: ""
 
@@ -102,7 +111,7 @@ class TeacherViewModel(
     // ── Start Lesson ──
     fun onStartLesson() {
         val topic = currentState.selectedTopic
-        val level = currentState.selectedCefrLevel
+        val level = currentState.selectedLevelText
         setState {
             copy(
                 isGeneratingLesson = true,
@@ -132,7 +141,7 @@ class TeacherViewModel(
     fun onSubmitLesson() {
         val state = currentState
         val lesson = state.lesson ?: return
-        val level = state.selectedCefrLevel
+        val level = state.selectedLevelText
         val answers = lesson.sentences.mapIndexed { i, s -> (state.userAnswers[i] ?: "") to s.english }
         val sentences = lesson.sentences.map { it.vietnamese }
         setState { copy(isEvaluating = true, error = null) }
@@ -155,7 +164,7 @@ class TeacherViewModel(
         if (state.explanations.containsKey(index)) return
 
         val lesson = state.lesson ?: return
-        val level = state.selectedCefrLevel
+        val level = state.selectedLevelText
         val sentence = lesson.sentences.getOrNull(index) ?: return
         val userAnswer = state.userAnswers[index] ?: ""
 
