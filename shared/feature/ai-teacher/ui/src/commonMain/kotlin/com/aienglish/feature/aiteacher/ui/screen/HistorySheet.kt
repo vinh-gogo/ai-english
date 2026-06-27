@@ -25,12 +25,14 @@ import com.aienglish.core.designsystem.theme.LocalAppColors
 import com.aienglish.feature.aiteacher.domain.model.HistoryStatus
 import com.aienglish.feature.aiteacher.domain.model.LessonHistory
 import com.aienglish.feature.aiteacher.ui.viewmodel.HistoryViewModel
+import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HistorySheet(
     historyViewModel: HistoryViewModel = koinInject(),
+    teacherViewModel: TeacherViewModel = koinInject(),
     onDismiss: () -> Unit
 ) {
     val state by historyViewModel.state.collectAsState()
@@ -143,7 +145,18 @@ fun HistorySheet(
                         Spacer(Modifier.height(4.dp))
 
                         state.items.forEach { item ->
-                            HistoryItem(item, colors)
+                            HistoryItem(
+                                item = item,
+                                colors = colors,
+                                onReview = {
+                                    teacherViewModel.onReviewLesson(item)
+                                    onDismiss()
+                                },
+                                onReTest = {
+                                    teacherViewModel.onReTestLesson(item)
+                                    onDismiss()
+                                }
+                            )
                         }
 
                         Spacer(Modifier.height(16.dp))
@@ -204,97 +217,139 @@ private fun SummaryChip(
 }
 
 @Composable
-private fun HistoryItem(item: LessonHistory, colors: AppColors) {
+private fun HistoryItem(
+    item: LessonHistory,
+    colors: AppColors,
+    onReview: () -> Unit,
+    onReTest: () -> Unit
+) {
     Card(
         colors = CardDefaults.cardColors(containerColor = colors.surface),
         shape = RoundedCornerShape(12.dp),
         border = BorderStroke(1.dp, colors.border),
         modifier = Modifier.fillMaxWidth()
     ) {
-        Row(
-            modifier = Modifier.padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            // Score / Status circle
-            val isCompleted = item.status == HistoryStatus.COMPLETED
-            val circleColor = if (isCompleted) colors.correct else Color(0xFFFFA726)
-            Box(
-                modifier = Modifier
-                    .size(44.dp)
-                    .clip(CircleShape)
-                    .background(circleColor.copy(0.12f)),
-                contentAlignment = Alignment.Center
+        Column(modifier = Modifier.padding(12.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                if (isCompleted) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            "${item.score ?: 0}",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp,
-                            color = circleColor
+                // Score / Status circle
+                val isCompleted = item.status == HistoryStatus.COMPLETED
+                val circleColor = if (isCompleted) colors.correct else Color(0xFFFFA726)
+                Box(
+                    modifier = Modifier
+                        .size(44.dp)
+                        .clip(CircleShape)
+                        .background(circleColor.copy(0.12f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (isCompleted) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(
+                                "${item.score ?: 0}",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 15.sp,
+                                color = circleColor
+                            )
+                            Text("/10", fontSize = 9.sp, color = circleColor.copy(0.7f))
+                        }
+                    } else {
+                        Icon(
+                            Icons.Rounded.HourglassTop, null,
+                            tint = circleColor,
+                            modifier = Modifier.size(20.dp)
                         )
-                        Text("/10", fontSize = 9.sp, color = circleColor.copy(0.7f))
                     }
-                } else {
-                    Icon(
-                        Icons.Rounded.HourglassTop, null,
-                        tint = circleColor,
-                        modifier = Modifier.size(20.dp)
-                    )
+                }
+
+                // Content
+                Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
+                    // Topic + Level badge
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            item.topic,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 14.sp,
+                            color = colors.mainText,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.weight(1f, fill = false)
+                        )
+                        // Level badge
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(colors.accent.copy(0.15f))
+                                .padding(horizontal = 7.dp, vertical = 2.dp)
+                        ) {
+                            Text(
+                                item.level,
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = colors.accent
+                            )
+                        }
+                    }
+
+                    // Status + date
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        val statusText = if (isCompleted) "✓ Hoàn thành" else "⏳ Đang học"
+                        Text(
+                            statusText,
+                            fontSize = 12.sp,
+                            color = circleColor,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Text("·", fontSize = 12.sp, color = colors.border)
+                        Text(
+                            formatDate(item.createdAt),
+                            fontSize = 12.sp,
+                            color = colors.hintText
+                        )
+                    }
                 }
             }
 
-            // Content
-            Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
-                // Topic + Level badge
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        item.topic,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 14.sp,
-                        color = colors.mainText,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.weight(1f, fill = false)
-                    )
-                    // Level badge
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(colors.accent.copy(0.15f))
-                            .padding(horizontal = 7.dp, vertical = 2.dp)
+            Spacer(Modifier.height(8.dp))
+            HorizontalDivider(color = colors.border.copy(alpha = 0.5f))
+            Spacer(Modifier.height(8.dp))
+
+            // Action Buttons
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (item.status == HistoryStatus.COMPLETED && !item.lessonJson.isNullOrEmpty()) {
+                    TextButton(
+                        onClick = onReview,
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                        modifier = Modifier.height(32.dp)
                     ) {
-                        Text(
-                            item.level,
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = colors.accent
-                        )
+                        Icon(Icons.Rounded.Visibility, null, modifier = Modifier.size(14.dp), tint = colors.accent)
+                        Spacer(Modifier.width(4.dp))
+                        Text("Xem lại", fontSize = 12.sp, color = colors.accent, fontWeight = FontWeight.Bold)
                     }
+                    Spacer(Modifier.width(8.dp))
                 }
 
-                // Status + date
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                Button(
+                    onClick = onReTest,
+                    colors = ButtonDefaults.buttonColors(containerColor = colors.accent.copy(alpha = 0.1f)),
+                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier.height(32.dp)
                 ) {
-                    val statusText = if (isCompleted) "✓ Hoàn thành" else "⏳ Đang học"
-                    Text(
-                        statusText,
-                        fontSize = 12.sp,
-                        color = circleColor,
-                        fontWeight = FontWeight.Medium
-                    )
-                    Text("·", fontSize = 12.sp, color = colors.border)
-                    Text(
-                        formatDate(item.createdAt),
-                        fontSize = 12.sp,
-                        color = colors.hintText
-                    )
+                    Icon(Icons.Rounded.Replay, null, modifier = Modifier.size(14.dp), tint = colors.accent)
+                    Spacer(Modifier.width(4.dp))
+                    Text("Luyện tập lại", fontSize = 12.sp, color = colors.accent, fontWeight = FontWeight.Bold)
                 }
             }
         }

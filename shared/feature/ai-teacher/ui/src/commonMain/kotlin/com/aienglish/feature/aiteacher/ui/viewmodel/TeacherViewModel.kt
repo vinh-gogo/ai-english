@@ -7,8 +7,11 @@ import com.aienglish.feature.aiteacher.application.usecase.GenerateEnglishLesson
 import com.aienglish.feature.aiteacher.domain.model.EnglishFeedback
 import com.aienglish.feature.aiteacher.domain.model.EnglishLesson
 import com.aienglish.feature.aiteacher.domain.model.Topics
+import com.aienglish.feature.aiteacher.domain.model.LessonHistory
 import com.aienglish.feature.aiteacher.domain.repository.HistoryRepository
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 enum class LevelType {
     CEFR, TOEIC
@@ -160,9 +163,24 @@ class TeacherViewModel(
                 ifLeft = { err -> setState { copy(isEvaluating = false, error = err.message) } },
                 ifRight = { fb ->
                     setState { copy(isEvaluating = false, feedback = fb) }
-                    // Update history to COMPLETED with score
+                    // Update history to COMPLETED with score and full snapshot
                     currentLessonHistoryId?.let { id ->
-                        try { historyRepository.completeLesson(id, fb.score) } catch (e: Exception) { /* ignore */ }
+                        try {
+                            val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
+                            val lessonJson = json.encodeToString(lesson)
+                            val userAnswersJson = json.encodeToString(state.userAnswers)
+                            val explanationsJson = json.encodeToString(state.explanations)
+                            val feedbackJson = json.encodeToString(fb)
+
+                            historyRepository.completeLesson(
+                                id = id,
+                                score = fb.score,
+                                lessonJson = lessonJson,
+                                userAnswersJson = userAnswersJson,
+                                explanationsJson = explanationsJson,
+                                feedbackJson = feedbackJson
+                            )
+                        } catch (e: Exception) { /* ignore */ }
                     }
                 }
             )
@@ -205,6 +223,58 @@ class TeacherViewModel(
                 }
             )
         }
+    }
+
+    fun onReviewLesson(history: LessonHistory) {
+        val lessonJson = history.lessonJson ?: return
+        val userAnswersJson = history.userAnswersJson ?: "{}"
+        val explanationsJson = history.explanationsJson ?: "{}"
+        val feedbackJson = history.feedbackJson ?: return
+
+        val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
+        try {
+            val lesson = json.decodeFromString<EnglishLesson>(lessonJson)
+            val userAnswers = json.decodeFromString<Map<Int, String>>(userAnswersJson)
+            val explanations = json.decodeFromString<Map<Int, String>>(explanationsJson)
+            val feedback = json.decodeFromString<EnglishFeedback>(feedbackJson)
+
+            val topicIndex = Topics.list.indexOfFirst { it.name == history.topic }.coerceAtLeast(0)
+            val isToeic = history.level.startsWith("TOEIC")
+            val levelValue = if (isToeic) history.level.removePrefix("TOEIC ").trim() else history.level
+
+            setState {
+                copy(
+                    selectedTopicIndex = topicIndex,
+                    levelType = if (isToeic) LevelType.TOEIC else LevelType.CEFR,
+                    selectedCefrLevel = if (!isToeic) levelValue else selectedCefrLevel,
+                    selectedToeicLevel = if (isToeic) levelValue else selectedToeicLevel,
+                    lesson = lesson,
+                    userAnswers = userAnswers,
+                    explanations = explanations,
+                    feedback = feedback,
+                    currentSentenceIndex = 0,
+                    checkedAnswers = userAnswers.keys
+                )
+            }
+        } catch (e: Exception) {
+            setState { copy(error = "Không thể tải lại lịch sử bài học: ${e.message}") }
+        }
+    }
+
+    fun onReTestLesson(history: LessonHistory) {
+        val topicIndex = Topics.list.indexOfFirst { it.name == history.topic }.coerceAtLeast(0)
+        val isToeic = history.level.startsWith("TOEIC")
+        val levelValue = if (isToeic) history.level.removePrefix("TOEIC ").trim() else history.level
+
+        setState {
+            copy(
+                selectedTopicIndex = topicIndex,
+                levelType = if (isToeic) LevelType.TOEIC else LevelType.CEFR,
+                selectedCefrLevel = if (!isToeic) levelValue else selectedCefrLevel,
+                selectedToeicLevel = if (isToeic) levelValue else selectedToeicLevel
+            )
+        }
+        onStartLesson()
     }
 
     fun onDismissError() = setState { copy(error = null) }

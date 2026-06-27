@@ -7,7 +7,11 @@ data class LessonHistory(
     val score: Int?,
     val status: HistoryStatus,
     val createdAt: String,
-    val completedAt: String?
+    val completedAt: String?,
+    val lessonJson: String? = null,
+    val userAnswersJson: String? = null,
+    val explanationsJson: String? = null,
+    val feedbackJson: String? = null
 )
 
 enum class HistoryStatus {

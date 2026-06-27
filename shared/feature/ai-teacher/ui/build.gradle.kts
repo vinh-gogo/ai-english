@@ -26,6 +26,7 @@ kotlin {
             implementation(libs.arrow.core)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.kotlinx.serialization.json)
             implementation(project(":shared:core:common"))
             implementation(project(":shared:core:designsystem"))
             implementation(project(":shared:feature:ai-teacher:domain"))

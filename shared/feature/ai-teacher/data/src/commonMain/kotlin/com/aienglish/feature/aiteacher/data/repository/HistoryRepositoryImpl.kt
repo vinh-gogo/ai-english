@@ -33,9 +33,24 @@ class HistoryRepositoryImpl(
             queries.getLastInsertId().executeAsOne()
         }
 
-    override suspend fun completeLesson(id: Long, score: Int) {
+    override suspend fun completeLesson(
+        id: Long,
+        score: Int,
+        lessonJson: String?,
+        userAnswersJson: String?,
+        explanationsJson: String?,
+        feedbackJson: String?
+    ) {
         withContext(dispatchers.io) {
-            queries.updateLessonCompleted(score.toLong(), nowString(), id)
+            queries.updateLessonCompleted(
+                score = score.toLong(),
+                completed_at = nowString(),
+                lesson_json = lessonJson,
+                user_answers_json = userAnswersJson,
+                explanations_json = explanationsJson,
+                feedback_json = feedbackJson,
+                id = id
+            )
         }
     }
 
@@ -52,7 +67,11 @@ class HistoryRepositoryImpl(
                         score = row.score?.toInt(),
                         status = HistoryStatus.from(row.status),
                         createdAt = row.created_at,
-                        completedAt = row.completed_at
+                        completedAt = row.completed_at,
+                        lessonJson = row.lesson_json,
+                        userAnswersJson = row.user_answers_json,
+                        explanationsJson = row.explanations_json,
+                        feedbackJson = row.feedback_json
                     )
                 }
             }

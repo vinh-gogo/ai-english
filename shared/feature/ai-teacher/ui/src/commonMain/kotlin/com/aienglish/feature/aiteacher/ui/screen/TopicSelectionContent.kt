@@ -463,12 +463,11 @@ fun TopicSelectionContent(
                         val idx = pair.first
                         val topic = pair.second
                         val isSelected = idx == selectedIdx
-                        val chipLevelColor = getLevelColor(topic.levelCode, colors)
                         Surface(
                             modifier = Modifier.clickable { viewModel.onTopicIndexSelected(idx) },
                             shape = RoundedCornerShape(12.dp),
-                            color = if (isSelected) chipLevelColor else colors.surface,
-                            border = BorderStroke(1.dp, if (isSelected) chipLevelColor else chipLevelColor.copy(alpha = 0.4f))
+                            color = if (isSelected) levelColor else colors.surface,
+                            border = BorderStroke(1.dp, if (isSelected) levelColor else colors.border)
                         ) {
                             Text(
                                 "${i + 1}. ${topic.name}",

@@ -1,0 +1,32 @@
+CREATE TABLE IF NOT EXISTS lesson_history (
+    id INTEGER PRIMARY KEY,
+    topic TEXT NOT NULL,
+    level TEXT NOT NULL,
+    score INTEGER,
+    status TEXT NOT NULL DEFAULT 'IN_PROGRESS',
+    created_at TEXT NOT NULL,
+    completed_at TEXT,
+    lesson_json TEXT,
+    user_answers_json TEXT,
+    explanations_json TEXT,
+    feedback_json TEXT
+);
+
+insertLesson:
+INSERT INTO lesson_history (topic, level, status, created_at)
+VALUES (?, ?, 'IN_PROGRESS', ?);
+
+getLastInsertId:
+SELECT last_insert_rowid();
+
+updateLessonCompleted:
+UPDATE lesson_history
+SET status = 'COMPLETED', score = ?, completed_at = ?, lesson_json = ?, user_answers_json = ?, explanations_json = ?, feedback_json = ?
+WHERE id = ?;
+
+getAllHistory:
+SELECT * FROM lesson_history ORDER BY created_at DESC;
+
+clearHistory:
+DELETE FROM lesson_history;
+

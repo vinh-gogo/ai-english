@@ -36,8 +36,6 @@ mapping.txt
 composeApp/.kotlin/
 **/composeResources/generated/
 
-# ─── SQLDelight ───────────────────────────────────────────────────────────────
-**/sqldelight/
 
 # ─── Node / Web ───────────────────────────────────────────────────────────────
 node_modules/
