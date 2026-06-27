@@ -1,0 +1,66 @@
+# ─── Gradle ───────────────────────────────────────────────────────────────────
+.gradle/
+**/build/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+
+# ─── IDE ──────────────────────────────────────────────────────────────────────
+.idea/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+Thumbs.db
+
+# ─── Local config (contains API keys, SDK paths — NEVER commit) ───────────────
+local.properties
+*.env
+.env.*
+
+# ─── Android ──────────────────────────────────────────────────────────────────
+androidApp/release/
+*.apk
+*.aab
+*.ap_
+*.dex
+proguard/
+mapping.txt
+
+# ─── Kotlin/Native ────────────────────────────────────────────────────────────
+*.klib
+*.bc
+.kotlin/
+
+# ─── Compose Multiplatform ────────────────────────────────────────────────────
+composeApp/.kotlin/
+**/composeResources/generated/
+
+# ─── SQLDelight ───────────────────────────────────────────────────────────────
+**/sqldelight/
+
+# ─── Node / Web ───────────────────────────────────────────────────────────────
+node_modules/
+dist/
+.next/
+out/
+.vercel/
+
+# ─── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+desktop.ini
+
+# ─── Logs & temp ──────────────────────────────────────────────────────────────
+*.log
+*.tmp
+*.temp
+*.cache
+
+# JVM heap dumps
+*.hprof
+*.hprof.index
