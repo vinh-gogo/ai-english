@@ -26,10 +26,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.AppColors
+import com.aienglish.feature.aiteacher.domain.model.TopicItem
 import com.aienglish.feature.aiteacher.domain.model.Topics
 import com.aienglish.feature.aiteacher.ui.viewmodel.LevelType
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherUiState
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
+
+fun getLevelColor(levelCode: String, colors: AppColors): Color {
+    return when (levelCode) {
+        "A1", "300" -> Color(0xFF0284C7)      // Xanh dương Sky Blue
+        "A2" -> Color(0xFF10B981)             // Xanh lá Emerald
+        "B1", "500" -> Color(0xFFF59E0B)      // Vàng hổ phách Amber
+        "B2", "700" -> Color(0xFFEF4444)      // Đỏ Coral
+        "C1", "900" -> colors.accent          // Màu accent chính (Blood đỏ sẫm)
+        "C2" -> Color(0xFF8B5CF6)             // Tím Violet
+        else -> colors.accent
+    }
+}
 
 @Composable
 fun TopicSelectionContent(
@@ -40,11 +53,17 @@ fun TopicSelectionContent(
     val listState = rememberLazyListState()
     val selectedIdx = state.selectedTopicIndex
 
-    val filteredTopics = remember(state.topicSearchQuery) {
+    // Determine current level code
+    val activeLevelCode = if (state.levelType == LevelType.CEFR) state.selectedCefrLevel else state.selectedToeicLevel
+    val levelColor = getLevelColor(activeLevelCode, colors)
+
+    // Filter topics: only show topics matching current level AND containing search query
+    val filteredTopics = remember(activeLevelCode, state.topicSearchQuery) {
         Topics.list.mapIndexed { i, t -> i to t }
-            .filter { it.second.contains(state.topicSearchQuery, ignoreCase = true) }
+            .filter { it.second.levelCode == activeLevelCode && it.second.name.contains(state.topicSearchQuery, ignoreCase = true) }
     }
 
+    // Auto-scroll when selection changes
     LaunchedEffect(selectedIdx) {
         val fi = filteredTopics.indexOfFirst { it.first == selectedIdx }
         if (fi != -1) listState.animateScrollToItem(fi)
@@ -53,7 +72,7 @@ fun TopicSelectionContent(
     if (state.isGeneratingLesson) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                CircularProgressIndicator(color = colors.accent)
+                CircularProgressIndicator(color = levelColor)
                 Spacer(Modifier.height(16.dp))
                 Text("AI đang soạn bài luyện tập...", color = colors.mutedText, fontSize = 14.sp)
             }
@@ -81,7 +100,7 @@ fun TopicSelectionContent(
             Icon(
                 imageVector = Icons.Rounded.School,
                 contentDescription = null,
-                tint = colors.accent,
+                tint = levelColor,
                 modifier = Modifier.size(36.dp)
             )
             Spacer(Modifier.height(4.dp))
@@ -92,7 +111,7 @@ fun TopicSelectionContent(
                 color = colors.mainText
             )
             Text(
-                "Chọn chủ đề luyện dịch 10 câu sang tiếng Anh",
+                "Mỗi trình độ sở hữu một bộ chủ đề luyện dịch riêng biệt",
                 fontSize = 13.sp,
                 color = colors.mutedText,
                 textAlign = TextAlign.Center,
@@ -101,14 +120,14 @@ fun TopicSelectionContent(
 
             Spacer(Modifier.height(12.dp))
 
-            // ── Carousel Card (giống Sensei AI) ──
+            // ── Carousel Card (giống Sensei AI, styled with Level Color) ──
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(110.dp),
                 shape = RoundedCornerShape(16.dp),
                 colors = CardDefaults.cardColors(containerColor = colors.surface),
-                border = BorderStroke(1.dp, colors.border)
+                border = BorderStroke(1.dp, levelColor.copy(alpha = 0.3f))
             ) {
                 Row(
                     modifier = Modifier.fillMaxSize(),
@@ -119,7 +138,7 @@ fun TopicSelectionContent(
                         val ci = filteredTopics.indexOfFirst { it.first == selectedIdx }
                         if (ci != -1 && filteredTopics.isNotEmpty())
                             filteredTopics[(ci - 1 + filteredTopics.size) % filteredTopics.size].first
-                        else (selectedIdx - 1 + Topics.list.size) % Topics.list.size
+                        else selectedIdx
                     }
                     IconButton(onClick = { viewModel.onTopicIndexSelected(prevIdx) }, modifier = Modifier.padding(start = 4.dp)) {
                         Icon(Icons.Default.ChevronLeft, "Trước", tint = colors.mainText)
@@ -130,16 +149,20 @@ fun TopicSelectionContent(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
+                        val localIndexText = remember(selectedIdx, filteredTopics) {
+                            val ci = filteredTopics.indexOfFirst { it.first == selectedIdx }
+                            if (ci != -1) "${ci + 1} / ${filteredTopics.size}" else "1 / 1"
+                        }
                         Text(
-                            "CHỦ ĐỀ ${selectedIdx + 1} / ${Topics.list.size}",
+                            "CHỦ ĐỀ $localIndexText (${activeLevelCode})",
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
-                            color = colors.accent
+                            color = levelColor
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
-                            Topics.list.getOrNull(selectedIdx) ?: "",
-                            fontSize = 16.sp,
+                            Topics.list.getOrNull(selectedIdx)?.name ?: "",
+                            fontSize = 15.sp,
                             fontWeight = FontWeight.Bold,
                             color = colors.mainText,
                             textAlign = TextAlign.Center,
@@ -152,7 +175,7 @@ fun TopicSelectionContent(
                         val ci = filteredTopics.indexOfFirst { it.first == selectedIdx }
                         if (ci != -1 && filteredTopics.isNotEmpty())
                             filteredTopics[(ci + 1) % filteredTopics.size].first
-                        else (selectedIdx + 1) % Topics.list.size
+                        else selectedIdx
                     }
                     IconButton(onClick = { viewModel.onTopicIndexSelected(nextIdx) }, modifier = Modifier.padding(end = 4.dp)) {
                         Icon(Icons.Default.ChevronRight, "Sau", tint = colors.mainText)
@@ -164,16 +187,20 @@ fun TopicSelectionContent(
 
             // Random topic button
             Button(
-                onClick = { viewModel.onTopicIndexSelected(Topics.list.indices.random()) },
+                onClick = {
+                    if (filteredTopics.isNotEmpty()) {
+                        viewModel.onTopicIndexSelected(filteredTopics.random().first)
+                    }
+                },
                 colors = ButtonDefaults.buttonColors(containerColor = colors.surface),
                 border = BorderStroke(1.dp, colors.border),
                 shape = RoundedCornerShape(12.dp),
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
                 modifier = Modifier.height(36.dp)
             ) {
-                Icon(Icons.Rounded.AutoAwesome, null, tint = colors.accent, modifier = Modifier.size(14.dp))
+                Icon(Icons.Rounded.AutoAwesome, null, tint = levelColor, modifier = Modifier.size(14.dp))
                 Spacer(Modifier.width(6.dp))
-                Text("Chọn ngẫu nhiên", color = colors.mainText, fontSize = 12.sp)
+                Text("Chọn ngẫu nhiên chủ đề", color = colors.mainText, fontSize = 12.sp)
             }
 
             Spacer(Modifier.height(12.dp))
@@ -186,11 +213,11 @@ fun TopicSelectionContent(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(10.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = colors.accent,
+                    focusedBorderColor = levelColor,
                     unfocusedBorderColor = colors.border,
                     focusedContainerColor = colors.surface,
                     unfocusedContainerColor = colors.surface,
-                    cursorColor = colors.accent
+                    cursorColor = levelColor
                 ),
                 singleLine = true,
                 leadingIcon = {
@@ -205,47 +232,7 @@ fun TopicSelectionContent(
                 }
             )
 
-            Spacer(Modifier.height(8.dp))
-
-            // Chips label
-            Text(
-                if (state.topicSearchQuery.isEmpty()) "Danh sách chủ đề"
-                else "Kết quả (${filteredTopics.size})",
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold,
-                color = colors.mutedText,
-                modifier = Modifier.align(Alignment.Start)
-            )
-
-            Spacer(Modifier.height(6.dp))
-
-            // ── LazyRow topic chips (giống Sensei AI) ──
-            LazyRow(
-                state = listState,
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                itemsIndexed(filteredTopics) { _, pair ->
-                    val idx = pair.first
-                    val topic = pair.second
-                    val isSelected = idx == selectedIdx
-                    Surface(
-                        modifier = Modifier.clickable { viewModel.onTopicIndexSelected(idx) },
-                        shape = RoundedCornerShape(12.dp),
-                        color = if (isSelected) colors.accent else colors.surface,
-                        border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
-                    ) {
-                        Text(
-                            "${idx + 1}. $topic",
-                            color = if (isSelected) Color.White else colors.mainText,
-                            fontSize = 13.sp,
-                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp)
-                        )
-                    }
-                }
-            }
-
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(12.dp))
 
             // ── Target Level System (CEFR / TOEIC Selector) ──
             Row(
@@ -272,7 +259,7 @@ fun TopicSelectionContent(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(6.dp))
-                            .background(if (isCefr) colors.accent else Color.Transparent)
+                            .background(if (isCefr) levelColor else Color.Transparent)
                             .clickable { viewModel.onLevelTypeSelected(LevelType.CEFR) }
                             .padding(horizontal = 12.dp, vertical = 4.dp),
                         contentAlignment = Alignment.Center
@@ -288,7 +275,7 @@ fun TopicSelectionContent(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(6.dp))
-                            .background(if (!isCefr) colors.accent else Color.Transparent)
+                            .background(if (!isCefr) levelColor else Color.Transparent)
                             .clickable { viewModel.onLevelTypeSelected(LevelType.TOEIC) }
                             .padding(horizontal = 12.dp, vertical = 4.dp),
                         contentAlignment = Alignment.Center
@@ -313,11 +300,12 @@ fun TopicSelectionContent(
                 ) {
                     listOf("A1", "A2", "B1", "B2", "C1", "C2").forEach { level ->
                         val isSelected = level == state.selectedCefrLevel
+                        val thisLevelColor = getLevelColor(level, colors)
                         Surface(
                             modifier = Modifier.weight(1f).clickable { viewModel.onCefrLevelSelected(level) },
                             shape = RoundedCornerShape(12.dp),
-                            color = if (isSelected) colors.accent else colors.surface,
-                            border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
+                            color = if (isSelected) thisLevelColor else colors.surface,
+                            border = BorderStroke(1.dp, if (isSelected) thisLevelColor else colors.border)
                         ) {
                             Box(
                                 modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
@@ -338,25 +326,75 @@ fun TopicSelectionContent(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    listOf("300", "500", "700", ">900").forEach { level ->
+                    listOf("300", "500", "700", "900").forEach { level ->
                         val isSelected = level == state.selectedToeicLevel
+                        val thisLevelColor = getLevelColor(level, colors)
                         Surface(
                             modifier = Modifier.weight(1f).clickable { viewModel.onToeicLevelSelected(level) },
                             shape = RoundedCornerShape(12.dp),
-                            color = if (isSelected) colors.accent else colors.surface,
-                            border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
+                            color = if (isSelected) thisLevelColor else colors.surface,
+                            border = BorderStroke(1.dp, if (isSelected) thisLevelColor else colors.border)
                         ) {
                             Box(
                                 modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    level,
+                                    text = if (level == "900") ">900" else level,
                                     color = if (isSelected) Color.White else colors.mainText,
                                     fontSize = 13.sp,
                                     fontWeight = FontWeight.Bold
                                 )
                             }
+                        }
+                    }
+                }
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            // Chips label
+            Text(
+                if (state.topicSearchQuery.isEmpty()) "Chủ đề luyện thi phù hợp trình độ ($activeLevelCode)"
+                else "Kết quả tìm kiếm (${filteredTopics.size})",
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                color = colors.mutedText,
+                modifier = Modifier.align(Alignment.Start)
+            )
+
+            Spacer(Modifier.height(6.dp))
+
+            // ── LazyRow topic chips (giống Sensei AI, styled with Level Color) ──
+            if (filteredTopics.isEmpty()) {
+                Box(
+                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    Text("Không tìm thấy chủ đề phù hợp.", color = colors.hintText, fontSize = 13.sp)
+                }
+            } else {
+                LazyRow(
+                    state = listState,
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    itemsIndexed(filteredTopics) { i, pair ->
+                        val idx = pair.first
+                        val topic = pair.second
+                        val isSelected = idx == selectedIdx
+                        Surface(
+                            modifier = Modifier.clickable { viewModel.onTopicIndexSelected(idx) },
+                            shape = RoundedCornerShape(12.dp),
+                            color = if (isSelected) levelColor else colors.surface,
+                            border = BorderStroke(1.dp, if (isSelected) levelColor else colors.border)
+                        ) {
+                            Text(
+                                "${i + 1}. ${topic.name}",
+                                color = if (isSelected) Color.White else colors.mainText,
+                                fontSize = 13.sp,
+                                modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp)
+                            )
                         }
                     }
                 }
@@ -370,7 +408,7 @@ fun TopicSelectionContent(
             Spacer(Modifier.height(16.dp))
         }
 
-        // ── Pinned start button ──
+        // ── Pinned start button (styled with Level Color) ──
         Button(
             onClick = { viewModel.onStartLesson() },
             modifier = Modifier
@@ -378,7 +416,7 @@ fun TopicSelectionContent(
                 .height(50.dp)
                 .padding(bottom = 4.dp)
                 .navigationBarsPadding(),
-            colors = ButtonDefaults.buttonColors(containerColor = colors.accent),
+            colors = ButtonDefaults.buttonColors(containerColor = levelColor),
             shape = RoundedCornerShape(14.dp)
         ) {
             Icon(Icons.Default.PlayArrow, null, modifier = Modifier.size(18.dp))

@@ -40,7 +40,7 @@ data class TeacherUiState(
     // Error
     val error: String? = null
 ) {
-    val selectedTopic: String get() = Topics.list.getOrNull(selectedTopicIndex) ?: ""
+    val selectedTopic: String get() = Topics.list.getOrNull(selectedTopicIndex)?.name ?: ""
     val selectedLevelText: String get() = if (levelType == LevelType.CEFR) selectedCefrLevel else "TOEIC $selectedToeicLevel"
 }
 
@@ -57,9 +57,19 @@ class TeacherViewModel(
     // ── Topic Selection ──
     fun onTopicIndexSelected(index: Int) = setState { copy(selectedTopicIndex = index) }
     fun onTopicSearchChange(query: String) = setState { copy(topicSearchQuery = query) }
-    fun onLevelTypeSelected(type: LevelType) = setState { copy(levelType = type) }
-    fun onCefrLevelSelected(level: String) = setState { copy(selectedCefrLevel = level) }
-    fun onToeicLevelSelected(level: String) = setState { copy(selectedToeicLevel = level) }
+    fun onLevelTypeSelected(type: LevelType) = setState {
+        val activeLevel = if (type == LevelType.CEFR) selectedCefrLevel else selectedToeicLevel
+        val firstIdx = Topics.list.indexOfFirst { it.levelCode == activeLevel }.coerceAtLeast(0)
+        copy(levelType = type, selectedTopicIndex = firstIdx)
+    }
+    fun onCefrLevelSelected(level: String) = setState {
+        val firstIdx = Topics.list.indexOfFirst { it.levelCode == level }.coerceAtLeast(0)
+        copy(selectedCefrLevel = level, selectedTopicIndex = firstIdx)
+    }
+    fun onToeicLevelSelected(level: String) = setState {
+        val firstIdx = Topics.list.indexOfFirst { it.levelCode == level }.coerceAtLeast(0)
+        copy(selectedToeicLevel = level, selectedTopicIndex = firstIdx)
+    }
 
     // ── Lesson Navigation ──
     fun onAnswerChanged(index: Int, answer: String) = setState {
