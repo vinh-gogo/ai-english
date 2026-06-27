@@ -5,22 +5,33 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import kotlinx.coroutines.delay
 import kotlinx.serialization.json.*
 
-// Model priority chain — ordered by speed + reliability for structured JSON output
-// All confirmed available from /v1beta/models endpoint
+// Standard exceptions for flow control matching mainichi-app-v2
+class GeminiRateLimitException(val retryAfterSeconds: Long) :
+    Exception("Rate limited (RPM). Retry after ${retryAfterSeconds}s.")
+
+class GeminiDailyQuotaExhaustedException :
+    Exception("Daily quota exhausted (limit=0). Switch model immediately.")
+
+// Expanded model priority chain - identical to mainichi-app-v2 to maximize quota pools
 val GEMINI_MODEL_CHAIN = listOf(
-    "gemini-2.5-flash",      // Primary: stable, fast, 65K output
-    "gemini-2.0-flash",      // Fallback 1: stable, no thinking, 8K output
-    "gemini-2.0-flash-lite"  // Fallback 2: lightest, most reliable
+    "gemini-2.5-flash",
+    "gemini-2.5-flash-lite",
+    "gemini-3.1-flash-lite",
+    "gemini-2.5-pro",
+    "gemini-3.1-flash",
+    "gemini-3.1-pro",
+    "gemini-2.0-flash",
+    "gemini-2.0-flash-lite"
 )
 
 class GeminiClient(private val httpClient: HttpClient) {
 
     /**
      * Generate content with automatic fallback across model chain.
-     * Disables thinking mode (thinkingBudget=0) to ensure clean JSON output.
-     * Retries on each model before giving up.
+     * Integrates KMP retry backoff and RPM/RPD detection from MainichiKanji.
      */
     suspend fun generateContent(
         apiKey: String,
@@ -28,7 +39,7 @@ class GeminiClient(private val httpClient: HttpClient) {
         userPrompt: String,
         model: String = GEMINI_MODEL_CHAIN.first()
     ): String {
-        // Build ordered list: requested model first, then rest of chain
+        // Build ordered list: requested model first, then the rest of the fallback chain
         val modelsToTry = buildList {
             add(model)
             GEMINI_MODEL_CHAIN.forEach { if (it != model) add(it) }
@@ -38,14 +49,44 @@ class GeminiClient(private val httpClient: HttpClient) {
 
         for (currentModel in modelsToTry) {
             try {
-                return callGemini(apiKey, systemPrompt, userPrompt, currentModel)
-            } catch (e: Exception) {
+                println("▶ MODEL: $currentModel")
+                return executeWithRetry(apiKey, systemPrompt, userPrompt, currentModel)
+            } catch (e: GeminiDailyQuotaExhaustedException) {
+                println("⚠ [MODEL SWITCH] $currentModel unavailable/exhausted. Switching model...")
                 lastException = e
-                // Continue to next model in chain
+            } catch (e: GeminiRateLimitException) {
+                println("⚠ [RPM LIMIT] $currentModel rate limited. Switching model...")
+                lastException = e
+            } catch (e: Exception) {
+                println("⚠ [ERROR] $currentModel: ${e.message}")
+                lastException = e
             }
         }
 
         throw lastException ?: Exception("All Gemini models failed")
+    }
+
+    private suspend fun executeWithRetry(
+        apiKey: String,
+        systemPrompt: String,
+        userPrompt: String,
+        model: String,
+        maxRetries: Int = 2
+    ): String {
+        repeat(maxRetries + 1) { attempt ->
+            try {
+                return callGemini(apiKey, systemPrompt, userPrompt, model)
+            } catch (e: GeminiDailyQuotaExhaustedException) {
+                throw e // Switch model immediately, do not retry
+            } catch (e: GeminiRateLimitException) {
+                if (attempt < maxRetries) {
+                    val delayMs = minOf(e.retryAfterSeconds * 1000L, 15000L)
+                    println("  [RPM Retry] Attempt ${attempt + 1}/$maxRetries. Waiting ${delayMs / 1000}s...")
+                    delay(delayMs)
+                } else throw e
+            }
+        }
+        throw IllegalStateException("Unreachable")
     }
 
     private suspend fun callGemini(
@@ -63,16 +104,17 @@ class GeminiClient(private val httpClient: HttpClient) {
                     }
                 }
             }
-            putJsonObject("systemInstruction") {
-                putJsonArray("parts") {
-                    addJsonObject { put("text", systemPrompt) }
+            if (systemPrompt.isNotBlank()) {
+                putJsonObject("systemInstruction") {
+                    putJsonArray("parts") {
+                        addJsonObject { put("text", systemPrompt) }
+                    }
                 }
             }
             putJsonObject("generationConfig") {
                 put("temperature", 0.7)
                 put("topP", 0.9)
                 // Disable thinking mode — ensures clean structured output (no thinking part mixing)
-                // Works for gemini-2.5-flash and other thinking-capable models
                 putJsonObject("thinkingConfig") {
                     put("thinkingBudget", 0)
                 }
@@ -88,7 +130,15 @@ class GeminiClient(private val httpClient: HttpClient) {
 
         val body = response.bodyAsText()
 
-        // Check for API-level errors (wrong key, quota, etc.)
+        // Handle Quota and Rate Limit status codes
+        if (response.status.value == 429) {
+            throw parseQuotaError(body)
+        }
+
+        if (response.status.value == 503) {
+            throw GeminiDailyQuotaExhaustedException() // Switch model immediately
+        }
+
         if (!response.status.isSuccess()) {
             val errorMsg = extractErrorMessage(body)
             throw Exception("Gemini API error [${response.status.value}] model=$model: $errorMsg")
@@ -97,11 +147,37 @@ class GeminiClient(private val httpClient: HttpClient) {
         return extractTextFromResponse(body, model)
     }
 
-    /**
-     * Extract text from Gemini response.
-     * Handles thinking models: takes the LAST text part (thinking parts come first).
-     * Falls back to joining all parts if last part is empty.
-     */
+    private fun parseQuotaError(rawBody: String): Exception {
+        return try {
+            val json = Json { ignoreUnknownKeys = true }
+            val root = json.parseToJsonElement(rawBody).jsonObject
+            val errorObj = root["error"]?.jsonObject ?: return GeminiRateLimitException(30L)
+            
+            // Check message or details for daily quota indicator
+            val message = errorObj["message"]?.jsonPrimitive?.content ?: ""
+            if ("quota" in message.lowercase() && ("limit" in message.lowercase() || "exhausted" in message.lowercase())) {
+                return GeminiDailyQuotaExhaustedException()
+            }
+
+            val details = errorObj["details"]?.jsonArray ?: return GeminiRateLimitException(30L)
+
+            val retryDelay = details
+                .firstOrNull { it.jsonObject["@type"]?.jsonPrimitive?.content?.contains("RetryInfo") == true }
+                ?.jsonObject?.get("retryDelay")?.jsonPrimitive?.content
+                ?.replace("s", "")?.toLong() ?: 30L
+
+            val isDailyExhausted = details
+                .filter { it.jsonObject["@type"]?.jsonPrimitive?.content?.contains("QuotaFailure") == true }
+                .flatMap { it.jsonObject["violations"]?.jsonArray ?: listOf() }
+                .any { it.jsonObject["quotaId"]?.jsonPrimitive?.content?.contains("PerDay") == true }
+
+            if (isDailyExhausted) GeminiDailyQuotaExhaustedException()
+            else GeminiRateLimitException(retryDelay)
+        } catch (_: Exception) {
+            GeminiRateLimitException(30L)
+        }
+    }
+
     private fun extractTextFromResponse(body: String, model: String): String {
         val json = Json { ignoreUnknownKeys = true }
         val root = try {
@@ -110,7 +186,6 @@ class GeminiClient(private val httpClient: HttpClient) {
             throw Exception("Invalid JSON from Gemini model=$model: $body")
         }
 
-        // Check for error in response body
         root["error"]?.let { error ->
             val msg = error.jsonObject["message"]?.jsonPrimitive?.content ?: "Unknown error"
             throw Exception("Gemini error model=$model: $msg")
@@ -122,21 +197,17 @@ class GeminiClient(private val httpClient: HttpClient) {
             ?.get("parts")?.jsonArray
             ?: throw Exception("No candidates in Gemini response model=$model. Body: $body")
 
-        // For thinking models: thinking part is first, actual content is LAST
-        // We try the last part first, then fall back to joining all text parts
         val allTexts = parts.mapNotNull { part ->
             part.jsonObject["text"]?.jsonPrimitive?.content?.trim()
         }.filter { it.isNotEmpty() }
 
         if (allTexts.isEmpty()) {
-            // Check finish reason
             val finishReason = root["candidates"]?.jsonArray
                 ?.firstOrNull()?.jsonObject
                 ?.get("finishReason")?.jsonPrimitive?.content
             throw Exception("Empty response from Gemini model=$model. FinishReason=$finishReason. Body: $body")
         }
 
-        // Return the last text part (actual output, not thinking)
         return allTexts.last()
     }
 
@@ -150,10 +221,6 @@ class GeminiClient(private val httpClient: HttpClient) {
         }
     }
 
-    /**
-     * Fetch list of available models from Gemini API.
-     * Useful for dynamic model selection in Profile settings.
-     */
     suspend fun listModels(apiKey: String): List<String> {
         return try {
             val response: HttpResponse = httpClient.get(
@@ -166,11 +233,10 @@ class GeminiClient(private val httpClient: HttpClient) {
                 val name = model.jsonObject["name"]?.jsonPrimitive?.content ?: return@mapNotNull null
                 val methods = model.jsonObject["supportedGenerationMethods"]?.jsonArray
                     ?.mapNotNull { it.jsonPrimitive.content } ?: emptyList()
-                // Only return models that support generateContent
                 if ("generateContent" in methods) name.removePrefix("models/") else null
             } ?: emptyList()
         } catch (e: Exception) {
-            GEMINI_MODEL_CHAIN // fallback to known list
+            GEMINI_MODEL_CHAIN
         }
     }
 }
