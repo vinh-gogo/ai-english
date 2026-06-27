@@ -245,6 +245,8 @@ fun TopicSelectionContent(
                 }
             }
 
+            Spacer(Modifier.height(20.dp))
+
             // ── Target Level System (CEFR / TOEIC Selector) ──
             Row(
                 modifier = Modifier.fillMaxWidth(),
