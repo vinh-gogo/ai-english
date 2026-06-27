@@ -29,6 +29,7 @@ include(":composeApp")
 
 // ── shared:core ──
 include(":shared:core:common")
+include(":shared:core:database")
 include(":shared:core:designsystem")
 include(":shared:core:network")
 

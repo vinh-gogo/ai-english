@@ -1,13 +1,17 @@
 package com.aienglish.feature.aiteacher.data.di
 
 import com.aienglish.core.common.dispatchers.AppDispatchers
-import com.aienglish.core.common.prefs.AppPreferences
-import com.aienglish.core.network.client.GeminiClient
-import com.aienglish.feature.aiteacher.data.repository.TeacherRepositoryImpl
-import com.aienglish.feature.aiteacher.domain.repository.TeacherRepository
+import com.aienglish.core.database.AIEnglishDatabase
+import com.aienglish.feature.aiteacher.data.repository.HistoryRepositoryImpl
+import com.aienglish.feature.aiteacher.domain.repository.HistoryRepository
 import org.koin.dsl.module
 
-// TeacherRepository is provided directly in AIEnglishApplication / Main.kt
-// where fallbackApiKey is available. This module is intentionally empty.
+// TeacherRepository is registered in platform entry points (needs fallbackApiKey)
 val teacherDataModule = module {
+    single<HistoryRepository> {
+        HistoryRepositoryImpl(
+            database = get<AIEnglishDatabase>(),
+            dispatchers = get<AppDispatchers>()
+        )
+    }
 }

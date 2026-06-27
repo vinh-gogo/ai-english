@@ -52,6 +52,7 @@ fun TeacherScreen(
     val state by viewModel.state.collectAsState()
     val profileState by profileViewModel.state.collectAsState()
     val colors = LocalAppColors.current
+    var showHistory by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -103,7 +104,17 @@ fun TeacherScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { profileViewModel.showProfile() }) {
+                        // History button
+                        IconButton(onClick = { showHistory = true }) {
+                            Icon(
+                                Icons.Rounded.History,
+                                contentDescription = "Lịch sử",
+                                tint = colors.mutedText,
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                        // Profile button
+                        IconButton(onClick = { profileViewModel.showProfile() }) {
                         if (profileState.isSignedIn && profileState.displayName != null) {
                             Box(
                                 modifier = Modifier
@@ -150,6 +161,10 @@ fun TeacherScreen(
                     onGoogleSignIn = onGoogleSignIn,
                     onGoogleSignOut = onGoogleSignOut
                 )
+            }
+            // History sheet overlay
+            if (showHistory) {
+                HistorySheet(onDismiss = { showHistory = false })
             }
             AnimatedContent(
                 targetState = when {

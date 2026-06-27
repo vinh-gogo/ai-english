@@ -52,6 +52,7 @@ dependencies {
 
     // All shared modules
     implementation(project(":shared:core:common"))
+    implementation(project(":shared:core:database"))
     implementation(project(":shared:core:network"))
     implementation(project(":shared:core:designsystem"))
     implementation(project(":shared:feature:ai-teacher:domain"))

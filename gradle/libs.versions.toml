@@ -1,6 +1,7 @@
 [versions]
 kotlin = "2.3.0"
 agp = "9.0.0"
+sqldelight = "2.3.2"
 ksp = "2.3.0-1.0.30"
 compose-multiplatform = "1.10.2"
 composeDesktop = "1.10.2"
@@ -64,6 +65,12 @@ lifecycle-runtime-compose = { module = "org.jetbrains.androidx.lifecycle:lifecyc
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
 security-crypto = { module = "androidx.security:security-crypto", version.ref = "androidx-security-crypto" }
 
+# SQLDelight
+sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight" }
+sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
+
 # Testing
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
@@ -80,3 +87,4 @@ jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-multip
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

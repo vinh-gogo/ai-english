@@ -28,6 +28,9 @@ private fun loadApiKey(): String {
     return System.getenv("GEMINI_API_KEY") ?: ""
 }
 
+import com.aienglish.core.database.AIEnglishDatabase
+import com.aienglish.core.database.driver.createDesktopDriver
+
 fun main() {
     val apiKey = loadApiKey()
 
@@ -36,6 +39,13 @@ fun main() {
             desktopCoreCommonModule,   // provides DesktopAppPreferences + AppDispatchers
             coreNetworkModule,
             teacherApplicationModule,
+            // Database module
+            module {
+                single { createDesktopDriver() }
+                single { AIEnglishDatabase(get()) }
+            },
+            // Data module (HistoryRepository)
+            teacherDataModule,
             module {
                 single<TeacherRepository> {
                     val prefs = get<AppPreferences>()

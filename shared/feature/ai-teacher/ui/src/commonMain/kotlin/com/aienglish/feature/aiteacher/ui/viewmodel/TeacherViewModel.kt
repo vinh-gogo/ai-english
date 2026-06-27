@@ -7,6 +7,7 @@ import com.aienglish.feature.aiteacher.application.usecase.GenerateEnglishLesson
 import com.aienglish.feature.aiteacher.domain.model.EnglishFeedback
 import com.aienglish.feature.aiteacher.domain.model.EnglishLesson
 import com.aienglish.feature.aiteacher.domain.model.Topics
+import com.aienglish.feature.aiteacher.domain.repository.HistoryRepository
 import kotlinx.coroutines.launch
 
 data class TeacherUiState(
@@ -40,8 +41,12 @@ data class TeacherUiState(
 class TeacherViewModel(
     private val generateLesson: GenerateEnglishLessonUseCase,
     private val evaluateLesson: EvaluateEnglishLessonUseCase,
-    private val explainSentence: ExplainSentenceUseCase
+    private val explainSentence: ExplainSentenceUseCase,
+    private val historyRepository: HistoryRepository
 ) : BaseViewModel<TeacherUiState>(TeacherUiState()) {
+
+    // Track current lesson DB id for history update
+    private var currentLessonHistoryId: Long? = null
 
     // ── Topic Selection ──
     fun onTopicIndexSelected(index: Int) = setState { copy(selectedTopicIndex = index) }
@@ -79,6 +84,11 @@ class TeacherViewModel(
             )
         }
         viewModelScope.launch {
+            // Save to history DB (IN_PROGRESS)
+            currentLessonHistoryId = try {
+                historyRepository.startLesson(topic, level)
+            } catch (e: Exception) { null }
+
             generateLesson("user", topic, level).fold(
                 ifLeft = { err -> setState { copy(isGeneratingLesson = false, error = err.message) } },
                 ifRight = { lesson -> setState { copy(isGeneratingLesson = false, lesson = lesson) } }
@@ -97,7 +107,13 @@ class TeacherViewModel(
         viewModelScope.launch {
             evaluateLesson("user", state.selectedTopic, answers, sentences, level).fold(
                 ifLeft = { err -> setState { copy(isEvaluating = false, error = err.message) } },
-                ifRight = { fb -> setState { copy(isEvaluating = false, feedback = fb) } }
+                ifRight = { fb ->
+                    setState { copy(isEvaluating = false, feedback = fb) }
+                    // Update history to COMPLETED with score
+                    currentLessonHistoryId?.let { id ->
+                        try { historyRepository.completeLesson(id, fb.score) } catch (e: Exception) { /* ignore */ }
+                    }
+                }
             )
         }
     }
