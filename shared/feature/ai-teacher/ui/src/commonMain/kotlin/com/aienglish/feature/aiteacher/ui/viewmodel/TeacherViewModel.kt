@@ -28,8 +28,7 @@ data class TeacherUiState(
     val feedback: EnglishFeedback? = null,
 
     // Explanation
-    val isExplaining: Boolean = false,
-    val selectedExplainIndex: Int? = null,
+    val explainingSentenceIndex: Int? = null,           // tracks which sentence index is currently loading its AI explanation
     val explanations: Map<Int, String> = emptyMap(),
 
     // Error
@@ -68,8 +67,7 @@ class TeacherViewModel(
         setState {
             copy(
                 checkedAnswers = checkedAnswers + index,
-                isExplaining = true,
-                selectedExplainIndex = index,
+                explainingSentenceIndex = index,
                 error = null
             )
         }
@@ -79,7 +77,7 @@ class TeacherViewModel(
                 ifLeft = { err ->
                     setState {
                         copy(
-                            isExplaining = false,
+                            explainingSentenceIndex = null,
                             error = "Không thể tải giải thích từ AI: ${err.message}"
                         )
                     }
@@ -87,7 +85,7 @@ class TeacherViewModel(
                 ifRight = { explanation ->
                     setState {
                         copy(
-                            isExplaining = false,
+                            explainingSentenceIndex = null,
                             explanations = explanations + (index to explanation)
                         )
                     }
@@ -152,29 +150,44 @@ class TeacherViewModel(
         }
     }
 
-    // ── Explain Sentence ──
     fun onExplainSentence(index: Int) {
         val state = currentState
+        if (state.explanations.containsKey(index)) return
+
         val lesson = state.lesson ?: return
         val level = state.selectedCefrLevel
-        if (state.explanations.containsKey(index)) {
-            setState { copy(selectedExplainIndex = index) }
-            return
-        }
         val sentence = lesson.sentences.getOrNull(index) ?: return
         val userAnswer = state.userAnswers[index] ?: ""
-        setState { copy(isExplaining = true, selectedExplainIndex = index, error = null) }
+
+        setState {
+            copy(
+                explainingSentenceIndex = index,
+                error = null
+            )
+        }
+
         viewModelScope.launch {
             explainSentence("user", sentence.vietnamese, sentence.english, userAnswer, level).fold(
-                ifLeft = { err -> setState { copy(isExplaining = false, error = err.message) } },
+                ifLeft = { err ->
+                    setState {
+                        copy(
+                            explainingSentenceIndex = null,
+                            error = "Không thể tải giải thích từ AI: ${err.message}"
+                        )
+                    }
+                },
                 ifRight = { explanation ->
-                    setState { copy(isExplaining = false, explanations = explanations + (index to explanation)) }
+                    setState {
+                        copy(
+                            explainingSentenceIndex = null,
+                            explanations = explanations + (index to explanation)
+                        )
+                    }
                 }
             )
         }
     }
 
-    fun onCloseExplanation() = setState { copy(selectedExplainIndex = null) }
     fun onDismissError() = setState { copy(error = null) }
     fun onReset() = setState { TeacherUiState() }
 }

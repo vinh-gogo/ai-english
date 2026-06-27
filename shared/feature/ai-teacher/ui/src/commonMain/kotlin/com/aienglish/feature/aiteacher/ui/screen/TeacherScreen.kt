@@ -183,10 +183,7 @@ fun TeacherScreen(
                 }
             }
 
-            // Explanation bottom sheet overlay
-            if (state.selectedExplainIndex != null) {
-                ExplanationOverlay(state, viewModel, colors)
-            }
+            // Explanation overlay removed (explanations are now rendered inline under each sentence)
 
             // Error snack
             if (state.error != null) {
@@ -645,7 +642,7 @@ private fun LessonContent(
 
                 // Explanation card if available
                 val explanation = state.explanations[idx]
-                if (state.isExplaining && state.selectedExplainIndex == idx) {
+                if (state.explainingSentenceIndex == idx) {
                     Spacer(Modifier.height(10.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         CircularProgressIndicator(modifier = Modifier.size(16.dp), color = colors.accent, strokeWidth = 2.dp)
@@ -829,6 +826,8 @@ private fun SentenceReviewCard(
     viewModel: TeacherViewModel,
     colors: com.aienglish.core.designsystem.theme.AppColors
 ) {
+    var isExpanded by remember { mutableStateOf(false) }
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = colors.surface),
@@ -855,99 +854,61 @@ private fun SentenceReviewCard(
             }
             Spacer(Modifier.height(8.dp))
             OutlinedButton(
-                onClick = { viewModel.onExplainSentence(index) },
+                onClick = {
+                    isExpanded = !isExpanded
+                    if (isExpanded) {
+                        viewModel.onExplainSentence(index)
+                    }
+                },
                 modifier = Modifier.height(30.dp),
                 border = BorderStroke(1.dp, colors.accent.copy(0.5f)),
                 shape = RoundedCornerShape(8.dp),
                 contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp)
             ) {
-                Icon(Icons.Default.Info, null, tint = colors.accent, modifier = Modifier.size(12.dp))
+                Icon(
+                    if (isExpanded) Icons.Default.ExpandLess else Icons.Default.Info,
+                    null,
+                    tint = colors.accent,
+                    modifier = Modifier.size(12.dp)
+                )
                 Spacer(Modifier.width(4.dp))
                 Text(
-                    if (state.explanations.containsKey(index)) "Xem lại" else "Giải thích",
+                    if (isExpanded) "Thu gọn" else if (state.explanations.containsKey(index)) "Xem lại" else "Giải thích",
                     color = colors.accent,
                     fontSize = 11.sp
                 )
             }
-        }
-    }
-}
 
-// ─────────────────────────────────────────────────────────────
-// Explanation overlay (bottom sheet style)
-// ─────────────────────────────────────────────────────────────
-@Composable
-private fun ExplanationOverlay(
-    state: TeacherUiState,
-    viewModel: TeacherViewModel,
-    colors: com.aienglish.core.designsystem.theme.AppColors
-) {
-    val idx = state.selectedExplainIndex ?: return
-    val explanation = state.explanations[idx]
-    val sentence = state.lesson?.sentences?.getOrNull(idx)
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.55f))
-            .clickable { viewModel.onCloseExplanation() }
-    ) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.88f)
-                .align(Alignment.BottomCenter)
-                .clickable(enabled = false) {},
-            colors = CardDefaults.cardColors(containerColor = colors.surface),
-            shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
-        ) {
-            Column(modifier = Modifier.fillMaxSize()) {
-                Box(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), contentAlignment = Alignment.Center) {
-                    Box(modifier = Modifier.width(40.dp).height(4.dp).clip(RoundedCornerShape(2.dp)).background(colors.border))
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text("💡 Giải thích chi tiết", color = colors.mainText, fontSize = 15.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
-                    IconButton(onClick = { viewModel.onCloseExplanation() }) {
-                        Icon(Icons.Default.Close, null, tint = colors.hintText)
+            if (isExpanded) {
+                val explanation = state.explanations[index]
+                if (state.explainingSentenceIndex == index) {
+                    Spacer(Modifier.height(10.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        CircularProgressIndicator(modifier = Modifier.size(14.dp), color = colors.accent, strokeWidth = 1.5.dp)
+                        Text("AI đang tải giải thích...", fontSize = 12.sp, color = colors.mutedText)
                     }
-                }
-                HorizontalDivider(color = colors.border)
-                Column(
-                    modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp)
-                ) {
-                    sentence?.let {
-                        Card(
-                            colors = CardDefaults.cardColors(containerColor = colors.surfaceElevated),
-                            shape = RoundedCornerShape(10.dp),
-                            border = BorderStroke(1.dp, colors.accent.copy(0.3f))
-                        ) {
-                            Column(modifier = Modifier.padding(12.dp)) {
-                                Text("🇻🇳 ${it.vietnamese}", color = colors.mainText, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
-                                Spacer(Modifier.height(4.dp))
-                                Text("🇬🇧 ${it.english}", color = colors.correct, fontSize = 13.sp, fontStyle = FontStyle.Italic)
-                            }
+                } else if (explanation != null) {
+                    Spacer(Modifier.height(10.dp))
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(8.dp),
+                        colors = CardDefaults.cardColors(containerColor = colors.surfaceElevated),
+                        border = BorderStroke(0.5.dp, colors.border)
+                    ) {
+                        Column(modifier = Modifier.padding(10.dp)) {
+                            MarkdownText(explanation, colors)
                         }
-                        Spacer(Modifier.height(12.dp))
-                    }
-                    if (state.isExplaining) {
-                        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                CircularProgressIndicator(color = colors.accent, modifier = Modifier.size(28.dp))
-                                Spacer(Modifier.height(8.dp))
-                                Text("AI đang phân tích...", color = colors.mutedText, fontSize = 13.sp)
-                            }
-                        }
-                    } else if (explanation != null) {
-                        MarkdownText(explanation, colors)
                     }
                 }
             }
         }
     }
 }
+
+
 
 // ─────────────────────────────────────────────────────────────
 // Markdown renderer - ported from MainichiKanji
