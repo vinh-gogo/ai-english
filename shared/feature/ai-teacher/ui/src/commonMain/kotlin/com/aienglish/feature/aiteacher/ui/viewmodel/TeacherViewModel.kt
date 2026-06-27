@@ -58,8 +58,42 @@ class TeacherViewModel(
         copy(userAnswers = userAnswers + (index to answer))
     }
 
-    fun onCheckAnswer(index: Int) = setState {
-        copy(checkedAnswers = checkedAnswers + index)
+    fun onCheckAnswer(index: Int) {
+        val state = currentState
+        val lesson = state.lesson ?: return
+        val level = state.selectedCefrLevel
+        val sentence = lesson.sentences.getOrNull(index) ?: return
+        val userAnswer = state.userAnswers[index] ?: ""
+
+        setState {
+            copy(
+                checkedAnswers = checkedAnswers + index,
+                isExplaining = true,
+                selectedExplainIndex = index,
+                error = null
+            )
+        }
+
+        viewModelScope.launch {
+            explainSentence("user", sentence.vietnamese, sentence.english, userAnswer, level).fold(
+                ifLeft = { err ->
+                    setState {
+                        copy(
+                            isExplaining = false,
+                            error = "Không thể tải giải thích từ AI: ${err.message}"
+                        )
+                    }
+                },
+                ifRight = { explanation ->
+                    setState {
+                        copy(
+                            isExplaining = false,
+                            explanations = explanations + (index to explanation)
+                        )
+                    }
+                }
+            )
+        }
     }
 
     fun onNextSentence() = setState {

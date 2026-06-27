@@ -22,6 +22,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(libs.coroutines.core)
+            implementation(libs.lifecycle.viewmodel)
             implementation(libs.arrow.core)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)

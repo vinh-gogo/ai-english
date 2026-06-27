@@ -707,32 +707,20 @@ private fun LessonContent(
                         Icon(Icons.Default.ChevronRight, null)
                     }
                 } else {
-                    // Last sentence — submit or explain
-                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        // Explain current
-                        OutlinedButton(
-                            onClick = { viewModel.onExplainSentence(idx) },
-                            border = BorderStroke(1.dp, colors.accent.copy(0.5f)),
-                            shape = RoundedCornerShape(12.dp),
-                            modifier = Modifier.weight(0.45f).height(48.dp)
-                        ) {
-                            Text("Giải thích", color = colors.accent, fontSize = 13.sp)
-                        }
-                        // Submit
-                        Button(
-                            onClick = { viewModel.onSubmitLesson() },
-                            colors = ButtonDefaults.buttonColors(containerColor = colors.correct),
-                            shape = RoundedCornerShape(12.dp),
-                            modifier = Modifier.weight(0.55f).height(48.dp)
-                        ) {
-                            if (state.isEvaluating) {
-                                CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
-                            } else {
-                                Text("Xem đánh giá", color = Color.White, fontWeight = FontWeight.Bold)
-                            }
+                    // Last sentence — submit directly since explanation is auto-triggered
+                    Button(
+                        onClick = { viewModel.onSubmitLesson() },
+                        colors = ButtonDefaults.buttonColors(containerColor = colors.correct),
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier.fillMaxWidth().height(48.dp)
+                    ) {
+                        if (state.isEvaluating) {
+                            CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
+                        } else {
+                            Text("Xem đánh giá", color = Color.White, fontWeight = FontWeight.Bold)
                         }
                     }
-                }
+                    }
             }
         }
     }
