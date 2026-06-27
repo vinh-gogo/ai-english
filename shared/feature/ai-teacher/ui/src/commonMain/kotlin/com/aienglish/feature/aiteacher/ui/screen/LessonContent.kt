@@ -154,13 +154,12 @@ fun LessonContent(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = colors.correct.copy(alpha = 0.08f)),
-                    border = BorderStroke(1.dp, colors.correct.copy(alpha = 0.3f))
+                    colors = CardDefaults.cardColors(containerColor = colors.correct.copy(alpha = 0.08f))
                 ) {
-                    Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Rounded.CheckCircle, null, tint = colors.correct, modifier = Modifier.size(16.dp))
-                        Spacer(Modifier.width(8.dp))
-                        Text(sentence.english, color = colors.correct, fontSize = 14.sp, fontStyle = FontStyle.Italic)
+                    Row(modifier = Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Icon(Icons.Rounded.CheckCircle, null, tint = colors.correct, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.width(10.dp))
+                        Text(sentence.english, color = colors.correct, fontSize = 16.sp, fontWeight = FontWeight.Bold)
                     }
                 }
 
