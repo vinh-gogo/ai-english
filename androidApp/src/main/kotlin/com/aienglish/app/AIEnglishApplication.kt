@@ -2,6 +2,7 @@ package com.aienglish.app
 
 import android.app.Application
 import com.aienglish.core.common.di.androidCoreCommonModule
+import com.aienglish.core.common.di.coreCommonModule
 import com.aienglish.core.common.prefs.AppPreferences
 import com.aienglish.core.database.AIEnglishDatabase
 import com.aienglish.core.database.driver.createAndroidDriver
@@ -33,7 +34,8 @@ class AIEnglishApplication : Application() {
         startKoin {
             androidContext(this@AIEnglishApplication)
             modules(
-                androidCoreCommonModule,   // provides AndroidAppPreferences + AppDispatchers
+                coreCommonModule,
+                androidCoreCommonModule,   // provides AndroidAppPreferences + secure storage
                 coreNetworkModule,
                 teacherApplicationModule,
                 // Database module

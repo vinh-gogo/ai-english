@@ -7,6 +7,6 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val androidCoreCommonModule = module {
-    single { AppDispatchers() }
-    single<AppPreferences> { AndroidAppPreferences(androidContext()) }
+    single<com.aienglish.core.common.security.SecureStorage> { com.aienglish.core.common.security.AndroidSecureStorage(androidContext()) }
+    single<AppPreferences> { AndroidAppPreferences(androidContext(), get()) }
 }

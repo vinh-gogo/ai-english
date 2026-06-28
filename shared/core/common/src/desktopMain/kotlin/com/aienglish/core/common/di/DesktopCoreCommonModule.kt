@@ -6,6 +6,6 @@ import com.aienglish.core.common.prefs.DesktopAppPreferences
 import org.koin.dsl.module
 
 val desktopCoreCommonModule = module {
-    single { AppDispatchers() }
-    single<AppPreferences> { DesktopAppPreferences() }
+    single<com.aienglish.core.common.security.SecureStorage> { com.aienglish.core.common.security.DesktopSecureStorage() }
+    single<AppPreferences> { DesktopAppPreferences(get()) }
 }

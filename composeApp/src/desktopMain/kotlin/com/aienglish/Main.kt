@@ -6,6 +6,7 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.aienglish.core.designsystem.theme.AIEnglishTheme
 import com.aienglish.core.network.di.coreNetworkModule
+import com.aienglish.core.common.di.coreCommonModule
 import com.aienglish.core.common.di.desktopCoreCommonModule
 import com.aienglish.core.common.prefs.AppPreferences
 import com.aienglish.core.database.AIEnglishDatabase
@@ -44,7 +45,8 @@ fun main() {
 
     startKoin {
         modules(
-            desktopCoreCommonModule,   // provides DesktopAppPreferences + AppDispatchers
+            coreCommonModule,
+            desktopCoreCommonModule,   // provides DesktopAppPreferences + secure storage
             coreNetworkModule,
             teacherApplicationModule,
             // Database module

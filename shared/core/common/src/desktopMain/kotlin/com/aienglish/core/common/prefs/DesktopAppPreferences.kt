@@ -2,11 +2,27 @@ package com.aienglish.core.common.prefs
 
 import java.util.prefs.Preferences
 
-class DesktopAppPreferences : AppPreferences {
+class DesktopAppPreferences(
+    private val secureStorage: com.aienglish.core.common.security.SecureStorage
+) : AppPreferences {
     private val prefs = Preferences.userRoot().node("ai_english")
 
-    override fun getApiKey() = prefs.get("api_key", "")
-    override fun saveApiKey(key: String) { prefs.put("api_key", key) }
+    override fun getApiKey(): String {
+        val secured = secureStorage.getSecret("api_key")
+        if (secured.isNotEmpty()) return secured
+
+        val legacy = prefs.get("api_key", "")
+        if (legacy.isNotEmpty()) {
+            secureStorage.saveSecret("api_key", legacy)
+            prefs.remove("api_key")
+            return legacy
+        }
+        return ""
+    }
+
+    override fun saveApiKey(key: String) {
+        secureStorage.saveSecret("api_key", key)
+    }
     override fun getUserName() = prefs.get("user_name", null).takeIf { !it.isNullOrEmpty() }
     override fun saveUserName(name: String?) { if (name != null) prefs.put("user_name", name) else prefs.remove("user_name") }
     override fun getUserEmail() = prefs.get("user_email", null).takeIf { !it.isNullOrEmpty() }
@@ -19,5 +35,8 @@ class DesktopAppPreferences : AppPreferences {
     override fun saveLanguageTarget(lang: String) { prefs.put("language_target", lang) }
     override fun isPaid() = prefs.getBoolean("is_paid", false)
     override fun setPaid(value: Boolean) { prefs.putBoolean("is_paid", value) }
-    override fun clear() { prefs.clear() }
+    override fun clear() {
+        prefs.clear()
+        secureStorage.deleteSecret("api_key")
+    }
 }
