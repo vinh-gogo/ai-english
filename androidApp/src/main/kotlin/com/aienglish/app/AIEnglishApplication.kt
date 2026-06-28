@@ -15,6 +15,8 @@ import com.aienglish.feature.profile.data.di.profileDataModule
 import com.aienglish.feature.profile.ui.di.profileUiModule
 import com.aienglish.feature.history.data.di.historyDataModule
 import com.aienglish.feature.history.ui.di.historyUiModule
+import com.aienglish.feature.pro.data.di.proDataModule
+import com.aienglish.feature.pro.ui.di.proUiModule
 import com.aienglish.feature.aiteacher.domain.resource.JsonResourceReader
 import com.aienglish.app.resource.AndroidJsonResourceReader
 import org.koin.android.ext.koin.androidContext
@@ -42,6 +44,7 @@ class AIEnglishApplication : Application() {
                 teacherDataModule,
                 profileDataModule,
                 historyDataModule,
+                proDataModule,
                 // TeacherRepository (needs API key)
                 module {
                     single<TeacherRepository> {
@@ -56,7 +59,8 @@ class AIEnglishApplication : Application() {
                 },
                 teacherUiModule,
                 profileUiModule,
-                historyUiModule
+                historyUiModule,
+                proUiModule
             )
         }
     }

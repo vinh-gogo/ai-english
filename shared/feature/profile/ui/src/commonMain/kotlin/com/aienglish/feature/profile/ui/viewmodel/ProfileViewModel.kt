@@ -18,7 +18,6 @@ data class ProfileState(
     val monthlyUsage: Int = 0,
     val monthlyLimit: Int = 5,
     val isPaid: Boolean = false,
-    val showVip: Boolean = false,
     val error: String? = null
 )
 
@@ -52,8 +51,6 @@ class ProfileViewModel(
 
     fun showProfile() = setState { copy(showProfile = true) }
     fun hideProfile() = setState { copy(showProfile = false, error = null) }
-    fun showVip() = setState { copy(showVip = true) }
-    fun hideVip() = setState { copy(showVip = false) }
 
     fun onApiKeyChanged(key: String) = setState { copy(apiKeyInput = key, apiKeySaved = false) }
     fun toggleApiKeyVisibility() = setState { copy(apiKeyVisible = !apiKeyVisible) }

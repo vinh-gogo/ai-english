@@ -1,4 +1,4 @@
-package com.aienglish.feature.profile.ui.screen
+package com.aienglish.feature.pro.ui.screen
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
@@ -23,21 +23,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.AppColors
 import com.aienglish.core.designsystem.theme.LocalAppColors
-import com.aienglish.feature.profile.ui.viewmodel.ProfileViewModel
+import com.aienglish.feature.pro.ui.viewmodel.ProViewModel
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VipSheet(
-    profileViewModel: ProfileViewModel = koinInject()
+    proViewModel: ProViewModel = koinInject()
 ) {
-    val state by profileViewModel.state.collectAsState()
+    val state by proViewModel.state.collectAsState()
     val colors = LocalAppColors.current
     val isVietnamese = state.languageNative == "vi"
     var isYearly by remember { mutableStateOf(false) }
 
     ModalBottomSheet(
-        onDismissRequest = { profileViewModel.hideVip() },
+        onDismissRequest = { proViewModel.hideVip() },
         containerColor = colors.background,
         contentColor = colors.mainText,
         dragHandle = {
@@ -69,7 +69,7 @@ fun VipSheet(
                     color = colors.mainText,
                     modifier = Modifier.weight(1f)
                 )
-                IconButton(onClick = { profileViewModel.hideVip() }) {
+                IconButton(onClick = { proViewModel.hideVip() }) {
                     Icon(Icons.Default.Close, "Đóng", tint = colors.hintText)
                 }
             }
@@ -298,7 +298,7 @@ fun VipSheet(
                 if (state.isPaid) {
                     OutlinedButton(
                         onClick = {
-                            profileViewModel.setPaid(false)
+                            proViewModel.setPaid(false)
                         },
                         modifier = Modifier.fillMaxWidth().height(48.dp),
                         shape = RoundedCornerShape(12.dp),
@@ -314,7 +314,7 @@ fun VipSheet(
                 } else {
                     Button(
                         onClick = {
-                            profileViewModel.setPaid(true)
+                            proViewModel.setPaid(true)
                         },
                         modifier = Modifier.fillMaxWidth().height(48.dp),
                         shape = RoundedCornerShape(12.dp),

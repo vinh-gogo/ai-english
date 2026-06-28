@@ -29,6 +29,7 @@ kotlin {
             implementation(project(":shared:core:common"))
             implementation(project(":shared:core:designsystem"))
             implementation(project(":shared:feature:profile:domain"))
+            implementation(project(":shared:feature:pro:ui"))
         }
         androidMain.dependencies {
             implementation(libs.koin.android)

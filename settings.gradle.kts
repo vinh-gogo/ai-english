@@ -49,6 +49,11 @@ include(":shared:feature:history:domain")
 include(":shared:feature:history:data")
 include(":shared:feature:history:ui")
 
+// ── shared:feature:pro ──
+include(":shared:feature:pro:domain")
+include(":shared:feature:pro:data")
+include(":shared:feature:pro:ui")
+
 // ── shared:feature:settings ── (add later if needed)
 // include(":shared:feature:settings:domain")
 // include(":shared:feature:settings:ui")

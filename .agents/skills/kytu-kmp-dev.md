@@ -456,8 +456,8 @@ Implement strict Vertical Slicing (Feature-based Modularization). Avoid monolith
 
 Each feature MUST encapsulate its own UI, Domain, and Data/Infrastructure in a cohesive structure to prevent merge conflicts and maximize Gradle build caching.
 
-Expected Feature Module Structure (Example for Kanji):
-:feature:kanji
+Expected Feature Module Structure (Example for pro):
+:feature:pro
 ├── :ui (Compose UI, ViewModels, MVI States - depends on :application)
 ├── :application (UseCases, DTO Mappers - depends on :domain)
 ├── :domain (Entities, Repository Interfaces - NO dependencies)

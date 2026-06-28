@@ -27,12 +27,14 @@ import com.aienglish.core.designsystem.theme.AppColors
 import com.aienglish.core.designsystem.theme.LocalAppColors
 import com.aienglish.feature.profile.ui.viewmodel.ProfileState
 import com.aienglish.feature.profile.ui.viewmodel.ProfileViewModel
+import com.aienglish.feature.pro.ui.viewmodel.ProViewModel
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileSheet(
     profileViewModel: ProfileViewModel = koinInject(),
+    proViewModel: ProViewModel = koinInject(),
     onGoogleSignIn: () -> Unit = {},
     onGoogleSignOut: () -> Unit = {}
 ) {
@@ -87,7 +89,7 @@ fun ProfileSheet(
                     .navigationBarsPadding(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                UserInfoSection(state, profileViewModel, colors, onGoogleSignIn, onGoogleSignOut)
+                UserInfoSection(state, profileViewModel, proViewModel, colors, onGoogleSignIn, onGoogleSignOut)
                 HorizontalDivider(color = colors.border)
                 LanguageSettingsSection(state, profileViewModel, colors)
                 HorizontalDivider(color = colors.border)
@@ -106,6 +108,7 @@ fun ProfileSheet(
 private fun UserInfoSection(
     state: ProfileState,
     vm: ProfileViewModel,
+    proViewModel: ProViewModel,
     colors: AppColors,
     onGoogleSignIn: () -> Unit,
     onGoogleSignOut: () -> Unit
@@ -147,7 +150,7 @@ private fun UserInfoSection(
             // VIP / PRO Upgrade Button (placed above logout button for signed-in users)
             if (!state.isPaid) {
                 Button(
-                    onClick = { vm.setPaid(true) },
+                    onClick = { proViewModel.showVip() },
                     modifier = Modifier.fillMaxWidth().height(44.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB300))
@@ -189,7 +192,7 @@ private fun UserInfoSection(
                             fontSize = 12.sp,
                             fontWeight = FontWeight.SemiBold,
                             color = colors.error,
-                            modifier = Modifier.clickable { vm.setPaid(false) }
+                            modifier = Modifier.clickable { proViewModel.setPaid(false) }
                         )
                     }
                 }
@@ -214,7 +217,7 @@ private fun UserInfoSection(
             // VIP / PRO Upgrade Button (placed above Google Login button for non-signed-in users)
             if (!state.isPaid) {
                 Button(
-                    onClick = { vm.setPaid(true) },
+                    onClick = { proViewModel.showVip() },
                     modifier = Modifier.fillMaxWidth().height(44.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB300))
@@ -256,7 +259,7 @@ private fun UserInfoSection(
                             fontSize = 12.sp,
                             fontWeight = FontWeight.SemiBold,
                             color = colors.error,
-                            modifier = Modifier.clickable { vm.setPaid(false) }
+                            modifier = Modifier.clickable { proViewModel.setPaid(false) }
                         )
                     }
                 }

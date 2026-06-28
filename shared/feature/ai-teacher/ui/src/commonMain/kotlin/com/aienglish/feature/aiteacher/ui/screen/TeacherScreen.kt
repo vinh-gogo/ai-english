@@ -35,8 +35,9 @@ import com.aienglish.core.designsystem.theme.LocalAppColors
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
 import com.aienglish.feature.history.ui.screen.HistorySheet
 import com.aienglish.feature.profile.ui.screen.ProfileSheet
-import com.aienglish.feature.profile.ui.screen.VipSheet
 import com.aienglish.feature.profile.ui.viewmodel.ProfileViewModel
+import com.aienglish.feature.pro.ui.screen.VipSheet
+import com.aienglish.feature.pro.ui.viewmodel.ProViewModel
 import org.koin.compose.koinInject
 
 // ─────────────────────────────────────────────────────────────
@@ -47,11 +48,13 @@ import org.koin.compose.koinInject
 fun TeacherScreen(
     viewModel: TeacherViewModel = koinInject(),
     profileViewModel: ProfileViewModel = koinInject(),
+    proViewModel: ProViewModel = koinInject(),
     onGoogleSignIn: () -> Unit = {},
     onGoogleSignOut: () -> Unit = {}
 ) {
     val state by viewModel.state.collectAsState()
     val profileState by profileViewModel.state.collectAsState()
+    val proState by proViewModel.state.collectAsState()
     val colors = LocalAppColors.current
     var showHistory by remember { mutableStateOf(false) }
 
@@ -59,8 +62,12 @@ fun TeacherScreen(
         viewModel.syncTargetLanguage()
     }
 
-    LaunchedEffect(profileState.showProfile, state.lesson, state.feedback) {
-        if (profileState.showProfile) {
+    LaunchedEffect(proState.isPaid) {
+        profileViewModel.setPaid(proState.isPaid)
+    }
+
+    LaunchedEffect(profileState.showProfile, proState.showVip, state.lesson, state.feedback) {
+        if (profileState.showProfile || proState.showVip) {
             viewModel.fetchMonthlyUsage { usage, limit ->
                 profileViewModel.updateMonthlyUsage(usage, limit)
             }
@@ -138,7 +145,7 @@ fun TeacherScreen(
 
                     // VIP / PRO Badge
                     Surface(
-                        onClick = { profileViewModel.showVip() },
+                        onClick = { proViewModel.showVip() },
                         modifier = Modifier.align(Alignment.CenterVertically),
                         shape = RoundedCornerShape(8.dp),
                         color = Color(0xFFFFB300).copy(0.12f),
@@ -188,9 +195,9 @@ fun TeacherScreen(
                 )
             }
             // VIP sheet overlay
-            if (profileState.showVip) {
+            if (proState.showVip) {
                 VipSheet(
-                    profileViewModel = profileViewModel
+                    proViewModel = proViewModel
                 )
             }
             // History sheet overlay

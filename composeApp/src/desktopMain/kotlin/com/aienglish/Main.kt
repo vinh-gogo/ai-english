@@ -20,6 +20,8 @@ import com.aienglish.feature.profile.data.di.profileDataModule
 import com.aienglish.feature.profile.ui.di.profileUiModule
 import com.aienglish.feature.history.data.di.historyDataModule
 import com.aienglish.feature.history.ui.di.historyUiModule
+import com.aienglish.feature.pro.data.di.proDataModule
+import com.aienglish.feature.pro.ui.di.proUiModule
 import com.aienglish.feature.aiteacher.domain.resource.JsonResourceReader
 import com.aienglish.resource.DesktopJsonResourceReader
 import org.koin.core.context.startKoin
@@ -53,6 +55,7 @@ fun main() {
             teacherDataModule,
             profileDataModule,
             historyDataModule,
+            proDataModule,
             module {
                 single<TeacherRepository> {
                     val prefs = get<AppPreferences>()
@@ -69,7 +72,8 @@ fun main() {
             },
             teacherUiModule,
             profileUiModule,
-            historyUiModule
+            historyUiModule,
+            proUiModule
         )
     }
 
