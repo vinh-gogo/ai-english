@@ -214,7 +214,7 @@ fun VipSheet(
                         BenefitItem(if (isVietnamese) "5 bài học/tháng" else "5 lessons/mo", false, colors)
                         BenefitItem(if (isVietnamese) "Không nhập ảnh" else "No image input", false, colors)
                         BenefitItem(if (isVietnamese) "Có quảng cáo" else "Contains ads", false, colors)
-                        BenefitItem(if (isVietnamese) "Không hỗ trợ API" else "No custom API", false, colors)
+                        BenefitItem(if (isVietnamese) "Anh & Nhật" else "English & Japanese", false, colors)
                     }
 
                     // Right Column: VIP Premium
@@ -237,7 +237,7 @@ fun VipSheet(
                         BenefitItem(if (isVietnamese) "Không giới hạn" else "Unlimited lessons", true, colors)
                         BenefitItem(if (isVietnamese) "Nhập ảnh chủ đề" else "Topic from photo", true, colors)
                         BenefitItem(if (isVietnamese) "Không quảng cáo" else "No ads", true, colors)
-                        BenefitItem(if (isVietnamese) "Hỗ trợ API Key" else "Full API support", true, colors)
+                        BenefitItem(if (isVietnamese) ">10 ngôn ngữ" else ">10 languages", true, colors)
                     }
                 }
 
