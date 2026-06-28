@@ -35,6 +35,7 @@ import com.aienglish.core.designsystem.theme.LocalAppColors
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
 import com.aienglish.feature.history.ui.screen.HistorySheet
 import com.aienglish.feature.profile.ui.screen.ProfileSheet
+import com.aienglish.feature.profile.ui.screen.VipSheet
 import com.aienglish.feature.profile.ui.viewmodel.ProfileViewModel
 import org.koin.compose.koinInject
 
@@ -137,7 +138,7 @@ fun TeacherScreen(
 
                     // VIP / PRO Badge
                     Surface(
-                        onClick = { profileViewModel.showProfile() },
+                        onClick = { profileViewModel.showVip() },
                         modifier = Modifier.align(Alignment.CenterVertically),
                         shape = RoundedCornerShape(8.dp),
                         color = Color(0xFFFFB300).copy(0.12f),
@@ -184,6 +185,12 @@ fun TeacherScreen(
                     profileViewModel = profileViewModel,
                     onGoogleSignIn = onGoogleSignIn,
                     onGoogleSignOut = onGoogleSignOut
+                )
+            }
+            // VIP sheet overlay
+            if (profileState.showVip) {
+                VipSheet(
+                    profileViewModel = profileViewModel
                 )
             }
             // History sheet overlay
