@@ -2,7 +2,8 @@ package com.aienglish.app.resource
 
 import android.content.Context
 import com.aienglish.feature.aiteacher.domain.resource.JsonResourceReader
-import java.io.FileNotFoundException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class AndroidJsonResourceReader(private val context: Context) : JsonResourceReader {
     override suspend fun readSystemsJson(): String = readAsset("files/learning_systems.json")
@@ -11,8 +12,8 @@ class AndroidJsonResourceReader(private val context: Context) : JsonResourceRead
     override suspend fun readJapaneseTopicsJson(): String = readAsset("files/japanese_topics.json")
     override suspend fun readChineseTopicsJson(): String = readAsset("files/chinese_topics.json")
 
-    private fun readAsset(path: String): String {
+    private suspend fun readAsset(path: String): String = withContext(Dispatchers.IO) {
         val stream = context.assets.open(path)
-        return stream.bufferedReader().use { it.readText() }
+        stream.bufferedReader().use { it.readText() }
     }
 }

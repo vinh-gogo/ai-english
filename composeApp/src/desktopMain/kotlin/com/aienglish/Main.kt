@@ -10,6 +10,7 @@ import com.aienglish.core.common.di.coreCommonModule
 import com.aienglish.core.common.di.desktopCoreCommonModule
 import com.aienglish.core.common.prefs.AppPreferences
 import com.aienglish.core.database.di.coreDatabaseModule
+import org.koin.core.qualifier.named
 import com.aienglish.feature.aiteacher.application.di.teacherApplicationModule
 import com.aienglish.feature.aiteacher.data.di.teacherDataModule
 import com.aienglish.feature.aiteacher.data.repository.TeacherRepositoryImpl
@@ -56,17 +57,7 @@ fun main() {
             proDataModule,
             proApplicationModule,
             module {
-                single<TeacherRepository> {
-                    val prefs = get<AppPreferences>()
-                    val geminiClient = get<com.aienglish.core.network.client.GeminiClient>()
-                    val dispatchers = get<com.aienglish.core.common.dispatchers.AppDispatchers>()
-                    TeacherRepositoryImpl(
-                        geminiClient = geminiClient,
-                        dispatchers = dispatchers,
-                        prefs = prefs,
-                        fallbackApiKey = apiKey
-                    )
-                }
+                single(named("fallback_api_key")) { apiKey }
                 single<JsonResourceReader> { DesktopJsonResourceReader() }
             },
             teacherUiModule,

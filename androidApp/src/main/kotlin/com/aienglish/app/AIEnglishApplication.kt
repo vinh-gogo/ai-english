@@ -3,6 +3,7 @@ package com.aienglish.app
 import android.app.Application
 import com.aienglish.core.common.di.androidCoreCommonModule
 import com.aienglish.core.common.di.coreCommonModule
+import org.koin.core.qualifier.named
 import com.aienglish.core.common.prefs.AppPreferences
 import com.aienglish.core.database.di.coreDatabaseModule
 import com.aienglish.core.network.di.coreNetworkModule
@@ -44,16 +45,8 @@ class AIEnglishApplication : Application() {
                 historyDataModule,
                 proDataModule,
                 proApplicationModule,
-                // TeacherRepository (needs API key)
                 module {
-                    single<TeacherRepository> {
-                        TeacherRepositoryImpl(
-                            geminiClient = get(),
-                            dispatchers = get(),
-                            prefs = get<AppPreferences>(),
-                            fallbackApiKey = buildConfigApiKey
-                        )
-                    }
+                    single(named("fallback_api_key")) { buildConfigApiKey }
                     single<JsonResourceReader> { AndroidJsonResourceReader(androidContext()) }
                 },
                 teacherUiModule,
