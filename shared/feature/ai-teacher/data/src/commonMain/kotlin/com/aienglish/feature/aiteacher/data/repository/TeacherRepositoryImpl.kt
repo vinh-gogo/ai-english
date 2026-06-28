@@ -133,7 +133,7 @@ class TeacherRepositoryImpl(
             val provider = PromptProviderFactory.getProvider(level)
             var systemPrompt = provider.getExplainSentenceSystemPrompt(level, vietnamese, targetEnglish, userAnswer)
             if (prefs.getAiResponseLength() == "short") {
-                systemPrompt += "\n\nCRITICAL REQUIREMENT: The 'explanation' must be extremely concise and brief (ngắn gọn), but it MUST still cover the general structure of the sentence (cấu trúc chung của câu) and explain all the words (bao hàm đủ các chữ) in the target sentence."
+                systemPrompt += "\n\nCRITICAL REQUIREMENT: The 'explanation' should be concise and direct (ngắn gọn, súc tích), but prioritize a complete and clear explanation. It must cover the general structure of the sentence (cấu trúc chung) and explain all the vocabulary/words (giải thích đầy đủ các từ) without being overly brief or skipping important grammar details."
             }
             val userPrompt = provider.getExplainSentenceUserPrompt()
 
