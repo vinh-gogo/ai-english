@@ -308,6 +308,7 @@ class TeacherRepositoryImpl(
             val isChinese = level.startsWith("HSK")
             val isSpanish = level.startsWith("DELE") || level.startsWith("SIELE")
             val isHindi = level.startsWith("Hindi")
+            val isFrench = level.startsWith("DELF") || level.startsWith("DALF")
             val reports = answers.zip(sentences).mapIndexed { index, (answerAndTarget, vietnamese) ->
                 val (userAnswer, targetLang) = answerAndTarget
                 val langLabel = when {
@@ -315,6 +316,7 @@ class TeacherRepositoryImpl(
                     isChinese -> "tiếng Trung"
                     isSpanish -> "tiếng Tây Ban Nha"
                     isHindi -> "tiếng Hindi"
+                    isFrench -> "tiếng Pháp"
                     else -> "English"
                 }
                 """
@@ -432,6 +434,33 @@ class TeacherRepositoryImpl(
                     1. Đảm bảo toàn bộ câu trả lời chỉ chứa chuỗi JSON hợp lệ. Không viết thêm chữ giải thích bên ngoài JSON.
                     2. Viết bằng tiếng Việt tự nhiên, mang tính khuyến khích học tập.
                 """.trimIndent()
+            } else if (isFrench) {
+                """
+                    Bạn là Professeur AI - giáo viên tiếng Pháp.
+                    Nhiệm vụ của bạn là đánh giá kết quả dịch câu của học sinh.
+                    Học sinh vừa hoàn thành một bài luyện dịch 10 câu cho chủ đề: $topic.
+
+                    BẠN PHẢI ĐÁNH GIÁ SÁT SAO THEO TIÊU CHUẨN TRÌNH ĐỘ CHỨNG CHỈ TIẾNG PHÁP (DELF/DALF): $level.
+                    - Với trình độ A1 hoặc A2: Chấp nhận các cách dịch cơ bản, tập trung vào thì hiện tại (Présent) và các lỗi chính tả, chia động từ cơ bản.
+                    - Với trình độ B1 hoặc B2: Đánh giá kĩ hơn việc sử dụng các thì quá khứ (Passé composé, Imparfait), tương lai, cấu trúc giả định cơ bản (Subjonctif), đại từ liên hệ (qui, que, dont) và giới từ phù hợp.
+                    - Với trình độ C1 hoặc C2: Yêu cầu rất cao về sự tự nhiên của câu dịch, trật tự từ sắc sảo, cấu trúc ngữ pháp học thuật/trang trọng, sắc thái tinh tế như người bản xứ.
+
+                    Dưới đây là kết quả làm bài của học sinh:
+                    $reports
+
+                    Hãy đánh giá tổng quan bằng tiếng Việt, khen ngợi những chỗ học sinh làm tốt, chỉ ra các lỗi sai phổ biến (về chia động từ, giống/số, giới từ, trật tự từ) nếu có và đề xuất cách cải thiện ngắn gọn.
+                    Cuối cùng, cho học sinh một số điểm trên thang điểm 10.
+
+                    BẠN BẮT BUỘC PHẢI TRẢ VỀ ĐẦU RA DƯỚI DẠNG JSON HỢP LỆ THEO ĐÚNG CẤU TRÚC SAU:
+                    {
+                      "score": 8,
+                      "review": "Lời nhận xét chi tiết bằng tiếng Việt có định dạng rõ ràng (sử dụng dấu xuống dòng \n để phân đoạn ý)."
+                    }
+
+                    LƯU Ý QUAN TRỌNG:
+                    1. Đảm bảo toàn bộ câu trả lời chỉ chứa chuỗi JSON hợp lệ. Không viết thêm chữ giải thích bên ngoài JSON.
+                    2. Viết bằng tiếng Việt tự nhiên, mang tính khuyến khích học tập.
+                """.trimIndent()
             } else {
                 """
                     You are an English AI Teacher evaluating student translation results.
@@ -468,6 +497,7 @@ class TeacherRepositoryImpl(
                 isChinese -> "Đánh giá bài làm tiếng Trung của tôi."
                 isSpanish -> "Đánh giá bài làm tiếng Tây Ban Nha của tôi."
                 isHindi -> "Đánh giá bài làm tiếng Hindi của tôi."
+                isFrench -> "Đánh giá bài làm tiếng Pháp của tôi."
                 else -> "Please evaluate my English translation results."
             }
 
