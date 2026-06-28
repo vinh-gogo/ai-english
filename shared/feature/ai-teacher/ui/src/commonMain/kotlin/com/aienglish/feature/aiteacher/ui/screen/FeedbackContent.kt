@@ -133,7 +133,22 @@ private fun SentenceReviewCard(
         border = BorderStroke(1.dp, colors.border)
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
-            Text("Câu ${index + 1}", color = colors.hintText, fontSize = 11.sp)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Câu ${index + 1}", color = colors.hintText, fontSize = 11.sp)
+                val sentenceScore = state.feedback?.sentenceScores?.getOrNull(index)
+                if (sentenceScore != null) {
+                    Text(
+                        text = "Điểm: $sentenceScore/10",
+                        color = if (sentenceScore >= 8) colors.correct else if (sentenceScore >= 5) colors.warning else colors.error,
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
             Spacer(Modifier.height(4.dp))
             Text(sentence.vietnamese, color = colors.mainText, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
             Spacer(Modifier.height(4.dp))

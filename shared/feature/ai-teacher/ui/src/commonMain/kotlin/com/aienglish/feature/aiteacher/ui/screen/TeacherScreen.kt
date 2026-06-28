@@ -73,7 +73,7 @@ fun TeacherScreen(
                 title = {
                     Text(
                         text = when {
-                            state.feedback != null -> "Kết quả bài học"
+                            state.feedback != null -> "Kết quả"
                             state.lesson != null -> "Luyện tập"
                             else -> "AI Teacher"
                         },

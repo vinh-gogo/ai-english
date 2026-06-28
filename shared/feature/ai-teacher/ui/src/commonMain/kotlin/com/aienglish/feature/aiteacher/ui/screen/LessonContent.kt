@@ -284,27 +284,48 @@ fun LessonContent(
                     }
                 }
             } else {
+                val isExplaining = state.explainingSentenceIndex == idx
                 if (idx < total - 1) {
                     // Next sentence
                     Button(
                         onClick = { viewModel.onNextSentence() },
-                        colors = ButtonDefaults.buttonColors(containerColor = colors.accent),
+                        enabled = !isExplaining,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colors.accent,
+                            disabledContainerColor = colors.accent.copy(alpha = 0.5f)
+                        ),
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier.fillMaxWidth().height(48.dp)
                     ) {
-                        Text("Câu tiếp theo", color = Color.White)
-                        Icon(Icons.Default.ChevronRight, null)
+                        if (isExplaining) {
+                            CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
+                            Spacer(Modifier.width(8.dp))
+                            Text("AI đang giải thích...", color = Color.White)
+                        } else {
+                            Text("Câu tiếp theo", color = Color.White)
+                            Icon(Icons.Default.ChevronRight, null)
+                        }
                     }
                 } else {
                     // Last sentence — submit directly since explanation is auto-triggered
                     Button(
                         onClick = { viewModel.onSubmitLesson() },
-                        colors = ButtonDefaults.buttonColors(containerColor = colors.correct),
+                        enabled = !isExplaining && !state.isEvaluating,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colors.correct,
+                            disabledContainerColor = colors.correct.copy(alpha = 0.5f)
+                        ),
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier.fillMaxWidth().height(48.dp)
                     ) {
                         if (state.isEvaluating) {
                             CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
+                            Spacer(Modifier.width(8.dp))
+                            Text("Đang đánh giá...", color = Color.White)
+                        } else if (isExplaining) {
+                            CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
+                            Spacer(Modifier.width(8.dp))
+                            Text("AI đang giải thích...", color = Color.White)
                         } else {
                             Text("Xem đánh giá", color = Color.White, fontWeight = FontWeight.Bold)
                         }

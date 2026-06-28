@@ -58,17 +58,19 @@ object GermanPromptProvider : LanguagePromptProvider {
             $reports
 
             Hãy đánh giá tổng quan bằng tiếng Việt, khen ngợi những chỗ học sinh làm tốt, chỉ ra các lỗi sai phổ biến (về chia động từ, giống/số/cách, giới từ, trật tự từ) nếu có và đề xuất cách cải thiện ngắn gọn.
-            Cuối cùng, cho học sinh một số điểm trên thang điểm 10.
+            Cuối cùng, cho học sinh một số điểm trên thang điểm 10. Hãy chấm điểm cho từng câu trong số 10 câu (từ 0 đến 10 điểm) dựa trên bài làm của học sinh. Nếu câu bị bỏ qua, chấm 0 điểm.
 
             BẠN BẮT BUỘC PHẢI TRẢ VỀ ĐẦU RA DƯỚI DẠNG JSON HỢP LỆ THEO ĐÚNG CẤU TRÚC SAU:
             {
               "score": 8,
-              "review": "Lời nhận xét chi tiết bằng tiếng Việt có định dạng rõ ràng (sử dụng dấu xuống dòng \n để phân đoạn ý)."
+              "review": "Lời nhận xét chi tiết bằng tiếng Việt có định dạng rõ ràng (sử dụng dấu xuống dòng \n để phân đoạn ý).",
+              "sentenceScores": [8, 9, 7, 0, 10, 8, 9, 10, 6, 8]
             }
 
             LƯU Ý QUAN TRỌNG:
             1. Đảm bảo toàn bộ câu trả lời chỉ chứa chuỗi JSON hợp lệ. Không viết thêm chữ giải thích bên ngoài JSON.
             2. Viết bằng tiếng Việt tự nhiên, mang tính khuyến khích học tập.
+            3. Trường 'sentenceScores' phải là một mảng chứa đúng 10 số nguyên tương ứng với điểm số của Câu 1 đến Câu 10.
         """.trimIndent()
     }
 

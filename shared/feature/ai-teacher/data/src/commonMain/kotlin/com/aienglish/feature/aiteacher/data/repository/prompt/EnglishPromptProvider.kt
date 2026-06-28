@@ -67,12 +67,13 @@ object EnglishPromptProvider : LanguagePromptProvider {
             $reports
 
             Provide feedback in Vietnamese: praise what was done well, point out common errors, suggest improvements.
-            Give a score out of 10.
+            Give a score out of 10. Also evaluate and score each of the 10 sentences individually (from 0 to 10). If a sentence is skipped or left blank, score it 0.
 
             RETURN ONLY VALID JSON (no markdown, no extra text):
             {
               "score": 8,
-              "review": "Detailed feedback in Vietnamese with clear paragraphs (use \n for line breaks)."
+              "review": "Detailed feedback in Vietnamese with clear paragraphs (use \n for line breaks).",
+              "sentenceScores": [8, 9, 7, 0, 10, 8, 9, 10, 6, 8]
             }
         """.trimIndent()
     }
