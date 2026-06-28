@@ -256,20 +256,16 @@ fun VipSheet(
                     ) {
                         Column {
                             Text(
-                                if (isVietnamese) {
-                                    if (isYearly) "Gói VIP Premium Năm" else "Gói VIP Premium Tháng"
-                                } else {
-                                    if (isYearly) "Yearly VIP Premium" else "Monthly VIP Premium"
-                                },
+                                text = "VIP Premium",
                                 fontSize = 15.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xFFFFB300)
                             )
                             Text(
                                 if (isVietnamese) {
-                                    if (isYearly) "Gia hạn hàng năm (Tiết kiệm nhất)" else "Gia hạn hàng tháng"
+                                    if (isYearly) "Gia hạn hàng năm" else "Gia hạn hàng tháng"
                                 } else {
-                                    if (isYearly) "Billed annually (Best value)" else "Billed monthly"
+                                    if (isYearly) "Billed annually" else "Billed monthly"
                                 },
                                 fontSize = 12.sp,
                                 color = colors.mutedText
