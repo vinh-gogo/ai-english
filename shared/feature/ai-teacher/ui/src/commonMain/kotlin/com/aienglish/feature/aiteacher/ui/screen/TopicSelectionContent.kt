@@ -417,26 +417,6 @@ fun TopicSelectionContent(
 
             Spacer(Modifier.height(16.dp))
 
-            // Random topic button
-            Button(
-                onClick = {
-                    if (filteredTopics.isNotEmpty()) {
-                        viewModel.onTopicIndexSelected(filteredTopics.random().first)
-                    }
-                },
-                colors = ButtonDefaults.buttonColors(containerColor = colors.surface),
-                border = BorderStroke(1.dp, colors.border),
-                shape = RoundedCornerShape(12.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
-                modifier = Modifier.height(36.dp)
-            ) {
-                Icon(Icons.Rounded.AutoAwesome, null, tint = colors.accent, modifier = Modifier.size(14.dp))
-                Spacer(Modifier.width(6.dp))
-                Text("Chọn ngẫu nhiên chủ đề", color = colors.mainText, fontSize = 12.sp)
-            }
-
-            Spacer(Modifier.height(12.dp))
-
             // ── Search Bar (Custom compact styling) ──
             var isSearchFocused by remember { mutableStateOf(false) }
             BasicTextField(
@@ -496,7 +476,7 @@ fun TopicSelectionContent(
                 }
             )
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(12.dp))
 
             // Chips label + Switcher
             Row(
@@ -587,6 +567,26 @@ fun TopicSelectionContent(
                         }
                     }
                 }
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            // Random topic button
+            Button(
+                onClick = {
+                    if (filteredTopics.isNotEmpty()) {
+                        viewModel.onTopicIndexSelected(filteredTopics.random().first)
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = colors.surface),
+                border = BorderStroke(1.dp, colors.border),
+                shape = RoundedCornerShape(12.dp),
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
+                modifier = Modifier.height(36.dp)
+            ) {
+                Icon(Icons.Rounded.AutoAwesome, null, tint = colors.accent, modifier = Modifier.size(14.dp))
+                Spacer(Modifier.width(6.dp))
+                Text("Chọn ngẫu nhiên", color = colors.mainText, fontSize = 12.sp)
             }
 
             if (state.error != null) {
