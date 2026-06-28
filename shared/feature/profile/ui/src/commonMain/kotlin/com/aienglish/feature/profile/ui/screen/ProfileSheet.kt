@@ -88,6 +88,8 @@ fun ProfileSheet(
             ) {
                 UserInfoSection(state, profileViewModel, colors, onGoogleSignIn, onGoogleSignOut)
                 HorizontalDivider(color = colors.border)
+                LanguageSettingsSection(state, profileViewModel, colors)
+                HorizontalDivider(color = colors.border)
                 ApiKeySection(state, profileViewModel, colors)
                 HorizontalDivider(color = colors.border)
                 HowToGetApiKeySection(state, profileViewModel, colors)
@@ -357,6 +359,100 @@ private fun HowToStep(step: Int, title: String, description: String, colors: App
         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(title, fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = colors.mainText)
             Text(description, fontSize = 12.sp, color = colors.mutedText, lineHeight = 17.sp)
+        }
+    }
+}
+
+@Composable
+private fun LanguageSettingsSection(
+    state: ProfileState,
+    vm: ProfileViewModel,
+    colors: AppColors
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(Icons.Rounded.Translate, null, tint = colors.accent, modifier = Modifier.size(18.dp))
+            Spacer(Modifier.width(8.dp))
+            Text("Cài đặt ngôn ngữ", fontSize = 15.sp, fontWeight = FontWeight.Bold, color = colors.mainText)
+        }
+
+        // Ngôn ngữ mẹ đẻ (Native Language)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(12.dp))
+                .background(colors.surface)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("Ngôn ngữ mẹ đẻ", fontSize = 13.sp, color = colors.mainText, fontWeight = FontWeight.Medium)
+            Surface(
+                shape = RoundedCornerShape(8.dp),
+                color = colors.border.copy(0.3f)
+            ) {
+                Text(
+                    "Tiếng Việt",
+                    fontSize = 12.sp,
+                    color = colors.mutedText,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+                )
+            }
+        }
+
+        // Ngôn ngữ học (Learning Language)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(12.dp))
+                .background(colors.surface)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("Ngôn ngữ học", fontSize = 13.sp, color = colors.mainText, fontWeight = FontWeight.Medium)
+
+            Row(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(colors.border.copy(0.4f))
+                    .padding(2.dp)
+            ) {
+                val isEnglish = state.languageTarget == "en"
+                // Tiếng Anh
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(6.dp))
+                        .background(if (isEnglish) colors.accent else Color.Transparent)
+                        .clickable { vm.onLanguageTargetChanged("en") }
+                        .padding(horizontal = 12.dp, vertical = 6.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "Tiếng Anh",
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = if (isEnglish) Color.White else colors.mutedText
+                    )
+                }
+                // Tiếng Nhật
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(6.dp))
+                        .background(if (!isEnglish) colors.accent else Color.Transparent)
+                        .clickable { vm.onLanguageTargetChanged("ja") }
+                        .padding(horizontal = 12.dp, vertical = 6.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "Tiếng Nhật",
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = if (!isEnglish) Color.White else colors.mutedText
+                    )
+                }
+            }
         }
     }
 }

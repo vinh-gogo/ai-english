@@ -1,0 +1,77 @@
+﻿[
+    {
+        "systemCode":  "CEFR",
+        "levelCode":  "A1",
+        "name":  "A1 - Beginner"
+    },
+    {
+        "systemCode":  "CEFR",
+        "levelCode":  "A2",
+        "name":  "A2 - Elementary"
+    },
+    {
+        "systemCode":  "CEFR",
+        "levelCode":  "B1",
+        "name":  "B1 - Intermediate"
+    },
+    {
+        "systemCode":  "CEFR",
+        "levelCode":  "B2",
+        "name":  "B2 - Upper-Intermediate"
+    },
+    {
+        "systemCode":  "CEFR",
+        "levelCode":  "C1",
+        "name":  "C1 - Advanced"
+    },
+    {
+        "systemCode":  "CEFR",
+        "levelCode":  "C2",
+        "name":  "C2 - Proficiency"
+    },
+    {
+        "systemCode":  "TOEIC",
+        "levelCode":  "300",
+        "name":  "TOEIC 300"
+    },
+    {
+        "systemCode":  "TOEIC",
+        "levelCode":  "500",
+        "name":  "TOEIC 500"
+    },
+    {
+        "systemCode":  "TOEIC",
+        "levelCode":  "700",
+        "name":  "TOEIC 700"
+    },
+    {
+        "systemCode":  "TOEIC",
+        "levelCode":  "900",
+        "name":  "TOEIC \u003e900"
+    },
+    {
+        "systemCode":  "JLPT",
+        "levelCode":  "N5",
+        "name":  "N5"
+    },
+    {
+        "systemCode":  "JLPT",
+        "levelCode":  "N4",
+        "name":  "N4"
+    },
+    {
+        "systemCode":  "JLPT",
+        "levelCode":  "N3",
+        "name":  "N3"
+    },
+    {
+        "systemCode":  "JLPT",
+        "levelCode":  "N2",
+        "name":  "N2"
+    },
+    {
+        "systemCode":  "JLPT",
+        "levelCode":  "N1",
+        "name":  "N1"
+    }
+]

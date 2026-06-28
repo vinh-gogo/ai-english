@@ -1,7 +1,7 @@
 ---
 name: kytu-kmp-dev
 description: >
-  Skill toàn diện cho dự án Kytu / MainichiKanji — ứng dụng học Kanji Desktop (Win/macOS/Linux) xây dựng bằng Kotlin Multiplatform + Compose
+  Skill toàn diện cho dự án — ứng dụng học Desktop (Win/macOS/Linux) xây dựng bằng Kotlin Multiplatform + Compose
   Multiplatform, SQLite local-only (SQLDelight), MVI pattern, Koin DI, offline-first.
 
   Đọc tài liệu truoc, design patterns: `docs/design-patterns/`, coding standards, techniques `docs/refactoring/techniques`, refactor code theo chuẩn `docs/refactoring` enterprise-grade Kotlin Multiplatform architecture. Tài liệu tham khảo ở đâu thì gắn link ở đó vào, không cần giải thích lại.
@@ -200,7 +200,6 @@ Structure:
 
 /shared/application
 /feature
-/kanji
 /command
 /query
 /usecase
@@ -265,7 +264,6 @@ Use Compose Multiplatform.
 Structure:
 /composeApp
 /feature
-/kanji
 /screen
 /component
 /state

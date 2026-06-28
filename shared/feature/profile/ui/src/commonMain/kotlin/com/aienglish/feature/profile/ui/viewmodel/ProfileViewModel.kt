@@ -13,6 +13,8 @@ data class ProfileState(
     val apiKeySaved: Boolean = false,
     val howToExpanded: Boolean = false,
     val isSigningIn: Boolean = false,
+    val languageNative: String = "vi",
+    val languageTarget: String = "en",
     val error: String? = null
 )
 
@@ -27,7 +29,9 @@ class ProfileViewModel(
                 isSignedIn = repository.isSignedIn(),
                 displayName = repository.getUserName(),
                 email = repository.getUserEmail(),
-                apiKeyInput = repository.getApiKey()
+                apiKeyInput = repository.getApiKey(),
+                languageNative = repository.getLanguageNative(),
+                languageTarget = repository.getLanguageTarget()
             )
         }
     }
@@ -46,6 +50,11 @@ class ProfileViewModel(
     }
 
     fun toggleHowTo() = setState { copy(howToExpanded = !howToExpanded) }
+
+    fun onLanguageTargetChanged(lang: String) {
+        repository.saveLanguageTarget(lang)
+        setState { copy(languageTarget = lang) }
+    }
 
     // Called after successful Google Sign-In
     fun onSignedIn(name: String, email: String) {

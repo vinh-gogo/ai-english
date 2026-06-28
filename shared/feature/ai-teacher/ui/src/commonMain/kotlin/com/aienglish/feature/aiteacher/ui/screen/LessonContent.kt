@@ -134,31 +134,59 @@ fun LessonContent(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
+                    val isJapanese = state.selectedLevelText.startsWith("N")
                     sentence.tokens.forEach { token ->
                         Column(
                             modifier = Modifier.padding(vertical = 4.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Text(
-                                text = token.word,
-                                color = colors.mainText,
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                            if (token.phonetic.isNotEmpty()) {
+                            if (isJapanese) {
+                                // Japanese layout: Furigana (Top), Kanji (Middle), Romaji (Bottom)
+                                if (token.partOfSpeech.isNotEmpty()) {
+                                    Text(
+                                        text = token.partOfSpeech,
+                                        color = colors.hintText,
+                                        fontSize = 9.sp,
+                                        fontWeight = FontWeight.Normal
+                                    )
+                                }
                                 Text(
-                                    text = token.phonetic,
-                                    color = colors.accent,
-                                    fontSize = 10.sp
+                                    text = token.word,
+                                    color = colors.mainText,
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold
                                 )
-                            }
-                            if (token.partOfSpeech.isNotEmpty()) {
+                                if (token.phonetic.isNotEmpty()) {
+                                    Text(
+                                        text = token.phonetic,
+                                        color = colors.hintText,
+                                        fontSize = 8.sp,
+                                        fontWeight = FontWeight.Light
+                                    )
+                                }
+                            } else {
+                                // English layout: Word (Top), IPA (Middle), Part of Speech (Bottom)
                                 Text(
-                                    text = token.partOfSpeech,
-                                    color = colors.hintText,
-                                    fontSize = 9.sp,
-                                    fontStyle = FontStyle.Italic
+                                    text = token.word,
+                                    color = colors.mainText,
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Bold
                                 )
+                                if (token.phonetic.isNotEmpty()) {
+                                    Text(
+                                        text = token.phonetic,
+                                        color = colors.accent,
+                                        fontSize = 10.sp
+                                    )
+                                }
+                                if (token.partOfSpeech.isNotEmpty()) {
+                                    Text(
+                                        text = token.partOfSpeech,
+                                        color = colors.hintText,
+                                        fontSize = 9.sp,
+                                        fontStyle = FontStyle.Italic
+                                    )
+                                }
                             }
                         }
                     }

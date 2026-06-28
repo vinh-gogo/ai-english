@@ -29,19 +29,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.AppColors
 import com.aienglish.feature.aiteacher.domain.model.TopicItem
-import com.aienglish.feature.aiteacher.domain.model.Topics
 import com.aienglish.feature.aiteacher.ui.viewmodel.LevelType
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherUiState
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
 
 fun getLevelColor(levelCode: String, colors: AppColors): Color {
     return when (levelCode) {
-        "A1", "300" -> Color(0xFF0284C7)      // Xanh dương Sky Blue
-        "A2" -> Color(0xFF10B981)             // Xanh lá Emerald
-        "B1", "500" -> Color(0xFFF59E0B)      // Vàng hổ phách Amber
-        "B2", "700" -> Color(0xFFEF4444)      // Đỏ Coral
-        "C1", "900" -> colors.accent          // Màu accent chính (Blood đỏ sẫm)
-        "C2" -> Color(0xFF8B5CF6)             // Tím Violet
+        "A1", "300", "N5" -> Color(0xFF0284C7)      // Xanh dương Sky Blue
+        "A2", "N4" -> Color(0xFF10B981)             // Xanh lá Emerald
+        "B1", "500", "N3" -> Color(0xFFF59E0B)      // Vàng hổ phách Amber
+        "B2", "700", "N2" -> Color(0xFFEF4444)      // Đỏ Coral
+        "C1", "900", "N1" -> colors.accent          // Màu accent chính (Blood đỏ sẫm)
+        "C2" -> Color(0xFF8B5CF6)                   // Tím Violet
         else -> colors.accent
     }
 }
@@ -60,6 +59,12 @@ fun getCompatibleLevels(activeLevel: String): List<String> {
         "500" -> listOf("300", "500")
         "700" -> listOf("300", "500", "700")
         "900" -> listOf("300", "500", "700", "900")
+        // JLPT
+        "N5" -> listOf("N5")
+        "N4" -> listOf("N5", "N4")
+        "N3" -> listOf("N5", "N4", "N3")
+        "N2" -> listOf("N5", "N4", "N3", "N2")
+        "N1" -> listOf("N5", "N4", "N3", "N2", "N1")
         else -> listOf(activeLevel)
     }
 }
@@ -74,23 +79,23 @@ fun TopicSelectionContent(
     val selectedIdx = state.selectedTopicIndex
 
     // Determine current level code and target color
-    val activeLevelCode = if (state.levelType == LevelType.CEFR) state.selectedCefrLevel else state.selectedToeicLevel
+    val activeLevelCode = when (state.levelType) {
+        LevelType.CEFR -> state.selectedCefrLevel
+        LevelType.TOEIC -> state.selectedToeicLevel
+        LevelType.JLPT -> state.selectedJlptLevel
+    }
     val levelColor = getLevelColor(activeLevelCode, colors)
 
-    // Lower level topic inheritance logic
-    val compatibleLevels = remember(activeLevelCode) { getCompatibleLevels(activeLevelCode) }
-
-    // Filter topics: show topics matching compatible levels AND containing search query
-    val filteredTopics = remember(compatibleLevels, state.topicSearchQuery) {
-        Topics.list.mapIndexed { i, t -> i to t }
+    // Filter topics: show topics containing search query (pre-filtered by compatible levels in ViewModel)
+    val filteredTopics = remember(state.topics, state.topicSearchQuery) {
+        state.topics.mapIndexed { i, t -> i to t }
             .filter { pair ->
-                pair.second.levelCode in compatibleLevels &&
                 pair.second.name.contains(state.topicSearchQuery, ignoreCase = true)
             }
     }
 
     // Determine current selected topic details for custom coloring
-    val currentTopic = remember(selectedIdx) { Topics.list.getOrNull(selectedIdx) }
+    val currentTopic = remember(state.topics, selectedIdx) { state.topics.getOrNull(selectedIdx) }
     val currentTopicLevel = currentTopic?.levelCode ?: activeLevelCode
     val currentTopicColor = getLevelColor(currentTopicLevel, colors)
 
@@ -314,7 +319,7 @@ fun TopicSelectionContent(
 
             Spacer(Modifier.height(12.dp))
 
-            // ── Target Level System (CEFR / TOEIC Selector) ──
+            // ── Target Level System (CEFR / TOEIC / JLPT Selector) ──
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -327,45 +332,60 @@ fun TopicSelectionContent(
                     color = colors.mutedText
                 )
 
-                // Tab-like selector for CEFR vs TOEIC
-                Row(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(colors.surfaceElevated)
-                        .padding(2.dp)
-                ) {
-                    val isCefr = state.levelType == LevelType.CEFR
-                    // CEFR Tab
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(if (isCefr) levelColor else Color.Transparent)
-                            .clickable { viewModel.onLevelTypeSelected(LevelType.CEFR) }
-                            .padding(horizontal = 12.dp, vertical = 4.dp),
-                        contentAlignment = Alignment.Center
+                if (state.targetLanguage == "ja") {
+                    // Only 1 option for Japanese (JLPT), display it as a simple tag
+                    Surface(
+                        shape = RoundedCornerShape(6.dp),
+                        color = levelColor
                     ) {
                         Text(
-                            "CEFR",
+                            "JLPT",
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
-                            color = if (isCefr) Color.White else colors.mutedText
+                            color = Color.White,
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
                         )
                     }
-                    // TOEIC Tab
-                    Box(
+                } else {
+                    // English: Show CEFR and TOEIC
+                    Row(
                         modifier = Modifier
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(if (!isCefr) levelColor else Color.Transparent)
-                            .clickable { viewModel.onLevelTypeSelected(LevelType.TOEIC) }
-                            .padding(horizontal = 12.dp, vertical = 4.dp),
-                        contentAlignment = Alignment.Center
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(colors.surfaceElevated)
+                            .padding(2.dp)
                     ) {
-                        Text(
-                            "TOEIC",
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = if (!isCefr) Color.White else colors.mutedText
-                        )
+                        // CEFR Tab
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(if (state.levelType == LevelType.CEFR) levelColor else Color.Transparent)
+                                .clickable { viewModel.onLevelTypeSelected(LevelType.CEFR) }
+                                .padding(horizontal = 12.dp, vertical = 4.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                "CEFR",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = if (state.levelType == LevelType.CEFR) Color.White else colors.mutedText
+                            )
+                        }
+                        // TOEIC Tab
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(if (state.levelType == LevelType.TOEIC) levelColor else Color.Transparent)
+                                .clickable { viewModel.onLevelTypeSelected(LevelType.TOEIC) }
+                                .padding(horizontal = 12.dp, vertical = 4.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                "TOEIC",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = if (state.levelType == LevelType.TOEIC) Color.White else colors.mutedText
+                            )
+                        }
                     }
                 }
             }
@@ -373,58 +393,90 @@ fun TopicSelectionContent(
             Spacer(Modifier.height(8.dp))
 
             // Render Level Buttons based on selected LevelType
-            if (state.levelType == LevelType.CEFR) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    listOf("A1", "A2", "B1", "B2", "C1", "C2").forEach { level ->
-                        val isSelected = level == state.selectedCefrLevel
-                        val thisLevelColor = getLevelColor(level, colors)
-                        Surface(
-                            modifier = Modifier.weight(1f).clickable { viewModel.onCefrLevelSelected(level) },
-                            shape = RoundedCornerShape(12.dp),
-                            color = if (isSelected) thisLevelColor else colors.surface,
-                            border = BorderStroke(1.dp, if (isSelected) thisLevelColor else colors.border)
-                        ) {
-                            Box(
-                                modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
-                                contentAlignment = Alignment.Center
+            when (state.levelType) {
+                LevelType.CEFR -> {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        listOf("A1", "A2", "B1", "B2", "C1", "C2").forEach { level ->
+                            val isSelected = level == state.selectedCefrLevel
+                            val thisLevelColor = getLevelColor(level, colors)
+                            Surface(
+                                modifier = Modifier.weight(1f).clickable { viewModel.onCefrLevelSelected(level) },
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (isSelected) thisLevelColor else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) thisLevelColor else colors.border)
                             ) {
-                                Text(
-                                    level,
-                                    color = if (isSelected) Color.White else colors.mainText,
-                                    fontSize = 13.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
+                                Box(
+                                    modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        level,
+                                        color = if (isSelected) Color.White else colors.mainText,
+                                        fontSize = 13.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
                             }
                         }
                     }
                 }
-            } else {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    listOf("300", "500", "700", "900").forEach { level ->
-                        val isSelected = level == state.selectedToeicLevel
-                        val thisLevelColor = getLevelColor(level, colors)
-                        Surface(
-                            modifier = Modifier.weight(1f).clickable { viewModel.onToeicLevelSelected(level) },
-                            shape = RoundedCornerShape(12.dp),
-                            color = if (isSelected) thisLevelColor else colors.surface,
-                            border = BorderStroke(1.dp, if (isSelected) thisLevelColor else colors.border)
-                        ) {
-                            Box(
-                                modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
-                                contentAlignment = Alignment.Center
+                LevelType.TOEIC -> {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        listOf("300", "500", "700", "900").forEach { level ->
+                            val isSelected = level == state.selectedToeicLevel
+                            val thisLevelColor = getLevelColor(level, colors)
+                            Surface(
+                                modifier = Modifier.weight(1f).clickable { viewModel.onToeicLevelSelected(level) },
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (isSelected) thisLevelColor else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) thisLevelColor else colors.border)
                             ) {
-                                Text(
-                                    text = if (level == "900") ">900" else level,
-                                    color = if (isSelected) Color.White else colors.mainText,
-                                    fontSize = 13.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
+                                Box(
+                                    modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = if (level == "900") ">900" else level,
+                                        color = if (isSelected) Color.White else colors.mainText,
+                                        fontSize = 13.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+                LevelType.JLPT -> {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        listOf("N5", "N4", "N3", "N2", "N1").forEach { level ->
+                            val isSelected = level == state.selectedJlptLevel
+                            val thisLevelColor = getLevelColor(level, colors)
+                            Surface(
+                                modifier = Modifier.weight(1f).clickable { viewModel.onJlptLevelSelected(level) },
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (isSelected) thisLevelColor else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) thisLevelColor else colors.border)
+                            ) {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        level,
+                                        color = if (isSelected) Color.White else colors.mainText,
+                                        fontSize = 13.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
                             }
                         }
                     }

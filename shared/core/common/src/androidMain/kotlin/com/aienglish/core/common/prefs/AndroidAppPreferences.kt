@@ -13,5 +13,9 @@ class AndroidAppPreferences(context: Context) : AppPreferences {
     override fun saveUserEmail(email: String?) { prefs.edit().putString("user_email", email).apply() }
     override fun isSignedIn() = prefs.getBoolean("signed_in", false)
     override fun setSignedIn(value: Boolean) { prefs.edit().putBoolean("signed_in", value).apply() }
+    override fun getLanguageNative() = prefs.getString("language_native", "vi") ?: "vi"
+    override fun saveLanguageNative(lang: String) { prefs.edit().putString("language_native", lang).apply() }
+    override fun getLanguageTarget() = prefs.getString("language_target", "en") ?: "en"
+    override fun saveLanguageTarget(lang: String) { prefs.edit().putString("language_target", lang).apply() }
     override fun clear() { prefs.edit().clear().apply() }
 }

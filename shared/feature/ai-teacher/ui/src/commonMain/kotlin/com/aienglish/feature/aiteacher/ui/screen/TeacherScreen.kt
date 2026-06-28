@@ -10,7 +10,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.rounded.AccountCircle
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.School
 import androidx.compose.material3.*
@@ -45,6 +49,12 @@ fun TeacherScreen(
     val colors = LocalAppColors.current
     var showHistory by remember { mutableStateOf(false) }
 
+    LaunchedEffect(profileState.showProfile) {
+        if (!profileState.showProfile) {
+            viewModel.syncTargetLanguage()
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -52,8 +62,11 @@ fun TeacherScreen(
                     Text(
                         text = when {
                             state.feedback != null -> "Kết quả bài học"
-                            state.lesson != null -> "Luyện dịch tiếng Anh"
-                            else -> "AI English Teacher"
+                            state.lesson != null -> {
+                                if (state.selectedLevelText.startsWith("N")) "Luyện dịch tiếng Nhật"
+                                else "Luyện dịch tiếng Anh"
+                            }
+                            else -> "AI Teacher"
                         },
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
@@ -179,6 +192,7 @@ fun TeacherScreen(
             // Error snackbar
             val error = state.error
             if (error != null) {
+                val clipboardManager = LocalClipboardManager.current
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
@@ -195,7 +209,17 @@ fun TeacherScreen(
                         ) {
                             Icon(Icons.Default.Warning, null, tint = Color.White, modifier = Modifier.size(16.dp))
                             Spacer(Modifier.width(8.dp))
-                            Text(error, color = Color.White, fontSize = 13.sp, modifier = Modifier.weight(1f))
+                            SelectionContainer(modifier = Modifier.weight(1f)) {
+                                Text(error, color = Color.White, fontSize = 13.sp)
+                            }
+                            Spacer(Modifier.width(8.dp))
+                            IconButton(
+                                onClick = { clipboardManager.setText(AnnotatedString(error)) },
+                                modifier = Modifier.size(24.dp)
+                            ) {
+                                Icon(Icons.Default.ContentCopy, "Copy", tint = Color.White, modifier = Modifier.size(14.dp))
+                            }
+                            Spacer(Modifier.width(4.dp))
                             IconButton(onClick = { viewModel.onDismissError() }, modifier = Modifier.size(24.dp)) {
                                 Icon(Icons.Default.Close, null, tint = Color.White, modifier = Modifier.size(14.dp))
                             }

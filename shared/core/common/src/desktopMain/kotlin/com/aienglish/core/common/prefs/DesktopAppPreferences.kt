@@ -13,5 +13,9 @@ class DesktopAppPreferences : AppPreferences {
     override fun saveUserEmail(email: String?) { if (email != null) prefs.put("user_email", email) else prefs.remove("user_email") }
     override fun isSignedIn() = prefs.getBoolean("signed_in", false)
     override fun setSignedIn(value: Boolean) { prefs.putBoolean("signed_in", value) }
+    override fun getLanguageNative() = prefs.get("language_native", "vi")
+    override fun saveLanguageNative(lang: String) { prefs.put("language_native", lang) }
+    override fun getLanguageTarget() = prefs.get("language_target", "en")
+    override fun saveLanguageTarget(lang: String) { prefs.put("language_target", lang) }
     override fun clear() { prefs.clear() }
 }

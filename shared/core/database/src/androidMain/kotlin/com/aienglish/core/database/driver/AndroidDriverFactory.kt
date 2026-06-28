@@ -6,4 +6,4 @@ import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.aienglish.core.database.AIEnglishDatabase
 
 fun createAndroidDriver(context: Context): SqlDriver =
-    AndroidSqliteDriver(AIEnglishDatabase.Schema, context, "ai_english.db")
+    AndroidSqliteDriver(AIEnglishDatabase.Schema, context, "ai_english_v2.db")

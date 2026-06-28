@@ -20,6 +20,8 @@ import com.aienglish.feature.profile.data.di.profileDataModule
 import com.aienglish.feature.profile.ui.di.profileUiModule
 import com.aienglish.feature.history.data.di.historyDataModule
 import com.aienglish.feature.history.ui.di.historyUiModule
+import com.aienglish.feature.aiteacher.domain.resource.JsonResourceReader
+import com.aienglish.resource.DesktopJsonResourceReader
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
@@ -63,6 +65,7 @@ fun main() {
                         fallbackApiKey = apiKey
                     )
                 }
+                single<JsonResourceReader> { DesktopJsonResourceReader() }
             },
             teacherUiModule,
             profileUiModule,

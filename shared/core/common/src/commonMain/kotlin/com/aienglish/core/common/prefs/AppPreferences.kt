@@ -9,5 +9,9 @@ interface AppPreferences {
     fun saveUserEmail(email: String?)
     fun isSignedIn(): Boolean
     fun setSignedIn(value: Boolean)
+    fun getLanguageNative(): String
+    fun saveLanguageNative(lang: String)
+    fun getLanguageTarget(): String
+    fun saveLanguageTarget(lang: String)
     fun clear()
 }

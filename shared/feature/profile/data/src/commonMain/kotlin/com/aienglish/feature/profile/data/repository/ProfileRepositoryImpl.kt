@@ -14,4 +14,8 @@ class ProfileRepositoryImpl(
     override fun saveUserEmail(email: String?) = prefs.saveUserEmail(email)
     override fun isSignedIn(): Boolean = prefs.isSignedIn()
     override fun setSignedIn(value: Boolean) = prefs.setSignedIn(value)
+    override fun getLanguageNative(): String = prefs.getLanguageNative()
+    override fun saveLanguageNative(lang: String) = prefs.saveLanguageNative(lang)
+    override fun getLanguageTarget(): String = prefs.getLanguageTarget()
+    override fun saveLanguageTarget(lang: String) = prefs.saveLanguageTarget(lang)
 }

@@ -1,29 +1,34 @@
 package com.aienglish.feature.aiteacher.ui.viewmodel
 
+import com.aienglish.core.common.prefs.AppPreferences
 import com.aienglish.core.common.viewmodel.BaseViewModel
 import com.aienglish.feature.aiteacher.application.usecase.EvaluateEnglishLessonUseCase
 import com.aienglish.feature.aiteacher.application.usecase.ExplainSentenceUseCase
 import com.aienglish.feature.aiteacher.application.usecase.GenerateEnglishLessonUseCase
 import com.aienglish.feature.aiteacher.domain.model.EnglishFeedback
 import com.aienglish.feature.aiteacher.domain.model.EnglishLesson
-import com.aienglish.feature.aiteacher.domain.model.Topics
+import com.aienglish.feature.aiteacher.domain.model.TopicItem
+import com.aienglish.feature.aiteacher.domain.repository.TopicRepository
+import com.aienglish.feature.aiteacher.domain.repository.TeacherHistoryRepository
+import com.aienglish.feature.aiteacher.domain.resource.JsonResourceReader
 import com.aienglish.feature.history.domain.model.LessonHistory
-import com.aienglish.feature.history.domain.repository.HistoryRepository
+import com.aienglish.feature.aiteacher.ui.screen.getCompatibleLevels
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 enum class LevelType {
-    CEFR, TOEIC
+    CEFR, TOEIC, JLPT
 }
 
 data class TeacherUiState(
     // Topic selection
+    val topics: List<TopicItem> = emptyList(),
     val selectedTopicIndex: Int = 0,
     val topicSearchQuery: String = "",
     val levelType: LevelType = LevelType.CEFR,
     val selectedCefrLevel: String = "B1",
     val selectedToeicLevel: String = "500",
+    val selectedJlptLevel: String = "N3",
+    val targetLanguage: String = "en",
 
     // Lesson state
     val isGeneratingLesson: Boolean = false,
@@ -43,35 +48,118 @@ data class TeacherUiState(
     // Error
     val error: String? = null
 ) {
-    val selectedTopic: String get() = Topics.list.getOrNull(selectedTopicIndex)?.name ?: ""
-    val selectedLevelText: String get() = if (levelType == LevelType.CEFR) selectedCefrLevel else "TOEIC $selectedToeicLevel"
+    val selectedTopic: String get() = topics.getOrNull(selectedTopicIndex)?.name ?: ""
+    val selectedLevelText: String get() = when (levelType) {
+        LevelType.CEFR -> selectedCefrLevel
+        LevelType.TOEIC -> "TOEIC $selectedToeicLevel"
+        LevelType.JLPT -> selectedJlptLevel
+    }
 }
 
 class TeacherViewModel(
     private val generateLesson: GenerateEnglishLessonUseCase,
     private val evaluateLesson: EvaluateEnglishLessonUseCase,
     private val explainSentence: ExplainSentenceUseCase,
-    private val historyRepository: HistoryRepository
+    private val teacherHistoryRepository: TeacherHistoryRepository,
+    private val topicRepository: TopicRepository,
+    private val jsonResourceReader: JsonResourceReader,
+    private val prefs: AppPreferences
 ) : BaseViewModel<TeacherUiState>(TeacherUiState()) {
 
     // Track current lesson DB id for history update
     private var currentLessonHistoryId: Long? = null
 
+    init {
+        val target = prefs.getLanguageTarget() // "en" or "ja"
+        val expectedType = if (target == "ja") LevelType.JLPT else LevelType.CEFR
+        val expectedLevel = if (expectedType == LevelType.JLPT) currentState.selectedJlptLevel else currentState.selectedCefrLevel
+        setState {
+            copy(
+                targetLanguage = target,
+                levelType = expectedType
+            )
+        }
+        loadTopics(expectedType, expectedLevel)
+    }
+
+    private suspend fun ensureDatabaseSeeded() {
+        val currentTopics = topicRepository.getTopics("CEFR", listOf("A1"))
+        if (currentTopics.isEmpty()) {
+            val systemsStr = jsonResourceReader.readSystemsJson()
+            val levelsStr = jsonResourceReader.readLevelsJson()
+            val englishStr = jsonResourceReader.readEnglishTopicsJson()
+            val japaneseStr = jsonResourceReader.readJapaneseTopicsJson()
+            topicRepository.seedDatabase(systemsStr, levelsStr, englishStr, japaneseStr)
+        }
+    }
+
+    private fun loadTopics(levelType: LevelType, levelCode: String) {
+        val systemCode = when (levelType) {
+            LevelType.CEFR -> "CEFR"
+            LevelType.TOEIC -> "TOEIC"
+            LevelType.JLPT -> "JLPT"
+        }
+        viewModelScope.launch {
+            try {
+                ensureDatabaseSeeded()
+
+                val compatible = getCompatibleLevels(levelCode)
+                val list = topicRepository.getTopics(systemCode, compatible)
+                setState {
+                    copy(
+                        topics = list,
+                        selectedTopicIndex = 0
+                    )
+                }
+            } catch (e: Exception) {
+                setState { copy(error = "Không thể tải chủ đề từ database: ${e.message}") }
+            }
+        }
+    }
+
+    fun syncTargetLanguage() {
+        val target = prefs.getLanguageTarget() // "en" or "ja"
+        val currentTarget = currentState.targetLanguage
+        if (target != currentTarget) {
+            val expectedType = if (target == "ja") LevelType.JLPT else LevelType.CEFR
+            val expectedLevel = if (expectedType == LevelType.JLPT) currentState.selectedJlptLevel else currentState.selectedCefrLevel
+            setState {
+                copy(
+                    targetLanguage = target,
+                    levelType = expectedType
+                )
+            }
+            loadTopics(expectedType, expectedLevel)
+        }
+    }
+
     // ── Topic Selection ──
     fun onTopicIndexSelected(index: Int) = setState { copy(selectedTopicIndex = index) }
     fun onTopicSearchChange(query: String) = setState { copy(topicSearchQuery = query) }
-    fun onLevelTypeSelected(type: LevelType) = setState {
-        val activeLevel = if (type == LevelType.CEFR) selectedCefrLevel else selectedToeicLevel
-        val firstIdx = Topics.list.indexOfFirst { it.levelCode == activeLevel }.coerceAtLeast(0)
-        copy(levelType = type, selectedTopicIndex = firstIdx)
+    
+    fun onLevelTypeSelected(type: LevelType) {
+        val activeLevel = when (type) {
+            LevelType.CEFR -> currentState.selectedCefrLevel
+            LevelType.TOEIC -> currentState.selectedToeicLevel
+            LevelType.JLPT -> currentState.selectedJlptLevel
+        }
+        setState { copy(levelType = type) }
+        loadTopics(type, activeLevel)
     }
-    fun onCefrLevelSelected(level: String) = setState {
-        val firstIdx = Topics.list.indexOfFirst { it.levelCode == level }.coerceAtLeast(0)
-        copy(selectedCefrLevel = level, selectedTopicIndex = firstIdx)
+
+    fun onCefrLevelSelected(level: String) {
+        setState { copy(selectedCefrLevel = level) }
+        loadTopics(LevelType.CEFR, level)
     }
-    fun onToeicLevelSelected(level: String) = setState {
-        val firstIdx = Topics.list.indexOfFirst { it.levelCode == level }.coerceAtLeast(0)
-        copy(selectedToeicLevel = level, selectedTopicIndex = firstIdx)
+
+    fun onToeicLevelSelected(level: String) {
+        setState { copy(selectedToeicLevel = level) }
+        loadTopics(LevelType.TOEIC, level)
+    }
+
+    fun onJlptLevelSelected(level: String) {
+        setState { copy(selectedJlptLevel = level) }
+        loadTopics(LevelType.JLPT, level)
     }
 
     // ── Lesson Navigation ──
@@ -144,7 +232,7 @@ class TeacherViewModel(
         viewModelScope.launch {
             // Save to history DB (IN_PROGRESS)
             currentLessonHistoryId = try {
-                historyRepository.startLesson(topic, level)
+                teacherHistoryRepository.startLesson(topic, level)
             } catch (e: Exception) { null }
 
             generateLesson("user", topic, level).fold(
@@ -173,19 +261,13 @@ class TeacherViewModel(
                     // Update history to COMPLETED with score and full snapshot
                     currentLessonHistoryId?.let { id ->
                         try {
-                            val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
-                            val lessonJson = json.encodeToString(lesson)
-                            val userAnswersJson = json.encodeToString(state.userAnswers)
-                            val explanationsJson = json.encodeToString(state.explanations)
-                            val feedbackJson = json.encodeToString(fb)
-
-                            historyRepository.completeLesson(
+                            teacherHistoryRepository.completeLesson(
                                 id = id,
                                 score = fb.score,
-                                lessonJson = lessonJson,
-                                userAnswersJson = userAnswersJson,
-                                explanationsJson = explanationsJson,
-                                feedbackJson = feedbackJson
+                                lesson = lesson,
+                                userAnswers = state.userAnswers,
+                                explanations = state.explanations,
+                                feedback = fb
                             )
                         } catch (e: Exception) { /* ignore */ }
                     }
@@ -234,55 +316,93 @@ class TeacherViewModel(
     }
 
     fun onReviewLesson(history: LessonHistory) {
-        val lessonJson = history.lessonJson ?: return
-        val userAnswersJson = history.userAnswersJson ?: "{}"
-        val explanationsJson = history.explanationsJson ?: "{}"
-        val feedbackJson = history.feedbackJson ?: return
+        viewModelScope.launch {
+            try {
+                ensureDatabaseSeeded()
 
-        val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
-        try {
-            val lesson = json.decodeFromString<EnglishLesson>(lessonJson)
-            val userAnswers = json.decodeFromString<Map<Int, String>>(userAnswersJson)
-            val explanations = json.decodeFromString<Map<Int, String>>(explanationsJson)
-            val feedback = json.decodeFromString<EnglishFeedback>(feedbackJson)
+                val isToeic = history.level.startsWith("TOEIC")
+                val isJlpt = history.level.startsWith("N")
+                val expectedType = if (isToeic) LevelType.TOEIC else if (isJlpt) LevelType.JLPT else LevelType.CEFR
+                val levelValue = if (isToeic) history.level.removePrefix("TOEIC ").trim() else history.level
+                
+                val systemCode = when (expectedType) {
+                    LevelType.CEFR -> "CEFR"
+                    LevelType.TOEIC -> "TOEIC"
+                    LevelType.JLPT -> "JLPT"
+                }
+                
+                val compatible = getCompatibleLevels(levelValue)
+                val list = topicRepository.getTopics(systemCode, compatible)
+                val topicIndex = list.indexOfFirst { it.name == history.topic }.coerceAtLeast(0)
 
-            val topicIndex = Topics.list.indexOfFirst { it.name == history.topic }.coerceAtLeast(0)
-            val isToeic = history.level.startsWith("TOEIC")
-            val levelValue = if (isToeic) history.level.removePrefix("TOEIC ").trim() else history.level
-
-            setState {
-                copy(
-                    selectedTopicIndex = topicIndex,
-                    levelType = if (isToeic) LevelType.TOEIC else LevelType.CEFR,
-                    selectedCefrLevel = if (!isToeic) levelValue else selectedCefrLevel,
-                    selectedToeicLevel = if (isToeic) levelValue else selectedToeicLevel,
-                    lesson = lesson,
-                    userAnswers = userAnswers,
-                    explanations = explanations,
-                    feedback = feedback,
-                    currentSentenceIndex = 0,
-                    checkedAnswers = userAnswers.keys
+                val teacherHistory = teacherHistoryRepository.parseHistory(
+                    id = history.id,
+                    topic = history.topic,
+                    level = history.level,
+                    score = history.score,
+                    lessonJson = history.lessonJson,
+                    userAnswersJson = history.userAnswersJson,
+                    explanationsJson = history.explanationsJson,
+                    feedbackJson = history.feedbackJson
                 )
+
+                setState {
+                    copy(
+                        topics = list,
+                        selectedTopicIndex = topicIndex,
+                        levelType = expectedType,
+                        selectedCefrLevel = if (expectedType == LevelType.CEFR) levelValue else selectedCefrLevel,
+                        selectedToeicLevel = if (expectedType == LevelType.TOEIC) levelValue else selectedToeicLevel,
+                        selectedJlptLevel = if (expectedType == LevelType.JLPT) levelValue else selectedJlptLevel,
+                        lesson = teacherHistory.lesson,
+                        userAnswers = teacherHistory.userAnswers,
+                        explanations = teacherHistory.explanations,
+                        feedback = teacherHistory.feedback,
+                        currentSentenceIndex = 0,
+                        checkedAnswers = teacherHistory.userAnswers.keys
+                    )
+                }
+            } catch (e: Exception) {
+                setState { copy(error = "Không thể tải lại lịch sử bài học: ${e.message}") }
             }
-        } catch (e: Exception) {
-            setState { copy(error = "Không thể tải lại lịch sử bài học: ${e.message}") }
         }
     }
 
     fun onReTestLesson(history: LessonHistory) {
-        val topicIndex = Topics.list.indexOfFirst { it.name == history.topic }.coerceAtLeast(0)
         val isToeic = history.level.startsWith("TOEIC")
+        val isJlpt = history.level.startsWith("N")
+        val expectedType = if (isToeic) LevelType.TOEIC else if (isJlpt) LevelType.JLPT else LevelType.CEFR
         val levelValue = if (isToeic) history.level.removePrefix("TOEIC ").trim() else history.level
+        
+        viewModelScope.launch {
+            try {
+                ensureDatabaseSeeded()
 
-        setState {
-            copy(
-                selectedTopicIndex = topicIndex,
-                levelType = if (isToeic) LevelType.TOEIC else LevelType.CEFR,
-                selectedCefrLevel = if (!isToeic) levelValue else selectedCefrLevel,
-                selectedToeicLevel = if (isToeic) levelValue else selectedToeicLevel
-            )
+                val systemCode = when (expectedType) {
+                    LevelType.CEFR -> "CEFR"
+                    LevelType.TOEIC -> "TOEIC"
+                    LevelType.JLPT -> "JLPT"
+                }
+
+                val compatible = getCompatibleLevels(levelValue)
+                val list = topicRepository.getTopics(systemCode, compatible)
+                val topicIndex = list.indexOfFirst { it.name == history.topic }.coerceAtLeast(0)
+
+                setState {
+                    copy(
+                        topics = list,
+                        selectedTopicIndex = topicIndex,
+                        levelType = expectedType,
+                        selectedCefrLevel = if (expectedType == LevelType.CEFR) levelValue else selectedCefrLevel,
+                        selectedToeicLevel = if (expectedType == LevelType.TOEIC) levelValue else selectedToeicLevel,
+                        selectedJlptLevel = if (expectedType == LevelType.JLPT) levelValue else selectedJlptLevel
+                    )
+                }
+                onStartLesson()
+            } catch (e: Exception) {
+                setState { copy(error = "Không thể thi lại bài học: ${e.message}") }
+            }
         }
-        onStartLesson()
     }
 
     fun onDismissError() = setState { copy(error = null) }
@@ -293,48 +413,68 @@ class TeacherViewModel(
         val lesson = currentState.lesson ?: return
         viewModelScope.launch {
             try {
-                val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
-                val lessonJson = json.encodeToString(lesson)
-                val userAnswersJson = json.encodeToString(currentState.userAnswers)
-                val explanationsJson = json.encodeToString(currentState.explanations)
-                historyRepository.updateLessonProgress(id, lessonJson, userAnswersJson, explanationsJson)
+                teacherHistoryRepository.updateLessonProgress(
+                    id = id,
+                    lesson = lesson,
+                    userAnswers = currentState.userAnswers,
+                    explanations = currentState.explanations
+                )
             } catch (e: Exception) { /* ignore */ }
         }
     }
 
     fun onResumeLesson(history: LessonHistory) {
-        val lessonJson = history.lessonJson ?: return
-        val userAnswersJson = history.userAnswersJson ?: "{}"
-        val explanationsJson = history.explanationsJson ?: "{}"
+        viewModelScope.launch {
+            try {
+                ensureDatabaseSeeded()
 
-        val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
-        try {
-            val lesson = json.decodeFromString<EnglishLesson>(lessonJson)
-            val userAnswers = json.decodeFromString<Map<Int, String>>(userAnswersJson)
-            val explanations = json.decodeFromString<Map<Int, String>>(explanationsJson)
+                val isToeic = history.level.startsWith("TOEIC")
+                val isJlpt = history.level.startsWith("N")
+                val expectedType = if (isToeic) LevelType.TOEIC else if (isJlpt) LevelType.JLPT else LevelType.CEFR
+                val levelValue = if (isToeic) history.level.removePrefix("TOEIC ").trim() else history.level
+                
+                val systemCode = when (expectedType) {
+                    LevelType.CEFR -> "CEFR"
+                    LevelType.TOEIC -> "TOEIC"
+                    LevelType.JLPT -> "JLPT"
+                }
 
-            val topicIndex = Topics.list.indexOfFirst { it.name == history.topic }.coerceAtLeast(0)
-            val isToeic = history.level.startsWith("TOEIC")
-            val levelValue = if (isToeic) history.level.removePrefix("TOEIC ").trim() else history.level
+                val compatible = getCompatibleLevels(levelValue)
+                val list = topicRepository.getTopics(systemCode, compatible)
+                val topicIndex = list.indexOfFirst { it.name == history.topic }.coerceAtLeast(0)
 
-            currentLessonHistoryId = history.id
-
-            setState {
-                copy(
-                    selectedTopicIndex = topicIndex,
-                    levelType = if (isToeic) LevelType.TOEIC else LevelType.CEFR,
-                    selectedCefrLevel = if (!isToeic) levelValue else selectedCefrLevel,
-                    selectedToeicLevel = if (isToeic) levelValue else selectedToeicLevel,
-                    lesson = lesson,
-                    userAnswers = userAnswers,
-                    explanations = explanations,
-                    feedback = null,
-                    currentSentenceIndex = 0,
-                    checkedAnswers = explanations.keys
+                val teacherHistory = teacherHistoryRepository.parseHistory(
+                    id = history.id,
+                    topic = history.topic,
+                    level = history.level,
+                    score = history.score,
+                    lessonJson = history.lessonJson,
+                    userAnswersJson = history.userAnswersJson,
+                    explanationsJson = history.explanationsJson,
+                    feedbackJson = history.feedbackJson
                 )
+
+                currentLessonHistoryId = history.id
+
+                setState {
+                    copy(
+                        topics = list,
+                        selectedTopicIndex = topicIndex,
+                        levelType = expectedType,
+                        selectedCefrLevel = if (expectedType == LevelType.CEFR) levelValue else selectedCefrLevel,
+                        selectedToeicLevel = if (expectedType == LevelType.TOEIC) levelValue else selectedToeicLevel,
+                        selectedJlptLevel = if (expectedType == LevelType.JLPT) levelValue else selectedJlptLevel,
+                        lesson = teacherHistory.lesson,
+                        userAnswers = teacherHistory.userAnswers,
+                        explanations = teacherHistory.explanations,
+                        feedback = null,
+                        currentSentenceIndex = 0,
+                        checkedAnswers = teacherHistory.explanations.keys
+                    )
+                }
+            } catch (e: Exception) {
+                setState { copy(error = "Không thể tiếp tục bài học dở dang: ${e.message}") }
             }
-        } catch (e: Exception) {
-            setState { copy(error = "Không thể tiếp tục bài học dở dang: ${e.message}") }
         }
     }
 }

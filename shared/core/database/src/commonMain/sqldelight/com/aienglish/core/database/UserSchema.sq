@@ -1,0 +1,141 @@
+-- Schema definitions for Users, Learning Systems and i18n Locales
+
+CREATE TABLE IF NOT EXISTS learning_systems (
+    system_code TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT
+);
+
+CREATE TABLE IF NOT EXISTS learning_levels (
+    system_code TEXT NOT NULL,
+    level_code TEXT NOT NULL,
+    name TEXT NOT NULL,
+    PRIMARY KEY (system_code, level_code),
+    FOREIGN KEY (system_code) REFERENCES learning_systems(system_code) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    user_id TEXT PRIMARY KEY,
+    display_name TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    password_hash TEXT,             -- Hashed password (SHA-256 + salt)
+    salt TEXT,                      -- Unique cryptographically secure salt
+    avatar_path TEXT,
+    google_id TEXT,
+    auth_provider TEXT NOT NULL DEFAULT 'email' 
+    CHECK(auth_provider IN ('email', 'google', 'apple', 'guest')),
+    language_native TEXT NOT NULL DEFAULT 'vi', -- e.g., 'vi' (Vietnamese)
+    language_target TEXT NOT NULL DEFAULT 'en', -- e.g., 'en' (English), 'ja' (Japanese)
+    learning_system_code TEXT,
+    learning_level_code TEXT,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL,
+    deleted_at INTEGER,             -- Soft delete timestamp
+    FOREIGN KEY (learning_system_code, learning_level_code) 
+        REFERENCES learning_levels(system_code, level_code) ON DELETE SET NULL
+);
+
+-- i18n Localization Tables
+CREATE TABLE IF NOT EXISTS i18n_locales (
+    locale_code TEXT PRIMARY KEY,      -- e.g. 'vi', 'en', 'ja'
+    name TEXT NOT NULL,                -- e.g. 'Tiếng Việt', 'English', '日本語'
+    is_default INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS i18n_keys (
+    key_id TEXT PRIMARY KEY,
+    category TEXT NOT NULL DEFAULT 'common'
+);
+
+CREATE TABLE IF NOT EXISTS i18n_translations (
+    key_id TEXT NOT NULL,
+    locale_code TEXT NOT NULL,
+    translation_text TEXT NOT NULL,
+    PRIMARY KEY (key_id, locale_code),
+    FOREIGN KEY (key_id) REFERENCES i18n_keys(key_id) ON DELETE CASCADE,
+    FOREIGN KEY (locale_code) REFERENCES i18n_locales(locale_code) ON DELETE CASCADE
+);
+
+
+CREATE TABLE IF NOT EXISTS learning_topics (
+    topic_id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    system_code TEXT NOT NULL,
+    level_code TEXT NOT NULL,
+    FOREIGN KEY (system_code, level_code) REFERENCES learning_levels(system_code, level_code) ON DELETE CASCADE
+);
+
+
+-- Queries
+
+-- Locale queries
+
+insertLocale:
+INSERT OR REPLACE INTO i18n_locales (locale_code, name, is_default) VALUES (?, ?, ?);
+
+getAllLocales:
+SELECT * FROM i18n_locales;
+
+-- Translation queries
+insertTranslationKey:
+INSERT OR IGNORE INTO i18n_keys (key_id, category) VALUES (?, ?);
+
+insertTranslation:
+INSERT OR REPLACE INTO i18n_translations (key_id, locale_code, translation_text) VALUES (?, ?, ?);
+
+getTranslationForLocale:
+SELECT t.translation_text 
+FROM i18n_translations t
+WHERE t.key_id = ? AND t.locale_code = ?;
+
+getAllTranslationsForLocale:
+SELECT k.key_id, t.translation_text 
+FROM i18n_keys k
+LEFT JOIN i18n_translations t ON k.key_id = t.key_id AND t.locale_code = ?;
+
+-- Learning System & Levels queries
+insertLearningSystem:
+INSERT OR REPLACE INTO learning_systems (system_code, name, description) VALUES (?, ?, ?);
+
+getLearningSystems:
+SELECT * FROM learning_systems;
+
+insertLearningLevel:
+INSERT OR REPLACE INTO learning_levels (system_code, level_code, name) VALUES (?, ?, ?);
+
+getLevelsForSystem:
+SELECT * FROM learning_levels WHERE system_code = ?;
+
+-- Topic queries
+insertTopic:
+INSERT OR REPLACE INTO learning_topics (topic_id, name, system_code, level_code) VALUES (?, ?, ?, ?);
+
+getAllTopics:
+SELECT * FROM learning_topics;
+
+getTopicsForLevels:
+SELECT * FROM learning_topics WHERE system_code = ? AND level_code IN ?;
+
+-- Secure User Queries
+createUser:
+INSERT INTO users (
+    user_id, display_name, email, password_hash, salt, avatar_path, google_id, 
+    auth_provider, language_native, language_target, learning_system_code, 
+    learning_level_code, created_at, updated_at
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+updateUser:
+UPDATE users
+SET display_name = ?, email = ?, password_hash = ?, salt = ?, avatar_path = ?, 
+    google_id = ?, auth_provider = ?, language_native = ?, language_target = ?, 
+    learning_system_code = ?, learning_level_code = ?, updated_at = ?
+WHERE user_id = ?;
+
+getUserById:
+SELECT * FROM users WHERE user_id = ? AND deleted_at IS NULL;
+
+getUserByEmail:
+SELECT * FROM users WHERE email = ? AND deleted_at IS NULL;
+
+softDeleteUser:
+UPDATE users SET deleted_at = ? WHERE user_id = ?;

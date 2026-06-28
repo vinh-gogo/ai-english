@@ -1,0 +1,17 @@
+﻿[
+    {
+        "systemCode":  "CEFR",
+        "description":  "Common European Framework of Reference for Languages",
+        "name":  "CEFR"
+    },
+    {
+        "systemCode":  "TOEIC",
+        "description":  "Test of English for International Communication",
+        "name":  "TOEIC"
+    },
+    {
+        "systemCode":  "JLPT",
+        "description":  "Japanese-Language Proficiency Test",
+        "name":  "JLPT"
+    }
+]

@@ -24,6 +24,7 @@ kotlin {
             implementation(project(":shared:core:network"))
             implementation(project(":shared:core:database"))
             implementation(project(":shared:feature:ai-teacher:domain"))
+            implementation(project(":shared:feature:history:domain"))
         }
     }
 }

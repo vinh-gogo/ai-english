@@ -1,0 +1,302 @@
+﻿[
+    {
+        "id":  300,
+        "name":  "Giới thiệu bản thân bằng tiếng Nhật (Jikoshoukai)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  301,
+        "name":  "Chào hỏi hàng ngày và các câu cảm ơn/xin lỗi cơ bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  302,
+        "name":  "Hỏi thăm sức khỏe và cuộc sống thường nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  303,
+        "name":  "Hỏi đường đi đến nhà ga, siêu thị, đền chùa",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  304,
+        "name":  "Đặt đồ ăn và gọi nước uống tại nhà hàng Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  305,
+        "name":  "Mua sắm quần áo: hỏi giá cả, kích cỡ, màu sắc",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  306,
+        "name":  "Đi siêu thị mua thực phẩm và rau củ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  307,
+        "name":  "Tại quầy thanh toán tiền mặt hoặc thẻ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  308,
+        "name":  "Đi xe buýt và tàu điện ngầm ở Tokyo",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  309,
+        "name":  "Hỏi giờ giấc và lịch trình chạy của tàu",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  310,
+        "name":  "Thời tiết các mùa và hiện tượng tự nhiên",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  311,
+        "name":  "Giới thiệu các thành viên trong gia đình",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  312,
+        "name":  "Nói về sở thích: nghe nhạc, xem phim, đọc manga",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  313,
+        "name":  "Lập kế hoạch đi chơi cuối tuần cùng bạn bè",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  314,
+        "name":  "Mô tả ngôi nhà và các phòng chức năng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  315,
+        "name":  "Đi du lịch nghỉ dưỡng và tham quan danh lam thắng cảnh",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  316,
+        "name":  "Thủ tục tại sân bay và ký gửi hành lý",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  317,
+        "name":  "Nhận phòng (Check-in) và trả phòng (Check-out) khách sạn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  318,
+        "name":  "Đặt lịch hẹn gặp mặt trực tiếp hoặc online",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  319,
+        "name":  "Đi cắt tóc và làm đẹp tại Hair Salon",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  320,
+        "name":  "Khám bệnh tại bệnh viện và mua thuốc theo đơn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  321,
+        "name":  "Mở tài khoản ngân hàng và thẻ ATM nội địa",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  322,
+        "name":  "Đi bưu điện gửi thư, bưu phẩm bằng đường hàng không",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  323,
+        "name":  "Công việc văn phòng hàng ngày và báo cáo tiến độ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  324,
+        "name":  "Phỏng vấn xin việc bán thời gian (Arubaito)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  325,
+        "name":  "Gọi điện thoại trao đổi công việc ngắn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  326,
+        "name":  "Viết email công sở thông báo lịch họp",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  327,
+        "name":  "Xin nghỉ phép và bàn giao công việc tạm thời",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  328,
+        "name":  "Trào lưu mua sắm online trên các sàn thương mại điện tử",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  329,
+        "name":  "Thói quen tập thể dục và duy trì sức khỏe tinh thần",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  330,
+        "name":  "Thảo luận về sự khác biệt văn hóa Việt Nam - Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  331,
+        "name":  "Chia sẻ kinh nghiệm tự học tiếng Nhật hiệu quả",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  332,
+        "name":  "Bàn về văn hóa làm việc nhóm (Teamwork) tại công ty Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  333,
+        "name":  "Phân loại rác thải tại các khu đô thị Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  334,
+        "name":  "Trải nghiệm tắm suối nước nóng Onsen truyền thống",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  335,
+        "name":  "Viếng đền chùa ngày đầu năm mới (Hatsumode)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  336,
+        "name":  "Thảo luận về xu hướng thanh toán không tiền mặt",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  337,
+        "name":  "Cách cân bằng giữa thời gian học tập và làm việc",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  338,
+        "name":  "Bàn luận về tầm quan trọng của việc bảo vệ môi trường",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  339,
+        "name":  "Nói về sở thích sưu tầm mô hình Anime và Manga",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  340,
+        "name":  "Vấn đề già hóa dân số và thiếu hụt nguồn lao động tại Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  341,
+        "name":  "Xu hướng giảm tỷ lệ sinh (Shoushika) và các chính sách xã hội",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  342,
+        "name":  "Tác động của Trí tuệ nhân tạo AI đối với thị trường lao động",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  343,
+        "name":  "Triết lý Kaizen - Cải tiến liên tục trong doanh nghiệp Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  344,
+        "name":  "Khái niệm Omotenashi - Tinh thần hiếu khách đỉnh cao",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  345,
+        "name":  "Bảo tồn văn hóa truyền thống trước làn sóng toàn cầu hóa",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  346,
+        "name":  "Vấn đề rác thải nhựa đại dương và cam kết Net Zero",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  347,
+        "name":  "An ninh mạng và bảo vệ quyền riêng tư thông tin cá nhân",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  348,
+        "name":  "Triết lý tối giản Danshari và ứng dụng trong cuộc sống hiện đại",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  349,
+        "name":  "Tác động của hiện tượng du lịch quá mức (Overtourism)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    }
+]
