@@ -318,7 +318,7 @@ fun LessonContent(
                                 shape = RoundedCornerShape(12.dp),
                                 colors = CardDefaults.cardColors(
                                     containerColor = when {
-                                        sentenceScore >= 8 -> colors.correct.copy(alpha = 0.15f)
+                                        sentenceScore >= 9 -> colors.correct.copy(alpha = 0.15f)
                                         sentenceScore >= 5 -> colors.warning.copy(alpha = 0.15f)
                                         else -> colors.error.copy(alpha = 0.15f)
                                     }
@@ -326,7 +326,7 @@ fun LessonContent(
                                 border = BorderStroke(
                                     1.dp,
                                     when {
-                                        sentenceScore >= 8 -> colors.correct
+                                        sentenceScore >= 9 -> colors.correct
                                         sentenceScore >= 5 -> colors.warning
                                         else -> colors.error
                                     }
@@ -342,7 +342,7 @@ fun LessonContent(
                                         fontWeight = FontWeight.ExtraBold,
                                         fontSize = 15.sp,
                                         color = when {
-                                            sentenceScore >= 8 -> colors.correct
+                                            sentenceScore >= 9 -> colors.correct
                                             sentenceScore >= 5 -> colors.warning
                                             else -> colors.error
                                         }
@@ -386,7 +386,7 @@ fun LessonContent(
                                 shape = RoundedCornerShape(12.dp),
                                 colors = CardDefaults.cardColors(
                                     containerColor = when {
-                                        sentenceScore >= 8 -> colors.correct.copy(alpha = 0.15f)
+                                        sentenceScore >= 9 -> colors.correct.copy(alpha = 0.15f)
                                         sentenceScore >= 5 -> colors.warning.copy(alpha = 0.15f)
                                         else -> colors.error.copy(alpha = 0.15f)
                                     }
@@ -394,7 +394,7 @@ fun LessonContent(
                                 border = BorderStroke(
                                     1.dp,
                                     when {
-                                        sentenceScore >= 8 -> colors.correct
+                                        sentenceScore >= 9 -> colors.correct
                                         sentenceScore >= 5 -> colors.warning
                                         else -> colors.error
                                     }
@@ -410,7 +410,7 @@ fun LessonContent(
                                         fontWeight = FontWeight.ExtraBold,
                                         fontSize = 15.sp,
                                         color = when {
-                                            sentenceScore >= 8 -> colors.correct
+                                            sentenceScore >= 9 -> colors.correct
                                             sentenceScore >= 5 -> colors.warning
                                             else -> colors.error
                                         }

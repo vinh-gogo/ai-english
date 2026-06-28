@@ -50,7 +50,7 @@ fun FeedbackContent(
                     .clip(CircleShape)
                     .background(
                         when {
-                            feedback.score >= 8 -> colors.correct
+                            feedback.score >= 9 -> colors.correct
                             feedback.score >= 5 -> colors.warning
                             else -> colors.error
                         }
@@ -143,7 +143,7 @@ private fun SentenceReviewCard(
                 if (sentenceScore != null) {
                     Text(
                         text = "Điểm: $sentenceScore/10",
-                        color = if (sentenceScore >= 8) colors.correct else if (sentenceScore >= 5) colors.warning else colors.error,
+                        color = if (sentenceScore >= 9) colors.correct else if (sentenceScore >= 5) colors.warning else colors.error,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Bold
                     )
