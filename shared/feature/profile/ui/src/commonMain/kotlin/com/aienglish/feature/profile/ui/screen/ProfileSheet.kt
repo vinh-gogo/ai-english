@@ -94,6 +94,8 @@ fun ProfileSheet(
                 ApiKeySection(state, profileViewModel, colors)
                 HorizontalDivider(color = colors.border)
                 HowToGetApiKeySection(state, profileViewModel, colors)
+                HorizontalDivider(color = colors.border)
+                QuotaSection(state, colors)
                 Spacer(Modifier.height(16.dp))
             }
         }
@@ -453,5 +455,71 @@ private fun LanguageSettingsSection(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun QuotaSection(state: ProfileState, colors: AppColors) {
+    val isVietnamese = state.languageNative == "vi"
+    val remaining = (state.monthlyLimit - state.monthlyUsage).coerceAtLeast(0)
+    val progress = if (state.monthlyLimit > 0) remaining.toFloat() / state.monthlyLimit.toFloat() else 0f
+
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = Icons.Rounded.Speed,
+                    contentDescription = null,
+                    tint = colors.accent,
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    if (isVietnamese) "Hạn ngạch sử dụng" else "Usage Quota",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = colors.mainText
+                )
+            }
+            Text(
+                if (isVietnamese) "Còn lại: $remaining / ${state.monthlyLimit}" else "Left: $remaining / ${state.monthlyLimit}",
+                fontSize = 12.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = colors.mutedText
+            )
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(8.dp)
+                .clip(RoundedCornerShape(4.dp))
+                .background(colors.border)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(progress)
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(
+                        if (progress < 0.2f) colors.error else colors.accent
+                    )
+            )
+        }
+
+        Text(
+            if (isVietnamese) {
+                "Số bài học được tạo trong tháng hiện tại. Cấu hình API Key của bạn để nâng hạn ngạch từ 5 lên 20 bài học/tháng."
+            } else {
+                "Number of lessons generated in the current month. Configure your API Key to increase quota from 5 to 20 lessons/month."
+            },
+            fontSize = 11.sp,
+            color = colors.hintText,
+            lineHeight = 16.sp
+        )
     }
 }

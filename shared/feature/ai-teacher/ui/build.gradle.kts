@@ -34,6 +34,7 @@ kotlin {
             implementation(project(":shared:feature:profile:ui"))
             implementation(project(":shared:feature:history:ui"))
             implementation(project(":shared:feature:history:domain"))
+            implementation(libs.datetime)
         }
         androidMain.dependencies {
             implementation(libs.koin.android)

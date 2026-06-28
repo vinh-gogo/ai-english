@@ -15,6 +15,8 @@ data class ProfileState(
     val isSigningIn: Boolean = false,
     val languageNative: String = "vi",
     val languageTarget: String = "en",
+    val monthlyUsage: Int = 0,
+    val monthlyLimit: Int = 5,
     val error: String? = null
 )
 
@@ -34,6 +36,10 @@ class ProfileViewModel(
                 languageTarget = repository.getLanguageTarget()
             )
         }
+    }
+
+    fun updateMonthlyUsage(usage: Int, limit: Int) {
+        setState { copy(monthlyUsage = usage, monthlyLimit = limit) }
     }
 
     fun showProfile() = setState { copy(showProfile = true) }

@@ -16,6 +16,9 @@ import com.aienglish.feature.history.domain.repository.HistoryRepository
 import com.aienglish.feature.aiteacher.ui.screen.getCompatibleLevels
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 enum class LevelType {
     CEFR, TOEIC, JLPT
@@ -225,20 +228,34 @@ class TeacherViewModel(
         val isGuest = prefs.getUserName() == "Khách"
 
         viewModelScope.launch {
-            if (isGuest) {
-                try {
-                    val historyList = historyRepository.getAllHistory().first()
-                    if (historyList.isNotEmpty()) {
-                        setState {
-                            copy(
-                                error = "Chế độ dùng thử tối đa 1 bài học. Vui lòng đăng nhập để tiếp tục học không giới hạn!"
-                            )
-                        }
-                        return@launch
-                    }
-                } catch (e: Exception) {
-                    // Ignore
+            try {
+                val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+                val nowLocal = Instant.fromEpochMilliseconds(now).toLocalDateTime(TimeZone.currentSystemDefault())
+                val currentYear = nowLocal.year
+                val currentMonth = nowLocal.monthNumber
+
+                val historyList = historyRepository.getAllHistory().first()
+                val monthlyUsage = historyList.count { item ->
+                    val itemLocal = Instant.fromEpochMilliseconds(item.createdAt).toLocalDateTime(TimeZone.currentSystemDefault())
+                    itemLocal.year == currentYear && itemLocal.monthNumber == currentMonth
                 }
+
+                val hasCustomApiKey = prefs.getApiKey().trim().isNotEmpty()
+                val limit = if (hasCustomApiKey) 20 else 5
+
+                if (monthlyUsage >= limit) {
+                    val limitMsg = if (isGuest) {
+                        "Chế độ dùng thử tối đa 5 bài học/tháng. Vui lòng đăng nhập để tiếp tục!"
+                    } else if (!hasCustomApiKey) {
+                        "Tài khoản chưa cấu hình API Key chỉ được tối đa 5 bài học/tháng. Vui lòng cấu hình API Key trong phần Profile để có 20 bài học/tháng!"
+                    } else {
+                        "Hạn ngạch sử dụng API Key tối đa 20 bài học/tháng đã hết!"
+                    }
+                    setState { copy(error = limitMsg) }
+                    return@launch
+                }
+            } catch (e: Exception) {
+                // Ignore
             }
 
             setState {
@@ -504,4 +521,27 @@ class TeacherViewModel(
 
     fun setCustomTopicMode(enabled: Boolean) = setState { copy(isCustomTopicMode = enabled) }
     fun onCustomTopicInputChanged(input: String) = setState { copy(customTopicInput = input) }
+
+    fun fetchMonthlyUsage(onResult: (usage: Int, limit: Int) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+                val nowLocal = Instant.fromEpochMilliseconds(now).toLocalDateTime(TimeZone.currentSystemDefault())
+                val currentYear = nowLocal.year
+                val currentMonth = nowLocal.monthNumber
+
+                val historyList = historyRepository.getAllHistory().first()
+                val monthlyUsage = historyList.count { item ->
+                    val itemLocal = Instant.fromEpochMilliseconds(item.createdAt).toLocalDateTime(TimeZone.currentSystemDefault())
+                    itemLocal.year == currentYear && itemLocal.monthNumber == currentMonth
+                }
+
+                val hasCustomApiKey = prefs.getApiKey().trim().isNotEmpty()
+                val limit = if (hasCustomApiKey) 20 else 5
+                onResult(monthlyUsage, limit)
+            } catch (e: Exception) {
+                onResult(0, 5)
+            }
+        }
+    }
 }

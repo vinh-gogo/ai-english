@@ -53,6 +53,14 @@ fun TeacherScreen(
         viewModel.syncTargetLanguage()
     }
 
+    LaunchedEffect(profileState.showProfile, state.lesson, state.feedback) {
+        if (profileState.showProfile) {
+            viewModel.fetchMonthlyUsage { usage, limit ->
+                profileViewModel.updateMonthlyUsage(usage, limit)
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
