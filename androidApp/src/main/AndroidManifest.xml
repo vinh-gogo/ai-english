@@ -8,7 +8,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:label="AI English Teacher"
+        android:label="AI Lingua"
         android:supportsRtl="true"
         android:theme="@style/Theme.AIEnglish"
         android:usesCleartextTraffic="false">

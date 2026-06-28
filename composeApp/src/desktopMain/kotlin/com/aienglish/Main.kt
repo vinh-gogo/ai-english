@@ -75,7 +75,7 @@ fun main() {
         val windowState = rememberWindowState(width = 400.dp, height = 800.dp)
         Window(
             onCloseRequest = ::exitApplication,
-            title = "AI English Teacher",
+            title = "AI Lingua",
             state = windowState
         ) {
             AIEnglishTheme {
