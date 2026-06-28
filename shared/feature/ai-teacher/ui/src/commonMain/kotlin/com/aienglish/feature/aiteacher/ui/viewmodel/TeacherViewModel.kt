@@ -359,6 +359,11 @@ class TeacherViewModel(
         copy(currentSentenceIndex = next)
     }
 
+    fun onPreviousSentence() = setState {
+        val prev = (currentSentenceIndex - 1).coerceAtLeast(0)
+        copy(currentSentenceIndex = prev)
+    }
+
     // ── Start Lesson ──
     fun onStartLesson() {
         val topic = currentState.selectedTopic
@@ -765,6 +770,10 @@ class TeacherViewModel(
 
                 currentLessonHistoryId = history.id
 
+                val nextIndex = teacherHistory.lesson?.sentences?.indices?.firstOrNull { idx ->
+                    !teacherHistory.explanations.containsKey(idx)
+                } ?: 0
+
                 setState {
                     copy(
                         topics = list,
@@ -783,7 +792,7 @@ class TeacherViewModel(
                         userAnswers = teacherHistory.userAnswers,
                         explanations = teacherHistory.explanations,
                         feedback = null,
-                        currentSentenceIndex = 0,
+                        currentSentenceIndex = nextIndex,
                         checkedAnswers = teacherHistory.explanations.keys
                     )
                 }

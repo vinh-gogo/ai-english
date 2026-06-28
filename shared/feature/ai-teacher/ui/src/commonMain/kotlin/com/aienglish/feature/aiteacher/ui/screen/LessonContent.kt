@@ -2,12 +2,14 @@ package com.aienglish.feature.aiteacher.ui.screen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material3.*
@@ -261,7 +263,22 @@ fun LessonContent(
         // Pinned bottom action
         Box(modifier = Modifier.fillMaxWidth().navigationBarsPadding()) {
             if (!hasChecked) {
-                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    if (idx > 0) {
+                        IconButton(
+                            onClick = { viewModel.onPreviousSentence() },
+                            modifier = Modifier
+                                .size(48.dp)
+                                .border(1.dp, colors.border, RoundedCornerShape(12.dp))
+                                .background(colors.surface, RoundedCornerShape(12.dp))
+                        ) {
+                            Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
+                        }
+                    }
                     // Skip button
                     Button(
                         onClick = { viewModel.onCheckAnswer(idx) },
@@ -270,7 +287,7 @@ fun LessonContent(
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier.weight(1f).height(48.dp)
                     ) {
-                        Text("Bỏ qua", color = colors.mutedText)
+                        Text("Chưa biết", color = colors.mutedText)
                     }
                     // Check button
                     Button(
@@ -292,6 +309,17 @@ fun LessonContent(
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        if (idx > 0) {
+                            IconButton(
+                                onClick = { viewModel.onPreviousSentence() },
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .border(1.dp, colors.border, RoundedCornerShape(12.dp))
+                                    .background(colors.surface, RoundedCornerShape(12.dp))
+                            ) {
+                                Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
+                            }
+                        }
                         Button(
                             onClick = { viewModel.onNextSentence() },
                             enabled = !isExplaining,
@@ -357,6 +385,17 @@ fun LessonContent(
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        if (idx > 0) {
+                            IconButton(
+                                onClick = { viewModel.onPreviousSentence() },
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .border(1.dp, colors.border, RoundedCornerShape(12.dp))
+                                    .background(colors.surface, RoundedCornerShape(12.dp))
+                            ) {
+                                Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
+                            }
+                        }
                         Button(
                             onClick = { viewModel.onSubmitLesson() },
                             enabled = !isExplaining && !state.isEvaluating,
