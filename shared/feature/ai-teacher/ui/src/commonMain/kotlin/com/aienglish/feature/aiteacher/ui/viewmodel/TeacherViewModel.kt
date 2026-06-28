@@ -60,6 +60,7 @@ data class TeacherUiState(
     // Explanation
     val explainingSentenceIndex: Int? = null,           // tracks which sentence index is currently loading its AI explanation
     val explanations: Map<Int, String> = emptyMap(),
+    val sentenceScores: Map<Int, Int> = emptyMap(),
 
     // Error
     val error: String? = null
@@ -339,11 +340,12 @@ class TeacherViewModel(
                         )
                     }
                 },
-                ifRight = { explanation ->
+                ifRight = { result ->
                     setState {
                         copy(
                             explainingSentenceIndex = null,
-                            explanations = explanations + (index to explanation)
+                            explanations = explanations + (index to result.explanation),
+                            sentenceScores = sentenceScores + (index to result.score)
                         )
                     }
                     saveCurrentProgress()
@@ -404,7 +406,8 @@ class TeacherViewModel(
                     userAnswers = emptyMap(),
                     checkedAnswers = emptySet(),
                     currentSentenceIndex = 0,
-                    explanations = emptyMap()
+                    explanations = emptyMap(),
+                    sentenceScores = emptyMap()
                 )
             }
 
@@ -480,11 +483,12 @@ class TeacherViewModel(
                         )
                     }
                 },
-                ifRight = { explanation ->
+                ifRight = { result ->
                     setState {
                         copy(
                             explainingSentenceIndex = null,
-                            explanations = explanations + (index to explanation)
+                            explanations = explanations + (index to result.explanation),
+                            sentenceScores = sentenceScores + (index to result.score)
                         )
                     }
                     saveCurrentProgress()

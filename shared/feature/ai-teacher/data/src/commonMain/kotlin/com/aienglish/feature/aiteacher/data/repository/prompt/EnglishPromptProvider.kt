@@ -99,7 +99,13 @@ object EnglishPromptProvider : LanguagePromptProvider {
             2. Compare with the target English, point out strengths or errors (grammar, word order, vocabulary, tone).
             3. If the student answered correctly, praise briefly and explain the grammar structures at $level depth.
             4. If the student skipped, provide a full breakdown of the target sentence, explaining vocabulary and grammar patterns relevant to $level.
-            5. Write in Vietnamese, warm and encouraging. Return as Markdown (use ##, bold, lists - no JSON).
+            5. Write in Vietnamese, warm and encouraging. Format the explanation in Markdown.
+
+            RETURN ONLY VALID JSON (no markdown block, no extra text):
+            {
+              "score": 8,
+              "explanation": "Detailed explanation text formatted in Markdown."
+            }
         """.trimIndent()
     }
 

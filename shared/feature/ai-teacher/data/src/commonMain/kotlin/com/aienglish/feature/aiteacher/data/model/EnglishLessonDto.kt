@@ -4,6 +4,7 @@ import com.aienglish.feature.aiteacher.domain.model.EnglishFeedback
 import com.aienglish.feature.aiteacher.domain.model.EnglishLesson
 import com.aienglish.feature.aiteacher.domain.model.EnglishSentence
 import com.aienglish.feature.aiteacher.domain.model.EnglishToken
+import com.aienglish.feature.aiteacher.domain.model.SentenceExplanation
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -53,6 +54,17 @@ data class EnglishFeedbackDto(
         score = score,
         review = review,
         sentenceScores = sentenceScores
+    )
+}
+
+@Serializable
+data class SentenceExplanationDto(
+    val score: Int,
+    val explanation: String
+) {
+    fun toDomain(): SentenceExplanation = SentenceExplanation(
+        score = score,
+        explanation = explanation
     )
 }
 

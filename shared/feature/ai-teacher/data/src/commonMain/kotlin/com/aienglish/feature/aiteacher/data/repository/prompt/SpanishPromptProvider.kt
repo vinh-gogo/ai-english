@@ -94,7 +94,13 @@ object SpanishPromptProvider : LanguagePromptProvider {
             2. So sánh câu của học sinh với Bản dịch chuẩn, chỉ rõ điểm tốt hoặc các lỗi sai (về chia động từ, giới từ, đại từ, Subjuntivo) nếu học sinh viết sai.
             3. Nếu học sinh viết đúng, hãy khen ngợi ngắn gọn và giải thích thêm các cấu trúc ngữ pháp sử dụng trong câu để họ hiểu sâu hơn.
             4. Nếu học sinh Bỏ qua, hãy dịch mẫu và phân tích tường nhận ngữ pháp, từ vựng từng phần để học sinh tự học.
-            5. Viết bằng tiếng Việt tự nhiên, ấm áp, khuyến khích học tập. Trả về văn bản giải thích trực tiếp dưới dạng Markdown (sử dụng các tiêu đề #, ##, ###, in đậm, in nghiêng, list..., không dùng định dạng JSON).
+            5. Viết bằng tiếng Việt tự nhiên, ấm áp, khuyến khích học tập. Văn bản giải thích sử dụng định dạng Markdown.
+
+            BẠN BẮT BUỘC PHẢI TRẢ VỀ ĐẦU RA DƯỚI DẠNG JSON HỢP LỆ THEO ĐÚNG CẤU TRÚC SAU:
+            {
+              "score": 8,
+              "explanation": "Nội dung giải thích chi tiết câu dịch sử dụng định dạng Markdown."
+            }
         """.trimIndent()
     }
 

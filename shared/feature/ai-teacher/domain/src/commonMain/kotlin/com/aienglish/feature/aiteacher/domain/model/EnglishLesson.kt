@@ -22,3 +22,8 @@ data class EnglishFeedback(
     val review: String,
     val sentenceScores: List<Int> = emptyList()
 )
+
+data class SentenceExplanation(
+    val score: Int,
+    val explanation: String
+)

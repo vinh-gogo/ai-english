@@ -121,7 +121,7 @@ class TeacherRepositoryImpl(
         targetEnglish: String,
         userAnswer: String,
         level: String
-    ): AppResult<String> = withContext(dispatchers.io) {
+    ): AppResult<com.aienglish.feature.aiteacher.domain.model.SentenceExplanation> = withContext(dispatchers.io) {
         try {
             val apiKey = resolveApiKey()
             if (apiKey.isBlank()) {
@@ -140,7 +140,9 @@ class TeacherRepositoryImpl(
                 userPrompt = userPrompt,
                 model = GEMINI_MODEL_CHAIN.first()
             )
-            Either.Right(rawResponse.trim())
+            val cleanedJson = sanitizeJson(rawResponse)
+            val explanation = json.decodeFromString<com.aienglish.feature.aiteacher.data.model.SentenceExplanationDto>(cleanedJson).toDomain()
+            Either.Right(explanation)
         } catch (e: Exception) {
             Either.Left(AppError.Network(friendlyError(e.message)))
         }

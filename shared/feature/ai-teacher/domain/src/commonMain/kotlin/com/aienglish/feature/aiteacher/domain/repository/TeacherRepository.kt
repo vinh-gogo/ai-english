@@ -25,5 +25,5 @@ interface TeacherRepository {
         targetEnglish: String,
         userAnswer: String,
         level: String
-    ): AppResult<String>
+    ): AppResult<com.aienglish.feature.aiteacher.domain.model.SentenceExplanation>
 }

@@ -285,49 +285,138 @@ fun LessonContent(
                 }
             } else {
                 val isExplaining = state.explainingSentenceIndex == idx
+                val sentenceScore = state.sentenceScores[idx]
                 if (idx < total - 1) {
                     // Next sentence
-                    Button(
-                        onClick = { viewModel.onNextSentence() },
-                        enabled = !isExplaining,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = colors.accent,
-                            disabledContainerColor = colors.accent.copy(alpha = 0.5f)
-                        ),
-                        shape = RoundedCornerShape(12.dp),
-                        modifier = Modifier.fillMaxWidth().height(48.dp)
+                    Row(
+                        modifier = Modifier.fillMaxWidth().height(48.dp),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        if (isExplaining) {
-                            CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
-                            Spacer(Modifier.width(8.dp))
-                            Text("AI đang giải thích...", color = Color.White)
-                        } else {
-                            Text("Câu tiếp theo", color = Color.White)
-                            Icon(Icons.Default.ChevronRight, null)
+                        Button(
+                            onClick = { viewModel.onNextSentence() },
+                            enabled = !isExplaining,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colors.accent,
+                                disabledContainerColor = colors.accent.copy(alpha = 0.5f)
+                            ),
+                            shape = RoundedCornerShape(12.dp),
+                            modifier = Modifier.weight(1f).fillMaxHeight()
+                        ) {
+                            if (isExplaining) {
+                                CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
+                                Spacer(Modifier.width(8.dp))
+                                Text("AI đang giải thích...", color = Color.White)
+                            } else {
+                                Text("Câu tiếp theo", color = Color.White)
+                                Icon(Icons.Default.ChevronRight, null)
+                            }
+                        }
+
+                        if (!isExplaining && sentenceScore != null) {
+                            Card(
+                                shape = RoundedCornerShape(12.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = when {
+                                        sentenceScore >= 8 -> colors.correct.copy(alpha = 0.15f)
+                                        sentenceScore >= 5 -> colors.warning.copy(alpha = 0.15f)
+                                        else -> colors.error.copy(alpha = 0.15f)
+                                    }
+                                ),
+                                border = BorderStroke(
+                                    1.dp,
+                                    when {
+                                        sentenceScore >= 8 -> colors.correct
+                                        sentenceScore >= 5 -> colors.warning
+                                        else -> colors.error
+                                    }
+                                ),
+                                modifier = Modifier.height(48.dp).padding(horizontal = 4.dp)
+                            ) {
+                                Box(
+                                    modifier = Modifier.fillMaxHeight().padding(horizontal = 14.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = "$sentenceScore/10",
+                                        fontWeight = FontWeight.ExtraBold,
+                                        fontSize = 15.sp,
+                                        color = when {
+                                            sentenceScore >= 8 -> colors.correct
+                                            sentenceScore >= 5 -> colors.warning
+                                            else -> colors.error
+                                        }
+                                    )
+                                }
+                            }
                         }
                     }
                 } else {
                     // Last sentence — submit directly since explanation is auto-triggered
-                    Button(
-                        onClick = { viewModel.onSubmitLesson() },
-                        enabled = !isExplaining && !state.isEvaluating,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = colors.correct,
-                            disabledContainerColor = colors.correct.copy(alpha = 0.5f)
-                        ),
-                        shape = RoundedCornerShape(12.dp),
-                        modifier = Modifier.fillMaxWidth().height(48.dp)
+                    Row(
+                        modifier = Modifier.fillMaxWidth().height(48.dp),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        if (state.isEvaluating) {
-                            CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
-                            Spacer(Modifier.width(8.dp))
-                            Text("Đang đánh giá...", color = Color.White)
-                        } else if (isExplaining) {
-                            CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
-                            Spacer(Modifier.width(8.dp))
-                            Text("AI đang giải thích...", color = Color.White)
-                        } else {
-                            Text("Xem đánh giá", color = Color.White, fontWeight = FontWeight.Bold)
+                        Button(
+                            onClick = { viewModel.onSubmitLesson() },
+                            enabled = !isExplaining && !state.isEvaluating,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colors.correct,
+                                disabledContainerColor = colors.correct.copy(alpha = 0.5f)
+                            ),
+                            shape = RoundedCornerShape(12.dp),
+                            modifier = Modifier.weight(1f).fillMaxHeight()
+                        ) {
+                            if (state.isEvaluating) {
+                                CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
+                                Spacer(Modifier.width(8.dp))
+                                Text("Đang đánh giá...", color = Color.White)
+                            } else if (isExplaining) {
+                                CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
+                                Spacer(Modifier.width(8.dp))
+                                Text("AI đang giải thích...", color = Color.White)
+                            } else {
+                                Text("Xem đánh giá", color = Color.White, fontWeight = FontWeight.Bold)
+                            }
+                        }
+
+                        if (!isExplaining && !state.isEvaluating && sentenceScore != null) {
+                            Card(
+                                shape = RoundedCornerShape(12.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = when {
+                                        sentenceScore >= 8 -> colors.correct.copy(alpha = 0.15f)
+                                        sentenceScore >= 5 -> colors.warning.copy(alpha = 0.15f)
+                                        else -> colors.error.copy(alpha = 0.15f)
+                                    }
+                                ),
+                                border = BorderStroke(
+                                    1.dp,
+                                    when {
+                                        sentenceScore >= 8 -> colors.correct
+                                        sentenceScore >= 5 -> colors.warning
+                                        else -> colors.error
+                                    }
+                                ),
+                                modifier = Modifier.height(48.dp).padding(horizontal = 4.dp)
+                            ) {
+                                Box(
+                                    modifier = Modifier.fillMaxHeight().padding(horizontal = 14.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = "$sentenceScore/10",
+                                        fontWeight = FontWeight.ExtraBold,
+                                        fontSize = 15.sp,
+                                        color = when {
+                                            sentenceScore >= 8 -> colors.correct
+                                            sentenceScore >= 5 -> colors.warning
+                                            else -> colors.error
+                                        }
+                                    )
+                                }
+                            }
                         }
                     }
                 }
