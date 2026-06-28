@@ -225,7 +225,7 @@ private fun ApiKeySection(state: ProfileState, vm: ProfileViewModel, colors: App
             Text("Gemini API Key", fontSize = 15.sp, fontWeight = FontWeight.Bold, color = colors.mainText)
         }
         Text(
-            "API Key dùng để gọi Gemini AI. Key được lưu trên thiết bị của bạn.",
+            "API Key cá nhân",
             fontSize = 12.sp, color = colors.mutedText, lineHeight = 17.sp
         )
         OutlinedTextField(

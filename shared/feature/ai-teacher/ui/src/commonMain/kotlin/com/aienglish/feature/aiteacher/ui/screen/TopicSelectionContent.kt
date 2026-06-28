@@ -499,21 +499,25 @@ fun TopicSelectionContent(
                     color = colors.mutedText
                 )
                 
-                TextButton(
-                    onClick = { viewModel.setCustomTopicMode(!state.isCustomTopicMode) },
-                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp),
-                    colors = ButtonDefaults.textButtonColors(contentColor = colors.accent)
+                Row(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(6.dp))
+                        .clickable { viewModel.setCustomTopicMode(!state.isCustomTopicMode) }
+                        .padding(horizontal = 6.dp, vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
                         imageVector = if (state.isCustomTopicMode) Icons.Rounded.List else Icons.Rounded.Edit,
                         contentDescription = null,
-                        modifier = Modifier.size(14.dp)
+                        modifier = Modifier.size(13.dp),
+                        tint = colors.accent
                     )
                     Spacer(Modifier.width(4.dp))
                     Text(
                         if (state.isCustomTopicMode) "Chọn từ danh sách" else "Tự nhập chủ đề",
                         fontSize = 11.sp,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
+                        color = colors.accent
                     )
                 }
             }
