@@ -82,29 +82,6 @@ fun TeacherScreen(
                                 tint = colors.mainText
                             )
                         }
-                    } else {
-                        Box(
-                            modifier = Modifier
-                                .padding(start = 8.dp)
-                                .size(36.dp)
-                                .clip(CircleShape)
-                                .background(
-                                    brush = androidx.compose.ui.graphics.Brush.linearGradient(
-                                        colors = listOf(
-                                            colors.accent,
-                                            colors.accent.copy(alpha = 0.7f)
-                                        )
-                                    )
-                                ),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                Icons.Rounded.School,
-                                contentDescription = "AI English",
-                                tint = Color.White,
-                                modifier = Modifier.size(20.dp)
-                            )
-                        }
                     }
                 },
                 actions = {

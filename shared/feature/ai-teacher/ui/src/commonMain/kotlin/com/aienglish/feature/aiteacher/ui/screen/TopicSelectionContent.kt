@@ -149,14 +149,14 @@ fun TopicSelectionContent(
 
             Spacer(Modifier.height(12.dp))
 
-            // ── Carousel Card (styled with active level color) ──
+            // ── Carousel Card (styled with uniform accent color) ──
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(110.dp),
                 shape = RoundedCornerShape(16.dp),
                 colors = CardDefaults.cardColors(containerColor = colors.surface),
-                border = BorderStroke(1.dp, levelColor.copy(alpha = 0.3f))
+                border = BorderStroke(1.dp, colors.accent.copy(alpha = 0.3f))
             ) {
                 Row(
                     modifier = Modifier.fillMaxSize(),
@@ -174,9 +174,9 @@ fun TopicSelectionContent(
                     }
 
                     Column(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1f).fillMaxHeight().padding(vertical = 12.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                        verticalArrangement = Arrangement.Top
                     ) {
                         val localIndexText = remember(selectedIdx, filteredTopics) {
                             val ci = filteredTopics.indexOfFirst { it.first == selectedIdx }
@@ -188,7 +188,7 @@ fun TopicSelectionContent(
                                 "CHỦ ĐỀ $localIndexText",
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = levelColor
+                                color = colors.accent
                             )
                             Spacer(Modifier.width(6.dp))
                             Surface(
@@ -205,16 +205,20 @@ fun TopicSelectionContent(
                             }
                         }
                         
-                        Spacer(Modifier.height(4.dp))
-                        Text(
-                            currentTopic?.name ?: "",
-                            fontSize = 15.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = colors.mainText,
-                            textAlign = TextAlign.Center,
-                            maxLines = 2,
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        )
+                        Box(
+                            modifier = Modifier.weight(1f).fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                currentTopic?.name ?: "",
+                                fontSize = 15.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = colors.mainText,
+                                textAlign = TextAlign.Center,
+                                maxLines = 2,
+                                modifier = Modifier.padding(horizontal = 8.dp)
+                            )
+                        }
                     }
 
                     val nextIdx = remember(selectedIdx, filteredTopics) {
@@ -511,8 +515,8 @@ fun TopicSelectionContent(
                         Surface(
                             modifier = Modifier.clickable { viewModel.onTopicIndexSelected(idx) },
                             shape = RoundedCornerShape(12.dp),
-                            color = if (isSelected) levelColor else colors.surface,
-                            border = BorderStroke(1.dp, if (isSelected) levelColor else colors.border)
+                            color = if (isSelected) colors.accent else colors.surface,
+                            border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
                         ) {
                             Text(
                                 "${i + 1}. ${topic.name}",
@@ -533,15 +537,15 @@ fun TopicSelectionContent(
             Spacer(Modifier.height(16.dp))
         }
 
-        // ── Pinned start button (styled with Level Color) ──
+        // ── Pinned start button (styled with uniform Accent Color) ──
         Button(
             onClick = { viewModel.onStartLesson() },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
-                .padding(bottom = 4.dp)
+                .padding(bottom = 16.dp)
                 .navigationBarsPadding(),
-            colors = ButtonDefaults.buttonColors(containerColor = levelColor),
+            colors = ButtonDefaults.buttonColors(containerColor = colors.accent),
             shape = RoundedCornerShape(14.dp)
         ) {
             Icon(Icons.Default.PlayArrow, null, modifier = Modifier.size(18.dp))
