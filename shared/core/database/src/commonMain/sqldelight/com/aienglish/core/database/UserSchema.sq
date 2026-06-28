@@ -139,6 +139,9 @@ SELECT * FROM learning_topics;
 getTopicsForLevels:
 SELECT * FROM learning_topics WHERE system_code = ? AND level_code IN ?;
 
+deleteAllTopics:
+DELETE FROM learning_topics;
+
 -- Secure User Queries
 createUser:
 INSERT INTO users (

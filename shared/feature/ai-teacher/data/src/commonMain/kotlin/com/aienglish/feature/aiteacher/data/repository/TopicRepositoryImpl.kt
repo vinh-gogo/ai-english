@@ -67,6 +67,9 @@ class TopicRepositoryImpl(
                     val englishTopics = json.decodeFromString<List<JsonTopicItem>>(englishTopicsJson.removeBom().trim())
                     val japaneseTopics = json.decodeFromString<List<JsonTopicItem>>(japaneseTopicsJson.removeBom().trim())
                     
+                    // 0. Clear old topics
+                    database.userSchemaQueries.deleteAllTopics()
+                    
                     // 1. Insert Systems
                     systems.forEach { sys ->
                         database.userSchemaQueries.insertLearningSystem(

@@ -92,7 +92,8 @@ class TeacherViewModel(
 
     private suspend fun ensureDatabaseSeeded() {
         val currentTopics = topicRepository.getTopics("CEFR", listOf("A1"))
-        if (currentTopics.isEmpty()) {
+        val currentJapaneseTopics = topicRepository.getTopics("JLPT", listOf("N5"))
+        if (currentTopics.isEmpty() || currentJapaneseTopics.size < 120) {
             val systemsStr = jsonResourceReader.readSystemsJson()
             val levelsStr = jsonResourceReader.readLevelsJson()
             val englishStr = jsonResourceReader.readEnglishTopicsJson()
