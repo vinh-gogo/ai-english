@@ -102,6 +102,21 @@ ai-english/
 | 9 | Tiếng Urdu | ~232 – 246 triệu | Được sử dụng rộng rãi tại Pakistan và Ấn Độ. |
 | 10 | Tiếng Indonesia | ~200 – 255 triệu | Đứng thứ 10 nhờ quy mô dân số lớn của quốc gia vạn đảo Indonesia. |
 
+### 📚 Bảng xếp hạng Top 10 Ngôn ngữ được học nhiều nhất thế giới
+
+| Hạng | Ngôn ngữ | Lý do học & Xu hướng nổi bật |
+| :---: | :--- | :--- |
+| 1 | Tiếng Anh (English) | Là ngôn ngữ toàn cầu bắt buộc cho công việc, nghiên cứu, khoa học và công nghệ. Hầu hết các quốc gia đều dạy tiếng Anh như ngoại ngữ thứ hai. |
+| 2 | Tiếng Tây Ban Nha (Spanish) | Cực kỳ phổ biến tại Mỹ và Châu Âu. Dễ học, hữu ích cho du lịch, giao dịch thương mại xuyên quốc gia. |
+| 3 | Tiếng Pháp (French) | Ngôn ngữ ngoại giao truyền thống của Liên Hợp Quốc, Châu Âu và đang bùng nổ số lượng người học/nói tại khu vực Châu Phi. |
+| 4 | Tiếng Nhật (Japanese) | Đang tăng trưởng vượt bậc và đứng đầu châu Á về lượng người học nhờ sức hút khổng lồ của văn hóa đại chúng (Anime, Manga, Gaming) và cơ hội việc làm. |
+| 5 | Tiếng Đức (German) | Ngôn ngữ kinh tế mạnh nhất Châu Âu. Được học nhiều cho mục đích du học, nghiên cứu kỹ thuật và làm việc chuyên môn. |
+| 6 | Tiếng Hàn (Korean) | Ngôn ngữ có tốc độ tăng trưởng người học nhanh nhất thế giới trong những năm gần đây, nhờ làn sóng văn hóa Hallyu (K-pop, K-drama) và các tập đoàn lớn toàn cầu (Samsung, Hyundai). |
+| 7 | Tiếng Trung (Mandarin) | Học chủ yếu vì mục đích kinh doanh, đầu tư, ngoại giao quốc tế và các cơ hội thương mại với nền kinh tế lớn thứ hai thế giới. |
+| 8 | Tiếng Ý (Italian) | Ngôn ngữ được học nhiều vì mục đích "sở thích và đam mê nghệ thuật" (du lịch, ẩm thực, thời trang, âm nhạc cổ điển). |
+| 9 | Tiếng Nga (Russian) | Vẫn giữ vị trí quan trọng tại khu vực Đông Âu và Trung Á phục vụ cho mục đích giao lưu kinh tế. |
+| 10 | Tiếng Bồ Đào Nha (Portuguese) | Đang thu hút lượng lớn người học nhờ sự trỗi dậy của kinh tế Brazil và du lịch phát triển ở Nam Mỹ/Bồ Đào Nha. |
+
 ---
 
 ## 🛠️ Tech Stack
