@@ -133,6 +133,7 @@ fun TeacherScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .imePadding()
         ) {
             // Profile sheet overlay
             if (profileState.showProfile) {
