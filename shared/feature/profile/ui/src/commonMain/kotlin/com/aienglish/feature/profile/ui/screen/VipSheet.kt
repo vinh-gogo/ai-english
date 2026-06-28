@@ -214,7 +214,7 @@ fun VipSheet(
                         BenefitItem(if (isVietnamese) "5 bài học/tháng" else "5 lessons/mo", false, colors)
                         BenefitItem(if (isVietnamese) "Không nhập ảnh" else "No image input", false, colors)
                         BenefitItem(if (isVietnamese) "Có quảng cáo" else "Contains ads", false, colors)
-                        BenefitItem(if (isVietnamese) "Anh & Nhật" else "English & Japanese", false, colors)
+                        BenefitItem(if (isVietnamese) "Anh & Việt" else "English & Vietnamese", false, colors)
                     }
 
                     // Right Column: VIP Premium
