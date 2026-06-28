@@ -15,7 +15,8 @@ val teacherDataModule = module {
     single<TopicRepository> {
         TopicRepositoryImpl(
             database = get(),
-            dispatchers = get()
+            dispatchers = get(),
+            jsonResourceReader = get()
         )
     }
 

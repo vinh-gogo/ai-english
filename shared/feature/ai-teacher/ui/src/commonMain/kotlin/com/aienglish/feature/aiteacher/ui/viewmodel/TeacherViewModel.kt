@@ -11,7 +11,6 @@ import com.aienglish.feature.aiteacher.domain.model.TopicItem
 import com.aienglish.feature.aiteacher.domain.model.getCompatibleLevels
 import com.aienglish.feature.aiteacher.domain.repository.TopicRepository
 import com.aienglish.feature.aiteacher.domain.repository.TeacherHistoryRepository
-import com.aienglish.feature.aiteacher.domain.resource.JsonResourceReader
 import com.aienglish.feature.history.domain.model.LessonHistory
 import com.aienglish.feature.history.domain.repository.HistoryRepository
 import kotlinx.coroutines.Job
@@ -82,7 +81,6 @@ class TeacherViewModel(
     private val explainSentence: ExplainSentenceUseCase,
     private val teacherHistoryRepository: TeacherHistoryRepository,
     private val topicRepository: TopicRepository,
-    private val jsonResourceReader: JsonResourceReader,
     private val prefs: AppPreferences,
     private val historyRepository: HistoryRepository
 ) : BaseViewModel<TeacherUiState>(TeacherUiState()) {
@@ -138,17 +136,7 @@ class TeacherViewModel(
         if (currentTopics.isEmpty() || currentJapaneseTopics.size < 120 || currentChineseTopics.isEmpty() || 
             currentToeicTopics.isEmpty() || currentDeleTopics.isEmpty() || currentHindiTopics.isEmpty() ||
             currentFrenchTopics.isEmpty()) {
-            val systemsStr = jsonResourceReader.readSystemsJson()
-            val levelsStr = jsonResourceReader.readLevelsJson()
-            val englishStr = jsonResourceReader.readEnglishTopicsJson()
-            val japaneseStr = jsonResourceReader.readJapaneseTopicsJson()
-            val chineseStr = jsonResourceReader.readChineseTopicsJson()
-            val spanishStr = jsonResourceReader.readSpanishTopicsJson()
-            val hindiStr = jsonResourceReader.readHindiTopicsJson()
-            val frenchStr = jsonResourceReader.readFrenchTopicsJson()
-            topicRepository.seedDatabase(
-                systemsStr, levelsStr, englishStr, japaneseStr, chineseStr, spanishStr, hindiStr, frenchStr
-            )
+            topicRepository.seedDatabase()
         }
     }
 

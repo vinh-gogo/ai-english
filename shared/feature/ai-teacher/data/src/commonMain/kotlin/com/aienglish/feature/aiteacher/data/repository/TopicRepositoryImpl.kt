@@ -4,6 +4,7 @@ import com.aienglish.core.common.dispatchers.AppDispatchers
 import com.aienglish.core.database.AIEnglishDatabase
 import com.aienglish.feature.aiteacher.domain.model.TopicItem
 import com.aienglish.feature.aiteacher.domain.repository.TopicRepository
+import com.aienglish.feature.aiteacher.domain.resource.JsonResourceReader
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -32,7 +33,8 @@ private data class JsonTopicItem(
 
 class TopicRepositoryImpl(
     private val database: AIEnglishDatabase,
-    private val dispatchers: AppDispatchers
+    private val dispatchers: AppDispatchers,
+    private val jsonResourceReader: JsonResourceReader
 ) : TopicRepository {
 
     private val json = Json { ignoreUnknownKeys = true }
@@ -53,17 +55,17 @@ class TopicRepositoryImpl(
     private fun String.removeBom(): String =
         if (this.startsWith("\uFEFF")) this.substring(1) else this
 
-    override suspend fun seedDatabase(
-        systemsJson: String,
-        levelsJson: String,
-        englishTopicsJson: String,
-        japaneseTopicsJson: String,
-        chineseTopicsJson: String,
-        spanishTopicsJson: String,
-        hindiTopicsJson: String,
-        frenchTopicsJson: String
-    ): Unit =
+    override suspend fun seedDatabase(): Unit =
         withContext(dispatchers.io) {
+            val systemsJson = jsonResourceReader.readSystemsJson()
+            val levelsJson = jsonResourceReader.readLevelsJson()
+            val englishTopicsJson = jsonResourceReader.readEnglishTopicsJson()
+            val japaneseTopicsJson = jsonResourceReader.readJapaneseTopicsJson()
+            val chineseTopicsJson = jsonResourceReader.readChineseTopicsJson()
+            val spanishTopicsJson = jsonResourceReader.readSpanishTopicsJson()
+            val hindiTopicsJson = jsonResourceReader.readHindiTopicsJson()
+            val frenchTopicsJson = jsonResourceReader.readFrenchTopicsJson()
+
             database.transaction {
                 try {
                     val systems = json.decodeFromString<List<JsonLearningSystem>>(systemsJson.removeBom().trim())
