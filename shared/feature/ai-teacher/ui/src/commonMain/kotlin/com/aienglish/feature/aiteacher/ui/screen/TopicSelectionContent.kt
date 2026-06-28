@@ -37,12 +37,12 @@ import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
 
 fun getLevelColor(levelCode: String, colors: AppColors): Color {
     return when (levelCode) {
-        "A1", "300", "N5" -> Color(0xFF0284C7)      // Xanh dương Sky Blue
-        "A2", "N4" -> Color(0xFF10B981)             // Xanh lá Emerald
-        "B1", "500", "N3" -> Color(0xFFF59E0B)      // Vàng hổ phách Amber
-        "B2", "700", "N2" -> Color(0xFFEF4444)      // Đỏ Coral
-        "C1", "900", "N1" -> colors.accent          // Màu accent chính (Blood đỏ sẫm)
-        "C2" -> Color(0xFF8B5CF6)                   // Tím Violet
+        "A1", "300", "N5", "HSK1" -> Color(0xFF0284C7)      // Xanh dương Sky Blue
+        "A2", "N4", "HSK2" -> Color(0xFF10B981)             // Xanh lá Emerald
+        "B1", "500", "N3", "HSK3" -> Color(0xFFF59E0B)      // Vàng hổ phách Amber
+        "B2", "700", "N2", "HSK4" -> Color(0xFFEF4444)      // Đỏ Coral
+        "C1", "900", "N1", "HSK5" -> colors.accent          // Màu accent chính (Blood đỏ sẫm)
+        "C2", "HSK6" -> Color(0xFF8B5CF6)                   // Tím Violet
         else -> colors.accent
     }
 }
@@ -67,6 +67,13 @@ fun getCompatibleLevels(activeLevel: String): List<String> {
         "N3" -> listOf("N5", "N4", "N3")
         "N2" -> listOf("N5", "N4", "N3", "N2")
         "N1" -> listOf("N5", "N4", "N3", "N2", "N1")
+        // HSK
+        "HSK1" -> listOf("HSK1")
+        "HSK2" -> listOf("HSK1", "HSK2")
+        "HSK3" -> listOf("HSK1", "HSK2", "HSK3")
+        "HSK4" -> listOf("HSK1", "HSK2", "HSK3", "HSK4")
+        "HSK5" -> listOf("HSK1", "HSK2", "HSK3", "HSK4", "HSK5")
+        "HSK6" -> listOf("HSK1", "HSK2", "HSK3", "HSK4", "HSK5", "HSK6")
         else -> listOf(activeLevel)
     }
 }
@@ -85,6 +92,7 @@ fun TopicSelectionContent(
         LevelType.CEFR -> state.selectedCefrLevel
         LevelType.TOEIC -> state.selectedToeicLevel
         LevelType.JLPT -> state.selectedJlptLevel
+        LevelType.HSK -> state.selectedHskLevel
     }
     val levelColor = getLevelColor(activeLevelCode, colors)
 
@@ -284,6 +292,20 @@ fun TopicSelectionContent(
                             modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
                         )
                     }
+                } else if (state.targetLanguage == "zh") {
+                    // Only 1 option for Chinese (HSK), display it as a simple tag
+                    Surface(
+                        shape = RoundedCornerShape(6.dp),
+                        color = colors.accent
+                    ) {
+                        Text(
+                            "HSK",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
+                        )
+                    }
                 } else {
                     // English: Show CEFR and TOEIC
                     Row(
@@ -412,6 +434,34 @@ fun TopicSelectionContent(
                                         level,
                                         color = if (isSelected) Color.White else colors.mainText,
                                         fontSize = 13.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+                LevelType.HSK -> {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        listOf("HSK1", "HSK2", "HSK3", "HSK4", "HSK5", "HSK6").forEach { level ->
+                            val isSelected = level == state.selectedHskLevel
+                            Surface(
+                                modifier = Modifier.weight(1f).clickable { viewModel.onHskLevelSelected(level) },
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (isSelected) colors.accent else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
+                            ) {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        level.replace("HSK", "H"),
+                                        color = if (isSelected) Color.White else colors.mainText,
+                                        fontSize = 12.sp,
                                         fontWeight = FontWeight.Bold
                                     )
                                 }

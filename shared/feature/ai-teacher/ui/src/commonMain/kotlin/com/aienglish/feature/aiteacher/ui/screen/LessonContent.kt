@@ -135,6 +135,7 @@ fun LessonContent(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     val isJapanese = state.selectedLevelText.startsWith("N")
+                    val isChinese = state.selectedLevelText.startsWith("HSK")
                     sentence.tokens.forEach { token ->
                         Column(
                             modifier = Modifier.padding(vertical = 4.dp),
@@ -162,6 +163,30 @@ fun LessonContent(
                                         color = colors.hintText,
                                         fontSize = 8.sp,
                                         fontWeight = FontWeight.Light
+                                    )
+                                }
+                            } else if (isChinese) {
+                                // Chinese layout: Pinyin (Top), Hanzi (Middle), Vietnamese Meaning/POS (Bottom)
+                                if (token.phonetic.isNotEmpty()) {
+                                    Text(
+                                        text = token.phonetic,
+                                        color = colors.accent,
+                                        fontSize = 10.sp,
+                                        fontWeight = FontWeight.Normal
+                                    )
+                                }
+                                Text(
+                                    text = token.word,
+                                    color = colors.mainText,
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                if (token.partOfSpeech.isNotEmpty()) {
+                                    Text(
+                                        text = token.partOfSpeech,
+                                        color = colors.hintText,
+                                        fontSize = 9.sp,
+                                        fontWeight = FontWeight.Normal
                                     )
                                 }
                             } else {

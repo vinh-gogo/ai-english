@@ -1,4 +1,4 @@
-﻿[
+[
     {
         "systemCode":  "CEFR",
         "levelCode":  "A1",
@@ -73,5 +73,35 @@
         "systemCode":  "JLPT",
         "levelCode":  "N1",
         "name":  "N1"
+    },
+    {
+        "systemCode":  "HSK",
+        "levelCode":  "HSK1",
+        "name":  "HSK 1"
+    },
+    {
+        "systemCode":  "HSK",
+        "levelCode":  "HSK2",
+        "name":  "HSK 2"
+    },
+    {
+        "systemCode":  "HSK",
+        "levelCode":  "HSK3",
+        "name":  "HSK 3"
+    },
+    {
+        "systemCode":  "HSK",
+        "levelCode":  "HSK4",
+        "name":  "HSK 4"
+    },
+    {
+        "systemCode":  "HSK",
+        "levelCode":  "HSK5",
+        "name":  "HSK 5"
+    },
+    {
+        "systemCode":  "HSK",
+        "levelCode":  "HSK6",
+        "name":  "HSK 6"
     }
 ]

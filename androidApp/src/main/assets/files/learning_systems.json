@@ -1,4 +1,4 @@
-﻿[
+[
     {
         "systemCode":  "CEFR",
         "description":  "Common European Framework of Reference for Languages",
@@ -13,5 +13,10 @@
         "systemCode":  "JLPT",
         "description":  "Japanese-Language Proficiency Test",
         "name":  "JLPT"
+    },
+    {
+        "systemCode":  "HSK",
+        "description":  "Hanyu Shuiping Kaoshi (Chinese Proficiency Test)",
+        "name":  "HSK"
     }
 ]

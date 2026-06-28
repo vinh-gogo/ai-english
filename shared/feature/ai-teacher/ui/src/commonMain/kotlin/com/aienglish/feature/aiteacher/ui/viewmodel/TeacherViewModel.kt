@@ -21,7 +21,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
 enum class LevelType {
-    CEFR, TOEIC, JLPT
+    CEFR, TOEIC, JLPT, HSK
 }
 
 data class TeacherUiState(
@@ -33,6 +33,7 @@ data class TeacherUiState(
     val selectedCefrLevel: String = "B1",
     val selectedToeicLevel: String = "500",
     val selectedJlptLevel: String = "N3",
+    val selectedHskLevel: String = "HSK3",
     val targetLanguage: String = "en",
     val isCustomTopicMode: Boolean = false,
     val customTopicInput: String = "",
@@ -60,6 +61,7 @@ data class TeacherUiState(
         LevelType.CEFR -> selectedCefrLevel
         LevelType.TOEIC -> "TOEIC $selectedToeicLevel"
         LevelType.JLPT -> selectedJlptLevel
+        LevelType.HSK -> selectedHskLevel
     }
 }
 
@@ -78,9 +80,17 @@ class TeacherViewModel(
     private var currentLessonHistoryId: Long? = null
 
     init {
-        val target = prefs.getLanguageTarget() // "en" or "ja"
-        val expectedType = if (target == "ja") LevelType.JLPT else LevelType.CEFR
-        val expectedLevel = if (expectedType == LevelType.JLPT) currentState.selectedJlptLevel else currentState.selectedCefrLevel
+        val target = prefs.getLanguageTarget() // "en", "ja", "zh"
+        val expectedType = when (target) {
+            "ja" -> LevelType.JLPT
+            "zh" -> LevelType.HSK
+            else -> LevelType.CEFR
+        }
+        val expectedLevel = when (expectedType) {
+            LevelType.JLPT -> currentState.selectedJlptLevel
+            LevelType.HSK -> currentState.selectedHskLevel
+            else -> currentState.selectedCefrLevel
+        }
         setState {
             copy(
                 targetLanguage = target,
@@ -93,12 +103,14 @@ class TeacherViewModel(
     private suspend fun ensureDatabaseSeeded() {
         val currentTopics = topicRepository.getTopics("CEFR", listOf("A1"))
         val currentJapaneseTopics = topicRepository.getTopics("JLPT", listOf("N5"))
-        if (currentTopics.isEmpty() || currentJapaneseTopics.size < 120) {
+        val currentChineseTopics = topicRepository.getTopics("HSK", listOf("HSK1"))
+        if (currentTopics.isEmpty() || currentJapaneseTopics.size < 120 || currentChineseTopics.isEmpty()) {
             val systemsStr = jsonResourceReader.readSystemsJson()
             val levelsStr = jsonResourceReader.readLevelsJson()
             val englishStr = jsonResourceReader.readEnglishTopicsJson()
             val japaneseStr = jsonResourceReader.readJapaneseTopicsJson()
-            topicRepository.seedDatabase(systemsStr, levelsStr, englishStr, japaneseStr)
+            val chineseStr = jsonResourceReader.readChineseTopicsJson()
+            topicRepository.seedDatabase(systemsStr, levelsStr, englishStr, japaneseStr, chineseStr)
         }
     }
 
@@ -107,6 +119,7 @@ class TeacherViewModel(
             LevelType.CEFR -> "CEFR"
             LevelType.TOEIC -> "TOEIC"
             LevelType.JLPT -> "JLPT"
+            LevelType.HSK -> "HSK"
         }
         viewModelScope.launch {
             try {
@@ -127,11 +140,19 @@ class TeacherViewModel(
     }
 
     fun syncTargetLanguage() {
-        val target = prefs.getLanguageTarget() // "en" or "ja"
+        val target = prefs.getLanguageTarget() // "en", "ja", "zh"
         val currentTarget = currentState.targetLanguage
         if (target != currentTarget) {
-            val expectedType = if (target == "ja") LevelType.JLPT else LevelType.CEFR
-            val expectedLevel = if (expectedType == LevelType.JLPT) currentState.selectedJlptLevel else currentState.selectedCefrLevel
+            val expectedType = when (target) {
+                "ja" -> LevelType.JLPT
+                "zh" -> LevelType.HSK
+                else -> LevelType.CEFR
+            }
+            val expectedLevel = when (expectedType) {
+                LevelType.JLPT -> currentState.selectedJlptLevel
+                LevelType.HSK -> currentState.selectedHskLevel
+                else -> currentState.selectedCefrLevel
+            }
             setState {
                 copy(
                     targetLanguage = target,
@@ -151,9 +172,15 @@ class TeacherViewModel(
             LevelType.CEFR -> currentState.selectedCefrLevel
             LevelType.TOEIC -> currentState.selectedToeicLevel
             LevelType.JLPT -> currentState.selectedJlptLevel
+            LevelType.HSK -> currentState.selectedHskLevel
         }
         setState { copy(levelType = type) }
         loadTopics(type, activeLevel)
+    }
+
+    fun onHskLevelSelected(level: String) {
+        setState { copy(selectedHskLevel = level) }
+        loadTopics(LevelType.HSK, level)
     }
 
     fun onCefrLevelSelected(level: String) {
@@ -365,13 +392,15 @@ class TeacherViewModel(
 
                 val isToeic = history.level.startsWith("TOEIC")
                 val isJlpt = history.level.startsWith("N")
-                val expectedType = if (isToeic) LevelType.TOEIC else if (isJlpt) LevelType.JLPT else LevelType.CEFR
+                val isHsk = history.level.startsWith("HSK")
+                val expectedType = if (isToeic) LevelType.TOEIC else if (isJlpt) LevelType.JLPT else if (isHsk) LevelType.HSK else LevelType.CEFR
                 val levelValue = if (isToeic) history.level.removePrefix("TOEIC ").trim() else history.level
                 
                 val systemCode = when (expectedType) {
                     LevelType.CEFR -> "CEFR"
                     LevelType.TOEIC -> "TOEIC"
                     LevelType.JLPT -> "JLPT"
+                    LevelType.HSK -> "HSK"
                 }
                 
                 val compatible = getCompatibleLevels(levelValue)
@@ -397,6 +426,7 @@ class TeacherViewModel(
                         selectedCefrLevel = if (expectedType == LevelType.CEFR) levelValue else selectedCefrLevel,
                         selectedToeicLevel = if (expectedType == LevelType.TOEIC) levelValue else selectedToeicLevel,
                         selectedJlptLevel = if (expectedType == LevelType.JLPT) levelValue else selectedJlptLevel,
+                        selectedHskLevel = if (expectedType == LevelType.HSK) levelValue else selectedHskLevel,
                         lesson = teacherHistory.lesson,
                         userAnswers = teacherHistory.userAnswers,
                         explanations = teacherHistory.explanations,
@@ -414,7 +444,8 @@ class TeacherViewModel(
     fun onReTestLesson(history: LessonHistory) {
         val isToeic = history.level.startsWith("TOEIC")
         val isJlpt = history.level.startsWith("N")
-        val expectedType = if (isToeic) LevelType.TOEIC else if (isJlpt) LevelType.JLPT else LevelType.CEFR
+        val isHsk = history.level.startsWith("HSK")
+        val expectedType = if (isToeic) LevelType.TOEIC else if (isJlpt) LevelType.JLPT else if (isHsk) LevelType.HSK else LevelType.CEFR
         val levelValue = if (isToeic) history.level.removePrefix("TOEIC ").trim() else history.level
         
         viewModelScope.launch {
@@ -425,6 +456,7 @@ class TeacherViewModel(
                     LevelType.CEFR -> "CEFR"
                     LevelType.TOEIC -> "TOEIC"
                     LevelType.JLPT -> "JLPT"
+                    LevelType.HSK -> "HSK"
                 }
 
                 val compatible = getCompatibleLevels(levelValue)
@@ -438,7 +470,8 @@ class TeacherViewModel(
                         levelType = expectedType,
                         selectedCefrLevel = if (expectedType == LevelType.CEFR) levelValue else selectedCefrLevel,
                         selectedToeicLevel = if (expectedType == LevelType.TOEIC) levelValue else selectedToeicLevel,
-                        selectedJlptLevel = if (expectedType == LevelType.JLPT) levelValue else selectedJlptLevel
+                        selectedJlptLevel = if (expectedType == LevelType.JLPT) levelValue else selectedJlptLevel,
+                        selectedHskLevel = if (expectedType == LevelType.HSK) levelValue else selectedHskLevel
                     )
                 }
                 onStartLesson()
@@ -473,13 +506,15 @@ class TeacherViewModel(
 
                 val isToeic = history.level.startsWith("TOEIC")
                 val isJlpt = history.level.startsWith("N")
-                val expectedType = if (isToeic) LevelType.TOEIC else if (isJlpt) LevelType.JLPT else LevelType.CEFR
+                val isHsk = history.level.startsWith("HSK")
+                val expectedType = if (isToeic) LevelType.TOEIC else if (isJlpt) LevelType.JLPT else if (isHsk) LevelType.HSK else LevelType.CEFR
                 val levelValue = if (isToeic) history.level.removePrefix("TOEIC ").trim() else history.level
                 
                 val systemCode = when (expectedType) {
                     LevelType.CEFR -> "CEFR"
                     LevelType.TOEIC -> "TOEIC"
                     LevelType.JLPT -> "JLPT"
+                    LevelType.HSK -> "HSK"
                 }
 
                 val compatible = getCompatibleLevels(levelValue)
@@ -507,6 +542,7 @@ class TeacherViewModel(
                         selectedCefrLevel = if (expectedType == LevelType.CEFR) levelValue else selectedCefrLevel,
                         selectedToeicLevel = if (expectedType == LevelType.TOEIC) levelValue else selectedToeicLevel,
                         selectedJlptLevel = if (expectedType == LevelType.JLPT) levelValue else selectedJlptLevel,
+                        selectedHskLevel = if (expectedType == LevelType.HSK) levelValue else selectedHskLevel,
                         lesson = teacherHistory.lesson,
                         userAnswers = teacherHistory.userAnswers,
                         explanations = teacherHistory.explanations,

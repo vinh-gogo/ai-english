@@ -490,6 +490,8 @@ private fun LanguageSettingsSection(
                     .padding(2.dp)
             ) {
                 val isEnglish = state.languageTarget == "en"
+                val isJapanese = state.languageTarget == "ja"
+                val isChinese = state.languageTarget == "zh"
                 // Tiếng Anh
                 Box(
                     modifier = Modifier
@@ -510,7 +512,7 @@ private fun LanguageSettingsSection(
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(6.dp))
-                        .background(if (!isEnglish) colors.accent else Color.Transparent)
+                        .background(if (isJapanese) colors.accent else Color.Transparent)
                         .clickable { vm.onLanguageTargetChanged("ja") }
                         .padding(horizontal = 12.dp, vertical = 6.dp),
                     contentAlignment = Alignment.Center
@@ -519,7 +521,23 @@ private fun LanguageSettingsSection(
                         "Tiếng Nhật",
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,
-                        color = if (!isEnglish) Color.White else colors.mutedText
+                        color = if (isJapanese) Color.White else colors.mutedText
+                    )
+                }
+                // Tiếng Trung
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(6.dp))
+                        .background(if (isChinese) colors.accent else Color.Transparent)
+                        .clickable { vm.onLanguageTargetChanged("zh") }
+                        .padding(horizontal = 12.dp, vertical = 6.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "Tiếng Trung",
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = if (isChinese) Color.White else colors.mutedText
                     )
                 }
             }

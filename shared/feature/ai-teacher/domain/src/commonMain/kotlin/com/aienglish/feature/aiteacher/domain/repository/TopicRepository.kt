@@ -8,6 +8,7 @@ interface TopicRepository {
         systemsJson: String,
         levelsJson: String,
         englishTopicsJson: String,
-        japaneseTopicsJson: String
+        japaneseTopicsJson: String,
+        chineseTopicsJson: String
     )
 }
