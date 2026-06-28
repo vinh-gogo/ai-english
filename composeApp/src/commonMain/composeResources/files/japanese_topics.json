@@ -1,301 +1,3601 @@
 ﻿[
     {
         "id":  300,
-        "name":  "Giới thiệu bản thân bằng tiếng Nhật (Jikoshoukai)",
+        "name":  "Giới thiệu bản thân",
         "systemCode":  "JLPT",
         "levelCode":  "N5"
     },
     {
         "id":  301,
-        "name":  "Chào hỏi hàng ngày và các câu cảm ơn/xin lỗi cơ bản",
+        "name":  "Chào hỏi hàng ngày",
         "systemCode":  "JLPT",
         "levelCode":  "N5"
     },
     {
         "id":  302,
-        "name":  "Hỏi thăm sức khỏe và cuộc sống thường nhật",
+        "name":  "Hỏi thăm sức khỏe",
         "systemCode":  "JLPT",
         "levelCode":  "N5"
     },
     {
         "id":  303,
-        "name":  "Hỏi đường đi đến nhà ga, siêu thị, đền chùa",
+        "name":  "Hỏi đường đi",
         "systemCode":  "JLPT",
         "levelCode":  "N5"
     },
     {
         "id":  304,
-        "name":  "Đặt đồ ăn và gọi nước uống tại nhà hàng Nhật",
+        "name":  "Đặt đồ ăn tại nhà hàng",
         "systemCode":  "JLPT",
         "levelCode":  "N5"
     },
     {
         "id":  305,
-        "name":  "Mua sắm quần áo: hỏi giá cả, kích cỡ, màu sắc",
+        "name":  "Mua sắm quần áo",
         "systemCode":  "JLPT",
         "levelCode":  "N5"
     },
     {
         "id":  306,
-        "name":  "Đi siêu thị mua thực phẩm và rau củ",
+        "name":  "Đi siêu thị mua thực phẩm",
         "systemCode":  "JLPT",
         "levelCode":  "N5"
     },
     {
         "id":  307,
-        "name":  "Tại quầy thanh toán tiền mặt hoặc thẻ",
+        "name":  "Tại quầy thanh toán",
         "systemCode":  "JLPT",
         "levelCode":  "N5"
     },
     {
         "id":  308,
-        "name":  "Đi xe buýt và tàu điện ngầm ở Tokyo",
+        "name":  "Đi xe buýt và tàu điện",
         "systemCode":  "JLPT",
         "levelCode":  "N5"
     },
     {
         "id":  309,
-        "name":  "Hỏi giờ giấc và lịch trình chạy của tàu",
+        "name":  "Mua vé tàu/vé phim",
         "systemCode":  "JLPT",
         "levelCode":  "N5"
     },
     {
         "id":  310,
-        "name":  "Thời tiết các mùa và hiện tượng tự nhiên",
+        "name":  "Hỏi giờ giấc",
         "systemCode":  "JLPT",
-        "levelCode":  "N4"
+        "levelCode":  "N5"
     },
     {
         "id":  311,
-        "name":  "Giới thiệu các thành viên trong gia đình",
+        "name":  "Thời tiết và mùa",
         "systemCode":  "JLPT",
-        "levelCode":  "N4"
+        "levelCode":  "N5"
     },
     {
         "id":  312,
-        "name":  "Nói về sở thích: nghe nhạc, xem phim, đọc manga",
+        "name":  "Giới thiệu gia đình",
         "systemCode":  "JLPT",
-        "levelCode":  "N4"
+        "levelCode":  "N5"
     },
     {
         "id":  313,
-        "name":  "Lập kế hoạch đi chơi cuối tuần cùng bạn bè",
+        "name":  "Nói về sở thích",
         "systemCode":  "JLPT",
-        "levelCode":  "N4"
+        "levelCode":  "N5"
     },
     {
         "id":  314,
-        "name":  "Mô tả ngôi nhà và các phòng chức năng",
+        "name":  "Lập kế hoạch cuối tuần",
         "systemCode":  "JLPT",
-        "levelCode":  "N4"
+        "levelCode":  "N5"
     },
     {
         "id":  315,
-        "name":  "Đi du lịch nghỉ dưỡng và tham quan danh lam thắng cảnh",
+        "name":  "Hẹn gặp bạn bè",
         "systemCode":  "JLPT",
-        "levelCode":  "N4"
+        "levelCode":  "N5"
     },
     {
         "id":  316,
-        "name":  "Thủ tục tại sân bay và ký gửi hành lý",
+        "name":  "Mô tả nhà cửa",
         "systemCode":  "JLPT",
-        "levelCode":  "N4"
+        "levelCode":  "N5"
     },
     {
         "id":  317,
-        "name":  "Nhận phòng (Check-in) và trả phòng (Check-out) khách sạn",
+        "name":  "Đi du lịch nghỉ dưỡng",
         "systemCode":  "JLPT",
-        "levelCode":  "N4"
+        "levelCode":  "N5"
     },
     {
         "id":  318,
-        "name":  "Đặt lịch hẹn gặp mặt trực tiếp hoặc online",
+        "name":  "Tại sân bay",
         "systemCode":  "JLPT",
-        "levelCode":  "N4"
+        "levelCode":  "N5"
     },
     {
         "id":  319,
-        "name":  "Đi cắt tóc và làm đẹp tại Hair Salon",
+        "name":  "Nhận và trả phòng khách sạn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  320,
+        "name":  "Đặt lịch hẹn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  321,
+        "name":  "Đi cắt tóc tại salon",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  322,
+        "name":  "Khám bệnh ở bệnh viện",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  323,
+        "name":  "Mua thuốc ở nhà thuốc",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  324,
+        "name":  "Mở tài khoản ngân hàng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  325,
+        "name":  "Đi bưu điện gửi thư",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  326,
+        "name":  "Đổi tiền tệ ngoại tệ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  327,
+        "name":  "Công việc văn phòng hàng ngày",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  328,
+        "name":  "Phỏng vấn xin việc",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  329,
+        "name":  "Giới thiệu dự án",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  330,
+        "name":  "Gọi điện thoại công việc",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  331,
+        "name":  "Viết email công sở",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  332,
+        "name":  "Làm việc nhóm",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  333,
+        "name":  "Xin nghỉ phép",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  334,
+        "name":  "Tham gia cuộc họp",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  335,
+        "name":  "Tăng ca và làm thêm",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  336,
+        "name":  "Đặt đồ online",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  337,
+        "name":  "Phản ánh chất lượng dịch vụ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  338,
+        "name":  "Ăn tối cùng đồng nghiệp",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  339,
+        "name":  "Tiệc chào mừng thành viên mới",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  340,
+        "name":  "Chúc mừng sinh nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  341,
+        "name":  "Quà tặng ngày lễ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  342,
+        "name":  "Đi xem phim rạp",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  343,
+        "name":  "Đi hát Karaoke",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  344,
+        "name":  "Đi công viên giải trí",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  345,
+        "name":  "Tham quan bảo tàng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  346,
+        "name":  "Đi dạo công viên",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  347,
+        "name":  "Mùa hoa anh đạo nở",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  348,
+        "name":  "Lễ hội pháo hoa mùa hè",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  349,
+        "name":  "Ngắm lá đỏ mùa thu",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  350,
+        "name":  "Trượt tuyết mùa đông",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  351,
+        "name":  "Đi mua sách ở nhà sách",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  352,
+        "name":  "Học tiếng Nhật mỗi ngày",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  353,
+        "name":  "Nói về thể thao yêu thích",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  354,
+        "name":  "Chơi nhạc cụ và ca hát",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  355,
+        "name":  "Đi mua sắm đồ điện tử",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  356,
+        "name":  "Chăm sóc thú cưng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  357,
+        "name":  "Nấu ăn gia đình",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  358,
+        "name":  "Dọn dẹp nhà cửa",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  359,
+        "name":  "Trồng cây và làm vườn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  360,
+        "name":  "Kể về kỳ nghỉ hè",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  361,
+        "name":  "Nói về quê hương",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  362,
+        "name":  "Chia sẻ ước mơ tương lai",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  363,
+        "name":  "Kỷ niệm đáng nhớ thời đi học",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  364,
+        "name":  "Lần đầu đến Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  365,
+        "name":  "Giao lưu văn hóa quốc tế",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  366,
+        "name":  "Trò chuyện về ẩm thực Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  367,
+        "name":  "Món ăn Việt Nam yêu thích",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  368,
+        "name":  "Thói quen đọc sách buổi tối",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  369,
+        "name":  "Xem hoạt hình Anime và đọc Manga",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  370,
+        "name":  "Tập thể dục buổi sáng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  371,
+        "name":  "Mua sắm đồ lưu niệm",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  372,
+        "name":  "Thuê nhà ở Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  373,
+        "name":  "Đi tìm việc làm thêm (Arubaito)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  374,
+        "name":  "Cách phân loại rác thải",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  375,
+        "name":  "Gặp gỡ hàng xóm mới",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  376,
+        "name":  "Đăng ký thẻ thư viện",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  377,
+        "name":  "Mất đồ và trình báo cảnh sát",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  378,
+        "name":  "Sự cố hỏng hóc đồ đạc",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  379,
+        "name":  "Gặp thời tiết xấu (bão, động đất)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  380,
+        "name":  "Gửi hành lý ký gửi",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  381,
+        "name":  "Chuyến bay bị trễ giờ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  382,
+        "name":  "Lạc đường ở ga tàu lớn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  383,
+        "name":  "Mua sắm tại cửa hàng tiện lợi (Konbini)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  384,
+        "name":  "Thưởng thức trà đạo",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  385,
+        "name":  "Trải nghiệm tắm Onsen",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  386,
+        "name":  "Mặc thử trang phục Yukata/Kimono",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  387,
+        "name":  "Viếng đền chùa ngày đầu năm (Hatsumode)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  388,
+        "name":  "Đi chợ đồ cũ (Flea Market)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  389,
+        "name":  "Lên kế hoạch giảm cân",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  390,
+        "name":  "Đi cắm trại dã ngoại",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  391,
+        "name":  "Chụp ảnh phong cảnh",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  392,
+        "name":  "Nói về thần tượng/ca sĩ yêu thích",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  393,
+        "name":  "Mua sắm mỹ phẩm làm đẹp",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  394,
+        "name":  "Sử dụng mạng xã hội",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  395,
+        "name":  "Bàn về công nghệ mới AI",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  396,
+        "name":  "Đọc tin tức buổi sáng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  397,
+        "name":  "Lập kế hoạch tiết kiệm tiền",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  398,
+        "name":  "Học một kỹ năng mới",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  399,
+        "name":  "Tự suy ngẫm về bản thân",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  400,
+        "name":  "Hẹn gặp bác sĩ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  401,
+        "name":  "Mượn sách thư viện",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  402,
+        "name":  "Nhận quà lưu niệm",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  403,
+        "name":  "Đi dã ngoại ở núi Fuji",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  404,
+        "name":  "Tham gia lớp học cắm hoa (Ikebana)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  405,
+        "name":  "Làm thẻ căn cước tại uỷ ban quận",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  406,
+        "name":  "Thuê xe đạp công cộng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  407,
+        "name":  "Mua vé tàu Shinkansen",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  408,
+        "name":  "Nói về vật nuôi yêu thích",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  409,
+        "name":  "Trải nghiệm làm sushi",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  410,
+        "name":  "Đi xem lễ hội đền thờ (Matsuri)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  411,
+        "name":  "Mua sắm đồ cũ tại chợ đồ cổ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  412,
+        "name":  "Cách sử dụng máy bán nước tự động",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  413,
+        "name":  "Lên lịch trình học tập hàng tuần",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  414,
+        "name":  "Tả ngoại hình của bạn bè",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  415,
+        "name":  "Nói về thời tiết hôm nay",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  416,
+        "name":  "Mua sắm nội thất gia đình",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  417,
+        "name":  "Đi dạo bờ biển vào mùa hè",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  418,
+        "name":  "Tự làm bữa trưa mang đi làm (Bento)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  419,
+        "name":  "Dọn dẹp rác ở khu phố",
+        "systemCode":  "JLPT",
+        "levelCode":  "N5"
+    },
+    {
+        "id":  420,
+        "name":  "Nói về kế hoạch kỳ nghỉ đông",
         "systemCode":  "JLPT",
         "levelCode":  "N4"
     },
     {
-        "id":  320,
-        "name":  "Khám bệnh tại bệnh viện và mua thuốc theo đơn",
+        "id":  421,
+        "name":  "Chia sẻ về món ăn quê hương",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  422,
+        "name":  "Tham gia câu lạc bộ thể thao trường học",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  423,
+        "name":  "Hỏi thông tin ở quầy hướng dẫn (Information Desk)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  424,
+        "name":  "Chuẩn bị hành lý đi công tác",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  425,
+        "name":  "Nói về thói quen ngủ muộn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  426,
+        "name":  "Đi khám răng định kỳ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  427,
+        "name":  "Đăng ký lớp học nấu ăn Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  428,
+        "name":  "Mua sắm đồ dùng học tập",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  429,
+        "name":  "Giúp đỡ người già qua đường",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  430,
+        "name":  "Viết thiệp chúc Tết (Nengajo)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  431,
+        "name":  "Đi xem triển lãm tranh nghệ thuật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  432,
+        "name":  "Thuê phòng tập nhảy",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  433,
+        "name":  "Tìm kiếm đồ thất lạc trên tàu điện",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  434,
+        "name":  "Mua hoa tươi tặng mẹ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  435,
+        "name":  "Thảo luận về món ăn cay",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  436,
+        "name":  "Trải nghiệm mặc thử áo Happi",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  437,
+        "name":  "Mua vé xem hòa nhạc cổ điển",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  438,
+        "name":  "Dọn tuyết trước cửa nhà vào mùa đông",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  439,
+        "name":  "Giới thiệu các địa điểm nổi tiếng ở Hà Nội/Sài Gòn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  440,
+        "name":  "Tham quan tháp Tokyo (Tokyo Tower)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  441,
+        "name":  "Đi mua sắm tại khu phố điện tử Akihabara",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  442,
+        "name":  "Học cách viết chữ Hiragana/Katakana",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  443,
+        "name":  "Chia sẻ cảm nhận khi học Kanji",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  444,
+        "name":  "Đi sở thú xem gấu trúc",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  445,
+        "name":  "Đón người thân ở ga tàu",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  446,
+        "name":  "Thảo luận về lối sống lành mạnh",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  447,
+        "name":  "Kể về một ngày chủ nhật bận rộn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  448,
+        "name":  "Chia sẻ sở thích xem phim tài liệu",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  449,
+        "name":  "Đặt vé máy bay khứ hồi",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  450,
+        "name":  "Hướng dẫn cách đi tàu điện ngầm",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  451,
+        "name":  "Viết nhật ký hàng ngày bằng tiếng Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  452,
+        "name":  "Đi siêu thị điện máy Akihabara",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  453,
+        "name":  "Bàn về lợi ích của việc dậy sớm",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  454,
+        "name":  "Chia sẻ trải nghiệm đi lạc ở ga Shinjuku",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  455,
+        "name":  "Thảo luận về việc nuôi mèo/chó",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  456,
+        "name":  "Phỏng vấn bán thời gian (Arubaito)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  457,
+        "name":  "Bàn luận về văn hóa làm việc nhóm của người Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  458,
+        "name":  "Giải quyết mâu thuẫn nhỏ với đồng nghiệp",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  459,
+        "name":  "Thảo luận về sự khác biệt văn hóa Việt - Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  460,
+        "name":  "Chia sẻ kinh nghiệm tiết kiệm chi tiêu khi sống một mình",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  461,
+        "name":  "Báo cáo tiến độ công việc với cấp trên (Hou-Ren-So)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  462,
+        "name":  "Đăng ký tham gia hoạt động tình nguyện bảo vệ môi trường",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  463,
+        "name":  "Thảo luận về trào lưu ăn uống lành mạnh của giới trẻ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  464,
+        "name":  "Lập kế hoạch tổ chức tiệc tất niên công ty (Bonenkai)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  465,
+        "name":  "Bàn luận về việc học tiếng Nhật qua Anime",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  466,
+        "name":  "Kể về trải nghiệm làm việc tại cửa hàng tiện lợi",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  467,
+        "name":  "Thảo luận về tầm quan trọng của việc phân loại rác đúng cách",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  468,
+        "name":  "Đăng ký tham gia kỳ thi JLPT trực tuyến",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  469,
+        "name":  "Chia sẻ kinh nghiệm ôn thi JLPT N3",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  470,
+        "name":  "Bàn luận về thói quen đọc sách của người Nhật trên tàu điện",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  471,
+        "name":  "Gặp gỡ và trao đổi danh thiếp (Meishi)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  472,
+        "name":  "Thảo luận về xu hướng thanh toán không tiền mặt ở Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  473,
+        "name":  "Trải nghiệm làm thêm tại quán ăn truyền thống (Izakaya)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  474,
+        "name":  "Thảo luận về sự phổ biến của ẩm thực Nhật trên thế giới",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  475,
+        "name":  "Nói về kế hoạch đi thực tập mùa hè",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  476,
+        "name":  "Chia sẻ cách cân bằng giữa học và làm",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  477,
+        "name":  "Thảo luận về dịch vụ giao hàng nhanh ở Nhật (Takkyubin)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  478,
+        "name":  "Trình bày ý kiến về việc bảo tồn làng cổ truyền thống",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  479,
+        "name":  "Trao đổi về xu hướng thời trang Vintage của giới trẻ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  480,
+        "name":  "Cách cư xử khi tham dự đám cưới người Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  481,
+        "name":  "Thảo luận về tác hại của việc thức khuya lướt điện thoại",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  482,
+        "name":  "Trao đổi về văn hóa xếp hàng của người Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  483,
+        "name":  "Lập kế hoạch du học tự túc tại Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  484,
+        "name":  "Bàn về vai trò của hoạt động thể chất đối với sức khỏe trí não",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  485,
+        "name":  "Trò chuyện về nghệ thuật gấp giấy Origami",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  486,
+        "name":  "Thảo luận về cách giảm căng thẳng (Stress) trong cuộc sống",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  487,
+        "name":  "Chia sẻ về món đồ chơi tuổi thơ yêu thích",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  488,
+        "name":  "Trao đổi về thói quen mua sắm thông minh thời bão giá",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  489,
+        "name":  "Nói về những thay đổi của quê hương sau 10 năm",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  490,
+        "name":  "Thảo luận về lợi ích và tác hại của Internet đối với trẻ em",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  491,
+        "name":  "Lên kế hoạch cho buổi họp mặt cựu học sinh",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  492,
+        "name":  "Kể về một người thầy giáo đã truyền cảm hứng cho bạn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  493,
+        "name":  "Thảo luận về văn hóa quà tặng lưu niệm (Omiyage) ở Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  494,
+        "name":  "Chia sẻ về một cuốn sách self-help bạn tâm đắc nhất",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  495,
+        "name":  "Bàn về tầm quan trọng của việc học ngoại ngữ thứ hai",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  496,
+        "name":  "Thảo luận về việc bảo vệ động vật hoang dã",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  497,
+        "name":  "Chia sẻ cách quản lý thời gian hiệu quả (Pomodoro)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  498,
+        "name":  "Trao đổi về xu hướng đi du lịch một mình (Solo Travel)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  499,
+        "name":  "Nói về sự phát triển của xe điện (EV)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  500,
+        "name":  "Thảo luận về văn hóa cúi đầu chào (Ojigi) của người Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  501,
+        "name":  "Chia sẻ về một bài hát tiếng Nhật yêu thích của bạn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  502,
+        "name":  "Trò chuyện về lễ trưởng thành (Seijin no Hi) ở Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  503,
+        "name":  "Thảo luận về vấn đề lãng phí thức ăn trong nhà hàng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  504,
+        "name":  "Trao đổi về các phương pháp tái chế đồ nhựa cũ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  505,
+        "name":  "Nói về sự thay đổi của khí hậu toàn cầu hiện nay",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  506,
+        "name":  "Thảo luận về thói quen ăn sáng lành mạnh của người Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  507,
+        "name":  "Bàn về tầm quan trọng của giấc ngủ đối với hiệu suất làm việc",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  508,
+        "name":  "Chia sẻ kinh nghiệm thuê căn hộ tại các thành phố lớn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  509,
+        "name":  "Thảo luận về văn hóa đi hát Karaoke tập thể",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  510,
+        "name":  "Trao đổi về việc chuẩn bị cho kỳ phỏng vấn xin học bổng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  511,
+        "name":  "Nói về vai trò của thư viện trong kỷ nguyên số",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  512,
+        "name":  "Thảo luận về ảnh hưởng của thời tiết đến tâm trạng con người",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  513,
+        "name":  "Chia sẻ cảm nhận khi lần đầu đi tàu Shinkansen",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  514,
+        "name":  "Trao đổi về thói quen sử dụng túi vải bảo vệ môi trường",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  515,
+        "name":  "Thảo luận về văn hóa chúc rượu trong các buổi tiệc công sở",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  516,
+        "name":  "Già hóa dân số và thiếu hụt lao động ở Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  517,
+        "name":  "Vấn đề giảm tỷ lệ sinh (Shoushika) và giải pháp",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  518,
+        "name":  "Xu hướng làm việc từ xa (Telework) sau đại dịch",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  519,
+        "name":  "Ảnh hưởng của Trí tuệ nhân tạo (AI) tới thị trường lao động",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  520,
+        "name":  "Khái niệm Ikigai - Lẽ sống của người Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  521,
+        "name":  "Tư duy Omotenashi trong ngành dịch vụ Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  522,
+        "name":  "Vấn đề bảo tồn văn hóa truyền thống trong thời đại toàn cầu hóa",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  523,
+        "name":  "Khái niệm Monozukuri - Tinh thần nghệ nhân trong sản xuất Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  524,
+        "name":  "Ảnh hưởng của mạng xã hội tới sức khỏe tinh thần của thanh thiếu niên",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  525,
+        "name":  "Biến đổi khí hậu và cam kết giảm phát thải carbon (Net Zero)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  526,
+        "name":  "Bàn luận về năng lượng tái tạo (gió, mặt trời, hạt nhân)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  527,
+        "name":  "Khoảng cách giàu nghèo trong xã hội hiện đại",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  528,
+        "name":  "Vấn đề bình đẳng giới tại nơi làm việc",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  529,
+        "name":  "Xu hướng kết hôn muộn và lối sống độc thân",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  530,
+        "name":  "Tầm quan trọng của giáo dục STEM đối với thế hệ tương lai",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  531,
+        "name":  "Sự trỗi dậy của thương mại điện tử và tác động tới bán lẻ truyền thống",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  532,
+        "name":  "Vấn đề an ninh mạng và bảo vệ thông tin cá nhân",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  533,
+        "name":  "Khái niệm Wabi-Sabi - Vẻ đẹp của sự không hoàn hảo",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  534,
+        "name":  "Nghệ thuật tối giản (Minimalism) và lối sống Danshari",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  535,
+        "name":  "Tác động của du lịch đại chúng (Overtourism) tới đời sống người dân địa phương",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  536,
+        "name":  "Bàn về văn hóa làm việc quá sức (Karoshi) ở Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  537,
+        "name":  "Tầm quan trọng của sức khỏe tinh thần tại môi trường công sở",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  538,
+        "name":  "Vấn đề rác thải nhựa đại dương và giải pháp toàn cầu",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  539,
+        "name":  "Ảnh hưởng của toàn cầu hóa tới sự đa dạng ngôn ngữ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N4"
+    },
+    {
+        "id":  540,
+        "name":  "Vai trò của người cao tuổi trong nền kinh tế bạc (Silver Economy)",
         "systemCode":  "JLPT",
         "levelCode":  "N3"
     },
     {
-        "id":  321,
-        "name":  "Mở tài khoản ngân hàng và thẻ ATM nội địa",
+        "id":  541,
+        "name":  "Thảo luận về việc sử dụng công nghệ thực tế ảo (VR) trong y học",
         "systemCode":  "JLPT",
         "levelCode":  "N3"
     },
     {
-        "id":  322,
-        "name":  "Đi bưu điện gửi thư, bưu phẩm bằng đường hàng không",
+        "id":  542,
+        "name":  "Bàn về đạo đức nghiên cứu công nghệ sinh học và chỉnh sửa gen",
         "systemCode":  "JLPT",
         "levelCode":  "N3"
     },
     {
-        "id":  323,
-        "name":  "Công việc văn phòng hàng ngày và báo cáo tiến độ",
+        "id":  543,
+        "name":  "Vấn đề đô thị hóa quá mức và sự suy thoái của vùng nông thôn",
         "systemCode":  "JLPT",
         "levelCode":  "N3"
     },
     {
-        "id":  324,
-        "name":  "Phỏng vấn xin việc bán thời gian (Arubaito)",
+        "id":  544,
+        "name":  "Tầm quan trọng của việc đọc sách giấy trong kỷ nguyên số",
         "systemCode":  "JLPT",
         "levelCode":  "N3"
     },
     {
-        "id":  325,
-        "name":  "Gọi điện thoại trao đổi công việc ngắn",
+        "id":  545,
+        "name":  "Sự phát triển của xe tự lái và tương lai ngành giao thông",
         "systemCode":  "JLPT",
         "levelCode":  "N3"
     },
     {
-        "id":  326,
-        "name":  "Viết email công sở thông báo lịch họp",
+        "id":  546,
+        "name":  "Khái niệm Kaizen - Triết lý cải tiến liên tục của doanh nghiệp Nhật",
         "systemCode":  "JLPT",
         "levelCode":  "N3"
     },
     {
-        "id":  327,
-        "name":  "Xin nghỉ phép và bàn giao công việc tạm thời",
+        "id":  547,
+        "name":  "Vấn đề rác thải điện tử và phương pháp xử lý bền vững",
         "systemCode":  "JLPT",
         "levelCode":  "N3"
     },
     {
-        "id":  328,
-        "name":  "Trào lưu mua sắm online trên các sàn thương mại điện tử",
+        "id":  548,
+        "name":  "Đạo đức kinh doanh và trách nhiệm xã hội của doanh nghiệp (CSR)",
         "systemCode":  "JLPT",
         "levelCode":  "N3"
     },
     {
-        "id":  329,
-        "name":  "Thói quen tập thể dục và duy trì sức khỏe tinh thần",
+        "id":  549,
+        "name":  "Sự khác biệt về tư duy giao tiếp gián tiếp của người Nhật",
         "systemCode":  "JLPT",
         "levelCode":  "N3"
     },
     {
-        "id":  330,
-        "name":  "Thảo luận về sự khác biệt văn hóa Việt Nam - Nhật Bản",
+        "id":  550,
+        "name":  "Thảo luận về vai trò của nghệ thuật đối với sự phát triển tư duy con người",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  551,
+        "name":  "Bàn về sự ảnh hưởng của truyền thông đại chúng đối với dư luận xã hội",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  552,
+        "name":  "Vấn đề ô nhiễm tiếng ồn tại các đô thị lớn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  553,
+        "name":  "Triết lý Zen (Thiền) và ứng dụng trong thiết kế hiện đại",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  554,
+        "name":  "Tầm quan trọng của đa dạng sinh học đối với hệ sinh thái trái đất",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  555,
+        "name":  "Sự thay đổi trong cơ cấu gia đình truyền thống",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  556,
+        "name":  "Vấn đề nhập cư và lao động nước ngoài tại Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  557,
+        "name":  "Thảo luận về hệ thống giáo dục đại học và định hướng nghề nghiệp",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  558,
+        "name":  "Bàn về khái niệm hạnh phúc trong xã hội tiêu dùng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  559,
+        "name":  "Tầm quan trọng của việc học tập suốt đời (Lifelong Learning)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  560,
+        "name":  "Vai trò của tổ chức phi chính phủ (NGO) trong cứu trợ thiên tai",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  561,
+        "name":  "Sự phát triển của nông nghiệp thông minh và an ninh lương thực",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  562,
+        "name":  "Thảo luận về ảnh hưởng của văn hóa đại chúng (Pop Culture) Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  563,
+        "name":  "Bàn về tương lai của tiền điện tử và công nghệ Blockchain",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  564,
+        "name":  "Vấn đề cô đơn trong xã hội hiện đại (lối sống Kodokushi)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  565,
+        "name":  "Tầm quan trọng của việc bảo tồn tài nguyên nước ngọt",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  566,
+        "name":  "Khái niệm Kintsugi - Nghệ thuật hàn gắn vết nứt bằng vàng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  567,
+        "name":  "Vai trò của việc rèn luyện tư duy phản biện (Critical Thinking)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  568,
+        "name":  "Thảo luận về các hiệp định thương mại tự do (FTA)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  569,
+        "name":  "Bàn về sự phát triển của công nghệ in 3D trong xây dựng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  570,
+        "name":  "Vấn đề bảo vệ quyền sở hữu trí tuệ toàn cầu",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  571,
+        "name":  "Tầm quan trọng của giáo dục bảo vệ môi trường từ bậc tiểu học",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  572,
+        "name":  "Sự suy giảm nguồn lợi thủy sản do đánh bắt quá mức",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  573,
+        "name":  "Thảo luận về xu hướng tiêu dùng xanh và sản phẩm hữu cơ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  574,
+        "name":  "Bàn về triết lý giáo dục của các trường học Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  575,
+        "name":  "Vai trò của phụ nữ trong ban lãnh đạo doanh nghiệp",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  576,
+        "name":  "Vấn đề căng thẳng địa chính trị và hợp tác kinh tế quốc tế",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  577,
+        "name":  "Khái niệm Shinrin-yoku - Tắm rừng để trị liệu tinh thần",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  578,
+        "name":  "Thảo luận về sự phát triển của dịch vụ chia sẻ xe (Ride-sharing)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  579,
+        "name":  "Bàn về việc sử dụng robot chăm sóc người cao tuổi ở Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  580,
+        "name":  "Vấn đề rác thải dệt may và thời trang nhanh (Fast Fashion)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  581,
+        "name":  "Tầm quan trọng của việc duy trì các lễ hội truyền thống địa phương",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  582,
+        "name":  "Sự phát triển của các đô thị thông minh (Smart City) bền vững",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  583,
+        "name":  "Thảo luận về văn hóa xin lỗi (O-jigi và Apology culture) ở Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  584,
+        "name":  "Bàn về ảnh hưởng của đô thị hóa tới đời sống chim muông thú hoang",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  585,
+        "name":  "Vai trò của bảo hiểm xã hội trong việc đảm bảo an sinh tuổi già",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  586,
+        "name":  "Vấn đề ô nhiễm ánh sáng tại các thành phố lớn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  587,
+        "name":  "Khái niệm Mottainai - Tinh thần trân trọng và chống lãng phí",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  588,
+        "name":  "Thảo luận về nghệ thuật làm vườn Nhật Bản (Nihon Teien)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  589,
+        "name":  "Bàn về tương lai của việc thám hiểm không gian vũ trụ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  590,
+        "name":  "Vấn đề suy giảm nguồn nước ngầm do khai thác công nghiệp",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  591,
+        "name":  "Tầm quan trọng của việc rèn luyện khả năng thích ứng (Resilience)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  592,
+        "name":  "Sự phát triển của công nghệ sinh học trong chế tạo thuốc mới",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  593,
+        "name":  "Thảo luận về hệ thống giao thông công cộng thông minh",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  594,
+        "name":  "Bàn về đạo đức sử dụng AI trong nghệ thuật sáng tạo",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  595,
+        "name":  "Tầm quan trọng của việc cân bằng giữa bảo tồn và phát triển du lịch",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  596,
+        "name":  "Khái niệm Bushido - Tinh thần Võ sĩ đạo trong xã hội hiện đại",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  597,
+        "name":  "Thảo luận về sự phát triển của kinh tế tuần hoàn (Circular Economy)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  598,
+        "name":  "Bàn về xu hướng tái chế nước thải sinh hoạt",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  599,
+        "name":  "Vấn đề suy thoái đất nông nghiệp và giải pháp cải tạo đất",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  600,
+        "name":  "Tầm quan trọng của việc bảo vệ rừng ngập mặn ven biển",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  601,
+        "name":  "Vai trò của việc rèn luyện kỹ năng mềm đối với sinh viên mới ra trường",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  602,
+        "name":  "Thảo luận về văn hóa uống trà và đàm đạo công sở",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  603,
+        "name":  "Bàn về sự phát triển của công nghệ Nano và ứng dụng y tế",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  604,
+        "name":  "Vấn đề thất nghiệp của giới trẻ và các chương trình hỗ trợ khởi nghiệp",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  605,
+        "name":  "Tầm quan trọng của việc phát triển giao thông thân thiện với môi trường",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  606,
+        "name":  "Khái niệm Giri và Ninjo - Nghĩa vụ và tình người trong văn hóa Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  607,
+        "name":  "Thảo luận về tầm quan trọng của việc duy trì hòa bình thế giới",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  608,
+        "name":  "Bàn về sự phát triển của các công nghệ lọc nước sạch quy mô lớn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  609,
+        "name":  "Vấn đề phân biệt đối xử đối với người khuyết tật và giải pháp hòa nhập",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  610,
+        "name":  "Tầm quan trọng của việc đầu tư vào các dự án nghiên cứu khoa học cơ bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  611,
+        "name":  "Vai trò của truyền thông xã hội trong việc cảnh báo thiên tai",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  612,
+        "name":  "Thảo luận về xu hướng đô thị hóa sinh thái (Eco-urbanism)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  613,
+        "name":  "Bàn về việc sử dụng drone trong nông nghiệp và giao hàng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  614,
+        "name":  "Vấn đề gia tăng rác thải nhựa dùng một lần tại các hộ gia đình",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  615,
+        "name":  "Tầm quan trọng của việc giáo dục về bình đẳng giới từ sớm",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  616,
+        "name":  "Khái niệm Ukiyo - Thế giới trôi nổi và tinh thần nghệ thuật Edo",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  617,
+        "name":  "Thảo luận về tác động của biến đổi khí hậu tới mùa màng thế giới",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  618,
+        "name":  "Bàn về việc chuyển dịch năng lượng từ hóa thạch sang hydro sạch",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  619,
+        "name":  "Vấn đề an toàn vệ sinh thực phẩm trong chuỗi cung ứng toàn cầu",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  620,
+        "name":  "Tầm quan trọng của việc phát triển kỹ năng tự học (Self-learning)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  621,
+        "name":  "Vai trò của các khu bảo tồn thiên nhiên đối với bảo vệ động vật hoang dã",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  622,
+        "name":  "Thảo luận về xu hướng làm việc linh hoạt (Flexitime)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  623,
+        "name":  "Bàn về tác động của sách nói (Audiobook) tới thói quen đọc sách",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  624,
+        "name":  "Vấn đề ô nhiễm hạt vi nhựa trong thức ăn và nước uống",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  625,
+        "name":  "Tầm quan trọng của việc bảo tồn các rặng san hô dưới đại dương",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  626,
+        "name":  "Triết lý Shinto (Thần đạo) và sự tôn sùng thiên nhiên của người Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  627,
+        "name":  "Thảo luận về sự phát triển của công nghệ dịch thuật thời gian thực",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  628,
+        "name":  "Bàn về ảnh hưởng của việc tăng học phí đại học tới cơ hội học tập",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  629,
+        "name":  "Vấn đề bảo đảm quyền lợi cho người lao động thời vụ (Gig Economy)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  630,
+        "name":  "Tầm quan trọng của việc duy trì và phát triển ngôn ngữ dân tộc thiểu số",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  631,
+        "name":  "Vai trò của việc rèn luyện thói quen tự phản tỉnh (Self-reflection)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  632,
+        "name":  "Thảo luận về sự phát triển của y học cá thể hóa (Personalized Medicine)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  633,
+        "name":  "Bàn về xu hướng thiết kế kiến trúc xanh tiết kiệm năng lượng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  634,
+        "name":  "Vấn đề cạn kiệt tài nguyên khoáng sản quý hiếm trên thế giới",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  635,
+        "name":  "Tầm quan trọng của việc nâng cao nhận thức về an toàn giao thông đường bộ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  636,
+        "name":  "Khái niệm Hannya - Hình tượng mặt nạ trong nghệ thuật kịch Noh",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  637,
+        "name":  "Thảo luận về tác động của việc đô thị hóa tới mực nước ngầm đô thị",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  638,
+        "name":  "Bàn về việc sử dụng năng lượng địa nhiệt tại các vùng núi lửa",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  639,
+        "name":  "Vấn đề bảo vệ quyền động vật trong các phòng thí nghiệm khoa học",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  640,
+        "name":  "Tầm quan trọng của việc rèn luyện trí tuệ cảm xúc (EQ) cho trẻ em",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  641,
+        "name":  "Vai trò của việc quảng bá du lịch văn hóa bền vững",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  642,
+        "name":  "Thảo luận về xu hướng sử dụng vật liệu phân hủy sinh học (Biodegradable)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  643,
+        "name":  "Bàn về tác động của việc học trực tuyến đối với kỹ năng xã hội của học sinh",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  644,
+        "name":  "Vấn đề sa mạc hóa đất đai do biến đổi khí hậu và canh tác sai cách",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  645,
+        "name":  "Tầm quan trọng của việc bảo vệ các nguồn gene giống cây trồng bản địa",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  646,
+        "name":  "Khái niệm mono no aware - Nỗi buồn man mác trước sự vô thường",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  647,
+        "name":  "Thảo luận về sự phát triển của công nghệ sạc nhanh xe điện",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  648,
+        "name":  "Bàn về tương lai của việc khai thác tài nguyên ngoài vũ trụ (Space Mining)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  649,
+        "name":  "Vấn đề ô nhiễm nguồn nước do hóa chất bảo vệ thực vật trong nông nghiệp",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  650,
+        "name":  "Tầm quan trọng của việc rèn luyện kỹ năng đàm phán thương lượng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  651,
+        "name":  "Vai trò của việc bảo tồn các làng nghề thủ công truyền thống",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  652,
+        "name":  "Thảo luận về xu hướng sử dụng sợi dệt tự nhiên thân thiện với môi trường",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  653,
+        "name":  "Bàn về tác động của việc sử dụng robot tự động trong dây chuyền đóng gói",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  654,
+        "name":  "Vấn đề gia tăng lượng khí thải methane từ chăn nuôi gia súc",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  655,
+        "name":  "Tầm quan trọng của việc nâng cao chất lượng giáo dục vùng cao vùng sâu",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  656,
+        "name":  "Khái niệm Sado - Nghệ thuật trà đạo và nghi thức đón khách",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  657,
+        "name":  "Thảo luận về tầm quan trọng của việc xây dựng hệ thống cảnh báo sóng thần",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  658,
+        "name":  "Bàn về sự phát triển của các công nghệ thu hồi carbon (Carbon Capture)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  659,
+        "name":  "Vấn đề bảo vệ người tiêu dùng trước các quảng cáo sai sự thật trực tuyến",
+        "systemCode":  "JLPT",
+        "levelCode":  "N3"
+    },
+    {
+        "id":  660,
+        "name":  "Tầm quan trọng của việc đầu tư vào các dự án nghiên cứu y tế cộng đồng",
         "systemCode":  "JLPT",
         "levelCode":  "N2"
     },
     {
-        "id":  331,
-        "name":  "Chia sẻ kinh nghiệm tự học tiếng Nhật hiệu quả",
+        "id":  661,
+        "name":  "Vai trò của thanh niên trong việc tham gia các hoạt động xã hội địa phương",
         "systemCode":  "JLPT",
         "levelCode":  "N2"
     },
     {
-        "id":  332,
-        "name":  "Bàn về văn hóa làm việc nhóm (Teamwork) tại công ty Nhật",
+        "id":  662,
+        "name":  "Thảo luận về xu hướng quy hoạch đô thị lấy con người làm trung tâm",
         "systemCode":  "JLPT",
         "levelCode":  "N2"
     },
     {
-        "id":  333,
-        "name":  "Phân loại rác thải tại các khu đô thị Nhật Bản",
+        "id":  663,
+        "name":  "Bàn về việc sử dụng drone để giám sát cháy rừng và cứu nạn cứu hộ",
         "systemCode":  "JLPT",
         "levelCode":  "N2"
     },
     {
-        "id":  334,
-        "name":  "Trải nghiệm tắm suối nước nóng Onsen truyền thống",
+        "id":  664,
+        "name":  "Vấn đề gia tăng lượng rác thải cồng kềnh tại các đô thị lớn hiện nay",
         "systemCode":  "JLPT",
         "levelCode":  "N2"
     },
     {
-        "id":  335,
-        "name":  "Viếng đền chùa ngày đầu năm mới (Hatsumode)",
+        "id":  665,
+        "name":  "Tầm quan trọng của việc giáo dục về tài chính cá nhân cho học sinh phổ thông",
         "systemCode":  "JLPT",
         "levelCode":  "N2"
     },
     {
-        "id":  336,
-        "name":  "Thảo luận về xu hướng thanh toán không tiền mặt",
+        "id":  666,
+        "name":  "Khái niệm Kado - Nghệ thuật cắm hoa Nhật Bản và sự hòa hợp đất trời",
         "systemCode":  "JLPT",
         "levelCode":  "N2"
     },
     {
-        "id":  337,
-        "name":  "Cách cân bằng giữa thời gian học tập và làm việc",
+        "id":  667,
+        "name":  "Thảo luận về tác động của biến đổi khí hậu tới mực nước biển dâng toàn cầu",
         "systemCode":  "JLPT",
         "levelCode":  "N2"
     },
     {
-        "id":  338,
-        "name":  "Bàn luận về tầm quan trọng của việc bảo vệ môi trường",
+        "id":  668,
+        "name":  "Bàn về việc phát triển các lưới điện thông minh (Smart Grid) tiết kiệm",
         "systemCode":  "JLPT",
         "levelCode":  "N2"
     },
     {
-        "id":  339,
-        "name":  "Nói về sở thích sưu tầm mô hình Anime và Manga",
+        "id":  669,
+        "name":  "Vấn đề kiểm soát chất lượng thuốc men nhập khẩu và giải pháp kiểm tra",
         "systemCode":  "JLPT",
         "levelCode":  "N2"
     },
     {
-        "id":  340,
-        "name":  "Vấn đề già hóa dân số và thiếu hụt nguồn lao động tại Nhật",
+        "id":  670,
+        "name":  "Tầm quan trọng của việc phát triển tư duy sáng tạo (Creative Thinking)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  671,
+        "name":  "Vai trò của các khu bảo tồn biển đối với việc phục hồi các loài cá quý",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  672,
+        "name":  "Thảo luận về xu hướng làm việc kết hợp (Hybrid Work) thời hiện đại",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  673,
+        "name":  "Bàn về tác động của sách điện tử (E-book) tới ngành xuất bản truyền thống",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  674,
+        "name":  "Vấn đề gia tăng lượng rác thải y tế nguy hại và phương án xử lý",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  675,
+        "name":  "Tầm quan trọng của việc nâng cao năng lực ứng phó sự cố rò rỉ hóa chất",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  676,
+        "name":  "Khái niệm Shodo - Thư pháp Nhật Bản và triết lý rèn luyện tâm tính",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  677,
+        "name":  "Thảo luận về ảnh hưởng của tiếng ồn giao thông tới sức khỏe tim mạch",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  678,
+        "name":  "Bàn về xu hướng phát triển nông nghiệp đô thị (Urban Agriculture)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  679,
+        "name":  "Vấn đề bảo vệ dữ liệu sức khỏe cá nhân trong hệ thống bệnh viện điện tử",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  680,
+        "name":  "Tầm quan trọng của việc duy trì và truyền bá các trò chơi dân gian trẻ em",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  681,
+        "name":  "Vai trò của việc nâng cao sức đề kháng thông qua chế độ dinh dưỡng cân bằng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  682,
+        "name":  "Thảo luận về xu hướng sử dụng bao bì bằng bã mía, xơ dừa tự nhiên",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  683,
+        "name":  "Bàn về tác động của việc học tập nhóm đối với kết quả rèn luyện của sinh viên",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  684,
+        "name":  "Vấn đề thiếu hụt nguồn nước sạch tại các nước đang phát triển và giải pháp",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  685,
+        "name":  "Tầm quan trọng của việc bảo đảm quyền tiếp cận giáo dục bình đẳng cho trẻ em nghèo",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  686,
+        "name":  "Khái niệm Rakugo - Nghệ thuật tấu hài độc thoại truyền thống Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  687,
+        "name":  "Thảo luận về tác động của khói bụi mịn (PM2.5) tới hệ hô hấp con người",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  688,
+        "name":  "Bàn về việc sử dụng vật liệu tái chế trong sản xuất linh kiện điện tử mới",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  689,
+        "name":  "Vấn đề gia tăng tỷ lệ mắc các bệnh tâm lý do áp lực cuộc sống đô thị dồn dập",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  690,
+        "name":  "Tầm quan trọng của việc duy trì lối sống cân bằng giữa công việc và giải trí",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  691,
+        "name":  "Vai trò của việc rèn luyện thói quen đọc sách mỗi ngày đối với phát triển tư duy ngôn ngữ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  692,
+        "name":  "Thảo luận về xu hướng thiết kế thời trang bền vững (Eco-fashion) thân thiện môi trường",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  693,
+        "name":  "Bàn về tác động của việc tự động hóa kho hàng đối với hiệu quả logistics vận chuyển",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  694,
+        "name":  "Vấn đề suy giảm diện tích rừng tự nhiên do khai thác lấy đất làm công nghiệp và đô thị",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  695,
+        "name":  "Tầm quan trọng của việc nâng cao kỹ năng phòng chống tai nạn thương tích học đường",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  696,
+        "name":  "Khái niệm Noh - Nghệ thuật kịch mặt nạ truyền thống lâu đời của Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  697,
+        "name":  "Thảo luận về xu hướng phát triển du lịch sinh thái rừng (Forest Ecotourism)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  698,
+        "name":  "Bàn về việc sử dụng năng lượng từ sóng biển để sản xuất điện năng sạch",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  699,
+        "name":  "Vấn đề ô nhiễm nguồn nước mặt do nước thải chưa xử lý từ các nhà máy nhỏ lẻ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  700,
+        "name":  "Trào lưu nhảy cover trên TikTok",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  701,
+        "name":  "Cách edit video ngắn triệu view",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  702,
+        "name":  "Sử dụng nhạc nền trending (BGM)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  703,
+        "name":  "Thách thức biến hình (Makeup Transformation)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  704,
+        "name":  "Video review món ăn đường phố (Mukbang)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  705,
+        "name":  "Sáng tạo nội dung ngắn (Content Creation)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  706,
+        "name":  "Sử dụng filter vui nhộn trên TikTok",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  707,
+        "name":  "Tương tác với người hâm mộ qua livestream",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  708,
+        "name":  "Cách gắn thẻ hashtag lên xu hướng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  709,
+        "name":  "Livestream bán hàng (Live commerce) trên mạng xã hội",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  710,
+        "name":  "Trào lưu chế ảnh và video hài hước (Meme)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  711,
+        "name":  "Video chia sẻ mẹo vặt cuộc sống (Life hacks)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  712,
+        "name":  "Kể chuyện ngắn qua video (Storytelling)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  713,
+        "name":  "Hậu trường làm video (Behind the scenes)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  714,
+        "name":  "Trò chuyện đêm muộn qua livestream (ASMR)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  715,
+        "name":  "Video ngắn hướng dẫn tập thể dục tại nhà",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  716,
+        "name":  "Thách thức nhảy đôi (Duet dance challenge)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  717,
+        "name":  "Chia sẻ góc làm việc đẹp mắt (Desk setup)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  718,
+        "name":  "Review sản phẩm công nghệ ngắn gọn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  719,
+        "name":  "Video du lịch ngắn (Travel vlog)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  720,
+        "name":  "Cách chọn khung giờ đăng video hiệu quả",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  721,
+        "name":  "Phản hồi bình luận của người xem bằng video",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  722,
+        "name":  "Video ngắn về thú cưng đáng yêu",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  723,
+        "name":  "Hướng dẫn phối đồ thời trang nhanh (OOTD)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  724,
+        "name":  "Trào lưu hát nhép (Lip-sync) các câu thoại nổi tiếng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  725,
+        "name":  "Hợp tác sáng tạo với các TikToker khác",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  726,
+        "name":  "Thách thức ăn đồ cay nóng trên mạng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  727,
+        "name":  "Nhận xét sản phẩm ăn uống (Food review)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  728,
+        "name":  "Video chia sẻ kinh nghiệm học ngoại ngữ nhanh",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  729,
+        "name":  "Cách làm đồ thủ công handmade ngắn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  730,
+        "name":  "Thử thách không sử dụng điện thoại trong 24 giờ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  731,
+        "name":  "Video ngắn giới thiệu sách hay",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  732,
+        "name":  "Sáng tạo thử thách nhảy tự do",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  733,
+        "name":  "Video biến hình phong cách cổ điển (Retro)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  734,
+        "name":  "Cách làm các món nước uống giải nhiệt tại nhà",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  735,
+        "name":  "Livestream giao lưu giải đáp thắc mắc",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  736,
+        "name":  "Trào lưu tạo video ngắn vẽ tranh nhanh (Speed painting)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  737,
+        "name":  "Thử thách dọn dẹp phòng ngủ cực gọn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  738,
+        "name":  "Video ngắn hướng dẫn thắt cà vạt và quàng khăn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  739,
+        "name":  "Chia sẻ cảm nhận sau một ngày làm việc qua vlog ngắn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  740,
+        "name":  "Văn hóa ủng hộ thần tượng (Oshikatsu) tại Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  741,
+        "name":  "Theo dõi các streamer ảo (VTuber) nổi tiếng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  742,
+        "name":  "Trò chuyện ẩn danh trên mạng xã hội X (Twitter)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  743,
+        "name":  "Gửi sticker dễ thương qua ứng dụng LINE",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  744,
+        "name":  "Cách giữ tương tác trên Instagram Stories",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  745,
+        "name":  "Tổ chức sự kiện gặp gỡ người hâm mộ (Offline meetups)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  746,
+        "name":  "Mua vật phẩm ủng hộ thần tượng (Merchandise)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  747,
+        "name":  "Tham gia các cộng đồng fan online (Fandom)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  748,
+        "name":  "Trào lưu chụp ảnh lấy ngay phong cách cổ điển",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  749,
+        "name":  "Sưu tầm thẻ ảnh thần tượng (Trading cards)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  750,
+        "name":  "Cách bảo vệ tài khoản mạng xã hội khỏi hacker",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  751,
+        "name":  "Tác động của văn hóa thần tượng ảo đối với giới trẻ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  752,
+        "name":  "Cách viết dòng giới thiệu bản thân (Bio) thu hút",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  753,
+        "name":  "Thảo luận về việc hủy theo dõi (Unfollow) bạn bè trên mạng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  754,
+        "name":  "Trào lưu chụp ảnh tự sướng (Purikura) kiểu Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  755,
+        "name":  "Sử dụng filter làm đẹp khi chụp ảnh điện thoại",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  756,
+        "name":  "Bàn luận về hiện tượng mạng (Viral phenomenon)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  757,
+        "name":  "Sức hút của các buổi concert trực tuyến (Online concert)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  758,
+        "name":  "Viết blog chia sẻ nhật ký cá nhân hàng ngày",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  759,
+        "name":  "Thói quen thả tim và bình luận dạo trên mạng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  760,
+        "name":  "Trào lưu sưu tầm huy hiệu nhân vật hoạt hình (Can badge)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  761,
+        "name":  "Tổ chức sinh nhật cho thần tượng ảo",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  762,
+        "name":  "Thảo luận về vấn đề bạo lực mạng (Cyberbullying)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  763,
+        "name":  "Cách quản lý thời gian sử dụng mạng xã hội hợp lý",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  764,
+        "name":  "Trào lưu viết bài review phim trên trang cá nhân",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  765,
+        "name":  "Tham gia khảo sát ý kiến trên mạng xã hội",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  766,
+        "name":  "Thảo luận về sự phát triển của các thần tượng K-Pop tại Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  767,
+        "name":  "Cách chụp ảnh đồ ăn đẹp mắt để đăng Instagram",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  768,
+        "name":  "Sử dụng tài khoản phụ (Sub-account) trên mạng xã hội",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  769,
+        "name":  "Sức ảnh hưởng của các bài viết chia sẻ quan điểm cá nhân",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  770,
+        "name":  "Tìm kiếm thông tin nhà hàng qua mạng xã hội thay vì Google",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  771,
+        "name":  "Thảo luận về trào lưu podcast tâm sự đêm muộn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  772,
+        "name":  "Trải nghiệm tham gia buổi ký tặng của tác giả (Fansign)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  773,
+        "name":  "Cách phân biệt tin tức giả (Fake news) trên mạng xã hội",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  774,
+        "name":  "Thảo luận về việc chia sẻ ảnh trẻ em lên mạng xã hội",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  775,
+        "name":  "Sự phát triển của các sticker chuyển động trên ứng dụng nhắn tin",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  776,
+        "name":  "Trào lưu chia sẻ danh sách nhạc yêu thích trên Spotify",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  777,
+        "name":  "Thảo luận về việc kết bạn với người lạ qua mạng xã hội",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  778,
+        "name":  "Cách viết bài kêu gọi quyên góp từ thiện online",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  779,
+        "name":  "Cảm giác lo sợ bị bỏ lỡ thông tin (Hội chứng FOMO)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N2"
+    },
+    {
+        "id":  780,
+        "name":  "Giải đấu thể thao điện tử (Esports) thế giới",
         "systemCode":  "JLPT",
         "levelCode":  "N1"
     },
     {
-        "id":  341,
-        "name":  "Xu hướng giảm tỷ lệ sinh (Shoushika) và các chính sách xã hội",
+        "id":  781,
+        "name":  "Trò chơi di động phổ biến (Mobile games) tại Nhật",
         "systemCode":  "JLPT",
         "levelCode":  "N1"
     },
     {
-        "id":  342,
-        "name":  "Tác động của Trí tuệ nhân tạo AI đối với thị trường lao động",
+        "id":  782,
+        "name":  "Sức hút của dòng máy chơi game Nintendo Switch",
         "systemCode":  "JLPT",
         "levelCode":  "N1"
     },
     {
-        "id":  343,
-        "name":  "Triết lý Kaizen - Cải tiến liên tục trong doanh nghiệp Nhật",
+        "id":  783,
+        "name":  "Trò chơi nhập vai thế giới mở (Open-world RPG)",
         "systemCode":  "JLPT",
         "levelCode":  "N1"
     },
     {
-        "id":  344,
-        "name":  "Khái niệm Omotenashi - Tinh thần hiếu khách đỉnh cao",
+        "id":  784,
+        "name":  "Thảo luận về sự phát triển của trò chơi Indie",
         "systemCode":  "JLPT",
         "levelCode":  "N1"
     },
     {
-        "id":  345,
-        "name":  "Bảo tồn văn hóa truyền thống trước làn sóng toàn cầu hóa",
+        "id":  785,
+        "name":  "Trò chơi giải đố kinh dị (Horror puzzle games)",
         "systemCode":  "JLPT",
         "levelCode":  "N1"
     },
     {
-        "id":  346,
-        "name":  "Vấn đề rác thải nhựa đại dương và cam kết Net Zero",
+        "id":  786,
+        "name":  "Cách xây dựng đội hình mạnh trong game chiến thuật",
         "systemCode":  "JLPT",
         "levelCode":  "N1"
     },
     {
-        "id":  347,
-        "name":  "An ninh mạng và bảo vệ quyền riêng tư thông tin cá nhân",
+        "id":  787,
+        "name":  "Xem các buổi phát sóng chơi game (Game streams)",
         "systemCode":  "JLPT",
         "levelCode":  "N1"
     },
     {
-        "id":  348,
-        "name":  "Triết lý tối giản Danshari và ứng dụng trong cuộc sống hiện đại",
+        "id":  788,
+        "name":  "Trào lưu chơi game co-op cùng bạn bè cuối tuần",
         "systemCode":  "JLPT",
         "levelCode":  "N1"
     },
     {
-        "id":  349,
-        "name":  "Tác động của hiện tượng du lịch quá mức (Overtourism)",
+        "id":  789,
+        "name":  "Thảo luận về đồ họa game 3D thế hệ mới",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  790,
+        "name":  "Trò chơi thực tế ảo tăng cường (AR games) trên di động",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  791,
+        "name":  "Cách vượt qua các màn chơi khó (Boss fight tips)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  792,
+        "name":  "Sự kiện giới thiệu game mới (Game show/Tokyo Game Show)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  793,
+        "name":  "Trò chơi thẻ bài ma thuật trực tuyến (Card games)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  794,
+        "name":  "Thảo luận về cốt truyện sâu sắc trong các game nhập vai",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  795,
+        "name":  "Trào lưu chơi game retro cổ điển hệ máy cũ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  796,
+        "name":  "Cách chọn phụ kiện chơi game chuyên nghiệp (Gaming gear)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  797,
+        "name":  "Bàn luận về việc nạp tiền mua trang phục trong game (Gacha)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  798,
+        "name":  "Tổ chức giải đấu game nội bộ trong trường học",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  799,
+        "name":  "Trải nghiệm chơi game giả lập trên máy tính",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  800,
+        "name":  "Trào lưu trò chơi tốc độ (Speedrun) phá đảo game nhanh",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  801,
+        "name":  "Thảo luận về nhạc nền game (Game OST) xuất sắc",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  802,
+        "name":  "Tác động của game đối với khả năng phản xạ nhanh",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  803,
+        "name":  "Cách cân bằng thời gian chơi game và ôn thi học tập",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  804,
+        "name":  "Trò chơi sinh tồn trực tuyến (Battle Royale games)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  805,
+        "name":  "Thiết kế nhân vật game theo phong cách cá nhân",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  806,
+        "name":  "Thảo luận về các bản cập nhật (DLC) và sửa lỗi game",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  807,
+        "name":  "Sự phát triển của cộng đồng game thủ nữ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  808,
+        "name":  "Trò chơi mô phỏng cuộc sống (Life simulation games)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  809,
+        "name":  "Tìm kiếm đồng đội chơi game qua các ứng dụng chat voice",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  810,
+        "name":  "Thảo luận về đạo đức trong thiết kế game bạo lực",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  811,
+        "name":  "Trải nghiệm chơi game tại các tiệm net cao cấp (Gaming Cafe)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  812,
+        "name":  "Cách viết bài đánh giá game trên chuyên trang Steam",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  813,
+        "name":  "Trào lưu chơi các tựa game vượt ngục, giải đố nhóm",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  814,
+        "name":  "Thảo luận về tương lai của công nghệ chơi game trên đám mây (Cloud Gaming)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  815,
+        "name":  "Cách tạo ra một bản mod game (Game modding) độc đáo",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  816,
+        "name":  "Sức hút của các tựa game nông trại yên bình",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  817,
+        "name":  "Trận đấu giao hữu Esports giữa các trường đại học",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  818,
+        "name":  "Thảo luận về việc nghiện game và các biện pháp phòng ngừa",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  819,
+        "name":  "Trò chơi đối kháng đòi hỏi kỹ năng bấm nút nhanh (Fighting games)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  820,
+        "name":  "Giải chạy việt dã tiếp sức (Ekiden) truyền thống của Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  821,
+        "name":  "Sức hút của môn bóng chày chuyên nghiệp tại Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  822,
+        "name":  "Giải bóng đá vô địch quốc gia Nhật Bản (J-League)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  823,
+        "name":  "Võ thuật truyền thống Sumo và các nghi lễ cổ xưa",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  824,
+        "name":  "Trào lưu trượt ván đường phố (Skateboarding) của giới trẻ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  825,
+        "name":  "Luyện tập bóng rổ đường phố 3x3 cuối tuần",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  826,
+        "name":  "Lớp học cầu lông và tennis phong trào cho người đi làm",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  827,
+        "name":  "Leo núi thể thao trong nhà (Bouldering/Climbing)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  828,
+        "name":  "Trượt tuyết bằng ván đơn (Snowboarding) vào mùa đông",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  829,
+        "name":  "Tham gia ngày hội thể thao trường học (Undokai)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  830,
+        "name":  "Đạp xe đường trường chinh phục các cung đường đèo",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  831,
+        "name":  "Luyện tập thể hình (Gym/Fitness) để cải thiện vóc dáng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  832,
+        "name":  "Chạy bộ buổi tối quanh hồ công viên giải tỏa stress",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  833,
+        "name":  "Tập luyện Yoga và thiền định tại nhà vào buổi sáng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  834,
+        "name":  "Các động tác khởi động tránh chấn thương khi chơi thể thao",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  835,
+        "name":  "Tầm quan trọng của việc bù nước và chất điện giải khi vận động",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  836,
+        "name":  "Thảo luận về tinh thần thể thao công bằng (Fair play)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  837,
+        "name":  "Xem trực tiếp các trận đấu thể thao tại sân vận động lớn",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  838,
+        "name":  "Trào lưu tập luyện Pilates để cải thiện tư thế đứng thẳng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  839,
+        "name":  "Tham gia câu lạc bộ bắn cung truyền thống (Kyudo)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  840,
+        "name":  "Thảo luận về chế độ ăn uống giàu protein cho vận động viên",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  841,
+        "name":  "Trò chơi ném bóng chày giao lưu cuối tuần (Catch ball)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  842,
+        "name":  "Trải nghiệm lướt sóng (Surfing) tại các bãi biển mùa hè",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  843,
+        "name":  "Sự phát triển của các môn thể thao mạo hiểm (Extreme sports)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  844,
+        "name":  "Thảo luận về lợi ích của môn bơi lội đối với xương khớp",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  845,
+        "name":  "Tổ chức giải bóng đá mini 5 người (Futsal) của công ty",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  846,
+        "name":  "Tinh thần đồng đội trong các môn thể thao tập thể",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  847,
+        "name":  "Sự chuẩn bị thể lực cho các giải chạy Marathon cự ly dài",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  848,
+        "name":  "Tìm hiểu về môn nghệ thuật võ thuật Kendo (Kiếm đạo)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  849,
+        "name":  "Trào lưu leo núi dã ngoại ngắm cảnh cuối tuần (Trekking)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  850,
+        "name":  "Tác hại của việc lười vận động đối với sức khỏe tim mạch",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  851,
+        "name":  "Thảo luận về sự thành công của các vận động viên Olympics Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  852,
+        "name":  "Cách lựa chọn giày chạy bộ phù hợp với bàn chân",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  853,
+        "name":  "Tập luyện các bài tập giãn cơ (Stretching) trước khi ngủ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  854,
+        "name":  "Trò chơi golf mini giải trí cùng đồng nghiệp và đối tác",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  855,
+        "name":  "Tìm hiểu môn võ tự vệ Judo của người Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  856,
+        "name":  "Thảo luận về việc đưa thể thao điện tử vào đại hội thể thao chính thức",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  857,
+        "name":  "Luyện tập nhảy dây giảm mỡ thừa hiệu quả tại nhà",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  858,
+        "name":  "Trải nghiệm chèo thuyền SUP trên sông hồ yên bình",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  859,
+        "name":  "Thói quen theo dõi các chỉ số sức khỏe bằng đồng hồ thông minh",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  860,
+        "name":  "Sức hút của văn hóa Retro thời kỳ Showa và Heisei",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  861,
+        "name":  "Trào lưu sưu tầm đĩa than (Vinyl records) cổ điển",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  862,
+        "name":  "Đi cà phê phong cách cổ điển (Kissaten) tại Tokyo",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  863,
+        "name":  "Sưu tầm nhãn dán sticker và trang trí sổ tay (Journaling)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  864,
+        "name":  "Trải nghiệm phòng hát Karaoke gia đình ấm cúng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  865,
+        "name":  "Tham gia lễ hội cosplay và hóa trang nhân vật Anime",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  866,
+        "name":  "Sự phổ biến của phong cách thời trang đường phố Harajuku",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  867,
+        "name":  "Trải nghiệm mua sắm đĩa nhạc tại các cửa hàng Tower Records",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  868,
+        "name":  "Tham gia sự kiện bắt tay (Handshake event) của thần tượng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  869,
+        "name":  "Sức hút của các bộ phim hoạt hình Studio Ghibli huyền thoại",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  870,
+        "name":  "Trào lưu sưu tầm mô hình nhân vật hoạt hình (Figures)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  871,
+        "name":  "Đi săn đồ hiệu cũ tại các cửa hàng Second-hand ở Shimokitazawa",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  872,
+        "name":  "Tham dự concert ca nhạc J-Pop tại sân vận động Tokyo Dome",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  873,
+        "name":  "Thảo luận về xu hướng nghe nhạc Lo-fi khi học tập và làm việc",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  874,
+        "name":  "Trải nghiệm quán cà phê thú cưng (Mèo, Chó, Cú mèo) độc lạ",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  875,
+        "name":  "Trào lưu tự làm nến thơm và nước hoa tại nhà",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  876,
+        "name":  "Bàn luận về sự khác biệt giữa văn hóa đại chúng Đông và Tây",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  877,
+        "name":  "Sức hút của nhạc trẻ Việt Nam đối với người nghe nước ngoài",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  878,
+        "name":  "Khám phá các khu chợ ẩm thực đêm sôi động",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  879,
+        "name":  "Sưu tầm các món đồ chơi từ máy bán trứng tự động (Gachapon)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  880,
+        "name":  "Trào lưu vẽ tranh tô màu giải tỏa áp lực (Coloring books)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  881,
+        "name":  "Thảo luận về việc tự làm podcast chia sẻ chuyện đời thường",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  882,
+        "name":  "Trải nghiệm xem biểu diễn hài kịch truyền thống (Rakugo)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  883,
+        "name":  "Trào lưu chụp ảnh bằng máy ảnh kỹ thuật số đời cũ (Y2K style)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  884,
+        "name":  "Thảo luận về văn hóa rạp chiếu phim nghệ thuật độc lập (Mini theater)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  885,
+        "name":  "Lễ hội ẩm thực đường phố và các món ăn xiên que (Yakitori)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  886,
+        "name":  "Sức ảnh hưởng của các bộ phim truyền hình Hàn Quốc tại Nhật",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  887,
+        "name":  "Cách bài trí phòng ngủ theo phong cách tối giản Nhật Bản",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  888,
+        "name":  "Trào lưu cắm trại sang chảnh (Glamping) giữa thiên nhiên",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  889,
+        "name":  "Tham gia lớp học làm đồ gốm thủ công cuối tuần",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  890,
+        "name":  "Thảo luận về sự phổ biến của nhạc City Pop Nhật Bản thập niên 80",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  891,
+        "name":  "Trải nghiệm uống trà chiều phong cách quý tộc Anh",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  892,
+        "name":  "Cách tự học vẽ minh họa phong cách Manga trên máy tính bảng",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  893,
+        "name":  "Trào lưu sưu tầm giày thể thao phiên bản giới hạn (Sneakerhead)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  894,
+        "name":  "Thảo luận về vai trò của các nhà sách độc lập trong khu phố",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  895,
+        "name":  "Trải nghiệm tham gia trò chơi trốn thoát thực tế (Escape room)",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  896,
+        "name":  "Trào lưu tự nhuộm tóc các tông màu thời trang tại nhà",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  897,
+        "name":  "Thảo luận về sự thú vị của các lễ hội bia ngoài trời mùa hè",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  898,
+        "name":  "Trải nghiệm làm tranh cát nghệ thuật hoặc tranh đính đá",
+        "systemCode":  "JLPT",
+        "levelCode":  "N1"
+    },
+    {
+        "id":  899,
+        "name":  "Thói quen đi dạo nhà sách ngắm bìa sách đẹp cuối tuần",
         "systemCode":  "JLPT",
         "levelCode":  "N1"
     }
