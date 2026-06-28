@@ -5,7 +5,3 @@ data class TopicItem(
     val name: String,
     val levelCode: String
 )
-
-object Topics {
-    val list: List<TopicItem> = englishTopicsList + japaneseTopicsList
-}
