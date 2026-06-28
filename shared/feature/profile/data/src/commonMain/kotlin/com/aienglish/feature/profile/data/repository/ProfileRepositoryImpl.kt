@@ -18,4 +18,6 @@ class ProfileRepositoryImpl(
     override fun saveLanguageNative(lang: String) = prefs.saveLanguageNative(lang)
     override fun getLanguageTarget(): String = prefs.getLanguageTarget()
     override fun saveLanguageTarget(lang: String) = prefs.saveLanguageTarget(lang)
+    override fun isPaid(): Boolean = prefs.isPaid()
+    override fun savePaid(value: Boolean) = prefs.setPaid(value)
 }

@@ -3,6 +3,8 @@ package com.aienglish.feature.aiteacher.ui.screen
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,6 +19,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.School
+import androidx.compose.material.icons.rounded.WorkspacePremium
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.LocalAppColors
@@ -100,6 +104,38 @@ fun TeacherScreen(
                             modifier = Modifier.size(24.dp)
                         )
                     }
+                    // VIP / PRO Badge
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .border(1.dp, Color(0xFFFFB300), RoundedCornerShape(8.dp))
+                            .background(Color(0xFFFFB300).copy(0.12f))
+                            .clickable { profileViewModel.showProfile() }
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.WorkspacePremium,
+                                contentDescription = "PRO",
+                                tint = Color(0xFFFFB300),
+                                modifier = Modifier.size(14.dp)
+                            )
+                            Text(
+                                text = if (profileState.isPaid) "PRO" else "GET",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontStyle = FontStyle.Italic,
+                                color = Color(0xFFFFB300)
+                            )
+                        }
+                    }
+
+                    Spacer(Modifier.width(4.dp))
+
                     // Profile button
                     IconButton(onClick = { profileViewModel.showProfile() }) {
                         if (profileState.isSignedIn && profileState.displayName != null) {

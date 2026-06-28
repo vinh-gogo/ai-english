@@ -17,5 +17,7 @@ class AndroidAppPreferences(context: Context) : AppPreferences {
     override fun saveLanguageNative(lang: String) { prefs.edit().putString("language_native", lang).apply() }
     override fun getLanguageTarget() = prefs.getString("language_target", "en") ?: "en"
     override fun saveLanguageTarget(lang: String) { prefs.edit().putString("language_target", lang).apply() }
+    override fun isPaid() = prefs.getBoolean("is_paid", false)
+    override fun setPaid(value: Boolean) { prefs.edit().putBoolean("is_paid", value).apply() }
     override fun clear() { prefs.edit().clear().apply() }
 }

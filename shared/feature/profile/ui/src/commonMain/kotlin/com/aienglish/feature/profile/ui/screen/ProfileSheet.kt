@@ -95,7 +95,7 @@ fun ProfileSheet(
                 HorizontalDivider(color = colors.border)
                 HowToGetApiKeySection(state, profileViewModel, colors)
                 HorizontalDivider(color = colors.border)
-                QuotaSection(state, colors)
+                QuotaSection(state, profileViewModel, colors)
                 Spacer(Modifier.height(16.dp))
             }
         }
@@ -459,7 +459,7 @@ private fun LanguageSettingsSection(
 }
 
 @Composable
-private fun QuotaSection(state: ProfileState, colors: AppColors) {
+private fun QuotaSection(state: ProfileState, vm: ProfileViewModel, colors: AppColors) {
     val isVietnamese = state.languageNative == "vi"
     val remaining = (state.monthlyLimit - state.monthlyUsage).coerceAtLeast(0)
     val progress = if (state.monthlyLimit > 0) remaining.toFloat() / state.monthlyLimit.toFloat() else 0f
@@ -521,5 +521,56 @@ private fun QuotaSection(state: ProfileState, colors: AppColors) {
             color = colors.hintText,
             lineHeight = 16.sp
         )
+
+        Spacer(Modifier.height(4.dp))
+
+        if (state.isPaid) {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(10.dp),
+                color = Color(0xFFFFB300).copy(0.12f),
+                border = BorderStroke(1.dp, Color(0xFFFFB300).copy(0.4f))
+            ) {
+                Row(
+                    modifier = Modifier.padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(Icons.Rounded.WorkspacePremium, null, tint = Color(0xFFFFB300), modifier = Modifier.size(20.dp))
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            if (isVietnamese) "Đang kích hoạt gói VIP" else "VIP Package Active",
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFFFFB300)
+                        )
+                    }
+                    Text(
+                        if (isVietnamese) "Hủy VIP (Simulate)" else "Cancel VIP (Simulate)",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = colors.error,
+                        modifier = Modifier.clickable { vm.setPaid(false) }
+                    )
+                }
+            }
+        } else {
+            Button(
+                onClick = { vm.setPaid(true) },
+                modifier = Modifier.fillMaxWidth().height(40.dp),
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB300))
+            ) {
+                Icon(Icons.Rounded.WorkspacePremium, null, tint = Color.White, modifier = Modifier.size(16.dp))
+                Spacer(Modifier.width(6.dp))
+                Text(
+                    if (isVietnamese) "Nâng cấp VIP (20 bài/tháng)" else "Upgrade VIP (20 lessons/mo)",
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+            }
+        }
     }
 }

@@ -17,5 +17,7 @@ class DesktopAppPreferences : AppPreferences {
     override fun saveLanguageNative(lang: String) { prefs.put("language_native", lang) }
     override fun getLanguageTarget() = prefs.get("language_target", "en")
     override fun saveLanguageTarget(lang: String) { prefs.put("language_target", lang) }
+    override fun isPaid() = prefs.getBoolean("is_paid", false)
+    override fun setPaid(value: Boolean) { prefs.putBoolean("is_paid", value) }
     override fun clear() { prefs.clear() }
 }

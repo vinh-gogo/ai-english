@@ -17,6 +17,7 @@ data class ProfileState(
     val languageTarget: String = "en",
     val monthlyUsage: Int = 0,
     val monthlyLimit: Int = 5,
+    val isPaid: Boolean = false,
     val error: String? = null
 )
 
@@ -33,13 +34,19 @@ class ProfileViewModel(
                 email = repository.getUserEmail(),
                 apiKeyInput = repository.getApiKey(),
                 languageNative = repository.getLanguageNative(),
-                languageTarget = repository.getLanguageTarget()
+                languageTarget = repository.getLanguageTarget(),
+                isPaid = repository.isPaid()
             )
         }
     }
 
     fun updateMonthlyUsage(usage: Int, limit: Int) {
         setState { copy(monthlyUsage = usage, monthlyLimit = limit) }
+    }
+
+    fun setPaid(value: Boolean) {
+        repository.savePaid(value)
+        setState { copy(isPaid = value) }
     }
 
     fun showProfile() = setState { copy(showProfile = true) }

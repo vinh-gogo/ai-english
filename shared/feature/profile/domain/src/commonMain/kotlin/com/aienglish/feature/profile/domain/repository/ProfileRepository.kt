@@ -13,4 +13,6 @@ interface ProfileRepository {
     fun saveLanguageNative(lang: String)
     fun getLanguageTarget(): String
     fun saveLanguageTarget(lang: String)
+    fun isPaid(): Boolean
+    fun savePaid(value: Boolean)
 }
