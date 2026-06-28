@@ -1,0 +1,1202 @@
+[
+  {
+    "id": 1200,
+    "name": "Chào hỏi và làm quen cơ bản (namaste - नमस्ते)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1201,
+    "name": "Hỏi tên và giới thiệu bản thân (Aapka naam kya hai? - आपका नाम क्या है?)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1202,
+    "name": "Hỏi thăm sức khỏe xã giao (Aap kaise hain? - आप कैसे हैं?)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1203,
+    "name": "Nói về các con số từ 1 đến 50 (Ginti - गिनती)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1204,
+    "name": "Hỏi giờ và thời gian (Samay kya hua hai? - समय क्या हुआ है?)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1205,
+    "name": "Các thứ trong tuần và các tháng (Hafte ke din - हफ्ते के दिन)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1206,
+    "name": "Mô tả màu sắc cơ bản (Rang - रंग)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1207,
+    "name": "Giới thiệu các thành viên gia đình (Parivar - परिवार)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1208,
+    "name": "Từ vựng về món ăn và đồ uống (Khana aur peena - खाना और पीना)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1209,
+    "name": "Hỏi đường đi đơn giản (Rasta puchna - रास्ता पूछना)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1210,
+    "name": "Nói về thời tiết hôm nay (Mausam - मौसम)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1211,
+    "name": "Gọi tên các con vật quen thuộc (Janwar - जानवर)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1212,
+    "name": "Giới thiệu quê hương và đất nước (Mera desh - मेरा देश)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1213,
+    "name": "Nói về các bộ phận cơ thể (Sharir ke ang - शरीर के अंग)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1214,
+    "name": "Đi mua sắm cơ bản và hỏi giá (Kitne ka hai? - कितने का है?)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1215,
+    "name": "Nói về sở thích cá nhân đơn giản (Meri pasand -...).",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1216,
+    "name": "Mô tả ngôi nhà của bạn (Mera ghar - मेरा घर)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1217,
+    "name": "Nói về các hoạt động hàng ngày (Rozana ki dincharya - रोज़ाना की दिनचर्या)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1218,
+    "name": "Chúc mừng sinh nhật và chúc sức khỏe (Janmadin ki shubhkamnayen -...).",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1219,
+    "name": "Nói về các ngày lễ lớn ở Ấn Độ (Tyohar - त्योहार)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1220,
+    "name": "Đi taxi và nói chuyện với tài xế (Taxi bulana - टैक्सी बुलाना)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1221,
+    "name": "Nói về trường học và việc học tiếng Hindi (Hindi seekhna -...).",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1222,
+    "name": "Diễn tả cảm xúc vui buồn (Bhavnaen - भावनाएँ)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1223,
+    "name": "Hỏi mua vé tàu hỏa (Train ki ticket - ट्रेन की टिकट)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1224,
+    "name": "Mua sắm hoa quả ở chợ Ấn Độ (Phal aur sabziyan - फल और सब्जियाँ)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1225,
+    "name": "Nói về trang phục truyền thống Sari và Kurta",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1226,
+    "name": "Đọc sách và nghe nhạc lúc rảnh rỗi (Pustak aur sangeet -...).",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1227,
+    "name": "Mô tả phòng học của bạn (Kasha - कक्षा)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1228,
+    "name": "Nói về món trà sữa Ấn Độ nổi tiếng (Chai - चाय)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1229,
+    "name": "Giới thiệu một người bạn Ấn Độ (Mera dost - मेरा दोस्त)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1230,
+    "name": "Nói về các hoạt động vào ngày cuối tuần (Saptahant - सप्ताहांत)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1231,
+    "name": "Cảm ơn và xin lỗi lịch sự (Dhanyavad aur kshama - धन्यवाद और क्षमा)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1232,
+    "name": "Hỏi xem đồ vật này của ai (Yeh kiska hai? - यह किसके का है?)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1233,
+    "name": "Nói về công việc hàng ngày của bạn (Mera kaam - मेरा काम)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1234,
+    "name": "Mô tả một buổi sáng thức dậy (Subah - सुबह)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1235,
+    "name": "Đi siêu thị mua đồ dùng cá nhân (Kharidari - खरीदारी)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1236,
+    "name": "Hỏi thăm số điện thoại liên lạc (Phone number - फ़ोन नंबर)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1237,
+    "name": "Nói về món bánh Roti và Curry (Roti aur sabzi - रोटी और सब्ज़ी)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1238,
+    "name": "Đi dạo công viên buổi tối (Sair karna - सैर करना)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1239,
+    "name": "Nhờ người khác giúp đỡ đơn giản (Madad - मदद)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1240,
+    "name": "Nói về kế hoạch đi chơi ngày mai (Kal ka plan - कल का प्लान)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1241,
+    "name": "Học viết chữ cái Devanagari (Devanagari lipi - देवनागरी लिपि)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1242,
+    "name": "Đi hiệu thuốc mua thuốc cảm (Dawa ki dukan - दवा की दुकान)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1243,
+    "name": "Hỏi giá phòng khách sạn (Hotel ka kamra - होटल का कमरा)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1244,
+    "name": "Nói về dòng sông Hằng linh thiêng (Ganga nadi - गंगा नदी)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1245,
+    "name": "Mô tả một ngày mưa ở Ấn Độ (Barish - बारिश)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1246,
+    "name": "Ăn sáng cùng gia đình (Nashta - नाश्ता)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1247,
+    "name": "Mượn sách của bạn học (Kitaab mangna - किताब माँगना)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1248,
+    "name": "Nói về thủ đô New Delhi (Nayi Dilli - नई दिल्ली)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1249,
+    "name": "Chào tạm biệt hẹn gặp lại (Phir milenge - फिर मिलेंगे)",
+    "systemCode": "HINDI",
+    "levelCode": "A1"
+  },
+  {
+    "id": 1250,
+    "name": "Đi nhà hàng gọi món ăn truyền thống Ấn Độ (Thali - थाली)",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1251,
+    "name": "Đi khám bệnh tại bệnh viện (Aspatal - अस्पताल)",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1252,
+    "name": "Bàn thảo về kế hoạch đi du lịch Jaipur (Jaipur ki yatra -...)",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1253,
+    "name": "Nói về bộ phim Bollywood yêu thích nhất",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1254,
+    "name": "Thuê phòng trọ hoặc căn hộ ở Mumbai",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1255,
+    "name": "Mua vé xem phim trực tuyến tại rạp",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1256,
+    "name": "Mô tả thời tiết mùa hè nắng nóng (Garmi - गर्मी)",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1257,
+    "name": "Lựa chọn trang phục cưới truyền thống Sherwani",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1258,
+    "name": "Hỏi thăm sức khỏe bạn cũ lâu ngày gặp lại",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1259,
+    "name": "Nói về các lễ hội Diwali và Holi đầy sắc màu",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1260,
+    "name": "Đi bưu điện gửi bưu phẩm (Post office - डाकघर)",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1261,
+    "name": "Nói về thói quen ăn chay tốt cho sức khỏe (Shakahari - शाकाहारी)",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1262,
+    "name": "Giới thiệu các món ăn đường phố cay nồng (Chaat - चाट)",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1263,
+    "name": "Trải nghiệm đi xe lam (Auto rickshaw - ऑटो रिक्शा)",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1264,
+    "name": "Mua sắm gia vị đặc trưng Ấn Độ (Masala - मसाला)",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1265,
+    "name": "Hỏi giá cả và mặc cả ở chợ truyền thống (Bhav-taw - भाव-ताव)",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1266,
+    "name": "Nói về công ty và vị trí làm việc của bạn",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1267,
+    "name": "Học nấu món gà Tikka Masala nổi tiếng",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1268,
+    "name": "Thảo luận về trận đấu Cricket kịch tính",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1269,
+    "name": "Chào đón khách quý đến thăm nhà (Atithi - अतिथि)",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1270,
+    "name": "Hỏi thăm đường đến đền thờ Taj Mahal",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1271,
+    "name": "Mô tả một buổi tối dạo quanh hồ nước",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1272,
+    "name": "Nói về kế hoạch tổ chức tiệc sinh nhật",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1273,
+    "name": "Mua sắm đồ dùng gia đình thông minh",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1274,
+    "name": "Đi cắt tóc tại salon làm đẹp",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1275,
+    "name": "Nói về lợi ích của việc tập Yoga hàng ngày",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1276,
+    "name": "Học các câu thành ngữ Hindi giao tiếp thông dụng",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1277,
+    "name": "Đi tìm chìa khóa nhà bị mất (Chabi - चाबी)",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1278,
+    "name": "Mượn đồ dùng của đồng nghiệp tại văn phòng",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1279,
+    "name": "Nói về các món ngọt truyền thống (Mithai - मिठाई)",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1280,
+    "name": "Lập thời khóa biểu học tập tiếng Hindi hiệu quả",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1281,
+    "name": "Chia sẻ cảm xúc khi lần đầu đến Ấn Độ",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1282,
+    "name": "Thảo luận về việc chọn quà cưới ý nghĩa",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1283,
+    "name": "Giới thiệu về trường đại học của bạn",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1284,
+    "name": "Nói về thói quen đọc tin tức buổi sáng",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1285,
+    "name": "Hỏi thăm thủ tục đăng ký thẻ ngân hàng",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1286,
+    "name": "Mô tả chuyến đi chơi cuối tuần cùng bạn bè",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1287,
+    "name": "Nói về các con vật linh thiêng trong văn hóa Ấn",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1288,
+    "name": "Đi bộ tập thể dục buổi sáng ở công viên",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1289,
+    "name": "Mua quà lưu niệm thủ công mỹ nghệ tinh xảo",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1290,
+    "name": "Hỏi thăm về múi giờ chênh lệch (Time zone -...) ",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1291,
+    "name": "Nói về sở thích nuôi cá cảnh phong thủy",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1292,
+    "name": "Trao đổi phương thức liên lạc xã giao",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1293,
+    "name": "Thảo luận về kế hoạch nghỉ hè của gia đình",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1294,
+    "name": "Nói về việc học bơi lội chống nóng",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1295,
+    "name": "Mua sắm giày dép và phụ kiện thời trang",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1296,
+    "name": "Cách pha trà Masala Chai chuẩn vị Ấn Độ",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1297,
+    "name": "Hỏi thăm kinh nghiệm đi tàu hỏa đường dài",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1298,
+    "name": "Nói về những ước mơ tuổi trẻ hoài bão",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1299,
+    "name": "Lời khuyên sống vui vẻ tích cực mỗi ngày",
+    "systemCode": "HINDI",
+    "levelCode": "A2"
+  },
+  {
+    "id": 1300,
+    "name": "Đồng nghiệp trao đổi dự án phát triển phần mềm",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1301,
+    "name": "Thảo luận về cơ hội việc làm tại Bangalore (IT hub)",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1302,
+    "name": "Kể về một chuyến du lịch trải nghiệm Himalaya kì vĩ",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1303,
+    "name": "Tầm quan trọng của triết học Ấn Độ cổ đại",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1304,
+    "name": "Tìm hiểu về điệu múa truyền thống Kathak cổ điển",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1305,
+    "name": "Thảo luận về bảo tồn văn hóa và ngôn ngữ bản địa",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1306,
+    "name": "Nói về ảnh hưởng của biến đổi khí hậu tại Nam Á",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1307,
+    "name": "Bảo vệ động vật hoang dã quý hiếm (Hổ Bengal)",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1308,
+    "name": "Cách quản lý tài chính cá nhân cho sinh viên",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1309,
+    "name": "Chia sẻ kinh nghiệm làm tình nguyện viên từ thiện",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1310,
+    "name": "Bàn luận về ảnh hưởng của phim ảnh Bollywood đến giới trẻ",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1311,
+    "name": "Kinh nghiệm học ngoại ngữ thứ ba thành công",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1312,
+    "name": "Sử dụng ví điện tử và thanh toán số UPI tại Ấn Độ",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1313,
+    "name": "Trải nghiệm mua sắm trực tuyến trên Flipkart",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1314,
+    "name": "Mô tả nét tính cách độc đáo của người Ấn Độ",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1315,
+    "name": "Những thách thức khi sống và làm việc ở nước ngoài",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1316,
+    "name": "Cách vượt qua áp lực học tập và thi cử căng thẳng",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1317,
+    "name": "Bàn luận về văn hóa đọc sách của giới trẻ ngày nay",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1318,
+    "name": "Tìm hiểu về y học cổ truyền Ayurveda Ấn Độ",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1319,
+    "name": "Chế độ ăn chay trường lành mạnh của người Ấn",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1320,
+    "name": "Trải nghiệm ngày hội Holi sắc màu rực rỡ",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1321,
+    "name": "Cách lên kế hoạch quản lý thời gian khoa học",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1322,
+    "name": "Tổ chức dã ngoại cuối tuần tại vùng ngoại ô",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1323,
+    "name": "Hỏi thăm kinh nghiệm xin học bổng du học Ấn Độ",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1324,
+    "name": "Bàn luận về tác động tích cực của mạng xã hội",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1325,
+    "name": "Tìm hiểu về nhạc cụ truyền thống Sitar nổi tiếng",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1326,
+    "name": "Kinh nghiệm nuôi thú cưng trong căn hộ nhỏ",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1327,
+    "name": "Cách sơ cứu y tế cơ bản khi gặp tai nạn",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1328,
+    "name": "Thảo luận về xu hướng sống xanh hiện đại",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1329,
+    "name": "Đi mua sắm trang trí nhà cửa đón Tết Diwali",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1330,
+    "name": "Nói về sở thích nhiếp ảnh phong cảnh thiên nhiên",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1331,
+    "name": "Trải nghiệm đi tàu điện ngầm Delhi Metro",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1332,
+    "name": "Bàn luận về lợi ích học trực tuyến trực quan",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1333,
+    "name": "Cách làm một bài vlog ngắn giới thiệu du lịch",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1334,
+    "name": "Thủ tục xin cấp visa và gia hạn lưu trú",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1335,
+    "name": "Nói về thần tượng âm nhạc cổ điển Ấn Độ",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1336,
+    "name": "Bàn luận về giữ gìn vệ sinh môi trường đô thị",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1337,
+    "name": "Trải nghiệm lễ hội tôn giáo Kumbh Mela khổng lồ",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1338,
+    "name": "Cách thuyết trình tự tin trước đám đông",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1339,
+    "name": "Bàn luận về tiết kiệm năng lượng điện nước sạch",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1340,
+    "name": "Đi leo núi dã ngoại khám phá thiên nhiên hoang dã",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1341,
+    "name": "Hỏi thăm thủ tục mua bảo hiểm du lịch quốc tế",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1342,
+    "name": "Sự gắn kết bền chặt của gia đình đa thế hệ Ấn Độ",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1343,
+    "name": "Thảo luận về cách giảm cân lành mạnh tự nhiên",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1344,
+    "name": "Tìm hiểu về lịch sử kiến trúc các pháo đài cổ",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1345,
+    "name": "Chia sẻ kinh nghiệm phỏng vấn tìm việc làm",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1346,
+    "name": "Ý nghĩa của ngày Quốc tế Yoga 21 tháng 6",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1347,
+    "name": "Bàn luận về thói quen ăn uống lề đường",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1348,
+    "name": "Kế hoạch phát triển bản thân toàn diện lâu dài",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1349,
+    "name": "Nói về giá trị của tình bạn chân thành sâu sắc",
+    "systemCode": "HINDI",
+    "levelCode": "B1"
+  },
+  {
+    "id": 1350,
+    "name": "Đàm phán hợp đồng kinh tế xuất nhập khẩu song phương",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1351,
+    "name": "Phân tích thị trường công nghệ thông tin và outsourcing",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1352,
+    "name": "Ảnh hưởng của cuộc cách mạng xanh đến nông nghiệp Ấn Độ",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1353,
+    "name": "Thảo luận về đô thị hóa và quy hoạch thành phố",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1354,
+    "name": "Tìm hiểu chiều sâu sử thi Mahabharata vĩ đại",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1355,
+    "name": "Nghiên cứu triết lý nhân sinh của sử thi Ramayana",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1356,
+    "name": "Chiến dịch khởi nghiệp công nghệ (Startup India)",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1357,
+    "name": "Đầu tư tài chính và thị trường chứng khoán Ấn Độ",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1358,
+    "name": "Chính sách bảo vệ quyền lợi người lao động công sở",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1359,
+    "name": "Hợp tác quốc tế về bảo vệ môi trường sinh thái biển",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1360,
+    "name": "Xu hướng toàn cầu hóa kinh tế và chuỗi cung ứng",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1361,
+    "name": "Tư tưởng bất bạo động (Ahimsa) của Mahatma Gandhi",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1362,
+    "name": "Văn hóa đàm phán thương lượng của doanh nhân Ấn Độ",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1363,
+    "name": "Hệ thống giáo dục đại học chất lượng của viện IIT",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1364,
+    "name": "Giải quyết khủng hoảng nhân sự trong doanh nghiệp lớn",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1365,
+    "name": "Tầm ảnh hưởng toàn cầu của ẩm thực Ấn Độ truyền thống",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1366,
+    "name": "Nghiên cứu văn học Hindi hiện đại thế kỷ 20-21",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1367,
+    "name": "Vấn đề phân hóa giàu nghèo và an sinh xã hội",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1368,
+    "name": "Tác động của du lịch tâm linh đối với kinh tế địa phương",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1369,
+    "name": "Xây dựng thành phố thông minh sinh thái bền vững",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1370,
+    "name": "Vai trò của Ấn Độ trong nền kinh tế số toàn cầu",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1371,
+    "name": "Tìm hiểu nghệ thuật điêu khắc đền thờ Khajuraho",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1372,
+    "name": "Phát triển nguồn năng lượng mặt trời sạch quy mô lớn",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1373,
+    "name": "An ninh mạng và bảo vệ dữ liệu cá nhân quốc gia",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1374,
+    "name": "Chính sách hỗ trợ y tế cộng đồng cho vùng nông thôn",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1375,
+    "name": "Tầm quan trọng của đổi mới công nghệ vũ trụ ISRO",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1376,
+    "name": "Phân tích hành vi tiêu dùng của tầng lớp trung lưu",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1377,
+    "name": "Bảo tồn di sản kiến trúc đền tháp cổ kính",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1378,
+    "name": "Thảo luận về sự phát triển của hệ thống tàu cao tốc",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1379,
+    "name": "Hội nhập kinh tế khu vực Nam Á và triển vọng tương lai",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1380,
+    "name": "Nghiên cứu về lịch sử con đường tơ lụa trên biển",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1381,
+    "name": "Lối sống tối giản hiện đại và bảo vệ hành tinh",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1382,
+    "name": "Phân tích tác động của các hiệp định thương mại song phương",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1383,
+    "name": "Quản lý rủi ro thiên tai lũ lụt mùa mưa gió mùa",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1384,
+    "name": "Ý nghĩa ngày Quốc khánh Ấn Độ 15 tháng 8 lịch sử",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1385,
+    "name": "Bàn luận về phát triển bền vững sông Hằng",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1386,
+    "name": "Nghệ thuật đàm phán đa phương trong ngoại giao quốc tế",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1387,
+    "name": "Tầm quan trọng của giáo dục bình đẳng giới xã hội",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1388,
+    "name": "Tìm hiểu lịch sử đế chế Mughal và các công trình vĩ đại",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1389,
+    "name": "Ứng dụng trí tuệ nhân tạo (AI) trong giáo dục trực tuyến",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1390,
+    "name": "Vấn đề chống lạm phát và ổn định kinh tế vĩ mô",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1391,
+    "name": "Phân tích cán cân thanh toán và dự trữ ngoại hối",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1392,
+    "name": "Bảo vệ đa dạng sinh học các vườn quốc gia hoang dã",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1393,
+    "name": "Chiến lược thu hút đầu tư nước ngoài FDI của chính phủ",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1394,
+    "name": "Tìm hiểu văn hóa cưới xin hoành tráng truyền thống",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1395,
+    "name": "Tác động của năng lượng tái tạo đến giá điện tiêu dùng",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1396,
+    "name": "Xu hướng phát triển của ngành truyền thông báo chí số",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1397,
+    "name": "Tầm nhìn xây dựng một thế giới hòa bình thịnh vượng",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1398,
+    "name": "Phương pháp phát triển tư duy sáng tạo của học sinh",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  },
+  {
+    "id": 1399,
+    "name": "Ý nghĩa triết học sâu xa của biểu tượng Om (ॐ)",
+    "systemCode": "HINDI",
+    "levelCode": "B2"
+  }
+]
