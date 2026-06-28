@@ -2,6 +2,7 @@ package com.aienglish.feature.aiteacher.ui.screen
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -135,38 +136,31 @@ fun TeacherScreen(
                     Spacer(Modifier.width(6.dp))
 
                     // VIP / PRO Badge
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                            .clickable { profileViewModel.showProfile() }
-                            .padding(4.dp)
+                    Surface(
+                        onClick = { profileViewModel.showProfile() },
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                        shape = RoundedCornerShape(8.dp),
+                        color = Color(0xFFFFB300).copy(0.12f),
+                        border = BorderStroke(1.dp, Color(0xFFFFB300))
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(8.dp))
-                                .border(1.dp, Color(0xFFFFB300), RoundedCornerShape(8.dp))
-                                .background(Color(0xFFFFB300).copy(0.12f))
-                                .padding(horizontal = 8.dp, vertical = 4.dp),
-                            contentAlignment = Alignment.Center
+                        Row(
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(4.dp)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.WorkspacePremium,
-                                    contentDescription = "PRO",
-                                    tint = Color(0xFFFFB300),
-                                    modifier = Modifier.size(14.dp)
-                                )
-                                Text(
-                                    text = if (profileState.isPaid) "PRO" else "GET",
-                                    fontSize = 11.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    fontStyle = FontStyle.Italic,
-                                    color = Color(0xFFFFB300)
-                                )
-                            }
+                            Icon(
+                                imageVector = Icons.Rounded.WorkspacePremium,
+                                contentDescription = "PRO",
+                                tint = Color(0xFFFFB300),
+                                modifier = Modifier.size(14.dp)
+                            )
+                            Text(
+                                text = if (profileState.isPaid) "PRO" else "GET",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontStyle = FontStyle.Italic,
+                                color = Color(0xFFFFB300)
+                            )
                         }
                     }
                 },
