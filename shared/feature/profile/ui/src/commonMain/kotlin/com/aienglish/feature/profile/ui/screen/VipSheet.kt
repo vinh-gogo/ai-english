@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -483,26 +484,67 @@ private fun MomoLogo() {
 private fun ChPlayLogo() {
     Box(
         modifier = Modifier
-            .size(width = 42.dp, height = 22.dp)
+            .size(width = 46.dp, height = 22.dp)
             .clip(RoundedCornerShape(4.dp))
             .background(Color(0xFFF1F3F4))
-            .border(0.5.dp, Color(0xFFDADCE0), RoundedCornerShape(4.dp)),
+            .border(0.5.dp, Color(0xFFDADCE0), RoundedCornerShape(4.dp))
+            .padding(horizontal = 4.dp),
         contentAlignment = Alignment.Center
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(2.dp)
+            horizontalArrangement = Arrangement.spacedBy(3.dp)
         ) {
-            Box(
-                modifier = Modifier
-                    .size(6.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFF00C6FF))
-            )
+            Canvas(modifier = Modifier.size(10.dp)) {
+                val w = size.width
+                val h = size.height
+                val ox = w * 0.35f
+                val oy = h * 0.5f
+                val divX = w * 0.65f
+                val divYTop = h * 0.325f
+                val divYBot = h * 0.675f
+
+                // 1. Blue (Left)
+                val pathBlue = Path().apply {
+                    moveTo(0f, 0f)
+                    lineTo(ox, oy)
+                    lineTo(0f, h)
+                    close()
+                }
+                drawPath(pathBlue, Color(0xFF00C6FF))
+
+                // 2. Green (Top)
+                val pathGreen = Path().apply {
+                    moveTo(0f, 0f)
+                    lineTo(divX, divYTop)
+                    lineTo(ox, oy)
+                    close()
+                }
+                drawPath(pathGreen, Color(0xFF00E676))
+
+                // 3. Red (Bottom)
+                val pathRed = Path().apply {
+                    moveTo(0f, h)
+                    lineTo(ox, oy)
+                    lineTo(divX, divYBot)
+                    close()
+                }
+                drawPath(pathRed, Color(0xFFFF1744))
+
+                // 4. Yellow (Right)
+                val pathYellow = Path().apply {
+                    moveTo(divX, divYTop)
+                    lineTo(w, oy)
+                    lineTo(divX, divYBot)
+                    lineTo(ox, oy)
+                    close()
+                }
+                drawPath(pathYellow, Color(0xFFFFEA00))
+            }
             Text(
-                text = "CH Play",
+                text = "Play",
                 color = Color(0xFF5F6368),
-                fontSize = 7.sp,
+                fontSize = 7.5.sp,
                 fontWeight = FontWeight.Black
             )
         }
