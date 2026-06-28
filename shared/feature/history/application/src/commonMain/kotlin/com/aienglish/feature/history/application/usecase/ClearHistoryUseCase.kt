@@ -5,5 +5,5 @@ import com.aienglish.feature.history.domain.repository.HistoryRepository
 class ClearHistoryUseCase(
     private val repository: HistoryRepository
 ) {
-    suspend operator fun invoke() = repository.clearHistory()
+    suspend operator fun invoke(ids: List<Long>) = repository.clearHistory(ids)
 }

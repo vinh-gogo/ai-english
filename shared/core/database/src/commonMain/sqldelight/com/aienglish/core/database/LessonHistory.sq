@@ -30,6 +30,9 @@ SELECT * FROM lesson_history ORDER BY created_at DESC;
 clearHistory:
 DELETE FROM lesson_history;
 
+deleteHistoryByIds:
+DELETE FROM lesson_history WHERE id IN ?;
+
 updateLessonProgress:
 UPDATE lesson_history
 SET lesson_json = ?, user_answers_json = ?, explanations_json = ?

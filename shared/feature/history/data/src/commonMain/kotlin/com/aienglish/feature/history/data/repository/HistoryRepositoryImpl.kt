@@ -73,9 +73,9 @@ class HistoryRepositoryImpl(
                 }
             }
 
-    override suspend fun clearHistory() {
+    override suspend fun clearHistory(ids: List<Long>) {
         withContext(dispatchers.io) {
-            queries.clearHistory()
+            queries.deleteHistoryByIds(ids)
         }
     }
 

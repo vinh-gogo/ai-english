@@ -58,9 +58,11 @@ class HistoryViewModel(
     }
 
     fun clearHistory() {
+        val ids = currentState.items.map { it.id }
+        if (ids.isEmpty()) return
         viewModelScope.launch {
             try {
-                clearHistoryUseCase()
+                clearHistoryUseCase(ids)
                 setState { copy(error = null) }
             } catch (e: Exception) {
                 setState { copy(error = "Không thể xóa lịch sử: ${e.message}") }

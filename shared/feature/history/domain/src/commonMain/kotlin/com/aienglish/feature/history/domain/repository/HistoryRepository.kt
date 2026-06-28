@@ -14,7 +14,7 @@ interface HistoryRepository {
         feedbackData: String?
     )
     fun getAllHistory(): Flow<List<LessonHistory>>
-    suspend fun clearHistory()
+    suspend fun clearHistory(ids: List<Long>)
     suspend fun updateLessonProgress(
         id: Long,
         lessonData: String?,
