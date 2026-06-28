@@ -66,6 +66,8 @@ fun TopicSelectionContent(
         LevelType.DELE -> state.selectedDeleLevel
         LevelType.SIELE -> state.selectedSieleLevel
         LevelType.HINDI -> state.selectedHindiLevel
+        LevelType.DELF -> state.selectedDelfLevel
+        LevelType.DALF -> state.selectedDalfLevel
     }
     val levelColor = getLevelColor(activeLevelCode, colors)
 
