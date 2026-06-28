@@ -133,8 +133,19 @@ fun TopicSelectionContent(
                     modifier = Modifier.size(32.dp)
                 )
                 Spacer(Modifier.width(10.dp))
+                val greetingText = when (state.targetLanguage) {
+                    "en" -> "AI English chào bạn!"
+                    "ja" -> "AI Japanese chào bạn!"
+                    "zh" -> "AI Chinese chào bạn!"
+                    "es" -> "AI Spanish chào bạn!"
+                    "hi" -> "AI Hindi chào bạn!"
+                    "fr" -> "AI French chào bạn!"
+                    "de" -> "AI German chào bạn!"
+                    "ko" -> "AI Korea chào bạn!"
+                    else -> "AI English chào bạn!"
+                }
                 Text(
-                    "AI English chào bạn!",
+                    greetingText,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = colors.mainText
