@@ -8,12 +8,12 @@ import com.aienglish.feature.aiteacher.application.usecase.GenerateEnglishLesson
 import com.aienglish.feature.aiteacher.domain.model.EnglishFeedback
 import com.aienglish.feature.aiteacher.domain.model.EnglishLesson
 import com.aienglish.feature.aiteacher.domain.model.TopicItem
+import com.aienglish.feature.aiteacher.domain.model.getCompatibleLevels
 import com.aienglish.feature.aiteacher.domain.repository.TopicRepository
 import com.aienglish.feature.aiteacher.domain.repository.TeacherHistoryRepository
 import com.aienglish.feature.aiteacher.domain.resource.JsonResourceReader
 import com.aienglish.feature.history.domain.model.LessonHistory
 import com.aienglish.feature.history.domain.repository.HistoryRepository
-import com.aienglish.feature.aiteacher.ui.screen.getCompatibleLevels
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant

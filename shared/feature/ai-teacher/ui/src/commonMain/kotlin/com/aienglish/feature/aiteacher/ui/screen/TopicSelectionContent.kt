@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.AppColors
 import com.aienglish.feature.aiteacher.domain.model.TopicItem
+import com.aienglish.feature.aiteacher.domain.model.getCompatibleLevels
 import com.aienglish.feature.aiteacher.ui.viewmodel.LevelType
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherUiState
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
@@ -44,37 +45,6 @@ fun getLevelColor(levelCode: String, colors: AppColors): Color {
         "C1", "900", "N1", "HSK5" -> colors.accent          // Màu accent chính (Blood đỏ sẫm)
         "C2", "HSK6" -> Color(0xFF8B5CF6)                   // Tím Violet
         else -> colors.accent
-    }
-}
-
-fun getCompatibleLevels(activeLevel: String): List<String> {
-    return when (activeLevel) {
-        // CEFR
-        "A1" -> listOf("A1")
-        "A2" -> listOf("A1", "A2")
-        "B1" -> listOf("A1", "A2", "B1")
-        "B2" -> listOf("A1", "A2", "B1", "B2")
-        "C1" -> listOf("A1", "A2", "B1", "B2", "C1")
-        "C2" -> listOf("A1", "A2", "B1", "B2", "C1", "C2")
-        // TOEIC
-        "300" -> listOf("300")
-        "500" -> listOf("300", "500")
-        "700" -> listOf("300", "500", "700")
-        "900" -> listOf("300", "500", "700", "900")
-        // JLPT
-        "N5" -> listOf("N5")
-        "N4" -> listOf("N5", "N4")
-        "N3" -> listOf("N5", "N4", "N3")
-        "N2" -> listOf("N5", "N4", "N3", "N2")
-        "N1" -> listOf("N5", "N4", "N3", "N2", "N1")
-        // HSK
-        "HSK1" -> listOf("HSK1")
-        "HSK2" -> listOf("HSK1", "HSK2")
-        "HSK3" -> listOf("HSK1", "HSK2", "HSK3")
-        "HSK4" -> listOf("HSK1", "HSK2", "HSK3", "HSK4")
-        "HSK5" -> listOf("HSK1", "HSK2", "HSK3", "HSK4", "HSK5")
-        "HSK6" -> listOf("HSK1", "HSK2", "HSK3", "HSK4", "HSK5", "HSK6")
-        else -> listOf(activeLevel)
     }
 }
 
