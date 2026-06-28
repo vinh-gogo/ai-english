@@ -104,9 +104,13 @@ fun TeacherScreen(
                             modifier = Modifier.size(24.dp)
                         )
                     }
+
+                    Spacer(Modifier.width(6.dp))
+
                     // VIP / PRO Badge
                     Box(
                         modifier = Modifier
+                            .align(Alignment.CenterVertically)
                             .clip(RoundedCornerShape(8.dp))
                             .border(1.dp, Color(0xFFFFB300), RoundedCornerShape(8.dp))
                             .background(Color(0xFFFFB300).copy(0.12f))
@@ -134,7 +138,7 @@ fun TeacherScreen(
                         }
                     }
 
-                    Spacer(Modifier.width(4.dp))
+                    Spacer(Modifier.width(6.dp))
 
                     // Profile button
                     IconButton(onClick = { profileViewModel.showProfile() }) {
