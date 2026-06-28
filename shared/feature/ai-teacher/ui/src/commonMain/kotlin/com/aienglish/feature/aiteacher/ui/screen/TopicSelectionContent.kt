@@ -476,7 +476,7 @@ fun TopicSelectionContent(
                 }
             )
 
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(8.dp))
 
             // Chips label + Switcher
             Row(
@@ -602,15 +602,15 @@ fun TopicSelectionContent(
             onClick = { viewModel.onStartLesson() },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
+                .navigationBarsPadding()
                 .padding(bottom = 16.dp)
-                .navigationBarsPadding(),
+                .height(56.dp),
             colors = ButtonDefaults.buttonColors(containerColor = colors.accent),
             shape = RoundedCornerShape(14.dp)
         ) {
-            Icon(Icons.Default.PlayArrow, null, modifier = Modifier.size(18.dp))
+            Icon(Icons.Default.PlayArrow, null, modifier = Modifier.size(20.dp))
             Spacer(Modifier.width(8.dp))
-            Text("Bắt đầu bài học", fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+            Text("Bắt đầu bài học", fontSize = 16.sp, fontWeight = FontWeight.Bold)
         }
     }
 }
