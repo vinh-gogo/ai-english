@@ -21,12 +21,19 @@ kotlin {
                 implementation(libs.koin.compose)
                 implementation(libs.koin.compose.viewmodel)
                 implementation(project(":shared:core:common"))
+                implementation(project(":shared:core:database"))
                 implementation(project(":shared:core:network"))
                 implementation(project(":shared:core:designsystem"))
                 implementation(project(":shared:feature:ai-teacher:domain"))
                 implementation(project(":shared:feature:ai-teacher:application"))
                 implementation(project(":shared:feature:ai-teacher:data"))
                 implementation(project(":shared:feature:ai-teacher:ui"))
+                implementation(project(":shared:feature:profile:domain"))
+                implementation(project(":shared:feature:profile:data"))
+                implementation(project(":shared:feature:profile:ui"))
+                implementation(project(":shared:feature:history:domain"))
+                implementation(project(":shared:feature:history:data"))
+                implementation(project(":shared:feature:history:ui"))
             }
         }
     }

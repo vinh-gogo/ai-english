@@ -1,9 +1,9 @@
-package com.aienglish.feature.aiteacher.ui.viewmodel
+package com.aienglish.feature.history.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.aienglish.core.common.viewmodel.BaseViewModel
-import com.aienglish.feature.aiteacher.domain.model.LessonHistory
-import com.aienglish.feature.aiteacher.domain.repository.HistoryRepository
+import com.aienglish.feature.history.domain.model.LessonHistory
+import com.aienglish.feature.history.domain.repository.HistoryRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch

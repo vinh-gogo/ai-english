@@ -1,4 +1,4 @@
-package com.aienglish.feature.aiteacher.domain.model
+package com.aienglish.feature.history.domain.model
 
 data class LessonHistory(
     val id: Long,
@@ -6,8 +6,8 @@ data class LessonHistory(
     val level: String,
     val score: Int?,
     val status: HistoryStatus,
-    val createdAt: String,
-    val completedAt: String?,
+    val createdAt: Long,
+    val completedAt: Long?,
     val lessonJson: String? = null,
     val userAnswersJson: String? = null,
     val explanationsJson: String? = null,

@@ -26,21 +26,31 @@ GEMINI_API_KEY=your_actual_gemini_api_key_here
 
 ```
 ai-english/
-├── composeApp/              ← Desktop + Android entry point
+├── androidApp/              ← Android entry point & Google Auth configuration
+├── composeApp/              ← Desktop entry point
 ├── shared/
 │   ├── core/
-│   │   ├── common/          ← BaseViewModel, AppDispatchers, AppResult
+│   │   ├── common/          ← BaseViewModel, AppPreferences, AppDispatchers
+│   │   ├── database/        ← SQLDelight Database and LessonHistory queries
 │   │   ├── network/         ← GeminiClient (Ktor)
 │   │   └── designsystem/    ← Theme, Color (Royal Blue dark mode)
 │   └── feature/
-│       └── ai-teacher/
-│           ├── domain/      ← Entities, Repository interfaces, Topics
-│           ├── application/ ← UseCases (Generate, Evaluate, Explain)
-│           ├── data/        ← TeacherRepositoryImpl (Gemini prompts)
-│           └── ui/          ← TeacherScreen, TeacherViewModel (MVI)
+│       ├── ai-teacher/
+│       │   ├── domain/      ← Entities, Repository interfaces, Topics
+│       │   ├── application/ ← UseCases (Generate, Evaluate, Explain)
+│       │   ├── data/        ← TeacherRepositoryImpl (Gemini prompts)
+│       │   └── ui/          ← TeacherScreen, TeacherViewModel (MVI)
+│       ├── profile/
+│       │   ├── domain/      ← ProfileRepository interface
+│       │   ├── data/        ← ProfileRepositoryImpl
+│       │   └── ui/          ← ProfileSheet, ProfileViewModel
+│       └── history/
+│           ├── domain/      ← LessonHistory entity, HistoryRepository interface
+│           ├── data/        ← HistoryRepositoryImpl
+│           └── ui/          ← HistorySheet, HistoryViewModel
 ```
 
-**Dependency flow:** UI → Application → Domain ← Data
+**Dependency flow:** UI → Application/UI → Domain ← Data
 
 ---
 
@@ -61,12 +71,21 @@ ai-english/
 
 | Cấp | Mô tả | Nội dung |
 |---|---|---|
-| A1 | Beginner | Câu đơn giản, hiện tại đơn, từ vựng cơ bản |
-| A2 | Elementary | Câu ngắn, thì đơn giản, giao tiếp hàng ngày |
-| B1 | Intermediate | Thì phức tạp, câu điều kiện, từ vựng trung bình |
-| B2 | Upper-Intermediate | Cụm động từ, thành ngữ, từ vựng nâng cao |
-| C1 | Advanced | Cấu trúc phức tạp, văn phong học thuật |
-| C2 | Mastery | Gần giống người bản ngữ, diễn đạt tinh tế |
+| A1 | Beginner | Thông tin cá nhân, gia đình, thói quen, đồ vật, thời tiết, thức ăn |
+| A2 | Elementary | Du lịch, mua sắm, khách sạn, sức khỏe, lễ hội, so sánh |
+| B1 | Intermediate | Thì phức tạp, câu điều kiện: Ý kiến cá nhân, giáo dục, mạng xã hội, du lịch, tài |
+| B2 | Upper-Intermediate | Cụm động từ, thành ngữ, từ vựng nâng cao: Tranh luận xã hội, môi trường, AI, tin giả, quyền riêng tư |
+| C1 | Advanced | Cấu trúc phức tạp, văn phong học thuật: Doanh nghiệp, đàm phán quốc tế, ESG, M&A, logistics |
+| C2 | Mastery | Gần giống người bản ngữ, diễn đạt tinh tế: Pháp lý quốc tế, kinh tế vĩ mô, AGI, Blockchain, triết học |
+
+### Cấu trúc mới dựa trên nghiên cứu thực tế:
+
+| Level | Chủ đề chính (theo CEFR/TOEIC chuẩn) |
+|---|---|
+| TOEIC 300 | Chào hỏi văn phòng, văn phòng phẩm, email đơn giản |
+| TOEIC 500 | Đặt phòng công tác, hợp đồng, tuyển dụng, đào tạo |
+| TOEIC 700 | Báo cáo doanh thu, đàm phán, kiểm toán, chiến dịch marketing |
+| TOEIC 900 | Kiểm toán tập đoàn, M&A, IPO, hedging, FTA, C-level |
 
 ---
 
@@ -76,4 +95,24 @@ ai-english/
 - **Koin 4.0.0** — Dependency Injection
 - **Ktor 3.0.0** — Networking (Gemini API)
 - **Arrow 1.2.0** — Either/AppResult type safety
-- **Gemini 2.5 Flash** — AI model
+- **Gemini API** — AI models
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions to improve **AI English Teacher**! To contribute:
+
+1. Fork the project.
+2. Create a feature branch (`git checkout -b feature/amazing-feature`).
+3. Commit your changes (`git commit -m 'Add some amazing feature'`).
+4. Push to the branch (`git push origin feature/amazing-feature`).
+5. Open a Pull Request.
+
+Please make sure to follow the existing code style, ensure that the app builds successfully on all targets, and write/update tests where appropriate.
+
+---
+
+## 📄 License
+
+This project is licensed under the **GNU General Public License v3.0** (GPL-3.0). See the [LICENSE](LICENSE) file for the full text.

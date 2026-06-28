@@ -23,8 +23,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.LocalAppColors
-import com.aienglish.feature.aiteacher.ui.viewmodel.ProfileViewModel
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
+import com.aienglish.feature.history.ui.screen.HistorySheet
+import com.aienglish.feature.profile.ui.screen.ProfileSheet
+import com.aienglish.feature.profile.ui.viewmodel.ProfileViewModel
 import org.koin.compose.koinInject
 
 // ─────────────────────────────────────────────────────────────
@@ -152,7 +154,12 @@ fun TeacherScreen(
             }
             // History sheet overlay
             if (showHistory) {
-                HistorySheet(onDismiss = { showHistory = false })
+                HistorySheet(
+                    onReview = { item -> viewModel.onReviewLesson(item) },
+                    onReTest = { item -> viewModel.onReTestLesson(item) },
+                    onContinue = { item -> viewModel.onResumeLesson(item) },
+                    onDismiss = { showHistory = false }
+                )
             }
             AnimatedContent(
                 targetState = when {

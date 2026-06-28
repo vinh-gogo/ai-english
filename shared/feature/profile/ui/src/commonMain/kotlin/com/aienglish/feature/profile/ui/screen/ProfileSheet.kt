@@ -1,4 +1,4 @@
-package com.aienglish.feature.aiteacher.ui.screen
+package com.aienglish.feature.profile.ui.screen
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.AppColors
 import com.aienglish.core.designsystem.theme.LocalAppColors
-import com.aienglish.feature.aiteacher.ui.viewmodel.ProfileState
-import com.aienglish.feature.aiteacher.ui.viewmodel.ProfileViewModel
+import com.aienglish.feature.profile.ui.viewmodel.ProfileState
+import com.aienglish.feature.profile.ui.viewmodel.ProfileViewModel
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,7 +38,6 @@ fun ProfileSheet(
     val state by profileViewModel.state.collectAsState()
     val colors = LocalAppColors.current
 
-    // Use Material3 ModalBottomSheet — handles z-order, scrim, and drag correctly
     ModalBottomSheet(
         onDismissRequest = { profileViewModel.hideProfile() },
         containerColor = colors.background,
@@ -58,7 +57,6 @@ fun ProfileSheet(
         }
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            // Header
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -80,7 +78,6 @@ fun ProfileSheet(
 
             HorizontalDivider(color = colors.border)
 
-            // Scrollable content
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -100,7 +97,6 @@ fun ProfileSheet(
     }
 }
 
-// ─── User Info + Google Auth ─────────────────────────────────────────────────
 @Composable
 private fun UserInfoSection(
     state: ProfileState,
@@ -178,7 +174,6 @@ private fun UserInfoSection(
             }
         }
 
-        // Error message
         if (state.error != null) {
             Spacer(Modifier.height(8.dp))
             Card(
@@ -201,7 +196,6 @@ private fun UserInfoSection(
     }
 }
 
-// ─── API Key Section ──────────────────────────────────────────────────────────
 @Composable
 private fun ApiKeySection(state: ProfileState, vm: ProfileViewModel, colors: AppColors) {
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -269,7 +263,6 @@ private fun ApiKeySection(state: ProfileState, vm: ProfileViewModel, colors: App
     }
 }
 
-// ─── How To Get API Key ───────────────────────────────────────────────────────
 @Composable
 private fun HowToGetApiKeySection(state: ProfileState, vm: ProfileViewModel, colors: AppColors) {
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {

@@ -1,4 +1,4 @@
-package com.aienglish.feature.aiteacher.ui.screen
+package com.aienglish.feature.history.ui.screen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -22,18 +22,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.AppColors
 import com.aienglish.core.designsystem.theme.LocalAppColors
-import com.aienglish.feature.aiteacher.domain.model.HistoryStatus
-import com.aienglish.feature.aiteacher.domain.model.LessonHistory
-import com.aienglish.feature.aiteacher.ui.viewmodel.HistoryViewModel
-import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
+import com.aienglish.feature.history.domain.model.HistoryStatus
+import com.aienglish.feature.history.domain.model.LessonHistory
+import com.aienglish.feature.history.ui.viewmodel.HistoryViewModel
 import org.koin.compose.koinInject
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HistorySheet(
-    historyViewModel: HistoryViewModel = koinInject(),
-    teacherViewModel: TeacherViewModel = koinInject(),
-    onDismiss: () -> Unit
+    onReview: (LessonHistory) -> Unit,
+    onReTest: (LessonHistory) -> Unit,
+    onContinue: (LessonHistory) -> Unit,
+    onDismiss: () -> Unit,
+    historyViewModel: HistoryViewModel = koinInject()
 ) {
     val state by historyViewModel.state.collectAsState()
     val colors = LocalAppColors.current
@@ -127,6 +132,34 @@ fun HistorySheet(
                 }
 
                 else -> {
+                    val items = state.items
+                    val groups = remember(items) {
+                        val excellent = mutableListOf<LessonHistory>()
+                        val good = mutableListOf<LessonHistory>()
+                        val average = mutableListOf<LessonHistory>()
+                        val weakOrPending = mutableListOf<LessonHistory>()
+
+                        items.forEach { item ->
+                            if (item.status == HistoryStatus.COMPLETED) {
+                                val score = item.score ?: 0
+                                when {
+                                    score >= 9 -> excellent.add(item)
+                                    score >= 7 -> good.add(item)
+                                    score >= 5 -> average.add(item)
+                                    else -> weakOrPending.add(item)
+                                }
+                            } else {
+                                weakOrPending.add(item)
+                            }
+                        }
+                        listOf(
+                            GroupData("Xuất sắc (9 - 10 điểm)", excellent, colors.correct),
+                            GroupData("Tốt (7 - 8 điểm)", good, colors.accent),
+                            GroupData("Trung bình (5 - 6 điểm)", average, Color(0xFFFFA726)),
+                            GroupData("Yếu / Chưa hoàn thành", weakOrPending, colors.error)
+                        )
+                    }
+
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -136,27 +169,62 @@ fun HistorySheet(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         // Summary chip
-                        val completed = state.items.count { it.status == HistoryStatus.COMPLETED }
+                        val completed = items.count { it.status == HistoryStatus.COMPLETED }
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            SummaryChip("${state.items.size} bài", Icons.Rounded.MenuBook, colors.accent, colors)
+                            SummaryChip("${items.size} bài", Icons.Rounded.MenuBook, colors.accent, colors)
                             SummaryChip("$completed hoàn thành", Icons.Rounded.CheckCircle, colors.correct, colors)
                         }
 
                         Spacer(Modifier.height(4.dp))
 
-                        state.items.forEach { item ->
-                            HistoryItem(
-                                item = item,
-                                colors = colors,
-                                onReview = {
-                                    teacherViewModel.onReviewLesson(item)
-                                    onDismiss()
-                                },
-                                onReTest = {
-                                    teacherViewModel.onReTestLesson(item)
-                                    onDismiss()
+                        groups.forEach { group ->
+                            if (group.items.isNotEmpty()) {
+                                Spacer(Modifier.height(10.dp))
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier.padding(vertical = 4.dp)
+                                ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(width = 4.dp, height = 16.dp)
+                                            .clip(RoundedCornerShape(2.dp))
+                                            .background(group.color)
+                                    )
+                                    Spacer(Modifier.width(8.dp))
+                                    Text(
+                                        text = group.title,
+                                        fontSize = 14.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = group.color
+                                    )
+                                    Spacer(Modifier.width(6.dp))
+                                    Text(
+                                        text = "(${group.items.size})",
+                                        fontSize = 12.sp,
+                                        color = colors.mutedText,
+                                        fontWeight = FontWeight.Medium
+                                    )
                                 }
-                            )
+
+                                group.items.forEach { item ->
+                                    HistoryItem(
+                                        item = item,
+                                        colors = colors,
+                                        onReview = {
+                                            onReview(item)
+                                            onDismiss()
+                                        },
+                                        onReTest = {
+                                            onReTest(item)
+                                            onDismiss()
+                                        },
+                                        onContinue = {
+                                            onContinue(item)
+                                            onDismiss()
+                                        }
+                                    )
+                                }
+                            }
                         }
 
                         Spacer(Modifier.height(16.dp))
@@ -221,7 +289,8 @@ private fun HistoryItem(
     item: LessonHistory,
     colors: AppColors,
     onReview: () -> Unit,
-    onReTest: () -> Unit
+    onReTest: () -> Unit,
+    onContinue: () -> Unit
 ) {
     Card(
         colors = CardDefaults.cardColors(containerColor = colors.surface),
@@ -327,6 +396,19 @@ private fun HistoryItem(
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                if (item.status == HistoryStatus.IN_PROGRESS && !item.lessonJson.isNullOrEmpty()) {
+                    TextButton(
+                        onClick = onContinue,
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                        modifier = Modifier.height(32.dp)
+                    ) {
+                        Icon(Icons.Rounded.PlayArrow, null, modifier = Modifier.size(14.dp), tint = colors.accent)
+                        Spacer(Modifier.width(4.dp))
+                        Text("Tiếp tục", fontSize = 12.sp, color = colors.accent, fontWeight = FontWeight.Bold)
+                    }
+                    Spacer(Modifier.width(8.dp))
+                }
+
                 if (item.status == HistoryStatus.COMPLETED && !item.lessonJson.isNullOrEmpty()) {
                     TextButton(
                         onClick = onReview,
@@ -349,20 +431,48 @@ private fun HistoryItem(
                 ) {
                     Icon(Icons.Rounded.Replay, null, modifier = Modifier.size(14.dp), tint = colors.accent)
                     Spacer(Modifier.width(4.dp))
-                    Text("Luyện tập lại", fontSize = 12.sp, color = colors.accent, fontWeight = FontWeight.Bold)
+                    Text(
+                        if (item.status == HistoryStatus.COMPLETED) "Luyện tập lại" else "Làm lại từ đầu",
+                        fontSize = 12.sp,
+                        color = colors.accent,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
         }
     }
 }
 
-private fun formatDate(dateTimeStr: String): String {
+private fun formatDate(epochMs: Long): String {
     return try {
-        val parts = dateTimeStr.split("T")
-        val dateParts = parts[0].split("-")   // [2026, 06, 28]
-        val timePart = parts.getOrNull(1)?.take(5) ?: ""  // 04:30
-        "${dateParts[2]}/${dateParts[1]} $timePart"
+        val now = Clock.System.now().toEpochMilliseconds()
+        val diffMs = now - epochMs
+        val diffSec = diffMs / 1000
+        val diffMin = diffSec / 60
+        val diffHour = diffMin / 60
+
+        when {
+            diffMs < 0L -> "Vừa xong"
+            diffSec < 60L -> "Vừa xong"
+            diffMin < 60L -> "$diffMin phút trước"
+            diffHour < 24L -> "$diffHour giờ trước"
+            else -> {
+                val instant = Instant.fromEpochMilliseconds(epochMs)
+                val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+                val day = localDateTime.dayOfMonth.toString().padStart(2, '0')
+                val month = localDateTime.monthNumber.toString().padStart(2, '0')
+                val hour = localDateTime.hour.toString().padStart(2, '0')
+                val minute = localDateTime.minute.toString().padStart(2, '0')
+                "$day/$month $hour:$minute"
+            }
+        }
     } catch (e: Exception) {
-        dateTimeStr
+        "Vừa xong"
     }
 }
+
+private data class GroupData(
+    val title: String,
+    val items: List<LessonHistory>,
+    val color: Color
+)

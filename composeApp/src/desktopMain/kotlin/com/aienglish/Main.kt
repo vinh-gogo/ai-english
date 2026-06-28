@@ -8,12 +8,18 @@ import com.aienglish.core.designsystem.theme.AIEnglishTheme
 import com.aienglish.core.network.di.coreNetworkModule
 import com.aienglish.core.common.di.desktopCoreCommonModule
 import com.aienglish.core.common.prefs.AppPreferences
+import com.aienglish.core.database.AIEnglishDatabase
+import com.aienglish.core.database.driver.createDesktopDriver
 import com.aienglish.feature.aiteacher.application.di.teacherApplicationModule
 import com.aienglish.feature.aiteacher.data.di.teacherDataModule
 import com.aienglish.feature.aiteacher.data.repository.TeacherRepositoryImpl
 import com.aienglish.feature.aiteacher.domain.repository.TeacherRepository
 import com.aienglish.feature.aiteacher.ui.di.teacherUiModule
 import com.aienglish.feature.aiteacher.ui.screen.TeacherScreen
+import com.aienglish.feature.profile.data.di.profileDataModule
+import com.aienglish.feature.profile.ui.di.profileUiModule
+import com.aienglish.feature.history.data.di.historyDataModule
+import com.aienglish.feature.history.ui.di.historyUiModule
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
@@ -27,9 +33,6 @@ private fun loadApiKey(): String {
     }
     return System.getenv("GEMINI_API_KEY") ?: ""
 }
-
-import com.aienglish.core.database.AIEnglishDatabase
-import com.aienglish.core.database.driver.createDesktopDriver
 
 fun main() {
     val apiKey = loadApiKey()
@@ -46,6 +49,8 @@ fun main() {
             },
             // Data module (HistoryRepository)
             teacherDataModule,
+            profileDataModule,
+            historyDataModule,
             module {
                 single<TeacherRepository> {
                     val prefs = get<AppPreferences>()
@@ -59,7 +64,9 @@ fun main() {
                     )
                 }
             },
-            teacherUiModule
+            teacherUiModule,
+            profileUiModule,
+            historyUiModule
         )
     }
 

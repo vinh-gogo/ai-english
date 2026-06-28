@@ -1,7 +1,7 @@
-package com.aienglish.feature.aiteacher.ui.viewmodel
+package com.aienglish.feature.profile.ui.viewmodel
 
-import com.aienglish.core.common.prefs.AppPreferences
 import com.aienglish.core.common.viewmodel.BaseViewModel
+import com.aienglish.feature.profile.domain.repository.ProfileRepository
 
 data class ProfileState(
     val showProfile: Boolean = false,
@@ -17,17 +17,17 @@ data class ProfileState(
 )
 
 class ProfileViewModel(
-    private val prefs: AppPreferences
+    private val repository: ProfileRepository
 ) : BaseViewModel<ProfileState>(ProfileState()) {
 
     init {
         // Load persisted data on start
         setState {
             copy(
-                isSignedIn = prefs.isSignedIn(),
-                displayName = prefs.getUserName(),
-                email = prefs.getUserEmail(),
-                apiKeyInput = prefs.getApiKey()
+                isSignedIn = repository.isSignedIn(),
+                displayName = repository.getUserName(),
+                email = repository.getUserEmail(),
+                apiKeyInput = repository.getApiKey()
             )
         }
     }
@@ -41,7 +41,7 @@ class ProfileViewModel(
     fun saveApiKey() {
         val key = currentState.apiKeyInput.trim()
         if (key.isEmpty()) { setState { copy(error = "API Key không được để trống") }; return }
-        prefs.saveApiKey(key)
+        repository.saveApiKey(key)
         setState { copy(apiKeySaved = true, error = null) }
     }
 
@@ -49,9 +49,9 @@ class ProfileViewModel(
 
     // Called after successful Google Sign-In
     fun onSignedIn(name: String, email: String) {
-        prefs.saveUserName(name)
-        prefs.saveUserEmail(email)
-        prefs.setSignedIn(true)
+        repository.saveUserName(name)
+        repository.saveUserEmail(email)
+        repository.setSignedIn(true)
         setState { copy(isSignedIn = true, displayName = name, email = email, isSigningIn = false, error = null) }
     }
 
@@ -59,9 +59,9 @@ class ProfileViewModel(
     fun onSignInError(msg: String) = setState { copy(isSigningIn = false, error = msg) }
 
     fun signOut() {
-        prefs.setSignedIn(false)
-        prefs.saveUserName(null)
-        prefs.saveUserEmail(null)
+        repository.setSignedIn(false)
+        repository.saveUserName(null)
+        repository.saveUserEmail(null)
         setState { copy(isSignedIn = false, displayName = null, email = null, error = null) }
     }
 

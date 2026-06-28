@@ -7,8 +7,8 @@ import com.aienglish.feature.aiteacher.application.usecase.GenerateEnglishLesson
 import com.aienglish.feature.aiteacher.domain.model.EnglishFeedback
 import com.aienglish.feature.aiteacher.domain.model.EnglishLesson
 import com.aienglish.feature.aiteacher.domain.model.Topics
-import com.aienglish.feature.aiteacher.domain.model.LessonHistory
-import com.aienglish.feature.aiteacher.domain.repository.HistoryRepository
+import com.aienglish.feature.history.domain.model.LessonHistory
+import com.aienglish.feature.history.domain.repository.HistoryRepository
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -75,8 +75,11 @@ class TeacherViewModel(
     }
 
     // ── Lesson Navigation ──
-    fun onAnswerChanged(index: Int, answer: String) = setState {
-        copy(userAnswers = userAnswers + (index to answer))
+    fun onAnswerChanged(index: Int, answer: String) {
+        setState {
+            copy(userAnswers = userAnswers + (index to answer))
+        }
+        saveCurrentProgress()
     }
 
     fun onCheckAnswer(index: Int) {
@@ -111,6 +114,7 @@ class TeacherViewModel(
                             explanations = explanations + (index to explanation)
                         )
                     }
+                    saveCurrentProgress()
                 }
             )
         }
@@ -145,7 +149,10 @@ class TeacherViewModel(
 
             generateLesson("user", topic, level).fold(
                 ifLeft = { err -> setState { copy(isGeneratingLesson = false, error = err.message) } },
-                ifRight = { lesson -> setState { copy(isGeneratingLesson = false, lesson = lesson) } }
+                ifRight = { lesson ->
+                    setState { copy(isGeneratingLesson = false, lesson = lesson) }
+                    saveCurrentProgress()
+                }
             )
         }
     }
@@ -220,6 +227,7 @@ class TeacherViewModel(
                             explanations = explanations + (index to explanation)
                         )
                     }
+                    saveCurrentProgress()
                 }
             )
         }
@@ -279,4 +287,54 @@ class TeacherViewModel(
 
     fun onDismissError() = setState { copy(error = null) }
     fun onReset() = setState { TeacherUiState() }
+
+    private fun saveCurrentProgress() {
+        val id = currentLessonHistoryId ?: return
+        val lesson = currentState.lesson ?: return
+        viewModelScope.launch {
+            try {
+                val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
+                val lessonJson = json.encodeToString(lesson)
+                val userAnswersJson = json.encodeToString(currentState.userAnswers)
+                val explanationsJson = json.encodeToString(currentState.explanations)
+                historyRepository.updateLessonProgress(id, lessonJson, userAnswersJson, explanationsJson)
+            } catch (e: Exception) { /* ignore */ }
+        }
+    }
+
+    fun onResumeLesson(history: LessonHistory) {
+        val lessonJson = history.lessonJson ?: return
+        val userAnswersJson = history.userAnswersJson ?: "{}"
+        val explanationsJson = history.explanationsJson ?: "{}"
+
+        val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
+        try {
+            val lesson = json.decodeFromString<EnglishLesson>(lessonJson)
+            val userAnswers = json.decodeFromString<Map<Int, String>>(userAnswersJson)
+            val explanations = json.decodeFromString<Map<Int, String>>(explanationsJson)
+
+            val topicIndex = Topics.list.indexOfFirst { it.name == history.topic }.coerceAtLeast(0)
+            val isToeic = history.level.startsWith("TOEIC")
+            val levelValue = if (isToeic) history.level.removePrefix("TOEIC ").trim() else history.level
+
+            currentLessonHistoryId = history.id
+
+            setState {
+                copy(
+                    selectedTopicIndex = topicIndex,
+                    levelType = if (isToeic) LevelType.TOEIC else LevelType.CEFR,
+                    selectedCefrLevel = if (!isToeic) levelValue else selectedCefrLevel,
+                    selectedToeicLevel = if (isToeic) levelValue else selectedToeicLevel,
+                    lesson = lesson,
+                    userAnswers = userAnswers,
+                    explanations = explanations,
+                    feedback = null,
+                    currentSentenceIndex = 0,
+                    checkedAnswers = explanations.keys
+                )
+            }
+        } catch (e: Exception) {
+            setState { copy(error = "Không thể tiếp tục bài học dở dang: ${e.message}") }
+        }
+    }
 }

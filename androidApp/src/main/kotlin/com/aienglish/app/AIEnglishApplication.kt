@@ -11,6 +11,10 @@ import com.aienglish.feature.aiteacher.data.di.teacherDataModule
 import com.aienglish.feature.aiteacher.data.repository.TeacherRepositoryImpl
 import com.aienglish.feature.aiteacher.domain.repository.TeacherRepository
 import com.aienglish.feature.aiteacher.ui.di.teacherUiModule
+import com.aienglish.feature.profile.data.di.profileDataModule
+import com.aienglish.feature.profile.ui.di.profileUiModule
+import com.aienglish.feature.history.data.di.historyDataModule
+import com.aienglish.feature.history.ui.di.historyUiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
@@ -34,6 +38,8 @@ class AIEnglishApplication : Application() {
                 },
                 // Data module (HistoryRepository)
                 teacherDataModule,
+                profileDataModule,
+                historyDataModule,
                 // TeacherRepository (needs API key)
                 module {
                     single<TeacherRepository> {
@@ -45,7 +51,9 @@ class AIEnglishApplication : Application() {
                         )
                     }
                 },
-                teacherUiModule
+                teacherUiModule,
+                profileUiModule,
+                historyUiModule
             )
         }
     }

@@ -4,8 +4,8 @@ CREATE TABLE IF NOT EXISTS lesson_history (
     level TEXT NOT NULL,
     score INTEGER,
     status TEXT NOT NULL DEFAULT 'IN_PROGRESS',
-    created_at TEXT NOT NULL,
-    completed_at TEXT,
+    created_at INTEGER NOT NULL,
+    completed_at INTEGER,
     lesson_json TEXT,
     user_answers_json TEXT,
     explanations_json TEXT,
@@ -29,4 +29,9 @@ SELECT * FROM lesson_history ORDER BY created_at DESC;
 
 clearHistory:
 DELETE FROM lesson_history;
+
+updateLessonProgress:
+UPDATE lesson_history
+SET lesson_json = ?, user_answers_json = ?, explanations_json = ?
+WHERE id = ?;
 

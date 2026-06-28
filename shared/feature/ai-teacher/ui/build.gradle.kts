@@ -31,6 +31,9 @@ kotlin {
             implementation(project(":shared:core:designsystem"))
             implementation(project(":shared:feature:ai-teacher:domain"))
             implementation(project(":shared:feature:ai-teacher:application"))
+            implementation(project(":shared:feature:profile:ui"))
+            implementation(project(":shared:feature:history:ui"))
+            implementation(project(":shared:feature:history:domain"))
         }
         androidMain.dependencies {
             implementation(libs.koin.android)

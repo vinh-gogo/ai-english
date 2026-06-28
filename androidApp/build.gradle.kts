@@ -59,4 +59,10 @@ dependencies {
     implementation(project(":shared:feature:ai-teacher:application"))
     implementation(project(":shared:feature:ai-teacher:data"))
     implementation(project(":shared:feature:ai-teacher:ui"))
+    implementation(project(":shared:feature:profile:domain"))
+    implementation(project(":shared:feature:profile:data"))
+    implementation(project(":shared:feature:profile:ui"))
+    implementation(project(":shared:feature:history:domain"))
+    implementation(project(":shared:feature:history:data"))
+    implementation(project(":shared:feature:history:ui"))
 }

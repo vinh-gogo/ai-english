@@ -1,17 +1,18 @@
-package com.aienglish.feature.aiteacher.data.repository
+package com.aienglish.feature.history.data.repository
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.aienglish.core.common.dispatchers.AppDispatchers
 import com.aienglish.core.database.AIEnglishDatabase
-import com.aienglish.feature.aiteacher.domain.model.HistoryStatus
-import com.aienglish.feature.aiteacher.domain.model.LessonHistory
-import com.aienglish.feature.aiteacher.domain.repository.HistoryRepository
+import com.aienglish.feature.history.domain.model.HistoryStatus
+import com.aienglish.feature.history.domain.model.LessonHistory
+import com.aienglish.feature.history.domain.repository.HistoryRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlinx.datetime.Clock
 import kotlin.time.ExperimentalTime
 
 class HistoryRepositoryImpl(
@@ -21,15 +22,10 @@ class HistoryRepositoryImpl(
 
     private val queries get() = database.lessonHistoryQueries
 
-    @OptIn(ExperimentalTime::class)
-    private fun nowString(): String {
-        val instant = kotlin.time.Clock.System.now()
-        return instant.toLocalDateTime(TimeZone.currentSystemDefault()).toString()
-    }
-
     override suspend fun startLesson(topic: String, level: String): Long =
         withContext(dispatchers.io) {
-            queries.insertLesson(topic, level, nowString())
+            val now = Clock.System.now().toEpochMilliseconds()
+            queries.insertLesson(topic, level, now)
             queries.getLastInsertId().executeAsOne()
         }
 
@@ -42,9 +38,10 @@ class HistoryRepositoryImpl(
         feedbackJson: String?
     ) {
         withContext(dispatchers.io) {
+            val now = Clock.System.now().toEpochMilliseconds()
             queries.updateLessonCompleted(
                 score = score.toLong(),
-                completed_at = nowString(),
+                completed_at = now,
                 lesson_json = lessonJson,
                 user_answers_json = userAnswersJson,
                 explanations_json = explanationsJson,
@@ -79,6 +76,22 @@ class HistoryRepositoryImpl(
     override suspend fun clearHistory() {
         withContext(dispatchers.io) {
             queries.clearHistory()
+        }
+    }
+
+    override suspend fun updateLessonProgress(
+        id: Long,
+        lessonJson: String?,
+        userAnswersJson: String?,
+        explanationsJson: String?
+    ) {
+        withContext(dispatchers.io) {
+            queries.updateLessonProgress(
+                lesson_json = lessonJson,
+                user_answers_json = userAnswersJson,
+                explanations_json = explanationsJson,
+                id = id
+            )
         }
     }
 }

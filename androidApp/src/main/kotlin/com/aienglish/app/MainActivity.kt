@@ -8,7 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import com.aienglish.core.designsystem.theme.AIEnglishTheme
 import com.aienglish.feature.aiteacher.ui.screen.TeacherScreen
-import com.aienglish.feature.aiteacher.ui.viewmodel.ProfileViewModel
+import com.aienglish.feature.profile.ui.viewmodel.ProfileViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
