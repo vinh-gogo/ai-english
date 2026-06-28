@@ -22,6 +22,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalUriHandler
 import com.aienglish.core.designsystem.theme.AppColors
 import com.aienglish.core.designsystem.theme.LocalAppColors
 import com.aienglish.feature.profile.ui.viewmodel.ProfileState
@@ -280,7 +281,7 @@ private fun HowToGetApiKeySection(state: ProfileState, vm: ProfileViewModel, col
             Icon(Icons.Rounded.HelpOutline, null, tint = colors.accent, modifier = Modifier.size(18.dp))
             Spacer(Modifier.width(8.dp))
             Text(
-                "Cách lấy Gemini API Key miễn phí",
+                "Cách lấy API Key",
                 fontSize = 14.sp, fontWeight = FontWeight.SemiBold,
                 color = colors.mainText, modifier = Modifier.weight(1f)
             )
@@ -308,25 +309,9 @@ private fun HowToGetApiKeySection(state: ProfileState, vm: ProfileViewModel, col
                     HowToStep(2, "Đăng nhập Google", "Dùng tài khoản Google của bạn", colors)
                     HowToStep(3, "Tạo API Key", "Click \"Get API key\" → \"Create API key\"", colors)
                     HowToStep(4, "Copy và dán vào đây", "Copy key (bắt đầu bằng AIzaSy...) và dán vào ô trên", colors)
-
-                    HorizontalDivider(color = colors.border)
-
-                    Card(
-                        colors = CardDefaults.cardColors(containerColor = colors.accent.copy(0.08f)),
-                        shape = RoundedCornerShape(10.dp),
-                        border = BorderStroke(1.dp, colors.accent.copy(0.25f))
-                    ) {
-                        Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.Top) {
-                            Text("💡", fontSize = 16.sp)
-                            Spacer(Modifier.width(8.dp))
-                            Text(
-                                "Gemini 2.0 Flash miễn phí: 15 req/phút, 1 triệu token/ngày — đủ học cả ngày!",
-                                fontSize = 12.sp, color = colors.mutedText, lineHeight = 17.sp
-                            )
-                        }
-                    }
-
+                    val uriHandler = LocalUriHandler.current
                     Surface(
+                        onClick = { uriHandler.openUri("https://aistudio.google.com/apikey") },
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(10.dp),
                         color = Color(0xFF4285F4).copy(0.1f),
