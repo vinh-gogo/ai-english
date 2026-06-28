@@ -15,8 +15,8 @@ import com.aienglish.core.designsystem.theme.SurfaceDark
 @Composable
 actual fun SeigaihaBackground(isDark: Boolean) {
     val bgColor = SurfaceDark
-    // Subtle dark-theme compatible pattern color
-    val patternColor = Color(0xFF334155).copy(alpha = 0.25f)
+    // White with 12% alpha has the perfect contrast and visibility on OLED/LCD dark themes
+    val patternColor = Color.White.copy(alpha = 0.12f)
     
     val density = LocalDensity.current
     val scale = 1.5f
