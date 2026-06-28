@@ -34,6 +34,10 @@ import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonArray
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+
+private val jsonParser = Json { ignoreUnknownKeys = true }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -166,53 +170,62 @@ fun HistorySheet(
                         )
                     }
 
-                    Column(
+                    LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .verticalScroll(rememberScrollState())
-                            .padding(horizontal = 16.dp, vertical = 12.dp)
+                            .padding(horizontal = 16.dp)
                             .navigationBarsPadding(),
+                        contentPadding = PaddingValues(vertical = 12.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         // Summary chip
-                        val completed = items.count { it.status == HistoryStatus.COMPLETED }
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            SummaryChip("${items.size} bài", Icons.Rounded.MenuBook, colors.accent, colors)
-                            SummaryChip("$completed hoàn thành", Icons.Rounded.CheckCircle, colors.correct, colors)
+                        item {
+                            val completed = items.count { it.status == HistoryStatus.COMPLETED }
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                SummaryChip("${items.size} bài", Icons.Rounded.MenuBook, colors.accent, colors)
+                                SummaryChip("$completed hoàn thành", Icons.Rounded.CheckCircle, colors.correct, colors)
+                            }
                         }
 
-                        Spacer(Modifier.height(4.dp))
+                        item {
+                            Spacer(Modifier.height(4.dp))
+                        }
 
                         groups.forEach { group ->
                             if (group.items.isNotEmpty()) {
-                                Spacer(Modifier.height(10.dp))
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier.padding(vertical = 4.dp)
-                                ) {
-                                    Box(
-                                        modifier = Modifier
-                                            .size(width = 4.dp, height = 16.dp)
-                                            .clip(RoundedCornerShape(2.dp))
-                                            .background(group.color)
-                                    )
-                                    Spacer(Modifier.width(8.dp))
-                                    Text(
-                                        text = group.title,
-                                        fontSize = 14.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        color = group.color
-                                    )
-                                    Spacer(Modifier.width(6.dp))
-                                    Text(
-                                        text = "(${group.items.size})",
-                                        fontSize = 12.sp,
-                                        color = colors.mutedText,
-                                        fontWeight = FontWeight.Medium
-                                    )
+                                item(key = "header_${group.title}") {
+                                    Spacer(Modifier.height(10.dp))
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        modifier = Modifier.padding(vertical = 4.dp)
+                                    ) {
+                                        Box(
+                                            modifier = Modifier
+                                                .size(width = 4.dp, height = 16.dp)
+                                                .clip(RoundedCornerShape(2.dp))
+                                                .background(group.color)
+                                        )
+                                        Spacer(Modifier.width(8.dp))
+                                        Text(
+                                            text = group.title,
+                                            fontSize = 14.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            color = group.color
+                                        )
+                                        Spacer(Modifier.width(6.dp))
+                                        Text(
+                                            text = "(${group.items.size})",
+                                            fontSize = 12.sp,
+                                            color = colors.mutedText,
+                                            fontWeight = FontWeight.Medium
+                                        )
+                                    }
                                 }
 
-                                group.items.forEach { item ->
+                                items(
+                                    items = group.items,
+                                    key = { "item_${it.id}_${it.status}" }
+                                ) { item ->
                                     HistoryItem(
                                         item = item,
                                         colors = colors,
@@ -233,7 +246,9 @@ fun HistorySheet(
                             }
                         }
 
-                        Spacer(Modifier.height(16.dp))
+                        item {
+                            Spacer(Modifier.height(16.dp))
+                        }
                     }
                 }
             }
@@ -299,11 +314,10 @@ private fun HistoryItem(
     onContinue: () -> Unit
 ) {
     val isCompleted = item.status == HistoryStatus.COMPLETED
-    val json = remember { Json { ignoreUnknownKeys = true } }
     val completed = remember(item.explanationsData) {
         item.explanationsData?.let { data ->
             try {
-                json.parseToJsonElement(data).jsonObject.size
+                jsonParser.parseToJsonElement(data).jsonObject.size
             } catch (e: Exception) {
                 0
             }
@@ -312,7 +326,7 @@ private fun HistoryItem(
     val total = remember(item.lessonData) {
         item.lessonData?.let { data ->
             try {
-                json.parseToJsonElement(data).jsonObject["sentences"]?.jsonArray?.size
+                jsonParser.parseToJsonElement(data).jsonObject["sentences"]?.jsonArray?.size
             } catch (e: Exception) {
                 null
             }
