@@ -344,11 +344,7 @@ fun LessonContent(
                             Card(
                                 shape = CircleShape,
                                 colors = CardDefaults.cardColors(
-                                    containerColor = when {
-                                        sentenceScore >= 9 -> colors.correct.copy(alpha = 0.15f)
-                                        sentenceScore >= 5 -> colors.warning.copy(alpha = 0.15f)
-                                        else -> colors.error.copy(alpha = 0.15f)
-                                    }
+                                    containerColor = colors.surface
                                 ),
                                 border = BorderStroke(
                                     2.dp,
@@ -424,11 +420,7 @@ fun LessonContent(
                             Card(
                                 shape = CircleShape,
                                 colors = CardDefaults.cardColors(
-                                    containerColor = when {
-                                        sentenceScore >= 9 -> colors.correct.copy(alpha = 0.15f)
-                                        sentenceScore >= 5 -> colors.warning.copy(alpha = 0.15f)
-                                        else -> colors.error.copy(alpha = 0.15f)
-                                    }
+                                    containerColor = colors.surface
                                 ),
                                 border = BorderStroke(
                                     2.dp,
