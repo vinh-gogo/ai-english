@@ -28,7 +28,7 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             implementation(project(":shared:core:common"))
             implementation(project(":shared:core:designsystem"))
-            implementation(project(":shared:feature:pro:domain"))
+            implementation(project(":shared:feature:pro:application"))
         }
         androidMain.dependencies {
             implementation(libs.koin.android)

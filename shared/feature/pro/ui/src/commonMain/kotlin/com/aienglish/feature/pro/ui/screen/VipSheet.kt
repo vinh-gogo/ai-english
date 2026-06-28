@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.AppColors
 import com.aienglish.core.designsystem.theme.LocalAppColors
+import com.aienglish.feature.pro.ui.intent.ProIntent
 import com.aienglish.feature.pro.ui.viewmodel.ProViewModel
 import org.koin.compose.koinInject
 
@@ -37,7 +38,7 @@ fun VipSheet(
     var isYearly by remember { mutableStateOf(false) }
 
     ModalBottomSheet(
-        onDismissRequest = { proViewModel.hideVip() },
+        onDismissRequest = { proViewModel.onIntent(ProIntent.HideVip) },
         containerColor = colors.background,
         contentColor = colors.mainText,
         dragHandle = {
@@ -69,7 +70,7 @@ fun VipSheet(
                     color = colors.mainText,
                     modifier = Modifier.weight(1f)
                 )
-                IconButton(onClick = { proViewModel.hideVip() }) {
+                IconButton(onClick = { proViewModel.onIntent(ProIntent.HideVip) }) {
                     Icon(Icons.Default.Close, "Đóng", tint = colors.hintText)
                 }
             }
@@ -298,7 +299,7 @@ fun VipSheet(
                 if (state.isPaid) {
                     OutlinedButton(
                         onClick = {
-                            proViewModel.setPaid(false)
+                            proViewModel.onIntent(ProIntent.SetVipPaid(false))
                         },
                         modifier = Modifier.fillMaxWidth().height(48.dp),
                         shape = RoundedCornerShape(12.dp),
@@ -314,7 +315,7 @@ fun VipSheet(
                 } else {
                     Button(
                         onClick = {
-                            proViewModel.setPaid(true)
+                            proViewModel.onIntent(ProIntent.SetVipPaid(true))
                         },
                         modifier = Modifier.fillMaxWidth().height(48.dp),
                         shape = RoundedCornerShape(12.dp),

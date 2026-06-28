@@ -66,6 +66,7 @@ dependencies {
     implementation(project(":shared:feature:history:data"))
     implementation(project(":shared:feature:history:ui"))
     implementation(project(":shared:feature:pro:domain"))
+    implementation(project(":shared:feature:pro:application"))
     implementation(project(":shared:feature:pro:data"))
     implementation(project(":shared:feature:pro:ui"))
 }

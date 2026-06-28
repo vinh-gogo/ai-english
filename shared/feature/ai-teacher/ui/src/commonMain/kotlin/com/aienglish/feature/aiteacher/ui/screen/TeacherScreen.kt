@@ -38,6 +38,7 @@ import com.aienglish.feature.profile.ui.screen.ProfileSheet
 import com.aienglish.feature.profile.ui.viewmodel.ProfileViewModel
 import com.aienglish.feature.pro.ui.screen.VipSheet
 import com.aienglish.feature.pro.ui.viewmodel.ProViewModel
+import com.aienglish.feature.pro.ui.intent.ProIntent
 import org.koin.compose.koinInject
 
 // ─────────────────────────────────────────────────────────────
@@ -145,7 +146,7 @@ fun TeacherScreen(
 
                     // VIP / PRO Badge
                     Surface(
-                        onClick = { proViewModel.showVip() },
+                        onClick = { proViewModel.onIntent(ProIntent.ShowVip) },
                         modifier = Modifier.align(Alignment.CenterVertically),
                         shape = RoundedCornerShape(8.dp),
                         color = Color(0xFFFFB300).copy(0.12f),

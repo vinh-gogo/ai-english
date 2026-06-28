@@ -28,6 +28,7 @@ import com.aienglish.core.designsystem.theme.LocalAppColors
 import com.aienglish.feature.profile.ui.viewmodel.ProfileState
 import com.aienglish.feature.profile.ui.viewmodel.ProfileViewModel
 import com.aienglish.feature.pro.ui.viewmodel.ProViewModel
+import com.aienglish.feature.pro.ui.intent.ProIntent
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -150,7 +151,7 @@ private fun UserInfoSection(
             // VIP / PRO Upgrade Button (placed above logout button for signed-in users)
             if (!state.isPaid) {
                 Button(
-                    onClick = { proViewModel.showVip() },
+                    onClick = { proViewModel.onIntent(ProIntent.ShowVip) },
                     modifier = Modifier.fillMaxWidth().height(44.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB300))
@@ -192,7 +193,7 @@ private fun UserInfoSection(
                             fontSize = 12.sp,
                             fontWeight = FontWeight.SemiBold,
                             color = colors.error,
-                            modifier = Modifier.clickable { proViewModel.setPaid(false) }
+                            modifier = Modifier.clickable { proViewModel.onIntent(ProIntent.SetVipPaid(false)) }
                         )
                     }
                 }
@@ -217,7 +218,7 @@ private fun UserInfoSection(
             // VIP / PRO Upgrade Button (placed above Google Login button for non-signed-in users)
             if (!state.isPaid) {
                 Button(
-                    onClick = { proViewModel.showVip() },
+                    onClick = { proViewModel.onIntent(ProIntent.ShowVip) },
                     modifier = Modifier.fillMaxWidth().height(44.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB300))
@@ -259,7 +260,7 @@ private fun UserInfoSection(
                             fontSize = 12.sp,
                             fontWeight = FontWeight.SemiBold,
                             color = colors.error,
-                            modifier = Modifier.clickable { proViewModel.setPaid(false) }
+                            modifier = Modifier.clickable { proViewModel.onIntent(ProIntent.SetVipPaid(false)) }
                         )
                     }
                 }

@@ -51,6 +51,7 @@ include(":shared:feature:history:ui")
 
 // ── shared:feature:pro ──
 include(":shared:feature:pro:domain")
+include(":shared:feature:pro:application")
 include(":shared:feature:pro:data")
 include(":shared:feature:pro:ui")
 
