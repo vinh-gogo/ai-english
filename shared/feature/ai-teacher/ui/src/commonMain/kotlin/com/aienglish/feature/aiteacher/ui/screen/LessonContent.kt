@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.AppColors
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherUiState
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
+import com.aienglish.feature.aiteacher.ui.viewmodel.LevelType
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -37,16 +38,15 @@ fun LessonContent(
     val sentence = lesson.sentences.getOrNull(idx) ?: return
     val userAnswer = state.userAnswers[idx] ?: ""
     val hasChecked = state.checkedAnswers.contains(idx)
-    val languageLabel = when (state.targetLanguage) {
-        "en" -> "tiếng Anh"
-        "ja" -> "tiếng Nhật"
-        "zh" -> "tiếng Trung"
-        "es" -> "tiếng Tây Ban Nha"
-        "hi" -> "tiếng Hindi"
-        "fr" -> "tiếng Pháp"
-        "de" -> "tiếng Đức"
-        "ko" -> "tiếng Hàn"
-        else -> "tiếng Anh"
+    val languageLabel = when (state.levelType) {
+        LevelType.CEFR, LevelType.TOEIC -> "tiếng Anh"
+        LevelType.JLPT -> "tiếng Nhật"
+        LevelType.HSK -> "tiếng Trung"
+        LevelType.DELE, LevelType.SIELE -> "tiếng Tây Ban Nha"
+        LevelType.HINDI -> "tiếng Hindi"
+        LevelType.DELF, LevelType.DALF -> "tiếng Pháp"
+        LevelType.GOETHE, LevelType.TESTDAF -> "tiếng Đức"
+        LevelType.TOPIK -> "tiếng Hàn"
     }
 
     Column(
