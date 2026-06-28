@@ -221,9 +221,9 @@ fun MarkdownText(
 ) {
     val processedMarkdown = remember(markdown) {
         markdown
-            .replace("""(?<!\*)\*["“]([^"“”\n]+)["”]\*(?!\*)""".toRegex(), "***\"$1\"***")
-            .replace("""(?<!_)_["“]([^"“”\n]+)["”]_(?!_)""".toRegex(), "***\"$1\"***")
-            .replace("""(?<![\*_])["“]([^"“”\n]+)["”](?![\*_])""".toRegex(), "**\"$1\"**")
+            .replace("""(?<!\*)\*["“]([^"“”\n]{1,50})["”]\*(?!\*)""".toRegex(), "***\"$1\"***")
+            .replace("""(?<!_)_["“]([^"“”\n]{1,50})["”]_(?!_)""".toRegex(), "***\"$1\"***")
+            .replace("""(?<=^|\W)(?<![\*_])["“]([^"“”\n]{1,50})["”](?=$|\W)(?![\*_])""".toRegex(), "**\"$1\"**")
     }
     val blocks = remember(processedMarkdown) { parseBlocks(processedMarkdown) }
 
