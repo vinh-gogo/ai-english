@@ -483,61 +483,67 @@ private fun LanguageSettingsSection(
         ) {
             Text("Ngôn ngữ học", fontSize = 13.sp, color = colors.mainText, fontWeight = FontWeight.Medium)
 
-            Row(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(colors.border.copy(0.4f))
-                    .padding(2.dp)
-            ) {
-                val isEnglish = state.languageTarget == "en"
-                val isJapanese = state.languageTarget == "ja"
-                val isChinese = state.languageTarget == "zh"
-                // Tiếng Anh
+            var expanded by remember { mutableStateOf(false) }
+            val currentLabel = when (state.languageTarget) {
+                "en" -> "Tiếng Anh"
+                "ja" -> "Tiếng Nhật"
+                "zh" -> "Tiếng Trung"
+                else -> "Tiếng Anh"
+            }
+
+            Box {
                 Box(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(6.dp))
-                        .background(if (isEnglish) colors.accent else Color.Transparent)
-                        .clickable { vm.onLanguageTargetChanged("en") }
-                        .padding(horizontal = 12.dp, vertical = 6.dp),
-                    contentAlignment = Alignment.Center
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(colors.border.copy(0.15f))
+                        .border(1.dp, colors.border.copy(0.2f), RoundedCornerShape(8.dp))
+                        .clickable { expanded = true }
+                        .padding(horizontal = 12.dp, vertical = 6.dp)
                 ) {
-                    Text(
-                        "Tiếng Anh",
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = if (isEnglish) Color.White else colors.mutedText
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Text(
+                            currentLabel,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = colors.mainText
+                        )
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = null,
+                            tint = colors.mutedText,
+                            modifier = Modifier.size(16.dp)
+                        )
+                    }
                 }
-                // Tiếng Nhật
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(6.dp))
-                        .background(if (isJapanese) colors.accent else Color.Transparent)
-                        .clickable { vm.onLanguageTargetChanged("ja") }
-                        .padding(horizontal = 12.dp, vertical = 6.dp),
-                    contentAlignment = Alignment.Center
+
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                    modifier = Modifier.background(colors.surface)
                 ) {
-                    Text(
-                        "Tiếng Nhật",
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = if (isJapanese) Color.White else colors.mutedText
+                    DropdownMenuItem(
+                        text = { Text("Tiếng Anh", fontSize = 13.sp, color = colors.mainText) },
+                        onClick = {
+                            vm.onLanguageTargetChanged("en")
+                            expanded = false
+                        }
                     )
-                }
-                // Tiếng Trung
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(6.dp))
-                        .background(if (isChinese) colors.accent else Color.Transparent)
-                        .clickable { vm.onLanguageTargetChanged("zh") }
-                        .padding(horizontal = 12.dp, vertical = 6.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        "Tiếng Trung",
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = if (isChinese) Color.White else colors.mutedText
+                    DropdownMenuItem(
+                        text = { Text("Tiếng Nhật", fontSize = 13.sp, color = colors.mainText) },
+                        onClick = {
+                            vm.onLanguageTargetChanged("ja")
+                            expanded = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Tiếng Trung", fontSize = 13.sp, color = colors.mainText) },
+                        onClick = {
+                            vm.onLanguageTargetChanged("zh")
+                            expanded = false
+                        }
                     )
                 }
             }
