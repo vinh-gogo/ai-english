@@ -37,6 +37,17 @@ fun LessonContent(
     val sentence = lesson.sentences.getOrNull(idx) ?: return
     val userAnswer = state.userAnswers[idx] ?: ""
     val hasChecked = state.checkedAnswers.contains(idx)
+    val languageLabel = when (state.targetLanguage) {
+        "en" -> "tiếng Anh"
+        "ja" -> "tiếng Nhật"
+        "zh" -> "tiếng Trung"
+        "es" -> "tiếng Tây Ban Nha"
+        "hi" -> "tiếng Hindi"
+        "fr" -> "tiếng Pháp"
+        "de" -> "tiếng Đức"
+        "ko" -> "tiếng Hàn"
+        else -> "tiếng Anh"
+    }
 
     Column(
         modifier = Modifier
@@ -81,7 +92,7 @@ fun LessonContent(
             ) {
                 Column(modifier = Modifier.padding(14.dp)) {
                     Text(
-                        "Dịch sang tiếng Anh:",
+                        "Dịch sang $languageLabel:",
                         fontSize = 12.sp,
                         color = colors.mutedText
                     )
@@ -102,7 +113,7 @@ fun LessonContent(
             OutlinedTextField(
                 value = userAnswer,
                 onValueChange = { if (!hasChecked) viewModel.onAnswerChanged(idx, it) },
-                placeholder = { Text("Nhập câu dịch tiếng Anh của bạn...", color = colors.hintText, fontSize = 13.sp) },
+                placeholder = { Text("Nhập câu dịch $languageLabel của bạn...", color = colors.hintText, fontSize = 13.sp) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
