@@ -14,6 +14,7 @@ import com.aienglish.feature.aiteacher.domain.repository.TeacherHistoryRepositor
 import com.aienglish.feature.aiteacher.domain.resource.JsonResourceReader
 import com.aienglish.feature.history.domain.model.LessonHistory
 import com.aienglish.feature.history.domain.repository.HistoryRepository
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
@@ -78,6 +79,7 @@ class TeacherViewModel(
 
     // Track current lesson DB id for history update
     private var currentLessonHistoryId: Long? = null
+    private var loadTopicsJob: Job? = null
 
     init {
         val target = prefs.getLanguageTarget() // "en", "ja", "zh"
@@ -129,7 +131,8 @@ class TeacherViewModel(
             LevelType.JLPT -> "JLPT"
             LevelType.HSK -> "HSK"
         }
-        viewModelScope.launch {
+        loadTopicsJob?.cancel()
+        loadTopicsJob = viewModelScope.launch {
             try {
                 ensureDatabaseSeeded()
 
