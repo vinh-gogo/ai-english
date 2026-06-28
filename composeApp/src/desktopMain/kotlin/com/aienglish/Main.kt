@@ -76,7 +76,8 @@ fun main() {
         Window(
             onCloseRequest = ::exitApplication,
             title = "AI Lingua",
-            state = windowState
+            state = windowState,
+            icon = androidx.compose.ui.res.painterResource("logo_ai_lingua.png")
         ) {
             AIEnglishTheme {
                 TeacherScreen()
