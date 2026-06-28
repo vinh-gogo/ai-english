@@ -31,6 +31,8 @@ data class TeacherUiState(
     val selectedToeicLevel: String = "500",
     val selectedJlptLevel: String = "N3",
     val targetLanguage: String = "en",
+    val isCustomTopicMode: Boolean = false,
+    val customTopicInput: String = "",
 
     // Lesson state
     val isGeneratingLesson: Boolean = false,
@@ -50,7 +52,7 @@ data class TeacherUiState(
     // Error
     val error: String? = null
 ) {
-    val selectedTopic: String get() = topics.getOrNull(selectedTopicIndex)?.name ?: ""
+    val selectedTopic: String get() = if (isCustomTopicMode) customTopicInput else topics.getOrNull(selectedTopicIndex)?.name ?: ""
     val selectedLevelText: String get() = when (levelType) {
         LevelType.CEFR -> selectedCefrLevel
         LevelType.TOEIC -> "TOEIC $selectedToeicLevel"
@@ -499,4 +501,7 @@ class TeacherViewModel(
             }
         }
     }
+
+    fun setCustomTopicMode(enabled: Boolean) = setState { copy(isCustomTopicMode = enabled) }
+    fun onCustomTopicInputChanged(input: String) = setState { copy(customTopicInput = input) }
 }

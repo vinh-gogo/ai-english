@@ -15,6 +15,8 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.School
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.List
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.material3.*
@@ -163,14 +165,18 @@ fun TopicSelectionContent(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    val prevIdx = remember(selectedIdx, filteredTopics) {
-                        val ci = filteredTopics.indexOfFirst { it.first == selectedIdx }
-                        if (ci != -1 && filteredTopics.isNotEmpty())
-                            filteredTopics[(ci - 1 + filteredTopics.size) % filteredTopics.size].first
-                        else selectedIdx
-                    }
-                    IconButton(onClick = { viewModel.onTopicIndexSelected(prevIdx) }, modifier = Modifier.padding(start = 4.dp)) {
-                        Icon(Icons.Default.ChevronLeft, "Trước", tint = colors.mainText)
+                    if (!state.isCustomTopicMode) {
+                        val prevIdx = remember(selectedIdx, filteredTopics) {
+                            val ci = filteredTopics.indexOfFirst { it.first == selectedIdx }
+                            if (ci != -1 && filteredTopics.isNotEmpty())
+                                filteredTopics[(ci - 1 + filteredTopics.size) % filteredTopics.size].first
+                            else selectedIdx
+                        }
+                        IconButton(onClick = { viewModel.onTopicIndexSelected(prevIdx) }, modifier = Modifier.padding(start = 4.dp)) {
+                            Icon(Icons.Default.ChevronLeft, "Trước", tint = colors.mainText)
+                        }
+                    } else {
+                        Spacer(Modifier.width(48.dp))
                     }
 
                     Column(
@@ -185,23 +191,25 @@ fun TopicSelectionContent(
                         
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
-                                "CHỦ ĐỀ $localIndexText",
+                                if (state.isCustomTopicMode) "CHỦ ĐỀ TỰ CHỌN" else "CHỦ ĐỀ $localIndexText",
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = colors.accent
                             )
-                            Spacer(Modifier.width(6.dp))
-                            Surface(
-                                shape = RoundedCornerShape(4.dp),
-                                color = currentTopicColor.copy(alpha = 0.15f)
-                            ) {
-                                Text(
-                                    text = if (currentTopicLevel == "900") ">900" else currentTopicLevel,
-                                    fontSize = 9.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = currentTopicColor,
-                                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
-                                )
+                            if (!state.isCustomTopicMode) {
+                                Spacer(Modifier.width(6.dp))
+                                Surface(
+                                    shape = RoundedCornerShape(4.dp),
+                                    color = currentTopicColor.copy(alpha = 0.15f)
+                                ) {
+                                    Text(
+                                        text = if (currentTopicLevel == "900") ">900" else currentTopicLevel,
+                                        fontSize = 9.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = currentTopicColor,
+                                        modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
+                                    )
+                                }
                             }
                         }
                         
@@ -210,10 +218,14 @@ fun TopicSelectionContent(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                currentTopic?.name ?: "",
+                                if (state.isCustomTopicMode) {
+                                    if (state.customTopicInput.isBlank()) "Hãy nhập chủ đề tự do..." else state.customTopicInput
+                                } else {
+                                    currentTopic?.name ?: ""
+                                },
                                 fontSize = 15.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = colors.mainText,
+                                color = if (state.isCustomTopicMode && state.customTopicInput.isBlank()) colors.hintText else colors.mainText,
                                 textAlign = TextAlign.Center,
                                 maxLines = 2,
                                 modifier = Modifier.padding(horizontal = 8.dp)
@@ -221,14 +233,18 @@ fun TopicSelectionContent(
                         }
                     }
 
-                    val nextIdx = remember(selectedIdx, filteredTopics) {
-                        val ci = filteredTopics.indexOfFirst { it.first == selectedIdx }
-                        if (ci != -1 && filteredTopics.isNotEmpty())
-                            filteredTopics[(ci + 1) % filteredTopics.size].first
-                        else selectedIdx
-                    }
-                    IconButton(onClick = { viewModel.onTopicIndexSelected(nextIdx) }, modifier = Modifier.padding(end = 4.dp)) {
-                        Icon(Icons.Default.ChevronRight, "Sau", tint = colors.mainText)
+                    if (!state.isCustomTopicMode) {
+                        val nextIdx = remember(selectedIdx, filteredTopics) {
+                            val ci = filteredTopics.indexOfFirst { it.first == selectedIdx }
+                            if (ci != -1 && filteredTopics.isNotEmpty())
+                                filteredTopics[(ci + 1) % filteredTopics.size].first
+                            else selectedIdx
+                        }
+                        IconButton(onClick = { viewModel.onTopicIndexSelected(nextIdx) }, modifier = Modifier.padding(end = 4.dp)) {
+                            Icon(Icons.Default.ChevronRight, "Sau", tint = colors.mainText)
+                        }
+                    } else {
+                        Spacer(Modifier.width(48.dp))
                     }
                 }
             }
@@ -482,48 +498,91 @@ fun TopicSelectionContent(
 
             Spacer(Modifier.height(16.dp))
 
-            // Chips label
-            Text(
-                if (state.topicSearchQuery.isEmpty()) "Chủ đề luyện thi sẵn có cho trình độ ($activeLevelCode)"
-                else "Kết quả tìm kiếm (${filteredTopics.size})",
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold,
-                color = colors.mutedText,
-                modifier = Modifier.align(Alignment.Start)
-            )
+            // Chips label + Switcher
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    if (state.isCustomTopicMode) "Nhập chủ đề tùy chỉnh"
+                    else if (state.topicSearchQuery.isEmpty()) "Danh sách chủ đề"
+                    else "Kết quả tìm kiếm (${filteredTopics.size})",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = colors.mutedText
+                )
+                
+                TextButton(
+                    onClick = { viewModel.setCustomTopicMode(!state.isCustomTopicMode) },
+                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp),
+                    colors = ButtonDefaults.textButtonColors(contentColor = colors.accent)
+                ) {
+                    Icon(
+                        imageVector = if (state.isCustomTopicMode) Icons.Rounded.List else Icons.Rounded.Edit,
+                        contentDescription = null,
+                        modifier = Modifier.size(14.dp)
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(
+                        if (state.isCustomTopicMode) "Chọn từ danh sách" else "Tự nhập chủ đề",
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+            }
 
             Spacer(Modifier.height(6.dp))
 
-            // ── LazyRow topic chips (styled with their own level color) ──
-            if (filteredTopics.isEmpty()) {
-                Box(
-                    modifier = Modifier.fillMaxWidth().height(48.dp),
-                    contentAlignment = Alignment.CenterStart
-                ) {
-                    Text("Không tìm thấy chủ đề phù hợp.", color = colors.hintText, fontSize = 13.sp)
-                }
-            } else {
-                LazyRow(
-                    state = listState,
+            if (state.isCustomTopicMode) {
+                OutlinedTextField(
+                    value = state.customTopicInput,
+                    onValueChange = { viewModel.onCustomTopicInputChanged(it) },
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    itemsIndexed(filteredTopics) { i, pair ->
-                        val idx = pair.first
-                        val topic = pair.second
-                        val isSelected = idx == selectedIdx
-                        Surface(
-                            modifier = Modifier.clickable { viewModel.onTopicIndexSelected(idx) },
-                            shape = RoundedCornerShape(12.dp),
-                            color = if (isSelected) colors.accent else colors.surface,
-                            border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
-                        ) {
-                            Text(
-                                "${i + 1}. ${topic.name}",
-                                color = if (isSelected) Color.White else colors.mainText,
-                                fontSize = 13.sp,
-                                modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp)
-                            )
+                    shape = RoundedCornerShape(12.dp),
+                    placeholder = { Text("Nhập chủ đề bạn tự chọn (Ví dụ: đi du lịch, phỏng vấn...)", color = colors.hintText, fontSize = 13.sp) },
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = colors.accent,
+                        unfocusedBorderColor = colors.border,
+                        focusedContainerColor = colors.surface,
+                        unfocusedContainerColor = colors.surface,
+                        focusedTextColor = colors.mainText,
+                        unfocusedTextColor = colors.mainText
+                    )
+                )
+            } else {
+                // ── LazyRow topic chips (styled with their own level color) ──
+                if (filteredTopics.isEmpty()) {
+                    Box(
+                        modifier = Modifier.fillMaxWidth().height(48.dp),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
+                        Text("Không tìm thấy chủ đề phù hợp.", color = colors.hintText, fontSize = 13.sp)
+                    }
+                } else {
+                    LazyRow(
+                        state = listState,
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        itemsIndexed(filteredTopics) { i, pair ->
+                            val idx = pair.first
+                            val topic = pair.second
+                            val isSelected = idx == selectedIdx
+                            Surface(
+                                modifier = Modifier.clickable { viewModel.onTopicIndexSelected(idx) },
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (isSelected) colors.accent else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
+                            ) {
+                                Text(
+                                    "${i + 1}. ${topic.name}",
+                                    color = if (isSelected) Color.White else colors.mainText,
+                                    fontSize = 13.sp,
+                                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp)
+                                )
+                            }
                         }
                     }
                 }
