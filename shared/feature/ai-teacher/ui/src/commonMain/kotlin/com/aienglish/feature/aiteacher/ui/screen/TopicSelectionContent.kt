@@ -249,88 +249,7 @@ fun TopicSelectionContent(
                 }
             }
 
-            Spacer(Modifier.height(8.dp))
-
-            // Random topic button
-            Button(
-                onClick = {
-                    if (filteredTopics.isNotEmpty()) {
-                        viewModel.onTopicIndexSelected(filteredTopics.random().first)
-                    }
-                },
-                colors = ButtonDefaults.buttonColors(containerColor = colors.surface),
-                border = BorderStroke(1.dp, colors.border),
-                shape = RoundedCornerShape(12.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
-                modifier = Modifier.height(36.dp)
-            ) {
-                Icon(Icons.Rounded.AutoAwesome, null, tint = colors.accent, modifier = Modifier.size(14.dp))
-                Spacer(Modifier.width(6.dp))
-                Text("Chọn ngẫu nhiên chủ đề", color = colors.mainText, fontSize = 12.sp)
-            }
-
-            Spacer(Modifier.height(12.dp))
-
-            // ── Search Bar (Custom compact styling) ──
-            var isSearchFocused by remember { mutableStateOf(false) }
-            BasicTextField(
-                value = state.topicSearchQuery,
-                onValueChange = { viewModel.onTopicSearchChange(it) },
-                textStyle = androidx.compose.ui.text.TextStyle(
-                    color = colors.mainText,
-                    fontSize = 13.sp
-                ),
-                singleLine = true,
-                cursorBrush = androidx.compose.ui.graphics.SolidColor(colors.accent),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(38.dp)
-                    .onFocusChanged { isSearchFocused = it.isFocused }
-                    .background(colors.surface, RoundedCornerShape(8.dp))
-                    .border(
-                        1.dp,
-                        if (isSearchFocused) colors.accent else colors.border,
-                        RoundedCornerShape(8.dp)
-                    ),
-                decorationBox = { innerTextField ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(horizontal = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp),
-                            tint = colors.hintText
-                        )
-                        Spacer(Modifier.width(8.dp))
-                        Box(modifier = Modifier.weight(1f)) {
-                            if (state.topicSearchQuery.isEmpty()) {
-                                Text(
-                                    text = "Tìm kiếm chủ đề...",
-                                    color = colors.hintText,
-                                    fontSize = 13.sp
-                                )
-                            }
-                            innerTextField()
-                        }
-                        if (state.topicSearchQuery.isNotEmpty()) {
-                            Icon(
-                                imageVector = Icons.Default.Close,
-                                contentDescription = "Clear",
-                                modifier = Modifier
-                                    .size(16.dp)
-                                    .clickable { viewModel.onTopicSearchChange("") },
-                                tint = colors.hintText
-                            )
-                        }
-                    }
-                }
-            )
-
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(16.dp))
 
             // ── Target Level System (CEFR / TOEIC / JLPT Selector) ──
             Row(
@@ -495,6 +414,87 @@ fun TopicSelectionContent(
                     }
                 }
             }
+
+            Spacer(Modifier.height(16.dp))
+
+            // Random topic button
+            Button(
+                onClick = {
+                    if (filteredTopics.isNotEmpty()) {
+                        viewModel.onTopicIndexSelected(filteredTopics.random().first)
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = colors.surface),
+                border = BorderStroke(1.dp, colors.border),
+                shape = RoundedCornerShape(12.dp),
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
+                modifier = Modifier.height(36.dp)
+            ) {
+                Icon(Icons.Rounded.AutoAwesome, null, tint = colors.accent, modifier = Modifier.size(14.dp))
+                Spacer(Modifier.width(6.dp))
+                Text("Chọn ngẫu nhiên chủ đề", color = colors.mainText, fontSize = 12.sp)
+            }
+
+            Spacer(Modifier.height(12.dp))
+
+            // ── Search Bar (Custom compact styling) ──
+            var isSearchFocused by remember { mutableStateOf(false) }
+            BasicTextField(
+                value = state.topicSearchQuery,
+                onValueChange = { viewModel.onTopicSearchChange(it) },
+                textStyle = androidx.compose.ui.text.TextStyle(
+                    color = colors.mainText,
+                    fontSize = 13.sp
+                ),
+                singleLine = true,
+                cursorBrush = androidx.compose.ui.graphics.SolidColor(colors.accent),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(38.dp)
+                    .onFocusChanged { isSearchFocused = it.isFocused }
+                    .background(colors.surface, RoundedCornerShape(8.dp))
+                    .border(
+                        1.dp,
+                        if (isSearchFocused) colors.accent else colors.border,
+                        RoundedCornerShape(8.dp)
+                    ),
+                decorationBox = { innerTextField ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp),
+                            tint = colors.hintText
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Box(modifier = Modifier.weight(1f)) {
+                            if (state.topicSearchQuery.isEmpty()) {
+                                Text(
+                                    text = "Tìm kiếm chủ đề...",
+                                    color = colors.hintText,
+                                    fontSize = 13.sp
+                                )
+                            }
+                            innerTextField()
+                        }
+                        if (state.topicSearchQuery.isNotEmpty()) {
+                            Icon(
+                                imageVector = Icons.Default.Close,
+                                contentDescription = "Clear",
+                                modifier = Modifier
+                                    .size(16.dp)
+                                    .clickable { viewModel.onTopicSearchChange("") },
+                                tint = colors.hintText
+                            )
+                        }
+                    }
+                }
+            )
 
             Spacer(Modifier.height(16.dp))
 
