@@ -592,6 +592,71 @@ private fun LanguageSettingsSection(
                 }
             }
         }
+
+        // AI Trả Lời (AI Response Mode)
+        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(colors.surface)
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("AI trả lời", fontSize = 13.sp, color = colors.mainText, fontWeight = FontWeight.Medium)
+
+                Row(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(colors.border.copy(alpha = 0.15f))
+                        .padding(2.dp)
+                ) {
+                    val isShort = state.aiResponseLength == "short"
+                    // Short Tab
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(if (isShort) colors.accent else Color.Transparent)
+                            .clickable { vm.onAiResponseLengthChanged("short") }
+                            .padding(horizontal = 12.dp, vertical = 6.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            "Ngắn",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = if (isShort) Color.White else colors.mutedText
+                        )
+                    }
+                    // Normal Tab
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(if (!isShort) colors.accent else Color.Transparent)
+                            .clickable { vm.onAiResponseLengthChanged("normal") }
+                            .padding(horizontal = 12.dp, vertical = 6.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            "Bình thường",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = if (!isShort) Color.White else colors.mutedText
+                        )
+                    }
+                }
+            }
+            if (state.aiResponseLength == "short") {
+                Text(
+                    "Chú thích: AI sẽ trả lời giải thích ngắn gọn nhưng bao hàm đủ các chữ trong câu.",
+                    fontSize = 11.sp,
+                    color = colors.mutedText,
+                    lineHeight = 16.sp,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp)
+                )
+            }
+        }
     }
 }
 

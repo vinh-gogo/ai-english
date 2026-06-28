@@ -28,6 +28,9 @@ class AndroidAppPreferences(
     private val _isSignedIn = MutableStateFlow(prefs.getBoolean("signed_in", false))
     override val isSignedInFlow = _isSignedIn.asStateFlow()
 
+    private val _aiResponseLength = MutableStateFlow(prefs.getString("ai_response_length", "normal") ?: "normal")
+    override val aiResponseLengthFlow = _aiResponseLength.asStateFlow()
+
     override fun getApiKey(): String {
         val secured = secureStorage.getSecret("api_key")
         if (secured.isNotEmpty()) return secured
@@ -87,6 +90,13 @@ class AndroidAppPreferences(
         _isPaid.value = value
     }
 
+    override fun getAiResponseLength() = prefs.getString("ai_response_length", "normal") ?: "normal"
+
+    override fun saveAiResponseLength(length: String) {
+        prefs.edit().putString("ai_response_length", length).apply()
+        _aiResponseLength.value = length
+    }
+
     override fun clear() {
         prefs.edit().clear().apply()
         secureStorage.deleteSecret("api_key")
@@ -96,5 +106,6 @@ class AndroidAppPreferences(
         _languageNative.value = "vi"
         _languageTarget.value = "en"
         _isPaid.value = false
+        _aiResponseLength.value = "normal"
     }
 }

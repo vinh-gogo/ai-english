@@ -27,6 +27,9 @@ class DesktopAppPreferences(
     private val _isSignedIn = MutableStateFlow(prefs.getBoolean("signed_in", false))
     override val isSignedInFlow = _isSignedIn.asStateFlow()
 
+    private val _aiResponseLength = MutableStateFlow(prefs.get("ai_response_length", "normal"))
+    override val aiResponseLengthFlow = _aiResponseLength.asStateFlow()
+
     override fun getApiKey(): String {
         val secured = secureStorage.getSecret("api_key")
         if (secured.isNotEmpty()) return secured
@@ -86,6 +89,13 @@ class DesktopAppPreferences(
         _isPaid.value = value
     }
 
+    override fun getAiResponseLength() = prefs.get("ai_response_length", "normal")
+
+    override fun saveAiResponseLength(length: String) {
+        prefs.put("ai_response_length", length)
+        _aiResponseLength.value = length
+    }
+
     override fun clear() {
         prefs.clear()
         secureStorage.deleteSecret("api_key")
@@ -95,5 +105,6 @@ class DesktopAppPreferences(
         _languageNative.value = "vi"
         _languageTarget.value = "en"
         _isPaid.value = false
+        _aiResponseLength.value = "normal"
     }
 }

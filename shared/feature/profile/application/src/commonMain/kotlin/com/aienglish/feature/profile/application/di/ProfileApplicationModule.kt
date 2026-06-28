@@ -13,4 +13,5 @@ val profileApplicationModule = module {
     factory { UpdateSignInStatusUseCase(get()) }
     factory { ClearProfileUseCase(get()) }
     factory { UpdatePaidStatusUseCase(get()) }
+    factory { UpdateAiResponseLengthUseCase(get()) }
 }

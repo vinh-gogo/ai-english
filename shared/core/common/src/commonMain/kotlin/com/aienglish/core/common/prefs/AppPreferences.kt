@@ -17,6 +17,8 @@ interface AppPreferences {
     fun saveLanguageTarget(lang: String)
     fun isPaid(): Boolean
     fun setPaid(value: Boolean)
+    fun getAiResponseLength(): String
+    fun saveAiResponseLength(length: String)
     fun clear()
 
     // Reactive preference streams
@@ -26,4 +28,5 @@ interface AppPreferences {
     val userNameFlow: Flow<String?>
     val userEmailFlow: Flow<String?>
     val isSignedInFlow: Flow<Boolean>
+    val aiResponseLengthFlow: Flow<String>
 }

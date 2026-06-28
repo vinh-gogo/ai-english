@@ -19,7 +19,8 @@ class ProfileRepositoryImpl(
         prefs.isSignedInFlow,
         prefs.languageNativeFlow,
         prefs.languageTargetFlow,
-        prefs.isPaidFlow
+        prefs.isPaidFlow,
+        prefs.aiResponseLengthFlow
     ) { array ->
         UserProfile(
             name = array[0] as String?,
@@ -27,7 +28,8 @@ class ProfileRepositoryImpl(
             isSignedIn = array[2] as Boolean,
             languageNative = array[3] as String,
             languageTarget = array[4] as String,
-            isPaid = array[5] as Boolean
+            isPaid = array[5] as Boolean,
+            aiResponseLength = array[6] as String
         )
     }
 
@@ -61,6 +63,10 @@ class ProfileRepositoryImpl(
 
     override suspend fun updatePaidStatus(paid: Boolean) = withContext(dispatchers.io) {
         prefs.setPaid(paid)
+    }
+
+    override suspend fun updateAiResponseLength(length: String) = withContext(dispatchers.io) {
+        prefs.saveAiResponseLength(length)
     }
 
     override suspend fun clearProfile() = withContext(dispatchers.io) {

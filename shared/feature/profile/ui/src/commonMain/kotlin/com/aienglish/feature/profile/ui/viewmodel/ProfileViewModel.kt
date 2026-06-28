@@ -19,7 +19,8 @@ data class ProfileState(
     val monthlyUsage: Int = 0,
     val monthlyLimit: Int = 5,
     val isPaid: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val aiResponseLength: String = "normal"
 )
 
 class ProfileViewModel(
@@ -31,7 +32,8 @@ class ProfileViewModel(
     private val updateUserEmailUseCase: UpdateUserEmailUseCase,
     private val updateSignInStatusUseCase: UpdateSignInStatusUseCase,
     private val clearProfileUseCase: ClearProfileUseCase,
-    private val updatePaidStatusUseCase: UpdatePaidStatusUseCase
+    private val updatePaidStatusUseCase: UpdatePaidStatusUseCase,
+    private val updateAiResponseLengthUseCase: UpdateAiResponseLengthUseCase
 ) : BaseViewModel<ProfileState>(ProfileState()) {
 
     init {
@@ -45,7 +47,8 @@ class ProfileViewModel(
                         email = profile.email,
                         languageNative = profile.languageNative,
                         languageTarget = profile.languageTarget,
-                        isPaid = profile.isPaid
+                        isPaid = profile.isPaid,
+                        aiResponseLength = profile.aiResponseLength
                     )
                 }
             }
@@ -88,6 +91,12 @@ class ProfileViewModel(
     fun onLanguageTargetChanged(lang: String) {
         viewModelScope.launch {
             updateLanguageTargetUseCase(lang)
+        }
+    }
+
+    fun onAiResponseLengthChanged(length: String) {
+        viewModelScope.launch {
+            updateAiResponseLengthUseCase(length)
         }
     }
 

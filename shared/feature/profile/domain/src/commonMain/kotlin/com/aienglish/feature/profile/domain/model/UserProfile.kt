@@ -6,5 +6,6 @@ data class UserProfile(
     val isSignedIn: Boolean,
     val languageNative: String,
     val languageTarget: String,
-    val isPaid: Boolean
+    val isPaid: Boolean,
+    val aiResponseLength: String
 )

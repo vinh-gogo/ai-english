@@ -14,7 +14,8 @@ val profileUiModule = module {
             updateUserEmailUseCase = get(),
             updateSignInStatusUseCase = get(),
             clearProfileUseCase = get(),
-            updatePaidStatusUseCase = get()
+            updatePaidStatusUseCase = get(),
+            updateAiResponseLengthUseCase = get()
         )
     }
 }

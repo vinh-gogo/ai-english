@@ -15,6 +15,7 @@ interface ProfileRepository {
     suspend fun updateLanguageTarget(lang: String)
     suspend fun updateLanguageNative(lang: String)
     suspend fun updatePaidStatus(paid: Boolean)
+    suspend fun updateAiResponseLength(length: String)
     
     suspend fun clearProfile()
 }
