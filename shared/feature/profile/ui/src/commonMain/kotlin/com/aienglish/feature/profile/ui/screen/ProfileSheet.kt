@@ -143,6 +143,59 @@ private fun UserInfoSection(
             Text(state.displayName ?: "Người dùng", fontSize = 17.sp, fontWeight = FontWeight.Bold, color = colors.mainText)
             if (state.email != null) Text(state.email, fontSize = 13.sp, color = colors.mutedText)
             Spacer(Modifier.height(12.dp))
+
+            // VIP / PRO Upgrade Button (placed above logout button for signed-in users)
+            if (!state.isPaid) {
+                Button(
+                    onClick = { vm.setPaid(true) },
+                    modifier = Modifier.fillMaxWidth().height(44.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB300))
+                ) {
+                    Icon(Icons.Rounded.WorkspacePremium, null, tint = Color.White, modifier = Modifier.size(16.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text(
+                        if (state.languageNative == "vi") "Đăng ký VIP (20 bài/tháng)" else "Register VIP (20 lessons/mo)",
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                }
+                Spacer(Modifier.height(8.dp))
+            } else {
+                Surface(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    color = Color(0xFFFFB300).copy(0.12f),
+                    border = BorderStroke(1.dp, Color(0xFFFFB300).copy(0.4f))
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Rounded.WorkspacePremium, null, tint = Color(0xFFFFB300), modifier = Modifier.size(18.dp))
+                            Spacer(Modifier.width(6.dp))
+                            Text(
+                                if (state.languageNative == "vi") "Gói VIP đang hoạt động" else "VIP Package Active",
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFFFFB300)
+                            )
+                        }
+                        Text(
+                            if (state.languageNative == "vi") "Hủy" else "Cancel",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colors.error,
+                            modifier = Modifier.clickable { vm.setPaid(false) }
+                        )
+                    }
+                }
+                Spacer(Modifier.height(8.dp))
+            }
+
             OutlinedButton(
                 onClick = { onGoogleSignOut(); vm.signOut() },
                 border = BorderStroke(1.dp, colors.error.copy(0.6f)),
@@ -157,6 +210,59 @@ private fun UserInfoSection(
             Text("Chưa đăng nhập", fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = colors.mainText)
             Text("Đăng nhập để đồng bộ tiến trình học", fontSize = 13.sp, color = colors.mutedText, textAlign = TextAlign.Center)
             Spacer(Modifier.height(12.dp))
+
+            // VIP / PRO Upgrade Button (placed above Google Login button for non-signed-in users)
+            if (!state.isPaid) {
+                Button(
+                    onClick = { vm.setPaid(true) },
+                    modifier = Modifier.fillMaxWidth().height(44.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB300))
+                ) {
+                    Icon(Icons.Rounded.WorkspacePremium, null, tint = Color.White, modifier = Modifier.size(16.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text(
+                        if (state.languageNative == "vi") "Đăng ký VIP (20 bài/tháng)" else "Register VIP (20 lessons/mo)",
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                }
+                Spacer(Modifier.height(8.dp))
+            } else {
+                Surface(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    color = Color(0xFFFFB300).copy(0.12f),
+                    border = BorderStroke(1.dp, Color(0xFFFFB300).copy(0.4f))
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Rounded.WorkspacePremium, null, tint = Color(0xFFFFB300), modifier = Modifier.size(18.dp))
+                            Spacer(Modifier.width(6.dp))
+                            Text(
+                                if (state.languageNative == "vi") "Gói VIP đang hoạt động" else "VIP Package Active",
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFFFFB300)
+                            )
+                        }
+                        Text(
+                            if (state.languageNative == "vi") "Hủy" else "Cancel",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colors.error,
+                            modifier = Modifier.clickable { vm.setPaid(false) }
+                        )
+                    }
+                }
+                Spacer(Modifier.height(8.dp))
+            }
+
             if (state.isSigningIn) {
                 CircularProgressIndicator(color = colors.accent, modifier = Modifier.size(28.dp), strokeWidth = 2.dp)
             } else {
@@ -521,56 +627,5 @@ private fun QuotaSection(state: ProfileState, vm: ProfileViewModel, colors: AppC
             color = colors.hintText,
             lineHeight = 16.sp
         )
-
-        Spacer(Modifier.height(4.dp))
-
-        if (state.isPaid) {
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(10.dp),
-                color = Color(0xFFFFB300).copy(0.12f),
-                border = BorderStroke(1.dp, Color(0xFFFFB300).copy(0.4f))
-            ) {
-                Row(
-                    modifier = Modifier.padding(12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Rounded.WorkspacePremium, null, tint = Color(0xFFFFB300), modifier = Modifier.size(20.dp))
-                        Spacer(Modifier.width(8.dp))
-                        Text(
-                            if (isVietnamese) "Đang kích hoạt gói VIP" else "VIP Package Active",
-                            fontSize = 13.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color(0xFFFFB300)
-                        )
-                    }
-                    Text(
-                        if (isVietnamese) "Hủy VIP (Simulate)" else "Cancel VIP (Simulate)",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = colors.error,
-                        modifier = Modifier.clickable { vm.setPaid(false) }
-                    )
-                }
-            }
-        } else {
-            Button(
-                onClick = { vm.setPaid(true) },
-                modifier = Modifier.fillMaxWidth().height(40.dp),
-                shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB300))
-            ) {
-                Icon(Icons.Rounded.WorkspacePremium, null, tint = Color.White, modifier = Modifier.size(16.dp))
-                Spacer(Modifier.width(6.dp))
-                Text(
-                    if (isVietnamese) "Nâng cấp VIP (20 bài/tháng)" else "Upgrade VIP (20 lessons/mo)",
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-            }
-        }
     }
 }
