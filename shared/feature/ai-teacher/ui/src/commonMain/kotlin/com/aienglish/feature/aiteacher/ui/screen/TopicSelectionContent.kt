@@ -104,21 +104,20 @@ fun TopicSelectionContent(
         return
     }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.SpaceBetween
+            .statusBarsPadding()
+            .padding(horizontal = 16.dp)
     ) {
         Column(
             modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
+                .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(78.dp)) // 48dp header + 12dp bottom gap = 60dp
 
             // Header icon + title side-by-side
             Row(
@@ -1004,6 +1003,8 @@ fun TopicSelectionContent(
             }
 
             Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(80.dp))
+            Spacer(Modifier.navigationBarsPadding())
         }
 
         val isStartEnabled = state.selectedTopic.isNotBlank() && !state.isGeneratingLesson
@@ -1014,14 +1015,15 @@ fun TopicSelectionContent(
             enabled = isStartEnabled,
             modifier = Modifier
                 .fillMaxWidth()
+                .align(Alignment.BottomCenter)
                 .navigationBarsPadding()
-                .padding(bottom = 16.dp)
-                .height(56.dp),
+                .padding(bottom = 14.dp)
+                .height(48.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = colors.accent,
                 disabledContainerColor = colors.accent.copy(alpha = 0.5f)
             ),
-            shape = RoundedCornerShape(14.dp)
+            shape = CircleShape
         ) {
             Icon(Icons.Default.PlayArrow, null, modifier = Modifier.size(20.dp))
             Spacer(Modifier.width(8.dp))

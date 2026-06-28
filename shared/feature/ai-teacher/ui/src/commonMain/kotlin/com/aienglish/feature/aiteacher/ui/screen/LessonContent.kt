@@ -54,18 +54,18 @@ fun LessonContent(
         LevelType.TOPIK -> "tiếng Hàn"
     }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.SpaceBetween
+            .statusBarsPadding()
+            .padding(horizontal = 16.dp)
     ) {
         Column(
             modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
+                .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
+            Spacer(Modifier.height(78.dp)) // 18dp top pad + 48dp header + 12dp bottom gap = 78dp
             // Progress row (giống Sensei AI)
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -258,10 +258,18 @@ fun LessonContent(
             }
 
             Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(80.dp)) // Extra space so content can scroll past the floating footer
+            Spacer(Modifier.navigationBarsPadding())
         }
 
         // Pinned bottom action
-        Box(modifier = Modifier.fillMaxWidth().navigationBarsPadding()) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .navigationBarsPadding()
+                .padding(bottom = 14.dp)
+        ) {
             if (!hasChecked) {
                 Row(
                     modifier = Modifier.fillMaxWidth().height(48.dp),
@@ -273,8 +281,8 @@ fun LessonContent(
                             onClick = { viewModel.onPreviousSentence() },
                             modifier = Modifier
                                 .size(48.dp)
-                                .border(1.dp, colors.border, RoundedCornerShape(12.dp))
-                                .background(colors.surface, RoundedCornerShape(12.dp))
+                                .border(1.dp, colors.border, CircleShape)
+                                .background(Color.Transparent, CircleShape)
                         ) {
                             Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
                         }
@@ -283,7 +291,7 @@ fun LessonContent(
                     Button(
                         onClick = { viewModel.onCheckAnswer(idx) },
                         colors = ButtonDefaults.buttonColors(containerColor = colors.accent),
-                        shape = RoundedCornerShape(12.dp),
+                        shape = CircleShape,
                         modifier = Modifier.weight(1f).height(48.dp)
                     ) {
                         Text("Kiểm tra", color = Color.White)
@@ -304,8 +312,8 @@ fun LessonContent(
                                 onClick = { viewModel.onPreviousSentence() },
                                 modifier = Modifier
                                     .size(48.dp)
-                                    .border(1.dp, colors.border, RoundedCornerShape(12.dp))
-                                    .background(colors.surface, RoundedCornerShape(12.dp))
+                                    .border(1.dp, colors.border, CircleShape)
+                                    .background(Color.Transparent, CircleShape)
                             ) {
                                 Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
                             }
@@ -317,7 +325,7 @@ fun LessonContent(
                                 containerColor = colors.accent,
                                 disabledContainerColor = colors.accent.copy(alpha = 0.5f)
                             ),
-                            shape = RoundedCornerShape(12.dp),
+                            shape = CircleShape,
                             modifier = Modifier.weight(1f).fillMaxHeight()
                         ) {
                             if (isExplaining) {
@@ -332,7 +340,7 @@ fun LessonContent(
 
                         if (!isExplaining && sentenceScore != null) {
                             Card(
-                                shape = RoundedCornerShape(12.dp),
+                                shape = CircleShape,
                                 colors = CardDefaults.cardColors(
                                     containerColor = when {
                                         sentenceScore >= 9 -> colors.correct.copy(alpha = 0.15f)
@@ -380,8 +388,8 @@ fun LessonContent(
                                 onClick = { viewModel.onPreviousSentence() },
                                 modifier = Modifier
                                     .size(48.dp)
-                                    .border(1.dp, colors.border, RoundedCornerShape(12.dp))
-                                    .background(colors.surface, RoundedCornerShape(12.dp))
+                                    .border(1.dp, colors.border, CircleShape)
+                                    .background(Color.Transparent, CircleShape)
                             ) {
                                 Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
                             }
@@ -393,7 +401,7 @@ fun LessonContent(
                                 containerColor = colors.correct,
                                 disabledContainerColor = colors.correct.copy(alpha = 0.5f)
                             ),
-                            shape = RoundedCornerShape(12.dp),
+                            shape = CircleShape,
                             modifier = Modifier.weight(1f).fillMaxHeight()
                         ) {
                             if (state.isEvaluating) {
@@ -411,7 +419,7 @@ fun LessonContent(
 
                         if (!isExplaining && !state.isEvaluating && sentenceScore != null) {
                             Card(
-                                shape = RoundedCornerShape(12.dp),
+                                shape = CircleShape,
                                 colors = CardDefaults.cardColors(
                                     containerColor = when {
                                         sentenceScore >= 9 -> colors.correct.copy(alpha = 0.15f)

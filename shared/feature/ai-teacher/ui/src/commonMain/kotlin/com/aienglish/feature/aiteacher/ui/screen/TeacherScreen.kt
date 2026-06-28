@@ -68,112 +68,12 @@ fun TeacherScreen(
     }
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = when {
-                            state.feedback != null -> "Kết quả"
-                            state.lesson != null -> "Luyện tập"
-                            else -> "AI Teacher"
-                        },
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = colors.mainText
-                    )
-                },
-                navigationIcon = {
-                    if (state.lesson != null || state.feedback != null) {
-                        IconButton(onClick = { viewModel.onReset() }) {
-                            Icon(
-                                Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Back",
-                                tint = colors.mainText
-                            )
-                        }
-                    }
-                },
-                actions = {
-                    // History button
-                    IconButton(onClick = { showHistory = true }) {
-                        Icon(
-                            Icons.Rounded.History,
-                            contentDescription = "Lịch sử",
-                            tint = colors.mutedText,
-                            modifier = Modifier.size(24.dp)
-                        )
-                    }
-
-                    // Profile button
-                    IconButton(onClick = { profileViewModel.showProfile() }) {
-                        if (profileState.isSignedIn && profileState.displayName != null) {
-                            Box(
-                                modifier = Modifier
-                                    .size(32.dp)
-                                    .clip(CircleShape)
-                                    .background(colors.accent),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    profileState.displayName!!.first().uppercase(),
-                                    color = Color.White,
-                                    fontSize = 13.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
-                        } else {
-                            Icon(
-                                Icons.Rounded.AccountCircle,
-                                contentDescription = "Profile",
-                                tint = colors.mutedText,
-                                modifier = Modifier.size(26.dp)
-                            )
-                        }
-                    }
-
-                    Spacer(Modifier.width(6.dp))
-
-                    // VIP / PRO Badge
-                    Surface(
-                        onClick = { proViewModel.onIntent(ProIntent.ShowVip) },
-                        modifier = Modifier.align(Alignment.CenterVertically),
-                        shape = RoundedCornerShape(8.dp),
-                        color = Color(0xFFFFB300).copy(0.12f),
-                        border = BorderStroke(1.dp, Color(0xFFFFB300))
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Rounded.WorkspacePremium,
-                                contentDescription = "PRO",
-                                tint = Color(0xFFFFB300),
-                                modifier = Modifier.size(14.dp)
-                            )
-                            Text(
-                                text = if (profileState.isPaid) "PRO" else "GET",
-                                fontSize = 11.sp,
-                                fontWeight = FontWeight.Bold,
-                                fontStyle = FontStyle.Italic,
-                                color = Color(0xFFFFB300)
-                            )
-                        }
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colors.surface,
-                    scrolledContainerColor = colors.surface
-                )
-            )
-        },
-        containerColor = colors.background
+        containerColor = colors.background,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0)
     ) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
                 .imePadding()
         ) {
             // Profile sheet overlay
@@ -211,6 +111,136 @@ fun TeacherScreen(
                     "feedback" -> FeedbackContent(state, viewModel, colors)
                     "lesson" -> LessonContent(state, viewModel, colors)
                     else -> TopicSelectionContent(state, viewModel, colors)
+                }
+            }
+
+            // Status bar background spacer (Black)
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .windowInsetsTopHeight(WindowInsets.statusBars)
+                    .background(Color.Black)
+            )
+
+            // Navigation bar background spacer (Black)
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .windowInsetsBottomHeight(WindowInsets.navigationBars)
+                    .background(Color.Black)
+                    .align(Alignment.BottomCenter)
+            )
+
+            // Floating Top Groups
+            Row(
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .fillMaxWidth()
+                    .statusBarsPadding()
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 18.dp, bottom = 12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Group 1: Back and Title
+                Row(
+                    modifier = Modifier
+                        .height(48.dp)
+                        .background(colors.surface, CircleShape)
+                        .border(2.dp, colors.border, CircleShape)
+                        .padding(horizontal = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    if (state.lesson != null || state.feedback != null) {
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = colors.mainText,
+                            modifier = Modifier
+                                .size(20.dp)
+                                .clickable { viewModel.onReset() }
+                        )
+                        Spacer(Modifier.width(12.dp))
+                    }
+                    Text(
+                        text = when {
+                            state.feedback != null -> "Kết quả"
+                            state.lesson != null -> "Luyện tập"
+                            else -> "AI Teacher"
+                        },
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = colors.mainText
+                    )
+                }
+
+                // Group 2: History, Profile, Pro badge
+                Row(
+                    modifier = Modifier
+                        .height(48.dp)
+                        .background(colors.surface, CircleShape)
+                        .border(2.dp, colors.border, CircleShape)
+                        .padding(horizontal = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    // History
+                    Icon(
+                        Icons.Rounded.History,
+                        contentDescription = "Lịch sử",
+                        tint = colors.mutedText,
+                        modifier = Modifier
+                            .size(20.dp)
+                            .clickable { showHistory = true }
+                    )
+
+                    // Profile
+                    Box(modifier = Modifier.clickable { profileViewModel.showProfile() }) {
+                        if (profileState.isSignedIn && profileState.displayName != null) {
+                            Box(
+                                modifier = Modifier
+                                    .size(20.dp)
+                                    .clip(CircleShape)
+                                    .background(colors.accent),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    profileState.displayName!!.first().uppercase(),
+                                    color = Color.White,
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        } else {
+                            Icon(
+                                Icons.Rounded.AccountCircle,
+                                contentDescription = "Profile",
+                                tint = colors.mutedText,
+                                modifier = Modifier.size(20.dp)
+                            )
+                        }
+                    }
+
+                    // PRO
+                    Row(
+                        modifier = Modifier.clickable { proViewModel.onIntent(ProIntent.ShowVip) },
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.WorkspacePremium,
+                            contentDescription = "PRO",
+                            tint = Color(0xFFFFB300),
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Text(
+                            text = if (profileState.isPaid) "PRO" else "GET",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontStyle = FontStyle.Italic,
+                            color = Color(0xFFFFB300)
+                        )
+                    }
                 }
             }
 

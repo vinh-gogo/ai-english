@@ -35,14 +35,20 @@ fun FeedbackContent(
     val feedback = state.feedback ?: return
     val lesson = state.lesson
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+    ) {
         Column(
             modifier = Modifier
-                .weight(1f)
+                .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(Modifier.height(78.dp)) // 18dp top pad + 48dp header + 12dp bottom gap = 78dp
+
             // Score badge
             Box(
                 modifier = Modifier
@@ -97,15 +103,23 @@ fun FeedbackContent(
             }
 
             Spacer(Modifier.height(80.dp))
+            Spacer(Modifier.navigationBarsPadding())
         }
 
         // Reset button
-        Box(modifier = Modifier.fillMaxWidth().padding(16.dp).navigationBarsPadding()) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(start = 16.dp, end = 16.dp)
+                .navigationBarsPadding()
+                .padding(bottom = 14.dp)
+        ) {
             Button(
                 onClick = { viewModel.onReset() },
-                modifier = Modifier.fillMaxWidth().height(50.dp),
+                modifier = Modifier.fillMaxWidth().height(48.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = colors.accent),
-                shape = RoundedCornerShape(14.dp)
+                shape = CircleShape
             ) {
                 Icon(Icons.Rounded.Refresh, null)
                 Spacer(Modifier.width(8.dp))
