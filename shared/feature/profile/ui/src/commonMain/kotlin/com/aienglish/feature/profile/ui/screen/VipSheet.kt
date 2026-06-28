@@ -108,6 +108,31 @@ fun VipSheet(
                     textAlign = TextAlign.Center
                 )
 
+                // Current Plan Status indicator
+                Surface(
+                    shape = RoundedCornerShape(8.dp),
+                    color = if (state.isPaid) Color(0xFFFFB300).copy(0.12f) else colors.surface,
+                    border = BorderStroke(1.dp, if (state.isPaid) Color(0xFFFFB300) else colors.border)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Text(
+                            text = if (isVietnamese) "Gói hiện tại:" else "Current Plan:",
+                            fontSize = 12.sp,
+                            color = colors.mutedText
+                        )
+                        Text(
+                            text = if (state.isPaid) "VIP Premium" else "Free-tier",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = if (state.isPaid) Color(0xFFFFB300) else colors.mainText
+                        )
+                    }
+                }
+
                 // Toggle Monthly / Yearly
                 Row(
                     modifier = Modifier
