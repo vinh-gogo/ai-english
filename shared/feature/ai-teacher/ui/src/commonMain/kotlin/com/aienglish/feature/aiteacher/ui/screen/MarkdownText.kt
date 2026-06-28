@@ -126,91 +126,146 @@ fun buildInlineAnnotatedString(
     colors: AppColors
 ): AnnotatedString {
     return buildAnnotatedString {
-        var i = 0
-        while (i < text.length) {
-            when {
-                text.startsWith("***", i) -> {
-                    val close = text.indexOf("***", i + 3)
-                    if (close != -1) {
-                        withStyle(SpanStyle(fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic)) {
-                            append(text.substring(i + 3, close))
-                        }
-                        i = close + 3
-                    } else {
-                        append(text[i]); i++
-                    }
-                }
-                text.startsWith("___", i) -> {
-                    val close = text.indexOf("___", i + 3)
-                    if (close != -1) {
-                        withStyle(SpanStyle(fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic)) {
-                            append(text.substring(i + 3, close))
-                        }
-                        i = close + 3
-                    } else {
-                        append(text[i]); i++
-                    }
-                }
-                text.startsWith("**", i) -> {
-                    val close = text.indexOf("**", i + 2)
-                    if (close != -1) {
-                        withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = colors.mainText)) {
-                            append(text.substring(i + 2, close))
-                        }
-                        i = close + 2
-                    } else {
-                        append(text[i]); i++
-                    }
-                }
-                text.startsWith("__", i) -> {
-                    val close = text.indexOf("__", i + 2)
-                    if (close != -1) {
-                        withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = colors.mainText)) {
-                            append(text.substring(i + 2, close))
-                        }
-                        i = close + 2
-                    } else {
-                        append(text[i]); i++
-                    }
-                }
-                text.startsWith("*", i) && !text.startsWith("**", i) -> {
-                    val close = text.indexOf('*', i + 1)
-                    if (close != -1) {
-                        withStyle(SpanStyle(fontStyle = FontStyle.Italic, color = colors.mutedText)) {
-                            append(text.substring(i + 1, close))
-                        }
-                        i = close + 1
-                    } else {
-                        append(text[i]); i++
-                    }
-                }
-                text.startsWith("_", i) && !text.startsWith("__", i) -> {
-                    val close = text.indexOf('_', i + 1)
-                    if (close != -1) {
-                        withStyle(SpanStyle(fontStyle = FontStyle.Italic, color = colors.mutedText)) {
-                            append(text.substring(i + 1, close))
-                        }
-                        i = close + 1
-                    } else {
-                        append(text[i]); i++
-                    }
-                }
-                text.startsWith("`", i) -> {
-                    val close = text.indexOf("`", i + 1)
-                    if (close != -1) {
-                        withStyle(SpanStyle(color = colors.accent, fontWeight = FontWeight.Medium)) {
-                            append(text.substring(i + 1, close))
-                        }
-                        i = close + 1
-                    } else {
-                        append(text[i]); i++
-                    }
-                }
-                else -> {
-                    append(text[i]); i++
+        appendFormattedText(text, colors)
+    }
+}
+
+private fun AnnotatedString.Builder.appendFormattedText(
+    text: String,
+    colors: AppColors,
+    outerBold: Boolean = false,
+    outerItalic: Boolean = false
+) {
+    var i = 0
+    while (i < text.length) {
+        when {
+            text.startsWith("***", i) -> {
+                val close = text.indexOf("***", i + 3)
+                if (close != -1) {
+                    appendFormattedText(
+                        text = text.substring(i + 3, close),
+                        colors = colors,
+                        outerBold = true,
+                        outerItalic = true
+                    )
+                    i = close + 3
+                } else {
+                    appendCharacter(text[i], outerBold, outerItalic, colors)
+                    i++
                 }
             }
+            text.startsWith("___", i) -> {
+                val close = text.indexOf("___", i + 3)
+                if (close != -1) {
+                    appendFormattedText(
+                        text = text.substring(i + 3, close),
+                        colors = colors,
+                        outerBold = true,
+                        outerItalic = true
+                    )
+                    i = close + 3
+                } else {
+                    appendCharacter(text[i], outerBold, outerItalic, colors)
+                    i++
+                }
+            }
+            text.startsWith("**", i) -> {
+                val close = text.indexOf("**", i + 2)
+                if (close != -1) {
+                    appendFormattedText(
+                        text = text.substring(i + 2, close),
+                        colors = colors,
+                        outerBold = true,
+                        outerItalic = outerItalic
+                    )
+                    i = close + 2
+                } else {
+                    appendCharacter(text[i], outerBold, outerItalic, colors)
+                    i++
+                }
+            }
+            text.startsWith("__", i) -> {
+                val close = text.indexOf("__", i + 2)
+                if (close != -1) {
+                    appendFormattedText(
+                        text = text.substring(i + 2, close),
+                        colors = colors,
+                        outerBold = true,
+                        outerItalic = outerItalic
+                    )
+                    i = close + 2
+                } else {
+                    appendCharacter(text[i], outerBold, outerItalic, colors)
+                    i++
+                }
+            }
+            text.startsWith("*", i) -> {
+                val close = text.indexOf('*', i + 1)
+                if (close != -1) {
+                    appendFormattedText(
+                        text = text.substring(i + 1, close),
+                        colors = colors,
+                        outerBold = outerBold,
+                        outerItalic = true
+                    )
+                    i = close + 1
+                } else {
+                    appendCharacter(text[i], outerBold, outerItalic, colors)
+                    i++
+                }
+            }
+            text.startsWith("_", i) -> {
+                val close = text.indexOf('_', i + 1)
+                if (close != -1) {
+                    appendFormattedText(
+                        text = text.substring(i + 1, close),
+                        colors = colors,
+                        outerBold = outerBold,
+                        outerItalic = true
+                    )
+                    i = close + 1
+                } else {
+                    appendCharacter(text[i], outerBold, outerItalic, colors)
+                    i++
+                }
+            }
+            text.startsWith("`", i) -> {
+                val close = text.indexOf("`", i + 1)
+                if (close != -1) {
+                    withStyle(SpanStyle(
+                        color = colors.accent,
+                        fontWeight = if (outerBold) FontWeight.Bold else FontWeight.Medium,
+                        fontStyle = if (outerItalic) FontStyle.Italic else FontStyle.Normal
+                    )) {
+                        append(text.substring(i + 1, close))
+                    }
+                    i = close + 1
+                } else {
+                    appendCharacter(text[i], outerBold, outerItalic, colors)
+                    i++
+                }
+            }
+            else -> {
+                appendCharacter(text[i], outerBold, outerItalic, colors)
+                i++
+            }
         }
+    }
+}
+
+private fun AnnotatedString.Builder.appendCharacter(
+    char: Char,
+    bold: Boolean,
+    italic: Boolean,
+    colors: AppColors
+) {
+    val style = SpanStyle(
+        fontWeight = if (bold) FontWeight.Bold else FontWeight.Normal,
+        fontStyle = if (italic) FontStyle.Italic else FontStyle.Normal,
+        color = if (italic) colors.mutedText else colors.mainText
+    )
+    withStyle(style) {
+        append(char)
     }
 }
 
