@@ -242,7 +242,7 @@ class TeacherViewModel(
 
                 val hasCustomApiKey = prefs.getApiKey().trim().isNotEmpty()
                 val isPaid = prefs.isPaid()
-                val limit = if (hasCustomApiKey || isPaid) 20 else 5
+                val limit = if (isPaid) 99999 else (if (hasCustomApiKey) 20 else 5)
 
                 if (monthlyUsage >= limit) {
                     val limitMsg = if (isGuest) {
@@ -539,7 +539,7 @@ class TeacherViewModel(
 
                 val hasCustomApiKey = prefs.getApiKey().trim().isNotEmpty()
                 val isPaid = prefs.isPaid()
-                val limit = if (hasCustomApiKey || isPaid) 20 else 5
+                val limit = if (isPaid) 99999 else (if (hasCustomApiKey) 20 else 5)
                 onResult(monthlyUsage, limit)
             } catch (e: Exception) {
                 onResult(0, 5)

@@ -212,7 +212,7 @@ fun VipSheet(
                         )
                         HorizontalDivider(color = colors.border.copy(0.5f))
                         BenefitItem(if (isVietnamese) "5 bài học/tháng" else "5 lessons/mo", false, colors)
-                        BenefitItem(if (isVietnamese) "Tốc độ AI thường" else "Normal AI speed", false, colors)
+                        BenefitItem(if (isVietnamese) "Không nhập ảnh" else "No image input", false, colors)
                         BenefitItem(if (isVietnamese) "Có quảng cáo" else "Contains ads", false, colors)
                         BenefitItem(if (isVietnamese) "Không hỗ trợ API" else "No custom API", false, colors)
                     }
@@ -234,9 +234,9 @@ fun VipSheet(
                             color = Color(0xFFFFB300)
                         )
                         HorizontalDivider(color = Color(0xFFFFB300).copy(0.3f))
-                        BenefitItem(if (isVietnamese) "20 bài học/tháng" else "20 lessons/mo", true, colors)
-                        BenefitItem(if (isVietnamese) "Tốc độ AI tối đa" else "Priority AI speed", true, colors)
-                        BenefitItem(if (isVietnamese) "Không quảng cáo" else "Ad-free", true, colors)
+                        BenefitItem(if (isVietnamese) "Không giới hạn" else "Unlimited lessons", true, colors)
+                        BenefitItem(if (isVietnamese) "Nhập ảnh chủ đề" else "Topic from photo", true, colors)
+                        BenefitItem(if (isVietnamese) "Không quảng cáo" else "No ads", true, colors)
                         BenefitItem(if (isVietnamese) "Hỗ trợ API Key" else "Full API support", true, colors)
                     }
                 }

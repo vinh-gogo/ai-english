@@ -568,7 +568,7 @@ private fun LanguageSettingsSection(
 private fun QuotaSection(state: ProfileState, vm: ProfileViewModel, colors: AppColors) {
     val isVietnamese = state.languageNative == "vi"
     val remaining = (state.monthlyLimit - state.monthlyUsage).coerceAtLeast(0)
-    val progress = if (state.monthlyLimit > 0) remaining.toFloat() / state.monthlyLimit.toFloat() else 0f
+    val progress = if (state.isPaid) 1f else (if (state.monthlyLimit > 0) remaining.toFloat() / state.monthlyLimit.toFloat() else 0f)
 
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Row(
@@ -592,7 +592,11 @@ private fun QuotaSection(state: ProfileState, vm: ProfileViewModel, colors: AppC
                 )
             }
             Text(
-                if (isVietnamese) "Còn lại: $remaining / ${state.monthlyLimit}" else "Left: $remaining / ${state.monthlyLimit}",
+                if (isVietnamese) {
+                    if (state.isPaid) "Còn lại: Không giới hạn" else "Còn lại: $remaining / ${state.monthlyLimit}"
+                } else {
+                    if (state.isPaid) "Left: Unlimited" else "Left: $remaining / ${state.monthlyLimit}"
+                },
                 fontSize = 12.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = colors.mutedText
@@ -612,16 +616,24 @@ private fun QuotaSection(state: ProfileState, vm: ProfileViewModel, colors: AppC
                     .fillMaxWidth(progress)
                     .clip(RoundedCornerShape(4.dp))
                     .background(
-                        if (progress < 0.2f) colors.error else colors.accent
+                        if (state.isPaid) colors.accent else (if (progress < 0.2f) colors.error else colors.accent)
                     )
             )
         }
 
         Text(
             if (isVietnamese) {
-                "Số bài học được tạo trong tháng hiện tại. Cấu hình API Key của bạn để nâng hạn ngạch từ 5 lên 20 bài học/tháng."
+                if (state.isPaid) {
+                    "Tài khoản VIP Premium có quyền tạo bài học không giới hạn."
+                } else {
+                    "Số bài học được tạo trong tháng hiện tại. Đăng ký VIP để không giới hạn bài học, hoặc cấu hình API Key riêng để nâng hạn ngạch lên 20 bài/tháng."
+                }
             } else {
-                "Number of lessons generated in the current month. Configure your API Key to increase quota from 5 to 20 lessons/month."
+                if (state.isPaid) {
+                    "VIP Premium account has unlimited lesson access."
+                } else {
+                    "Number of lessons generated in the current month. Upgrade to VIP for unlimited lessons, or configure custom API Key to raise limit to 20/mo."
+                }
             },
             fontSize = 11.sp,
             color = colors.hintText,
