@@ -14,6 +14,15 @@ CREATE TABLE IF NOT EXISTS learning_levels (
     FOREIGN KEY (system_code) REFERENCES learning_systems(system_code) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS quota (
+    quota_id TEXT PRIMARY KEY,
+    package_type TEXT NOT NULL CHECK(package_type IN ('day', 'month', 'year')),
+    account_type TEXT NOT NULL CHECK(account_type IN ('VIP', 'NORMAL', 'GUEST')),
+    is_paid INTEGER NOT NULL DEFAULT 0,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS users (
     user_id TEXT PRIMARY KEY,
     display_name TEXT NOT NULL,
@@ -31,8 +40,22 @@ CREATE TABLE IF NOT EXISTS users (
     created_at INTEGER NOT NULL,
     updated_at INTEGER NOT NULL,
     deleted_at INTEGER,             -- Soft delete timestamp
+    quota_id TEXT,
     FOREIGN KEY (learning_system_code, learning_level_code) 
-        REFERENCES learning_levels(system_code, level_code) ON DELETE SET NULL
+        REFERENCES learning_levels(system_code, level_code) ON DELETE SET NULL,
+    FOREIGN KEY (quota_id) REFERENCES quota(quota_id) ON DELETE SET NULL
+);
+
+CREATE TABLE IF NOT EXISTS payments (
+    payment_id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    amount REAL NOT NULL,
+    currency TEXT NOT NULL DEFAULT 'VND',
+    status TEXT NOT NULL CHECK(status IN ('PENDING', 'COMPLETED', 'FAILED')),
+    payment_method TEXT,
+    transaction_ref TEXT,
+    created_at INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 -- i18n Localization Tables
@@ -121,14 +144,14 @@ createUser:
 INSERT INTO users (
     user_id, display_name, email, password_hash, salt, avatar_path, google_id, 
     auth_provider, language_native, language_target, learning_system_code, 
-    learning_level_code, created_at, updated_at
-) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    learning_level_code, created_at, updated_at, quota_id
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 updateUser:
 UPDATE users
 SET display_name = ?, email = ?, password_hash = ?, salt = ?, avatar_path = ?, 
     google_id = ?, auth_provider = ?, language_native = ?, language_target = ?, 
-    learning_system_code = ?, learning_level_code = ?, updated_at = ?
+    learning_system_code = ?, learning_level_code = ?, updated_at = ?, quota_id = ?
 WHERE user_id = ?;
 
 getUserById:
@@ -139,3 +162,27 @@ SELECT * FROM users WHERE email = ? AND deleted_at IS NULL;
 
 softDeleteUser:
 UPDATE users SET deleted_at = ? WHERE user_id = ?;
+
+-- Quota Queries
+insertQuota:
+INSERT OR REPLACE INTO quota (quota_id, package_type, account_type, is_paid, created_at, updated_at)
+VALUES (?, ?, ?, ?, ?, ?);
+
+getQuotaById:
+SELECT * FROM quota WHERE quota_id = ?;
+
+updateQuota:
+UPDATE quota
+SET package_type = ?, account_type = ?, is_paid = ?, updated_at = ?
+WHERE quota_id = ?;
+
+deleteQuota:
+DELETE FROM quota WHERE quota_id = ?;
+
+-- Payment Queries
+insertPayment:
+INSERT OR REPLACE INTO payments (payment_id, user_id, amount, currency, status, payment_method, transaction_ref, created_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+
+getPaymentsByUserId:
+SELECT * FROM payments WHERE user_id = ? ORDER BY created_at DESC;
