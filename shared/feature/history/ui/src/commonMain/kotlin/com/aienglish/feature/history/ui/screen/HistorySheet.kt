@@ -27,6 +27,7 @@ import com.aienglish.feature.history.domain.model.HistoryStatus
 import com.aienglish.feature.history.domain.model.LessonHistory
 import com.aienglish.feature.history.ui.viewmodel.HistoryViewModel
 import org.koin.compose.koinInject
+import kotlinx.coroutines.delay
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
@@ -51,6 +52,12 @@ fun HistorySheet(
     val state by historyViewModel.state.collectAsState()
     val colors = LocalAppColors.current
     var showClearDialog by remember { mutableStateOf(false) }
+    var isAnimationFinished by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        delay(250) // wait 250ms for sheet slide-up animation
+        isAnimationFinished = true
+    }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -104,7 +111,7 @@ fun HistorySheet(
             HorizontalDivider(color = colors.border)
 
             when {
-                state.isLoading -> {
+                !isAnimationFinished || state.isLoading -> {
                     Box(
                         modifier = Modifier.fillMaxWidth().height(200.dp),
                         contentAlignment = Alignment.Center

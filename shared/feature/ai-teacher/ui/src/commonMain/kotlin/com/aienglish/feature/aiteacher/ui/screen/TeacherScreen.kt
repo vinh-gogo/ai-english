@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.LocalAppColors
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
 import com.aienglish.feature.history.ui.screen.HistorySheet
+import com.aienglish.feature.history.ui.viewmodel.HistoryViewModel
 import com.aienglish.feature.profile.ui.screen.ProfileSheet
 import com.aienglish.feature.profile.ui.viewmodel.ProfileViewModel
 import com.aienglish.feature.pro.ui.screen.VipSheet
@@ -50,6 +51,7 @@ fun TeacherScreen(
     viewModel: TeacherViewModel = koinInject(),
     profileViewModel: ProfileViewModel = koinInject(),
     proViewModel: ProViewModel = koinInject(),
+    historyViewModel: HistoryViewModel = koinInject(),
     onGoogleSignIn: () -> Unit = {},
     onGoogleSignOut: () -> Unit = {}
 ) {
@@ -93,6 +95,7 @@ fun TeacherScreen(
             // History sheet overlay
             if (showHistory) {
                 HistorySheet(
+                    historyViewModel = historyViewModel,
                     onReview = { item -> viewModel.onReviewLesson(item) },
                     onReTest = { item -> viewModel.onReTestLesson(item) },
                     onContinue = { item -> viewModel.onResumeLesson(item) },
