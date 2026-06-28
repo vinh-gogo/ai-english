@@ -1,433 +1,1801 @@
 [
   {
     "id": 900,
-    "name": "Chào hỏi và làm quen",
+    "name": "Chào hỏi và làm quen cơ bản",
     "systemCode": "HSK",
     "levelCode": "HSK1"
   },
   {
     "id": 901,
-    "name": "Tên, quốc tịch và tuổi tác",
+    "name": "Tên, quốc tịch và tuổi tác của bạn",
     "systemCode": "HSK",
     "levelCode": "HSK1"
   },
   {
     "id": 902,
-    "name": "Thành viên gia đình",
+    "name": "Giới thiệu các thành viên trong gia đình",
     "systemCode": "HSK",
     "levelCode": "HSK1"
   },
   {
     "id": 903,
-    "name": "Chữ số và cách đếm",
+    "name": "Nói về các con số từ 1 đến 100",
     "systemCode": "HSK",
     "levelCode": "HSK1"
   },
   {
     "id": 904,
-    "name": "Ngày, tháng, thứ và thời gian",
+    "name": "Hỏi giờ và thời gian trong ngày",
     "systemCode": "HSK",
     "levelCode": "HSK1"
   },
   {
     "id": 905,
-    "name": "Hỏi giá tiền và mua sắm cơ bản",
+    "name": "Các thứ trong tuần và ngày tháng năm",
     "systemCode": "HSK",
     "levelCode": "HSK1"
   },
   {
     "id": 906,
-    "name": "Đồ ăn, thức uống cơ bản",
+    "name": "Thời tiết hôm nay nóng hay lạnh",
     "systemCode": "HSK",
     "levelCode": "HSK1"
   },
   {
     "id": 907,
-    "name": "Phương tiện giao thông đơn giản",
+    "name": "Hỏi tên các đồ vật xung quanh bạn",
     "systemCode": "HSK",
     "levelCode": "HSK1"
   },
   {
     "id": 908,
-    "name": "Thời tiết hôm nay",
+    "name": "Nói về món ăn yêu thích của bạn",
     "systemCode": "HSK",
     "levelCode": "HSK1"
   },
   {
     "id": 909,
-    "name": "Trường học và học tập",
+    "name": "Mua trái cây ở chợ hoặc siêu thị",
     "systemCode": "HSK",
     "levelCode": "HSK1"
   },
   {
     "id": 910,
-    "name": "Nhà cửa và phòng ốc",
+    "name": "Hỏi và giới thiệu nghề nghiệp đơn giản",
     "systemCode": "HSK",
     "levelCode": "HSK1"
   },
   {
     "id": 911,
-    "name": "Bộ phận cơ thể cơ bản",
+    "name": "Nói về nơi sống và địa chỉ của bạn",
     "systemCode": "HSK",
     "levelCode": "HSK1"
   },
   {
     "id": 912,
-    "name": "Thói quen hàng ngày",
+    "name": "Phương tiện giao thông đi học hàng ngày",
     "systemCode": "HSK",
-    "levelCode": "HSK2"
+    "levelCode": "HSK1"
   },
   {
     "id": 913,
-    "name": "Sở thích và hoạt động giải trí",
+    "name": "Các con vật nuôi trong nhà thân thuộc",
     "systemCode": "HSK",
-    "levelCode": "HSK2"
+    "levelCode": "HSK1"
   },
   {
     "id": 914,
-    "name": "Bạn bè và đồng nghiệp",
+    "name": "Mô tả màu sắc của quần áo",
     "systemCode": "HSK",
-    "levelCode": "HSK2"
+    "levelCode": "HSK1"
   },
   {
     "id": 915,
-    "name": "Thời gian rảnh rỗi và cuối tuần",
+    "name": "Hẹn giờ gặp mặt bạn bè",
     "systemCode": "HSK",
-    "levelCode": "HSK2"
+    "levelCode": "HSK1"
   },
   {
     "id": 916,
-    "name": "Đi taxi, xe buýt và tàu điện",
+    "name": "Nói về các môn thể thao yêu thích",
     "systemCode": "HSK",
-    "levelCode": "HSK2"
+    "levelCode": "HSK1"
   },
   {
     "id": 917,
-    "name": "Hỏi đường và chỉ đường",
+    "name": "Hỏi giá tiền khi đi mua sắm cơ bản",
     "systemCode": "HSK",
-    "levelCode": "HSK2"
+    "levelCode": "HSK1"
   },
   {
     "id": 918,
-    "name": "Sức khỏe và mô tả triệu chứng bệnh nhẹ",
+    "name": "Giới thiệu trường học hoặc công ty",
     "systemCode": "HSK",
-    "levelCode": "HSK2"
+    "levelCode": "HSK1"
   },
   {
     "id": 919,
-    "name": "Mua sắm quần áo: màu sắc, kích cỡ",
+    "name": "Nói về các hoạt động vào buổi sáng",
     "systemCode": "HSK",
-    "levelCode": "HSK2"
+    "levelCode": "HSK1"
   },
   {
     "id": 920,
-    "name": "Ăn uống tại nhà hàng và thanh toán",
+    "name": "Nói về các hoạt động vào buổi tối",
     "systemCode": "HSK",
-    "levelCode": "HSK2"
+    "levelCode": "HSK1"
   },
   {
     "id": 921,
-    "name": "Nhận xét thời tiết và nhiệt độ",
+    "name": "Các loại đồ uống phổ biến (Trà, Cà phê)",
     "systemCode": "HSK",
-    "levelCode": "HSK2"
+    "levelCode": "HSK1"
   },
   {
     "id": 922,
-    "name": "Nói về các mùa trong năm",
+    "name": "Đi tìm đồ đạc bị thất lạc trong phòng",
     "systemCode": "HSK",
-    "levelCode": "HSK2"
+    "levelCode": "HSK1"
   },
   {
     "id": 923,
-    "name": "Kỳ nghỉ và chuyến đi ngắn",
+    "name": "Hỏi đường đi đến nhà ga hoặc bến xe",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 924,
+    "name": "Mua sắm quần áo đơn giản ở cửa hàng",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 925,
+    "name": "Nói về sở thích cá nhân lúc rảnh rỗi",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 926,
+    "name": "Đọc sách và xem phim vào cuối tuần",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 927,
+    "name": "Giới thiệu về một người bạn Trung Quốc",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 928,
+    "name": "Nói về các bộ phận trên cơ thể người",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 929,
+    "name": "Cảm ơn và xin lỗi trong giao tiếp hàng ngày",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 930,
+    "name": "Gọi điện thoại hỏi thăm sức khỏe người thân",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 931,
+    "name": "Hỏi xem ai đang gõ cửa hoặc gọi điện",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 932,
+    "name": "Nói về chiếc máy tính hoặc điện thoại mới",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 933,
+    "name": "Đi taxi và nói điểm đến cho tài xế",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 934,
+    "name": "Mua vé tàu hỏa hoặc vé xe khách",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 935,
+    "name": "Nói về kế hoạch đi chơi vào ngày mai",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 936,
+    "name": "Mô tả một căn phòng nhỏ của bạn",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 937,
+    "name": "Nói về các món ăn Trung Hoa nổi tiếng",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 938,
+    "name": "Học tiếng Trung tại lớp hoặc trực tuyến",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 939,
+    "name": "Nói về công việc bận rộn ngày hôm nay",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 940,
+    "name": "Đi nhà sách mua sách ngoại ngữ",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 941,
+    "name": "Giới thiệu về quê hương của mình",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 942,
+    "name": "Đi siêu thị mua sắm đồ dùng gia đình",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 943,
+    "name": "Hỏi xem món ăn này có cay không",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 944,
+    "name": "Nói về thời gian ngủ và thức dậy",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 945,
+    "name": "Rủ bạn bè đi ăn cơm trưa cùng nhau",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 946,
+    "name": "Hỏi thăm tình hình học tập của con cái",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 947,
+    "name": "Nhờ người khác giúp đỡ việc đơn giản",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 948,
+    "name": "Nói về mùa yêu thích nhất trong năm",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 949,
+    "name": "Chúc mừng sinh nhật bạn bè đồng nghiệp",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 950,
+    "name": "Đi nhà hàng gọi món ăn truyền thống",
     "systemCode": "HSK",
     "levelCode": "HSK2"
   },
   {
-    "id": 924,
-    "name": "Sắp xếp cuộc hẹn và lên lịch trình",
-    "systemCode": "HSK",
-    "levelCode": "HSK3"
-  },
-  {
-    "id": 925,
-    "name": "Môi trường học tập và các môn học",
-    "systemCode": "HSK",
-    "levelCode": "HSK3"
-  },
-  {
-    "id": 926,
-    "name": "Động vật và vật nuôi trong nhà",
-    "systemCode": "HSK",
-    "levelCode": "HSK3"
-  },
-  {
-    "id": 927,
-    "name": "Công việc văn phòng và nhiệm vụ",
-    "systemCode": "HSK",
-    "levelCode": "HSK3"
-  },
-  {
-    "id": 928,
-    "name": "Thể thao và rèn luyện sức khỏe",
-    "systemCode": "HSK",
-    "levelCode": "HSK3"
-  },
-  {
-    "id": 929,
-    "name": "Đi du lịch bằng máy bay và tàu hỏa",
-    "systemCode": "HSK",
-    "levelCode": "HSK3"
-  },
-  {
-    "id": 930,
-    "name": "Đặt phòng khách sạn và dịch vụ",
-    "systemCode": "HSK",
-    "levelCode": "HSK3"
-  },
-  {
-    "id": 931,
-    "name": "Mua sắm trực tuyến và thanh toán điện tử",
-    "systemCode": "HSK",
-    "levelCode": "HSK3"
-  },
-  {
-    "id": 932,
-    "name": "Cảm xúc và bày tỏ ý kiến cá nhân",
-    "systemCode": "HSK",
-    "levelCode": "HSK3"
-  },
-  {
-    "id": 933,
-    "name": "So sánh người và đồ vật",
-    "systemCode": "HSK",
-    "levelCode": "HSK3"
-  },
-  {
-    "id": 934,
-    "name": "Lễ hội truyền thống và phong tục",
-    "systemCode": "HSK",
-    "levelCode": "HSK3"
-  },
-  {
-    "id": 935,
-    "name": "Giới thiệu danh lam thắng cảnh địa phương",
-    "systemCode": "HSK",
-    "levelCode": "HSK3"
-  },
-  {
-    "id": 936,
-    "name": "Quan hệ xã hội và giao tiếp cộng đồng",
-    "systemCode": "HSK",
-    "levelCode": "HSK4"
-  },
-  {
-    "id": 937,
-    "name": "Phỏng vấn xin việc và sơ yếu lý lịch",
-    "systemCode": "HSK",
-    "levelCode": "HSK4"
-  },
-  {
-    "id": 938,
-    "name": "Kế hoạch nghề nghiệp và thăng tiến",
-    "systemCode": "HSK",
-    "levelCode": "HSK4"
-  },
-  {
-    "id": 939,
-    "name": "Tiêu dùng thông minh và quản lý tài chính",
-    "systemCode": "HSK",
-    "levelCode": "HSK4"
-  },
-  {
-    "id": 940,
-    "name": "Công nghệ thông tin và thiết bị thông minh",
-    "systemCode": "HSK",
-    "levelCode": "HSK4"
-  },
-  {
-    "id": 941,
-    "name": "Bảo vệ môi trường và phân loại rác",
-    "systemCode": "HSK",
-    "levelCode": "HSK4"
-  },
-  {
-    "id": 942,
-    "name": "Đọc sách, xem phim và giải trí nghệ thuật",
-    "systemCode": "HSK",
-    "levelCode": "HSK4"
-  },
-  {
-    "id": 943,
-    "name": "Du học và giao lưu văn hóa quốc tế",
-    "systemCode": "HSK",
-    "levelCode": "HSK4"
-  },
-  {
-    "id": 944,
-    "name": "Lối sống lành mạnh và phòng ngừa dịch bệnh",
-    "systemCode": "HSK",
-    "levelCode": "HSK4"
-  },
-  {
-    "id": 945,
-    "name": "Thảo luận về tính cách và phẩm chất cá nhân",
-    "systemCode": "HSK",
-    "levelCode": "HSK4"
-  },
-  {
-    "id": 946,
-    "name": "Bàn luận về tình bạn và tình yêu",
-    "systemCode": "HSK",
-    "levelCode": "HSK4"
-  },
-  {
-    "id": 947,
-    "name": "Quảng cáo và tiếp thị sản phẩm",
-    "systemCode": "HSK",
-    "levelCode": "HSK4"
-  },
-  {
-    "id": 948,
-    "name": "Văn hóa doanh nghiệp và quản lý nhân sự",
-    "systemCode": "HSK",
-    "levelCode": "HSK5"
-  },
-  {
-    "id": 949,
-    "name": "Xu hướng kinh tế và thị trường tài chính",
-    "systemCode": "HSK",
-    "levelCode": "HSK5"
-  },
-  {
-    "id": 950,
-    "name": "Truyền thông đại chúng và ảnh hưởng của mạng xã hội",
-    "systemCode": "HSK",
-    "levelCode": "HSK5"
-  },
-  {
     "id": 951,
-    "name": "Khoa học, công nghệ mới và đổi mới sáng tạo",
+    "name": "Đi bệnh viện khám sức khỏe định kỳ",
     "systemCode": "HSK",
-    "levelCode": "HSK5"
+    "levelCode": "HSK2"
   },
   {
     "id": 952,
-    "name": "Lịch sử cổ đại và văn hóa truyền thống Trung Quốc",
+    "name": "Đón bạn bè ở sân bay hoặc ga tàu",
     "systemCode": "HSK",
-    "levelCode": "HSK5"
+    "levelCode": "HSK2"
   },
   {
     "id": 953,
-    "name": "Hệ thống giáo dục và đào tạo chuyên sâu",
+    "name": "Hỏi thăm sức khỏe của bạn học cũ",
     "systemCode": "HSK",
-    "levelCode": "HSK5"
+    "levelCode": "HSK2"
   },
   {
     "id": 954,
-    "name": "Triết lý nhân sinh và giá trị cuộc sống",
+    "name": "Mua vé xem phim trực tuyến",
     "systemCode": "HSK",
-    "levelCode": "HSK5"
+    "levelCode": "HSK2"
   },
   {
     "id": 955,
-    "name": "Biến đổi khí hậu và phát triển bền vững",
+    "name": "So sánh chiều cao và cân nặng",
     "systemCode": "HSK",
-    "levelCode": "HSK5"
+    "levelCode": "HSK2"
   },
   {
     "id": 956,
-    "name": "Y học cổ truyền và chăm sóc sức khỏe chủ động",
+    "name": "Thuê phòng trọ hoặc căn hộ mới",
     "systemCode": "HSK",
-    "levelCode": "HSK5"
+    "levelCode": "HSK2"
   },
   {
     "id": 957,
-    "name": "Bảo tồn đa dạng sinh học và tài nguyên thiên nhiên",
+    "name": "Đi du lịch bằng tàu cao tốc",
     "systemCode": "HSK",
-    "levelCode": "HSK5"
+    "levelCode": "HSK2"
   },
   {
     "id": 958,
-    "name": "Nghệ thuật biểu diễn và di sản văn hóa phi vật thể",
+    "name": "Chuẩn bị quà tặng sinh nhật cho mẹ",
     "systemCode": "HSK",
-    "levelCode": "HSK5"
+    "levelCode": "HSK2"
   },
   {
     "id": 959,
-    "name": "Phát triển đô thị và giao thông thông minh",
+    "name": "Nói về các môn học ở trường đại học",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 960,
+    "name": "Bàn bạc về kế hoạch tổ chức tiệc cuối năm",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 961,
+    "name": "Mua thẻ điện thoại và đăng ký mạng di động",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 962,
+    "name": "Giới thiệu công ty và phòng ban làm việc",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 963,
+    "name": "Hỏi thăm thời gian làm việc của ngân hàng",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 964,
+    "name": "Mô tả thời tiết bốn mùa ở địa phương",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 965,
+    "name": "Nói về thói quen ăn uống lành mạnh",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 966,
+    "name": "Đi hiệu cắt tóc thay đổi kiểu tóc mới",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 967,
+    "name": "Hỏi về kinh nghiệm học tiếng Trung hiệu quả",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 968,
+    "name": "Mượn sách ở thư viện trường học",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 969,
+    "name": "Nói về dự định kết hôn hoặc mua nhà",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 970,
+    "name": "Thảo luận về một trận bóng đá kịch tính",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 971,
+    "name": "Đi mua sắm đồ điện tử gia dụng mới",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 972,
+    "name": "Nói về công việc làm thêm của sinh viên",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 973,
+    "name": "Đặt vé máy bay khứ hồi đi Bắc Kinh",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 974,
+    "name": "Hỏi về phong tục ngày Tết truyền thống",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 975,
+    "name": "Hướng dẫn sử dụng đồ gia dụng thông minh",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 976,
+    "name": "Nói về các trò chơi điện tử phổ biến",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 977,
+    "name": "Tìm kiếm một công việc phù hợp sau tốt nghiệp",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 978,
+    "name": "Nói về lợi ích của việc chạy bộ buổi sáng",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 979,
+    "name": "Đi trung tâm thương mại mua sắm giảm giá",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 980,
+    "name": "Trao đổi thông tin liên lạc (WeChat, Zalo)",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 981,
+    "name": "Nói về bộ phim điện ảnh vừa mới công chiếu",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 982,
+    "name": "Chia sẻ cảm xúc khi lần đầu đến Trung Quốc",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 983,
+    "name": "Nói về việc học bơi lội vào mùa hè",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 984,
+    "name": "Mua bánh ngọt và trà sữa cho bữa chiều",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 985,
+    "name": "Hỏi ý kiến bạn bè về việc chọn trang phục",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 986,
+    "name": "Mô tả con vật cưng (chó, mèo) đáng yêu",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 987,
+    "name": "Nói về lịch trình làm việc một ngày bận rộn",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 988,
+    "name": "Chúc mừng năm mới và chúc sức khỏe người lớn",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 989,
+    "name": "Đi bộ dạo công viên vào ngày cuối tuần ấm áp",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 990,
+    "name": "Thảo luận về việc chuẩn bị hành lý du lịch",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 991,
+    "name": "Hỏi thăm đường đi đến danh lam thắng cảnh",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 992,
+    "name": "Đi bưu điện gửi bưu phẩm ra nước ngoài",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 993,
+    "name": "Nói về ước mơ nghề nghiệp trong tương lai",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 994,
+    "name": "Tổ chức buổi dã ngoại ngoài trời cùng lớp",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 995,
+    "name": "Nói về việc chăm sóc cây cảnh trong nhà",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 996,
+    "name": "Bàn bạc về việc đi ăn lẩu vào mùa đông lạnh",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 997,
+    "name": "Mua sắm giày thể thao chất lượng tốt",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 998,
+    "name": "Hỏi thăm giá cả phòng tập gym gần nhà",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 999,
+    "name": "Nói về việc học nấu một món ăn mới",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 1000,
+    "name": "Đồng nghiệp trao đổi dự án mới",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1001,
+    "name": "Báo cáo tiến độ công việc hàng tuần",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1002,
+    "name": "Nói về lịch sử văn hóa của Trung Quốc",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1003,
+    "name": "Đi bảo tàng mỹ thuật xem triển lãm",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1004,
+    "name": "Cách pha trà đạo Trung Hoa chuẩn vị",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1005,
+    "name": "Tìm hiểu về nghệ thuật thư pháp",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1006,
+    "name": "Lập kế hoạch tiết kiệm tiền mua xe",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1007,
+    "name": "Thảo luận về ô nhiễm môi trường đô thị",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1008,
+    "name": "Bảo vệ động vật quý hiếm (Gấu trúc)",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1009,
+    "name": "Nói về việc làm tình nguyện viên xã hội",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1010,
+    "name": "Kinh nghiệm đi phượt bằng xe máy",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1011,
+    "name": "Tầm quan trọng của việc học ngoại ngữ",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1012,
+    "name": "Sử dụng ví điện tử (Alipay, WeChat Pay)",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1013,
+    "name": "Trải nghiệm mua sắm trên Taobao",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1014,
+    "name": "Mô tả tính cách của một người bạn tốt",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1015,
+    "name": "Nói về những khó khăn khi sống xa nhà",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1016,
+    "name": "Cách giải tỏa áp lực sau giờ làm việc",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1017,
+    "name": "Bàn luận về lợi ích của việc đọc sách giấy",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1018,
+    "name": "Tham gia câu lạc bộ ghi ta của trường",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1019,
+    "name": "Tìm hiểu về y học cổ truyền Trung Hoa",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1020,
+    "name": "Chế độ ăn chay và sức khỏe tim mạch",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1021,
+    "name": "Nói về kỳ nghỉ hè đáng nhớ ở Hải Nam",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1022,
+    "name": "Đi mua sắm quà lưu niệm đặc sản vùng miền",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1023,
+    "name": "Bàn luận về thói quen thức khuya của giới trẻ",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1024,
+    "name": "Cách lên kế hoạch quản lý thời gian hiệu quả",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1025,
+    "name": "Tổ chức tiệc nướng BBQ ngoài trời",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1026,
+    "name": "Hỏi thăm kinh nghiệm phỏng vấn visa du học",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1027,
+    "name": "Nói về ngày hội thể thao của trường",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1028,
+    "name": "Bàn luận về ảnh hưởng của mạng xã hội",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1029,
+    "name": "Tìm hiểu về nghệ thuật Kinh kịch",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1030,
+    "name": "Kinh nghiệm nuôi cá cảnh phong thủy",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1031,
+    "name": "Cách sơ cứu vết thương cơ bản tại nhà",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1032,
+    "name": "Thảo luận về lối sống tối giản hiện nay",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1033,
+    "name": "Đi mua hoa trang trí nhà cửa đón Tết",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1034,
+    "name": "Nói về sở thích chụp ảnh phong cảnh",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1035,
+    "name": "Trải nghiệm đi tàu điện ngầm giờ cao điểm",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1036,
+    "name": "Bàn luận về việc học đại học trực tuyến",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1037,
+    "name": "Cách làm một video ngắn đăng Tiktok",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1038,
+    "name": "Hỏi thăm thủ tục gia hạn hộ chiếu",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1039,
+    "name": "Nói về thần tượng âm nhạc của bạn",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1040,
+    "name": "Bàn luận về việc giữ gìn vệ sinh công cộng",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1041,
+    "name": "Cách tự sửa chữa đồ điện đơn giản",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1042,
+    "name": "Tham quan phố cổ và thưởng thức trà chiều",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1043,
+    "name": "Kỷ niệm ngày đầu tiên đi làm ở công ty",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1044,
+    "name": "Nói về việc học chơi cờ tướng Trung Quốc",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1045,
+    "name": "Cách chuẩn bị một bài thuyết trình thuyết phục",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1046,
+    "name": "Bàn luận về việc tiết kiệm điện nước gia đình",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1047,
+    "name": "Đi cắm trại trên núi vào mùa thu",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1048,
+    "name": "Hỏi thăm về thủ tục mua bảo hiểm y tế",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1049,
+    "name": "Nói về giá trị của tình cảm gia đình",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1050,
+    "name": "Phỏng vấn xin việc vào tập đoàn đa quốc gia",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1051,
+    "name": "Thương lượng lương bổng và phúc lợi xã hội",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1052,
+    "name": "Thảo luận về xu hướng phát triển AI hiện nay",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1053,
+    "name": "Ảnh hưởng của biến đổi khí hậu toàn cầu",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1054,
+    "name": "Tìm hiểu về kiến trúc nhà cổ Tứ Hợp Viện",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1055,
+    "name": "Lịch sử và ý nghĩa của Vạn Lý Trường Thành",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1056,
+    "name": "Kinh nghiệm khởi nghiệp kinh doanh nhỏ",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1057,
+    "name": "Thảo luận về thị trường chứng khoán cơ bản",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1058,
+    "name": "Quản lý tài chính cá nhân và đầu tư thông minh",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1059,
+    "name": "Nói về phong trào bảo vệ môi trường xanh",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1060,
+    "name": "Tác động của thương mại điện tử đến bán lẻ",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1061,
+    "name": "Ý nghĩa của ngày Lễ Tình nhân Thất Tịch",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1062,
+    "name": "Phong tục tập quán đón Tết Trung thu truyền thống",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1063,
+    "name": "Tầm quan trọng của việc rèn luyện tư duy phản biện",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1064,
+    "name": "Bàn luận về vấn đề già hóa dân số xã hội",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1065,
+    "name": "Tìm hiểu về ẩm thực Tứ Xuyên và ẩm thực Quảng Đông",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1066,
+    "name": "Kinh nghiệm xin học bổng chính phủ Trung Quốc",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1067,
+    "name": "Thảo luận về việc phân loại rác thải tại nguồn",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1068,
+    "name": "Ảnh hưởng của quảng cáo đến hành vi người tiêu dùng",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1069,
+    "name": "Tầm quan trọng của việc bảo mật thông tin cá nhân",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1070,
+    "name": "Bàn luận về văn hóa làm việc 996 ở Trung Quốc",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1071,
+    "name": "Tìm hiểu về các phát minh lớn của Trung Quốc cổ đại",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1072,
+    "name": "Lợi ích của việc thiền định đối với trí não",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1073,
+    "name": "Thảo luận về xu hướng xe điện (EV) tương lai",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1074,
+    "name": "Kinh nghiệm tham gia hoạt động hướng nghiệp",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1075,
+    "name": "Ý nghĩa của Lễ hội Thuyền rồng (Đoan ngọ)",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1076,
+    "name": "Bàn luận về sự khác biệt thế hệ trong gia đình",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1077,
+    "name": "Tác động của du lịch đại chúng đến văn hóa bản địa",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1078,
+    "name": "Cách đối phó với khủng hoảng tâm lý tuổi trung niên",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1079,
+    "name": "Thảo luận về tương lai của năng lượng tái tạo",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1080,
+    "name": "Tìm hiểu về nghệ thuật cắt giấy truyền thống",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1081,
+    "name": "Kinh nghiệm học thi chứng chỉ HSK cao cấp",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1082,
+    "name": "Ảnh hưởng của game online đến kết quả học tập",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1083,
+    "name": "Tầm quan trọng của EQ (trí tuệ cảm xúc) trong công việc",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1084,
+    "name": "Bàn luận về trào lưu khởi nghiệp của giới trẻ",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1085,
+    "name": "Cách duy trì mối quan hệ đồng nghiệp tốt đẹp",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1086,
+    "name": "Thảo luận về an toàn giao thông đường bộ",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1087,
+    "name": "Tìm hiểu về trà Long Tỉnh và văn hóa thưởng trà Tây Hồ",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1088,
+    "name": "Ý nghĩa của việc học tập suốt đời (Lifelong learning)",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1089,
+    "name": "Tác động của sách điện tử đến ngành xuất bản",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1090,
+    "name": "Kinh nghiệm tổ chức sự kiện quy mô vừa ở công ty",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1091,
+    "name": "Thảo luận về việc cân bằng giữa công việc và cuộc sống",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1092,
+    "name": "Tầm quan trọng của việc ngủ đủ giấc mỗi ngày",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1093,
+    "name": "Ảnh hưởng của đô thị hóa đến vùng nông thôn",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1094,
+    "name": "Bàn luận về việc bảo tồn di sản văn hóa phi vật thể",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1095,
+    "name": "Cách xây dựng thương hiệu cá nhân trực tuyến",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1096,
+    "name": "Tìm hiểu về nghệ thuật tranh thủy mặc Trung Hoa",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1097,
+    "name": "Kinh nghiệm đi du lịch tự túc nước ngoài an toàn",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1098,
+    "name": "Thảo luận về xu hướng làm việc từ xa (Remote work)",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1099,
+    "name": "Tầm quan trọng của việc duy trì thái độ sống tích cực",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1100,
+    "name": "Đàm phán hợp đồng thương mại quốc tế",
     "systemCode": "HSK",
     "levelCode": "HSK5"
   },
   {
-    "id": 960,
-    "name": "Học thuyết triết học cổ đại Trung Quốc",
+    "id": 1101,
+    "name": "Phân tích chiến lược marketing của đối thủ",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1102,
+    "name": "Ứng dụng blockchain trong quản lý chuỗi cung ứng",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1103,
+    "name": "Chính sách phát triển kinh tế tuần hoàn quốc gia",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1104,
+    "name": "Tìm hiểu chiều sâu triết học Khổng Tử",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1105,
+    "name": "Tư tưởng Vô vi của Lão Tử trong đời sống",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1106,
+    "name": "Chiến lược quản trị rủi ro doanh nghiệp khởi nghiệp",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1107,
+    "name": "Đầu tư bất động sản và phân tích thị trường",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1108,
+    "name": "Tác động của trí tuệ nhân tạo đến thị trường lao động",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1109,
+    "name": "Chính sách giảm thiểu phát thải carbon toàn cầu",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1110,
+    "name": "Xu hướng toàn cầu hóa và bảo hộ thương mại",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1111,
+    "name": "Tìm hiểu ý nghĩa kinh dịch Trung Hoa cổ đại",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1112,
+    "name": "Văn hóa kinh doanh và quan hệ xã giao ở Trung Quốc",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1113,
+    "name": "Phương pháp giáo dục sớm cho trẻ em thông minh",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1114,
+    "name": "Giải quyết mâu thuẫn nội bộ trong tổ chức lớn",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1115,
+    "name": "Nghệ thuật giao tiếp ứng xử của người lãnh đạo",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1116,
+    "name": "Phân tích báo cáo tài chính quý của doanh nghiệp",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1117,
+    "name": "Ảnh hưởng của tâm lý học hành vi trong đầu tư",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1118,
+    "name": "Quản lý khủng hoảng truyền thông của thương hiệu",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1119,
+    "name": "Phát triển đô thị thông minh và giao thông xanh",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1120,
+    "name": "Tầm quan trọng của đổi mới sáng tạo trong công nghệ",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1121,
+    "name": "Tìm hiểu lịch sử gốm sứ Cảnh Đức Trấn nghệ thuật",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1122,
+    "name": "Ứng dụng dữ liệu lớn (Big Data) trong y tế",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1123,
+    "name": "Tương lai của công nghệ mạng di động 6G",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1124,
+    "name": "Vấn đề an ninh lương thực toàn cầu hiện nay",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1125,
+    "name": "Chính sách khuyến khích tiêu dùng nội địa quốc gia",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1126,
+    "name": "Bảo tồn nghệ thuật khắc đá Long Môn di sản",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1127,
+    "name": "Phát triển du lịch bền vững gắn liền văn hóa",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1128,
+    "name": "Cách xây dựng văn hóa doanh nghiệp vững mạnh",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1129,
+    "name": "Thảo luận về sự trỗi dậy của thanh toán số",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1130,
+    "name": "Vai trò của WTO trong thương mại tự do toàn cầu",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1131,
+    "name": "Nghiên cứu văn học cổ điển Trung Hoa (Tứ đại danh tác)",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1132,
+    "name": "Tìm hiểu nghệ thuật võ thuật Thiếu Lâm tự",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1133,
+    "name": "Sức khỏe tinh thần và stress nơi công sở hiện đại",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1134,
+    "name": "Xu hướng phát triển nông nghiệp công nghệ cao",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1135,
+    "name": "Tác động của mạng xã hội đến tâm lý thanh thiếu niên",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1136,
+    "name": "Phương pháp tối ưu hóa bộ máy nhân sự doanh nghiệp",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1137,
+    "name": "Phân tích xu hướng tiêu dùng của thế hệ Gen Z",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1138,
+    "name": "Nghệ thuật đàm phán đa phương trong ngoại giao",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1139,
+    "name": "Tầm quan trọng của giáo dục đạo đức học đường",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1140,
+    "name": "Tìm hiểu lịch sử con đường tơ lụa giao thương",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1141,
+    "name": "Ứng dụng năng lượng hạt nhân vì mục đích hòa bình",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1142,
+    "name": "Chống độc quyền và bảo vệ cạnh tranh lành mạnh",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1143,
+    "name": "Phân tích tác động của các hiệp định thương mại tự do",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1144,
+    "name": "Bảo vệ đa dạng sinh học hệ sinh thái rừng",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1145,
+    "name": "Cách thu hút và giữ chân nhân tài của tập đoàn",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1146,
+    "name": "Tìm hiểu nghệ thuật tuồng cổ và kịch truyền thống",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1147,
+    "name": "Tác động của biến đổi khí hậu đến mực nước biển",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1148,
+    "name": "Xu hướng phát triển của ngành công nghiệp giải trí",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1149,
+    "name": "Ý nghĩa của việc xây dựng cộng đồng chung vận mệnh",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1150,
+    "name": "Chiến lược kinh tế vĩ mô toàn cầu",
     "systemCode": "HSK",
     "levelCode": "HSK6"
   },
   {
-    "id": 961,
-    "name": "Đạo đức kinh doanh và trách nhiệm xã hội của doanh nghiệp",
+    "id": 1151,
+    "name": "Cơ chế vận hành của chính sách tiền tệ quốc gia",
     "systemCode": "HSK",
     "levelCode": "HSK6"
   },
   {
-    "id": 962,
-    "name": "Trí tuệ nhân tạo và tương lai của lao động loài người",
+    "id": 1152,
+    "name": "Nghiên cứu chuyên sâu về thuyết lượng tử vật lý",
     "systemCode": "HSK",
     "levelCode": "HSK6"
   },
   {
-    "id": 963,
-    "name": "Toàn cầu hóa kinh tế và hợp tác đa quốc gia",
+    "id": 1153,
+    "name": "Địa chính trị và an ninh năng lượng thế giới",
     "systemCode": "HSK",
     "levelCode": "HSK6"
   },
   {
-    "id": 964,
-    "name": "Du lịch đại chúng và bảo tồn di sản văn hóa",
+    "id": 1154,
+    "name": "Triết học biện chứng và ứng dụng hiện đại",
     "systemCode": "HSK",
     "levelCode": "HSK6"
   },
   {
-    "id": 965,
-    "name": "Nghệ thuật tối giản và xu hướng kiến trúc xanh",
+    "id": 1155,
+    "name": "Nghiên cứu tư tưởng quân sự Tôn Tử Binh Pháp",
     "systemCode": "HSK",
     "levelCode": "HSK6"
   },
   {
-    "id": 966,
-    "name": "An ninh mạng toàn cầu và bảo mật dữ liệu người dùng",
+    "id": 1156,
+    "name": "Tái cấu trúc doanh nghiệp nhà nước quy mô lớn",
     "systemCode": "HSK",
     "levelCode": "HSK6"
   },
   {
-    "id": 967,
-    "name": "Xu hướng già hóa dân số và hệ thống an sinh xã hội",
+    "id": 1157,
+    "name": "Quản trị dòng vốn đầu tư mạo hiểm quốc tế",
     "systemCode": "HSK",
     "levelCode": "HSK6"
   },
   {
-    "id": 968,
-    "name": "Khủng hoảng tài nguyên và an ninh lương thực toàn cầu",
+    "id": 1158,
+    "name": "Đạo đức sinh học trong kỹ thuật di truyền người",
     "systemCode": "HSK",
     "levelCode": "HSK6"
   },
   {
-    "id": 969,
-    "name": "Giao tiếp đa văn hóa và xóa bỏ rào cản ngôn ngữ",
+    "id": 1159,
+    "name": "Hợp tác quốc tế về ứng phó thảm họa thiên tai",
     "systemCode": "HSK",
     "levelCode": "HSK6"
   },
   {
-    "id": 970,
-    "name": "Nghiên cứu khoa học cơ bản và vật lý hiện đại",
+    "id": 1160,
+    "name": "Toàn cầu hóa tài chính và rủi ro hệ thống",
     "systemCode": "HSK",
     "levelCode": "HSK6"
   },
   {
-    "id": 971,
-    "name": "Nghệ thuật văn học cổ điển và phê bình văn học",
+    "id": 1161,
+    "name": "Nghiên cứu văn tự cổ Giáp Cốt Văn lịch sử",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1162,
+    "name": "Văn hóa xã hội Trung Quốc thời Đường Tống hưng thịnh",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1163,
+    "name": "Cải cách hệ thống giáo dục quốc gia hiện đại",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1164,
+    "name": "Chiến lược hòa giải xungodet sắc tộc quốc tế",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1165,
+    "name": "Nghệ thuật ngoại giao phòng ngừa khủng hoảng chung",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1166,
+    "name": "Phân tích kinh tế lượng và dự báo tăng trưởng",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1167,
+    "name": "Lý thuyết trò chơi ứng dụng trong kinh doanh đàm phán",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1168,
+    "name": "Quản trị khủng hoảng tài chính toàn cầu hệ thống",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1169,
+    "name": "Đô thị hóa sinh thái và kiến trúc bền vững",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1170,
+    "name": "Chiến lược sở hữu trí tuệ toàn cầu của doanh nghiệp",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1171,
+    "name": "Nghiên cứu khảo cổ học nền văn minh lúa nước",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1172,
+    "name": "Ứng dụng trí tuệ nhân tạo tổng hợp (AGI) tương lai",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1173,
+    "name": "Khám phá vũ trụ và công nghệ hàng không vũ trụ",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1174,
+    "name": "Chính sách an ninh phi truyền thống quốc tế",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1175,
+    "name": "An ninh mạng và chiến tranh thông tin kỹ thuật số",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1176,
+    "name": "Bảo tồn đa dạng văn hóa trước làn sóng đồng hóa",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1177,
+    "name": "Chiến lược phát triển kinh tế biển bền vững quốc gia",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1178,
+    "name": "Cải cách luật pháp quốc tế về bảo vệ môi trường",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1179,
+    "name": "Phân tích cán cân thanh toán quốc tế vĩ mô",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1180,
+    "name": "Nghiên cứu chuyên sâu về thơ ca thời Đường",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1181,
+    "name": "Ý nghĩa lịch sử của cuộc cải cách mở cửa 1978",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1182,
+    "name": "Lý thuyết về sự hỗn loạn và hệ thống phức tạp",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1183,
+    "name": "Ứng dụng vật liệu nano trong công nghiệp tương lai",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1184,
+    "name": "Chính sách phát triển giao thông đường sắt tốc độ cao",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1185,
+    "name": "Phân tích tâm lý học đám đông trong tài chính",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1186,
+    "name": "Cơ chế giải quyết tranh chấp thương mại của WTO",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1187,
+    "name": "Chiến lược phát triển bền vững lưu vực sông Mekong",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1188,
+    "name": "Nghiên cứu lịch sử triết học phương Tây cổ đại",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1189,
+    "name": "Tương lai của tiền điện tử ngân hàng trung ương",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1190,
+    "name": "An ninh nguồn nước và tranh chấp tài nguyên xuyên biên giới",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1191,
+    "name": "Chiến lược phát triển chuỗi giá trị toàn cầu",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1192,
+    "name": "Nghiên cứu về hội họa phong cảnh thời Tống",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1193,
+    "name": "Lịch sử phát triển của y học hiện đại toàn cầu",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1194,
+    "name": "Phân tích tác động của thuế carbon quốc tế",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1195,
+    "name": "Chiến lược xây dựng đô thị trung hòa carbon đầu tiên",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1196,
+    "name": "Nghiên cứu văn hóa ẩm thực cung đình Trung Hoa xưa",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1197,
+    "name": "Tác động của robot sinh học đến cuộc sống loài người",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1198,
+    "name": "Cơ chế hợp tác phát triển kinh tế khu vực ASEAN+",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1199,
+    "name": "Tầm nhìn tương lai về phát triển bền vững hành tinh",
     "systemCode": "HSK",
     "levelCode": "HSK6"
   }

@@ -111,7 +111,8 @@ class TeacherViewModel(
         val currentTopics = topicRepository.getTopics("CEFR", listOf("A1"))
         val currentJapaneseTopics = topicRepository.getTopics("JLPT", listOf("N5"))
         val currentChineseTopics = topicRepository.getTopics("HSK", listOf("HSK1"))
-        if (currentTopics.isEmpty() || currentJapaneseTopics.size < 120 || currentChineseTopics.isEmpty()) {
+        val currentToeicTopics = topicRepository.getTopics("TOEIC", listOf("300"))
+        if (currentTopics.isEmpty() || currentJapaneseTopics.size < 120 || currentChineseTopics.isEmpty() || currentToeicTopics.isEmpty()) {
             val systemsStr = jsonResourceReader.readSystemsJson()
             val levelsStr = jsonResourceReader.readLevelsJson()
             val englishStr = jsonResourceReader.readEnglishTopicsJson()

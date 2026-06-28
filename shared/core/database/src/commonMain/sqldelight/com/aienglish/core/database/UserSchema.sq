@@ -81,10 +81,11 @@ CREATE TABLE IF NOT EXISTS i18n_translations (
 
 
 CREATE TABLE IF NOT EXISTS learning_topics (
-    topic_id INTEGER PRIMARY KEY,
+    topic_id INTEGER NOT NULL,
     name TEXT NOT NULL,
     system_code TEXT NOT NULL,
     level_code TEXT NOT NULL,
+    PRIMARY KEY (system_code, topic_id),
     FOREIGN KEY (system_code, level_code) REFERENCES learning_levels(system_code, level_code) ON DELETE CASCADE
 );
 
