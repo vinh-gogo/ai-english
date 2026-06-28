@@ -74,11 +74,7 @@ fun TeacherScreen(
                     Text(
                         text = when {
                             state.feedback != null -> "Kết quả bài học"
-                            state.lesson != null -> {
-                                if (state.selectedLevelText.startsWith("N")) "Luyện dịch tiếng Nhật"
-                                else if (state.selectedLevelText.startsWith("HSK")) "Luyện dịch tiếng Trung"
-                                else "Luyện dịch tiếng Anh"
-                            }
+                            state.lesson != null -> "Luyện tập"
                             else -> "AI Teacher"
                         },
                         fontSize = 18.sp,
