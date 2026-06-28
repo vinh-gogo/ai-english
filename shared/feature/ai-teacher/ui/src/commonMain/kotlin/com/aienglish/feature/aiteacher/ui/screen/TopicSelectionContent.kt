@@ -573,12 +573,13 @@ fun TopicSelectionContent(
                             Surface(
                                 modifier = Modifier.clickable { viewModel.onTopicIndexSelected(idx) },
                                 shape = RoundedCornerShape(12.dp),
-                                color = if (isSelected) colors.accent else colors.surface,
-                                border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
+                                color = if (isSelected) colors.surfaceElevated else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) colors.mainText else colors.border)
                             ) {
                                 Text(
                                     "${i + 1}. ${topic.name}",
-                                    color = if (isSelected) Color.White else colors.mainText,
+                                    color = colors.mainText,
+                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                                     fontSize = 13.sp,
                                     modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp)
                                 )
