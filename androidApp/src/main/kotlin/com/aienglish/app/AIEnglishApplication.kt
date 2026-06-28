@@ -4,8 +4,7 @@ import android.app.Application
 import com.aienglish.core.common.di.androidCoreCommonModule
 import com.aienglish.core.common.di.coreCommonModule
 import com.aienglish.core.common.prefs.AppPreferences
-import com.aienglish.core.database.AIEnglishDatabase
-import com.aienglish.core.database.driver.createAndroidDriver
+import com.aienglish.core.database.di.coreDatabaseModule
 import com.aienglish.core.network.di.coreNetworkModule
 import com.aienglish.feature.aiteacher.application.di.teacherApplicationModule
 import com.aienglish.feature.aiteacher.data.di.teacherDataModule
@@ -36,13 +35,9 @@ class AIEnglishApplication : Application() {
             modules(
                 coreCommonModule,
                 androidCoreCommonModule,   // provides AndroidAppPreferences + secure storage
+                coreDatabaseModule,
                 coreNetworkModule,
                 teacherApplicationModule,
-                // Database module
-                module {
-                    single { createAndroidDriver(androidContext()) }
-                    single { AIEnglishDatabase(get()) }
-                },
                 // Data module (HistoryRepository)
                 teacherDataModule,
                 profileDataModule,

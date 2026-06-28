@@ -18,6 +18,7 @@ kotlin {
             implementation(libs.sqldelight.coroutines)
             implementation(libs.coroutines.core)
             implementation(libs.datetime)
+            implementation(libs.koin.core)
         }
         androidMain.dependencies {
             implementation(libs.sqldelight.android.driver)

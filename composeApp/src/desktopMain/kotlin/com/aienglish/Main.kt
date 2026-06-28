@@ -9,8 +9,7 @@ import com.aienglish.core.network.di.coreNetworkModule
 import com.aienglish.core.common.di.coreCommonModule
 import com.aienglish.core.common.di.desktopCoreCommonModule
 import com.aienglish.core.common.prefs.AppPreferences
-import com.aienglish.core.database.AIEnglishDatabase
-import com.aienglish.core.database.driver.createDesktopDriver
+import com.aienglish.core.database.di.coreDatabaseModule
 import com.aienglish.feature.aiteacher.application.di.teacherApplicationModule
 import com.aienglish.feature.aiteacher.data.di.teacherDataModule
 import com.aienglish.feature.aiteacher.data.repository.TeacherRepositoryImpl
@@ -47,13 +46,9 @@ fun main() {
         modules(
             coreCommonModule,
             desktopCoreCommonModule,   // provides DesktopAppPreferences + secure storage
+            coreDatabaseModule,
             coreNetworkModule,
             teacherApplicationModule,
-            // Database module
-            module {
-                single { createDesktopDriver() }
-                single { AIEnglishDatabase(get()) }
-            },
             // Data module (HistoryRepository)
             teacherDataModule,
             profileDataModule,
