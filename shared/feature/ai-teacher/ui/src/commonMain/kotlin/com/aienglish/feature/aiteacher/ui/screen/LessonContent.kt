@@ -279,16 +279,6 @@ fun LessonContent(
                             Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
                         }
                     }
-                    // Skip button
-                    Button(
-                        onClick = { viewModel.onCheckAnswer(idx) },
-                        colors = ButtonDefaults.buttonColors(containerColor = colors.surface),
-                        border = BorderStroke(1.dp, colors.border),
-                        shape = RoundedCornerShape(12.dp),
-                        modifier = Modifier.weight(1f).height(48.dp)
-                    ) {
-                        Text("Chưa biết", color = colors.mutedText)
-                    }
                     // Check button
                     Button(
                         onClick = { viewModel.onCheckAnswer(idx) },
