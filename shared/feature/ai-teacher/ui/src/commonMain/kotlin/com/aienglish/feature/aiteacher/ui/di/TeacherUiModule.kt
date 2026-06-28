@@ -18,7 +18,8 @@ val teacherUiModule = module {
             teacherHistoryRepository = get(),
             topicRepository = get(),
             jsonResourceReader = get(),
-            prefs = get()
+            prefs = get(),
+            historyRepository = get()
         )
     }
 }

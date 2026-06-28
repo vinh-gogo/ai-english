@@ -174,6 +174,23 @@ private fun UserInfoSection(
                     Spacer(Modifier.width(10.dp))
                     Text("Đăng nhập với Google", color = colors.mainText, fontSize = 14.sp, fontWeight = FontWeight.Medium)
                 }
+                Spacer(Modifier.height(8.dp))
+                OutlinedButton(
+                    onClick = { vm.signInAsGuest() },
+                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = colors.mainText),
+                    border = BorderStroke(1.dp, colors.border)
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Person,
+                        contentDescription = "Guest",
+                        tint = colors.mutedText,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(Modifier.width(10.dp))
+                    Text("Dùng thử làm Khách", color = colors.mainText, fontSize = 14.sp, fontWeight = FontWeight.Medium)
+                }
             }
         }
 

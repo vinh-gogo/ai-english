@@ -12,7 +12,9 @@ import com.aienglish.feature.aiteacher.domain.repository.TopicRepository
 import com.aienglish.feature.aiteacher.domain.repository.TeacherHistoryRepository
 import com.aienglish.feature.aiteacher.domain.resource.JsonResourceReader
 import com.aienglish.feature.history.domain.model.LessonHistory
+import com.aienglish.feature.history.domain.repository.HistoryRepository
 import com.aienglish.feature.aiteacher.ui.screen.getCompatibleLevels
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 enum class LevelType {
@@ -63,7 +65,8 @@ class TeacherViewModel(
     private val teacherHistoryRepository: TeacherHistoryRepository,
     private val topicRepository: TopicRepository,
     private val jsonResourceReader: JsonResourceReader,
-    private val prefs: AppPreferences
+    private val prefs: AppPreferences,
+    private val historyRepository: HistoryRepository
 ) : BaseViewModel<TeacherUiState>(TeacherUiState()) {
 
     // Track current lesson DB id for history update
@@ -217,19 +220,38 @@ class TeacherViewModel(
     fun onStartLesson() {
         val topic = currentState.selectedTopic
         val level = currentState.selectedLevelText
-        setState {
-            copy(
-                isGeneratingLesson = true,
-                error = null,
-                lesson = null,
-                feedback = null,
-                userAnswers = emptyMap(),
-                checkedAnswers = emptySet(),
-                currentSentenceIndex = 0,
-                explanations = emptyMap()
-            )
-        }
+        val isGuest = prefs.getUserName() == "Khách"
+
         viewModelScope.launch {
+            if (isGuest) {
+                try {
+                    val historyList = historyRepository.getAllHistory().first()
+                    if (historyList.isNotEmpty()) {
+                        setState {
+                            copy(
+                                error = "Chế độ dùng thử tối đa 1 bài học. Vui lòng đăng nhập để tiếp tục học không giới hạn!"
+                            )
+                        }
+                        return@launch
+                    }
+                } catch (e: Exception) {
+                    // Ignore
+                }
+            }
+
+            setState {
+                copy(
+                    isGeneratingLesson = true,
+                    error = null,
+                    lesson = null,
+                    feedback = null,
+                    userAnswers = emptyMap(),
+                    checkedAnswers = emptySet(),
+                    currentSentenceIndex = 0,
+                    explanations = emptyMap()
+                )
+            }
+
             // Save to history DB (IN_PROGRESS)
             currentLessonHistoryId = try {
                 teacherHistoryRepository.startLesson(topic, level)

@@ -64,6 +64,13 @@ class ProfileViewModel(
         setState { copy(isSignedIn = true, displayName = name, email = email, isSigningIn = false, error = null) }
     }
 
+    fun signInAsGuest() {
+        repository.saveUserName("Khách")
+        repository.saveUserEmail("guest@aienglish.com")
+        repository.setSignedIn(true)
+        setState { copy(isSignedIn = true, displayName = "Khách", email = "guest@aienglish.com", isSigningIn = false, error = null) }
+    }
+
     fun onSigningIn() = setState { copy(isSigningIn = true, error = null) }
     fun onSignInError(msg: String) = setState { copy(isSigningIn = false, error = msg) }
 
