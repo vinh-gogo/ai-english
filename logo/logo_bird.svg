@@ -23,6 +23,35 @@
   <circle cx="512" cy="512" r="420" fill="none" stroke="url(#skyGrad)" stroke-width="4" opacity="0.15" filter="url(#glow)"/>
   <circle cx="512" cy="512" r="420" fill="none" stroke="url(#skyGrad)" stroke-width="2" opacity="0.3"/>
 
+  <!-- Wireframe Construction Grid (Dashed circles demonstrating mathematical carving) -->
+  <g stroke="url(#skyGrad)" stroke-width="1.5" stroke-dasharray="6 6" fill="none" opacity="0.22">
+    <!-- Head grid -->
+    <circle cx="512" cy="320" r="75" />
+    
+    <!-- Body grid -->
+    <circle cx="380" cy="595" r="210" />
+    <circle cx="644" cy="595" r="210" />
+    <circle cx="512" cy="595" r="130" />
+
+    <!-- Wing loop grid -->
+    <circle cx="362" cy="595" r="110" />
+    <circle cx="662" cy="595" r="110" />
+    <circle cx="362" cy="595" r="152" />
+    <circle cx="662" cy="595" r="152" />
+  </g>
+
+  <g stroke="url(#goldGrad)" stroke-width="1.2" stroke-dasharray="4 4" fill="none" opacity="0.25">
+    <!-- Beak grid -->
+    <circle cx="570" cy="295" r="45" />
+    <circle cx="560" cy="355" r="45" />
+
+    <!-- Spark grid -->
+    <circle cx="720" cy="295" r="55" />
+    <circle cx="775" cy="295" r="55" />
+    <circle cx="720" cy="350" r="55" />
+    <circle cx="665" cy="295" r="55" />
+  </g>
+
   <!-- Head -->
   <circle cx="512" cy="320" r="75" fill="url(#skyGrad)"/>
 
