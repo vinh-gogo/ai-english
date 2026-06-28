@@ -6,6 +6,8 @@ import com.aienglish.feature.pro.application.usecase.GetVipStatusUseCase
 import com.aienglish.feature.pro.application.usecase.SetVipStatusUseCase
 import com.aienglish.feature.pro.ui.intent.ProIntent
 import com.aienglish.feature.pro.ui.state.ProState
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
 
 class ProViewModel(
     private val getVipStatusUseCase: GetVipStatusUseCase,
@@ -14,7 +16,22 @@ class ProViewModel(
 ) : BaseViewModel<ProState>(ProState()) {
 
     init {
-        processIntent(ProIntent.SyncState)
+        // Collect reactive status from flows
+        viewModelScope.launch {
+            combine(
+                getVipStatusUseCase(),
+                getNativeLanguageUseCase()
+            ) { isPaid, nativeLang ->
+                isPaid to nativeLang
+            }.collect { (isPaid, nativeLang) ->
+                setState {
+                    copy(
+                        isPaid = isPaid,
+                        languageNative = nativeLang
+                    )
+                }
+            }
+        }
     }
 
     fun onIntent(intent: ProIntent) {
@@ -24,12 +41,7 @@ class ProViewModel(
     private fun processIntent(intent: ProIntent) {
         when (intent) {
             is ProIntent.SyncState -> {
-                setState {
-                    copy(
-                        isPaid = getVipStatusUseCase(),
-                        languageNative = getNativeLanguageUseCase()
-                    )
-                }
+                // Handled reactively via flow collections in init block
             }
             is ProIntent.ShowVip -> {
                 setState { copy(showVip = true) }
@@ -38,8 +50,9 @@ class ProViewModel(
                 setState { copy(showVip = false) }
             }
             is ProIntent.SetVipPaid -> {
-                setVipStatusUseCase(intent.isPaid)
-                setState { copy(isPaid = intent.isPaid) }
+                viewModelScope.launch {
+                    setVipStatusUseCase(intent.isPaid)
+                }
             }
         }
     }

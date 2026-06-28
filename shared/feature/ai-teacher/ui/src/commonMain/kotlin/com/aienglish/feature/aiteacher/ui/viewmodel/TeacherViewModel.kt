@@ -98,6 +98,13 @@ class TeacherViewModel(
             )
         }
         loadTopics(expectedType, expectedLevel)
+
+        // Observe target language changes reactively
+        viewModelScope.launch {
+            prefs.languageTargetFlow.collect { newTarget ->
+                syncTargetLanguage(newTarget)
+            }
+        }
     }
 
     private suspend fun ensureDatabaseSeeded() {
@@ -139,8 +146,7 @@ class TeacherViewModel(
         }
     }
 
-    fun syncTargetLanguage() {
-        val target = prefs.getLanguageTarget() // "en", "ja", "zh"
+    private fun syncTargetLanguage(target: String) {
         val currentTarget = currentState.targetLanguage
         if (target != currentTarget) {
             val expectedType = when (target) {

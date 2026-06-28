@@ -59,14 +59,6 @@ fun TeacherScreen(
     val colors = LocalAppColors.current
     var showHistory by remember { mutableStateOf(false) }
 
-    LaunchedEffect(profileState.languageTarget) {
-        viewModel.syncTargetLanguage()
-    }
-
-    LaunchedEffect(proState.isPaid) {
-        profileViewModel.setPaid(proState.isPaid)
-    }
-
     LaunchedEffect(profileState.showProfile, proState.showVip, state.lesson, state.feedback) {
         if (profileState.showProfile || proState.showVip) {
             viewModel.fetchMonthlyUsage { usage, limit ->

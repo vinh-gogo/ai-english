@@ -1,5 +1,7 @@
 package com.aienglish.core.common.prefs
 
+import kotlinx.coroutines.flow.Flow
+
 interface AppPreferences {
     fun getApiKey(): String
     fun saveApiKey(key: String)
@@ -16,4 +18,12 @@ interface AppPreferences {
     fun isPaid(): Boolean
     fun setPaid(value: Boolean)
     fun clear()
+
+    // Reactive preference streams
+    val isPaidFlow: Flow<Boolean>
+    val languageNativeFlow: Flow<String>
+    val languageTargetFlow: Flow<String>
+    val userNameFlow: Flow<String?>
+    val userEmailFlow: Flow<String?>
+    val isSignedInFlow: Flow<Boolean>
 }
