@@ -438,17 +438,38 @@ class TeacherViewModel(
             evaluateLesson("user", state.selectedTopic, answers, sentences, level).fold(
                 ifLeft = { err -> setState { copy(isEvaluating = false, error = err.message) } },
                 ifRight = { fb ->
-                    setState { copy(isEvaluating = false, feedback = fb) }
+                    val sanitizedSentenceScores = if (fb.sentenceScores.size == lesson.sentences.size) {
+                        fb.sentenceScores.mapIndexed { index, score ->
+                            val userAnswer = state.userAnswers[index] ?: ""
+                            if (userAnswer.isBlank()) 0 else score
+                        }
+                    } else {
+                        lesson.sentences.mapIndexed { index, _ ->
+                            val userAnswer = state.userAnswers[index] ?: ""
+                            if (userAnswer.isBlank()) 0 else (fb.sentenceScores.getOrNull(index) ?: 0)
+                        }
+                    }
+                    val calculatedScore = if (sanitizedSentenceScores.isNotEmpty()) {
+                        ((sanitizedSentenceScores.sum() / sanitizedSentenceScores.size.toDouble()) + 0.5).toInt()
+                    } else {
+                        fb.score
+                    }
+                    val sanitizedFb = fb.copy(
+                        score = calculatedScore,
+                        sentenceScores = sanitizedSentenceScores
+                    )
+
+                    setState { copy(isEvaluating = false, feedback = sanitizedFb) }
                     // Update history to COMPLETED with score and full snapshot
                     currentLessonHistoryId?.let { id ->
                         try {
                             teacherHistoryRepository.completeLesson(
                                 id = id,
-                                score = fb.score,
+                                score = sanitizedFb.score,
                                 lesson = lesson,
                                 userAnswers = state.userAnswers,
                                 explanations = state.explanations,
-                                feedback = fb
+                                feedback = sanitizedFb
                             )
                         } catch (e: Exception) { /* ignore */ }
                     }
