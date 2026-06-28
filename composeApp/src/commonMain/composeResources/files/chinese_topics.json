@@ -1,0 +1,434 @@
+[
+  {
+    "id": 900,
+    "name": "Chào hỏi và làm quen",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 901,
+    "name": "Tên, quốc tịch và tuổi tác",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 902,
+    "name": "Thành viên gia đình",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 903,
+    "name": "Chữ số và cách đếm",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 904,
+    "name": "Ngày, tháng, thứ và thời gian",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 905,
+    "name": "Hỏi giá tiền và mua sắm cơ bản",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 906,
+    "name": "Đồ ăn, thức uống cơ bản",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 907,
+    "name": "Phương tiện giao thông đơn giản",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 908,
+    "name": "Thời tiết hôm nay",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 909,
+    "name": "Trường học và học tập",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 910,
+    "name": "Nhà cửa và phòng ốc",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 911,
+    "name": "Bộ phận cơ thể cơ bản",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 912,
+    "name": "Thói quen hàng ngày",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 913,
+    "name": "Sở thích và hoạt động giải trí",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 914,
+    "name": "Bạn bè và đồng nghiệp",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 915,
+    "name": "Thời gian rảnh rỗi và cuối tuần",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 916,
+    "name": "Đi taxi, xe buýt và tàu điện",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 917,
+    "name": "Hỏi đường và chỉ đường",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 918,
+    "name": "Sức khỏe và mô tả triệu chứng bệnh nhẹ",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 919,
+    "name": "Mua sắm quần áo: màu sắc, kích cỡ",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 920,
+    "name": "Ăn uống tại nhà hàng và thanh toán",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 921,
+    "name": "Nhận xét thời tiết và nhiệt độ",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 922,
+    "name": "Nói về các mùa trong năm",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 923,
+    "name": "Kỳ nghỉ và chuyến đi ngắn",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 924,
+    "name": "Sắp xếp cuộc hẹn và lên lịch trình",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 925,
+    "name": "Môi trường học tập và các môn học",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 926,
+    "name": "Động vật và vật nuôi trong nhà",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 927,
+    "name": "Công việc văn phòng và nhiệm vụ",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 928,
+    "name": "Thể thao và rèn luyện sức khỏe",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 929,
+    "name": "Đi du lịch bằng máy bay và tàu hỏa",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 930,
+    "name": "Đặt phòng khách sạn và dịch vụ",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 931,
+    "name": "Mua sắm trực tuyến và thanh toán điện tử",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 932,
+    "name": "Cảm xúc và bày tỏ ý kiến cá nhân",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 933,
+    "name": "So sánh người và đồ vật",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 934,
+    "name": "Lễ hội truyền thống và phong tục",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 935,
+    "name": "Giới thiệu danh lam thắng cảnh địa phương",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 936,
+    "name": "Quan hệ xã hội và giao tiếp cộng đồng",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 937,
+    "name": "Phỏng vấn xin việc và sơ yếu lý lịch",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 938,
+    "name": "Kế hoạch nghề nghiệp và thăng tiến",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 939,
+    "name": "Tiêu dùng thông minh và quản lý tài chính",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 940,
+    "name": "Công nghệ thông tin và thiết bị thông minh",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 941,
+    "name": "Bảo vệ môi trường và phân loại rác",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 942,
+    "name": "Đọc sách, xem phim và giải trí nghệ thuật",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 943,
+    "name": "Du học và giao lưu văn hóa quốc tế",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 944,
+    "name": "Lối sống lành mạnh và phòng ngừa dịch bệnh",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 945,
+    "name": "Thảo luận về tính cách và phẩm chất cá nhân",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 946,
+    "name": "Bàn luận về tình bạn và tình yêu",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 947,
+    "name": "Quảng cáo và tiếp thị sản phẩm",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 948,
+    "name": "Văn hóa doanh nghiệp và quản lý nhân sự",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 949,
+    "name": "Xu hướng kinh tế và thị trường tài chính",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 950,
+    "name": "Truyền thông đại chúng và ảnh hưởng của mạng xã hội",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 951,
+    "name": "Khoa học, công nghệ mới và đổi mới sáng tạo",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 952,
+    "name": "Lịch sử cổ đại và văn hóa truyền thống Trung Quốc",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 953,
+    "name": "Hệ thống giáo dục và đào tạo chuyên sâu",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 954,
+    "name": "Triết lý nhân sinh và giá trị cuộc sống",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 955,
+    "name": "Biến đổi khí hậu và phát triển bền vững",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 956,
+    "name": "Y học cổ truyền và chăm sóc sức khỏe chủ động",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 957,
+    "name": "Bảo tồn đa dạng sinh học và tài nguyên thiên nhiên",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 958,
+    "name": "Nghệ thuật biểu diễn và di sản văn hóa phi vật thể",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 959,
+    "name": "Phát triển đô thị và giao thông thông minh",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 960,
+    "name": "Học thuyết triết học cổ đại Trung Quốc",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 961,
+    "name": "Đạo đức kinh doanh và trách nhiệm xã hội của doanh nghiệp",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 962,
+    "name": "Trí tuệ nhân tạo và tương lai của lao động loài người",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 963,
+    "name": "Toàn cầu hóa kinh tế và hợp tác đa quốc gia",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 964,
+    "name": "Du lịch đại chúng và bảo tồn di sản văn hóa",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 965,
+    "name": "Nghệ thuật tối giản và xu hướng kiến trúc xanh",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 966,
+    "name": "An ninh mạng toàn cầu và bảo mật dữ liệu người dùng",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 967,
+    "name": "Xu hướng già hóa dân số và hệ thống an sinh xã hội",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 968,
+    "name": "Khủng hoảng tài nguyên và an ninh lương thực toàn cầu",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 969,
+    "name": "Giao tiếp đa văn hóa và xóa bỏ rào cản ngôn ngữ",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 970,
+    "name": "Nghiên cứu khoa học cơ bản và vật lý hiện đại",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 971,
+    "name": "Nghệ thuật văn học cổ điển và phê bình văn học",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  }
+]
