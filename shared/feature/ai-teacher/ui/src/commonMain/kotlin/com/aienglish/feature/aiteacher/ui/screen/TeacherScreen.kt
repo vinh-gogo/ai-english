@@ -49,10 +49,8 @@ fun TeacherScreen(
     val colors = LocalAppColors.current
     var showHistory by remember { mutableStateOf(false) }
 
-    LaunchedEffect(profileState.showProfile) {
-        if (!profileState.showProfile) {
-            viewModel.syncTargetLanguage()
-        }
+    LaunchedEffect(profileState.languageTarget) {
+        viewModel.syncTargetLanguage()
     }
 
     Scaffold(
