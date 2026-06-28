@@ -8,5 +8,6 @@ data class TeacherLessonHistory(
     val lesson: EnglishLesson?,
     val userAnswers: Map<Int, String>,
     val explanations: Map<Int, String>,
+    val sentenceScores: Map<Int, Int> = emptyMap(),
     val feedback: EnglishFeedback?
 )

@@ -20,7 +20,8 @@ interface TeacherHistoryRepository {
         id: Long,
         lesson: EnglishLesson,
         userAnswers: Map<Int, String>,
-        explanations: Map<Int, String>
+        explanations: Map<Int, String>,
+        sentenceScores: Map<Int, Int>
     )
 
     fun parseHistory(

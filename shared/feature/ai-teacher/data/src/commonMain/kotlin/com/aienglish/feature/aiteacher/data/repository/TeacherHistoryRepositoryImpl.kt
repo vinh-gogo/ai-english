@@ -11,6 +11,12 @@ import com.aienglish.feature.history.domain.repository.HistoryRepository
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
+@kotlinx.serialization.Serializable
+private data class ExplanationProgressDto(
+    val score: Int,
+    val explanation: String
+)
+
 class TeacherHistoryRepositoryImpl(
     private val historyRepository: HistoryRepository
 ) : TeacherHistoryRepository {
@@ -31,7 +37,17 @@ class TeacherHistoryRepositoryImpl(
     ) {
         val lessonJson = json.encodeToString(lesson.toDto())
         val userAnswersJson = json.encodeToString(userAnswers)
-        val explanationsJson = json.encodeToString(explanations)
+        
+        val progressMap = explanations.mapValues { entry ->
+            val index = entry.key
+            val sentenceScore = feedback.sentenceScores.getOrNull(index) ?: 0
+            ExplanationProgressDto(
+                score = sentenceScore,
+                explanation = entry.value
+            )
+        }
+        val explanationsJson = json.encodeToString(progressMap)
+        
         val feedbackJson = json.encodeToString(feedback.toDto())
         historyRepository.completeLesson(
             id = id,
@@ -47,11 +63,20 @@ class TeacherHistoryRepositoryImpl(
         id: Long,
         lesson: EnglishLesson,
         userAnswers: Map<Int, String>,
-        explanations: Map<Int, String>
+        explanations: Map<Int, String>,
+        sentenceScores: Map<Int, Int>
     ) {
         val lessonJson = json.encodeToString(lesson.toDto())
         val userAnswersJson = json.encodeToString(userAnswers)
-        val explanationsJson = json.encodeToString(explanations)
+        
+        val progressMap = explanations.mapValues { entry ->
+            ExplanationProgressDto(
+                score = sentenceScores[entry.key] ?: 0,
+                explanation = entry.value
+            )
+        }
+        val explanationsJson = json.encodeToString(progressMap)
+        
         historyRepository.updateLessonProgress(
             id = id,
             lessonData = lessonJson,
@@ -85,11 +110,18 @@ class TeacherHistoryRepositoryImpl(
             }
         } ?: emptyMap()
         
+        var sentenceScoresMap = emptyMap<Int, Int>()
         val explanations = explanationsJson?.let {
             try {
-                json.decodeFromString<Map<Int, String>>(it)
+                val progressMap = json.decodeFromString<Map<Int, ExplanationProgressDto>>(it)
+                sentenceScoresMap = progressMap.mapValues { entry -> entry.value.score }
+                progressMap.mapValues { entry -> entry.value.explanation }
             } catch (e: Exception) {
-                emptyMap()
+                try {
+                    json.decodeFromString<Map<Int, String>>(it)
+                } catch (e2: Exception) {
+                    emptyMap()
+                }
             }
         } ?: emptyMap()
         
@@ -101,6 +133,12 @@ class TeacherHistoryRepositoryImpl(
             }
         }
 
+        val finalSentenceScores = if (feedback != null && feedback.sentenceScores.isNotEmpty()) {
+            feedback.sentenceScores.mapIndexed { index, sc -> index to sc }.toMap()
+        } else {
+            sentenceScoresMap
+        }
+
         return TeacherLessonHistory(
             id = id,
             topic = topic,
@@ -109,6 +147,7 @@ class TeacherHistoryRepositoryImpl(
             lesson = lesson,
             userAnswers = userAnswers,
             explanations = explanations,
+            sentenceScores = finalSentenceScores,
             feedback = feedback
         )
     }

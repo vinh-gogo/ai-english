@@ -725,7 +725,8 @@ class TeacherViewModel(
                     id = id,
                     lesson = lesson,
                     userAnswers = currentState.userAnswers,
-                    explanations = currentState.explanations
+                    explanations = currentState.explanations,
+                    sentenceScores = currentState.sentenceScores
                 )
             } catch (e: Exception) { /* ignore */ }
         }
@@ -770,9 +771,10 @@ class TeacherViewModel(
 
                 currentLessonHistoryId = history.id
 
+                val totalSentences = teacherHistory.lesson?.sentences?.size ?: 0
                 val nextIndex = teacherHistory.lesson?.sentences?.indices?.firstOrNull { idx ->
                     !teacherHistory.explanations.containsKey(idx)
-                } ?: 0
+                } ?: if (totalSentences > 0) totalSentences - 1 else 0
 
                 setState {
                     copy(
@@ -791,6 +793,7 @@ class TeacherViewModel(
                         lesson = teacherHistory.lesson,
                         userAnswers = teacherHistory.userAnswers,
                         explanations = teacherHistory.explanations,
+                        sentenceScores = teacherHistory.sentenceScores,
                         feedback = null,
                         currentSentenceIndex = nextIndex,
                         checkedAnswers = teacherHistory.explanations.keys
