@@ -215,6 +215,7 @@ fun VipSheet(
                         BenefitItem(if (isVietnamese) "Không nhập ảnh" else "No image input", false, colors)
                         BenefitItem(if (isVietnamese) "Có quảng cáo" else "Contains ads", false, colors)
                         BenefitItem(if (isVietnamese) "Anh & Việt" else "English & Vietnamese", false, colors)
+                        BenefitItem(if (isVietnamese) "Audio mặc định" else "Default audio", false, colors)
                     }
 
                     // Right Column: VIP Premium
@@ -238,6 +239,7 @@ fun VipSheet(
                         BenefitItem(if (isVietnamese) "Nhập ảnh chủ đề" else "Topic from photo", true, colors)
                         BenefitItem(if (isVietnamese) "Không quảng cáo" else "No ads", true, colors)
                         BenefitItem(if (isVietnamese) ">10 ngôn ngữ" else ">10 languages", true, colors)
+                        BenefitItem(if (isVietnamese) "Audio sinh động" else "Vivid audio", true, colors)
                     }
                 }
 
