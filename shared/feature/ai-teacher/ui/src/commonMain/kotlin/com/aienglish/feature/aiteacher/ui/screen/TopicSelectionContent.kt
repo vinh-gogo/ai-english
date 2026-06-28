@@ -488,7 +488,7 @@ fun TopicSelectionContent(
                             val isSelected = level == state.selectedCefrLevel
                             val thisLevelColor = getLevelColor(level, colors)
                             Surface(
-                                modifier = Modifier.weight(1f).clickable { viewModel.onCefrLevelSelected(level) },
+                                modifier = Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).clickable { viewModel.onCefrLevelSelected(level) },
                                 shape = RoundedCornerShape(12.dp),
                                 color = if (isSelected) colors.accent else colors.surface,
                                 border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
@@ -517,7 +517,7 @@ fun TopicSelectionContent(
                             val isSelected = level == state.selectedToeicLevel
                             val thisLevelColor = getLevelColor(level, colors)
                             Surface(
-                                modifier = Modifier.weight(1f).clickable { viewModel.onToeicLevelSelected(level) },
+                                modifier = Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).clickable { viewModel.onToeicLevelSelected(level) },
                                 shape = RoundedCornerShape(12.dp),
                                 color = if (isSelected) colors.accent else colors.surface,
                                 border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
@@ -546,7 +546,7 @@ fun TopicSelectionContent(
                             val isSelected = level == state.selectedJlptLevel
                             val thisLevelColor = getLevelColor(level, colors)
                             Surface(
-                                modifier = Modifier.weight(1f).clickable { viewModel.onJlptLevelSelected(level) },
+                                modifier = Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).clickable { viewModel.onJlptLevelSelected(level) },
                                 shape = RoundedCornerShape(12.dp),
                                 color = if (isSelected) colors.accent else colors.surface,
                                 border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
@@ -574,7 +574,7 @@ fun TopicSelectionContent(
                         listOf("HSK1", "HSK2", "HSK3", "HSK4", "HSK5", "HSK6").forEach { level ->
                             val isSelected = level == state.selectedHskLevel
                             Surface(
-                                modifier = Modifier.weight(1f).clickable { viewModel.onHskLevelSelected(level) },
+                                modifier = Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).clickable { viewModel.onHskLevelSelected(level) },
                                 shape = RoundedCornerShape(12.dp),
                                 color = if (isSelected) colors.accent else colors.surface,
                                 border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
@@ -602,7 +602,7 @@ fun TopicSelectionContent(
                         listOf("A1", "A2", "B1", "B2", "C1", "C2").forEach { level ->
                             val isSelected = level == state.selectedDeleLevel
                             Surface(
-                                modifier = Modifier.weight(1f).clickable { viewModel.onDeleLevelSelected(level) },
+                                modifier = Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).clickable { viewModel.onDeleLevelSelected(level) },
                                 shape = RoundedCornerShape(12.dp),
                                 color = if (isSelected) colors.accent else colors.surface,
                                 border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
@@ -630,7 +630,7 @@ fun TopicSelectionContent(
                         listOf("A1", "A2", "B1", "B2", "C1").forEach { level ->
                             val isSelected = level == state.selectedSieleLevel
                             Surface(
-                                modifier = Modifier.weight(1f).clickable { viewModel.onSieleLevelSelected(level) },
+                                modifier = Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).clickable { viewModel.onSieleLevelSelected(level) },
                                 shape = RoundedCornerShape(12.dp),
                                 color = if (isSelected) colors.accent else colors.surface,
                                 border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
@@ -658,7 +658,7 @@ fun TopicSelectionContent(
                         listOf("A1", "A2", "B1", "B2").forEach { level ->
                             val isSelected = level == state.selectedHindiLevel
                             Surface(
-                                modifier = Modifier.weight(1f).clickable { viewModel.onHindiLevelSelected(level) },
+                                modifier = Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).clickable { viewModel.onHindiLevelSelected(level) },
                                 shape = RoundedCornerShape(12.dp),
                                 color = if (isSelected) colors.accent else colors.surface,
                                 border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
@@ -686,7 +686,7 @@ fun TopicSelectionContent(
                         listOf("A1", "A2", "B1", "B2").forEach { level ->
                             val isSelected = level == state.selectedDelfLevel
                             Surface(
-                                modifier = Modifier.weight(1f).clickable { viewModel.onDelfLevelSelected(level) },
+                                modifier = Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).clickable { viewModel.onDelfLevelSelected(level) },
                                 shape = RoundedCornerShape(12.dp),
                                 color = if (isSelected) colors.accent else colors.surface,
                                 border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
@@ -714,7 +714,7 @@ fun TopicSelectionContent(
                         listOf("C1", "C2").forEach { level ->
                             val isSelected = level == state.selectedDalfLevel
                             Surface(
-                                modifier = Modifier.weight(1f).clickable { viewModel.onDalfLevelSelected(level) },
+                                modifier = Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).clickable { viewModel.onDalfLevelSelected(level) },
                                 shape = RoundedCornerShape(12.dp),
                                 color = if (isSelected) colors.accent else colors.surface,
                                 border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
@@ -742,7 +742,7 @@ fun TopicSelectionContent(
                         listOf("A1", "A2", "B1", "B2", "C1", "C2").forEach { level ->
                             val isSelected = level == state.selectedGoetheLevel
                             Surface(
-                                modifier = Modifier.weight(1f).clickable { viewModel.onGoetheLevelSelected(level) },
+                                modifier = Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).clickable { viewModel.onGoetheLevelSelected(level) },
                                 shape = RoundedCornerShape(12.dp),
                                 color = if (isSelected) colors.accent else colors.surface,
                                 border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
@@ -770,7 +770,7 @@ fun TopicSelectionContent(
                         listOf("TDN3", "TDN4", "TDN5").forEach { level ->
                             val isSelected = level == state.selectedTestdafLevel
                             Surface(
-                                modifier = Modifier.weight(1f).clickable { viewModel.onTestdafLevelSelected(level) },
+                                modifier = Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).clickable { viewModel.onTestdafLevelSelected(level) },
                                 shape = RoundedCornerShape(12.dp),
                                 color = if (isSelected) colors.accent else colors.surface,
                                 border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
@@ -798,7 +798,7 @@ fun TopicSelectionContent(
                         listOf("TOPIK1", "TOPIK2", "TOPIK3", "TOPIK4", "TOPIK5", "TOPIK6").forEach { level ->
                             val isSelected = level == state.selectedTopikLevel
                             Surface(
-                                modifier = Modifier.weight(1f).clickable { viewModel.onTopikLevelSelected(level) },
+                                modifier = Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).clickable { viewModel.onTopikLevelSelected(level) },
                                 shape = RoundedCornerShape(12.dp),
                                 color = if (isSelected) colors.accent else colors.surface,
                                 border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
