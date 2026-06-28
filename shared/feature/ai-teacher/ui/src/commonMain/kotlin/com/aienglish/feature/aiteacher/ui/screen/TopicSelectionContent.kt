@@ -199,21 +199,6 @@ fun TopicSelectionContent(
                                 fontWeight = FontWeight.Bold,
                                 color = colors.accent
                             )
-                            if (!state.isCustomTopicMode) {
-                                Spacer(Modifier.width(6.dp))
-                                Surface(
-                                    shape = RoundedCornerShape(4.dp),
-                                    color = colors.accent.copy(alpha = 0.15f)
-                                ) {
-                                    Text(
-                                        text = if (currentTopicLevel == "900") ">900" else currentTopicLevel,
-                                        fontSize = 9.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        color = colors.accent,
-                                        modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
-                                    )
-                                }
-                            }
                         }
                         
                         Box(
