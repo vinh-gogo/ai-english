@@ -119,25 +119,48 @@ private fun UserInfoSection(
         modifier = Modifier.fillMaxWidth()
     ) {
         Box(
-            modifier = Modifier
-                .size(72.dp)
-                .clip(CircleShape)
-                .background(if (state.isSignedIn) colors.accent else colors.surface),
-            contentAlignment = Alignment.Center
+            modifier = Modifier.size(72.dp)
         ) {
-            if (state.isSignedIn && state.displayName != null) {
-                Text(
-                    state.displayName.first().uppercase(),
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-            } else {
-                Icon(
-                    Icons.Rounded.Person, null,
-                    modifier = Modifier.size(36.dp),
-                    tint = colors.mutedText
-                )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(CircleShape)
+                    .background(if (state.isSignedIn) colors.accent else colors.surface),
+                contentAlignment = Alignment.Center
+            ) {
+                if (state.isSignedIn && state.displayName != null) {
+                    Text(
+                        state.displayName.first().uppercase(),
+                        fontSize = 28.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                } else {
+                    Icon(
+                        Icons.Rounded.Person, null,
+                        modifier = Modifier.size(36.dp),
+                        tint = colors.mutedText
+                    )
+                }
+            }
+
+            if (state.isPaid) {
+                Box(
+                    modifier = Modifier
+                        .size(22.dp)
+                        .align(Alignment.BottomEnd)
+                        .clip(CircleShape)
+                        .background(Color(0xFFFFB300))
+                        .border(1.5.dp, colors.background, CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.WorkspacePremium,
+                        contentDescription = "VIP",
+                        tint = Color.White,
+                        modifier = Modifier.size(13.dp)
+                    )
+                }
             }
         }
 
@@ -164,38 +187,6 @@ private fun UserInfoSection(
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
-                }
-                Spacer(Modifier.height(8.dp))
-            } else {
-                Surface(
-                    modifier = Modifier.fillMaxWidth().height(44.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    color = Color(0xFFFFB300).copy(0.12f),
-                    border = BorderStroke(1.dp, Color(0xFFFFB300).copy(0.4f))
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxSize().padding(horizontal = 14.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Rounded.WorkspacePremium, null, tint = Color(0xFFFFB300), modifier = Modifier.size(18.dp))
-                            Spacer(Modifier.width(6.dp))
-                            Text(
-                                if (state.languageNative == "vi") "Gói VIP đang hoạt động" else "VIP Package Active",
-                                fontSize = 13.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFFFFB300)
-                            )
-                        }
-                        Text(
-                            if (state.languageNative == "vi") "Hủy" else "Cancel",
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = colors.error,
-                            modifier = Modifier.clickable { proViewModel.onIntent(ProIntent.SetVipPaid(false)) }
-                        )
-                    }
                 }
                 Spacer(Modifier.height(8.dp))
             }
@@ -231,38 +222,6 @@ private fun UserInfoSection(
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
-                }
-                Spacer(Modifier.height(8.dp))
-            } else {
-                Surface(
-                    modifier = Modifier.fillMaxWidth().height(44.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    color = Color(0xFFFFB300).copy(0.12f),
-                    border = BorderStroke(1.dp, Color(0xFFFFB300).copy(0.4f))
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxSize().padding(horizontal = 14.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Rounded.WorkspacePremium, null, tint = Color(0xFFFFB300), modifier = Modifier.size(18.dp))
-                            Spacer(Modifier.width(6.dp))
-                            Text(
-                                if (state.languageNative == "vi") "Gói VIP đang hoạt động" else "VIP Package Active",
-                                fontSize = 13.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFFFFB300)
-                            )
-                        }
-                        Text(
-                            if (state.languageNative == "vi") "Hủy" else "Cancel",
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = colors.error,
-                            modifier = Modifier.clickable { proViewModel.onIntent(ProIntent.SetVipPaid(false)) }
-                        )
-                    }
                 }
                 Spacer(Modifier.height(8.dp))
             }
