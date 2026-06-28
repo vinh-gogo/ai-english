@@ -134,20 +134,26 @@ fun TopicSelectionContent(
         ) {
             Spacer(Modifier.height(12.dp))
 
-            // Header icon + title
-            Icon(
-                imageVector = Icons.Rounded.School,
-                contentDescription = null,
-                tint = colors.accent,
-                modifier = Modifier.size(36.dp)
-            )
-            Spacer(Modifier.height(4.dp))
-            Text(
-                "AI English chào bạn!",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                color = colors.mainText
-            )
+            // Header icon + title side-by-side
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.School,
+                    contentDescription = null,
+                    tint = colors.accent,
+                    modifier = Modifier.size(32.dp)
+                )
+                Spacer(Modifier.width(10.dp))
+                Text(
+                    "AI English chào bạn!",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = colors.mainText
+                )
+            }
 
             Spacer(Modifier.height(12.dp))
 
