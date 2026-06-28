@@ -54,6 +54,7 @@ class TeacherRepositoryImpl(
             val isChinese = level.startsWith("HSK")
             val isSpanish = level.startsWith("DELE") || level.startsWith("SIELE")
             val isHindi = level.startsWith("Hindi")
+            val isFrench = level.startsWith("DELF") || level.startsWith("DALF")
             val systemPrompt = if (isJapanese) {
                 """
                     Bạn là Sensei AI - giáo viên tiếng Nhật chuyên nghiệp và tận tâm.
@@ -190,6 +191,41 @@ class TeacherRepositoryImpl(
                        - Trường 'phonetic' chứa phiên âm Latinh (transliteration) tương ứng.
                        - Trường 'partOfSpeech' chứa ý nghĩa hoặc nghĩa tiếng Việt tương ứng của từ đó.
                 """.trimIndent()
+            } else if (isFrench) {
+                """
+                    Bạn là Professeur AI - giáo viên tiếng Pháp chuyên nghiệp và tận tâm.
+                    Nhiệm vụ của bạn là hỗ trợ người dùng học tiếng Pháp qua phương pháp dịch câu ngắn hàng ngày.
+                    Khi người dùng chọn một chủ đề, bạn phải tạo ra đúng 10 câu tiếng Việt ngắn liên quan tới chủ đề đó, kèm theo bản dịch tiếng Pháp tương ứng và phân tích từ vựng cho từng câu.
+
+                    BẠN BẮT BUỘC PHẢI TẠO CÁC CÂU CÓ ĐỘ KHÓ VÀ NGỮ PHÁP PHÙ HỢP CHÍNH XÁC VỚI TRÌNH ĐỘ CHỨNG CHỈ TIẾNG PHÁP (DELF/DALF): $level.
+                    - Nếu trình độ là A1 hoặc A2: Sử dụng từ vựng cơ bản hàng ngày, các thì hiện tại đơn giản (Présent de l'indicatif), câu ngắn, dễ hiểu.
+                    - Nếu trình độ là B1 hoặc B2: Sử dụng các thì quá khứ (Passé composé, Imparfait), tương lai, thể giả định cơ bản (Subjonctif), các liên từ liên kết và thành ngữ tự nhiên.
+                    - Nếu trình độ là C1 hoặc C2: Sử dụng ngữ pháp nâng cao phức tạp, thể giả định nâng cao, cấu trúc diễn đạt tinh tế trong văn viết trang trọng, lối nói tự nhiên như người bản xứ.
+
+                    BẠN BẮT BUỘC PHẢI TRẢ VỀ ĐẦU RA DƯỚI DẠNG JSON HỢP LỆ THEO ĐÚNG CẤU TRÚC SAU:
+                    {
+                      "sentences": [
+                        {
+                          "vietnamese": "Câu tiếng Việt ngắn (ví dụ: 'Xin chào, bạn khỏe không?')",
+                          "english": "Bản dịch tiếng Pháp tương ứng (ví dụ: 'Bonjour, comment ça va ?')",
+                          "tokens": [
+                            { "word": "Bonjour", "phonetic": "/bɔ̃ʒuʁ/", "partOfSpeech": "interjection" },
+                            { "word": "comment", "phonetic": "/kɔmɑ̃/", "partOfSpeech": "adverbe" },
+                            { "word": "ça", "phonetic": "/sa/", "partOfSpeech": "pronom" },
+                            { "word": "va", "phonetic": "/va/", "partOfSpeech": "verbe" }
+                          ]
+                        }
+                      ]
+                    }
+
+                    LƯU Ý QUAN TRỌNG:
+                    1. Đảm bảo toàn bộ câu trả lời chỉ chứa chuỗi JSON hợp lệ. Không viết thêm chữ giải thích bên ngoài JSON.
+                    2. Các câu tiếng Việt phải ngắn gọn, tự nhiên, mang tính giao tiếp thực tế và phù hợp với chủ đề được chọn.
+                    3. Trong mảng 'tokens', đối với tiếng Pháp:
+                       - Trường 'word' chứa từ vựng tiếng Pháp.
+                       - Trường 'phonetic' chứa phiên âm IPA tiếng Pháp chuẩn.
+                       - Trường 'partOfSpeech' chứa từ loại tiếng Pháp hoặc nghĩa tiếng Việt tương ứng.
+                """.trimIndent()
             } else {
                 """
                     You are an English AI Teacher - a professional and caring English language instructor.
@@ -229,7 +265,14 @@ class TeacherRepositoryImpl(
                 """.trimIndent()
             }
 
-            val userPrompt = "Create 10 English translation sentences for topic: $topic, level: $level."
+            val userPrompt = when {
+                isJapanese -> "Hãy tạo 10 câu ôn tập ngắn trình độ tiếng Nhật $level cho chủ đề: $topic"
+                isChinese -> "Hãy tạo 10 câu ôn tập ngắn trình độ tiếng Trung $level cho chủ đề: $topic"
+                isSpanish -> "Hãy tạo 10 câu ôn tập ngắn trình độ tiếng Tây Ban Nha $level cho chủ đề: $topic"
+                isHindi -> "Hãy tạo 10 câu ôn tập ngắn trình độ tiếng Hindi $level cho chủ đề: $topic"
+                isFrench -> "Hãy tạo 10 câu ôn tập ngắn trình độ tiếng Pháp $level cho chủ đề: $topic"
+                else -> "Create 10 English translation sentences for topic: $topic, level: $level."
+            }
 
             val rawResponse = geminiClient.generateContent(
                 apiKey = apiKey,
@@ -463,6 +506,7 @@ class TeacherRepositoryImpl(
             val isChinese = level.startsWith("HSK")
             val isSpanish = level.startsWith("DELE") || level.startsWith("SIELE")
             val isHindi = level.startsWith("Hindi")
+            val isFrench = level.startsWith("DELF") || level.startsWith("DALF")
             val systemPrompt = if (isJapanese) {
                 """
                     Bạn là Sensei AI - giáo viên tiếng Nhật chuyên nghiệp.
@@ -531,6 +575,23 @@ class TeacherRepositoryImpl(
                     4. Nếu học sinh Bỏ qua, hãy dịch mẫu và phân tích tường nhận ngữ pháp, từ vựng từng phần để học sinh tự học.
                     5. Viết bằng tiếng Việt tự nhiên, ấm áp, khuyến khích học tập. Trả về văn bản giải thích trực tiếp dưới dạng Markdown (sử dụng các tiêu đề #, ##, ###, in đậm, in nghiêng, list..., không dùng định dạng JSON).
                 """.trimIndent()
+            } else if (isFrench) {
+                """
+                    Bạn là Professeur AI - giáo viên tiếng Pháp chuyên nghiệp.
+                    Nhiệm vụ của bạn là giải thích chi tiết, dễ hiểu ngữ pháp và từ vựng của câu tiếng Pháp dựa trên câu dịch của học sinh, phù hợp với trình độ mục tiêu: $level.
+                    
+                    Thông tin câu hỏi:
+                    - Câu gốc tiếng Việt: $vietnamese
+                    - Bản dịch chuẩn tiếng Pháp: $targetEnglish
+                    - Câu trả lời của học sinh: ${userAnswer.ifBlank { "(Học sinh chọn Bỏ qua)" }}
+                    
+                    Yêu cầu giải thích (Điều chỉnh theo trình độ $level):
+                    1. Hãy đánh giá xem câu của học sinh viết (nếu có) có đúng ngữ pháp và tự nhiên hay không (đặc biệt lưu ý chia động từ, giống/số, giới từ).
+                    2. So sánh câu của học sinh với Bản dịch chuẩn, chỉ rõ điểm tốt hoặc các lỗi sai (về trật tự từ, cách dùng giới từ, chia thì động từ) nếu học sinh viết sai.
+                    3. Nếu học sinh viết đúng, hãy khen ngợi ngắn gọn và giải thích thêm các cấu trúc ngữ pháp sử dụng trong câu để họ hiểu sâu hơn.
+                    4. Nếu học sinh Bỏ qua, hãy dịch mẫu và phân tích tường nhận ngữ pháp, từ vựng từng phần để học sinh tự học.
+                    5. Viết bằng tiếng Việt tự nhiên, ấm áp, khuyến khích học tập. Trả về văn bản giải thích trực tiếp dưới dạng Markdown (sử dụng các tiêu đề #, ##, ###, in đậm, in nghiêng, list..., không dùng định dạng JSON).
+                """.trimIndent()
             } else {
                 """
                     You are an English AI Teacher - a professional and caring instructor.
@@ -556,6 +617,7 @@ class TeacherRepositoryImpl(
                 isChinese -> "Hãy giải thích chi tiết câu dịch này cho tôi."
                 isSpanish -> "Hãy giải thích chi tiết câu dịch này cho tôi."
                 isHindi -> "Hãy giải thích chi tiết câu dịch này cho tôi."
+                isFrench -> "Hãy giải thích chi tiết câu dịch này cho tôi."
                 else -> "Please explain this English sentence in detail."
             }
 

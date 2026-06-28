@@ -158,5 +158,35 @@
         "systemCode":  "SIELE",
         "levelCode":  "C1",
         "name":  "SIELE C1"
+    },
+    {
+        "systemCode":  "DELF",
+        "levelCode":  "A1",
+        "name":  "DELF A1"
+    },
+    {
+        "systemCode":  "DELF",
+        "levelCode":  "A2",
+        "name":  "DELF A2"
+    },
+    {
+        "systemCode":  "DELF",
+        "levelCode":  "B1",
+        "name":  "DELF B1"
+    },
+    {
+        "systemCode":  "DELF",
+        "levelCode":  "B2",
+        "name":  "DELF B2"
+    },
+    {
+        "systemCode":  "DALF",
+        "levelCode":  "C1",
+        "name":  "DALF C1"
+    },
+    {
+        "systemCode":  "DALF",
+        "levelCode":  "C2",
+        "name":  "DALF C2"
     }
 ]

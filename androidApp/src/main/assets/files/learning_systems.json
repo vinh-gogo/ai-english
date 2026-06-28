@@ -28,5 +28,15 @@
         "systemCode":  "SIELE",
         "description":  "Servicio Internacional de Evaluación de la Lengua Española (Online Spanish Certificate)",
         "name":  "SIELE"
+    },
+    {
+        "systemCode":  "DELF",
+        "description":  "Diplôme d'études en langue française (French Proficiency Certificate)",
+        "name":  "DELF"
+    },
+    {
+        "systemCode":  "DALF",
+        "description":  "Diplôme approfondi de langue française (Advanced French Proficiency Certificate)",
+        "name":  "DALF"
     }
 ]

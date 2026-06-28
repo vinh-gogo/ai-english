@@ -60,7 +60,8 @@ class TopicRepositoryImpl(
         japaneseTopicsJson: String,
         chineseTopicsJson: String,
         spanishTopicsJson: String,
-        hindiTopicsJson: String
+        hindiTopicsJson: String,
+        frenchTopicsJson: String
     ): Unit =
         withContext(dispatchers.io) {
             database.transaction {
@@ -72,6 +73,7 @@ class TopicRepositoryImpl(
                     val chineseTopics = json.decodeFromString<List<JsonTopicItem>>(chineseTopicsJson.removeBom().trim())
                     val spanishTopics = json.decodeFromString<List<JsonTopicItem>>(spanishTopicsJson.removeBom().trim())
                     val hindiTopics = json.decodeFromString<List<JsonTopicItem>>(hindiTopicsJson.removeBom().trim())
+                    val frenchTopics = json.decodeFromString<List<JsonTopicItem>>(frenchTopicsJson.removeBom().trim())
                     
                     // 0. Clear old topics
                     database.userSchemaQueries.deleteAllTopics()
@@ -136,6 +138,16 @@ class TopicRepositoryImpl(
 
                     // 7. Insert Hindi Topics
                     hindiTopics.forEach { topic ->
+                        database.userSchemaQueries.insertTopic(
+                            topic_id = topic.id.toLong(),
+                            name = topic.name,
+                            system_code = topic.systemCode,
+                            level_code = topic.levelCode
+                        )
+                    }
+
+                    // 8. Insert French Topics
+                    frenchTopics.forEach { topic ->
                         database.userSchemaQueries.insertTopic(
                             topic_id = topic.id.toLong(),
                             name = topic.name,

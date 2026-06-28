@@ -22,7 +22,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
 enum class LevelType {
-    CEFR, TOEIC, JLPT, HSK, DELE, SIELE, HINDI
+    CEFR, TOEIC, JLPT, HSK, DELE, SIELE, HINDI, DELF, DALF
 }
 
 data class TeacherUiState(
@@ -38,6 +38,8 @@ data class TeacherUiState(
     val selectedDeleLevel: String = "B1",
     val selectedSieleLevel: String = "B1",
     val selectedHindiLevel: String = "B1",
+    val selectedDelfLevel: String = "B1",
+    val selectedDalfLevel: String = "C1",
     val targetLanguage: String = "en",
     val isCustomTopicMode: Boolean = false,
     val customTopicInput: String = "",
@@ -69,6 +71,8 @@ data class TeacherUiState(
         LevelType.DELE -> "DELE $selectedDeleLevel"
         LevelType.SIELE -> "SIELE $selectedSieleLevel"
         LevelType.HINDI -> "Hindi $selectedHindiLevel"
+        LevelType.DELF -> "DELF $selectedDelfLevel"
+        LevelType.DALF -> "DALF $selectedDalfLevel"
     }
 }
 
@@ -88,12 +92,13 @@ class TeacherViewModel(
     private var loadTopicsJob: Job? = null
 
     init {
-        val target = prefs.getLanguageTarget() // "en", "ja", "zh", "es", "hi"
+        val target = prefs.getLanguageTarget() // "en", "ja", "zh", "es", "hi", "fr"
         val expectedType = when (target) {
             "ja" -> LevelType.JLPT
             "zh" -> LevelType.HSK
             "es" -> LevelType.DELE
             "hi" -> LevelType.HINDI
+            "fr" -> LevelType.DELF
             else -> LevelType.CEFR
         }
         val expectedLevel = when (expectedType) {
@@ -102,6 +107,8 @@ class TeacherViewModel(
             LevelType.DELE -> currentState.selectedDeleLevel
             LevelType.SIELE -> currentState.selectedSieleLevel
             LevelType.HINDI -> currentState.selectedHindiLevel
+            LevelType.DELF -> currentState.selectedDelfLevel
+            LevelType.DALF -> currentState.selectedDalfLevel
             else -> currentState.selectedCefrLevel
         }
         setState {
@@ -127,8 +134,10 @@ class TeacherViewModel(
         val currentToeicTopics = topicRepository.getTopics("TOEIC", listOf("300"))
         val currentDeleTopics = topicRepository.getTopics("DELE", listOf("A1"))
         val currentHindiTopics = topicRepository.getTopics("HINDI", listOf("A1"))
+        val currentFrenchTopics = topicRepository.getTopics("DELF", listOf("A1"))
         if (currentTopics.isEmpty() || currentJapaneseTopics.size < 120 || currentChineseTopics.isEmpty() || 
-            currentToeicTopics.isEmpty() || currentDeleTopics.isEmpty() || currentHindiTopics.isEmpty()) {
+            currentToeicTopics.isEmpty() || currentDeleTopics.isEmpty() || currentHindiTopics.isEmpty() ||
+            currentFrenchTopics.isEmpty()) {
             val systemsStr = jsonResourceReader.readSystemsJson()
             val levelsStr = jsonResourceReader.readLevelsJson()
             val englishStr = jsonResourceReader.readEnglishTopicsJson()
@@ -136,8 +145,9 @@ class TeacherViewModel(
             val chineseStr = jsonResourceReader.readChineseTopicsJson()
             val spanishStr = jsonResourceReader.readSpanishTopicsJson()
             val hindiStr = jsonResourceReader.readHindiTopicsJson()
+            val frenchStr = jsonResourceReader.readFrenchTopicsJson()
             topicRepository.seedDatabase(
-                systemsStr, levelsStr, englishStr, japaneseStr, chineseStr, spanishStr, hindiStr
+                systemsStr, levelsStr, englishStr, japaneseStr, chineseStr, spanishStr, hindiStr, frenchStr
             )
         }
     }
@@ -151,6 +161,8 @@ class TeacherViewModel(
             LevelType.DELE -> "DELE"
             LevelType.SIELE -> "SIELE"
             LevelType.HINDI -> "HINDI"
+            LevelType.DELF -> "DELF"
+            LevelType.DALF -> "DALF"
         }
         loadTopicsJob?.cancel()
         loadTopicsJob = viewModelScope.launch {
@@ -179,6 +191,7 @@ class TeacherViewModel(
                 "zh" -> LevelType.HSK
                 "es" -> LevelType.DELE
                 "hi" -> LevelType.HINDI
+                "fr" -> LevelType.DELF
                 else -> LevelType.CEFR
             }
             val expectedLevel = when (expectedType) {
@@ -187,6 +200,8 @@ class TeacherViewModel(
                 LevelType.DELE -> currentState.selectedDeleLevel
                 LevelType.SIELE -> currentState.selectedSieleLevel
                 LevelType.HINDI -> currentState.selectedHindiLevel
+                LevelType.DELF -> currentState.selectedDelfLevel
+                LevelType.DALF -> currentState.selectedDalfLevel
                 else -> currentState.selectedCefrLevel
             }
             setState {
@@ -212,6 +227,8 @@ class TeacherViewModel(
             LevelType.DELE -> currentState.selectedDeleLevel
             LevelType.SIELE -> currentState.selectedSieleLevel
             LevelType.HINDI -> currentState.selectedHindiLevel
+            LevelType.DELF -> currentState.selectedDelfLevel
+            LevelType.DALF -> currentState.selectedDalfLevel
         }
         setState { copy(levelType = type) }
         loadTopics(type, activeLevel)
@@ -250,6 +267,16 @@ class TeacherViewModel(
     fun onHindiLevelSelected(level: String) {
         setState { copy(selectedHindiLevel = level) }
         loadTopics(LevelType.HINDI, level)
+    }
+
+    fun onDelfLevelSelected(level: String) {
+        setState { copy(selectedDelfLevel = level) }
+        loadTopics(LevelType.DELF, level)
+    }
+
+    fun onDalfLevelSelected(level: String) {
+        setState { copy(selectedDalfLevel = level) }
+        loadTopics(LevelType.DALF, level)
     }
 
     // ── Lesson Navigation ──
@@ -454,6 +481,8 @@ class TeacherViewModel(
                     LevelType.DELE -> "DELE"
                     LevelType.SIELE -> "SIELE"
                     LevelType.HINDI -> "HINDI"
+                    LevelType.DELF -> "DELF"
+                    LevelType.DALF -> "DALF"
                 }
                 
                 val compatible = getCompatibleLevels(levelValue)
@@ -483,6 +512,8 @@ class TeacherViewModel(
                         selectedDeleLevel = if (expectedType == LevelType.DELE) levelValue else selectedDeleLevel,
                         selectedSieleLevel = if (expectedType == LevelType.SIELE) levelValue else selectedSieleLevel,
                         selectedHindiLevel = if (expectedType == LevelType.HINDI) levelValue else selectedHindiLevel,
+                        selectedDelfLevel = if (expectedType == LevelType.DELF) levelValue else selectedDelfLevel,
+                        selectedDalfLevel = if (expectedType == LevelType.DALF) levelValue else selectedDalfLevel,
                         lesson = teacherHistory.lesson,
                         userAnswers = teacherHistory.userAnswers,
                         explanations = teacherHistory.explanations,
@@ -512,6 +543,8 @@ class TeacherViewModel(
                     LevelType.DELE -> "DELE"
                     LevelType.SIELE -> "SIELE"
                     LevelType.HINDI -> "HINDI"
+                    LevelType.DELF -> "DELF"
+                    LevelType.DALF -> "DALF"
                 }
 
                 val compatible = getCompatibleLevels(levelValue)
@@ -529,7 +562,9 @@ class TeacherViewModel(
                         selectedHskLevel = if (expectedType == LevelType.HSK) levelValue else selectedHskLevel,
                         selectedDeleLevel = if (expectedType == LevelType.DELE) levelValue else selectedDeleLevel,
                         selectedSieleLevel = if (expectedType == LevelType.SIELE) levelValue else selectedSieleLevel,
-                        selectedHindiLevel = if (expectedType == LevelType.HINDI) levelValue else selectedHindiLevel
+                        selectedHindiLevel = if (expectedType == LevelType.HINDI) levelValue else selectedHindiLevel,
+                        selectedDelfLevel = if (expectedType == LevelType.DELF) levelValue else selectedDelfLevel,
+                        selectedDalfLevel = if (expectedType == LevelType.DALF) levelValue else selectedDalfLevel
                     )
                 }
                 onStartLesson()
@@ -547,6 +582,7 @@ class TeacherViewModel(
             "zh" -> LevelType.HSK
             "es" -> LevelType.DELE
             "hi" -> LevelType.HINDI
+            "fr" -> LevelType.DELF
             else -> LevelType.CEFR
         }
         val expectedLevel = when (expectedType) {
@@ -555,6 +591,8 @@ class TeacherViewModel(
             LevelType.DELE -> currentState.selectedDeleLevel
             LevelType.SIELE -> currentState.selectedSieleLevel
             LevelType.HINDI -> currentState.selectedHindiLevel
+            LevelType.DELF -> currentState.selectedDelfLevel
+            LevelType.DALF -> currentState.selectedDalfLevel
             else -> currentState.selectedCefrLevel
         }
         currentLessonHistoryId = null
@@ -581,6 +619,8 @@ class TeacherViewModel(
         val isDele = level.startsWith("DELE")
         val isSiele = level.startsWith("SIELE")
         val isHindi = level.startsWith("Hindi")
+        val isDelf = level.startsWith("DELF")
+        val isDalf = level.startsWith("DALF")
         
         val expectedType = when {
             isToeic -> LevelType.TOEIC
@@ -589,6 +629,8 @@ class TeacherViewModel(
             isDele -> LevelType.DELE
             isSiele -> LevelType.SIELE
             isHindi -> LevelType.HINDI
+            isDelf -> LevelType.DELF
+            isDalf -> LevelType.DALF
             else -> LevelType.CEFR
         }
         val levelValue = when {
@@ -596,6 +638,8 @@ class TeacherViewModel(
             isDele -> level.removePrefix("DELE ").trim()
             isSiele -> level.removePrefix("SIELE ").trim()
             isHindi -> level.removePrefix("Hindi ").trim()
+            isDelf -> level.removePrefix("DELF ").trim()
+            isDalf -> level.removePrefix("DALF ").trim()
             else -> level
         }
         return expectedType to levelValue
@@ -631,6 +675,8 @@ class TeacherViewModel(
                     LevelType.DELE -> "DELE"
                     LevelType.SIELE -> "SIELE"
                     LevelType.HINDI -> "HINDI"
+                    LevelType.DELF -> "DELF"
+                    LevelType.DALF -> "DALF"
                 }
 
                 val compatible = getCompatibleLevels(levelValue)
@@ -662,6 +708,8 @@ class TeacherViewModel(
                         selectedDeleLevel = if (expectedType == LevelType.DELE) levelValue else selectedDeleLevel,
                         selectedSieleLevel = if (expectedType == LevelType.SIELE) levelValue else selectedSieleLevel,
                         selectedHindiLevel = if (expectedType == LevelType.HINDI) levelValue else selectedHindiLevel,
+                        selectedDelfLevel = if (expectedType == LevelType.DELF) levelValue else selectedDelfLevel,
+                        selectedDalfLevel = if (expectedType == LevelType.DALF) levelValue else selectedDalfLevel,
                         lesson = teacherHistory.lesson,
                         userAnswers = teacherHistory.userAnswers,
                         explanations = teacherHistory.explanations,

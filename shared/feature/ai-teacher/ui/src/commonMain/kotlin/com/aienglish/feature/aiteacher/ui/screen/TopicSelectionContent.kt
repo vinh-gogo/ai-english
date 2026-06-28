@@ -334,6 +334,47 @@ fun TopicSelectionContent(
                             )
                         }
                     }
+                } else if (state.targetLanguage == "fr") {
+                    // French: Show DELF and DALF
+                    Row(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(colors.surfaceElevated)
+                            .padding(2.dp)
+                    ) {
+                        // DELF Tab
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(if (state.levelType == LevelType.DELF) colors.accent else Color.Transparent)
+                                .clickable { viewModel.onLevelTypeSelected(LevelType.DELF) }
+                                .padding(horizontal = 12.dp, vertical = 4.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                "DELF",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = if (state.levelType == LevelType.DELF) Color.White else colors.mutedText
+                            )
+                        }
+                        // DALF Tab
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(if (state.levelType == LevelType.DALF) colors.accent else Color.Transparent)
+                                .clickable { viewModel.onLevelTypeSelected(LevelType.DALF) }
+                                .padding(horizontal = 12.dp, vertical = 4.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                "DALF",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = if (state.levelType == LevelType.DALF) Color.White else colors.mutedText
+                            )
+                        }
+                    }
                 } else {
                     // English: Show CEFR and TOEIC
                     Row(
@@ -562,6 +603,62 @@ fun TopicSelectionContent(
                             val isSelected = level == state.selectedHindiLevel
                             Surface(
                                 modifier = Modifier.weight(1f).clickable { viewModel.onHindiLevelSelected(level) },
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (isSelected) colors.accent else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
+                            ) {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        level,
+                                        color = if (isSelected) Color.White else colors.mainText,
+                                        fontSize = 13.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+                LevelType.DELF -> {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        listOf("A1", "A2", "B1", "B2").forEach { level ->
+                            val isSelected = level == state.selectedDelfLevel
+                            Surface(
+                                modifier = Modifier.weight(1f).clickable { viewModel.onDelfLevelSelected(level) },
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (isSelected) colors.accent else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
+                            ) {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        level,
+                                        color = if (isSelected) Color.White else colors.mainText,
+                                        fontSize = 13.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+                LevelType.DALF -> {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        listOf("C1", "C2").forEach { level ->
+                            val isSelected = level == state.selectedDalfLevel
+                            Surface(
+                                modifier = Modifier.weight(1f).clickable { viewModel.onDalfLevelSelected(level) },
                                 shape = RoundedCornerShape(12.dp),
                                 color = if (isSelected) colors.accent else colors.surface,
                                 border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)

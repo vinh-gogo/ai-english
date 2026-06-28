@@ -8,4 +8,5 @@ interface JsonResourceReader {
     suspend fun readChineseTopicsJson(): String
     suspend fun readSpanishTopicsJson(): String
     suspend fun readHindiTopicsJson(): String
+    suspend fun readFrenchTopicsJson(): String
 }

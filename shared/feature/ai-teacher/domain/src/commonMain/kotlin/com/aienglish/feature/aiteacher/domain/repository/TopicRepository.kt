@@ -11,6 +11,7 @@ interface TopicRepository {
         japaneseTopicsJson: String,
         chineseTopicsJson: String,
         spanishTopicsJson: String,
-        hindiTopicsJson: String
+        hindiTopicsJson: String,
+        frenchTopicsJson: String
     )
 }
