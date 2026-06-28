@@ -220,7 +220,10 @@ fun MarkdownText(
     colors: AppColors
 ) {
     val processedMarkdown = remember(markdown) {
-        markdown.replace("""(?<!\*)["“]([^"“”\n]+)["”](?!\*)""".toRegex(), "**\"$1\"**")
+        markdown
+            .replace("""(?<!\*)\*["“]([^"“”\n]+)["”]\*(?!\*)""".toRegex(), "***\"$1\"***")
+            .replace("""(?<!_)_["“]([^"“”\n]+)["”]_(?!_)""".toRegex(), "***\"$1\"***")
+            .replace("""(?<![\*_])["“]([^"“”\n]+)["”](?![\*_])""".toRegex(), "**\"$1\"**")
     }
     val blocks = remember(processedMarkdown) { parseBlocks(processedMarkdown) }
 
