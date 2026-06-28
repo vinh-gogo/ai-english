@@ -32,20 +32,20 @@ class HistoryRepositoryImpl(
     override suspend fun completeLesson(
         id: Long,
         score: Int,
-        lessonJson: String?,
-        userAnswersJson: String?,
-        explanationsJson: String?,
-        feedbackJson: String?
+        lessonData: String?,
+        userAnswersData: String?,
+        explanationsData: String?,
+        feedbackData: String?
     ) {
         withContext(dispatchers.io) {
             val now = Clock.System.now().toEpochMilliseconds()
             queries.updateLessonCompleted(
                 score = score.toLong(),
                 completed_at = now,
-                lesson_json = lessonJson,
-                user_answers_json = userAnswersJson,
-                explanations_json = explanationsJson,
-                feedback_json = feedbackJson,
+                lesson_json = lessonData,
+                user_answers_json = userAnswersData,
+                explanations_json = explanationsData,
+                feedback_json = feedbackData,
                 id = id
             )
         }
@@ -65,10 +65,10 @@ class HistoryRepositoryImpl(
                         status = HistoryStatus.from(row.status),
                         createdAt = row.created_at,
                         completedAt = row.completed_at,
-                        lessonJson = row.lesson_json,
-                        userAnswersJson = row.user_answers_json,
-                        explanationsJson = row.explanations_json,
-                        feedbackJson = row.feedback_json
+                        lessonData = row.lesson_json,
+                        userAnswersData = row.user_answers_json,
+                        explanationsData = row.explanations_json,
+                        feedbackData = row.feedback_json
                     )
                 }
             }
@@ -81,15 +81,15 @@ class HistoryRepositoryImpl(
 
     override suspend fun updateLessonProgress(
         id: Long,
-        lessonJson: String?,
-        userAnswersJson: String?,
-        explanationsJson: String?
+        lessonData: String?,
+        userAnswersData: String?,
+        explanationsData: String?
     ) {
         withContext(dispatchers.io) {
             queries.updateLessonProgress(
-                lesson_json = lessonJson,
-                user_answers_json = userAnswersJson,
-                explanations_json = explanationsJson,
+                lesson_json = lessonData,
+                user_answers_json = userAnswersData,
+                explanations_json = explanationsData,
                 id = id
             )
         }

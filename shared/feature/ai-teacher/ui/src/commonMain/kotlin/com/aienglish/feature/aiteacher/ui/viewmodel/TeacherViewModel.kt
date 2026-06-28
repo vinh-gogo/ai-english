@@ -494,10 +494,10 @@ class TeacherViewModel(
                     topic = history.topic,
                     level = history.level,
                     score = history.score,
-                    lessonJson = history.lessonJson,
-                    userAnswersJson = history.userAnswersJson,
-                    explanationsJson = history.explanationsJson,
-                    feedbackJson = history.feedbackJson
+                    lessonJson = history.lessonData,
+                    userAnswersJson = history.userAnswersData,
+                    explanationsJson = history.explanationsData,
+                    feedbackJson = history.feedbackData
                 )
 
                 setState {
@@ -688,10 +688,10 @@ class TeacherViewModel(
                     topic = history.topic,
                     level = history.level,
                     score = history.score,
-                    lessonJson = history.lessonJson,
-                    userAnswersJson = history.userAnswersJson,
-                    explanationsJson = history.explanationsJson,
-                    feedbackJson = history.feedbackJson
+                    lessonJson = history.lessonData,
+                    userAnswersJson = history.userAnswersData,
+                    explanationsJson = history.explanationsData,
+                    feedbackJson = history.feedbackData
                 )
 
                 currentLessonHistoryId = history.id

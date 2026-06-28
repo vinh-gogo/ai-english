@@ -398,7 +398,7 @@ private fun HistoryItem(
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (item.status == HistoryStatus.IN_PROGRESS && !item.lessonJson.isNullOrEmpty()) {
+                if (item.status == HistoryStatus.IN_PROGRESS && !item.lessonData.isNullOrEmpty()) {
                     TextButton(
                         onClick = onContinue,
                         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
@@ -411,7 +411,7 @@ private fun HistoryItem(
                     Spacer(Modifier.width(8.dp))
                 }
 
-                if (item.status == HistoryStatus.COMPLETED && !item.lessonJson.isNullOrEmpty()) {
+                if (item.status == HistoryStatus.COMPLETED && !item.lessonData.isNullOrEmpty()) {
                     TextButton(
                         onClick = onReview,
                         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),

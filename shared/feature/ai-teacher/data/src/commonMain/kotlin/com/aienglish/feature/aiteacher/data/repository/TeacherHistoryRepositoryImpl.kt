@@ -36,10 +36,10 @@ class TeacherHistoryRepositoryImpl(
         historyRepository.completeLesson(
             id = id,
             score = score,
-            lessonJson = lessonJson,
-            userAnswersJson = userAnswersJson,
-            explanationsJson = explanationsJson,
-            feedbackJson = feedbackJson
+            lessonData = lessonJson,
+            userAnswersData = userAnswersJson,
+            explanationsData = explanationsJson,
+            feedbackData = feedbackJson
         )
     }
 
@@ -54,9 +54,9 @@ class TeacherHistoryRepositoryImpl(
         val explanationsJson = json.encodeToString(explanations)
         historyRepository.updateLessonProgress(
             id = id,
-            lessonJson = lessonJson,
-            userAnswersJson = userAnswersJson,
-            explanationsJson = explanationsJson
+            lessonData = lessonJson,
+            userAnswersData = userAnswersJson,
+            explanationsData = explanationsJson
         )
     }
 

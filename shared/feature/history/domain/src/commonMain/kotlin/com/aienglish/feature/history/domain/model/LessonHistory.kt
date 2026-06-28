@@ -8,10 +8,10 @@ data class LessonHistory(
     val status: HistoryStatus,
     val createdAt: Long,
     val completedAt: Long?,
-    val lessonJson: String? = null,
-    val userAnswersJson: String? = null,
-    val explanationsJson: String? = null,
-    val feedbackJson: String? = null
+    val lessonData: String? = null,
+    val userAnswersData: String? = null,
+    val explanationsData: String? = null,
+    val feedbackData: String? = null
 )
 
 enum class HistoryStatus {

@@ -8,17 +8,17 @@ interface HistoryRepository {
     suspend fun completeLesson(
         id: Long,
         score: Int,
-        lessonJson: String?,
-        userAnswersJson: String?,
-        explanationsJson: String?,
-        feedbackJson: String?
+        lessonData: String?,
+        userAnswersData: String?,
+        explanationsData: String?,
+        feedbackData: String?
     )
     fun getAllHistory(): Flow<List<LessonHistory>>
     suspend fun clearHistory()
     suspend fun updateLessonProgress(
         id: Long,
-        lessonJson: String?,
-        userAnswersJson: String?,
-        explanationsJson: String?
+        lessonData: String?,
+        userAnswersData: String?,
+        explanationsData: String?
     )
 }
