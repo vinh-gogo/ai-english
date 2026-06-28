@@ -319,13 +319,10 @@ private fun HowToGetApiKeySection(state: ProfileState, vm: ProfileViewModel, col
                         Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.Top) {
                             Text("💡", fontSize = 16.sp)
                             Spacer(Modifier.width(8.dp))
-                            Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                                Text("Gemini miễn phí!", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = colors.accent)
-                                Text(
-                                    "Gemini 2.0 Flash miễn phí: 15 req/phút, 1 triệu token/ngày — đủ học cả ngày!",
-                                    fontSize = 12.sp, color = colors.mutedText, lineHeight = 17.sp
-                                )
-                            }
+                            Text(
+                                "Gemini 2.0 Flash miễn phí: 15 req/phút, 1 triệu token/ngày — đủ học cả ngày!",
+                                fontSize = 12.sp, color = colors.mutedText, lineHeight = 17.sp
+                            )
                         }
                     }
 

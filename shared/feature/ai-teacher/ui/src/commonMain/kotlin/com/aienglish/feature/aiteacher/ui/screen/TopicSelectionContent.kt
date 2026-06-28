@@ -146,13 +146,6 @@ fun TopicSelectionContent(
                 fontWeight = FontWeight.Bold,
                 color = colors.mainText
             )
-            Text(
-                "Trình độ cao kế thừa và có thể luyện tập các chủ đề của cấp độ dưới",
-                fontSize = 12.sp,
-                color = colors.mutedText,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(horizontal = 12.dp)
-            )
 
             Spacer(Modifier.height(12.dp))
 
