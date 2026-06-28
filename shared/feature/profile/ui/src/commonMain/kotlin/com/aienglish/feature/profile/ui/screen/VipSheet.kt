@@ -284,6 +284,11 @@ fun VipSheet(
                     }
                 }
 
+                Spacer(Modifier.height(4.dp))
+
+                // Payment Methods Logos Row
+                PaymentLogosRow()
+
                 Spacer(Modifier.height(8.dp))
 
                 // Main CTA Button
@@ -355,5 +360,151 @@ private fun BenefitItem(
             color = if (isVip) colors.mainText else colors.mutedText,
             maxLines = 2
         )
+    }
+}
+
+@Composable
+private fun PaymentLogosRow() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        VisaLogo()
+        Spacer(Modifier.width(8.dp))
+        MastercardLogo()
+        Spacer(Modifier.width(8.dp))
+        JcbLogo()
+        Spacer(Modifier.width(8.dp))
+        MomoLogo()
+        Spacer(Modifier.width(8.dp))
+        ChPlayLogo()
+    }
+}
+
+@Composable
+private fun VisaLogo() {
+    Box(
+        modifier = Modifier
+            .size(width = 38.dp, height = 22.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .background(Color(0xFF1A1F71)),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "VISA",
+            color = Color(0xFFF7B600),
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Black,
+            fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+        )
+    }
+}
+
+@Composable
+private fun MastercardLogo() {
+    Box(
+        modifier = Modifier
+            .size(width = 38.dp, height = 22.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .background(Color(0xFF222222))
+            .padding(horizontal = 4.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy((-6).dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(12.dp)
+                    .clip(CircleShape)
+                    .background(Color(0xFFEB001B))
+            )
+            Box(
+                modifier = Modifier
+                    .size(12.dp)
+                    .clip(CircleShape)
+                    .background(Color(0xFFFF5F00).copy(0.9f))
+            )
+        }
+    }
+}
+
+@Composable
+private fun JcbLogo() {
+    Box(
+        modifier = Modifier
+            .size(width = 38.dp, height = 22.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .background(Color.White)
+            .border(0.5.dp, Color.LightGray, RoundedCornerShape(4.dp)),
+        contentAlignment = Alignment.Center
+    ) {
+        Row(
+            modifier = Modifier.fillMaxSize().padding(1.dp),
+            horizontalArrangement = Arrangement.spacedBy(1.dp)
+        ) {
+            Box(modifier = Modifier.weight(1f).fillMaxHeight().background(Color(0xFF0060B6), RoundedCornerShape(topStart = 2.dp, bottomStart = 2.dp)))
+            Box(modifier = Modifier.weight(1f).fillMaxHeight().background(Color(0xFFD91818)))
+            Box(modifier = Modifier.weight(1f).fillMaxHeight().background(Color(0xFF008938), RoundedCornerShape(topEnd = 2.dp, bottomEnd = 2.dp)))
+        }
+        Text(
+            text = "JCB",
+            color = Color.White,
+            fontSize = 7.sp,
+            fontWeight = FontWeight.ExtraBold,
+            modifier = Modifier.align(Alignment.Center)
+        )
+    }
+}
+
+@Composable
+private fun MomoLogo() {
+    Box(
+        modifier = Modifier
+            .size(width = 38.dp, height = 22.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .background(Color(0xFFA50064)),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "momo",
+            color = Color.White,
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+@Composable
+private fun ChPlayLogo() {
+    Box(
+        modifier = Modifier
+            .size(width = 42.dp, height = 22.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .background(Color(0xFFF1F3F4))
+            .border(0.5.dp, Color(0xFFDADCE0), RoundedCornerShape(4.dp)),
+        contentAlignment = Alignment.Center
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(2.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(6.dp)
+                    .clip(CircleShape)
+                    .background(Color(0xFF00C6FF))
+            )
+            Text(
+                text = "CH Play",
+                color = Color(0xFF5F6368),
+                fontSize = 7.sp,
+                fontWeight = FontWeight.Black
+            )
+        }
     }
 }
