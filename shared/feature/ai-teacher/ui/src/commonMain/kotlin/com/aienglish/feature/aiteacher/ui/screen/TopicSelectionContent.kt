@@ -110,7 +110,7 @@ fun TopicSelectionContent(
     if (state.isGeneratingLesson) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                CircularProgressIndicator(color = levelColor)
+                CircularProgressIndicator(color = colors.accent)
                 Spacer(Modifier.height(16.dp))
                 Text("AI đang soạn bài luyện tập...", color = colors.mutedText, fontSize = 14.sp)
             }
@@ -138,7 +138,7 @@ fun TopicSelectionContent(
             Icon(
                 imageVector = Icons.Rounded.School,
                 contentDescription = null,
-                tint = levelColor,
+                tint = colors.accent,
                 modifier = Modifier.size(36.dp)
             )
             Spacer(Modifier.height(4.dp))
@@ -200,13 +200,13 @@ fun TopicSelectionContent(
                                 Spacer(Modifier.width(6.dp))
                                 Surface(
                                     shape = RoundedCornerShape(4.dp),
-                                    color = currentTopicColor.copy(alpha = 0.15f)
+                                    color = colors.accent.copy(alpha = 0.15f)
                                 ) {
                                     Text(
                                         text = if (currentTopicLevel == "900") ">900" else currentTopicLevel,
                                         fontSize = 9.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = currentTopicColor,
+                                        color = colors.accent,
                                         modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
                                     )
                                 }
@@ -264,7 +264,7 @@ fun TopicSelectionContent(
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
                 modifier = Modifier.height(36.dp)
             ) {
-                Icon(Icons.Rounded.AutoAwesome, null, tint = levelColor, modifier = Modifier.size(14.dp))
+                Icon(Icons.Rounded.AutoAwesome, null, tint = colors.accent, modifier = Modifier.size(14.dp))
                 Spacer(Modifier.width(6.dp))
                 Text("Chọn ngẫu nhiên chủ đề", color = colors.mainText, fontSize = 12.sp)
             }
@@ -281,7 +281,7 @@ fun TopicSelectionContent(
                     fontSize = 13.sp
                 ),
                 singleLine = true,
-                cursorBrush = androidx.compose.ui.graphics.SolidColor(levelColor),
+                cursorBrush = androidx.compose.ui.graphics.SolidColor(colors.accent),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(38.dp)
@@ -289,7 +289,7 @@ fun TopicSelectionContent(
                     .background(colors.surface, RoundedCornerShape(8.dp))
                     .border(
                         1.dp,
-                        if (isSearchFocused) levelColor else colors.border,
+                        if (isSearchFocused) colors.accent else colors.border,
                         RoundedCornerShape(8.dp)
                     ),
                 decorationBox = { innerTextField ->
@@ -349,7 +349,7 @@ fun TopicSelectionContent(
                     // Only 1 option for Japanese (JLPT), display it as a simple tag
                     Surface(
                         shape = RoundedCornerShape(6.dp),
-                        color = levelColor
+                        color = colors.accent
                     ) {
                         Text(
                             "JLPT",
@@ -371,7 +371,7 @@ fun TopicSelectionContent(
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(6.dp))
-                                .background(if (state.levelType == LevelType.CEFR) levelColor else Color.Transparent)
+                                .background(if (state.levelType == LevelType.CEFR) colors.accent else Color.Transparent)
                                 .clickable { viewModel.onLevelTypeSelected(LevelType.CEFR) }
                                 .padding(horizontal = 12.dp, vertical = 4.dp),
                             contentAlignment = Alignment.Center
@@ -387,7 +387,7 @@ fun TopicSelectionContent(
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(6.dp))
-                                .background(if (state.levelType == LevelType.TOEIC) levelColor else Color.Transparent)
+                                .background(if (state.levelType == LevelType.TOEIC) colors.accent else Color.Transparent)
                                 .clickable { viewModel.onLevelTypeSelected(LevelType.TOEIC) }
                                 .padding(horizontal = 12.dp, vertical = 4.dp),
                             contentAlignment = Alignment.Center
@@ -418,8 +418,8 @@ fun TopicSelectionContent(
                             Surface(
                                 modifier = Modifier.weight(1f).clickable { viewModel.onCefrLevelSelected(level) },
                                 shape = RoundedCornerShape(12.dp),
-                                color = if (isSelected) thisLevelColor else colors.surface,
-                                border = BorderStroke(1.dp, if (isSelected) thisLevelColor else colors.border)
+                                color = if (isSelected) colors.accent else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
                             ) {
                                 Box(
                                     modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
@@ -447,8 +447,8 @@ fun TopicSelectionContent(
                             Surface(
                                 modifier = Modifier.weight(1f).clickable { viewModel.onToeicLevelSelected(level) },
                                 shape = RoundedCornerShape(12.dp),
-                                color = if (isSelected) thisLevelColor else colors.surface,
-                                border = BorderStroke(1.dp, if (isSelected) thisLevelColor else colors.border)
+                                color = if (isSelected) colors.accent else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
                             ) {
                                 Box(
                                     modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
@@ -476,8 +476,8 @@ fun TopicSelectionContent(
                             Surface(
                                 modifier = Modifier.weight(1f).clickable { viewModel.onJlptLevelSelected(level) },
                                 shape = RoundedCornerShape(12.dp),
-                                color = if (isSelected) thisLevelColor else colors.surface,
-                                border = BorderStroke(1.dp, if (isSelected) thisLevelColor else colors.border)
+                                color = if (isSelected) colors.accent else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
                             ) {
                                 Box(
                                     modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
