@@ -138,30 +138,35 @@ fun TeacherScreen(
                     Box(
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
-                            .clip(RoundedCornerShape(8.dp))
-                            .border(1.dp, Color(0xFFFFB300), RoundedCornerShape(8.dp))
-                            .background(Color(0xFFFFB300).copy(0.12f))
                             .clickable { profileViewModel.showProfile() }
-                            .padding(horizontal = 8.dp, vertical = 4.dp),
-                        contentAlignment = Alignment.Center
+                            .padding(4.dp)
                     ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .border(1.dp, Color(0xFFFFB300), RoundedCornerShape(8.dp))
+                                .background(Color(0xFFFFB300).copy(0.12f))
+                                .padding(horizontal = 8.dp, vertical = 4.dp),
+                            contentAlignment = Alignment.Center
                         ) {
-                            Icon(
-                                imageVector = Icons.Rounded.WorkspacePremium,
-                                contentDescription = "PRO",
-                                tint = Color(0xFFFFB300),
-                                modifier = Modifier.size(14.dp)
-                            )
-                            Text(
-                                text = if (profileState.isPaid) "PRO" else "GET",
-                                fontSize = 11.sp,
-                                fontWeight = FontWeight.Bold,
-                                fontStyle = FontStyle.Italic,
-                                color = Color(0xFFFFB300)
-                            )
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.WorkspacePremium,
+                                    contentDescription = "PRO",
+                                    tint = Color(0xFFFFB300),
+                                    modifier = Modifier.size(14.dp)
+                                )
+                                Text(
+                                    text = if (profileState.isPaid) "PRO" else "GET",
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    fontStyle = FontStyle.Italic,
+                                    color = Color(0xFFFFB300)
+                                )
+                            }
                         }
                     }
                 },

@@ -530,7 +530,7 @@ fun TopicSelectionContent(
                     onValueChange = { viewModel.onCustomTopicInputChanged(it) },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
-                    placeholder = { Text("Nhập chủ đề bạn tự chọn (Ví dụ: đi du lịch, phỏng vấn...)", color = colors.hintText, fontSize = 13.sp) },
+                    placeholder = { Text("Nhập chủ đề bạn tùy chỉnh", color = colors.hintText, fontSize = 13.sp) },
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = colors.accent,
