@@ -960,7 +960,7 @@ fun TopicSelectionContent(
                             val topic = pair.second
                             val isSelected = idx == selectedIdx
                             Surface(
-                                modifier = Modifier.clickable { viewModel.onTopicIndexSelected(idx) },
+                                modifier = Modifier.clip(RoundedCornerShape(12.dp)).clickable { viewModel.onTopicIndexSelected(idx) },
                                 shape = RoundedCornerShape(12.dp),
                                 color = if (isSelected) colors.surfaceElevated else colors.surface,
                                 border = BorderStroke(1.dp, if (isSelected) colors.mainText else colors.border)
@@ -1006,15 +1006,21 @@ fun TopicSelectionContent(
             Spacer(Modifier.height(16.dp))
         }
 
+        val isStartEnabled = state.selectedTopic.isNotBlank() && !state.isGeneratingLesson
+
         // ── Pinned start button (styled with uniform Accent Color) ──
         Button(
             onClick = { viewModel.onStartLesson() },
+            enabled = isStartEnabled,
             modifier = Modifier
                 .fillMaxWidth()
                 .navigationBarsPadding()
                 .padding(bottom = 16.dp)
                 .height(56.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = colors.accent),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = colors.accent,
+                disabledContainerColor = colors.accent.copy(alpha = 0.5f)
+            ),
             shape = RoundedCornerShape(14.dp)
         ) {
             Icon(Icons.Default.PlayArrow, null, modifier = Modifier.size(20.dp))
