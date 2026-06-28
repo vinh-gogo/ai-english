@@ -216,7 +216,7 @@ private fun ApiKeySection(state: ProfileState, vm: ProfileViewModel, colors: App
             onValueChange = { vm.onApiKeyChanged(it) },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
-            placeholder = { Text("AIzaSy...", color = colors.hintText, fontSize = 13.sp) },
+            placeholder = { Text("AQ.Ab8...", color = colors.hintText, fontSize = 13.sp) },
             visualTransformation = if (state.apiKeyVisible) VisualTransformation.None else PasswordVisualTransformation('•'),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             singleLine = true,
@@ -308,7 +308,7 @@ private fun HowToGetApiKeySection(state: ProfileState, vm: ProfileViewModel, col
                     HowToStep(1, "Truy cập Google AI Studio", "Mở trình duyệt: aistudio.google.com", colors)
                     HowToStep(2, "Đăng nhập Google", "Dùng tài khoản Google của bạn", colors)
                     HowToStep(3, "Tạo API Key", "Click \"Get API key\" → \"Create API key\"", colors)
-                    HowToStep(4, "Copy và dán vào đây", "Copy key (bắt đầu bằng AIzaSy...) và dán vào ô trên", colors)
+                    HowToStep(4, "Copy và dán vào đây", "Copy key (bắt đầu bằng AQ.Ab8...) và dán vào ô trên", colors)
                     val uriHandler = LocalUriHandler.current
                     Surface(
                         onClick = { uriHandler.openUri("https://aistudio.google.com/apikey") },
