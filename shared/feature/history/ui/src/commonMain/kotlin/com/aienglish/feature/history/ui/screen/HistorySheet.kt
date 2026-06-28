@@ -137,7 +137,8 @@ fun HistorySheet(
                         val excellent = mutableListOf<LessonHistory>()
                         val good = mutableListOf<LessonHistory>()
                         val average = mutableListOf<LessonHistory>()
-                        val weakOrPending = mutableListOf<LessonHistory>()
+                        val weak = mutableListOf<LessonHistory>()
+                        val pending = mutableListOf<LessonHistory>()
 
                         items.forEach { item ->
                             if (item.status == HistoryStatus.COMPLETED) {
@@ -146,17 +147,18 @@ fun HistorySheet(
                                     score >= 9 -> excellent.add(item)
                                     score >= 7 -> good.add(item)
                                     score >= 5 -> average.add(item)
-                                    else -> weakOrPending.add(item)
+                                    else -> weak.add(item)
                                 }
                             } else {
-                                weakOrPending.add(item)
+                                pending.add(item)
                             }
                         }
                         listOf(
                             GroupData("Xuất sắc (9 - 10 điểm)", excellent, colors.correct),
                             GroupData("Tốt (7 - 8 điểm)", good, colors.accent),
                             GroupData("Trung bình (5 - 6 điểm)", average, Color(0xFFFFA726)),
-                            GroupData("Yếu / Chưa hoàn thành", weakOrPending, colors.error)
+                            GroupData("Yếu (Dưới 5 điểm)", weak, colors.error),
+                            GroupData("Chưa hoàn thành", pending, colors.mutedText)
                         )
                     }
 
