@@ -5,6 +5,9 @@ import org.koin.dsl.module
 
 val historyUiModule = module {
     single {
-        HistoryViewModel(historyRepository = get())
+        HistoryViewModel(
+            getAllHistoryUseCase = get(),
+            clearHistoryUseCase = get()
+        )
     }
 }

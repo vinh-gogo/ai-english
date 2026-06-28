@@ -1,0 +1,1802 @@
+[
+  {
+    "id": 5000,
+    "name": "Chào hỏi và giới thiệu bản thân (Sich vorstellen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5001,
+    "name": "Hỏi thăm sức khỏe xã giao (Wie geht es dir?)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5002,
+    "name": "Tên, tuổi và quốc tịch (Name, Alter und Herkunft)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5003,
+    "name": "Số đếm từ 1 đến 100 (Die Zahlen von 1 bis 100)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5004,
+    "name": "Các ngày trong tuần và tháng trong năm (Wochentage und Monate)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5005,
+    "name": "Các màu sắc cơ bản (Die Farben)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5006,
+    "name": "Các thành viên trong gia đình (Die Familie)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5007,
+    "name": "Món ăn và đồ uống yêu thích (Lieblingsessen und -getränke)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5008,
+    "name": "Mô tả thời tiết hôm nay (Das Wetter heute)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5009,
+    "name": "Hỏi đường đơn giản (Wegbeschreibung)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5010,
+    "name": "Gọi tên các con vật nuôi (Haustiere)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5011,
+    "name": "Trang phục và quần áo hàng ngày (Kleidung)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5012,
+    "name": "Nói về sở thích cá nhân (Hobbys)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5013,
+    "name": "Mô tả ngôi nhà của bạn (Mein Haus / Meine Wohnung)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5014,
+    "name": "Hỏi giá tiền khi mua sắm (Wie viel kostet das?)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5015,
+    "name": "Thói quen vào buổi sáng (Morgenroutine)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5016,
+    "name": "Thói quen vào buổi tối (Abendroutine)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5017,
+    "name": "Các loại quả và rau củ (Obst und Gemüse)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5018,
+    "name": "Trường học và môn học yêu thích (Schule und Fächer)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5019,
+    "name": "Nói về công việc hiện tại (Mein Beruf)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5020,
+    "name": "Chào hỏi lịch sự trong công sở (Formelle Begrüßung am Arbeitsplatz)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5021,
+    "name": "Kế hoạch cho ngày cuối tuần (Pläne für das Wochenende)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5022,
+    "name": "Đi siêu thị mua thực phẩm (Einkaufen im Supermarkt)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5023,
+    "name": "Mô tả một người bạn thân (Ein guter Freund)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5024,
+    "name": "Cách cảm ơn và xin lỗi (Danke und Entschuldigung)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5025,
+    "name": "Các bộ phận trên cơ thể (Körperteile)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5026,
+    "name": "Gọi điện thoại đặt bàn đơn giản (Einfaches Telefongespräch)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5027,
+    "name": "Nói về quê hương của mình (Meine Heimatstadt)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5028,
+    "name": "Gọi món tại quán cà phê (Im Café bestellen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5029,
+    "name": "Phương tiện giao thông công cộng (Öffentliche Verkehrsmittel)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5030,
+    "name": "Đồ dùng học tập và văn phòng (Schul- und Büromaterialien)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5031,
+    "name": "Mô tả phòng ngủ của bạn (Mein Schlafzimmer)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5032,
+    "name": "Mua vé tàu hỏa hoặc vé xe buýt (Fahrkarten kaufen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5033,
+    "name": "Nói về bộ phim yêu thích (Mein Lieblingsfilm)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5034,
+    "name": "Nói về thể loại nhạc yêu thích (Lieblingsmusik)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5035,
+    "name": "Các hoạt động thể thao thường ngày (Sportliche Aktivitäten)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5036,
+    "name": "Các mùa trong năm (Die vier Jahreszeiten)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5037,
+    "name": "Chúc mừng sinh nhật đồng nghiệp (Zum Geburtstag gratulieren)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5038,
+    "name": "Nhờ sự giúp đỡ của người khác (Um Hilfe bitten)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5039,
+    "name": "Mô tả một ngày nghỉ thư thái (Ein entspannter Tag)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5040,
+    "name": "Hỏi thăm thông tin liên lạc (Kontaktdaten erfragen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5041,
+    "name": "Các đồ vật trong phòng khách (Gegenstände im Wohnzimmer)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5042,
+    "name": "Nói về bữa ăn sáng cùng gia đình (Frühstück mit der Familie)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5043,
+    "name": "Đi nhà sách mua sách mới (In der Buchhandlung)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5044,
+    "name": "Nói về dự định cho ngày mai (Pläne für morgen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5045,
+    "name": "Các loại đồ uống nóng và lạnh (Heiße und kalte Getränke)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5046,
+    "name": "Lời chào tạm biệt và chúc may mắn (Verabschiedung und viel Glück)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5047,
+    "name": "Thói quen đọc sách mỗi ngày (Tägliches Lesen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5048,
+    "name": "Mô tả một ngày làm việc bận rộn (Ein arbeitsreicher Tag)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5049,
+    "name": "Các quốc gia và ngôn ngữ trên thế giới (Länder und Sprachen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 5050,
+    "name": "Đi nhà hàng thưởng thức ẩm thực Đức (Im deutschen Restaurant)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5051,
+    "name": "Đi khám sức khỏe tại phòng khám (Beim Arzt / In der Praxis)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5052,
+    "name": "Đón bạn bè ở sân bay Munich (Am Flughafen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5053,
+    "name": "Thủ tục thuê căn hộ hoặc phòng trọ (Eine Wohnung mieten)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5054,
+    "name": "Mua vé xem phim trực tuyến (Kinokarten online kaufen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5055,
+    "name": "So sánh ngoại hình và tính cách (Personen vergleichen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5056,
+    "name": "Thói quen ăn uống lành mạnh và cân bằng (Gesunde Ernährung)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5057,
+    "name": "Đi tiệm cắt tóc thay đổi kiểu tóc (Beim Friseur)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5058,
+    "name": "Chọn quà sinh nhật tặng người thân (Ein Geburtstagsgeschenk auswählen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5059,
+    "name": "Nói về cuộc sống thời sinh viên (Das Studentenleben)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5060,
+    "name": "Bàn bạc kế hoạch tổ chức tiệc cuối năm (Die Silvesterparty planen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5061,
+    "name": "Đăng ký gói mạng di động mới (Einen Mobilfunkvertrag abschließen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5062,
+    "name": "Giới thiệu văn phòng làm việc mới (Das neue Büro vorstellen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5063,
+    "name": "Hỏi thăm thời gian giao dịch của ngân hàng (Öffnungszeiten der Bank)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5064,
+    "name": "Thời tiết bốn mùa tại thành phố Berlin (Das Klima in Berlin)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5065,
+    "name": "Nói về kế hoạch tương lai dài hạn (Langfristige Zukunftipläne)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5066,
+    "name": "Thảo luận trận đấu bóng đá của đội tuyển Đức (Fußballspiel diskutieren)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5067,
+    "name": "Mua sắm đồ điện máy gia dụng (Haushaltsgeräte kaufen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5068,
+    "name": "Công việc làm thêm thời sinh viên (Ein Nebenjob für Studenten)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5069,
+    "name": "Đặt vé máy bay khứ hồi đi Hamburg (Einen Flug nach Hamburg buchen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5070,
+    "name": "Tìm hiểu các lễ hội truyền thống của Đức (Deutsche Traditionen und Feste)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5071,
+    "name": "Hướng dẫn sử dụng máy pha cà phê văn phòng (Kaffeemaschine im Büro benutzen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5072,
+    "name": "Nói về các trò chơi điện tử yêu thích (Lieblings-Videospiele)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5073,
+    "name": "Tìm kiếm cơ hội việc làm sau tốt nghiệp (Jobsuche nach dem Abschluss)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5074,
+    "name": "Lợi ích của việc chạy bộ buổi sáng (Vorteile des morgendlichen Joggens)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5075,
+    "name": "Mua sắm quần áo dịp giảm giá (Kleidung im Ausverkauf kaufen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5076,
+    "name": "Sử dụng mạng xã hội hàng ngày (Tägliche Nutzung sozialer Medien)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5077,
+    "name": "Cảm xúc lần đầu tiên đến thăm lâu đài Neuschwanstein (Schloss Neuschwanstein besuchen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5078,
+    "name": "Học bơi lội vào dịp hè (Schwimmen lernen im Sommer)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5079,
+    "name": "Gọi bánh ngọt và trà chiều (Kuchen und Kaffee bestellen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5080,
+    "name": "Hỏi ý kiến bạn bè về phong cách thời trang (Freunde nach Modetipps fragen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5081,
+    "name": "Mô tả tính cách thú cưng của bạn (Charakter meines Haustiers)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5082,
+    "name": "Kế hoạch chuẩn bị hành lý đi du lịch (Koffer packen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5083,
+    "name": "Hỏi đường đi đến đảo bảo tàng Berlin (Zur Museumsinsel gehen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5084,
+    "name": "Gửi bưu kiện tại bưu điện (Ein Paket bei der Post abgeben)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5085,
+    "name": "Nói về nghề nghiệp mơ ước (Mein Traumberuf)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5086,
+    "name": "Tổ chức buổi dã ngoại ngoài trời (Ein Picknick organisieren)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5087,
+    "name": "Cách chăm sóc cây cảnh trong nhà (Zimmerpflanzen pflegen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5088,
+    "name": "Bàn luận về việc đi ăn tối cùng đồng nghiệp (Abendessen mit Kollegen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5089,
+    "name": "Mua sắm giày thể thao mới (Neue Sportschuhe kaufen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5090,
+    "name": "Đăng ký thẻ thành viên phòng tập gym (Sich im Fitnessstudio anmelden)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5091,
+    "name": "Học nấu một món ăn truyền thống Đức (Ein traditionelles deutsches Gericht kochen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5092,
+    "name": "Kể về chuyến đi chơi biển Bắc mùa hè (Urlaub an der Nordsee)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5093,
+    "name": "Đăng ký làm thẻ thư viện (Einen Bibliotheksausweis beantragen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5094,
+    "name": "Nói về sở thích cắm trại dã ngoại (Camping als Hobby)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5095,
+    "name": "Bàn về bánh mì Đức và xúc xích Bratwurst (Deutsches Brot und Bratwurst)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5096,
+    "name": "Cách lên kế hoạch cho một chuyến đi chơi xa (Einen Ausflug planen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5097,
+    "name": "Mua sắm đồ trang trí nhà cửa (Dekoration für die Wohnung kaufen)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5098,
+    "name": "Thói quen tiết kiệm tiền hàng tháng (Geld sparen jeden Monat)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5099,
+    "name": "Kể về một kỷ niệm đáng nhớ thời thơ ấu (Eine Kindheitserinnerung)",
+    "systemCode": "GOETHE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 5100,
+    "name": "Họp bàn dự án phát triển mới với đồng nghiệp (Projektbesprechung mit Kollegen)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5101,
+    "name": "Báo cáo tiến độ công việc hàng tuần (Wöchentlicher Arbeitsbericht)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5102,
+    "name": "Nói về lịch sử và văn hóa phong phú của Đức (Deutsche Geschichte und Kultur)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5103,
+    "name": "Tham quan bảo tàng Pergamon (Besuch im Pergamonmuseum)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5104,
+    "name": "Tìm hiểu về nghệ thuật ẩm thực bia và xúc xích Đức (Deutsche Bier- und Wurstkultur)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5105,
+    "name": "Nói về tác phẩm văn học Faust của Goethe (Faust von Goethe)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5106,
+    "name": "Thảo luận về vấn đề bảo vệ môi trường đô thị (Städtischer Umweltschutz)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5107,
+    "name": "Bảo tồn các loài động vật hoang dã (Schutz wilder Tiere)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5108,
+    "name": "Tầm quan trọng của việc học ngoại ngữ thứ ba (Die Bedeutung einer dritten Fremdsprache)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5109,
+    "name": "Trải nghiệm du lịch phượt bằng xe đạp tại thung lũng sông Rhine (Radtour am Rhein)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5110,
+    "name": "Xu hướng mua sắm trực tuyến ngày nay (Online-Shopping-Trends)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5111,
+    "name": "Mô tả những phẩm chất tốt đẹp của bạn bè (Eigenschaften eines guten Freundes)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5112,
+    "name": "Thử thách khi sống và học tập ở nước ngoài (Herausforderungen im Ausland)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5113,
+    "name": "Cách giảm căng thẳng sau giờ làm việc hiệu quả (Stressabbau nach der Arbeit)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5114,
+    "name": "Lợi ích của việc đọc sách giấy truyền thống (Vorteile von gedruckten Büchern)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5115,
+    "name": "Tham gia câu lạc bộ âm nhạc hoặc nhạc cụ (Einem Musikverein beitreten)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5116,
+    "name": "Chế độ ăn chay và sức khỏe tim mạch (Vegetarische Ernährung und Gesundheit)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5117,
+    "name": "Cách quản lý thời gian cá nhân khoa học (Effektives Zeitmanagement)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5118,
+    "name": "Tổ chức buổi tiệc nướng BBQ ngoài vườn (Grillen im Garten)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5119,
+    "name": "Chia sẻ kinh nghiệm phỏng vấn xin visa du học (Erfahrungen beim Visumgespräch)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5120,
+    "name": "Ngày hội thể thao tại trường học (Sportfest an der Schule)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5121,
+    "name": "Ảnh hưởng tiêu cực và tích cực của mạng xã hội (Vor- und Nachteile sozialer Medien)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5122,
+    "name": "Các bước sơ cứu chấn thương cơ bản tại nhà (Erste Hilfe zu Hause)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5123,
+    "name": "Trào lưu sống tối giản trong giới trẻ (Minimalismus bei Jugendlichen)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5124,
+    "name": "Mua sắm hoa tươi trang trí nhà cửa đón Giáng sinh (Weihnachtsdekoration kaufen)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5125,
+    "name": "Đam mê nghệ thuật nhiếp ảnh đường phố (Straßenfotografie als Leidenschaft)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5126,
+    "name": "Trải nghiệm đi tàu điện ngầm U-Bahn giờ cao điểm (U-Bahn in der Rushhour)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5127,
+    "name": "Thảo luận về hình thức học đại học trực tuyến (Online-Studium diskutieren)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5128,
+    "name": "Cách sản xuất một video ngắn sáng tạo (Ein kreatives Kurzvideo erstellen)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5129,
+    "name": "Thủ tục gia hạn hộ chiếu tại đại sứ quán (Reisepass verlängern)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5130,
+    "name": "Nói về thần tượng hoặc người truyền cảm hứng (Mein Vorbild)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5131,
+    "name": "Ý thức giữ gìn vệ sinh và mỹ quan đô thị (Sauberkeit in der Stadt)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5132,
+    "name": "Cách sửa chữa các vật dụng gia đình đơn giản (Einfache Reparaturen im Haushalt)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5133,
+    "name": "Tham quan phố cổ và thưởng thức cà phê vỉa hè (Altstadt und Straßencafé)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5134,
+    "name": "Kỷ niệm ngày đầu tiên đi làm tại công ty (Der erste Arbeitstag)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5135,
+    "name": "Chuẩn bị bài thuyết trình thuyết phục trước đám đông (Eine Präsentation vorbereiten)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5136,
+    "name": "Tiết kiệm năng lượng điện nước trong gia đình (Energie sparen im Haushalt)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5137,
+    "name": "Đi cắm trại trên núi vào mùa thu (Camping in den Bergen im Herbst)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5138,
+    "name": "Đăng ký mua bảo hiểm y tế toàn diện (Krankenversicherung abschließen)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5139,
+    "name": "Vai trò và giá trị của tình cảm gia đình (Bedeutung familiärer Werte)",
+    "systemCode": "GOETHE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 5140,
+    "name": "Phỏng vấn xin việc tại tập đoàn đa quốc gia (Vorstellungsgespräch bei einem Großkonzern)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5141,
+    "name": "Đàm phán mức lương và các chế độ đãi ngộ (Gehaltsverhandlung)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5142,
+    "name": "Thảo luận xu hướng phát triển của Trí tuệ nhân tạo - AI (Entwicklung der Künstlichen Intelligenz)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5143,
+    "name": "Tác động của biến đổi khí hậu toàn cầu (Auswirkungen des globalen Klimawandels)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5144,
+    "name": "Tìm hiểu kiến trúc độc đáo của nhà thờ lớn Köln (Kölner Dom)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5145,
+    "name": "Lịch sử và vẻ đẹp kiến trúc cổng Brandenburg (Das Brandenburger Tor)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5146,
+    "name": "Kinh nghiệm khởi nghiệp kinh doanh công nghệ (Ein Startup gründen)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5147,
+    "name": "Phân tích thị trường chứng khoán và đầu tư tài chính (Aktienmarkt und Finanzinvestitionen)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5148,
+    "name": "Quản lý tài chính cá nhân thông minh (Kluge persönliche Finanzen)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5149,
+    "name": "Phong trào bảo vệ môi trường và tiêu dùng xanh (Umweltbewegung und grüner Konsum)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5150,
+    "name": "Thương mại điện tử làm thay đổi ngành bán lẻ (E-Commerce verändert den Einzelhandel)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5151,
+    "name": "Ý nghĩa lịch sử của ngày thống nhất nước Đức (Deutsche Wiedervereinigung)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5152,
+    "name": "Tầm quan trọng của việc phát triển tư duy phản biện (Kritisches Denken entwickeln)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5153,
+    "name": "Bàn về thách thức của vấn đề già hóa dân số (Herausforderung der alternden Gesellschaft)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5154,
+    "name": "Lợi ích sức khỏe của việc tập Yoga thường xuyên (Gesundheitliche Vorteile von Yoga)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5155,
+    "name": "Cách xin học bổng du học của tổ chức DAAD (DAAD-Stipendium beantragen)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5156,
+    "name": "Giải pháp thúc đẩy phân loại rác thải tại nguồn (Mülltrennung fördern)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5157,
+    "name": "Ảnh hưởng của quảng cáo đến tâm lý người tiêu dùng (Einfluss der Werbung auf Konsumenten)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5158,
+    "name": "Vấn đề bảo mật thông tin trên môi trường internet (Datenschutz im Internet)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5159,
+    "name": "Sự cân bằng giữa công việc và cuộc sống cá nhân (Work-Life-Balance)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5160,
+    "name": "Những đóng góp khoa học lớn của các nhà bác học Đức (Wissenschaftliche Entdeckungen aus Deutschland)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5161,
+    "name": "Lợi ích của việc rèn luyện sự tập trung và thiền (Vorteile von Meditation)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5162,
+    "name": "Xu hướng chuyển dịch sang sử dụng ô tô điện ở Đức (Elektromobilität in Deutschland)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5163,
+    "name": "Vai trò của công tác hướng nghiệp cho học sinh (Berufsorientierung für Schüler)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5164,
+    "name": "Sự khác biệt về quan điểm giữa các thế hệ (Generationskonflikte)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5165,
+    "name": "Ảnh hưởng của du lịch đại chúng đến danh lam thắng cảnh (Massentourismus und seine Folgen)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5166,
+    "name": "Khủng hoảng tâm lý của người trẻ trong xã hội hiện đại (Psychische Krisen bei jungen Menschen)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5167,
+    "name": "Tương lai của ngành năng lượng tái tạo (Zukunft der erneuerbaren Energien)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5168,
+    "name": "Tìm hiểu lễ hội bia Oktoberfest (Oktoberfest in München)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5169,
+    "name": "Kinh nghiệm tự học thi chứng chỉ Goethe B2 (Vorbereitung auf Goethe B2)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5170,
+    "name": "Ảnh hưởng của trò chơi điện tử trực tuyến đến giới trẻ (Computerspiele und Jugendliche)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5171,
+    "name": "Vai trò của Trí tuệ cảm xúc - EQ trong quản lý (Emotionale Intelligenz im Management)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5172,
+    "name": "Lối sống làm việc tự do và thời gian linh hoạt (Leben als Freelancer)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5173,
+    "name": "Cách duy trì mối quan hệ đồng nghiệp bền vững (Gute Beziehungen am Arbeitsplatz)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5174,
+    "name": "Giải pháp nâng cao an toàn giao thông đường bộ (Verkehrssicherheit verbessern)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5175,
+    "name": "Tìm hiểu về ngành sản xuất ô tô nổi tiếng của Đức (Die deutsche Automobilindustrie)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5176,
+    "name": "Ý nghĩa và giá trị của việc học tập suốt đời (Lebenslanges Lernen)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5177,
+    "name": "Tác động của sách điện tử đối với văn hóa đọc (E-Books und Lesekultur)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5178,
+    "name": "Kinh nghiệm quản trị dự án trong doanh nghiệp (Projektmanagement im Unternehmen)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5179,
+    "name": "Tầm quan trọng của giấc ngủ đối với sức khỏe tinh thần (Bedeutung des Schlafes für die Psyche)",
+    "systemCode": "GOETHE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 5180,
+    "name": "Thách thức đạo đức của công nghệ nhân bản vô tính (Ethische Herausforderungen des Klonens)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5181,
+    "name": "Tác động của toàn cầu hóa đến văn hóa bản địa (Globalisierung und kulturelle Identität)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5182,
+    "name": "Vai trò của giáo dục đại học trong thời đại số (Hochschulbildung im digitalen Zeitalter)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5183,
+    "name": "Phân tích triết học của Immanuel Kant (Die Philosophie von Immanuel Kant)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5184,
+    "name": "Nghệ thuật ngoại giao và vai trò trung gian hòa giải (Diplomatie und Vermittlung)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5185,
+    "name": "Tương lai của kinh tế tuần hoàn và tái chế vật liệu (Zukunft der Kreislaufwirtschaft)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5186,
+    "name": "Vấn đề đô thị hóa bền vững và thành phố thông minh (Nachhaltige Stadtentwicklung und Smart Cities)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5187,
+    "name": "Quyền riêng tư cá nhân và sự giám sát của dữ liệu lớn (Privatsphäre und Big Data)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5188,
+    "name": "Thảo luận về chính sách di cư của các quốc gia châu Âu (Migrationspolitik in Europa)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5189,
+    "name": "Vai trò của báo chí chính thống trước vấn đề tin giả (Medien und Fake News)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5190,
+    "name": "Phân tích cuộc khủng hoảng nợ công toàn cầu (Globale Staatsschuldenkrise)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5191,
+    "name": "Tác động xã hội của việc tự động hóa và robot (Automatisierung und Arbeitsmarkt)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5192,
+    "name": "Đa dạng ngôn ngữ và nguy cơ biến mất của các sinh ngữ (Bedrohte Sprachen)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5193,
+    "name": "Phân tích tư tưởng triết học Đức hiện đại (Moderne deutsche Philosophie)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5194,
+    "name": "Bảo tồn đa dạng sinh học đại dương và biến đổi khí hậu (Meeresbiologie und Klimawandel)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5195,
+    "name": "Vai trò của nghệ thuật đương đại trong phản ánh xã hội (Zeitgenössische Kunst und Gesellschaft)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5196,
+    "name": "Tương lai của tiền điện tử và công nghệ Blockchain (Zukunft von Kryptowährungen und Blockchain)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5197,
+    "name": "Ảnh hưởng của mạng xã hội đến tâm lý học đường (Auswirkungen von Social Media auf Schüler)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5198,
+    "name": "An ninh lương thực toàn cầu trước nguy cơ hạn hán (Globale Ernährungssicherheit)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5199,
+    "name": "Đạo đức học trong y khoa và quyền trợ tử (Medizinethik und Sterbehilfe)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5200,
+    "name": "Thảo luận về cuộc cách mạng công nghiệp lần thứ tư (Die vierte industrielle Revolution)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5201,
+    "name": "Phân tích tác phẩm điện ảnh kinhetlen của Đức (Klassiker des deutschen Kinos)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5202,
+    "name": "Bảo tồn di sản văn hóa phi vật thể của nhân loại (Immaterielles Kulturerbe)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5203,
+    "name": "Xu hướng phát triển của y học cá thể hóa (Personalisierte Medizin)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5204,
+    "name": "Thách thức của việc hội nhập văn hóa đối với người nhập cư (Kulturelle Integration von Einwanderern)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5205,
+    "name": "Vai trò của các tổ chức phi chính phủ - NGO trên thế giới (Die Rolle von NGOs weltweit)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5206,
+    "name": "Khủng hoảng năng lượng và các giải pháp thay thế hạt nhân (Energiekrise und Kernkraft)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5207,
+    "name": "Phân tích tâm lý học hành vi người tiêu dùng hiện đại (Konsumentenpsychologie)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5208,
+    "name": "Vai trò của sở hữu trí tuệ trong kỷ nguyên số (Geistiges Eigentum im Internetzeitalter)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5209,
+    "name": "Đánh giá tính hiệu quả của các hiệp định thương mại tự do (Freihandelsabkommen bewerten)",
+    "systemCode": "GOETHE",
+    "levelCode": "C1"
+  },
+  {
+    "id": 5210,
+    "name": "Thuyết tương đối và các khám phá vật lý lượng tử mới (Relativitätstheorie und Quantenphysik)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5211,
+    "name": "Thảo luận triết học về bản chất của ý thức con người (Philosophische Natur des Bewusstseins)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5212,
+    "name": "Vai trò của tư duy phản biện trong nghiên cứu khoa học (Kritisches Denken in der Wissenschaft)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5213,
+    "name": "Sự tiến hóa của ngôn ngữ học cấu trúc (Entwicklung der strukturellen Linguistik)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5214,
+    "name": "Địa chính trị toàn cầu và sự dịch chuyển quyền lực kinh tế (Globale Geopolitik)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5215,
+    "name": "Trách nhiệm xã hội của các tập đoàn công nghệ khổng lồ (Soziale Verantwortung von Big Tech)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5216,
+    "name": "Đánh giá sự bền vững của hệ thống tài chính toàn cầu (Stabilität des globalen Finanzsystems)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5217,
+    "name": "Tương lai của loài người trước viễn cảnh chinh phục sao Hỏa (Kolonisierung des Mars)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5218,
+    "name": "Đạo đức học sinh học và việc thiết kế gene người (Bioethik und Genmanipulation)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5219,
+    "name": "Tác động của các thuật toán AI đối với dân chủ (Algorithmen und Demokratie)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5220,
+    "name": "Phân tích sâu về các học thuyết triết học phương Tây (Westliche philosophische Lehren)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5221,
+    "name": "Vai trò của các siêu đô thị trong phát triển kinh tế vùng (Metropolregionen und Wirtschaftsentwicklung)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5222,
+    "name": "Thách thức của việc bảo tồn tài nguyên nước ngọt toàn cầu (Globale Wasserkrise)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5223,
+    "name": "Đánh giá tác động lâu dài của đại dịch đối với xã hội (Langzeitfolgen von Pandemien)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5224,
+    "name": "Tương lai của việc làm trước sự phát triển của tự động hóa (Zukunft der Arbeit und Automatisierung)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5225,
+    "name": "Phân tích giá trị nghệ thuật của dòng tranh trường phái Bauhaus (Bauhaus-Kunstrichtung)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5226,
+    "name": "Vai trò của giáo dục thẩm mỹ trong trường học (Ästhetische Erziehung in Schulen)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5227,
+    "name": "Thảo luận về bản chất của thời gian và không gian (Natur von Zeit und Raum)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5228,
+    "name": "Đánh giá chiến lược năng lượng hạt nhân toàn cầu (Globale Kernenergiestrategie)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5229,
+    "name": "Vấn đề công bằng xã hội trong phân phối vắc xin toàn cầu (Globale Impfstoffgerechtigkeit)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5230,
+    "name": "Phân tích các xu hướng nghệ thuật đương đại thế kỷ 21 (Kunsttrends des 21. Jahrhunderts)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5231,
+    "name": "Vai trò của sở hữu trí tuệ trong công nghệ sinh học (Geistiges Eigentum in der Biotechnologie)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5232,
+    "name": "Đánh giá sự trỗi dậy của các nền kinh tế mới nổi (Aufstieg von Schwellenländern)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5233,
+    "name": "Tác động của sự ấm lên toàn cầu đối với băng tan ở hai cực (Schmelzen der Polarkappen)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5234,
+    "name": "Thảo luận về quyền con người và luật pháp quốc tế (Menschenrechte und internationales Recht)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5235,
+    "name": "Phân tích các trào lưu tư tưởng xã hội học hiện đại (Moderne soziologische Strömungen)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5236,
+    "name": "Vai trò của nghiên cứu cơ bản đối với tiến bộ công nghệ (Grundlagenforschung und Fortschritt)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5237,
+    "name": "Đánh giá chính sách bảo trợ xã hội và thu nhập cơ bản (Bedingungsloses Grundeinkommen)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5238,
+    "name": "Tương lai của các liên minh quân sự và an ninh đa phương (Zukunft militärischer Allianzen)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5239,
+    "name": "Phân tích các tác phẩm giao hưởng cổ điển vĩ đại của Beethoven (Sinfonien von Beethoven)",
+    "systemCode": "GOETHE",
+    "levelCode": "C2"
+  },
+  {
+    "id": 5200,
+    "name": "Phương pháp học tập hiệu quả tại trường đại học Đức (Effektive Lernmethoden an der Universität)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5201,
+    "name": "Sử dụng tài liệu số trong thư viện trường học (Digitale Ressourcen in der Universitätsbibliothek)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5202,
+    "name": "Cách chuẩn bị cho kỳ thi học kỳ đầu tiên (Vorbereitung auf die ersten Semesterprüfungen)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5203,
+    "name": "Đăng ký môn học và lập lịch trình thời khóa biểu (Kursanmeldung und Stundenplanerstellung)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5204,
+    "name": "Lợi ích của việc tham gia các nhóm học tập (Vorteile von Lerngruppen)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5205,
+    "name": "Vấn đề tìm nhà ở và ký túc xá sinh viên (Wohnungssuche und Studentenwohnheime)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5206,
+    "name": "Cách viết email trao đổi học tập với giáo sư (E-Mails an Professoren schreiben)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5207,
+    "name": "Quy định làm việc bán thời gian đối với sinh viên quốc tế (Arbeitsvorschriften für internationale Studierende)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5208,
+    "name": "Các dịch vụ hỗ trợ sinh viên nước ngoài của trường (Studentenwerk und Betreuung)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5209,
+    "name": "Tham gia các câu lạc bộ thể thao học đường (Hochschulsport nutzen)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5210,
+    "name": "Tầm quan trọng của việc tham gia tuần lễ định hướng (Orientierungswoche für Erstsemester)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5211,
+    "name": "Quản lý ngân sách chi tiêu hàng tháng của sinh viên (Monatsbudget der Studierenden verwalten)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5212,
+    "name": "Sử dụng nhà ăn sinh viên Mensa tiết kiệm và dinh dưỡng (Essen in der Mensa)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5213,
+    "name": "Tìm kiếm tài liệu nghiên cứu khoa học cơ bản (Recherche nach wissenschaftlicher Literatur)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5214,
+    "name": "Cách viết báo cáo thực hành thí nghiệm đơn giản (Einfache Laborberichte verfassen)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5215,
+    "name": "Kế hoạch tham gia khóa học tiếng Đức bổ trợ (Deutschkurse für Studierende)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5216,
+    "name": "Phương pháp ôn tập từ vựng chuyên ngành hiệu quả (Fachwortschatz effektiv lernen)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5217,
+    "name": "Chuẩn bị bài thuyết trình nhóm trên lớp (Gruppenpräsentationen vorbereiten)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5218,
+    "name": "Lợi ích của các chương trình trao đổi sinh viên (Vorteile von Austauschprogrammen)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5219,
+    "name": "Thích nghi với môi trường sống và học tập mới tại Đức (Einleben in Deutschland)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN3"
+  },
+  {
+    "id": 5220,
+    "name": "Kỹ năng viết bài luận học thuật đạt chuẩn Đức (Wissenschaftliches Schreiben)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5221,
+    "name": "Phương pháp phân tích biểu đồ và số liệu thống kê (Grafikbeschreibung und Datenanalyse)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5222,
+    "name": "Thuyết trình đề tài nghiên cứu khoa học trước hội đồng (Präsentation von Forschungsthemen)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5223,
+    "name": "Kỹ năng ghi chép bài giảng tốc ký của giáo sư (Mitschreiben in Vorlesungen)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5224,
+    "name": "Tham gia thảo luận chuyên đề và seminar học thuật (Teilnahme an Seminaren)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5225,
+    "name": "Cách trích dẫn tài liệu tham khảo tránh đạo văn (Zitierregeln und Plagiatsvermeidung)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5226,
+    "name": "Lập đề cương chi tiết cho luận văn tốt nghiệp (Exposé für die Abschlussarbeit)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5227,
+    "name": "Ứng tuyển học bổng nghiên cứu khoa học đại học (Bewerbung um Forschungsstipendien)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5228,
+    "name": "Phương pháp đọc hiểu tài liệu chuyên ngành nhanh (Lesestrategien für wissenschaftliche Texte)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5229,
+    "name": "Thảo luận các đề tài khoa học tự nhiên và công nghệ (Diskussion über naturwissenschaftliche Themen)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5230,
+    "name": "Tác động của chuyển đổi số trong giáo dục đại học (Digitalisierung der Hochschulbildung)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5231,
+    "name": "Quy trình đăng ký thực tập tại các doanh nghiệp Đức (Praktikumssuche in Deutschland)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5232,
+    "name": "Phát triển tư duy phản biện trong nghiên cứu học thuật (Kritisches Denken in der Forschung)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5233,
+    "name": "Kỹ năng quản lý thời gian khi làm bài thi TestDaF (Zeitmanagement bei der TestDaF-Prüfung)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5234,
+    "name": "Thảo luận về các chính sách giáo dục đại học miễn phí (Gebührenfreies Studium in Deutschland)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5235,
+    "name": "Tầm quan trọng của nghiên cứu liên ngành (Bedeutung interdisziplinärer Forschung)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5236,
+    "name": "Phân tích tác động của biến đổi khí hậu đối với nông nghiệp (Klimawandel und Landwirtschaft)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5237,
+    "name": "Vai trò của năng lượng sạch trong tương lai (Rolle sauberer Energien)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5238,
+    "name": "An ninh thông tin trong môi trường học đường số (Datensicherheit an Hochschulen)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5239,
+    "name": "Cách vượt qua rào cản ngôn ngữ khi viết báo cáo khoa học (Sprachbarrieren beim Schreiben überwinden)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN4"
+  },
+  {
+    "id": 5240,
+    "name": "Viết luận án tiến sĩ và nghiên cứu chuyên sâu (Promotion und fortgeschrittene Forschung)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5241,
+    "name": "Bảo vệ luận án tốt nghiệp thạc sĩ (Verteidigung der Masterarbeit)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5242,
+    "name": "Đăng tải bài báo khoa học trên các tạp chí quốc tế (Veröffentlichung wissenschaftlicher Artikel)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5243,
+    "name": "Phân tích các mô hình kinh tế vĩ mô phức tạp (Analyse komplexer makroökonomischer Modelle)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5244,
+    "name": "Đạo đức sinh học trong nghiên cứu y học hiện đại (Bioethik in der modernen Medizin)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5245,
+    "name": "Ứng dụng trí tuệ nhân tạo trong chuẩn đoán y tế (KI in der medizinischen Diagnostik)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5246,
+    "name": "Thách thức của việc lưu trữ và xử lý dữ liệu lớn (Herausforderungen von Big Data)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5247,
+    "name": "Địa chính trị toàn cầu và an ninh năng lượng (Globale Geopolitik und Energiesicherheit)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5248,
+    "name": "Đánh giá chính sách kinh tế xanh của Liên minh Châu Âu (EU-Green-Deal bewerten)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5249,
+    "name": "Mật mã học lượng tử và tương lai bảo mật (Quantenkryptographie und Sicherheit)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5250,
+    "name": "Phân tích triết học về bản chất của ngôn ngữ (Philosophie der Sprache)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5251,
+    "name": "Nghiên cứu cơ chế vật lý lượng tử tiên tiến (Fortgeschrittene Quantenmechanik)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5252,
+    "name": "Vai trò của sở hữu trí tuệ trong chuyển giao công nghệ (Patentrecht und Technologietransfer)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5253,
+    "name": "Phát triển các vật liệu nano siêu dẫn mới (Entwicklung von Supraleitern)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5254,
+    "name": "Thảo luận sâu về luật hiến pháp và quyền con người (Verfassungsrecht und Menschenrechte)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5255,
+    "name": "Tương lai của công nghệ tự hành và robot thông minh (Autonome Systeme und Robotik)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5256,
+    "name": "Phân tích cấu trúc gene và liệu pháp tế bào gốc (Genetik und Stammzellentherapie)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5257,
+    "name": "Giải quyết các cuộc khủng hoảng tài chính toàn cầu (Bewältigung globaler Finanzkrisen)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5258,
+    "name": "Bảo tồn hệ sinh thái rừng nhiệt đới đa dạng (Erhalt tropischer Ökosysteme)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  },
+  {
+    "id": 5259,
+    "name": "Thách thức phát triển đô thị thông minh bền vững (Smart Cities und Nachhaltigkeit)",
+    "systemCode": "TESTDAF",
+    "levelCode": "TDN5"
+  }
+]

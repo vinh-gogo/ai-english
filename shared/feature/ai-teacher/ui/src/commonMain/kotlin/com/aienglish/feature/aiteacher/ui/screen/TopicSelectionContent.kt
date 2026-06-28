@@ -41,9 +41,9 @@ fun getLevelColor(levelCode: String, colors: AppColors): Color {
         "A1", "300", "N5", "HSK1" -> Color(0xFF0284C7)      // Xanh dương Sky Blue
         "A2", "N4", "HSK2" -> Color(0xFF10B981)             // Xanh lá Emerald
         "B1", "500", "N3", "HSK3" -> Color(0xFFF59E0B)      // Vàng hổ phách Amber
-        "B2", "700", "N2", "HSK4" -> Color(0xFFEF4444)      // Đỏ Coral
-        "C1", "900", "N1", "HSK5" -> colors.accent          // Màu accent chính (Blood đỏ sẫm)
-        "C2", "HSK6" -> Color(0xFF8B5CF6)                   // Tím Violet
+        "B2", "700", "N2", "HSK4", "TDN3" -> Color(0xFFEF4444) // Đỏ Coral
+        "C1", "900", "N1", "HSK5", "TDN4" -> colors.accent  // Màu accent chính
+        "C2", "HSK6", "TDN5" -> Color(0xFF8B5CF6)           // Tím Violet
         else -> colors.accent
     }
 }
@@ -68,6 +68,9 @@ fun TopicSelectionContent(
         LevelType.HINDI -> state.selectedHindiLevel
         LevelType.DELF -> state.selectedDelfLevel
         LevelType.DALF -> state.selectedDalfLevel
+        LevelType.GOETHE -> state.selectedGoetheLevel
+        LevelType.TESTDAF -> state.selectedTestdafLevel
+        LevelType.TOPIK -> state.selectedTopikLevel
     }
     val levelColor = getLevelColor(activeLevelCode, colors)
 
@@ -281,6 +284,20 @@ fun TopicSelectionContent(
                             modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
                         )
                     }
+                } else if (state.targetLanguage == "ko") {
+                    // Only 1 option for Korean (TOPIK), display it as a simple tag
+                    Surface(
+                        shape = RoundedCornerShape(6.dp),
+                        color = colors.accent
+                    ) {
+                        Text(
+                            "TOPIK",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
+                        )
+                    }
                 } else if (state.targetLanguage == "hi") {
                     // Only 1 option for Hindi (HINDI), display it as a simple tag
                     Surface(
@@ -374,6 +391,47 @@ fun TopicSelectionContent(
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = if (state.levelType == LevelType.DALF) Color.White else colors.mutedText
+                            )
+                        }
+                    }
+                } else if (state.targetLanguage == "de") {
+                    // German: Show Goethe and TestDaF
+                    Row(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(colors.surfaceElevated)
+                            .padding(2.dp)
+                    ) {
+                        // Goethe Tab
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(if (state.levelType == LevelType.GOETHE) colors.accent else Color.Transparent)
+                                .clickable { viewModel.onLevelTypeSelected(LevelType.GOETHE) }
+                                .padding(horizontal = 12.dp, vertical = 4.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                "Goethe",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = if (state.levelType == LevelType.GOETHE) Color.White else colors.mutedText
+                            )
+                        }
+                        // TestDaF Tab
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(if (state.levelType == LevelType.TESTDAF) colors.accent else Color.Transparent)
+                                .clickable { viewModel.onLevelTypeSelected(LevelType.TESTDAF) }
+                                .padding(horizontal = 12.dp, vertical = 4.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                "TestDaF",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = if (state.levelType == LevelType.TESTDAF) Color.White else colors.mutedText
                             )
                         }
                     }
@@ -673,6 +731,90 @@ fun TopicSelectionContent(
                                         level,
                                         color = if (isSelected) Color.White else colors.mainText,
                                         fontSize = 13.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+                LevelType.GOETHE -> {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        listOf("A1", "A2", "B1", "B2", "C1", "C2").forEach { level ->
+                            val isSelected = level == state.selectedGoetheLevel
+                            Surface(
+                                modifier = Modifier.weight(1f).clickable { viewModel.onGoetheLevelSelected(level) },
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (isSelected) colors.accent else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
+                            ) {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        level,
+                                        color = if (isSelected) Color.White else colors.mainText,
+                                        fontSize = 13.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+                LevelType.TESTDAF -> {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        listOf("TDN3", "TDN4", "TDN5").forEach { level ->
+                            val isSelected = level == state.selectedTestdafLevel
+                            Surface(
+                                modifier = Modifier.weight(1f).clickable { viewModel.onTestdafLevelSelected(level) },
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (isSelected) colors.accent else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
+                            ) {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        level,
+                                        color = if (isSelected) Color.White else colors.mainText,
+                                        fontSize = 13.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+                LevelType.TOPIK -> {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        listOf("TOPIK1", "TOPIK2", "TOPIK3", "TOPIK4", "TOPIK5", "TOPIK6").forEach { level ->
+                            val isSelected = level == state.selectedTopikLevel
+                            Surface(
+                                modifier = Modifier.weight(1f).clickable { viewModel.onTopikLevelSelected(level) },
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (isSelected) colors.accent else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
+                            ) {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        level.replace("TOPIK", "T"),
+                                        color = if (isSelected) Color.White else colors.mainText,
+                                        fontSize = 11.sp,
                                         fontWeight = FontWeight.Bold
                                     )
                                 }

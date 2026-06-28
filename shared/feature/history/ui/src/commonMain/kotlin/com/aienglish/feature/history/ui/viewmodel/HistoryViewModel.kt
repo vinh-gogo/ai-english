@@ -1,8 +1,9 @@
 package com.aienglish.feature.history.ui.viewmodel
 
 import com.aienglish.core.common.viewmodel.BaseViewModel
+import com.aienglish.feature.history.application.usecase.ClearHistoryUseCase
+import com.aienglish.feature.history.application.usecase.GetAllHistoryUseCase
 import com.aienglish.feature.history.domain.model.LessonHistory
-import com.aienglish.feature.history.domain.repository.HistoryRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -15,7 +16,8 @@ data class HistoryState(
 )
 
 class HistoryViewModel(
-    private val historyRepository: HistoryRepository
+    private val getAllHistoryUseCase: GetAllHistoryUseCase,
+    private val clearHistoryUseCase: ClearHistoryUseCase
 ) : BaseViewModel<HistoryState>(HistoryState()) {
 
     init {
@@ -23,7 +25,7 @@ class HistoryViewModel(
     }
 
     private fun observeHistory() {
-        historyRepository.getAllHistory()
+        getAllHistoryUseCase()
             .onEach { items ->
                 setState { copy(items = items, isLoading = false, error = null) }
             }
@@ -36,7 +38,7 @@ class HistoryViewModel(
     fun clearHistory() {
         viewModelScope.launch {
             try {
-                historyRepository.clearHistory()
+                clearHistoryUseCase()
                 setState { copy(error = null) }
             } catch (e: Exception) {
                 setState { copy(error = "Không thể xóa lịch sử: ${e.message}") }

@@ -1,0 +1,110 @@
+[
+  {
+    "id": 6000,
+    "name": "Chào hỏi và giới thiệu bản thân (자기소개)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK1"
+  },
+  {
+    "id": 6001,
+    "name": "Mua sắm cơ bản và giá cả (물건 사기)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK1"
+  },
+  {
+    "id": 6002,
+    "name": "Gọi món ăn tại nhà hàng (음식 주문하기)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK1"
+  },
+  {
+    "id": 6003,
+    "name": "Gia đình và nghề nghiệp (가족과 직업)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK2"
+  },
+  {
+    "id": 6004,
+    "name": "Thời tiết và các mùa (날씨와 계절)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK2"
+  },
+  {
+    "id": 6005,
+    "name": "Kế hoạch cuối tuần và sở thích (주말 계획과 취미)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK2"
+  },
+  {
+    "id": 6006,
+    "name": "Sử dụng giao thông công cộng (대중교통 이용)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK3"
+  },
+  {
+    "id": 6007,
+    "name": "Hẹn gặp và đặt chỗ (약속 và 예약)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK3"
+  },
+  {
+    "id": 6008,
+    "name": "Sức khỏe và đi bệnh viện (건강과 병원 이용)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK3"
+  },
+  {
+    "id": 6009,
+    "name": "Môi trường công sở và công việc (직장 생활과 업무)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK4"
+  },
+  {
+    "id": 6010,
+    "name": "Mua sắm trực tuyến và thanh toán (인터넷 쇼핑과 결제)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK4"
+  },
+  {
+    "id": 6011,
+    "name": "Sự cố và cách giải quyết (사고와 문제 해결)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK4"
+  },
+  {
+    "id": 6012,
+    "name": "Vấn đề xã hội và môi trường (사회 문제와 환경)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK5"
+  },
+  {
+    "id": 6013,
+    "name": "Kinh tế và tài chính cá nhân (경제와 개인 금융)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK5"
+  },
+  {
+    "id": 6014,
+    "name": "Văn hóa và lễ hội truyền thống Hàn Quốc (한국 전통 문화와 축제)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK5"
+  },
+  {
+    "id": 6015,
+    "name": "Khoa học công nghệ và tương lai (과학 기술과 미래)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK6"
+  },
+  {
+    "id": 6016,
+    "name": "Thời sự, truyền thông và thông tin (시사와 언론)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK6"
+  },
+  {
+    "id": 6017,
+    "name": "Chính sách công và giáo dục (공공 정책과 교육)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK6"
+  }
+]

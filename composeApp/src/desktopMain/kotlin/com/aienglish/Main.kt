@@ -19,8 +19,10 @@ import com.aienglish.feature.aiteacher.ui.di.teacherUiModule
 import com.aienglish.feature.aiteacher.ui.screen.TeacherScreen
 import com.aienglish.feature.profile.data.di.profileDataModule
 import com.aienglish.feature.profile.ui.di.profileUiModule
+import com.aienglish.feature.profile.application.di.profileApplicationModule
 import com.aienglish.feature.history.data.di.historyDataModule
 import com.aienglish.feature.history.ui.di.historyUiModule
+import com.aienglish.feature.history.application.di.historyApplicationModule
 import com.aienglish.feature.pro.data.di.proDataModule
 import com.aienglish.feature.pro.ui.di.proUiModule
 import com.aienglish.feature.pro.application.di.proApplicationModule
@@ -53,7 +55,9 @@ fun main() {
             // Data module (HistoryRepository)
             teacherDataModule,
             profileDataModule,
+            profileApplicationModule,
             historyDataModule,
+            historyApplicationModule,
             proDataModule,
             proApplicationModule,
             module {

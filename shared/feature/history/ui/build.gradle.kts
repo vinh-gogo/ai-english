@@ -29,6 +29,7 @@ kotlin {
             implementation(libs.datetime)
             implementation(project(":shared:core:common"))
             implementation(project(":shared:core:designsystem"))
+            implementation(project(":shared:feature:history:application"))
             implementation(project(":shared:feature:history:domain"))
         }
         androidMain.dependencies {

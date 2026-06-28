@@ -33,6 +33,26 @@ fun getCompatibleLevels(activeLevel: String): List<String> {
         "HSK4" -> listOf("HSK1", "HSK2", "HSK3", "HSK4")
         "HSK5" -> listOf("HSK1", "HSK2", "HSK3", "HSK4", "HSK5")
         "HSK6" -> listOf("HSK1", "HSK2", "HSK3", "HSK4", "HSK5", "HSK6")
-        else -> listOf(activeLevel)
+        // TestDaF
+        "TDN3" -> listOf("TDN3")
+        "TDN4" -> listOf("TDN3", "TDN4")
+        "TDN5" -> listOf("TDN3", "TDN4", "TDN5")
+        // TOPIK
+        "TOPIK1" -> listOf("TOPIK1")
+        "TOPIK2" -> listOf("TOPIK1", "TOPIK2")
+        "TOPIK3" -> listOf("TOPIK1", "TOPIK2", "TOPIK3")
+        "TOPIK4" -> listOf("TOPIK1", "TOPIK2", "TOPIK3", "TOPIK4")
+        "TOPIK5" -> listOf("TOPIK1", "TOPIK2", "TOPIK3", "TOPIK4", "TOPIK5")
+        "TOPIK6" -> listOf("TOPIK1", "TOPIK2", "TOPIK3", "TOPIK4", "TOPIK5", "TOPIK6")
+        else -> when (activeLevel) {
+            // Goethe shares CEFR names, so let's match them here as fallback
+            "A1" -> listOf("A1")
+            "A2" -> listOf("A1", "A2")
+            "B1" -> listOf("A1", "A2", "B1")
+            "B2" -> listOf("A1", "A2", "B1", "B2")
+            "C1" -> listOf("A1", "A2", "B1", "B2", "C1")
+            "C2" -> listOf("A1", "A2", "B1", "B2", "C1", "C2")
+            else -> listOf(activeLevel)
+        }
     }
 }

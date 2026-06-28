@@ -491,6 +491,8 @@ private fun LanguageSettingsSection(
                 "es" -> "Tiếng Tây Ban Nha"
                 "hi" -> "Tiếng Hindi"
                 "fr" -> "Tiếng Pháp"
+                "de" -> "Tiếng Đức"
+                "ko" -> "Tiếng Hàn"
                 else -> "Tiếng Anh"
             }
 
@@ -503,22 +505,26 @@ private fun LanguageSettingsSection(
                         .clickable { expanded = true }
                         .padding(horizontal = 12.dp, vertical = 6.dp)
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    Box(
+                        contentAlignment = Alignment.Center
                     ) {
-                        Text(
-                            currentLabel,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = colors.mainText
-                        )
-                        Icon(
-                            imageVector = Icons.Default.ArrowDropDown,
-                            contentDescription = null,
-                            tint = colors.mutedText,
-                            modifier = Modifier.size(16.dp)
-                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            Text(
+                                currentLabel,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = colors.mainText
+                            )
+                            Icon(
+                                imageVector = Icons.Default.ArrowDropDown,
+                                contentDescription = null,
+                                tint = colors.mutedText,
+                                modifier = Modifier.size(16.dp)
+                            )
+                        }
                     }
                 }
 
@@ -566,6 +572,20 @@ private fun LanguageSettingsSection(
                         text = { Text("Tiếng Pháp", fontSize = 13.sp, color = colors.mainText) },
                         onClick = {
                             vm.onLanguageTargetChanged("fr")
+                            expanded = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Tiếng Đức", fontSize = 13.sp, color = colors.mainText) },
+                        onClick = {
+                            vm.onLanguageTargetChanged("de")
+                            expanded = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Tiếng Hàn", fontSize = 13.sp, color = colors.mainText) },
+                        onClick = {
+                            vm.onLanguageTargetChanged("ko")
                             expanded = false
                         }
                     )

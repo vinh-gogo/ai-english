@@ -1,7 +1,7 @@
 package com.aienglish.feature.profile.ui.viewmodel
 
 import com.aienglish.core.common.viewmodel.BaseViewModel
-import com.aienglish.feature.profile.domain.repository.ProfileRepository
+import com.aienglish.feature.profile.application.usecase.*
 import kotlinx.coroutines.launch
 
 data class ProfileState(
@@ -23,13 +23,21 @@ data class ProfileState(
 )
 
 class ProfileViewModel(
-    private val repository: ProfileRepository
+    private val getUserProfileUseCase: GetUserProfileUseCase,
+    private val getApiKeyUseCase: GetApiKeyUseCase,
+    private val saveApiKeyUseCase: SaveApiKeyUseCase,
+    private val updateLanguageTargetUseCase: UpdateLanguageTargetUseCase,
+    private val updateDisplayNameUseCase: UpdateDisplayNameUseCase,
+    private val updateUserEmailUseCase: UpdateUserEmailUseCase,
+    private val updateSignInStatusUseCase: UpdateSignInStatusUseCase,
+    private val clearProfileUseCase: ClearProfileUseCase,
+    private val updatePaidStatusUseCase: UpdatePaidStatusUseCase
 ) : BaseViewModel<ProfileState>(ProfileState()) {
 
     init {
         // Collect reactive user profile
         viewModelScope.launch {
-            repository.getUserProfile().collect { profile ->
+            getUserProfileUseCase().collect { profile ->
                 setState {
                     copy(
                         isSignedIn = profile.isSignedIn,
@@ -45,7 +53,7 @@ class ProfileViewModel(
         
         // Load API key async
         viewModelScope.launch {
-            val key = repository.getApiKey()
+            val key = getApiKeyUseCase()
             setState { copy(apiKeyInput = key) }
         }
     }
@@ -56,7 +64,7 @@ class ProfileViewModel(
 
     fun setPaid(value: Boolean) {
         viewModelScope.launch {
-            repository.updatePaidStatus(value)
+            updatePaidStatusUseCase(value)
         }
     }
 
@@ -70,7 +78,7 @@ class ProfileViewModel(
         val key = currentState.apiKeyInput.trim()
         if (key.isEmpty()) { setState { copy(error = "API Key không được để trống") }; return }
         viewModelScope.launch {
-            repository.saveApiKey(key)
+            saveApiKeyUseCase(key)
             setState { copy(apiKeySaved = true, error = null) }
         }
     }
@@ -79,23 +87,23 @@ class ProfileViewModel(
 
     fun onLanguageTargetChanged(lang: String) {
         viewModelScope.launch {
-            repository.updateLanguageTarget(lang)
+            updateLanguageTargetUseCase(lang)
         }
     }
 
     fun onSignedIn(name: String, email: String) {
         viewModelScope.launch {
-            repository.updateDisplayName(name)
-            repository.updateUserEmail(email)
-            repository.updateSignInStatus(true)
+            updateDisplayNameUseCase(name)
+            updateUserEmailUseCase(email)
+            updateSignInStatusUseCase(true)
         }
     }
 
     fun signInAsGuest() {
         viewModelScope.launch {
-            repository.updateDisplayName("Khách")
-            repository.updateUserEmail("guest@aienglish.com")
-            repository.updateSignInStatus(true)
+            updateDisplayNameUseCase("Khách")
+            updateUserEmailUseCase("guest@aienglish.com")
+            updateSignInStatusUseCase(true)
         }
     }
 
@@ -104,7 +112,7 @@ class ProfileViewModel(
 
     fun signOut() {
         viewModelScope.launch {
-            repository.clearProfile()
+            clearProfileUseCase()
         }
     }
 

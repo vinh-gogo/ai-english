@@ -21,7 +21,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
 enum class LevelType {
-    CEFR, TOEIC, JLPT, HSK, DELE, SIELE, HINDI, DELF, DALF
+    CEFR, TOEIC, JLPT, HSK, DELE, SIELE, HINDI, DELF, DALF, GOETHE, TESTDAF, TOPIK
 }
 
 data class TeacherUiState(
@@ -39,6 +39,9 @@ data class TeacherUiState(
     val selectedHindiLevel: String = "B1",
     val selectedDelfLevel: String = "B1",
     val selectedDalfLevel: String = "C1",
+    val selectedGoetheLevel: String = "B1",
+    val selectedTestdafLevel: String = "TDN4",
+    val selectedTopikLevel: String = "TOPIK3",
     val targetLanguage: String = "en",
     val isCustomTopicMode: Boolean = false,
     val customTopicInput: String = "",
@@ -72,6 +75,9 @@ data class TeacherUiState(
         LevelType.HINDI -> "Hindi $selectedHindiLevel"
         LevelType.DELF -> "DELF $selectedDelfLevel"
         LevelType.DALF -> "DALF $selectedDalfLevel"
+        LevelType.GOETHE -> "Goethe $selectedGoetheLevel"
+        LevelType.TESTDAF -> "TestDaF $selectedTestdafLevel"
+        LevelType.TOPIK -> selectedTopikLevel
     }
 }
 
@@ -90,13 +96,15 @@ class TeacherViewModel(
     private var loadTopicsJob: Job? = null
 
     init {
-        val target = prefs.getLanguageTarget() // "en", "ja", "zh", "es", "hi", "fr"
+        val target = prefs.getLanguageTarget() // "en", "ja", "zh", "es", "hi", "fr", "de", "ko"
         val expectedType = when (target) {
             "ja" -> LevelType.JLPT
             "zh" -> LevelType.HSK
             "es" -> LevelType.DELE
             "hi" -> LevelType.HINDI
             "fr" -> LevelType.DELF
+            "de" -> LevelType.GOETHE
+            "ko" -> LevelType.TOPIK
             else -> LevelType.CEFR
         }
         val expectedLevel = when (expectedType) {
@@ -107,6 +115,9 @@ class TeacherViewModel(
             LevelType.HINDI -> currentState.selectedHindiLevel
             LevelType.DELF -> currentState.selectedDelfLevel
             LevelType.DALF -> currentState.selectedDalfLevel
+            LevelType.GOETHE -> currentState.selectedGoetheLevel
+            LevelType.TESTDAF -> currentState.selectedTestdafLevel
+            LevelType.TOPIK -> currentState.selectedTopikLevel
             else -> currentState.selectedCefrLevel
         }
         setState {
@@ -133,9 +144,11 @@ class TeacherViewModel(
         val currentDeleTopics = topicRepository.getTopics("DELE", listOf("A1"))
         val currentHindiTopics = topicRepository.getTopics("HINDI", listOf("A1"))
         val currentFrenchTopics = topicRepository.getTopics("DELF", listOf("A1"))
+        val currentGermanTopics = topicRepository.getTopics("GOETHE", listOf("A1"))
+        val currentKoreanTopics = topicRepository.getTopics("TOPIK", listOf("TOPIK1"))
         if (currentTopics.isEmpty() || currentJapaneseTopics.size < 120 || currentChineseTopics.isEmpty() || 
             currentToeicTopics.isEmpty() || currentDeleTopics.isEmpty() || currentHindiTopics.isEmpty() ||
-            currentFrenchTopics.isEmpty()) {
+            currentFrenchTopics.isEmpty() || currentGermanTopics.isEmpty() || currentKoreanTopics.isEmpty()) {
             topicRepository.seedDatabase()
         }
     }
@@ -151,6 +164,9 @@ class TeacherViewModel(
             LevelType.HINDI -> "HINDI"
             LevelType.DELF -> "DELF"
             LevelType.DALF -> "DALF"
+            LevelType.GOETHE -> "GOETHE"
+            LevelType.TESTDAF -> "TESTDAF"
+            LevelType.TOPIK -> "TOPIK"
         }
         loadTopicsJob?.cancel()
         loadTopicsJob = viewModelScope.launch {
@@ -180,6 +196,8 @@ class TeacherViewModel(
                 "es" -> LevelType.DELE
                 "hi" -> LevelType.HINDI
                 "fr" -> LevelType.DELF
+                "de" -> LevelType.GOETHE
+                "ko" -> LevelType.TOPIK
                 else -> LevelType.CEFR
             }
             val expectedLevel = when (expectedType) {
@@ -190,6 +208,9 @@ class TeacherViewModel(
                 LevelType.HINDI -> currentState.selectedHindiLevel
                 LevelType.DELF -> currentState.selectedDelfLevel
                 LevelType.DALF -> currentState.selectedDalfLevel
+                LevelType.GOETHE -> currentState.selectedGoetheLevel
+                LevelType.TESTDAF -> currentState.selectedTestdafLevel
+                LevelType.TOPIK -> currentState.selectedTopikLevel
                 else -> currentState.selectedCefrLevel
             }
             setState {
@@ -217,6 +238,9 @@ class TeacherViewModel(
             LevelType.HINDI -> currentState.selectedHindiLevel
             LevelType.DELF -> currentState.selectedDelfLevel
             LevelType.DALF -> currentState.selectedDalfLevel
+            LevelType.GOETHE -> currentState.selectedGoetheLevel
+            LevelType.TESTDAF -> currentState.selectedTestdafLevel
+            LevelType.TOPIK -> currentState.selectedTopikLevel
         }
         setState { copy(levelType = type) }
         loadTopics(type, activeLevel)
@@ -265,6 +289,21 @@ class TeacherViewModel(
     fun onDalfLevelSelected(level: String) {
         setState { copy(selectedDalfLevel = level) }
         loadTopics(LevelType.DALF, level)
+    }
+
+    fun onGoetheLevelSelected(level: String) {
+        setState { copy(selectedGoetheLevel = level) }
+        loadTopics(LevelType.GOETHE, level)
+    }
+
+    fun onTestdafLevelSelected(level: String) {
+        setState { copy(selectedTestdafLevel = level) }
+        loadTopics(LevelType.TESTDAF, level)
+    }
+
+    fun onTopikLevelSelected(level: String) {
+        setState { copy(selectedTopikLevel = level) }
+        loadTopics(LevelType.TOPIK, level)
     }
 
     // ── Lesson Navigation ──
@@ -471,6 +510,9 @@ class TeacherViewModel(
                     LevelType.HINDI -> "HINDI"
                     LevelType.DELF -> "DELF"
                     LevelType.DALF -> "DALF"
+                    LevelType.GOETHE -> "GOETHE"
+                    LevelType.TESTDAF -> "TESTDAF"
+                    LevelType.TOPIK -> "TOPIK"
                 }
                 
                 val compatible = getCompatibleLevels(levelValue)
@@ -533,6 +575,9 @@ class TeacherViewModel(
                     LevelType.HINDI -> "HINDI"
                     LevelType.DELF -> "DELF"
                     LevelType.DALF -> "DALF"
+                    LevelType.GOETHE -> "GOETHE"
+                    LevelType.TESTDAF -> "TESTDAF"
+                    LevelType.TOPIK -> "TOPIK"
                 }
 
                 val compatible = getCompatibleLevels(levelValue)
@@ -609,6 +654,9 @@ class TeacherViewModel(
         val isHindi = level.startsWith("Hindi")
         val isDelf = level.startsWith("DELF")
         val isDalf = level.startsWith("DALF")
+        val isGoethe = level.startsWith("Goethe")
+        val isTestdaf = level.startsWith("TestDaF")
+        val isTopik = level.startsWith("TOPIK")
         
         val expectedType = when {
             isToeic -> LevelType.TOEIC
@@ -619,6 +667,9 @@ class TeacherViewModel(
             isHindi -> LevelType.HINDI
             isDelf -> LevelType.DELF
             isDalf -> LevelType.DALF
+            isGoethe -> LevelType.GOETHE
+            isTestdaf -> LevelType.TESTDAF
+            isTopik -> LevelType.TOPIK
             else -> LevelType.CEFR
         }
         val levelValue = when {
@@ -628,6 +679,8 @@ class TeacherViewModel(
             isHindi -> level.removePrefix("Hindi ").trim()
             isDelf -> level.removePrefix("DELF ").trim()
             isDalf -> level.removePrefix("DALF ").trim()
+            isGoethe -> level.removePrefix("Goethe ").trim()
+            isTestdaf -> level.removePrefix("TestDaF ").trim()
             else -> level
         }
         return expectedType to levelValue
@@ -665,6 +718,9 @@ class TeacherViewModel(
                     LevelType.HINDI -> "HINDI"
                     LevelType.DELF -> "DELF"
                     LevelType.DALF -> "DALF"
+                    LevelType.GOETHE -> "GOETHE"
+                    LevelType.TESTDAF -> "TESTDAF"
+                    LevelType.TOPIK -> "TOPIK"
                 }
 
                 val compatible = getCompatibleLevels(levelValue)

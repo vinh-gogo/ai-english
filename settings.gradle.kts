@@ -41,11 +41,13 @@ include(":shared:feature:ai-teacher:ui")
 
 // ── shared:feature:profile ──
 include(":shared:feature:profile:domain")
+include(":shared:feature:profile:application")
 include(":shared:feature:profile:data")
 include(":shared:feature:profile:ui")
 
 // ── shared:feature:history ──
 include(":shared:feature:history:domain")
+include(":shared:feature:history:application")
 include(":shared:feature:history:data")
 include(":shared:feature:history:ui")
 

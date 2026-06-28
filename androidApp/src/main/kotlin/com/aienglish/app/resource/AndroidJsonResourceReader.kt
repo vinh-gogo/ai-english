@@ -14,6 +14,8 @@ class AndroidJsonResourceReader(private val context: Context) : JsonResourceRead
     override suspend fun readSpanishTopicsJson(): String = readAsset("files/spanish_topics.json")
     override suspend fun readHindiTopicsJson(): String = readAsset("files/hindi_topics.json")
     override suspend fun readFrenchTopicsJson(): String = readAsset("files/french_topics.json")
+    override suspend fun readGermanTopicsJson(): String = readAsset("files/german_topics.json")
+    override suspend fun readKoreanTopicsJson(): String = readAsset("files/korean_topics.json")
 
     private suspend fun readAsset(path: String): String = withContext(Dispatchers.IO) {
         val stream = context.assets.open(path)
