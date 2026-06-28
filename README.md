@@ -89,43 +89,18 @@ ai-english/
 
 ### 📊 Bảng xếp hạng Top 10 Ngôn ngữ (Năm 2026)
 
-   Hạng │ Ngôn ngữ               │ Tổng số người nói … │ Đặc điểm nổi bật
-  ──────┼────────────────────────┼─────────────────────┼────────────────────────
-   1    │ Tiếng Anh (English)    │ ~1.49 – 1.53 tỷ     │ Ngôn ngữ toàn cầu
-        │                        │                     │ (Lingua Franca) cho
-        │                        │                     │ kinh doanh, khoa học,
-        │                        │                     │ và công nghệ. Phần lớn
-        │                        │                     │ là người học sử dụng
-        │                        │                     │ (non-native).
-   2    │ Tiếng Trung Quốc       │ ~1.14 – 1.18 tỷ     │ Có số lượng người bản
-        │ (Mandarin Chinese)     │                     │ xứ (native speakers)
-        │                        │                     │ đông nhất thế giới.
-   3    │ Tiếng Hindi            │ ~600 – 629 triệu    │ Phát triển rất nhanh
-        │                        │                     │ do quy mô và cơ cấu
-        │                        │                     │ dân số trẻ tại Ấn Độ.
-   4    │ Tiếng Tây Ban Nha      │ ~560 – 590 triệu    │ Ngôn ngữ chính thức
-        │ (Spanish)              │                     │ tại hơn 20 quốc gia,
-        │                        │                     │ cực kỳ phổ biến ở châu
-        │                        │                     │ Mỹ và châu Âu.
-   5    │ Tiếng Ả Rập (Standard  │ ~335 – 422 triệu    │ Bao gồm nhiều phương
-        │ Arabic)                │                     │ ngôn khác nhau thuộc
-        │                        │                     │ khối các nước Ả Rập.
-   6    │ Tiếng Pháp (French)    │ ~312 – 416 triệu    │ Tăng trưởng mạnh mẽ ở
-        │                        │                     │ khu vực châu Phi nhờ
-        │                        │                     │ sự bùng nổ dân số và
-        │                        │                     │ kết nối kỹ thuật số.
-   7    │ Tiếng Bengali          │ ~273 – 284 triệu    │ Ngôn ngữ chính thức
-        │                        │                     │ của Bangladesh và một
-        │                        │                     │ số bang của Ấn Độ.
-   8    │ Tiếng Bồ Đào Nha       │ ~267 – 282 triệu    │ Phổ biến nhất ở
-        │ (Portuguese)           │                     │ Brazil, tiếp theo là
-        │                        │                     │ Bồ Đào Nha và một số
-        │                        │                     │ quốc gia châu Phi.
-   9    │ Tiếng Urdu             │ ~232 – 246 triệu    │ Được sử dụng rộng rãi
-        │                        │                     │ tại Pakistan và Ấn Độ.
-   10   │ Tiếng Indonesia        │ ~200 – 255 triệu    │ Đứng thứ 10 nhờ quy mô
-        │                        │                     │ dân số lớn của quốc
-        │                        │                     │ gia vạn đảo Indonesia.
+| Hạng | Ngôn ngữ | Tổng số người nói (2026) | Đặc điểm nổi bật |
+| :--- | :--- | :--- | :--- |
+| 1 | Tiếng Anh (English) | ~1.49 – 1.53 tỷ | Ngôn ngữ toàn cầu (Lingua Franca) cho kinh doanh, khoa học, và công nghệ. Phần lớn là người học sử dụng (non-native). |
+| 2 | Tiếng Trung Quốc (Mandarin Chinese) | ~1.14 – 1.18 tỷ | Có số lượng người bản xứ (native speakers) đông nhất thế giới. |
+| 3 | Tiếng Hindi | ~600 – 629 triệu | Phát triển rất nhanh do quy mô và cơ cấu dân số trẻ tại Ấn Độ. |
+| 4 | Tiếng Tây Ban Nha (Spanish) | ~560 – 590 triệu | Ngôn ngữ chính thức tại hơn 20 quốc gia, cực kỳ phổ biến ở châu Mỹ và châu Âu. |
+| 5 | Tiếng Ả Rập (Standard Arabic) | ~335 – 422 triệu | Bao gồm nhiều phương ngôn khác nhau thuộc khối các nước Ả Rập. |
+| 6 | Tiếng Pháp (French) | ~312 – 416 triệu | Tăng trưởng mạnh mẽ ở khu vực châu Phi nhờ sự bùng nổ dân số và kết nối kỹ thuật số. |
+| 7 | Tiếng Bengali | ~273 – 284 triệu | Ngôn ngữ chính thức của Bangladesh và một số bang của Ấn Độ. |
+| 8 | Tiếng Bồ Đào Nha (Portuguese) | ~267 – 282 triệu | Phổ biến nhất ở Brazil, tiếp theo là Bồ Đào Nha và một số quốc gia châu Phi. |
+| 9 | Tiếng Urdu | ~232 – 246 triệu | Được sử dụng rộng rãi tại Pakistan và Ấn Độ. |
+| 10 | Tiếng Indonesia | ~200 – 255 triệu | Đứng thứ 10 nhờ quy mô dân số lớn của quốc gia vạn đảo Indonesia. |
 
 ---
 
