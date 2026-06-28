@@ -30,6 +30,9 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonArray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -294,6 +297,26 @@ private fun HistoryItem(
     onReTest: () -> Unit,
     onContinue: () -> Unit
 ) {
+    val json = remember { Json { ignoreUnknownKeys = true } }
+    val completed = remember(item.explanationsData) {
+        item.explanationsData?.let { data ->
+            try {
+                json.parseToJsonElement(data).jsonObject.size
+            } catch (e: Exception) {
+                0
+            }
+        } ?: 0
+    }
+    val total = remember(item.lessonData) {
+        item.lessonData?.let { data ->
+            try {
+                json.parseToJsonElement(data).jsonObject["sentences"]?.jsonArray?.size
+            } catch (e: Exception) {
+                null
+            }
+        } ?: 10
+    }
+
     Card(
         colors = CardDefaults.cardColors(containerColor = colors.surface),
         shape = RoundedCornerShape(12.dp),
@@ -371,7 +394,7 @@ private fun HistoryItem(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(6.dp)
                     ) {
-                        val statusText = if (isCompleted) "✓ Hoàn thành" else "⏳ Đang học"
+                        val statusText = if (isCompleted) "✓ Hoàn thành" else "⏳ Đang học ($completed/$total câu)"
                         Text(
                             statusText,
                             fontSize = 12.sp,
