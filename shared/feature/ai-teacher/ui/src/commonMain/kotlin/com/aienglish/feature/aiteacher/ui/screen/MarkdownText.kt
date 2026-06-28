@@ -224,6 +224,7 @@ fun MarkdownText(
             .replace("""(?<!\*)\*["“]([^"“”\n]{1,50})["”]\*(?!\*)""".toRegex(), "***\"$1\"***")
             .replace("""(?<!_)_["“]([^"“”\n]{1,50})["”]_(?!_)""".toRegex(), "***\"$1\"***")
             .replace("""(?<=^|\W)(?<![\*_])["“]([^"“”\n]{1,50})["”](?=$|\W)(?![\*_])""".toRegex(), "**\"$1\"**")
+            .replace("""(?<![\*_])\(([^)\n]{1,150})\)(?![\*_])""".toRegex(), "*($1)*")
     }
     val blocks = remember(processedMarkdown) { parseBlocks(processedMarkdown) }
 
