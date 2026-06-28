@@ -28,6 +28,7 @@ val GEMINI_MODEL_CHAIN = listOf(
 )
 
 class GeminiClient(private val httpClient: HttpClient) {
+    private val json = Json { ignoreUnknownKeys = true; isLenient = true }
 
     /**
      * Generate content with automatic fallback across model chain.
@@ -149,7 +150,6 @@ class GeminiClient(private val httpClient: HttpClient) {
 
     private fun parseQuotaError(rawBody: String): Exception {
         return try {
-            val json = Json { ignoreUnknownKeys = true }
             val root = json.parseToJsonElement(rawBody).jsonObject
             val errorObj = root["error"]?.jsonObject ?: return GeminiRateLimitException(30L)
             
@@ -179,7 +179,6 @@ class GeminiClient(private val httpClient: HttpClient) {
     }
 
     private fun extractTextFromResponse(body: String, model: String): String {
-        val json = Json { ignoreUnknownKeys = true }
         val root = try {
             json.parseToJsonElement(body).jsonObject
         } catch (e: Exception) {
@@ -213,7 +212,6 @@ class GeminiClient(private val httpClient: HttpClient) {
 
     private fun extractErrorMessage(body: String): String {
         return try {
-            val json = Json { ignoreUnknownKeys = true }
             val root = json.parseToJsonElement(body).jsonObject
             root["error"]?.jsonObject?.get("message")?.jsonPrimitive?.content ?: body
         } catch (e: Exception) {
@@ -227,7 +225,6 @@ class GeminiClient(private val httpClient: HttpClient) {
                 "https://generativelanguage.googleapis.com/v1beta/models?key=$apiKey"
             )
             val body = response.bodyAsText()
-            val json = Json { ignoreUnknownKeys = true }
             val root = json.parseToJsonElement(body).jsonObject
             root["models"]?.jsonArray?.mapNotNull { model ->
                 val name = model.jsonObject["name"]?.jsonPrimitive?.content ?: return@mapNotNull null
