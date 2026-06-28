@@ -298,6 +298,7 @@ private fun HistoryItem(
     onReTest: () -> Unit,
     onContinue: () -> Unit
 ) {
+    val isCompleted = item.status == HistoryStatus.COMPLETED
     val json = remember { Json { ignoreUnknownKeys = true } }
     val completed = remember(item.explanationsData) {
         item.explanationsData?.let { data ->
@@ -330,27 +331,27 @@ private fun HistoryItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                // Left Status Icon
-                val isCompleted = item.status == HistoryStatus.COMPLETED
-                val circleColor = if (isCompleted) colors.correct else Color(0xFFFFA726)
+                // Left Status Icon (Refined Squircle style)
+                val iconColor = if (isCompleted) colors.correct else Color(0xFFFFA726)
                 Box(
                     modifier = Modifier
-                        .size(40.dp)
-                        .clip(CircleShape)
-                        .background(circleColor.copy(0.12f)),
+                        .size(36.dp)
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(iconColor.copy(0.08f))
+                        .border(0.5.dp, iconColor.copy(0.15f), RoundedCornerShape(10.dp)),
                     contentAlignment = Alignment.Center
                 ) {
                     if (isCompleted) {
                         Icon(
-                            Icons.Rounded.CheckCircle, null,
-                            tint = circleColor,
-                            modifier = Modifier.size(20.dp)
+                            Icons.Rounded.Check, null,
+                            tint = iconColor,
+                            modifier = Modifier.size(18.dp)
                         )
                     } else {
                         Icon(
-                            Icons.Rounded.HourglassTop, null,
-                            tint = circleColor,
-                            modifier = Modifier.size(18.dp)
+                            Icons.Rounded.HourglassBottom, null,
+                            tint = iconColor,
+                            modifier = Modifier.size(16.dp)
                         )
                     }
                 }
@@ -401,7 +402,7 @@ private fun HistoryItem(
                         Text(
                             text = statusText,
                             fontSize = 12.sp,
-                            color = circleColor,
+                            color = iconColor,
                             fontWeight = FontWeight.Medium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
@@ -416,8 +417,19 @@ private fun HistoryItem(
                         )
                     }
                 }
+            }
 
-                // Premium Score Badge on the right
+            Spacer(Modifier.height(8.dp))
+            HorizontalDivider(color = colors.border.copy(alpha = 0.5f))
+            Spacer(Modifier.height(8.dp))
+
+            // Action Buttons
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Score Badge (căn lề bên trái)
                 if (isCompleted) {
                     val scoreVal = item.score ?: 0
                     val scoreColor = when {
@@ -428,34 +440,28 @@ private fun HistoryItem(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
-                            .background(scoreColor.copy(0.1f))
-                            .border(0.5.dp, scoreColor.copy(0.3f), RoundedCornerShape(8.dp))
+                            .background(scoreColor.copy(0.08f))
+                            .border(0.5.dp, scoreColor.copy(0.2f), RoundedCornerShape(8.dp))
                             .padding(horizontal = 8.dp, vertical = 4.dp)
                     ) {
                         Text(
                             text = "$scoreVal/10 điểm",
-                            fontSize = 12.sp,
+                            fontSize = 11.sp,
                             fontWeight = FontWeight.ExtraBold,
                             color = scoreColor
                         )
                     }
+                } else {
+                    Spacer(Modifier.width(1.dp))
                 }
-            }
 
-            Spacer(Modifier.height(8.dp))
-            HorizontalDivider(color = colors.border.copy(alpha = 0.5f))
-            Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.weight(1f))
 
-            // Action Buttons
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+                // Action buttons on the right
                 if (item.status == HistoryStatus.IN_PROGRESS && !item.lessonData.isNullOrEmpty()) {
                     TextButton(
                         onClick = onContinue,
-                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
                         modifier = Modifier.height(32.dp)
                     ) {
                         Icon(Icons.Rounded.PlayArrow, null, modifier = Modifier.size(14.dp), tint = colors.accent)
@@ -468,7 +474,7 @@ private fun HistoryItem(
                 if (item.status == HistoryStatus.COMPLETED && !item.lessonData.isNullOrEmpty()) {
                     TextButton(
                         onClick = onReview,
-                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
                         modifier = Modifier.height(32.dp)
                     ) {
                         Icon(Icons.Rounded.Visibility, null, modifier = Modifier.size(14.dp), tint = colors.accent)
@@ -480,15 +486,15 @@ private fun HistoryItem(
 
                 Button(
                     onClick = onReTest,
-                    colors = ButtonDefaults.buttonColors(containerColor = colors.accent.copy(alpha = 0.1f)),
-                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = colors.accent.copy(alpha = 0.08f)),
+                    contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier.height(32.dp)
                 ) {
                     Icon(Icons.Rounded.Replay, null, modifier = Modifier.size(14.dp), tint = colors.accent)
                     Spacer(Modifier.width(4.dp))
                     Text(
-                        if (item.status == HistoryStatus.COMPLETED) "Luyện tập lại" else "Làm lại từ đầu",
+                        text = if (item.status == HistoryStatus.COMPLETED) "Luyện tập lại" else "Làm lại",
                         fontSize = 12.sp,
                         color = colors.accent,
                         fontWeight = FontWeight.Bold
