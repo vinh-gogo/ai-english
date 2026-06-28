@@ -219,7 +219,10 @@ fun MarkdownText(
     markdown: String,
     colors: AppColors
 ) {
-    val blocks = remember(markdown) { parseBlocks(markdown) }
+    val processedMarkdown = remember(markdown) {
+        markdown.replace("""(?<!\*)["“]([^"“”\n]+)["”](?!\*)""".toRegex(), "**\"$1\"**")
+    }
+    val blocks = remember(processedMarkdown) { parseBlocks(processedMarkdown) }
 
     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
         for (block in blocks) {
