@@ -63,6 +63,9 @@ fun TopicSelectionContent(
         LevelType.TOEIC -> state.selectedToeicLevel
         LevelType.JLPT -> state.selectedJlptLevel
         LevelType.HSK -> state.selectedHskLevel
+        LevelType.DELE -> state.selectedDeleLevel
+        LevelType.SIELE -> state.selectedSieleLevel
+        LevelType.HINDI -> state.selectedHindiLevel
     }
     val levelColor = getLevelColor(activeLevelCode, colors)
 
@@ -276,6 +279,61 @@ fun TopicSelectionContent(
                             modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
                         )
                     }
+                } else if (state.targetLanguage == "hi") {
+                    // Only 1 option for Hindi (HINDI), display it as a simple tag
+                    Surface(
+                        shape = RoundedCornerShape(6.dp),
+                        color = colors.accent
+                    ) {
+                        Text(
+                            "Hindi",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
+                        )
+                    }
+                } else if (state.targetLanguage == "es") {
+                    // Spanish: Show DELE and SIELE
+                    Row(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(colors.surfaceElevated)
+                            .padding(2.dp)
+                    ) {
+                        // DELE Tab
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(if (state.levelType == LevelType.DELE) colors.accent else Color.Transparent)
+                                .clickable { viewModel.onLevelTypeSelected(LevelType.DELE) }
+                                .padding(horizontal = 12.dp, vertical = 4.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                "DELE",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = if (state.levelType == LevelType.DELE) Color.White else colors.mutedText
+                            )
+                        }
+                        // SIELE Tab
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(if (state.levelType == LevelType.SIELE) colors.accent else Color.Transparent)
+                                .clickable { viewModel.onLevelTypeSelected(LevelType.SIELE) }
+                                .padding(horizontal = 12.dp, vertical = 4.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                "SIELE",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = if (state.levelType == LevelType.SIELE) Color.White else colors.mutedText
+                            )
+                        }
+                    }
                 } else {
                     // English: Show CEFR and TOEIC
                     Row(
@@ -432,6 +490,90 @@ fun TopicSelectionContent(
                                         level.replace("HSK", "H"),
                                         color = if (isSelected) Color.White else colors.mainText,
                                         fontSize = 12.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+                LevelType.DELE -> {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        listOf("A1", "A2", "B1", "B2", "C1", "C2").forEach { level ->
+                            val isSelected = level == state.selectedDeleLevel
+                            Surface(
+                                modifier = Modifier.weight(1f).clickable { viewModel.onDeleLevelSelected(level) },
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (isSelected) colors.accent else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
+                            ) {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        level,
+                                        color = if (isSelected) Color.White else colors.mainText,
+                                        fontSize = 13.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+                LevelType.SIELE -> {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        listOf("A1", "A2", "B1", "B2", "C1").forEach { level ->
+                            val isSelected = level == state.selectedSieleLevel
+                            Surface(
+                                modifier = Modifier.weight(1f).clickable { viewModel.onSieleLevelSelected(level) },
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (isSelected) colors.accent else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
+                            ) {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        level,
+                                        color = if (isSelected) Color.White else colors.mainText,
+                                        fontSize = 13.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+                LevelType.HINDI -> {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        listOf("A1", "A2", "B1", "B2").forEach { level ->
+                            val isSelected = level == state.selectedHindiLevel
+                            Surface(
+                                modifier = Modifier.weight(1f).clickable { viewModel.onHindiLevelSelected(level) },
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (isSelected) colors.accent else colors.surface,
+                                border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
+                            ) {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        level,
+                                        color = if (isSelected) Color.White else colors.mainText,
+                                        fontSize = 13.sp,
                                         fontWeight = FontWeight.Bold
                                     )
                                 }

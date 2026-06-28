@@ -9,6 +9,8 @@ interface TopicRepository {
         levelsJson: String,
         englishTopicsJson: String,
         japaneseTopicsJson: String,
-        chineseTopicsJson: String
+        chineseTopicsJson: String,
+        spanishTopicsJson: String,
+        hindiTopicsJson: String
     )
 }

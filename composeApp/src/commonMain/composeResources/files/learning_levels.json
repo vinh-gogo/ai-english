@@ -103,5 +103,60 @@
         "systemCode":  "HSK",
         "levelCode":  "HSK6",
         "name":  "HSK 6"
+    },
+    {
+        "systemCode":  "DELE",
+        "levelCode":  "A1",
+        "name":  "DELE A1"
+    },
+    {
+        "systemCode":  "DELE",
+        "levelCode":  "A2",
+        "name":  "DELE A2"
+    },
+    {
+        "systemCode":  "DELE",
+        "levelCode":  "B1",
+        "name":  "DELE B1"
+    },
+    {
+        "systemCode":  "DELE",
+        "levelCode":  "B2",
+        "name":  "DELE B2"
+    },
+    {
+        "systemCode":  "DELE",
+        "levelCode":  "C1",
+        "name":  "DELE C1"
+    },
+    {
+        "systemCode":  "DELE",
+        "levelCode":  "C2",
+        "name":  "DELE C2"
+    },
+    {
+        "systemCode":  "SIELE",
+        "levelCode":  "A1",
+        "name":  "SIELE A1"
+    },
+    {
+        "systemCode":  "SIELE",
+        "levelCode":  "A2",
+        "name":  "SIELE A2"
+    },
+    {
+        "systemCode":  "SIELE",
+        "levelCode":  "B1",
+        "name":  "SIELE B1"
+    },
+    {
+        "systemCode":  "SIELE",
+        "levelCode":  "B2",
+        "name":  "SIELE B2"
+    },
+    {
+        "systemCode":  "SIELE",
+        "levelCode":  "C1",
+        "name":  "SIELE C1"
     }
 ]

@@ -9,7 +9,7 @@ import java.util.Properties
 fun createDesktopDriver(): SqlDriver {
     val dbDir = File(System.getProperty("user.home"), ".ai-english")
     dbDir.mkdirs()
-    val dbFile = File(dbDir, "ai_english_v3.db")
+    val dbFile = File(dbDir, "ai_english_v4.db")
     val isNew = !dbFile.exists()
     val driver = JdbcSqliteDriver(
         url = "jdbc:sqlite:${dbFile.absolutePath}",

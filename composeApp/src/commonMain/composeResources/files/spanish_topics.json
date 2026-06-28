@@ -1,0 +1,2402 @@
+[
+  {
+    "id": 2000,
+    "name": "Chào hỏi và giới thiệu cơ bản (¡Hola! ¿Cómo estás? - Xin chào! Bạn khỏe không?)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2001,
+    "name": "Tên, tuổi và quốc tịch (Mi nombre es Juan, tengo 25 años - Tôi tên là Juan, 25 tuổi)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2002,
+    "name": "Hỏi thăm sức khỏe xã giao (¿Qué tal? ¿Cómo te va? - Thế nào rồi? Công việc thế nào?)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2003,
+    "name": "Số đếm từ 1 đến 100 (Los números de 1 a 100)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2004,
+    "name": "Hỏi giờ và thời gian (¿Qué hora es? - Mấy giờ rồi?)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2005,
+    "name": "Các thứ trong tuần và các tháng (Días de la semana y meses - Thứ trong tuần và các tháng)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2006,
+    "name": "Mô tả màu sắc cơ bản (Los colores - Màu sắc)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2007,
+    "name": "Giới thiệu các thành viên gia đình (Mi familia - Gia đình tôi)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2008,
+    "name": "Món ăn và đồ uống yêu thích (Comida y bebida - Đồ ăn và thức uống)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2009,
+    "name": "Hỏi đường đi đơn giản (¿Dónde está la estación? - Nhà ga ở đâu?)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2010,
+    "name": "Nói về thời tiết hôm nay (¿Qué tiempo hace hoy? - Thời tiết hôm nay thế nào?)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2011,
+    "name": "Gọi tên các con vật nuôi quen thuộc (Las mascotas - Thú cưng)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2012,
+    "name": "Mô tả quần áo và trang phục (La ropa - Quần áo)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2013,
+    "name": "Nói về sở thích cá nhân đơn giản (Mis pasatiempos - Sở thích của tôi)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2014,
+    "name": "Mô tả ngôi nhà và căn phòng (Mi casa y mi habitación - Nhà và phòng của tôi)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2015,
+    "name": "Hỏi giá tiền khi mua sắm cơ bản (¿Cuánto cuesta? - Giá bao nhiêu?)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2016,
+    "name": "Các hoạt động vào buổi sáng (Mi rutina de la mañana - Thói quen buổi sáng)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2017,
+    "name": "Các hoạt động vào buổi tối (Mi rutina de la noche - Thói quen buổi tối)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2018,
+    "name": "Các loại đồ uống phổ biến (Bebidas comunes - Đồ uống phổ biến)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2019,
+    "name": "Trường học và môn học yêu thích (Mi escuela y asignaturas - Trường và môn học)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2020,
+    "name": "Nói về nghề nghiệp của các thành viên (Profesiones - Nghề nghiệp)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2021,
+    "name": "Chào hỏi lịch sự trong văn phòng (Saludos formales - Chào hỏi trang trọng)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2022,
+    "name": "Kế hoạch đi chơi cuối tuần (Planes para el fin de semana - Kế hoạch cuối tuần)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2023,
+    "name": "Đi siêu thị mua thực phẩm (En el supermercado - Trong siêu thị)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2024,
+    "name": "Mô tả một người bạn thân (Mi mejor amigo - Bạn thân của tôi)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2025,
+    "name": "Cảm ơn và xin lỗi lịch sự (Gracias y perdón - Cảm ơn và xin lỗi)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2026,
+    "name": "Các bộ phận cơ thể người (Partes del cuerpo - Các bộ phận cơ thể)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2027,
+    "name": "Gọi điện thoại hỏi thăm đơn giản (Llamada telefónica - Cuộc gọi điện thoại)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2028,
+    "name": "Nói về quê hương của mình (Mi ciudad natal - Thành phố quê hương)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2029,
+    "name": "Đặt món ăn tại quán cà phê (En la cafetería - Ở quán cà phê)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2030,
+    "name": "Phương tiện giao thông đi lại hàng ngày (Medios de transporte - Phương tiện giao thông)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2031,
+    "name": "Tìm kiếm đồ đạc bị thất lạc (Objetos perdidos - Đồ đạc bị mất)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2032,
+    "name": "Hẹn giờ gặp mặt bạn bè (Hacer una cita - Hẹn gặp mặt)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2033,
+    "name": "Mua vé xe buýt hoặc vé tàu (Comprar un billete - Mua vé)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2034,
+    "name": "Nói về bộ phim yêu thích (Mi película favorita - Bộ phim yêu thích của tôi)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2035,
+    "name": "Giới thiệu một ca sĩ/bài hát yêu thích (Música favorita - Âm nhạc yêu thích)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2036,
+    "name": "Các hoạt động thể thao nâng cao sức khỏe (Deportes - Thể thao)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2037,
+    "name": "Nói về các mùa trong năm (Las estaciones - Các mùa)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2038,
+    "name": "Chúc mừng sinh nhật đồng nghiệp (Feliz cumpleaños - Chúc mừng sinh nhật)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2039,
+    "name": "Nhờ người khác giúp đỡ việc nhỏ (Pedir ayuda - Nhờ giúp đỡ)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2040,
+    "name": "Mô tả một ngày nghỉ thư thái (Un día libre - Một ngày nghỉ)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2041,
+    "name": "Hỏi thăm số điện thoại và email (Datos de contacto - Thông tin liên hệ)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2042,
+    "name": "Mô tả các đồ vật trong phòng khách (El salón - Phòng khách)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2043,
+    "name": "Nói về bữa ăn sáng cùng gia đình (El desayuno - Bữa sáng)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2044,
+    "name": "Đi nhà sách mua văn phòng phẩm (En la librería - Trong hiệu sách)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2045,
+    "name": "Nói về dự định ngày mai (Planes para mañana - Kế hoạch ngày mai)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2046,
+    "name": "Trái cây và rau củ phổ biến (Frutas y verduras - Trái cây và rau củ)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2047,
+    "name": "Chào tạm biệt hẹn gặp lại (Adiós, hasta luego - Tạm biệt, hẹn gặp lại)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2048,
+    "name": "Nói về thói quen đọc sách (Hábito de lectura - Thói quen đọc sách)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2049,
+    "name": "Mô tả một công việc bận rộn (Un día ocupado - Một ngày bận rộn)",
+    "systemCode": "DELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2050,
+    "name": "Đi nhà hàng gọi món ăn truyền thống Tây Ban Nha (Tapas y Paella)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2051,
+    "name": "Đi bệnh viện khám sức khỏe định kỳ (En el hospital)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2052,
+    "name": "Đón bạn bè ở sân bay Madrid (En el aeropuerto de Madrid)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2053,
+    "name": "Thuê phòng trọ hoặc căn hộ nhỏ (Alquilar un piso)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2054,
+    "name": "Mua vé xem phim trực tuyến (Comprar entradas de cine)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2055,
+    "name": "So sánh chiều cao, cân nặng và ngoại hình (Comparaciones)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2056,
+    "name": "Nói về thói quen ăn uống lành mạnh (Comida saludable)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2057,
+    "name": "Đi hiệu cắt tóc thay đổi kiểu tóc mới (En la peluquería)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2058,
+    "name": "Chuẩn bị quà tặng sinh nhật cho mẹ (Regalo para mamá)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2059,
+    "name": "Nói về các môn học ở trường đại học (Materias universitarias)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2060,
+    "name": "Bàn bạc về kế hoạch tiệc cuối năm (Fiesta de fin de año)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2061,
+    "name": "Mua thẻ điện thoại và đăng ký mạng di động (Tarjeta SIM)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2062,
+    "name": "Giới thiệu công ty và văn phòng làm việc (Mi oficina)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2063,
+    "name": "Hỏi thăm giờ làm việc của ngân hàng (Horario del banco)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2064,
+    "name": "Mô tả thời tiết bốn mùa ở Barcelona (El clima en Barcelona)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2065,
+    "name": "Nói về dự định kết hôn hoặc mua nhà (Planes de futuro)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2066,
+    "name": "Thảo luận về trận đấu bóng đá của Real Madrid (El partido de fútbol)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2067,
+    "name": "Đi mua sắm đồ điện tử gia dụng mới (Electrodomésticos)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2068,
+    "name": "Nói về công việc làm thêm của sinh viên (Trabajo a tiempo parcial)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2069,
+    "name": "Đặt vé máy bay khứ hồi đi Seville (Vuelo a Sevilla)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2070,
+    "name": "Hỏi về các lễ hội truyền thống Tây Ban Nha (Fiestas tradicionales)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2071,
+    "name": "Hướng dẫn sử dụng máy pha cà phê (Usar la cafetera)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2072,
+    "name": "Nói về các trò chơi điện tử phổ biến (Videojuegos)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2073,
+    "name": "Tìm kiếm một công việc sau tốt nghiệp (Buscar trabajo)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2074,
+    "name": "Lợi ích của việc chạy bộ buổi sáng (Correr por la mañana)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2075,
+    "name": "Đi trung tâm thương mại mua sắm giảm giá (Rebajas)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2076,
+    "name": "Trao đổi tài khoản mạng xã hội (Redes sociales)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2077,
+    "name": "Chia sẻ cảm xúc khi lần đầu đến Tây Ban Nha (Primer viaje a España)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2078,
+    "name": "Nói về việc học bơi lội vào mùa hè (Aprender a nadar)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2079,
+    "name": "Mua bánh ngọt và trà sữa cho bữa chiều (Merienda)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2080,
+    "name": "Hỏi ý kiến bạn bè về việc chọn trang phục (Pedir opinión)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2081,
+    "name": "Mô tả thú cưng đáng yêu của bạn (Mi mascota querida)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2082,
+    "name": "Nói về lịch trình làm việc bận rộn (Un día de trabajo duro)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2083,
+    "name": "Chúc mừng năm mới và chúc sức khỏe (Feliz Año Nuevo)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2084,
+    "name": "Đi bộ dạo công viên vào ngày cuối tuần (Pasear por el parque)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2085,
+    "name": "Thảo luận về việc chuẩn bị hành lý du lịch (Preparar la maleta)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2086,
+    "name": "Hỏi thăm đường đi đến bảo tàng Prado (Camino al Museo del Prado)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2087,
+    "name": "Đi bưu điện gửi bưu phẩm ra nước ngoài (Enviar un paquete)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2088,
+    "name": "Nói về ước mơ nghề nghiệp tương lai (Mi profesión ideal)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2089,
+    "name": "Tổ chức buổi dã ngoại ngoài trời cùng lớp (Picnic con la clase)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2090,
+    "name": "Cách chăm sóc cây cảnh trong nhà (Cuidar las plantas)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2091,
+    "name": "Bàn bạc về việc đi ăn lẩu vào ngày lạnh (Comer juntos)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2092,
+    "name": "Mua sắm giày thể thao chất lượng tốt (Zapatos deportivos)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2093,
+    "name": "Hỏi thăm giá cả phòng tập gym gần nhà (El gimnasio)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2094,
+    "name": "Nói về việc học nấu một món ăn mới (Aprender a cocinar)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2095,
+    "name": "Mô tả một chuyến đi chơi biển mùa hè (Un día en la playa)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2096,
+    "name": "Hỏi thăm thủ tục làm thẻ thư viện (Tarjeta de biblioteca)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2097,
+    "name": "Nói về sở thích cắm trại ngoài trời (Ir de cámping)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2098,
+    "name": "Bàn luận về món tráng miệng churros nổi tiếng (Churros con chocolate)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2099,
+    "name": "Cách chuẩn bị cho một chuyến đi chơi xa (Planificar un viaje)",
+    "systemCode": "DELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2100,
+    "name": "Đồng nghiệp trao đổi dự án phát triển mới (Reunión de trabajo)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2101,
+    "name": "Báo cáo tiến độ công việc hàng tuần (Informe semanal)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2102,
+    "name": "Nói về lịch sử và văn hóa phong phú của Tây Ban Nha (Historia de España)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2103,
+    "name": "Đi bảo tàng nghệ thuật Reina Sofía (Visita al museo)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2104,
+    "name": "Tìm hiểu về điệu nhảy Flamenco truyền thống (El baile Flamenco)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2105,
+    "name": "Nói về tác phẩm văn học Đôn Ki-hô-tê (Don Quijote de la Mancha)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2106,
+    "name": "Thảo luận về vấn đề ô nhiễm môi trường đô thị (Contaminación)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2107,
+    "name": "Bảo vệ động vật quý hiếm hoang dã (Animales en peligro de extinción)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2108,
+    "name": "Nói về tầm quan trọng của việc học ngoại ngữ (Aprender idiomas)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2109,
+    "name": "Kinh nghiệm đi phượt bằng xe máy ở Mallorca (Viaje en moto)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2110,
+    "name": "Trải nghiệm mua sắm trực tuyến trên Amazon Tây Ban Nha",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2111,
+    "name": "Mô tả tính cách tốt đẹp của một người bạn (Rasgos de personalidad)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2112,
+    "name": "Nói về những khó khăn khi sống xa nhà (Vivir lejos de casa)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2113,
+    "name": "Cách giải tỏa áp lực sau giờ làm việc bận rộn (Reducir el estrés)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2114,
+    "name": "Bàn luận về lợi ích của việc đọc sách giấy (Leer libros de papel)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2115,
+    "name": "Tham gia câu lạc bộ chơi đàn guitar (Club de guitarra)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2116,
+    "name": "Chế độ ăn chay tốt cho sức khỏe (Dieta vegetariana)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2117,
+    "name": "Cách lên kế hoạch quản lý thời gian hiệu quả (Gestión del tiempo)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2118,
+    "name": "Tổ chức tiệc nướng BBQ ngoài trời (Hacer una barbacoa)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2119,
+    "name": "Hỏi thăm kinh nghiệm phỏng vấn visa du học (Entrevista de visado)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2120,
+    "name": "Nói về ngày hội thể thao của trường học (Día del deporte)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2121,
+    "name": "Bàn luận về ảnh hưởng của mạng xã hội (Impacto de las redes sociales)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2122,
+    "name": "Cách sơ cứu vết thương cơ bản tại nhà (Primeros auxilios)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2123,
+    "name": "Thảo luận về lối sống tối giản hiện nay (Estilo de vida minimalista)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2124,
+    "name": "Đi mua hoa trang trí nhà cửa đón Giáng sinh (Decoración navideña)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2125,
+    "name": "Nói về sở thích chụp ảnh nghệ thuật (Fotografía artística)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2126,
+    "name": "Trải nghiệm đi tàu điện ngầm giờ cao điểm (Metro en hora punta)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2127,
+    "name": "Bàn luận về việc học đại học trực tuyến (Estudiar en línea)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2128,
+    "name": "Cách làm một video ngắn đăng lên mạng xã hội (Crear un video corto)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2129,
+    "name": "Hỏi thăm thủ tục gia hạn hộ chiếu (Renovar el pasaporte)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2130,
+    "name": "Nói về thần tượng âm nhạc của bạn (Ídolo musical)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2131,
+    "name": "Bàn luận về việc giữ gìn vệ sinh công cộng (Limpieza pública)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2132,
+    "name": "Cách tự sửa chữa đồ điện gia dụng đơn giản (Reparaciones domésticas)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2133,
+    "name": "Tham quan phố cổ Madrid và thưởng thức trà chiều (Paseo por Madrid)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2134,
+    "name": "Kỷ niệm ngày đầu tiên đi làm ở công ty mới (Primer día de trabajo)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2135,
+    "name": "Cách chuẩn bị bài thuyết trình thuyết phục (Preparar una presentación)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2136,
+    "name": "Bàn luận về việc tiết kiệm điện nước gia đình (Ahorrar energía)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2137,
+    "name": "Đi cắm trại trên núi vào mùa thu (Cámping en la montaña)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2138,
+    "name": "Hỏi thăm về thủ tục mua bảo hiểm y tế (Seguro médico)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2139,
+    "name": "Nói về giá trị của tình cảm gia đình ấm áp (Valores familiares)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2140,
+    "name": "Tìm hiểu về lễ hội cà chua La Tomatina độc đáo",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2141,
+    "name": "Bàn luận về văn hóa ngủ trưa Siesta của người Tây Ban Nha",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2142,
+    "name": "Cách viết email công việc lịch sự bằng tiếng Tây Ban Nha",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2143,
+    "name": "Nói về trải nghiệm đi xem đấu bò tót (La corrida de toros)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2144,
+    "name": "Kế hoạch tài chính tiết kiệm mua ô tô mới (Ahorrar para un coche)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2145,
+    "name": "Bảo tồn các kiến trúc cổ thời kỳ Phục hưng (Arquitectura antigua)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2146,
+    "name": "Cách ứng phó với tình huống khẩn cấp khi du lịch",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2147,
+    "name": "Thảo luận về lợi ích của việc tập thiền (Meditar)",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2148,
+    "name": "Nói về vai trò của hoạt động thể thao đồng đội",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2149,
+    "name": "Chia sẻ cảm xúc khi hoàn thành một mục tiêu lớn",
+    "systemCode": "DELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2150,
+    "name": "Phỏng vấn xin việc vào tập đoàn đa quốc gia (Entrevista de trabajo)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2151,
+    "name": "Thương lượng lương bổng và phúc lợi xã hội (Negociar el salario)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2152,
+    "name": "Thảo luận về xu hướng phát triển trí tuệ nhân tạo (IA)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2153,
+    "name": "Ảnh hưởng của biến đổi khí hậu toàn cầu (Cambio climático)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2154,
+    "name": "Tìm hiểu về kiến trúc nhà thờ Sagrada Família độc đáo của Gaudí",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2155,
+    "name": "Lịch sử và ý nghĩa của cung điện Alhambra ở Granada",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2156,
+    "name": "Kinh nghiệm khởi nghiệp kinh doanh nhỏ (Emprender un negocio)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2157,
+    "name": "Thảo luận về thị trường chứng khoán và đầu tư (Bolsa de valores)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2158,
+    "name": "Quản lý tài chính cá nhân và đầu tư thông minh (Finanzas personales)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2159,
+    "name": "Nói về phong trào bảo vệ môi trường xanh (Movimiento ecologista)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2160,
+    "name": "Tác động của thương mại điện tử đến ngành bán lẻ (Comercio electrónico)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2161,
+    "name": "Ý nghĩa của ngày Quốc khánh Tây Ban Nha 12 tháng 10",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2162,
+    "name": "Tầm quan trọng của việc rèn luyện tư duy phản biện (Pensamiento crítico)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2163,
+    "name": "Bàn luận về vấn đề già hóa dân số trong xã hội (Envejecimiento de la población)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2164,
+    "name": "Tìm hiểu về ẩm thực Địa Trung Hải tốt cho sức khỏe (Dieta mediterránea)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2165,
+    "name": "Kinh nghiệm xin học bổng du học của chính phủ Tây Ban Nha",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2166,
+    "name": "Thảo luận về việc phân loại rác thải tại nguồn (Reciclaje)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2167,
+    "name": "Ảnh hưởng của quảng cáo đến hành vi người tiêu dùng (Publicidad)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2168,
+    "name": "Tầm quan trọng của việc bảo mật thông tin cá nhân (Privacidad de datos)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2169,
+    "name": "Bàn luận về văn hóa làm việc và sự cân bằng cuộc sống",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2170,
+    "name": "Tìm hiểu về các phát minh lớn của các nhà khoa học Tây Ban Nha",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2171,
+    "name": "Lợi ích của việc thiền định đối với trí não và tâm lý",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2172,
+    "name": "Thảo luận về xu hướng phát triển của xe điện (Vehículos eléctricos)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2173,
+    "name": "Kinh nghiệm tham gia hoạt động hướng nghiệp (Orientación profesional)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2174,
+    "name": "Bàn luận về sự khác biệt thế hệ trong gia đình (Brecha generacional)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2175,
+    "name": "Tác động của du lịch đại chúng đến văn hóa bản địa (Turismo de masas)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2176,
+    "name": "Cách đối phó với khủng hoảng tâm lý tuổi trẻ (Crisis de identidad)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2177,
+    "name": "Thảo luận về tương lai của năng lượng tái tạo (Energías renovables)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2178,
+    "name": "Tìm hiểu về điệu múa Salsa và Bachata sôi động",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2179,
+    "name": "Kinh nghiệm học thi chứng chỉ DELE cao cấp (Preparar el DELE)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2180,
+    "name": "Ảnh hưởng của game online đến kết quả học tập (Juegos en línea)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2181,
+    "name": "Tầm quan trọng của trí tuệ cảm xúc (EQ) trong sự nghiệp",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2182,
+    "name": "Bàn luận về trào lưu làm việc tự do (Freelancer)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2183,
+    "name": "Cách duy trì mối quan hệ đồng nghiệp tốt đẹp (Relaciones laborales)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2184,
+    "name": "Thảo luận về an toàn giao thông đường bộ (Seguridad vial)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2185,
+    "name": "Tìm hiểu về rượu vang Rioja nổi tiếng toàn cầu (Vino de Rioja)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2186,
+    "name": "Ý nghĩa của việc học tập suốt đời (Aprendizaje continuo)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2187,
+    "name": "Tác động của sách điện tử đến ngành xuất bản (Libros electrónicos)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2188,
+    "name": "Kinh nghiệm tổ chức sự kiện quy mô vừa ở công ty",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2189,
+    "name": "Tầm quan trọng của giấc ngủ đối với hiệu suất làm việc",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2190,
+    "name": "Ảnh hưởng của đô thị hóa đến vùng nông thôn (Urbanización)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2191,
+    "name": "Bàn luận về việc bảo tồn di sản văn hóa thế giới UNESCO",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2192,
+    "name": "Cách xây dựng thương hiệu cá nhân trực tuyến (Marca personal)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2193,
+    "name": "Tìm hiểu về các danh họa nổi tiếng Picasso, Dalí và Goya",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2194,
+    "name": "Kinh nghiệm đi du lịch bụi nước ngoài an toàn (Viajar de mochilero)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2195,
+    "name": "Thảo luận về xu hướng làm việc từ xa (Teletrabajo)",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2196,
+    "name": "Tầm quan trọng của việc duy trì thái độ sống tích cực",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2197,
+    "name": "Phân tích chiến lược phát triển kinh tế xanh bền vững",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2198,
+    "name": "Bảo vệ đa dạng sinh học các hệ sinh thái tự nhiên",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2199,
+    "name": "Vai trò của liên minh châu Âu (EU) đối với Tây Ban Nha",
+    "systemCode": "DELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2200,
+    "name": "Chào hỏi và giới thiệu cơ bản (¡Hola! ¿Cómo estás? - Xin chào! Bạn khỏe không?)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2201,
+    "name": "Tên, tuổi và quốc tịch (Mi nombre es Juan, tengo 25 años - Tôi tên là Juan, 25 tuổi)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2202,
+    "name": "Hỏi thăm sức khỏe xã giao (¿Qué tal? ¿Cómo te va? - Thế nào rồi? Công việc thế nào?)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2203,
+    "name": "Số đếm từ 1 đến 100 (Los números de 1 a 100)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2204,
+    "name": "Hỏi giờ và thời gian (¿Qué hora es? - Mấy giờ rồi?)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2205,
+    "name": "Các thứ trong tuần và các tháng (Días de la semana y meses - Thứ trong tuần và các tháng)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2206,
+    "name": "Mô tả màu sắc cơ bản (Los colores - Màu sắc)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2207,
+    "name": "Giới thiệu các thành viên gia đình (Mi familia - Gia đình tôi)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2208,
+    "name": "Món ăn và đồ uống yêu thích (Comida y bebida - Đồ ăn và thức uống)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2209,
+    "name": "Hỏi đường đi đơn giản (¿Dónde está la estación? - Nhà ga ở đâu?)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2210,
+    "name": "Nói về thời tiết hôm nay (¿Qué tiempo hace hoy? - Thời tiết hôm nay thế nào?)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2211,
+    "name": "Gọi tên các con vật nuôi quen thuộc (Las mascotas - Thú cưng)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2212,
+    "name": "Mô tả quần áo và trang phục (La ropa - Quần áo)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2213,
+    "name": "Nói về sở thích cá nhân đơn giản (Mis pasatiempos - Sở thích của tôi)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2214,
+    "name": "Mô tả ngôi nhà và căn phòng (Mi casa y mi habitación - Nhà và phòng của tôi)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2215,
+    "name": "Hỏi giá tiền khi mua sắm cơ bản (¿Cuánto cuesta? - Giá bao nhiêu?)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2216,
+    "name": "Các hoạt động vào buổi sáng (Mi rutina de la mañana - Thói quen buổi sáng)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2217,
+    "name": "Các hoạt động vào buổi tối (Mi rutina de la noche - Thói quen buổi tối)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2218,
+    "name": "Các loại đồ uống phổ biến (Bebidas comunes - Đồ uống phổ biến)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2219,
+    "name": "Trường học và môn học yêu thích (Mi escuela y asignaturas - Trường và môn học)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2220,
+    "name": "Nói về nghề nghiệp của các thành viên (Profesiones - Nghề nghiệp)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2221,
+    "name": "Chào hỏi lịch sự trong văn phòng (Saludos formales - Chào hỏi trang trọng)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2222,
+    "name": "Kế hoạch đi chơi cuối tuần (Planes para el fin de semana - Kế hoạch cuối tuần)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2223,
+    "name": "Đi siêu thị mua thực phẩm (En el supermercado - Trong siêu thị)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2224,
+    "name": "Mô tả một người bạn thân (Mi mejor amigo - Bạn thân của tôi)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2225,
+    "name": "Cảm ơn và xin lỗi lịch sự (Gracias y perdón - Cảm ơn và xin lỗi)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2226,
+    "name": "Các bộ phận cơ thể người (Partes del cuerpo - Các bộ phận cơ thể)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2227,
+    "name": "Gọi điện thoại hỏi thăm đơn giản (Llamada telefónica - Cuộc gọi điện thoại)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2228,
+    "name": "Nói về quê hương của mình (Mi ciudad natal - Thành phố quê hương)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2229,
+    "name": "Đặt món ăn tại quán cà phê (En la cafetería - Ở quán cà phê)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2230,
+    "name": "Phương tiện giao thông đi lại hàng ngày (Medios de transporte - Phương tiện giao thông)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2231,
+    "name": "Tìm kiếm đồ đạc bị thất lạc (Objetos perdidos - Đồ đạc bị mất)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2232,
+    "name": "Hẹn giờ gặp mặt bạn bè (Hacer una cita - Hẹn gặp mặt)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2233,
+    "name": "Mua vé xe buýt hoặc vé tàu (Comprar un billete - Mua vé)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2234,
+    "name": "Nói về bộ phim yêu thích (Mi película favorita - Bộ phim yêu thích của tôi)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2235,
+    "name": "Giới thiệu một ca sĩ/bài hát yêu thích (Música favorita - Âm nhạc yêu thích)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2236,
+    "name": "Các hoạt động thể thao nâng cao sức khỏe (Deportes - Thể thao)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2237,
+    "name": "Nói về các mùa trong năm (Las estaciones - Các mùa)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2238,
+    "name": "Chúc mừng sinh nhật đồng nghiệp (Feliz cumpleaños - Chúc mừng sinh nhật)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2239,
+    "name": "Nhờ người khác giúp đỡ việc nhỏ (Pedir ayuda - Nhờ giúp đỡ)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2240,
+    "name": "Mô tả một ngày nghỉ thư thái (Un día libre - Một ngày nghỉ)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2241,
+    "name": "Hỏi thăm số điện thoại và email (Datos de contacto - Thông tin liên hệ)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2242,
+    "name": "Mô tả các đồ vật trong phòng khách (El salón - Phòng khách)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2243,
+    "name": "Nói về bữa ăn sáng cùng gia đình (El desayuno - Bữa sáng)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2244,
+    "name": "Đi nhà sách mua văn phòng phẩm (En la librería - Trong hiệu sách)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2245,
+    "name": "Nói về dự định ngày mai (Planes para mañana - Kế hoạch ngày mai)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2246,
+    "name": "Trái cây và rau củ phổ biến (Frutas y verduras - Trái cây và rau củ)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2247,
+    "name": "Chào tạm biệt hẹn gặp lại (Adiós, hasta luego - Tạm biệt, hẹn gặp lại)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2248,
+    "name": "Nói về thói quen đọc sách (Hábito de lectura - Thói quen đọc sách)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2249,
+    "name": "Mô tả một công việc bận rộn (Un día ocupado - Một ngày bận rộn)",
+    "systemCode": "SIELE",
+    "levelCode": "A1"
+  },
+  {
+    "id": 2250,
+    "name": "Đi nhà hàng gọi món ăn truyền thống Tây Ban Nha (Tapas y Paella)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2251,
+    "name": "Đi bệnh viện khám sức khỏe định kỳ (En el hospital)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2252,
+    "name": "Đón bạn bè ở sân bay Madrid (En el aeropuerto de Madrid)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2253,
+    "name": "Thuê phòng trọ hoặc căn hộ nhỏ (Alquilar un piso)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2254,
+    "name": "Mua vé xem phim trực tuyến (Comprar entradas de cine)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2255,
+    "name": "So sánh chiều cao, cân nặng và ngoại hình (Comparaciones)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2256,
+    "name": "Nói về thói quen ăn uống lành mạnh (Comida saludable)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2257,
+    "name": "Đi hiệu cắt tóc thay đổi kiểu tóc mới (En la peluquería)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2258,
+    "name": "Chuẩn bị quà tặng sinh nhật cho mẹ (Regalo para mamá)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2259,
+    "name": "Nói về các môn học ở trường đại học (Materias universitarias)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2260,
+    "name": "Bàn bạc về kế hoạch tiệc cuối năm (Fiesta de fin de año)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2261,
+    "name": "Mua thẻ điện thoại và đăng ký mạng di động (Tarjeta SIM)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2262,
+    "name": "Giới thiệu công ty và văn phòng làm việc (Mi oficina)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2263,
+    "name": "Hỏi thăm giờ làm việc của ngân hàng (Horario del banco)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2264,
+    "name": "Mô tả thời tiết bốn mùa ở Barcelona (El clima en Barcelona)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2265,
+    "name": "Nói về dự định kết hôn hoặc mua nhà (Planes de futuro)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2266,
+    "name": "Thảo luận về trận đấu bóng đá của Real Madrid (El partido de fútbol)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2267,
+    "name": "Đi mua sắm đồ điện tử gia dụng mới (Electrodomésticos)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2268,
+    "name": "Nói về công việc làm thêm của sinh viên (Trabajo a tiempo parcial)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2269,
+    "name": "Đặt vé máy bay khứ hồi đi Seville (Vuelo a Sevilla)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2270,
+    "name": "Hỏi về các lễ hội truyền thống Tây Ban Nha (Fiestas tradicionales)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2271,
+    "name": "Hướng dẫn sử dụng máy pha cà phê (Usar la cafetera)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2272,
+    "name": "Nói về các trò chơi điện tử phổ biến (Videojuegos)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2273,
+    "name": "Tìm kiếm một công việc sau tốt nghiệp (Buscar trabajo)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2274,
+    "name": "Lợi ích của việc chạy bộ buổi sáng (Correr por la mañana)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2275,
+    "name": "Đi trung tâm thương mại mua sắm giảm giá (Rebajas)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2276,
+    "name": "Trao đổi tài khoản mạng xã hội (Redes sociales)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2277,
+    "name": "Chia sẻ cảm xúc khi lần đầu đến Tây Ban Nha (Primer viaje a España)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2278,
+    "name": "Nói về việc học bơi lội vào mùa hè (Aprender a nadar)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2279,
+    "name": "Mua bánh ngọt và trà sữa cho bữa chiều (Merienda)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2280,
+    "name": "Hỏi ý kiến bạn bè về việc chọn trang phục (Pedir opinión)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2281,
+    "name": "Mô tả thú cưng đáng yêu của bạn (Mi mascota querida)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2282,
+    "name": "Nói về lịch trình làm việc bận rộn (Un día de trabajo duro)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2283,
+    "name": "Chúc mừng năm mới và chúc sức khỏe (Feliz Año Nuevo)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2284,
+    "name": "Đi bộ dạo công viên vào ngày cuối tuần (Pasear por el parque)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2285,
+    "name": "Thảo luận về việc chuẩn bị hành lý du lịch (Preparar la maleta)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2286,
+    "name": "Hỏi thăm đường đi đến bảo tàng Prado (Camino al Museo del Prado)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2287,
+    "name": "Đi bưu điện gửi bưu phẩm ra nước ngoài (Enviar un paquete)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2288,
+    "name": "Nói về ước mơ nghề nghiệp tương lai (Mi profesión ideal)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2289,
+    "name": "Tổ chức buổi dã ngoại ngoài trời cùng lớp (Picnic con la clase)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2290,
+    "name": "Cách chăm sóc cây cảnh trong nhà (Cuidar las plantas)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2291,
+    "name": "Bàn bạc về việc đi ăn lẩu vào ngày lạnh (Comer juntos)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2292,
+    "name": "Mua sắm giày thể thao chất lượng tốt (Zapatos deportivos)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2293,
+    "name": "Hỏi thăm giá cả phòng tập gym gần nhà (El gimnasio)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2294,
+    "name": "Nói về việc học nấu một món ăn mới (Aprender a cocinar)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2295,
+    "name": "Mô tả một chuyến đi chơi biển mùa hè (Un día en la playa)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2296,
+    "name": "Hỏi thăm thủ tục làm thẻ thư viện (Tarjeta de biblioteca)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2297,
+    "name": "Nói về sở thích cắm trại ngoài trời (Ir de cámping)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2298,
+    "name": "Bàn luận về món tráng miệng churros nổi tiếng (Churros con chocolate)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2299,
+    "name": "Cách chuẩn bị cho một chuyến đi chơi xa (Planificar un viaje)",
+    "systemCode": "SIELE",
+    "levelCode": "A2"
+  },
+  {
+    "id": 2300,
+    "name": "Đồng nghiệp trao đổi dự án phát triển mới (Reunión de trabajo)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2301,
+    "name": "Báo cáo tiến độ công việc hàng tuần (Informe semanal)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2302,
+    "name": "Nói về lịch sử và văn hóa phong phú của Tây Ban Nha (Historia de España)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2303,
+    "name": "Đi bảo tàng nghệ thuật Reina Sofía (Visita al museo)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2304,
+    "name": "Tìm hiểu về điệu nhảy Flamenco truyền thống (El baile Flamenco)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2305,
+    "name": "Nói về tác phẩm văn học Đôn Ki-hô-tê (Don Quijote de la Mancha)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2306,
+    "name": "Thảo luận về vấn đề ô nhiễm môi trường đô thị (Contaminación)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2307,
+    "name": "Bảo vệ động vật quý hiếm hoang dã (Animales en peligro de extinción)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2308,
+    "name": "Nói về tầm quan trọng của việc học ngoại ngữ (Aprender idiomas)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2309,
+    "name": "Kinh nghiệm đi phượt bằng xe máy ở Mallorca (Viaje en moto)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2310,
+    "name": "Trải nghiệm mua sắm trực tuyến trên Amazon Tây Ban Nha",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2311,
+    "name": "Mô tả tính cách tốt đẹp của một người bạn (Rasgos de personalidad)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2312,
+    "name": "Nói về những khó khăn khi sống xa nhà (Vivir lejos de casa)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2313,
+    "name": "Cách giải tỏa áp lực sau giờ làm việc bận rộn (Reducir el estrés)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2314,
+    "name": "Bàn luận về lợi ích của việc đọc sách giấy (Leer libros de papel)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2315,
+    "name": "Tham gia câu lạc bộ chơi đàn guitar (Club de guitarra)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2316,
+    "name": "Chế độ ăn chay tốt cho sức khỏe (Dieta vegetariana)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2317,
+    "name": "Cách lên kế hoạch quản lý thời gian hiệu quả (Gestión del tiempo)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2318,
+    "name": "Tổ chức tiệc nướng BBQ ngoài trời (Hacer una barbacoa)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2319,
+    "name": "Hỏi thăm kinh nghiệm phỏng vấn visa du học (Entrevista de visado)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2320,
+    "name": "Nói về ngày hội thể thao của trường học (Día del deporte)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2321,
+    "name": "Bàn luận về ảnh hưởng của mạng xã hội (Impacto de las redes sociales)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2322,
+    "name": "Cách sơ cứu vết thương cơ bản tại nhà (Primeros auxilios)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2323,
+    "name": "Thảo luận về lối sống tối giản hiện nay (Estilo de vida minimalista)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2324,
+    "name": "Đi mua hoa trang trí nhà cửa đón Giáng sinh (Decoración navideña)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2325,
+    "name": "Nói về sở thích chụp ảnh nghệ thuật (Fotografía artística)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2326,
+    "name": "Trải nghiệm đi tàu điện ngầm giờ cao điểm (Metro en hora punta)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2327,
+    "name": "Bàn luận về việc học đại học trực tuyến (Estudiar en línea)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2328,
+    "name": "Cách làm một video ngắn đăng lên mạng xã hội (Crear un video corto)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2329,
+    "name": "Hỏi thăm thủ tục gia hạn hộ chiếu (Renovar el pasaporte)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2330,
+    "name": "Nói về thần tượng âm nhạc của bạn (Ídolo musical)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2331,
+    "name": "Bàn luận về việc giữ gìn vệ sinh công cộng (Limpieza pública)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2332,
+    "name": "Cách tự sửa chữa đồ điện gia dụng đơn giản (Reparaciones domésticas)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2333,
+    "name": "Tham quan phố cổ Madrid và thưởng thức trà chiều (Paseo por Madrid)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2334,
+    "name": "Kỷ niệm ngày đầu tiên đi làm ở công ty mới (Primer día de trabajo)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2335,
+    "name": "Cách chuẩn bị bài thuyết trình thuyết phục (Preparar una presentación)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2336,
+    "name": "Bàn luận về việc tiết kiệm điện nước gia đình (Ahorrar energía)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2337,
+    "name": "Đi cắm trại trên núi vào mùa thu (Cámping en la montaña)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2338,
+    "name": "Hỏi thăm về thủ tục mua bảo hiểm y tế (Seguro médico)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2339,
+    "name": "Nói về giá trị của tình cảm gia đình ấm áp (Valores familiares)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2340,
+    "name": "Tìm hiểu về lễ hội cà chua La Tomatina độc đáo",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2341,
+    "name": "Bàn luận về văn hóa ngủ trưa Siesta của người Tây Ban Nha",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2342,
+    "name": "Cách viết email công việc lịch sự bằng tiếng Tây Ban Nha",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2343,
+    "name": "Nói về trải nghiệm đi xem đấu bò tót (La corrida de toros)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2344,
+    "name": "Kế hoạch tài chính tiết kiệm mua ô tô mới (Ahorrar para un coche)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2345,
+    "name": "Bảo tồn các kiến trúc cổ thời kỳ Phục hưng (Arquitectura antigua)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2346,
+    "name": "Cách ứng phó với tình huống khẩn cấp khi du lịch",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2347,
+    "name": "Thảo luận về lợi ích của việc tập thiền (Meditar)",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2348,
+    "name": "Nói về vai trò của hoạt động thể thao đồng đội",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2349,
+    "name": "Chia sẻ cảm xúc khi hoàn thành một mục tiêu lớn",
+    "systemCode": "SIELE",
+    "levelCode": "B1"
+  },
+  {
+    "id": 2350,
+    "name": "Phỏng vấn xin việc vào tập đoàn đa quốc gia (Entrevista de trabajo)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2351,
+    "name": "Thương lượng lương bổng và phúc lợi xã hội (Negociar el salario)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2352,
+    "name": "Thảo luận về xu hướng phát triển trí tuệ nhân tạo (IA)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2353,
+    "name": "Ảnh hưởng của biến đổi khí hậu toàn cầu (Cambio climático)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2354,
+    "name": "Tìm hiểu về kiến trúc nhà thờ Sagrada Família độc đáo của Gaudí",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2355,
+    "name": "Lịch sử và ý nghĩa của cung điện Alhambra ở Granada",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2356,
+    "name": "Kinh nghiệm khởi nghiệp kinh doanh nhỏ (Emprender un negocio)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2357,
+    "name": "Thảo luận về thị trường chứng khoán và đầu tư (Bolsa de valores)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2358,
+    "name": "Quản lý tài chính cá nhân và đầu tư thông minh (Finanzas personales)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2359,
+    "name": "Nói về phong trào bảo vệ môi trường xanh (Movimiento ecologista)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2360,
+    "name": "Tác động của thương mại điện tử đến ngành bán lẻ (Comercio electrónico)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2361,
+    "name": "Ý nghĩa của ngày Quốc khánh Tây Ban Nha 12 tháng 10",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2362,
+    "name": "Tầm quan trọng của việc rèn luyện tư duy phản biện (Pensamiento crítico)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2363,
+    "name": "Bàn luận về vấn đề già hóa dân số trong xã hội (Envejecimiento de la población)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2364,
+    "name": "Tìm hiểu về ẩm thực Địa Trung Hải tốt cho sức khỏe (Dieta mediterránea)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2365,
+    "name": "Kinh nghiệm xin học bổng du học của chính phủ Tây Ban Nha",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2366,
+    "name": "Thảo luận về việc phân loại rác thải tại nguồn (Reciclaje)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2367,
+    "name": "Ảnh hưởng của quảng cáo đến hành vi người tiêu dùng (Publicidad)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2368,
+    "name": "Tầm quan trọng của việc bảo mật thông tin cá nhân (Privacidad de datos)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2369,
+    "name": "Bàn luận về văn hóa làm việc và sự cân bằng cuộc sống",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2370,
+    "name": "Tìm hiểu về các phát minh lớn của các nhà khoa học Tây Ban Nha",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2371,
+    "name": "Lợi ích của việc thiền định đối với trí não và tâm lý",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2372,
+    "name": "Thảo luận về xu hướng phát triển của xe điện (Vehículos eléctricos)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2373,
+    "name": "Kinh nghiệm tham gia hoạt động hướng nghiệp (Orientación profesional)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2374,
+    "name": "Bàn luận về sự khác biệt thế hệ trong gia đình (Brecha generacional)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2375,
+    "name": "Tác động của du lịch đại chúng đến văn hóa bản địa (Turismo de masas)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2376,
+    "name": "Cách đối phó với khủng hoảng tâm lý tuổi trẻ (Crisis de identidad)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2377,
+    "name": "Thảo luận về tương lai của năng lượng tái tạo (Energías renovables)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2378,
+    "name": "Tìm hiểu về điệu múa Salsa và Bachata sôi động",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2379,
+    "name": "Kinh nghiệm học thi chứng chỉ DELE cao cấp (Preparar el DELE)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2380,
+    "name": "Ảnh hưởng của game online đến kết quả học tập (Juegos en línea)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2381,
+    "name": "Tầm quan trọng của trí tuệ cảm xúc (EQ) trong sự nghiệp",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2382,
+    "name": "Bàn luận về trào lưu làm việc tự do (Freelancer)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2383,
+    "name": "Cách duy trì mối quan hệ đồng nghiệp tốt đẹp (Relaciones laborales)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2384,
+    "name": "Thảo luận về an toàn giao thông đường bộ (Seguridad vial)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2385,
+    "name": "Tìm hiểu về rượu vang Rioja nổi tiếng toàn cầu (Vino de Rioja)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2386,
+    "name": "Ý nghĩa của việc học tập suốt đời (Aprendizaje continuo)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2387,
+    "name": "Tác động của sách điện tử đến ngành xuất bản (Libros electrónicos)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2388,
+    "name": "Kinh nghiệm tổ chức sự kiện quy mô vừa ở công ty",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2389,
+    "name": "Tầm quan trọng của giấc ngủ đối với hiệu suất làm việc",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2390,
+    "name": "Ảnh hưởng của đô thị hóa đến vùng nông thôn (Urbanización)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2391,
+    "name": "Bàn luận về việc bảo tồn di sản văn hóa thế giới UNESCO",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2392,
+    "name": "Cách xây dựng thương hiệu cá nhân trực tuyến (Marca personal)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2393,
+    "name": "Tìm hiểu về các danh họa nổi tiếng Picasso, Dalí và Goya",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2394,
+    "name": "Kinh nghiệm đi du lịch bụi nước ngoài an toàn (Viajar de mochilero)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2395,
+    "name": "Thảo luận về xu hướng làm việc từ xa (Teletrabajo)",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2396,
+    "name": "Tầm quan trọng của việc duy trì thái độ sống tích cực",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2397,
+    "name": "Phân tích chiến lược phát triển kinh tế xanh bền vững",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2398,
+    "name": "Bảo vệ đa dạng sinh học các hệ sinh thái tự nhiên",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  },
+  {
+    "id": 2399,
+    "name": "Vai trò của liên minh châu Âu (EU) đối với Tây Ban Nha",
+    "systemCode": "SIELE",
+    "levelCode": "B2"
+  }
+]

@@ -488,6 +488,8 @@ private fun LanguageSettingsSection(
                 "en" -> "Tiếng Anh"
                 "ja" -> "Tiếng Nhật"
                 "zh" -> "Tiếng Trung"
+                "es" -> "Tiếng Tây Ban Nha"
+                "hi" -> "Tiếng Hindi"
                 else -> "Tiếng Anh"
             }
 
@@ -532,6 +534,13 @@ private fun LanguageSettingsSection(
                         }
                     )
                     DropdownMenuItem(
+                        text = { Text("Tiếng Tây Ban Nha", fontSize = 13.sp, color = colors.mainText) },
+                        onClick = {
+                            vm.onLanguageTargetChanged("es")
+                            expanded = false
+                        }
+                    )
+                    DropdownMenuItem(
                         text = { Text("Tiếng Nhật", fontSize = 13.sp, color = colors.mainText) },
                         onClick = {
                             vm.onLanguageTargetChanged("ja")
@@ -542,6 +551,13 @@ private fun LanguageSettingsSection(
                         text = { Text("Tiếng Trung", fontSize = 13.sp, color = colors.mainText) },
                         onClick = {
                             vm.onLanguageTargetChanged("zh")
+                            expanded = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Tiếng Hindi", fontSize = 13.sp, color = colors.mainText) },
+                        onClick = {
+                            vm.onLanguageTargetChanged("hi")
                             expanded = false
                         }
                     )

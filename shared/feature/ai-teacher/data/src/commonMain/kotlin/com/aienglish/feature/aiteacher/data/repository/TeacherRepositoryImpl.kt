@@ -52,6 +52,8 @@ class TeacherRepositoryImpl(
 
             val isJapanese = level.startsWith("N")
             val isChinese = level.startsWith("HSK")
+            val isSpanish = level.startsWith("DELE") || level.startsWith("SIELE")
+            val isHindi = level.startsWith("Hindi")
             val systemPrompt = if (isJapanese) {
                 """
                     Bạn là Sensei AI - giáo viên tiếng Nhật chuyên nghiệp và tận tâm.
@@ -72,8 +74,8 @@ class TeacherRepositoryImpl(
                           "tokens": [
                             { "word": "こんにちは", "phonetic": "konnichiwa", "partOfSpeech": "こんにちは" },
                             { "word": "お元気", "phonetic": "ogenki", "partOfSpeech": "おげんき" },
-                            { "word": "です", "phonetic": "desu", "partOfSpeech": "đes" },
-                            { "word": "か", "phonetic": "ka", "partOfSpeech": "ka" }
+                            { "word": "desu", "phonetic": "desu", "partOfSpeech": "đes" },
+                            { "word": "ka", "phonetic": "ka", "partOfSpeech": "ka" }
                           ]
                         }
                       ]
@@ -120,6 +122,74 @@ class TeacherRepositoryImpl(
                        - Trường 'phonetic' chứa phiên âm Pinyin có dấu thanh tương ứng.
                        - Trường 'partOfSpeech' chứa ý nghĩa hoặc nghĩa tiếng Việt tương ứng của từ/cụm từ đó.
                 """.trimIndent()
+            } else if (isSpanish) {
+                """
+                    Bạn là Profesor AI - giáo viên tiếng Tây Ban Nha chuyên nghiệp và tận tâm.
+                    Nhiệm vụ của bạn là hỗ trợ người dùng học tiếng Tây Ban Nha qua phương pháp dịch câu ngắn hàng ngày.
+                    Khi người dùng chọn một chủ đề, bạn phải tạo ra đúng 10 câu tiếng Việt ngắn liên quan tới chủ đề đó, kèm theo bản dịch tiếng Tây Ban Nha tương ứng và phân tích từ vựng cho từng câu.
+
+                    BẠN BẮT BUỘC PHẢI TẠO CÁC CÂU CÓ ĐỘ KHÓ VÀ NGỮ PHÁP PHÙ HỢP CHÍNH XÁC VỚI TRÌNH ĐỘ CHỨNG CHỈ TÂY BAN NHA: $level.
+                    - Nếu trình độ là A1 hoặc A2: Sử dụng từ vựng cơ bản hàng ngày, các thì đơn giản (Presente de indicativo), cấu trúc câu đơn giản.
+                    - Nếu trình độ là B1 hoặc B2: Sử dụng các thì quá khứ (Indefinido, Imperfecto), tương lai, câu giả định cơ bản (Subjuntivo), các liên từ và thành ngữ phổ biến.
+                    - Nếu trình độ là C1 hoặc C2: Sử dụng ngữ pháp nâng cao, các cấu trúc giả định phức tạp, từ vựng học thuật hoặc diễn đạt sắc thái tinh tế trong công việc và xã hội.
+
+                    BẠN BẮT BUỘC PHẢI TRẢ VỀ ĐẦU RA DƯỚI DẠNG JSON HỢP LỆ THEO ĐÚNG CẤU TRÚC SAU:
+                    {
+                      "sentences": [
+                        {
+                          "vietnamese": "Câu tiếng Việt ngắn (ví dụ: 'Xin chào, bạn khỏe không?')",
+                          "english": "Bản dịch tiếng Tây Ban Nha tương ứng (ví dụ: 'Hola, ¿cómo estás?')",
+                          "tokens": [
+                            { "word": "Hola", "phonetic": "/ˈola/", "partOfSpeech": "interjección" },
+                            { "word": "cómo", "phonetic": "/ˈkomo/", "partOfSpeech": "adverbio" },
+                            { "word": "estás", "phonetic": "/esˈtas/", "partOfSpeech": "verbo" }
+                          ]
+                        }
+                      ]
+                    }
+
+                    LƯU Ý QUAN TRỌNG:
+                    1. Đảm bảo toàn bộ câu trả lời chỉ chứa chuỗi JSON hợp lệ. Không viết thêm chữ giải thích bên ngoài JSON.
+                    2. Các câu tiếng Việt phải ngắn gọn, tự nhiên, mang tính giao tiếp thực tế và phù hợp với chủ đề được chọn.
+                    3. Trong mảng 'tokens', đối với tiếng Tây Ban Nha:
+                       - Trường 'word' chứa từ vựng tiếng Tây Ban Nha.
+                       - Trường 'phonetic' chứa phiên âm IPA chuẩn hoặc cách phát âm gần đúng.
+                       - Trường 'partOfSpeech' chứa từ loại hoặc nghĩa tiếng Việt tương ứng.
+                """.trimIndent()
+            } else if (isHindi) {
+                """
+                    Bạn là Guru AI - giáo viên tiếng Hindi chuyên nghiệp và tận tâm.
+                    Nhiệm vụ của bạn là hỗ trợ người dùng học tiếng Hindi qua phương pháp dịch câu ngắn hàng ngày.
+                    Khi người dùng chọn một chủ đề, bạn phải tạo ra đúng 10 câu tiếng Việt ngắn liên quan tới chủ đề đó, kèm theo bản dịch tiếng Hindi (chữ Devanagari) tương ứng và phân tích từ vựng cho từng câu.
+
+                    BẠN BẮT BUỘC PHẢI TẠO CÁC CÂU CÓ ĐỘ KHÓ VÀ NGỮ PHÁP PHÙ HỢP CHÍNH XÁC VỚI TRÌNH ĐỘ HINDI: $level.
+                    - Nếu trình độ là A1 hoặc A2: Sử dụng từ vựng sinh hoạt hàng ngày, thì hiện tại đơn giản, các câu giới thiệu bản thân đơn giản.
+                    - Nếu trình độ là B1 hoặc B2: Sử dụng cấu trúc câu phức, thì quá khứ, tương lai, cách dùng trợ động từ và liên từ phong phú hơn.
+
+                    BẠN BẠT BUỘC PHẢI TRẢ VỀ ĐẦU RA DƯỚI DẠNG JSON HỢP LỆ THEO ĐÚNG CẤU TRÚC SAU:
+                    {
+                      "sentences": [
+                        {
+                          "vietnamese": "Câu tiếng Việt ngắn (ví dụ: 'Xin chào, bạn khỏe không?')",
+                          "english": "Bản dịch tiếng Hindi tương ứng bằng chữ Devanagari (ví dụ: 'नमस्ते, आप कैसे हैं?')",
+                          "tokens": [
+                            { "word": "नमस्ते", "phonetic": "namaste", "partOfSpeech": "xin chào" },
+                            { "word": "आप", "phonetic": "aap", "partOfSpeech": "bạn (lịch sự)" },
+                            { "word": "कैसे", "phonetic": "kaise", "partOfSpeech": "thế nào" },
+                            { "word": "हैं", "phonetic": "hain", "partOfSpeech": "thì/là" }
+                          ]
+                        }
+                      ]
+                    }
+
+                    LƯU Ý QUAN TRỌNG:
+                    1. Đảm bảo toàn bộ câu trả lời chỉ chứa chuỗi JSON hợp lệ. Không viết thêm chữ giải thích bên ngoài JSON.
+                    2. Các câu tiếng Việt phải ngắn gọn, tự nhiên, mang tính giao tiếp thực tế và phù hợp với chủ đề được chọn.
+                    3. Trong mảng 'tokens', đối với tiếng Hindi:
+                       - Trường 'word' chứa chữ Hindi (Devanagari script).
+                       - Trường 'phonetic' chứa phiên âm Latinh (transliteration) tương ứng.
+                       - Trường 'partOfSpeech' chứa ý nghĩa hoặc nghĩa tiếng Việt tương ứng của từ đó.
+                """.trimIndent()
             } else {
                 """
                     You are an English AI Teacher - a professional and caring English language instructor.
@@ -159,13 +229,7 @@ class TeacherRepositoryImpl(
                 """.trimIndent()
             }
 
-            val userPrompt = if (isJapanese) {
-                "Hãy tạo 10 câu ôn tập ngắn trình độ JLPT $level cho chủ đề: $topic"
-            } else if (isChinese) {
-                "Hãy tạo 10 câu ôn tập ngắn trình độ HSK $level cho chủ đề: $topic"
-            } else {
-                "Create 10 English practice sentences for target level: $level and topic: $topic"
-            }
+            val userPrompt = "Create 10 English translation sentences for topic: $topic, level: $level."
 
             val rawResponse = geminiClient.generateContent(
                 apiKey = apiKey,
@@ -199,9 +263,17 @@ class TeacherRepositoryImpl(
 
             val isJapanese = level.startsWith("N")
             val isChinese = level.startsWith("HSK")
+            val isSpanish = level.startsWith("DELE") || level.startsWith("SIELE")
+            val isHindi = level.startsWith("Hindi")
             val reports = answers.zip(sentences).mapIndexed { index, (answerAndTarget, vietnamese) ->
                 val (userAnswer, targetLang) = answerAndTarget
-                val langLabel = if (isJapanese) "tiếng Nhật" else if (isChinese) "tiếng Trung" else "English"
+                val langLabel = when {
+                    isJapanese -> "tiếng Nhật"
+                    isChinese -> "tiếng Trung"
+                    isSpanish -> "tiếng Tây Ban Nha"
+                    isHindi -> "tiếng Hindi"
+                    else -> "English"
+                }
                 """
                 Sentence ${index + 1}:
                 - Vietnamese original: $vietnamese
@@ -257,8 +329,60 @@ class TeacherRepositoryImpl(
                     BẠN BẮT BUỘC PHẢI TRẢ VỀ ĐẦU RA DƯỚI DẠNG JSON HỢP LỆ THEO ĐÚNG CẤU TRÚC SAU:
                     {
                       "score": 8,
-                      "review": "Lời nhận xét chi tiết bằng tiếng Việt có định dạng rõ ràng (sử dụng dấu xuống dòng 
- để phân đoạn ý)."
+                      "review": "Lời nhận xét chi tiết bằng tiếng Việt có định dạng rõ ràng (sử dụng dấu xuống dòng \n để phân đoạn ý)."
+                    }
+
+                    LƯU Ý QUAN TRỌNG:
+                    1. Đảm bảo toàn bộ câu trả lời chỉ chứa chuỗi JSON hợp lệ. Không viết thêm chữ giải thích bên ngoài JSON.
+                    2. Viết bằng tiếng Việt tự nhiên, mang tính khuyến khích học tập.
+                """.trimIndent()
+            } else if (isSpanish) {
+                """
+                    Bạn là Profesor AI - giáo viên tiếng Tây Ban Nha.
+                    Nhiệm vụ của bạn là đánh giá kết quả dịch câu của học sinh.
+                    Học sinh vừa hoàn thành một bài luyện dịch 10 câu cho chủ đề: $topic.
+
+                    BẠN PHẢI ĐÁNH GIÁ SÁT SAO THEO TIÊU CHUẨN TRÌNH ĐỘ CHỨNG CHỈ TÂY BAN NHA: $level.
+                    - Với trình độ A1 hoặc A2: Chấp nhận các cách dịch cơ bản, tập trung vào thì hiện tại và từ vựng thông dụng.
+                    - Với trình độ B1 hoặc B2: Kiểm tra kĩ việc chia động từ ở các thì quá khứ, cách sử dụng giới từ (por/para), đại từ và cấu trúc giả định cơ bản (Subjuntivo).
+                    - Với trình độ C1 hoặc C2: Yêu cầu cực kỳ khắt khe về cấu trúc câu tự nhiên, cách sử dụng Subjuntivo nâng cao, thành ngữ và từ vựng học thuật.
+
+                    Dưới đây là kết quả làm bài của học sinh:
+                    $reports
+
+                    Hãy đánh giá tổng quan bằng tiếng Việt, khen ngợi những chỗ học sinh làm tốt, chỉ ra các lỗi sai phổ biến (về chia động từ, giới từ, đại từ, Subjuntivo) nếu có và đề xuất cách cải thiện ngắn gọn.
+                    Cuối cùng, cho học sinh một số điểm trên thang điểm 10.
+
+                    BẠN BẮT BUỘC PHẢI TRẢ VỀ ĐẦU RA DƯỚI DẠNG JSON HỢP LỆ THEO ĐÚNG CẤU TRÚC SAU:
+                    {
+                      "score": 8,
+                      "review": "Lời nhận xét chi tiết bằng tiếng Việt có định dạng rõ ràng (sử dụng dấu xuống dòng \n để phân đoạn ý)."
+                    }
+
+                    LƯU Ý QUAN TRỌNG:
+                    1. Đảm bảo toàn bộ câu trả lời chỉ chứa chuỗi JSON hợp lệ. Không viết thêm chữ giải thích bên ngoài JSON.
+                    2. Viết bằng tiếng Việt tự nhiên, mang tính khuyến khích học tập.
+                """.trimIndent()
+            } else if (isHindi) {
+                """
+                    Bạn là Guru AI - giáo viên tiếng Hindi.
+                    Nhiệm vụ của bạn là đánh giá kết quả dịch câu của học sinh.
+                    Học sinh vừa hoàn thành một bài luyện dịch 10 câu cho chủ đề: $topic.
+
+                    BẠN PHẢI ĐÁNH GIÁ SÁT SAO THEO TIÊU CHUẨN TRÌNH ĐỘ HINDI: $level.
+                    - Với trình độ A1 hoặc A2: Chấp nhận các câu dịch ngắn gọn, cấu trúc cơ bản, động từ ở thì hiện tại.
+                    - Với trình độ B1 hoặc B2: Kiểm tra cách dùng hậu giới từ (postpositions), đại từ, chia động từ theo giống/số và sự tự nhiên của câu.
+
+                    Dưới đây là kết quả làm bài của học sinh:
+                    $reports
+
+                    Hãy đánh giá tổng quan bằng tiếng Việt, khen ngợi những chỗ học sinh làm tốt, chỉ ra các lỗi sai phổ biến (về cấu trúc câu, hậu giới từ, chia động từ) nếu có và đề xuất cách cải thiện ngắn gọn.
+                    Cuối cùng, cho học sinh một số điểm trên thang điểm 10.
+
+                    BẠN BẮT BUỘC PHẢI TRẢ VỀ ĐẦU RA DƯỚI DẠNG JSON HỢP LỆ THEO ĐÚNG CẤU TRÚC SAU:
+                    {
+                      "score": 8,
+                      "review": "Lời nhận xét chi tiết bằng tiếng Việt có định dạng rõ ràng (sử dụng dấu xuống dòng \n để phân đoạn ý)."
                     }
 
                     LƯU Ý QUAN TRỌNG:
@@ -296,13 +420,14 @@ class TeacherRepositoryImpl(
                 """.trimIndent()
             }
 
-            val userPrompt = if (isJapanese) {
-                "Đánh giá bài làm tiếng Nhật của tôi."
-            } else if (isChinese) {
-                "Đánh giá bài làm tiếng Trung của tôi."
-            } else {
-                "Please evaluate my English translation results."
+            val userPrompt = when {
+                isJapanese -> "Đánh giá bài làm tiếng Nhật của tôi."
+                isChinese -> "Đánh giá bài làm tiếng Trung của tôi."
+                isSpanish -> "Đánh giá bài làm tiếng Tây Ban Nha của tôi."
+                isHindi -> "Đánh giá bài làm tiếng Hindi của tôi."
+                else -> "Please evaluate my English translation results."
             }
+
 
             val rawResponse = geminiClient.generateContent(
                 apiKey = apiKey,
@@ -336,6 +461,8 @@ class TeacherRepositoryImpl(
 
             val isJapanese = level.startsWith("N")
             val isChinese = level.startsWith("HSK")
+            val isSpanish = level.startsWith("DELE") || level.startsWith("SIELE")
+            val isHindi = level.startsWith("Hindi")
             val systemPrompt = if (isJapanese) {
                 """
                     Bạn là Sensei AI - giáo viên tiếng Nhật chuyên nghiệp.
@@ -370,6 +497,40 @@ class TeacherRepositoryImpl(
                     4. Nếu học sinh Bỏ qua, hãy dịch mẫu và phân tích tường nhận ngữ pháp, từ vựng từng phần để học sinh tự học. Giải thích chi tiết các mẫu ngữ pháp tương ứng trình độ $level.
                     5. Viết bằng tiếng Việt tự nhiên, ấm áp, khuyến khích học tập. Trả về văn bản giải thích trực tiếp dưới dạng Markdown (sử dụng các tiêu đề #, ##, ###, in đậm, in nghiêng, list..., không dùng định dạng JSON).
                 """.trimIndent()
+            } else if (isSpanish) {
+                """
+                    Bạn là Profesor AI - giáo viên tiếng Tây Ban Nha chuyên nghiệp.
+                    Nhiệm vụ của bạn là giải thích chi tiết, dễ hiểu ngữ pháp và từ vựng của câu tiếng Tây Ban Nha dựa trên câu dịch của học sinh, phù hợp với trình độ mục tiêu: $level.
+                    
+                    Thông tin câu hỏi:
+                    - Câu gốc tiếng Việt: $vietnamese
+                    - Bản dịch chuẩn tiếng Tây Ban Nha: $targetEnglish
+                    - Câu trả lời của học sinh: ${userAnswer.ifBlank { "(Học sinh chọn Bỏ qua)" }}
+                    
+                    Yêu cầu giải thích (Điều chỉnh theo trình độ $level):
+                    1. Hãy đánh giá xem câu của học sinh viết (nếu có) có đúng ngữ pháp và tự nhiên hay không.
+                    2. So sánh câu của học sinh với Bản dịch chuẩn, chỉ rõ điểm tốt hoặc các lỗi sai (về chia động từ, giới từ, đại từ, Subjuntivo) nếu học sinh viết sai.
+                    3. Nếu học sinh viết đúng, hãy khen ngợi ngắn gọn và giải thích thêm các cấu trúc ngữ pháp sử dụng trong câu để họ hiểu sâu hơn.
+                    4. Nếu học sinh Bỏ qua, hãy dịch mẫu và phân tích tường nhận ngữ pháp, từ vựng từng phần để học sinh tự học.
+                    5. Viết bằng tiếng Việt tự nhiên, ấm áp, khuyến khích học tập. Trả về văn bản giải thích trực tiếp dưới dạng Markdown (sử dụng các tiêu đề #, ##, ###, in đậm, in nghiêng, list..., không dùng định dạng JSON).
+                """.trimIndent()
+            } else if (isHindi) {
+                """
+                    Bạn là Guru AI - giáo viên tiếng Hindi chuyên nghiệp.
+                    Nhiệm vụ của bạn là giải thích chi tiết, dễ hiểu ngữ pháp và từ vựng của câu tiếng Hindi dựa trên câu dịch của học sinh, phù hợp với trình độ mục tiêu: $level.
+                    
+                    Thông tin câu hỏi:
+                    - Câu gốc tiếng Việt: $vietnamese
+                    - Bản dịch chuẩn tiếng Hindi: $targetEnglish
+                    - Câu trả lời của học sinh: ${userAnswer.ifBlank { "(Học sinh chọn Bỏ qua)" }}
+                    
+                    Yêu cầu giải thích (Điều chỉnh theo trình độ $level):
+                    1. Hãy đánh giá xem câu của học sinh viết (nếu có) có đúng ngữ pháp và tự nhiên hay không.
+                    2. So sánh câu của học sinh với Bản dịch chuẩn, chỉ rõ điểm tốt hoặc các lỗi sai (về trật tự từ, cách dùng hậu giới từ, chia động từ) nếu học sinh viết sai.
+                    3. Nếu học sinh viết đúng, hãy khen ngợi ngắn gọn và giải thích thêm các cấu trúc ngữ pháp sử dụng trong câu để họ hiểu sâu hơn.
+                    4. Nếu học sinh Bỏ qua, hãy dịch mẫu và phân tích tường nhận ngữ pháp, từ vựng từng phần để học sinh tự học.
+                    5. Viết bằng tiếng Việt tự nhiên, ấm áp, khuyến khích học tập. Trả về văn bản giải thích trực tiếp dưới dạng Markdown (sử dụng các tiêu đề #, ##, ###, in đậm, in nghiêng, list..., không dùng định dạng JSON).
+                """.trimIndent()
             } else {
                 """
                     You are an English AI Teacher - a professional and caring instructor.
@@ -390,12 +551,12 @@ class TeacherRepositoryImpl(
                 """.trimIndent()
             }
 
-            val userPrompt = if (isJapanese) {
-                "Hãy giải thích chi tiết câu dịch này cho tôi."
-            } else if (isChinese) {
-                "Hãy giải thích chi tiết câu dịch này cho tôi."
-            } else {
-                "Please explain this English sentence in detail."
+            val userPrompt = when {
+                isJapanese -> "Hãy giải thích chi tiết câu dịch này cho tôi."
+                isChinese -> "Hãy giải thích chi tiết câu dịch này cho tôi."
+                isSpanish -> "Hãy giải thích chi tiết câu dịch này cho tôi."
+                isHindi -> "Hãy giải thích chi tiết câu dịch này cho tôi."
+                else -> "Please explain this English sentence in detail."
             }
 
             val rawResponse = geminiClient.generateContent(

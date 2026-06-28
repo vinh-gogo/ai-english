@@ -18,5 +18,15 @@
         "systemCode":  "HSK",
         "description":  "Hanyu Shuiping Kaoshi (Chinese Proficiency Test)",
         "name":  "HSK"
+    },
+    {
+        "systemCode":  "DELE",
+        "description":  "Diplomas de Español como Lengua Extranjera (Spanish Proficiency Certificate)",
+        "name":  "DELE"
+    },
+    {
+        "systemCode":  "SIELE",
+        "description":  "Servicio Internacional de Evaluación de la Lengua Española (Online Spanish Certificate)",
+        "name":  "SIELE"
     }
 ]
