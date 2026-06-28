@@ -105,6 +105,33 @@ fun TeacherScreen(
                         )
                     }
 
+                    // Profile button
+                    IconButton(onClick = { profileViewModel.showProfile() }) {
+                        if (profileState.isSignedIn && profileState.displayName != null) {
+                            Box(
+                                modifier = Modifier
+                                    .size(32.dp)
+                                    .clip(CircleShape)
+                                    .background(colors.accent),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    profileState.displayName!!.first().uppercase(),
+                                    color = Color.White,
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        } else {
+                            Icon(
+                                Icons.Rounded.AccountCircle,
+                                contentDescription = "Profile",
+                                tint = colors.mutedText,
+                                modifier = Modifier.size(26.dp)
+                            )
+                        }
+                    }
+
                     Spacer(Modifier.width(6.dp))
 
                     // VIP / PRO Badge
@@ -134,35 +161,6 @@ fun TeacherScreen(
                                 fontWeight = FontWeight.Bold,
                                 fontStyle = FontStyle.Italic,
                                 color = Color(0xFFFFB300)
-                            )
-                        }
-                    }
-
-                    Spacer(Modifier.width(6.dp))
-
-                    // Profile button
-                    IconButton(onClick = { profileViewModel.showProfile() }) {
-                        if (profileState.isSignedIn && profileState.displayName != null) {
-                            Box(
-                                modifier = Modifier
-                                    .size(32.dp)
-                                    .clip(CircleShape)
-                                    .background(colors.accent),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    profileState.displayName!!.first().uppercase(),
-                                    color = Color.White,
-                                    fontSize = 13.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
-                        } else {
-                            Icon(
-                                Icons.Rounded.AccountCircle,
-                                contentDescription = "Profile",
-                                tint = colors.mutedText,
-                                modifier = Modifier.size(26.dp)
                             )
                         }
                     }
