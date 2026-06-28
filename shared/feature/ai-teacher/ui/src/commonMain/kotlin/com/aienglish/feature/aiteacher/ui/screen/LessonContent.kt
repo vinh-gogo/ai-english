@@ -281,8 +281,8 @@ fun LessonContent(
                             onClick = { viewModel.onPreviousSentence() },
                             modifier = Modifier
                                 .size(48.dp)
-                                .border(1.dp, colors.border, CircleShape)
-                                .background(Color.Transparent, CircleShape)
+                                .border(2.dp, colors.border, CircleShape)
+                                .background(colors.surface, CircleShape)
                         ) {
                             Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
                         }
@@ -291,6 +291,7 @@ fun LessonContent(
                     Button(
                         onClick = { viewModel.onCheckAnswer(idx) },
                         colors = ButtonDefaults.buttonColors(containerColor = colors.accent),
+                        border = BorderStroke(2.dp, colors.border),
                         shape = CircleShape,
                         modifier = Modifier.weight(1f).height(48.dp)
                     ) {
@@ -312,8 +313,8 @@ fun LessonContent(
                                 onClick = { viewModel.onPreviousSentence() },
                                 modifier = Modifier
                                     .size(48.dp)
-                                    .border(1.dp, colors.border, CircleShape)
-                                    .background(Color.Transparent, CircleShape)
+                                    .border(2.dp, colors.border, CircleShape)
+                                    .background(colors.surface, CircleShape)
                             ) {
                                 Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
                             }
@@ -325,6 +326,7 @@ fun LessonContent(
                                 containerColor = colors.accent,
                                 disabledContainerColor = colors.accent.copy(alpha = 0.5f)
                             ),
+                            border = BorderStroke(2.dp, colors.border),
                             shape = CircleShape,
                             modifier = Modifier.weight(1f).fillMaxHeight()
                         ) {
@@ -349,7 +351,7 @@ fun LessonContent(
                                     }
                                 ),
                                 border = BorderStroke(
-                                    1.dp,
+                                    2.dp,
                                     when {
                                         sentenceScore >= 9 -> colors.correct
                                         sentenceScore >= 5 -> colors.warning
@@ -388,8 +390,8 @@ fun LessonContent(
                                 onClick = { viewModel.onPreviousSentence() },
                                 modifier = Modifier
                                     .size(48.dp)
-                                    .border(1.dp, colors.border, CircleShape)
-                                    .background(Color.Transparent, CircleShape)
+                                    .border(2.dp, colors.border, CircleShape)
+                                    .background(colors.surface, CircleShape)
                             ) {
                                 Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
                             }
@@ -401,6 +403,7 @@ fun LessonContent(
                                 containerColor = colors.correct,
                                 disabledContainerColor = colors.correct.copy(alpha = 0.5f)
                             ),
+                            border = BorderStroke(2.dp, colors.border),
                             shape = CircleShape,
                             modifier = Modifier.weight(1f).fillMaxHeight()
                         ) {
@@ -428,7 +431,7 @@ fun LessonContent(
                                     }
                                 ),
                                 border = BorderStroke(
-                                    1.dp,
+                                    2.dp,
                                     when {
                                         sentenceScore >= 9 -> colors.correct
                                         sentenceScore >= 5 -> colors.warning

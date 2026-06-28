@@ -119,6 +119,7 @@ fun FeedbackContent(
                 onClick = { viewModel.onReset() },
                 modifier = Modifier.fillMaxWidth().height(48.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = colors.accent),
+                border = BorderStroke(2.dp, colors.border),
                 shape = CircleShape
             ) {
                 Icon(Icons.Rounded.Refresh, null)

@@ -1023,6 +1023,7 @@ fun TopicSelectionContent(
                 containerColor = colors.accent,
                 disabledContainerColor = colors.accent.copy(alpha = 0.5f)
             ),
+            border = BorderStroke(2.dp, colors.border),
             shape = CircleShape
         ) {
             Icon(Icons.Default.PlayArrow, null, modifier = Modifier.size(20.dp))
