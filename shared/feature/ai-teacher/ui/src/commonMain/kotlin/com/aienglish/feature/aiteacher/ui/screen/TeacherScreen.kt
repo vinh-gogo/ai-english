@@ -35,6 +35,7 @@ import com.aienglish.core.designsystem.theme.LocalAppColors
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
 import com.aienglish.feature.history.ui.screen.HistorySheet
 import com.aienglish.feature.history.ui.viewmodel.HistoryViewModel
+import com.aienglish.core.designsystem.components.harmony.SeigaihaBackground
 import com.aienglish.feature.profile.ui.screen.ProfileSheet
 import com.aienglish.feature.profile.ui.viewmodel.ProfileViewModel
 import com.aienglish.feature.pro.ui.screen.VipSheet
@@ -78,6 +79,9 @@ fun TeacherScreen(
                 .fillMaxSize()
                 .imePadding()
         ) {
+            // Seigaiha Cloud Background
+            SeigaihaBackground(isDark = true)
+
             // Profile sheet overlay
             if (profileState.showProfile) {
                 ProfileSheet(
