@@ -326,6 +326,7 @@ private fun HistoryItem(
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             Row(
+                modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
@@ -355,20 +356,24 @@ private fun HistoryItem(
                 }
 
                 // Content
-                Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
                     // Topic + Level badge
                     Row(
+                        modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Text(
-                            item.topic,
-                            fontWeight = FontWeight.SemiBold,
+                            text = item.topic,
+                            fontWeight = FontWeight.Bold,
                             fontSize = 14.sp,
                             color = colors.mainText,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.weight(1f, fill = false)
+                            modifier = Modifier.weight(1f)
                         )
                         // Level badge
                         Box(
@@ -378,7 +383,7 @@ private fun HistoryItem(
                                 .padding(horizontal = 7.dp, vertical = 2.dp)
                         ) {
                             Text(
-                                item.level,
+                                text = item.level,
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = colors.accent
@@ -388,21 +393,26 @@ private fun HistoryItem(
 
                     // Status + date
                     Row(
+                        modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(6.dp)
                     ) {
                         val statusText = if (isCompleted) "✓ Hoàn thành" else "⏳ Đang học ($completed/$total câu)"
                         Text(
-                            statusText,
+                            text = statusText,
                             fontSize = 12.sp,
                             color = circleColor,
-                            fontWeight = FontWeight.Medium
+                            fontWeight = FontWeight.Medium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                         Text("·", fontSize = 12.sp, color = colors.border)
                         Text(
-                            formatDate(item.createdAt),
+                            text = formatDate(item.createdAt),
                             fontSize = 12.sp,
-                            color = colors.hintText
+                            color = colors.hintText,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 }
