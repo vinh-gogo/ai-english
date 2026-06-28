@@ -164,13 +164,13 @@ private fun UserInfoSection(
                 Spacer(Modifier.height(8.dp))
             } else {
                 Surface(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().height(44.dp),
                     shape = RoundedCornerShape(12.dp),
                     color = Color(0xFFFFB300).copy(0.12f),
                     border = BorderStroke(1.dp, Color(0xFFFFB300).copy(0.4f))
                 ) {
                     Row(
-                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+                        modifier = Modifier.fillMaxSize().padding(horizontal = 14.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
@@ -231,13 +231,13 @@ private fun UserInfoSection(
                 Spacer(Modifier.height(8.dp))
             } else {
                 Surface(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().height(44.dp),
                     shape = RoundedCornerShape(12.dp),
                     color = Color(0xFFFFB300).copy(0.12f),
                     border = BorderStroke(1.dp, Color(0xFFFFB300).copy(0.4f))
                 ) {
                     Row(
-                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+                        modifier = Modifier.fillMaxSize().padding(horizontal = 14.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
