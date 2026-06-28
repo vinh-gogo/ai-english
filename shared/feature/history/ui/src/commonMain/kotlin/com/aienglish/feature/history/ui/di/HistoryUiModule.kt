@@ -7,7 +7,8 @@ val historyUiModule = module {
     single {
         HistoryViewModel(
             getAllHistoryUseCase = get(),
-            clearHistoryUseCase = get()
+            clearHistoryUseCase = get(),
+            prefs = get()
         )
     }
 }
