@@ -2,6 +2,7 @@ package com.aienglish.feature.history.ui.screen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -328,31 +329,27 @@ private fun HistoryItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                // Score / Status circle
+                // Left Status Icon
                 val isCompleted = item.status == HistoryStatus.COMPLETED
                 val circleColor = if (isCompleted) colors.correct else Color(0xFFFFA726)
                 Box(
                     modifier = Modifier
-                        .size(44.dp)
+                        .size(40.dp)
                         .clip(CircleShape)
                         .background(circleColor.copy(0.12f)),
                     contentAlignment = Alignment.Center
                 ) {
                     if (isCompleted) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(
-                                "${item.score ?: 0}",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 15.sp,
-                                color = circleColor
-                            )
-                            Text("/10", fontSize = 9.sp, color = circleColor.copy(0.7f))
-                        }
+                        Icon(
+                            Icons.Rounded.CheckCircle, null,
+                            tint = circleColor,
+                            modifier = Modifier.size(20.dp)
+                        )
                     } else {
                         Icon(
                             Icons.Rounded.HourglassTop, null,
                             tint = circleColor,
-                            modifier = Modifier.size(20.dp)
+                            modifier = Modifier.size(18.dp)
                         )
                     }
                 }
@@ -406,6 +403,30 @@ private fun HistoryItem(
                             formatDate(item.createdAt),
                             fontSize = 12.sp,
                             color = colors.hintText
+                        )
+                    }
+                }
+
+                // Premium Score Badge on the right
+                if (isCompleted) {
+                    val scoreVal = item.score ?: 0
+                    val scoreColor = when {
+                        scoreVal >= 9 -> colors.correct
+                        scoreVal >= 5 -> colors.warning
+                        else -> colors.error
+                    }
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(scoreColor.copy(0.1f))
+                            .border(0.5.dp, scoreColor.copy(0.3f), RoundedCornerShape(8.dp))
+                            .padding(horizontal = 8.dp, vertical = 4.dp)
+                    ) {
+                        Text(
+                            text = "$scoreVal/10 điểm",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = scoreColor
                         )
                     }
                 }
