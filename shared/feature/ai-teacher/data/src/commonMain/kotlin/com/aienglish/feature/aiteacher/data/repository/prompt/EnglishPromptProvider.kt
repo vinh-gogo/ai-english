@@ -67,7 +67,7 @@ object EnglishPromptProvider : LanguagePromptProvider {
             $reports
 
             Provide feedback in Vietnamese: praise what was done well, point out common errors, suggest improvements.
-            Give a score out of 10. Also evaluate and score each of the 10 sentences individually (from 0 to 10). If a sentence is skipped or left blank, score it 0.
+            Give a total score out of 10. Also evaluate and score each of the 10 sentences individually (from 0 to 10). If a sentence is skipped or left blank, score it 0. For others, rate strictly based on correctness.
 
             RETURN ONLY VALID JSON (no markdown, no extra text):
             {
@@ -100,6 +100,7 @@ object EnglishPromptProvider : LanguagePromptProvider {
             3. If the student answered correctly, praise briefly and explain the grammar structures at $level depth.
             4. If the student skipped, provide a full breakdown of the target sentence, explaining vocabulary and grammar patterns relevant to $level.
             5. Write in Vietnamese, warm and encouraging. Format the explanation in Markdown.
+            6. In "score", rate the student's answer from 0 to 10. If skipped or blank, score MUST be 0. Otherwise, rate strictly based on correctness.
 
             RETURN ONLY VALID JSON (no markdown block, no extra text):
             {
