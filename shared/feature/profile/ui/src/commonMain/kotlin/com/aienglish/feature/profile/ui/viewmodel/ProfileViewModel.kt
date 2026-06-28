@@ -2,6 +2,7 @@ package com.aienglish.feature.profile.ui.viewmodel
 
 import com.aienglish.core.common.viewmodel.BaseViewModel
 import com.aienglish.feature.profile.domain.repository.ProfileRepository
+import kotlinx.coroutines.launch
 
 data class ProfileState(
     val showProfile: Boolean = false,
@@ -26,17 +27,26 @@ class ProfileViewModel(
 ) : BaseViewModel<ProfileState>(ProfileState()) {
 
     init {
-        // Load persisted data on start
-        setState {
-            copy(
-                isSignedIn = repository.isSignedIn(),
-                displayName = repository.getUserName(),
-                email = repository.getUserEmail(),
-                apiKeyInput = repository.getApiKey(),
-                languageNative = repository.getLanguageNative(),
-                languageTarget = repository.getLanguageTarget(),
-                isPaid = repository.isPaid()
-            )
+        // Collect reactive user profile
+        viewModelScope.launch {
+            repository.getUserProfile().collect { profile ->
+                setState {
+                    copy(
+                        isSignedIn = profile.isSignedIn,
+                        displayName = profile.name,
+                        email = profile.email,
+                        languageNative = profile.languageNative,
+                        languageTarget = profile.languageTarget,
+                        isPaid = profile.isPaid
+                    )
+                }
+            }
+        }
+        
+        // Load API key async
+        viewModelScope.launch {
+            val key = repository.getApiKey()
+            setState { copy(apiKeyInput = key) }
         }
     }
 
@@ -45,8 +55,9 @@ class ProfileViewModel(
     }
 
     fun setPaid(value: Boolean) {
-        repository.savePaid(value)
-        setState { copy(isPaid = value) }
+        viewModelScope.launch {
+            repository.updatePaidStatus(value)
+        }
     }
 
     fun showProfile() = setState { copy(showProfile = true) }
@@ -58,40 +69,43 @@ class ProfileViewModel(
     fun saveApiKey() {
         val key = currentState.apiKeyInput.trim()
         if (key.isEmpty()) { setState { copy(error = "API Key không được để trống") }; return }
-        repository.saveApiKey(key)
-        setState { copy(apiKeySaved = true, error = null) }
+        viewModelScope.launch {
+            repository.saveApiKey(key)
+            setState { copy(apiKeySaved = true, error = null) }
+        }
     }
 
     fun toggleHowTo() = setState { copy(howToExpanded = !howToExpanded) }
 
     fun onLanguageTargetChanged(lang: String) {
-        repository.saveLanguageTarget(lang)
-        setState { copy(languageTarget = lang) }
+        viewModelScope.launch {
+            repository.updateLanguageTarget(lang)
+        }
     }
 
-    // Called after successful Google Sign-In
     fun onSignedIn(name: String, email: String) {
-        repository.saveUserName(name)
-        repository.saveUserEmail(email)
-        repository.setSignedIn(true)
-        setState { copy(isSignedIn = true, displayName = name, email = email, isSigningIn = false, error = null) }
+        viewModelScope.launch {
+            repository.updateDisplayName(name)
+            repository.updateUserEmail(email)
+            repository.updateSignInStatus(true)
+        }
     }
 
     fun signInAsGuest() {
-        repository.saveUserName("Khách")
-        repository.saveUserEmail("guest@aienglish.com")
-        repository.setSignedIn(true)
-        setState { copy(isSignedIn = true, displayName = "Khách", email = "guest@aienglish.com", isSigningIn = false, error = null) }
+        viewModelScope.launch {
+            repository.updateDisplayName("Khách")
+            repository.updateUserEmail("guest@aienglish.com")
+            repository.updateSignInStatus(true)
+        }
     }
 
     fun onSigningIn() = setState { copy(isSigningIn = true, error = null) }
     fun onSignInError(msg: String) = setState { copy(isSigningIn = false, error = msg) }
 
     fun signOut() {
-        repository.setSignedIn(false)
-        repository.saveUserName(null)
-        repository.saveUserEmail(null)
-        setState { copy(isSignedIn = false, displayName = null, email = null, error = null) }
+        viewModelScope.launch {
+            repository.clearProfile()
+        }
     }
 
     fun dismissError() = setState { copy(error = null) }

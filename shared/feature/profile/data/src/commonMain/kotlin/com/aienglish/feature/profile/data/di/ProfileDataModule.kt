@@ -6,6 +6,6 @@ import org.koin.dsl.module
 
 val profileDataModule = module {
     single<ProfileRepository> {
-        ProfileRepositoryImpl(prefs = get())
+        ProfileRepositoryImpl(prefs = get(), dispatchers = get())
     }
 }

@@ -1,18 +1,20 @@
 package com.aienglish.feature.profile.domain.repository
 
+import com.aienglish.feature.profile.domain.model.UserProfile
+import kotlinx.coroutines.flow.Flow
+
 interface ProfileRepository {
-    fun getApiKey(): String
-    fun saveApiKey(key: String)
-    fun getUserName(): String?
-    fun saveUserName(name: String?)
-    fun getUserEmail(): String?
-    fun saveUserEmail(email: String?)
-    fun isSignedIn(): Boolean
-    fun setSignedIn(value: Boolean)
-    fun getLanguageNative(): String
-    fun saveLanguageNative(lang: String)
-    fun getLanguageTarget(): String
-    fun saveLanguageTarget(lang: String)
-    fun isPaid(): Boolean
-    fun savePaid(value: Boolean)
+    fun getUserProfile(): Flow<UserProfile>
+    
+    suspend fun getApiKey(): String
+    suspend fun saveApiKey(key: String)
+    
+    suspend fun updateDisplayName(name: String?)
+    suspend fun updateUserEmail(email: String?)
+    suspend fun updateSignInStatus(signedIn: Boolean)
+    suspend fun updateLanguageTarget(lang: String)
+    suspend fun updateLanguageNative(lang: String)
+    suspend fun updatePaidStatus(paid: Boolean)
+    
+    suspend fun clearProfile()
 }
