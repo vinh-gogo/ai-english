@@ -192,3 +192,53 @@ val NS_ErrorContainer = Color(0xFFFFDAD6)
 val NS_OnError        = Color(0xFF93000A)
 val NS_Correct        = Color(0xFF2E7D32)
 val NS_Warning        = Color(0xFF7A5900)
+
+
+// ══════════════════════════════════════════════════════════════════════════
+//  THEME 5 — Midnight Indigo (Dark — Violet / Deep Space)
+// ══════════════════════════════════════════════════════════════════════════
+
+// Primary (Violet Light — on dark backgrounds)
+val VioletLight      = Color(0xFFD0BCFF)
+val VioletContainer  = Color(0xFFA078FF)
+val VioletPale       = Color(0xFFE9DDFF)
+val VioletDimmed     = Color(0xFF5516BE)
+val VioletOnPrimary  = Color(0xFF3C0091)
+val VioletDeep       = Color(0xFF340080)
+val VioletDarkest    = Color(0xFF23005C)
+
+// Surfaces — Midnight Indigo (dark)
+val MI_Surface                  = Color(0xFF101415)
+val MI_SurfaceDim               = Color(0xFF101415)
+val MI_SurfaceContainerLow      = Color(0xFF191C1E)
+val MI_SurfaceContainer         = Color(0xFF1D2022)
+val MI_SurfaceContainerHigh     = Color(0xFF272A2C)
+val MI_SurfaceContainerHighest  = Color(0xFF323537)
+val MI_SurfaceBright            = Color(0xFF363A3B)
+val MI_SurfaceLowest            = Color(0xFF0B0F10)
+
+// On-Surface text — Midnight Indigo
+val MI_OnSurface        = Color(0xFFE0E3E5)
+val MI_OnSurfaceVariant = Color(0xFFCBC3D7)
+val MI_InverseSurface   = Color(0xFFE0E3E5)
+val MI_InverseOnSurface = Color(0xFF2D3133)
+val MI_Outline          = Color(0xFF958EA0)
+val MI_OutlineVariant   = Color(0xFF494454)
+
+// Secondary — Midnight Indigo (Soft Purple)
+val MI_Secondary          = Color(0xFFC4C1FB)
+val MI_SecondaryContainer = Color(0xFF444173)
+val MI_OnSecondaryContainer = Color(0xFFB3AFE9)
+
+// Tertiary — Midnight Indigo (Blue-Violet)
+val MI_Tertiary           = Color(0xFFC3C0FF)
+val MI_TertiaryContainer  = Color(0xFF8987DF)
+val MI_OnTertiaryContainer = Color(0xFF201B70)
+
+// Semantic — Midnight Indigo (dark-mode variants)
+val MI_Error          = Color(0xFFFFB4AB)
+val MI_ErrorContainer = Color(0xFF93000A)
+val MI_OnError        = Color(0xFF690005)
+val MI_Correct        = Color(0xFF66BB6A)
+val MI_Warning        = Color(0xFFFFB74D)
+

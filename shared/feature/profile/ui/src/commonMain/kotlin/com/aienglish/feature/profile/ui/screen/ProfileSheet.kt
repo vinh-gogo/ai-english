@@ -1,4 +1,4 @@
-package com.aienglish.feature.profile.ui.screen
+﻿package com.aienglish.feature.profile.ui.screen
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
@@ -1088,6 +1088,12 @@ private fun ThemeOptionCard(
             androidx.compose.ui.graphics.Color(0xFFF7FAF9),
             androidx.compose.ui.graphics.Color(0xFFB5C8DF)
         )
+        AppTheme.MIDNIGHT_INDIGO -> listOf(
+            androidx.compose.ui.graphics.Color(0xFF101415),
+            androidx.compose.ui.graphics.Color(0xFF1D2022),
+            androidx.compose.ui.graphics.Color(0xFFD0BCFF),
+            androidx.compose.ui.graphics.Color(0xFFA078FF)
+        )
     }
 
     Row(
@@ -1127,7 +1133,9 @@ private fun ThemeOptionCard(
                     AppTheme.NATURE_MINT   -> "Tươi mát • Xanh Mint & Trắng"
                     AppTheme.BERRY_SORBET  -> "Năng động • Berry Đỏ & Kem Hồng"
                     AppTheme.NORDIC_SLATE  -> "Tối giản • Slate Xám & Tuyết"
-                },
+                
+                        AppTheme.MIDNIGHT_INDIGO -> "Dark Mode u{2022} Violet & Deep Space"
+},
                 fontSize = 12.sp,
                 color = colors.mutedText
             )
@@ -1151,3 +1159,4 @@ private fun ThemeOptionCard(
         }
     }
 }
+

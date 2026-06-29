@@ -1,6 +1,7 @@
 package com.aienglish.core.designsystem.theme
 
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -8,11 +9,12 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 // ── App Theme Enum ────────────────────────────────────────────────────────
-enum class AppTheme(val displayName: String, val emoji: String) {
+enum class AppTheme(val displayName: String, val emoji: String, val isDark: Boolean = false) {
     SUNSET_WARMTH("Sunset Warmth", "🌅"),
     NATURE_MINT("Nature Mint", "🌿"),
     BERRY_SORBET("Berry Sorbet", "🍓"),
-    NORDIC_SLATE("Nordic Slate", "🧱")
+    NORDIC_SLATE("Nordic Slate", "🧱"),
+    MIDNIGHT_INDIGO("Midnight Indigo", "🌌", isDark = true)
 }
 
 // ── App Color Tokens ──────────────────────────────────────────────────────
@@ -231,6 +233,49 @@ fun nordicSlateColors() = AppColors(
     m3OnSurfaceVariant     = NS_OnSurfaceVariant
 )
 
+// ── Midnight Indigo Factory (Dark Theme) ──────────────────────────────────
+fun midnightIndigoColors() = AppColors(
+    accent                 = VioletLight,
+    accentHighlight        = VioletContainer,
+    accentLight            = VioletPale,
+    accentDark             = VioletDimmed,
+    background             = MI_Surface,
+    surface                = MI_SurfaceContainer,
+    surfaceElevated        = MI_SurfaceContainerLow,
+    surfaceContainer       = MI_SurfaceContainerHigh,
+    surfaceContainerHigh   = MI_SurfaceContainerHigh,
+    surfaceContainerHighest = MI_SurfaceContainerHighest,
+    surfaceDim             = MI_SurfaceDim,
+    mainText               = MI_OnSurface,
+    mutedText              = MI_OnSurfaceVariant,
+    hintText               = MI_Outline,
+    border                 = MI_OutlineVariant,
+    inverseSurface         = MI_InverseSurface,
+    inverseOnSurface       = MI_InverseOnSurface,
+    secondaryContainer     = MI_SecondaryContainer,
+    onSecondaryContainer   = MI_OnSecondaryContainer,
+    tertiaryContainer      = MI_TertiaryContainer,
+    onTertiaryContainer    = MI_OnTertiaryContainer,
+    correct                = MI_Correct,
+    error                  = MI_Error,
+    errorContainer         = MI_ErrorContainer,
+    warning                = MI_Warning,
+    m3Primary              = VioletLight,
+    m3PrimaryContainer     = VioletContainer,
+    m3OnPrimaryContainer   = VioletDeep,
+    m3Secondary            = MI_Secondary,
+    m3SecondaryContainer   = MI_SecondaryContainer,
+    m3OnSecondaryContainer = MI_OnSecondaryContainer,
+    m3Tertiary             = MI_Tertiary,
+    m3TertiaryContainer    = MI_TertiaryContainer,
+    m3OnTertiaryContainer  = MI_OnTertiaryContainer,
+    m3Outline              = MI_Outline,
+    m3OutlineVariant       = MI_OutlineVariant,
+    m3InversePrimary       = VioletDimmed,
+    m3SurfaceVariant       = MI_SurfaceContainerHighest,
+    m3OnSurfaceVariant     = MI_OnSurfaceVariant
+)
+
 // ── Composition Locals ────────────────────────────────────────────────────
 val LocalAppColors = staticCompositionLocalOf<AppColors> { sunsetWarmthColors() }
 val LocalAppTheme  = staticCompositionLocalOf { AppTheme.SUNSET_WARMTH }
@@ -250,47 +295,81 @@ fun AIEnglishTheme(
     content: @Composable () -> Unit
 ) {
     val colors = when (theme) {
-        AppTheme.SUNSET_WARMTH -> sunsetWarmthColors()
-        AppTheme.NATURE_MINT   -> natureMintColors()
-        AppTheme.BERRY_SORBET  -> berrySorbetColors()
-        AppTheme.NORDIC_SLATE  -> nordicSlateColors()
+        AppTheme.SUNSET_WARMTH   -> sunsetWarmthColors()
+        AppTheme.NATURE_MINT     -> natureMintColors()
+        AppTheme.BERRY_SORBET    -> berrySorbetColors()
+        AppTheme.NORDIC_SLATE    -> nordicSlateColors()
+        AppTheme.MIDNIGHT_INDIGO -> midnightIndigoColors()
     }
 
-    val lightScheme = lightColorScheme(
-        primary              = colors.m3Primary,
-        onPrimary            = Color.White,
-        primaryContainer     = colors.m3PrimaryContainer,
-        onPrimaryContainer   = colors.m3OnPrimaryContainer,
-        secondary            = colors.m3Secondary,
-        onSecondary          = Color.White,
-        secondaryContainer   = colors.m3SecondaryContainer,
-        onSecondaryContainer = colors.m3OnSecondaryContainer,
-        tertiary             = colors.m3Tertiary,
-        onTertiary           = Color.White,
-        tertiaryContainer    = colors.m3TertiaryContainer,
-        onTertiaryContainer  = colors.m3OnTertiaryContainer,
-        background           = colors.background,
-        onBackground         = colors.mainText,
-        surface              = colors.surface,
-        onSurface            = colors.mainText,
-        surfaceVariant       = colors.m3SurfaceVariant,
-        onSurfaceVariant     = colors.m3OnSurfaceVariant,
-        outline              = colors.m3Outline,
-        outlineVariant       = colors.m3OutlineVariant,
-        error                = colors.error,
-        onError              = Color.White,
-        errorContainer       = colors.errorContainer,
-        onErrorContainer     = colors.m3OnPrimaryContainer,
-        inverseSurface       = colors.inverseSurface,
-        inverseOnSurface     = colors.inverseOnSurface,
-        inversePrimary       = colors.m3InversePrimary,
-        surfaceTint          = colors.m3Primary
-    )
+    val colorScheme = if (theme.isDark) {
+        darkColorScheme(
+            primary              = colors.m3Primary,
+            onPrimary            = VioletOnPrimary,
+            primaryContainer     = colors.m3PrimaryContainer,
+            onPrimaryContainer   = colors.m3OnPrimaryContainer,
+            secondary            = colors.m3Secondary,
+            onSecondary          = Color(0xFF2D2A5B),
+            secondaryContainer   = colors.m3SecondaryContainer,
+            onSecondaryContainer = colors.m3OnSecondaryContainer,
+            tertiary             = colors.m3Tertiary,
+            onTertiary           = Color(0xFF272377),
+            tertiaryContainer    = colors.m3TertiaryContainer,
+            onTertiaryContainer  = colors.m3OnTertiaryContainer,
+            background           = colors.background,
+            onBackground         = colors.mainText,
+            surface              = colors.surface,
+            onSurface            = colors.mainText,
+            surfaceVariant       = colors.m3SurfaceVariant,
+            onSurfaceVariant     = colors.m3OnSurfaceVariant,
+            outline              = colors.m3Outline,
+            outlineVariant       = colors.m3OutlineVariant,
+            error                = colors.error,
+            onError              = colors.m3OnPrimaryContainer,
+            errorContainer       = colors.errorContainer,
+            onErrorContainer     = MI_OnError,
+            inverseSurface       = colors.inverseSurface,
+            inverseOnSurface     = colors.inverseOnSurface,
+            inversePrimary       = colors.m3InversePrimary,
+            surfaceTint          = colors.m3Primary
+        )
+    } else {
+        lightColorScheme(
+            primary              = colors.m3Primary,
+            onPrimary            = Color.White,
+            primaryContainer     = colors.m3PrimaryContainer,
+            onPrimaryContainer   = colors.m3OnPrimaryContainer,
+            secondary            = colors.m3Secondary,
+            onSecondary          = Color.White,
+            secondaryContainer   = colors.m3SecondaryContainer,
+            onSecondaryContainer = colors.m3OnSecondaryContainer,
+            tertiary             = colors.m3Tertiary,
+            onTertiary           = Color.White,
+            tertiaryContainer    = colors.m3TertiaryContainer,
+            onTertiaryContainer  = colors.m3OnTertiaryContainer,
+            background           = colors.background,
+            onBackground         = colors.mainText,
+            surface              = colors.surface,
+            onSurface            = colors.mainText,
+            surfaceVariant       = colors.m3SurfaceVariant,
+            onSurfaceVariant     = colors.m3OnSurfaceVariant,
+            outline              = colors.m3Outline,
+            outlineVariant       = colors.m3OutlineVariant,
+            error                = colors.error,
+            onError              = Color.White,
+            errorContainer       = colors.errorContainer,
+            onErrorContainer     = colors.m3OnPrimaryContainer,
+            inverseSurface       = colors.inverseSurface,
+            inverseOnSurface     = colors.inverseOnSurface,
+            inversePrimary       = colors.m3InversePrimary,
+            surfaceTint          = colors.m3Primary
+        )
+    }
 
     CompositionLocalProvider(
         LocalAppColors provides colors,
         LocalAppTheme  provides theme
     ) {
-        MaterialTheme(colorScheme = lightScheme, content = content)
+        MaterialTheme(colorScheme = colorScheme, content = content)
     }
 }
