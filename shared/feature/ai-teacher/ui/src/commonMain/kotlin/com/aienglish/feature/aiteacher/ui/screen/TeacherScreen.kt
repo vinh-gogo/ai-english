@@ -163,10 +163,10 @@ fun TeacherScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Group 1: Back and Title
+                // Group 1: Back and Title (Height synchronized to 52dp)
                 Row(
                     modifier = Modifier
-                        .height(48.dp)
+                        .height(52.dp)
                         .background(colors.surface, CircleShape)
                         .border(2.dp, colors.border, CircleShape)
                         .padding(horizontal = 16.dp),
@@ -195,18 +195,20 @@ fun TeacherScreen(
                     )
                 }
 
-                // Group 2: History, Profile, Pro badge (Standalone 48dp buttons matching footer design style)
+                // Group 2: History, Profile, Pro badge (Grouped inside a single 52dp capsule aligned to the right)
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    modifier = Modifier
+                        .height(52.dp)
+                        .background(colors.surface, CircleShape)
+                        .border(2.dp, colors.border, CircleShape),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // History Button (Circular, 48dp)
+                    // History Button (Perfect 52x52 circle bounds)
                     Box(
                         modifier = Modifier
-                            .size(48.dp)
+                            .fillMaxHeight()
+                            .width(52.dp)
                             .clip(CircleShape)
-                            .background(colors.surface)
-                            .border(2.dp, colors.border, CircleShape)
                             .clickable { showHistory = true },
                         contentAlignment = Alignment.Center
                     ) {
@@ -214,24 +216,31 @@ fun TeacherScreen(
                             Icons.Rounded.History,
                             contentDescription = "Lịch sử",
                             tint = colors.mutedText,
-                            modifier = Modifier.size(20.dp)
+                            modifier = Modifier.size(22.dp)
                         )
                     }
 
-                    // Profile Button (Circular, 48dp)
+                    // Divider
                     Box(
                         modifier = Modifier
-                            .size(48.dp)
+                            .width(1.dp)
+                            .height(24.dp)
+                            .background(colors.border)
+                    )
+
+                    // Profile Button (Perfect 52x52 circle bounds)
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .width(52.dp)
                             .clip(CircleShape)
-                            .background(colors.surface)
-                            .border(2.dp, colors.border, CircleShape)
                             .clickable { profileViewModel.showProfile() },
                         contentAlignment = Alignment.Center
                     ) {
                         if (profileState.isSignedIn && profileState.displayName != null) {
                             Box(
                                 modifier = Modifier
-                                    .size(24.dp)
+                                    .size(26.dp)
                                     .clip(CircleShape)
                                     .background(colors.accent),
                                 contentAlignment = Alignment.Center
@@ -239,7 +248,7 @@ fun TeacherScreen(
                                 Text(
                                     profileState.displayName!!.first().uppercase(),
                                     color = Color.White,
-                                    fontSize = 11.sp,
+                                    fontSize = 12.sp,
                                     fontWeight = FontWeight.Bold
                                 )
                             }
@@ -248,20 +257,26 @@ fun TeacherScreen(
                                 Icons.Rounded.AccountCircle,
                                 contentDescription = "Profile",
                                 tint = colors.mutedText,
-                                modifier = Modifier.size(20.dp)
+                                modifier = Modifier.size(22.dp)
                             )
                         }
                     }
 
-                    // PRO Button (Capsule, 48dp)
+                    // Divider
+                    Box(
+                        modifier = Modifier
+                            .width(1.dp)
+                            .height(24.dp)
+                            .background(colors.border)
+                    )
+
+                    // PRO Button
                     Row(
                         modifier = Modifier
-                            .height(48.dp)
+                            .fillMaxHeight()
                             .clip(CircleShape)
-                            .background(colors.surface)
-                            .border(2.dp, colors.border, CircleShape)
                             .clickable { proViewModel.onIntent(ProIntent.ShowVip) }
-                            .padding(horizontal = 14.dp),
+                            .padding(start = 12.dp, end = 16.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(6.dp)
                     ) {
@@ -269,7 +284,7 @@ fun TeacherScreen(
                             imageVector = Icons.Rounded.WorkspacePremium,
                             contentDescription = "PRO",
                             tint = Color(0xFFFFB300),
-                            modifier = Modifier.size(18.dp)
+                            modifier = Modifier.size(20.dp)
                         )
                         Text(
                             text = if (profileState.isPaid) "PRO" else "GET",
