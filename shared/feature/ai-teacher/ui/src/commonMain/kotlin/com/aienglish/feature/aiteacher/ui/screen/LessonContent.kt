@@ -229,13 +229,7 @@ fun LessonContent(
                                     )
                                 }
                             } else {
-                                // English layout: Word (Top), IPA (Middle), Part of Speech (Bottom)
-                                Text(
-                                    text = token.word,
-                                    color = colors.mainText,
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
+                                // English layout: IPA (Top), Word (Middle), Part of Speech (Bottom)
                                 if (token.phonetic.isNotEmpty()) {
                                     Text(
                                         text = token.phonetic,
@@ -243,6 +237,12 @@ fun LessonContent(
                                         fontSize = 11.sp
                                     )
                                 }
+                                Text(
+                                    text = token.word,
+                                    color = colors.mainText,
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
                                 if (token.partOfSpeech.isNotEmpty()) {
                                     Text(
                                         text = token.partOfSpeech,

@@ -106,6 +106,7 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
     - Thay thế tiêu đề hiển thị từ "Đáp án chuẩn:" thành "Các đáp án chuẩn:" (cỡ chữ `13.sp` in đậm).
     - Trình bày đáp án chính và các đáp án thay thế cùng chung một danh sách được đánh số thứ tự `1), 2), 3)...` có kích thước font `15.sp` đồng bộ.
     - **Đồng bộ và tăng cỡ chữ Từ vựng chi tiết (Tokens):** Cấu hình thống nhất font size cho các tokens trên cả 3 ngôn ngữ (Anh, Nhật, Trung) gồm: từ chính `16.sp` Bold, phiên âm `11.sp`, từ loại / nghĩa dịch `10.sp`.
+    - **Sắp xếp lại thứ tự hiển thị Token:** Cập nhật thứ tự hiển thị các thành phần trong Token chip thành **Cách đọc ở trên cùng (phonetic/IPA), Từ chính ở giữa (word), và Loại từ/Nghĩa dịch ở dưới cùng (partOfSpeech)** để đồng bộ nhất quán trên toàn bộ các ngôn ngữ.
   - **Review UI ([FeedbackContent.kt](file:///D:/ai-english/shared/feature/aiteacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/FeedbackContent.kt)):**
     - Thiết kế lại `SentenceReviewCard` hiển thị khối "Các đáp án chuẩn:" đánh số thứ tự với kích thước font `15.sp` đồng bộ, kèm theo câu trả lời của user rõ ràng và thoáng hơn.
 - **Ghi chú kỹ thuật:**
