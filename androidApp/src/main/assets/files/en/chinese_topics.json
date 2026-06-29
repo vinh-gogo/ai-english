@@ -1,0 +1,1802 @@
+[
+  {
+    "id": 900,
+    "name": "Greetings and basic acquaintances",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 901,
+    "name": "Your name, nationality and age",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 902,
+    "name": "Introduce family members",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 903,
+    "name": "Talk about numbers from 1 to 100",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 904,
+    "name": "Ask for the time and time of day",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 905,
+    "name": "Days of the week and dates of the year",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 906,
+    "name": "The weather today is hot or cold",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 907,
+    "name": "Ask the names of objects around you",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 908,
+    "name": "Talk about your favorite food",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 909,
+    "name": "Buy fruit at the market or supermarket",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 910,
+    "name": "Simple career inquiries and introductions",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 911,
+    "name": "Talk about where you live and your address",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 912,
+    "name": "Means of transportation to go to school every day",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 913,
+    "name": "Familiar domestic animals",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 914,
+    "name": "Describe the color of the clothes",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 915,
+    "name": "Schedule a meeting with friends",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 916,
+    "name": "Talk about favorite sports",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 917,
+    "name": "Ask about prices when going basic shopping",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 918,
+    "name": "Introducing the school or company",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 919,
+    "name": "Talk about morning activities",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 920,
+    "name": "Talk about evening activities",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 921,
+    "name": "Popular drinks (Tea, Coffee)",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 922,
+    "name": "Look for lost items in the room",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 923,
+    "name": "Ask for directions to the train station or bus station",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 924,
+    "name": "Shop for simple clothes at the store",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 925,
+    "name": "Talk about personal interests in your free time",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 926,
+    "name": "Read books and watch movies on weekends",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 927,
+    "name": "Introducing a Chinese friend",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 928,
+    "name": "Talk about parts of the human body",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 929,
+    "name": "Thank you and apologize in daily communication",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 930,
+    "name": "Call to inquire about your loved one's health",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 931,
+    "name": "Ask who is knocking or calling",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 932,
+    "name": "Talk about a new computer or phone",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 933,
+    "name": "Take a taxi and tell the driver your destination",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 934,
+    "name": "Buy train tickets or bus tickets",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 935,
+    "name": "Talk about plans to go out tomorrow",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 936,
+    "name": "Describe a small room of yours",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 937,
+    "name": "Talking about famous Chinese dishes",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 938,
+    "name": "Learn Chinese in class or online",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 939,
+    "name": "Talking about busy work today",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 940,
+    "name": "Go to the bookstore to buy foreign language books",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 941,
+    "name": "Introducing my hometown",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 942,
+    "name": "Go to the supermarket to shop for household appliances",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 943,
+    "name": "Ask if this dish is spicy",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 944,
+    "name": "Talk about sleep and wake times",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 945,
+    "name": "Invite friends to have lunch together",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 946,
+    "name": "Ask about your children's learning situation",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 947,
+    "name": "Ask others for help with simple tasks",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 948,
+    "name": "Talk about your favorite season of the year",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 949,
+    "name": "Happy birthday to friends and colleagues",
+    "systemCode": "HSK",
+    "levelCode": "HSK1"
+  },
+  {
+    "id": 950,
+    "name": "Go to a restaurant and order traditional dishes",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 951,
+    "name": "Go to the hospital for regular health check-ups",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 952,
+    "name": "Pick up friends at the airport or train station",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 953,
+    "name": "Ask about the health of old classmates",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 954,
+    "name": "Buy movie tickets online",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 955,
+    "name": "Compare height and weight",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 956,
+    "name": "Rent a new room or apartment",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 957,
+    "name": "Travel by speedboat",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 958,
+    "name": "Prepare birthday gifts for mother",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 959,
+    "name": "Talk about university subjects",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 960,
+    "name": "Discuss plans for a year-end party",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 961,
+    "name": "Buy phone cards and register for mobile networks",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 962,
+    "name": "Introducing the company and working departments",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 963,
+    "name": "Ask about the bank's opening hours",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 964,
+    "name": "Describe the local four-season weather",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 965,
+    "name": "Talk about healthy eating habits",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 966,
+    "name": "Go to the barbershop and get a new hairstyle",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 967,
+    "name": "Ask about effective Chinese learning experiences",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 968,
+    "name": "Borrow books from the school library",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 969,
+    "name": "Talk about plans to get married or buy a house",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 970,
+    "name": "Discuss a dramatic soccer match",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 971,
+    "name": "Go shopping for new home electronics",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 972,
+    "name": "Talk about part-time jobs for students",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 973,
+    "name": "Book round-trip air tickets to Beijing",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 974,
+    "name": "Ask about traditional Tet customs",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 975,
+    "name": "Instructions for using smart home appliances",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 976,
+    "name": "Talk about popular video games",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 977,
+    "name": "Find a suitable job after graduation",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 978,
+    "name": "Talk about the benefits of morning jogging",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 979,
+    "name": "Go to the mall to shop for discounts",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 980,
+    "name": "Exchange contact information (WeChat, Zalo)",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 981,
+    "name": "Talking about the movie that just released",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 982,
+    "name": "Share your feelings when you first come to China",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 983,
+    "name": "Talk about learning to swim in the summer",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 984,
+    "name": "Buy cakes and milk tea for afternoon snack",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 985,
+    "name": "Ask friends for advice about choosing outfits",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 986,
+    "name": "Describe a lovely pet (dog, cat).",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 987,
+    "name": "Talk about a busy day's work schedule",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 988,
+    "name": "Happy New Year and good health to adults",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 989,
+    "name": "Take a walk in the park on a warm weekend",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 990,
+    "name": "Discuss preparing travel luggage",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 991,
+    "name": "Ask for directions to scenic spots",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 992,
+    "name": "Go to the post office to send parcels abroad",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 993,
+    "name": "Talk about future career dreams",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 994,
+    "name": "Organize an outdoor picnic with the class",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 995,
+    "name": "Talk about taking care of indoor plants",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 996,
+    "name": "Discussing going to eat hot pot in the cold winter",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 997,
+    "name": "Shop for good quality sneakers",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 998,
+    "name": "Ask about prices for gyms near your home",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 999,
+    "name": "Talk about learning to cook a new dish",
+    "systemCode": "HSK",
+    "levelCode": "HSK2"
+  },
+  {
+    "id": 1000,
+    "name": "Colleagues exchange new projects",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1001,
+    "name": "Report weekly work progress",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1002,
+    "name": "Talk about China's cultural history",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1003,
+    "name": "Go to an art museum to see an exhibition",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1004,
+    "name": "How to prepare the perfect Chinese tea ceremony",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1005,
+    "name": "Learn about the art of calligraphy",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1006,
+    "name": "Make a plan to save money to buy a car",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1007,
+    "name": "Discuss urban environmental pollution",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1008,
+    "name": "Protecting rare animals (Panda)",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1009,
+    "name": "Talk about being a social volunteer",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1010,
+    "name": "Experience traveling by motorbike",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1011,
+    "name": "The importance of learning foreign languages",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1012,
+    "name": "Use e-wallets (Alipay, WeChat Pay)",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1013,
+    "name": "Experience shopping on Taobao",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1014,
+    "name": "Describe the personality of a good friend",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1015,
+    "name": "Talk about the difficulties of living away from home",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1016,
+    "name": "How to relieve pressure after work",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1017,
+    "name": "Discuss the benefits of reading paper books",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1018,
+    "name": "Join the school guitar club",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1019,
+    "name": "Learn about traditional Chinese medicine",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1020,
+    "name": "Vegetarian diet and cardiovascular health",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1021,
+    "name": "Talk about a memorable summer vacation in Hainan",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1022,
+    "name": "Go shopping for souvenirs with regional specialties",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1023,
+    "name": "Discuss the habit of staying up late among young people",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1024,
+    "name": "How to plan effective time management",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1025,
+    "name": "Organize an outdoor BBQ party",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1026,
+    "name": "Ask about student visa interview experience",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1027,
+    "name": "Talk about the school's sports day",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1028,
+    "name": "Discuss the influence of social networks",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1029,
+    "name": "Learn about the art of Peking opera",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1030,
+    "name": "Experience in raising feng shui ornamental fish",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1031,
+    "name": "How to provide basic first aid for wounds at home",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1032,
+    "name": "Discuss today's minimalist lifestyle",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1033,
+    "name": "Go buy flowers to decorate your home for Tet",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1034,
+    "name": "Talk about your hobby of landscape photography",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1035,
+    "name": "Experience riding the subway during rush hour",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1036,
+    "name": "Discuss studying college online",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1037,
+    "name": "How to make a short video for Tiktok",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1038,
+    "name": "Ask about passport renewal procedures",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1039,
+    "name": "Talk about your musical idols",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1040,
+    "name": "Discuss maintaining public hygiene",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1041,
+    "name": "Simple ways to repair electrical appliances yourself",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1042,
+    "name": "Visit the old town and enjoy afternoon tea",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1043,
+    "name": "Celebrating the first day of work at the company",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1044,
+    "name": "Talk about learning to play Chinese chess",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1045,
+    "name": "How to prepare a persuasive presentation",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1046,
+    "name": "Discuss saving electricity and water at home",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1047,
+    "name": "Go camping in the mountains in the fall",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1048,
+    "name": "Ask about the procedure for buying health insurance",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1049,
+    "name": "Talk about the value of family affection",
+    "systemCode": "HSK",
+    "levelCode": "HSK3"
+  },
+  {
+    "id": 1050,
+    "name": "Interview for a job at a multinational corporation",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1051,
+    "name": "Negotiate salaries and social benefits",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1052,
+    "name": "Discuss current AI development trends",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1053,
+    "name": "Effects of global climate change",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1054,
+    "name": "Learn about the architecture of Tu Hop Vien ancient house",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1055,
+    "name": "History and meaning of the Great Wall",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1056,
+    "name": "Experience in starting a small business",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1057,
+    "name": "Discuss basic stock markets",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1058,
+    "name": "Personal financial management and smart investments",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1059,
+    "name": "Talk about the green environmental protection movement",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1060,
+    "name": "The impact of e-commerce on retail",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1061,
+    "name": "The meaning of That Tich Valentine's Day",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1062,
+    "name": "Traditional customs and traditions of celebrating the Mid-Autumn Festival",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1063,
+    "name": "The importance of practicing critical thinking",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1064,
+    "name": "Discuss the problem of aging population in society",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1065,
+    "name": "Learn about Sichuan cuisine and Cantonese cuisine",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1066,
+    "name": "Experience applying for Chinese government scholarships",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1067,
+    "name": "Discuss waste separation at source",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1068,
+    "name": "The influence of advertising on consumer behavior",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1069,
+    "name": "The importance of protecting personal information",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1070,
+    "name": "Discussing 996 work culture in China",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1071,
+    "name": "Learn about the great inventions of ancient China",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1072,
+    "name": "Benefits of meditation for the brain",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1073,
+    "name": "Discuss future electric vehicle (EV) trends",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1074,
+    "name": "Experience participating in career guidance activities",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1075,
+    "name": "Meaning of Dragon Boat Festival (Doan Ngo)",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1076,
+    "name": "Discuss generational differences in the family",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1077,
+    "name": "The impact of mass tourism on local culture",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1078,
+    "name": "How to deal with the psychological crisis of middle age",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1079,
+    "name": "Discuss the future of renewable energy",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1080,
+    "name": "Learn about the traditional art of paper cutting",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1081,
+    "name": "Experience studying for the advanced HSK certificate exam",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1082,
+    "name": "The impact of online games on learning outcomes",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1083,
+    "name": "The importance of EQ (emotional intelligence) at work",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1084,
+    "name": "Discuss the entrepreneurial trend of young people",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1085,
+    "name": "How to maintain good co-worker relationships",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1086,
+    "name": "Discuss road traffic safety",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1087,
+    "name": "Learn about Longjing tea and Tay Ho tea culture",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1088,
+    "name": "The meaning of lifelong learning (Lifelong learning)",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1089,
+    "name": "The impact of e-books on the publishing industry",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1090,
+    "name": "Experience in organizing medium-sized events at the company",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1091,
+    "name": "Discuss work-life balance",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1092,
+    "name": "The importance of getting enough sleep every day",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1093,
+    "name": "The impact of urbanization on rural areas",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1094,
+    "name": "Discuss the preservation of intangible cultural heritage",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1095,
+    "name": "How to build a personal brand online",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1096,
+    "name": "Learn about the art of Chinese ink painting",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1097,
+    "name": "Experience in traveling safely abroad on your own",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1098,
+    "name": "Discuss the trend of remote work (Remote work)",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1099,
+    "name": "The importance of maintaining a positive attitude to life",
+    "systemCode": "HSK",
+    "levelCode": "HSK4"
+  },
+  {
+    "id": 1100,
+    "name": "Negotiate international commercial contracts",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1101,
+    "name": "Analyze your competitors' marketing strategies",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1102,
+    "name": "Blockchain application in supply chain management",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1103,
+    "name": "National circular economy development policy",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1104,
+    "name": "Learn the depth of Confucius philosophy",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1105,
+    "name": "Lao Tzu's Wuwei thought in life",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1106,
+    "name": "Startup risk management strategy",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1107,
+    "name": "Real estate investment and market analysis",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1108,
+    "name": "Impact of artificial intelligence on the labor market",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1109,
+    "name": "Global carbon emission reduction policy",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1110,
+    "name": "The trend of globalization and trade protection",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1111,
+    "name": "Learn the meaning of the ancient Chinese I Ching",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1112,
+    "name": "Business culture and social relations in China",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1113,
+    "name": "Early education methods for smart children",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1114,
+    "name": "Resolve internal conflicts in large organizations",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1115,
+    "name": "The art of communication and behavior of leaders",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1116,
+    "name": "Analyze quarterly financial reports of enterprises",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1117,
+    "name": "The influence of behavioral psychology in investing",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1118,
+    "name": "Managing brand communication crises",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1119,
+    "name": "Developing smart urban areas and green transportation",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1120,
+    "name": "The importance of innovation in technology",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1121,
+    "name": "Learn about the history of Jingdezhen ceramic art",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1122,
+    "name": "Big Data application in healthcare",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1123,
+    "name": "The future of 6G mobile network technology",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1124,
+    "name": "Current global food security problem",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1125,
+    "name": "Policy to encourage national domestic consumption",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1126,
+    "name": "Preserving the heritage Longmen stone carving art",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1127,
+    "name": "Developing sustainable tourism associated with culture",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1128,
+    "name": "How to build a strong corporate culture",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1129,
+    "name": "Discuss the rise of digital payments",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1130,
+    "name": "The role of the WTO in global free trade",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1131,
+    "name": "Research on classical Chinese literature (Four great works)",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1132,
+    "name": "Learn the art of Shaolin martial arts",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1133,
+    "name": "Mental health and stress in the modern workplace",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1134,
+    "name": "The trend of developing high-tech agriculture",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1135,
+    "name": "The impact of social networks on adolescent psychology",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1136,
+    "name": "Methods of optimizing corporate human resources",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1137,
+    "name": "Analyzing consumption trends of Gen Z generation",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1138,
+    "name": "The art of multilateral negotiation in diplomacy",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1139,
+    "name": "The importance of school ethics education",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1140,
+    "name": "Learn about the history of the Silk Road trade",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1141,
+    "name": "Application of nuclear energy for peaceful purposes",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1142,
+    "name": "Anti-monopoly and protection of fair competition",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1143,
+    "name": "Analyzing the impact of free trade agreements",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1144,
+    "name": "Protect biodiversity of forest ecosystems",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1145,
+    "name": "How to attract and retain corporate talent",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1146,
+    "name": "Learn about ancient opera and traditional drama",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1147,
+    "name": "Impact of climate change on sea level",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1148,
+    "name": "Development trends of the entertainment industry",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1149,
+    "name": "The meaning of building a community with a common destiny",
+    "systemCode": "HSK",
+    "levelCode": "HSK5"
+  },
+  {
+    "id": 1150,
+    "name": "Global macroeconomic strategy",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1151,
+    "name": "Operating mechanism of national monetary policy",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1152,
+    "name": "In-depth research on quantum theory of physics",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1153,
+    "name": "Geopolitics and world energy security",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1154,
+    "name": "Dialectical philosophy and modern applications",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1155,
+    "name": "Research on Sun Tzu's military ideology",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1156,
+    "name": "Restructuring large-scale state-owned enterprises",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1157,
+    "name": "Managing international venture capital flows",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1158,
+    "name": "Bioethics in human genetic engineering",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1159,
+    "name": "International cooperation on natural disaster response",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1160,
+    "name": "Financial globalization and systemic risk",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1161,
+    "name": "Researching ancient Giap Cot Van historical texts",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1162,
+    "name": "Chinese culture and society flourished during the Tang Dynasty",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1163,
+    "name": "Reform of the modern national education system",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1164,
+    "name": "Strategy for international ethnic reconciliation",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1165,
+    "name": "The art of diplomacy to prevent common crises",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1166,
+    "name": "Econometric analysis and growth forecast",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1167,
+    "name": "Game theory applied in business negotiations",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1168,
+    "name": "Managing the global financial crisis system",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1169,
+    "name": "Ecological urbanization and sustainable architecture",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1170,
+    "name": "Global intellectual property strategy of the enterprise",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1171,
+    "name": "Archaeological research on wet rice civilization",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1172,
+    "name": "Future applications of artificial general intelligence (AGI).",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1173,
+    "name": "Explore space and aerospace technology",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1174,
+    "name": "International non-traditional security policy",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1175,
+    "name": "Cybersecurity and digital information warfare",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1176,
+    "name": "Preserving cultural diversity in the face of assimilation",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1177,
+    "name": "National sustainable marine economic development strategy",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1178,
+    "name": "Reform international law on environmental protection",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1179,
+    "name": "Analyze the macro international balance of payments",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1180,
+    "name": "In-depth study of Tang Dynasty poetry",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1181,
+    "name": "Historical significance of the 1978 reform and opening up",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1182,
+    "name": "Theory of chaos and complex systems",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1183,
+    "name": "Application of nanomaterials in future industry",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1184,
+    "name": "High-speed rail transport development policy",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1185,
+    "name": "Analyzing crowd psychology in finance",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1186,
+    "name": "WTO's trade dispute settlement mechanism",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1187,
+    "name": "Strategy for sustainable development of the Mekong River basin",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1188,
+    "name": "Research the history of ancient Western philosophy",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1189,
+    "name": "The future of central bank cryptocurrencies",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1190,
+    "name": "Water security and cross-border resource disputes",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1191,
+    "name": "Global value chain development strategy",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1192,
+    "name": "Research on landscape painting of the Song Dynasty",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1193,
+    "name": "History of development of modern global medicine",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1194,
+    "name": "Analyzing the impact of an international carbon tax",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1195,
+    "name": "Strategy for building the first carbon-neutral urban area",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1196,
+    "name": "Research ancient Chinese royal culinary culture",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1197,
+    "name": "The impact of biological robots on human life",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1198,
+    "name": "ASEAN+ regional economic development cooperation mechanism",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  },
+  {
+    "id": 1199,
+    "name": "Future vision of sustainable development of the planet",
+    "systemCode": "HSK",
+    "levelCode": "HSK6"
+  }
+]
