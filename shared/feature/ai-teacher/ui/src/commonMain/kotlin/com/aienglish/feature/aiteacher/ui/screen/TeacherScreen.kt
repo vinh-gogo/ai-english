@@ -207,8 +207,8 @@ fun TeacherScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .width(52.dp)
-                            .clip(RoundedCornerShape(topStart = 26.dp, bottomStart = 26.dp))
+                            .aspectRatio(1f)
+                            .clip(RoundedCornerShape(topStart = 100.dp, bottomStart = 100.dp))
                             .clickable { showHistory = true },
                         contentAlignment = Alignment.Center
                     ) {
@@ -232,7 +232,7 @@ fun TeacherScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .width(52.dp)
+                            .aspectRatio(1f)
                             .clip(RoundedCornerShape(0.dp))
                             .clickable { profileViewModel.showProfile() },
                         contentAlignment = Alignment.Center
@@ -274,7 +274,7 @@ fun TeacherScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .clip(RoundedCornerShape(topEnd = 26.dp, bottomEnd = 26.dp))
+                            .clip(RoundedCornerShape(topEnd = 100.dp, bottomEnd = 100.dp))
                             .clickable { proViewModel.onIntent(ProIntent.ShowVip) }
                             .padding(start = 12.dp, end = 16.dp),
                         verticalAlignment = Alignment.CenterVertically,
