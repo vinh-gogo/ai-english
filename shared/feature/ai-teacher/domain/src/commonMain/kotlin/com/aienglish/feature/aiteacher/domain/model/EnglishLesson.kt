@@ -7,6 +7,7 @@ data class EnglishLesson(
 data class EnglishSentence(
     val vietnamese: String,
     val english: String,
+    val alternatives: List<String> = emptyList(),
     val tokens: List<EnglishToken> = emptyList(),
     val explanation: String = ""
 )

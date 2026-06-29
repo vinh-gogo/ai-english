@@ -38,6 +38,10 @@ object EnglishPromptProvider : LanguagePromptProvider {
                 {
                   "vietnamese": "Short $nativeName sentence",
                   "english": "Corresponding target English translation",
+                  "alternatives": [
+                    "Alternative correct translation 1",
+                    "Alternative correct translation 2"
+                  ],
                   "tokens": [
                     { "word": "Hello", "phonetic": "/həˈloʊ/", "partOfSpeech": "interjection" }
                   ]
@@ -48,7 +52,8 @@ object EnglishPromptProvider : LanguagePromptProvider {
             CRITICAL RULES:
             1. Return ONLY valid JSON. No markdown, no explanation, no preamble outside the JSON.
             2. $nativeName sentences must be short, natural, and relevant to the chosen topic.
-            3. Tokens must break the English target sentence into individual words with IPA phonetics and part of speech.
+            3. Alternatives must list 2-4 other correct ways to translate the sentence in English (using synonyms, contractions, or slightly different structures).
+            4. Tokens must break the main English target sentence into individual words with IPA phonetics and part of speech.
         """.trimIndent()
     }
 
@@ -80,7 +85,12 @@ object EnglishPromptProvider : LanguagePromptProvider {
             $reports
 
             Provide feedback in $responseLang: praise what was done well, point out common errors, suggest improvements.
-            Give a total score out of 10. Also evaluate and score each of the 10 sentences individually (from 0 to 10). If a sentence is skipped or left blank, score it 0. For others, rate strictly based on correctness.
+            Give a total score out of 10. Also evaluate and score each of the 10 sentences individually (from 0 to 10). If a sentence is skipped or left blank, score it 0.
+            
+            CRITICAL GRADING INSTRUCTIONS:
+            - Focus on SEMANTIC EQUIVALENCE: If the student's answer expresses the correct meaning naturally (even using different words, synonyms, active/passive voice, or structures than the reference English), you MUST score it 10/10.
+            - DO NOT DEDUCT POINTS for minor differences such as: capitalization (e.g. 'hello' vs 'Hello'), punctuation (missing period or comma), minor spacing, or common contractions (e.g. 'do not' vs 'don't'). These must receive a perfect 10/10.
+            - Deduct points only for real grammatical errors, incorrect words, or completely wrong meanings.
 
             RETURN ONLY VALID JSON (no markdown, no extra text):
             {
@@ -112,11 +122,12 @@ object EnglishPromptProvider : LanguagePromptProvider {
 
             Explanation requirements (adjusted for target level $level):
             1. Evaluate whether the student's answer is grammatically correct and natural.
-            2. Compare with the target English, point out strengths or errors (grammar, word order, vocabulary, tone).
-            3. If the student answered correctly, praise briefly and explain the grammar structures at $level depth.
-            4. If the student skipped, provide a full breakdown of the target sentence, explaining vocabulary and grammar patterns relevant to $level.
-            5. Write in $responseLang, warm and encouraging. Format the explanation in Markdown.
-            6. In "score", rate the student's answer from 0 to 10. If skipped or blank, score MUST be 0. Otherwise, rate strictly based on correctness.
+            2. Compare with the target English (and any valid alternatives), point out strengths or errors (grammar, word order, vocabulary, tone).
+            3. If the student's answer is semantically equivalent (same meaning), even if worded differently, or has minor differences like capitalization ('hello' vs 'Hello') or punctuation, treat it as fully correct (10/10) and praise the student.
+            4. If the student answered correctly, praise briefly and explain the grammar structures at $level depth.
+            5. If the student skipped, provide a full breakdown of the target sentence, explaining vocabulary and grammar patterns relevant to $level.
+            6. Write in $responseLang, warm and encouraging. Format the explanation in Markdown.
+            7. In "score", rate the student's answer from 0 to 10. If skipped or blank, score MUST be 0. Do NOT deduct any points for capitalization, punctuation, spacing, or minor contraction differences.
 
             RETURN ONLY VALID JSON (no markdown block, no extra text):
             {

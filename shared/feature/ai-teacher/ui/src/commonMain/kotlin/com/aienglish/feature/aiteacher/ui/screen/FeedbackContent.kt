@@ -167,10 +167,22 @@ private fun SentenceReviewCard(
             Spacer(Modifier.height(4.dp))
             Text(sentence.vietnamese, color = colors.mainText, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
             Spacer(Modifier.height(4.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Rounded.CheckCircle, null, tint = colors.correct, modifier = Modifier.size(13.dp))
-                Spacer(Modifier.width(4.dp))
-                Text(sentence.english, color = colors.correct, fontSize = 12.sp, fontStyle = FontStyle.Italic)
+            Column {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Rounded.CheckCircle, null, tint = colors.correct, modifier = Modifier.size(13.dp))
+                    Spacer(Modifier.width(4.dp))
+                    Text(sentence.english, color = colors.correct, fontSize = 12.sp, fontStyle = FontStyle.Italic)
+                }
+                if (sentence.alternatives.isNotEmpty()) {
+                    sentence.alternatives.forEach { alt ->
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(start = 17.dp, top = 2.dp)
+                        ) {
+                            Text("• $alt", color = colors.mutedText, fontSize = 11.sp, fontStyle = FontStyle.Italic)
+                        }
+                    }
+                }
             }
             if (!userAnswer.isNullOrBlank()) {
                 Spacer(Modifier.height(3.dp))

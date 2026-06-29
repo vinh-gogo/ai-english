@@ -11,6 +11,7 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 1** | 2026-06-29 | Gemini 3.5 Flash | `2a008a49-cd1d-4bab-b247-bcc68426f630` | Khởi tạo file `GEMINI.md` để theo dõi tiến độ và lịch sử chat. | Hoàn thành |
 | **Session 2** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Tăng chiều rộng nhóm 3 nút (History, Profile, Pro). | Hoàn thành |
 | **Session 3** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Cấu hình Novita API Service và hỗ trợ chuyển đổi API Provider (Gemini / Novita). | Hoàn thành |
+| **Session 4** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Sửa logic chấm điểm AI & bổ sung các đáp án chuẩn thay thế (Alternatives). | Hoàn thành |
 
 ---
 
@@ -52,6 +53,25 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
   - **Profile UI & Presentation:** Nâng cấp [ProfileViewModel.kt](file:///D:/ai-english/shared/feature/profile/ui/src/commonMain/kotlin/com/aienglish/feature/profile/ui/viewmodel/ProfileViewModel.kt), đăng ký DI trong [ProfileUiModule.kt](file:///D:/ai-english/shared/feature/profile/ui/src/commonMain/kotlin/com/aienglish/feature/profile/ui/di/ProfileUiModule.kt). Tích hợp Segmented Control (đổi provider) và form cấu hình Novita API Key trong [ProfileSheet.kt](file:///D:/ai-english/shared/feature/profile/ui/src/commonMain/kotlin/com/aienglish/feature/profile/ui/screen/ProfileSheet.kt).
 - **Ghi chú kỹ thuật:**
   - Build kiểm tra thành công với target Desktop, đảm bảo các modules tích hợp mượt mà.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 4 (2026-06-29)
+
+- **Mục tiêu:** Cải thiện độ chuẩn xác trong việc chấm điểm của AI (tránh trừ điểm lỗi viết hoa/thường, khoảng trắng, dấu câu) và bổ sung thêm các đáp án thay thế chuẩn khác (alternatives).
+- **Hoạt động & Thay đổi:**
+  - **Domain Model:** Mở rộng [EnglishLesson.kt](file:///D:/ai-english/shared/feature/ai-teacher/domain/src/commonMain/kotlin/com/aienglish/feature/aiteacher/domain/model/EnglishLesson.kt) thêm trường `alternatives: List<String> = emptyList()` vào model `EnglishSentence`.
+  - **Data Transfer Object:** Đồng bộ trường `alternatives` và cập nhật mapper tương ứng trong [EnglishLessonDto.kt](file:///D:/ai-english/shared/feature/ai-teacher/data/src/commonMain/kotlin/com/aienglish/feature/aiteacher/data/model/EnglishLessonDto.kt).
+  - **Prompt Configuration:** Cập nhật [EnglishPromptProvider.kt](file:///D:/ai-english/shared/feature/ai-teacher/data/src/commonMain/kotlin/com/aienglish/feature/aiteacher/data/repository/prompt/EnglishPromptProvider.kt):
+    - `getGenerateLessonSystemPrompt`: Yêu cầu AI sinh thêm mảng `alternatives` chứa 2-4 câu dịch tiếng Anh chuẩn khác nhau.
+    - `getEvaluateLessonSystemPrompt` & `getExplainSentenceSystemPrompt`: Thêm hướng dẫn chấm điểm **lenient grading** (không trừ điểm nếu chỉ khác biệt về viết hoa/thường, khoảng trắng, dấu câu, viết tắt; ưu tiên tính tương đương về mặt ý nghĩa - semantic equivalence).
+  - **User Interface:**
+    - Cập nhật [LessonContent.kt](file:///D:/ai-english/shared/feature/aiteacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/LessonContent.kt) để hiển thị đầy đủ câu đáp án chuẩn chính và danh sách các đáp án chuẩn thay thế khác ngay khi người dùng kiểm tra câu trả lời.
+    - Cập nhật [FeedbackContent.kt](file:///D:/ai-english/shared/feature/aiteacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/FeedbackContent.kt) hiển thị danh sách đáp án thay thế dưới dạng danh sách bullet point trong màn hình xem lại kết quả.
+- **Ghi chú kỹ thuật:**
+  - Biên dịch thành công với target Desktop, đảm bảo các API serialization tương thích mượt mà nhờ cơ chế default values của Kotlin.
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 

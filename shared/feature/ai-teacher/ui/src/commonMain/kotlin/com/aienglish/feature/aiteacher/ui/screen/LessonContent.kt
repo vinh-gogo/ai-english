@@ -142,6 +142,37 @@ fun LessonContent(
                     fontWeight = FontWeight.Bold,
                     color = colors.mutedText
                 )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = sentence.english,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = colors.mainText
+                )
+                if (sentence.alternatives.isNotEmpty()) {
+                    Spacer(Modifier.height(8.dp))
+                    Text(
+                        "Các đáp án chuẩn khác:",
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = colors.mutedText
+                    )
+                    sentence.alternatives.forEach { alt ->
+                        Text(
+                            text = "• $alt",
+                            fontSize = 13.sp,
+                            color = colors.mutedText,
+                            modifier = Modifier.padding(start = 8.dp, top = 2.dp, bottom = 2.dp)
+                        )
+                    }
+                }
+                Spacer(Modifier.height(12.dp))
+                Text(
+                    "Từ vựng chi tiết:",
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = colors.mutedText
+                )
                 Spacer(Modifier.height(6.dp))
 
                 // Token chips in FlowRow (no cards/borders, clean wraps like Sensei AI)

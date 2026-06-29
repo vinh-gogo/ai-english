@@ -20,12 +20,14 @@ data class EnglishLessonDto(
 data class EnglishSentenceDto(
     val vietnamese: String,
     val english: String,
+    val alternatives: List<String> = emptyList(),
     val tokens: List<EnglishTokenDto> = emptyList(),
     val explanation: String = ""
 ) {
     fun toDomain(): EnglishSentence = EnglishSentence(
         vietnamese = vietnamese,
         english = english,
+        alternatives = alternatives,
         tokens = tokens.map { it.toDomain() },
         explanation = explanation
     )
@@ -76,6 +78,7 @@ fun EnglishLesson.toDto(): EnglishLessonDto = EnglishLessonDto(
 fun EnglishSentence.toDto(): EnglishSentenceDto = EnglishSentenceDto(
     vietnamese = vietnamese,
     english = english,
+    alternatives = alternatives,
     tokens = tokens.map { it.toDto() },
     explanation = explanation
 )
