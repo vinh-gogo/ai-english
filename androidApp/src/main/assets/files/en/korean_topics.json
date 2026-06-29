@@ -1,0 +1,110 @@
+[
+  {
+    "id": 6000,
+    "name": "Greetings and self-introduction (자기소개)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK1"
+  },
+  {
+    "id": 6001,
+    "name": "Basic shopping and pricing (물건 사기)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK1"
+  },
+  {
+    "id": 6002,
+    "name": "Ordering food at a restaurant (음식 주문하기)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK1"
+  },
+  {
+    "id": 6003,
+    "name": "Family and occupation (가족과 직업)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK2"
+  },
+  {
+    "id": 6004,
+    "name": "Weather and seasons (날씨와 계절)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK2"
+  },
+  {
+    "id": 6005,
+    "name": "Weekend plans and hobbies (주말 계획과 취미)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK2"
+  },
+  {
+    "id": 6006,
+    "name": "Using public transportation (대중교통 이용)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK3"
+  },
+  {
+    "id": 6007,
+    "name": "Appointments and reservations (약속 & 예약)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK3"
+  },
+  {
+    "id": 6008,
+    "name": "Health and visiting the hospital (건강과 병원 이용)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK3"
+  },
+  {
+    "id": 6009,
+    "name": "Office life and work (직장 생활과 업무)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK4"
+  },
+  {
+    "id": 6010,
+    "name": "Online shopping and payment (인터넷 쇼핑과 결제)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK4"
+  },
+  {
+    "id": 6011,
+    "name": "Accidents and problem solving (사고와 문제 해결)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK4"
+  },
+  {
+    "id": 6012,
+    "name": "Social issues and environment (사회 문제와 환경)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK5"
+  },
+  {
+    "id": 6013,
+    "name": "Economy and personal finance (경제와 개인 금융)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK5"
+  },
+  {
+    "id": 6014,
+    "name": "Korean traditional culture and festivals (한국 전통 문화와 축제)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK5"
+  },
+  {
+    "id": 6015,
+    "name": "Science, technology, and future (과학 기술과 미래)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK6"
+  },
+  {
+    "id": 6016,
+    "name": "Current events and media (시사와 언론)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK6"
+  },
+  {
+    "id": 6017,
+    "name": "Public policy and education (공공 정책과 교육)",
+    "systemCode": "TOPIK",
+    "levelCode": "TOPIK6"
+  }
+]

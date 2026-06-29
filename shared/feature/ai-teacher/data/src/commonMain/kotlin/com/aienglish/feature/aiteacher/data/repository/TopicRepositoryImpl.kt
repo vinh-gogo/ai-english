@@ -1,6 +1,7 @@
 package com.aienglish.feature.aiteacher.data.repository
 
 import com.aienglish.core.common.dispatchers.AppDispatchers
+import com.aienglish.core.common.prefs.AppPreferences
 import com.aienglish.core.database.AIEnglishDatabase
 import com.aienglish.feature.aiteacher.domain.model.TopicItem
 import com.aienglish.feature.aiteacher.domain.repository.TopicRepository
@@ -33,6 +34,7 @@ private data class JsonTopicItem(
 
 class TopicRepositoryImpl(
     private val database: AIEnglishDatabase,
+    private val prefs: AppPreferences,
     private val dispatchers: AppDispatchers,
     private val jsonResourceReader: JsonResourceReader
 ) : TopicRepository {
@@ -41,15 +43,43 @@ class TopicRepositoryImpl(
 
     override suspend fun getTopics(systemCode: String, levelCodes: List<String>): List<TopicItem> =
         withContext(dispatchers.io) {
-            database.userSchemaQueries.getTopicsForLevels(systemCode, levelCodes)
+            val dbTopics = database.userSchemaQueries.getTopicsForLevels(systemCode, levelCodes)
                 .executeAsList()
-                .map {
+            
+            val isEn = prefs.getLanguageNative() == "en"
+            
+            if (isEn && systemCode == "TOPIK") {
+                try {
+                    val enTopicsJson = jsonResourceReader.readKoreanTopicsEnJson()
+                    val enTopicsList = json.decodeFromString<List<JsonTopicItem>>(enTopicsJson.removeBom().trim())
+                    val enTopicsMap = enTopicsList.associateBy { it.id }
+                    
+                    dbTopics.map { row ->
+                        val enTopic = enTopicsMap[row.topic_id.toInt()]
+                        TopicItem(
+                            id = row.topic_id.toInt(),
+                            name = enTopic?.name ?: row.name,
+                            levelCode = row.level_code
+                        )
+                    }
+                } catch (e: Exception) {
+                    dbTopics.map {
+                        TopicItem(
+                            id = it.topic_id.toInt(),
+                            name = it.name,
+                            levelCode = it.level_code
+                        )
+                    }
+                }
+            } else {
+                dbTopics.map {
                     TopicItem(
                         id = it.topic_id.toInt(),
                         name = it.name,
                         levelCode = it.level_code
                     )
                 }
+            }
         }
 
     private fun String.removeBom(): String =
