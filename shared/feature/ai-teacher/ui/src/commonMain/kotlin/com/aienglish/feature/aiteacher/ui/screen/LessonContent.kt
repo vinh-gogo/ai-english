@@ -186,30 +186,6 @@ fun LessonContent(
                                     Text(
                                         text = token.partOfSpeech,
                                         color = colors.hintText,
-                                        fontSize = 9.sp,
-                                        fontWeight = FontWeight.Normal
-                                    )
-                                }
-                                Text(
-                                    text = token.word,
-                                    color = colors.mainText,
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                                if (token.phonetic.isNotEmpty()) {
-                                    Text(
-                                        text = token.phonetic,
-                                        color = colors.hintText,
-                                        fontSize = 8.sp,
-                                        fontWeight = FontWeight.Light
-                                    )
-                                }
-                            } else if (isChinese) {
-                                // Chinese layout: Pinyin (Top), Hanzi (Middle), Vietnamese Meaning/POS (Bottom)
-                                if (token.phonetic.isNotEmpty()) {
-                                    Text(
-                                        text = token.phonetic,
-                                        color = colors.accent,
                                         fontSize = 10.sp,
                                         fontWeight = FontWeight.Normal
                                     )
@@ -220,11 +196,35 @@ fun LessonContent(
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Bold
                                 )
+                                if (token.phonetic.isNotEmpty()) {
+                                    Text(
+                                        text = token.phonetic,
+                                        color = colors.hintText,
+                                        fontSize = 11.sp,
+                                        fontWeight = FontWeight.Light
+                                    )
+                                }
+                            } else if (isChinese) {
+                                // Chinese layout: Pinyin (Top), Hanzi (Middle), Vietnamese Meaning/POS (Bottom)
+                                if (token.phonetic.isNotEmpty()) {
+                                    Text(
+                                        text = token.phonetic,
+                                        color = colors.accent,
+                                        fontSize = 11.sp,
+                                        fontWeight = FontWeight.Normal
+                                    )
+                                }
+                                Text(
+                                    text = token.word,
+                                    color = colors.mainText,
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
                                 if (token.partOfSpeech.isNotEmpty()) {
                                     Text(
                                         text = token.partOfSpeech,
                                         color = colors.hintText,
-                                        fontSize = 9.sp,
+                                        fontSize = 10.sp,
                                         fontWeight = FontWeight.Normal
                                     )
                                 }
@@ -233,21 +233,21 @@ fun LessonContent(
                                 Text(
                                     text = token.word,
                                     color = colors.mainText,
-                                    fontSize = 14.sp,
+                                    fontSize = 16.sp,
                                     fontWeight = FontWeight.Bold
                                 )
                                 if (token.phonetic.isNotEmpty()) {
                                     Text(
                                         text = token.phonetic,
                                         color = colors.accent,
-                                        fontSize = 10.sp
+                                        fontSize = 11.sp
                                     )
                                 }
                                 if (token.partOfSpeech.isNotEmpty()) {
                                     Text(
                                         text = token.partOfSpeech,
                                         color = colors.hintText,
-                                        fontSize = 9.sp,
+                                        fontSize = 10.sp,
                                         fontStyle = FontStyle.Italic
                                     )
                                 }
