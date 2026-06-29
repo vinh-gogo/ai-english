@@ -163,36 +163,74 @@ fun TeacherScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Group 1: Back and Title (Height synchronized to 48dp)
+                // Group 1: Back and Title (Segmented control style, height 48dp)
                 Row(
                     modifier = Modifier
                         .height(48.dp)
                         .background(colors.surface, CircleShape)
-                        .border(2.dp, colors.border, CircleShape)
-                        .padding(horizontal = 16.dp),
+                        .border(2.dp, colors.border, CircleShape),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (state.lesson != null || state.feedback != null) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = colors.mainText,
+                        // Back Button Segment (Rounded on the left, flat on the right)
+                        Box(
                             modifier = Modifier
-                                .size(20.dp)
-                                .clickable { viewModel.onReset() }
+                                .fillMaxHeight()
+                                .width(40.dp)
+                                .clip(RoundedCornerShape(topStart = 100.dp, bottomStart = 100.dp))
+                                .clickable { viewModel.onReset() },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Back",
+                                tint = colors.mainText,
+                                modifier = Modifier.size(20.dp)
+                            )
+                        }
+
+                        // Divider
+                        Box(
+                            modifier = Modifier
+                                .width(1.dp)
+                                .height(20.dp)
+                                .background(colors.border)
                         )
-                        Spacer(Modifier.width(12.dp))
+
+                        // Title Text Segment (with safe padding)
+                        Row(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .padding(start = 12.dp, end = 16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = when {
+                                    state.feedback != null -> "Kết quả"
+                                    state.lesson != null -> "Luyện tập"
+                                    else -> "AI Lingua"
+                                },
+                                fontSize = 15.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = colors.mainText
+                            )
+                        }
+                    } else {
+                        // Title Text only (standard padding)
+                        Row(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .padding(horizontal = 16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "AI Lingua",
+                                fontSize = 15.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = colors.mainText
+                            )
+                        }
                     }
-                    Text(
-                        text = when {
-                            state.feedback != null -> "Kết quả"
-                            state.lesson != null -> "Luyện tập"
-                            else -> "AI Lingua"
-                        },
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = colors.mainText
-                    )
                 }
 
                 // Group 2: History, Profile, Pro badge (Grouped inside a single 48dp capsule aligned to the right)
