@@ -199,11 +199,12 @@ class TeacherViewModel(
         val currentFrenchTopics = topicRepository.getTopics("DELF", listOf("A1"))
         val currentGermanTopics = topicRepository.getTopics("GOETHE", listOf("A1"))
         val currentKoreanTopics = topicRepository.getTopics("TOPIK", listOf("TOPIK1"))
-        val currentVietTopics = topicRepository.getTopics("VIET", listOf("TIEU_HOC"))
+        val currentVietTopics = topicRepository.getTopics("VIET", listOf("TIEU_HOC", "TRUNG_HOC", "DAI_HOC"))
         val hasBoldTopic = currentToeicTopics.any { it.name.contains("**") }
-        if (currentTopics.isEmpty() || !hasBoldTopic || currentJapaneseTopics.size < 120 || currentChineseTopics.isEmpty() || 
+        if (currentTopics.isEmpty() || !hasBoldTopic || currentJapaneseTopics.size < 120 || currentChineseTopics.isEmpty() ||
             currentToeicTopics.isEmpty() || currentDeleTopics.isEmpty() || currentHindiTopics.isEmpty() ||
-            currentFrenchTopics.isEmpty() || currentGermanTopics.isEmpty() || currentKoreanTopics.isEmpty() || currentVietTopics.isEmpty()) {
+            currentFrenchTopics.isEmpty() || currentGermanTopics.isEmpty() || currentKoreanTopics.isEmpty() ||
+            currentVietTopics.size < 400) {
             topicRepository.seedDatabase()
         }
     }
