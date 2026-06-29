@@ -23,7 +23,8 @@ val teacherDataModule = module {
 
     single<TeacherHistoryRepository> {
         TeacherHistoryRepositoryImpl(
-            historyRepository = get()
+            historyRepository = get(),
+            database = get()
         )
     }
 

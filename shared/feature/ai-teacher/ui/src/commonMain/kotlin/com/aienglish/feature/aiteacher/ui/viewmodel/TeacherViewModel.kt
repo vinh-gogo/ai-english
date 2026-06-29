@@ -465,7 +465,7 @@ class TeacherViewModel(
                     )
 
                     setState { copy(isEvaluating = false, feedback = sanitizedFb) }
-                    // Update history to COMPLETED with score and full snapshot
+                    // Update history to COMPLETED with score and structured data
                     currentLessonHistoryId?.let { id ->
                         try {
                             teacherHistoryRepository.completeLesson(
@@ -549,16 +549,12 @@ class TeacherViewModel(
                 val list = topicRepository.getTopics(systemCode, compatible)
                 val topicIndex = list.indexOfFirst { it.name == history.topic }.coerceAtLeast(0)
 
-                val teacherHistory = teacherHistoryRepository.parseHistory(
-                    id = history.id,
-                    topic = history.topic,
-                    level = history.level,
-                    score = history.score,
-                    lessonJson = history.lessonData,
-                    userAnswersJson = history.userAnswersData,
-                    explanationsJson = history.explanationsData,
-                    feedbackJson = history.feedbackData
-                )
+                val teacherHistory = teacherHistoryRepository.loadHistory(history.id)
+
+                if (teacherHistory == null) {
+                    setState { copy(error = "Không thể tải lại lịch sử bài học") }
+                    return@launch
+                }
 
                 setState {
                     copy(
@@ -758,16 +754,12 @@ class TeacherViewModel(
                 val list = topicRepository.getTopics(systemCode, compatible)
                 val topicIndex = list.indexOfFirst { it.name == history.topic }.coerceAtLeast(0)
 
-                val teacherHistory = teacherHistoryRepository.parseHistory(
-                    id = history.id,
-                    topic = history.topic,
-                    level = history.level,
-                    score = history.score,
-                    lessonJson = history.lessonData,
-                    userAnswersJson = history.userAnswersData,
-                    explanationsJson = history.explanationsData,
-                    feedbackJson = history.feedbackData
-                )
+                val teacherHistory = teacherHistoryRepository.loadHistory(history.id)
+
+                if (teacherHistory == null) {
+                    setState { copy(error = "Không thể tiếp tục bài học dở dang") }
+                    return@launch
+                }
 
                 currentLessonHistoryId = history.id
 

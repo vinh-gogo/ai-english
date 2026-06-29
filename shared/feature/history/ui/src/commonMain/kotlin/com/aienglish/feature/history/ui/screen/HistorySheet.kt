@@ -199,7 +199,7 @@ fun HistorySheet(
                                 completedCount = item.completedCount,
                                 totalCount = item.totalCount,
                                 formattedDate = formatDate(item.createdAt),
-                                hasLessonData = !item.lessonData.isNullOrEmpty(),
+                                hasLessonData = item.totalCount > 0,
                                 rawItem = item
                             )
                             if (item.status == HistoryStatus.COMPLETED) {

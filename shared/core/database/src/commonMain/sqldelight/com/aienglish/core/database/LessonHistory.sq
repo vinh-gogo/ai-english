@@ -1,16 +1,12 @@
 CREATE TABLE IF NOT EXISTS lesson_history (
     id INTEGER PRIMARY KEY,
-    user_id TEXT NOT NULL DEFAULT 'guest',
+    user_id TEXT NOT NULL DEFAULT '0000000000000000',
     topic TEXT NOT NULL,
     level TEXT NOT NULL,
     score INTEGER,
     status TEXT NOT NULL DEFAULT 'IN_PROGRESS',
     created_at INTEGER NOT NULL,
     completed_at INTEGER,
-    lesson_json TEXT,
-    user_answers_json TEXT,
-    explanations_json TEXT,
-    feedback_json TEXT,
     FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
@@ -23,7 +19,7 @@ SELECT last_insert_rowid();
 
 updateLessonCompleted:
 UPDATE lesson_history
-SET status = 'COMPLETED', score = ?, completed_at = ?, lesson_json = ?, user_answers_json = ?, explanations_json = ?, feedback_json = ?
+SET status = 'COMPLETED', score = ?, completed_at = ?
 WHERE id = ?;
 
 getAllHistory:
@@ -34,11 +30,6 @@ DELETE FROM lesson_history;
 
 deleteHistoryByIds:
 DELETE FROM lesson_history WHERE id IN ?;
-
-updateLessonProgress:
-UPDATE lesson_history
-SET lesson_json = ?, user_answers_json = ?, explanations_json = ?
-WHERE id = ?;
 
 
 CREATE TABLE IF NOT EXISTS lesson_question (
@@ -51,6 +42,7 @@ CREATE TABLE IF NOT EXISTS lesson_question (
     user_answer TEXT,
     ai_score INTEGER,
     ai_explanation TEXT,
+    alternatives_json TEXT,
     UNIQUE(history_id, sentence_index) ON CONFLICT REPLACE,
     FOREIGN KEY(history_id) REFERENCES lesson_history(id) ON DELETE CASCADE
 );
@@ -64,9 +56,18 @@ CREATE TABLE IF NOT EXISTS lesson_question_token (
     FOREIGN KEY(question_id) REFERENCES lesson_question(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS lesson_feedback (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    history_id INTEGER NOT NULL UNIQUE,
+    overall_score INTEGER NOT NULL DEFAULT 0,
+    review TEXT NOT NULL DEFAULT '',
+    sentence_scores_json TEXT,
+    FOREIGN KEY(history_id) REFERENCES lesson_history(id) ON DELETE CASCADE
+);
+
 insertQuestion:
-INSERT OR REPLACE INTO lesson_question (history_id, sentence_index, vietnamese, english, explanation, user_answer, ai_score, ai_explanation)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+INSERT OR REPLACE INTO lesson_question (history_id, sentence_index, vietnamese, english, explanation, user_answer, ai_score, ai_explanation, alternatives_json)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 insertToken:
 INSERT INTO lesson_question_token (question_id, word, phonetic, part_of_speech)
@@ -84,8 +85,15 @@ SELECT * FROM lesson_question WHERE history_id = ? ORDER BY sentence_index ASC;
 getTokensForQuestion:
 SELECT * FROM lesson_question_token WHERE question_id = ?;
 
+insertOrReplaceFeedback:
+INSERT OR REPLACE INTO lesson_feedback (history_id, overall_score, review, sentence_scores_json)
+VALUES (?, ?, ?, ?);
+
+getFeedbackForHistory:
+SELECT * FROM lesson_feedback WHERE history_id = ?;
+
 getAllHistoryWithCounts:
-SELECT 
+SELECT
     h.id,
     h.topic,
     h.level,
@@ -93,10 +101,6 @@ SELECT
     h.status,
     h.created_at,
     h.completed_at,
-    h.lesson_json,
-    h.user_answers_json,
-    h.explanations_json,
-    h.feedback_json,
     (SELECT COUNT(*) FROM lesson_question q WHERE q.history_id = h.id) AS total_count,
     (SELECT COUNT(q.ai_explanation) FROM lesson_question q WHERE q.history_id = h.id) AS completed_count
 FROM lesson_history h
@@ -108,5 +112,3 @@ UPDATE lesson_history SET user_id = '0000000000000000' WHERE user_id = 'guest';
 
 migrateGuestEmailHistory:
 UPDATE lesson_history SET user_id = '0000000000000000' WHERE user_id = 'guest@aienglish.com';
-
-

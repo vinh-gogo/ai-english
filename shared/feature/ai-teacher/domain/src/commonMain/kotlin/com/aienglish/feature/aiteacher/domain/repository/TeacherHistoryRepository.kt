@@ -6,7 +6,7 @@ import com.aienglish.feature.aiteacher.domain.model.TeacherLessonHistory
 
 interface TeacherHistoryRepository {
     suspend fun startLesson(topic: String, level: String): Long
-    
+
     suspend fun completeLesson(
         id: Long,
         score: Int,
@@ -15,7 +15,7 @@ interface TeacherHistoryRepository {
         explanations: Map<Int, String>,
         feedback: EnglishFeedback
     )
-    
+
     suspend fun updateLessonProgress(
         id: Long,
         lesson: EnglishLesson,
@@ -24,14 +24,6 @@ interface TeacherHistoryRepository {
         sentenceScores: Map<Int, Int>
     )
 
-    fun parseHistory(
-        id: Long,
-        topic: String,
-        level: String,
-        score: Int?,
-        lessonJson: String?,
-        userAnswersJson: String?,
-        explanationsJson: String?,
-        feedbackJson: String?
-    ): TeacherLessonHistory
+    /** Load full lesson detail from structured DB tables (no JSON parsing). */
+    suspend fun loadHistory(historyId: Long): TeacherLessonHistory?
 }

@@ -8,10 +8,6 @@ data class LessonHistory(
     val status: HistoryStatus,
     val createdAt: Long,
     val completedAt: Long?,
-    val lessonData: String? = null,
-    val userAnswersData: String? = null,
-    val explanationsData: String? = null,
-    val feedbackData: String? = null,
     val completedCount: Int = 0,
     val totalCount: Int = 0
 )
