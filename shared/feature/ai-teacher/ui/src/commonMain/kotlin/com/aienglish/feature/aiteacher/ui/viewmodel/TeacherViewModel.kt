@@ -83,6 +83,26 @@ data class TeacherUiState(
     }
 }
 
+data class TopicSelectionState(
+    val levelType: LevelType,
+    val selectedCefrLevel: String,
+    val selectedToeicLevel: String,
+    val selectedJlptLevel: String,
+    val selectedHskLevel: String,
+    val selectedDeleLevel: String,
+    val selectedSieleLevel: String,
+    val selectedHindiLevel: String,
+    val selectedDelfLevel: String,
+    val selectedDalfLevel: String,
+    val selectedGoetheLevel: String,
+    val selectedTestdafLevel: String,
+    val selectedTopikLevel: String,
+    val topicSearchQuery: String,
+    val isCustomTopicMode: Boolean,
+    val customTopicInput: String,
+    val selectedTopicIndex: Int
+)
+
 class TeacherViewModel(
     private val generateLesson: GenerateEnglishLessonUseCase,
     private val evaluateLesson: EvaluateEnglishLessonUseCase,
@@ -96,6 +116,31 @@ class TeacherViewModel(
     // Track current lesson DB id for history update
     private var currentLessonHistoryId: Long? = null
     private var loadTopicsJob: Job? = null
+    private var lastTopicSelectionState: TopicSelectionState? = null
+
+    private fun saveTopicSelectionSnapshot() {
+        if (currentState.lesson == null && currentState.feedback == null) {
+            lastTopicSelectionState = TopicSelectionState(
+                levelType = currentState.levelType,
+                selectedCefrLevel = currentState.selectedCefrLevel,
+                selectedToeicLevel = currentState.selectedToeicLevel,
+                selectedJlptLevel = currentState.selectedJlptLevel,
+                selectedHskLevel = currentState.selectedHskLevel,
+                selectedDeleLevel = currentState.selectedDeleLevel,
+                selectedSieleLevel = currentState.selectedSieleLevel,
+                selectedHindiLevel = currentState.selectedHindiLevel,
+                selectedDelfLevel = currentState.selectedDelfLevel,
+                selectedDalfLevel = currentState.selectedDalfLevel,
+                selectedGoetheLevel = currentState.selectedGoetheLevel,
+                selectedTestdafLevel = currentState.selectedTestdafLevel,
+                selectedTopikLevel = currentState.selectedTopikLevel,
+                topicSearchQuery = currentState.topicSearchQuery,
+                isCustomTopicMode = currentState.isCustomTopicMode,
+                customTopicInput = currentState.customTopicInput,
+                selectedTopicIndex = currentState.selectedTopicIndex
+            )
+        }
+    }
 
     init {
         val target = prefs.getLanguageTarget() // "en", "ja", "zh", "es", "hi", "fr", "de", "ko"
@@ -155,7 +200,7 @@ class TeacherViewModel(
         }
     }
 
-    private fun loadTopics(levelType: LevelType, levelCode: String) {
+    private fun loadTopics(levelType: LevelType, levelCode: String, restoreTopicIndex: Int? = null) {
         val systemCode = when (levelType) {
             LevelType.CEFR -> "CEFR"
             LevelType.TOEIC -> "TOEIC"
@@ -206,7 +251,7 @@ class TeacherViewModel(
                 setState {
                     copy(
                         topics = sortedList,
-                        selectedTopicIndex = 0,
+                        selectedTopicIndex = restoreTopicIndex?.coerceIn(0, sortedList.lastIndex)?.coerceAtLeast(0) ?: 0,
                         topicCounts = cumulativeCounts
                     )
                 }
@@ -394,6 +439,7 @@ class TeacherViewModel(
 
     // ── Start Lesson ──
     fun onStartLesson() {
+        saveTopicSelectionSnapshot()
         val topic = currentState.selectedTopic
         val level = currentState.selectedLevelText
         val isGuest = prefs.getUserName() == "Khách"
@@ -536,6 +582,7 @@ class TeacherViewModel(
     }
 
     fun onReviewLesson(history: LessonHistory) {
+        saveTopicSelectionSnapshot()
         viewModelScope.launch {
             try {
                 ensureDatabaseSeeded()
@@ -597,6 +644,7 @@ class TeacherViewModel(
     }
 
     fun onReTestLesson(history: LessonHistory) {
+        saveTopicSelectionSnapshot()
         val (expectedType, levelValue) = parseLevelTypeAndValue(history.level)
         
         viewModelScope.launch {
@@ -661,49 +709,97 @@ class TeacherViewModel(
 
     fun onReset() {
         val target = prefs.getLanguageTarget()
-        val expectedType = if (target == currentState.targetLanguage) {
-            currentState.levelType
-        } else {
-            when (target) {
-                "ja" -> LevelType.JLPT
-                "zh" -> LevelType.HSK
-                "es" -> LevelType.DELE
-                "hi" -> LevelType.HINDI
-                "fr" -> LevelType.DELF
-                "de" -> LevelType.GOETHE
-                "ko" -> LevelType.TOPIK
-                else -> LevelType.CEFR
+        val snapshot = lastTopicSelectionState
+        if (snapshot != null && target == currentState.targetLanguage) {
+            currentLessonHistoryId = null
+            setState {
+                copy(
+                    targetLanguage = target,
+                    levelType = snapshot.levelType,
+                    selectedCefrLevel = snapshot.selectedCefrLevel,
+                    selectedToeicLevel = snapshot.selectedToeicLevel,
+                    selectedJlptLevel = snapshot.selectedJlptLevel,
+                    selectedHskLevel = snapshot.selectedHskLevel,
+                    selectedDeleLevel = snapshot.selectedDeleLevel,
+                    selectedSieleLevel = snapshot.selectedSieleLevel,
+                    selectedHindiLevel = snapshot.selectedHindiLevel,
+                    selectedDelfLevel = snapshot.selectedDelfLevel,
+                    selectedDalfLevel = snapshot.selectedDalfLevel,
+                    selectedGoetheLevel = snapshot.selectedGoetheLevel,
+                    selectedTestdafLevel = snapshot.selectedTestdafLevel,
+                    selectedTopikLevel = snapshot.selectedTopikLevel,
+                    topicSearchQuery = snapshot.topicSearchQuery,
+                    isCustomTopicMode = snapshot.isCustomTopicMode,
+                    customTopicInput = snapshot.customTopicInput,
+                    lesson = null,
+                    userAnswers = emptyMap(),
+                    checkedAnswers = emptySet(),
+                    currentSentenceIndex = 0,
+                    feedback = null,
+                    isGeneratingLesson = false,
+                    error = null
+                )
             }
+            val expectedLevel = when (snapshot.levelType) {
+                LevelType.CEFR -> snapshot.selectedCefrLevel
+                LevelType.TOEIC -> snapshot.selectedToeicLevel
+                LevelType.JLPT -> snapshot.selectedJlptLevel
+                LevelType.HSK -> snapshot.selectedHskLevel
+                LevelType.DELE -> snapshot.selectedDeleLevel
+                LevelType.SIELE -> snapshot.selectedSieleLevel
+                LevelType.HINDI -> snapshot.selectedHindiLevel
+                LevelType.DELF -> snapshot.selectedDelfLevel
+                LevelType.DALF -> snapshot.selectedDalfLevel
+                LevelType.GOETHE -> snapshot.selectedGoetheLevel
+                LevelType.TESTDAF -> snapshot.selectedTestdafLevel
+                LevelType.TOPIK -> snapshot.selectedTopikLevel
+            }
+            loadTopics(snapshot.levelType, expectedLevel, restoreTopicIndex = snapshot.selectedTopicIndex)
+        } else {
+            val expectedType = if (target == currentState.targetLanguage) {
+                currentState.levelType
+            } else {
+                when (target) {
+                    "ja" -> LevelType.JLPT
+                    "zh" -> LevelType.HSK
+                    "es" -> LevelType.DELE
+                    "hi" -> LevelType.HINDI
+                    "fr" -> LevelType.DELF
+                    "de" -> LevelType.GOETHE
+                    "ko" -> LevelType.TOPIK
+                    else -> LevelType.CEFR
+                }
+            }
+            val expectedLevel = when (expectedType) {
+                LevelType.CEFR -> currentState.selectedCefrLevel
+                LevelType.TOEIC -> currentState.selectedToeicLevel
+                LevelType.JLPT -> currentState.selectedJlptLevel
+                LevelType.HSK -> currentState.selectedHskLevel
+                LevelType.DELE -> currentState.selectedDeleLevel
+                LevelType.SIELE -> currentState.selectedSieleLevel
+                LevelType.HINDI -> currentState.selectedHindiLevel
+                LevelType.DELF -> currentState.selectedDelfLevel
+                LevelType.DALF -> currentState.selectedDalfLevel
+                LevelType.GOETHE -> currentState.selectedGoetheLevel
+                LevelType.TESTDAF -> currentState.selectedTestdafLevel
+                LevelType.TOPIK -> currentState.selectedTopikLevel
+            }
+            currentLessonHistoryId = null
+            setState {
+                copy(
+                    targetLanguage = target,
+                    levelType = expectedType,
+                    lesson = null,
+                    userAnswers = emptyMap(),
+                    checkedAnswers = emptySet(),
+                    currentSentenceIndex = 0,
+                    feedback = null,
+                    isGeneratingLesson = false,
+                    error = null
+                )
+            }
+            loadTopics(expectedType, expectedLevel)
         }
-        val expectedLevel = when (expectedType) {
-            LevelType.CEFR -> currentState.selectedCefrLevel
-            LevelType.TOEIC -> currentState.selectedToeicLevel
-            LevelType.JLPT -> currentState.selectedJlptLevel
-            LevelType.HSK -> currentState.selectedHskLevel
-            LevelType.DELE -> currentState.selectedDeleLevel
-            LevelType.SIELE -> currentState.selectedSieleLevel
-            LevelType.HINDI -> currentState.selectedHindiLevel
-            LevelType.DELF -> currentState.selectedDelfLevel
-            LevelType.DALF -> currentState.selectedDalfLevel
-            LevelType.GOETHE -> currentState.selectedGoetheLevel
-            LevelType.TESTDAF -> currentState.selectedTestdafLevel
-            LevelType.TOPIK -> currentState.selectedTopikLevel
-        }
-        currentLessonHistoryId = null
-        setState {
-            copy(
-                targetLanguage = target,
-                levelType = expectedType,
-                lesson = null,
-                userAnswers = emptyMap(),
-                checkedAnswers = emptySet(),
-                currentSentenceIndex = 0,
-                feedback = null,
-                isGeneratingLesson = false,
-                error = null
-            )
-        }
-        loadTopics(expectedType, expectedLevel)
     }
 
     private fun parseLevelTypeAndValue(level: String): Pair<LevelType, String> {
@@ -764,6 +860,7 @@ class TeacherViewModel(
     }
 
     fun onResumeLesson(history: LessonHistory) {
+        saveTopicSelectionSnapshot()
         viewModelScope.launch {
             try {
                 ensureDatabaseSeeded()

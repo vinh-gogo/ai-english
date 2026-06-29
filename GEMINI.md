@@ -49,6 +49,8 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 40** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Sắp xếp danh sách chủ đề theo cấp độ từ cao đến thấp để ưu tiên các chủ đề đúng với cấp độ đang chọn. | Hoàn thành |
 | **Session 41** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Thêm lớp phủ gradient mờ (vertical gradient brush Box) bên dưới nút Bắt đầu học để giao diện cuộn mượt mà hơn. | Hoàn thành |
 | **Session 42** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Áp dụng lớp phủ gradient mờ vertical tương tự bên dưới nút/phím chức năng của tất cả các màn hình chính (Luyện tập và Xem kết quả). | Hoàn thành |
+| **Session 43** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Đóng gói mã nguồn lên Git và thêm lớp phủ gradient mờ vertical ở đầu trang (header) phía sau thanh công cụ trên cùng. | Hoàn thành |
+| **Session 44** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Sửa lỗi mất trạng thái chọn level và nội dung input đã nhập trên giao diện khi xem lại lịch sử bài học. | Hoàn thành |
 
 ---
 
@@ -390,6 +392,39 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 - **Ghi chú kỹ thuật:**
   - Việc phủ gradient mờ đồng nhất ở đáy cho toàn bộ màn hình giúp app mang phong cách thiết kế trọn vẹn, thống nhất và bảo toàn tính toàn vẹn thông tin khi cuộn nội dung ở mọi nơi.
   - Dự án build thành công và cập nhật lên thiết bị Android thông qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 43 (2026-06-29)
+
+- **Mục tiêu:** Đóng gói code hiện tại đẩy lên Git Repository (nhánh dev) và bổ sung hiệu ứng lớp phủ gradient mờ vertical ở đầu trang (phía sau Header) để đồng bộ trải nghiệm giao diện cao cấp.
+- **Hoạt động & Thay đổi:**
+  - **Git**: Thực hiện `git add`, `git commit` và `git push origin dev` thành công toàn bộ thay đổi lũy kế trước đó.
+  - **TeacherScreen.kt**: Import `androidx.compose.ui.graphics.Brush`. Thêm `Box` gradient overlay cao `110.dp` ghim ở vị trí `Alignment.TopCenter` trực tiếp đằng sau Floating Top Groups (Header). Gradient chuyển từ màu nền hệ thống `colors.background` (đặc) sang màu trong suốt (`Color.Transparent`).
+- **Ghi chú kỹ thuật:**
+  - Lớp phủ gradient được đặt đúng vị trí Z-order (phía trước danh sách cuộn AnimatedContent, phía sau thanh Header nổi và Status Bar spacer) giúp các phần tử cuộn mờ dần dưới Header nhưng Header vẫn hoàn toàn nổi bật, sắc nét và click bình thường.
+  - Dự án build thành công và cập nhật lên thiết bị Android thông qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 44 (2026-06-29)
+
+- **Mục tiêu:** Khắc phục lỗi mất trạng thái chọn level cũ và các trường nhập liệu (search query, custom topic input, isCustomTopicMode) khi xem một bài học từ Lịch sử và nhấn nút "Trở về".
+- **Hoạt động & Thay đổi:**
+  - **TeacherViewModel.kt**:
+    - Khởi tạo data class `TopicSelectionState` để mô tả đầy đủ trạng thái lựa chọn chủ đề hiện tại của người dùng.
+    - Định nghĩa thuộc tính backup `lastTopicSelectionState: TopicSelectionState?`.
+    - Viết hàm trợ giúp `saveTopicSelectionSnapshot()` để tự động chụp lại trạng thái hiện tại (nếu người dùng đang ở màn hình chọn chủ đề).
+    - Gọi hàm chụp trạng thái này trước khi thực hiện: `onStartLesson()`, `onReviewLesson(...)`, `onReTestLesson(...)`, `onResumeLesson(...)`.
+    - Cập nhật hàm `loadTopics(...)` để hỗ trợ tham số phục hồi index chủ đề: `restoreTopicIndex: Int? = null`.
+    - Cập nhật hàm `onReset()` để khi nhấn "Trở về", nếu có snapshot lưu trữ và cùng ngôn ngữ mục tiêu, chương trình sẽ phục hồi chính xác 100% trạng thái chọn level cũ, nội dung ô nhập tìm kiếm, ô nhập tự chọn, chế độ tự chọn và cả vị trí chọn chủ đề cũ (selectedTopicIndex).
+- **Ghi chú kỹ thuật:**
+  - Giải pháp snapshot này giúp lưu trữ và phục hồi trạng thái cô lập, hoàn toàn ngăn chặn việc xem lịch sử bài học ghi đè hoặc làm sạch dữ liệu đang chọn của người dùng.
+  - Dự án build thành công và cập nhật lên thiết bị Android qua ADB.
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 
