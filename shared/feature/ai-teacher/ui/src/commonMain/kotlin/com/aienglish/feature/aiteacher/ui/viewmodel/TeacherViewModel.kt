@@ -45,6 +45,7 @@ data class TeacherUiState(
     val targetLanguage: String = "en",
     val isCustomTopicMode: Boolean = false,
     val customTopicInput: String = "",
+    val topicCounts: Map<String, Int> = emptyMap(),
 
     // Lesson state
     val isGeneratingLesson: Boolean = false,
@@ -175,11 +176,38 @@ class TeacherViewModel(
                 ensureDatabaseSeeded()
 
                 val compatible = getCompatibleLevels(levelCode)
-                val list = topicRepository.getTopics(systemCode, compatible)
+                val rawList = topicRepository.getTopics(systemCode, compatible)
+                val sortedList = rawList.sortedWith(
+                    compareByDescending<TopicItem> { compatible.indexOf(it.levelCode) }
+                        .thenBy { it.id }
+                )
+
+                val allLevels = when (levelType) {
+                    LevelType.CEFR -> listOf("A1", "A2", "B1", "B2", "C1", "C2")
+                    LevelType.TOEIC -> listOf("300", "500", "700", "900")
+                    LevelType.JLPT -> listOf("N5", "N4", "N3", "N2", "N1")
+                    LevelType.HSK -> listOf("HSK1", "HSK2", "HSK3", "HSK4", "HSK5", "HSK6")
+                    LevelType.DELE -> listOf("A1", "A2", "B1", "B2", "C1", "C2")
+                    LevelType.SIELE -> listOf("A1", "A2", "B1", "B2", "C1")
+                    LevelType.HINDI -> listOf("A1", "A2", "B1", "B2")
+                    LevelType.DELF -> listOf("A1", "A2", "B1", "B2")
+                    LevelType.DALF -> listOf("C1", "C2")
+                    LevelType.GOETHE -> listOf("A1", "A2", "B1", "B2", "C1", "C2")
+                    LevelType.TESTDAF -> listOf("TDN3", "TDN4", "TDN5")
+                    LevelType.TOPIK -> listOf("TOPIK1", "TOPIK2", "TOPIK3", "TOPIK4", "TOPIK5", "TOPIK6")
+                }
+                val allTopics = topicRepository.getTopics(systemCode, allLevels)
+                val rawCounts = allTopics.groupBy { it.levelCode }.mapValues { it.value.size }
+                val cumulativeCounts = allLevels.associateWith { lvl ->
+                    val lvlCompatible = getCompatibleLevels(lvl)
+                    lvlCompatible.sumOf { rawCounts[it] ?: 0 }
+                }
+
                 setState {
                     copy(
-                        topics = list,
-                        selectedTopicIndex = 0
+                        topics = sortedList,
+                        selectedTopicIndex = 0,
+                        topicCounts = cumulativeCounts
                     )
                 }
             } catch (e: Exception) {

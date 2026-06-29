@@ -75,6 +75,7 @@ internal fun TargetLevelSystem(
                     listOf("A1", "A2", "B1", "B2", "C1", "C2").forEach { level ->
                         LevelChip(
                             text = level,
+                            count = state.topicCounts[level],
                             isSelected = level == state.selectedCefrLevel,
                             onClick = { viewModel.onCefrLevelSelected(level) },
                             colors = colors
@@ -87,6 +88,7 @@ internal fun TargetLevelSystem(
                     listOf("300", "500", "700", "900").forEach { level ->
                         LevelChip(
                             text = if (level == "900") ">900" else level,
+                            count = state.topicCounts[level],
                             isSelected = level == state.selectedToeicLevel,
                             onClick = { viewModel.onToeicLevelSelected(level) },
                             colors = colors
@@ -99,6 +101,7 @@ internal fun TargetLevelSystem(
                     listOf("N5", "N4", "N3", "N2", "N1").forEach { level ->
                         LevelChip(
                             text = level,
+                            count = state.topicCounts[level],
                             isSelected = level == state.selectedJlptLevel,
                             onClick = { viewModel.onJlptLevelSelected(level) },
                             colors = colors
@@ -111,6 +114,7 @@ internal fun TargetLevelSystem(
                     listOf("HSK1", "HSK2", "HSK3", "HSK4", "HSK5", "HSK6").forEach { level ->
                         LevelChip(
                             text = level.replace("HSK", "H"),
+                            count = state.topicCounts[level],
                             isSelected = level == state.selectedHskLevel,
                             onClick = { viewModel.onHskLevelSelected(level) },
                             colors = colors,
@@ -124,6 +128,7 @@ internal fun TargetLevelSystem(
                     listOf("A1", "A2", "B1", "B2", "C1", "C2").forEach { level ->
                         LevelChip(
                             text = level,
+                            count = state.topicCounts[level],
                             isSelected = level == state.selectedDeleLevel,
                             onClick = { viewModel.onDeleLevelSelected(level) },
                             colors = colors
@@ -136,6 +141,7 @@ internal fun TargetLevelSystem(
                     listOf("A1", "A2", "B1", "B2", "C1").forEach { level ->
                         LevelChip(
                             text = level,
+                            count = state.topicCounts[level],
                             isSelected = level == state.selectedSieleLevel,
                             onClick = { viewModel.onSieleLevelSelected(level) },
                             colors = colors
@@ -148,6 +154,7 @@ internal fun TargetLevelSystem(
                     listOf("A1", "A2", "B1", "B2").forEach { level ->
                         LevelChip(
                             text = level,
+                            count = state.topicCounts[level],
                             isSelected = level == state.selectedHindiLevel,
                             onClick = { viewModel.onHindiLevelSelected(level) },
                             colors = colors
@@ -160,6 +167,7 @@ internal fun TargetLevelSystem(
                     listOf("A1", "A2", "B1", "B2").forEach { level ->
                         LevelChip(
                             text = level,
+                            count = state.topicCounts[level],
                             isSelected = level == state.selectedDelfLevel,
                             onClick = { viewModel.onDelfLevelSelected(level) },
                             colors = colors
@@ -172,6 +180,7 @@ internal fun TargetLevelSystem(
                     listOf("C1", "C2").forEach { level ->
                         LevelChip(
                             text = level,
+                            count = state.topicCounts[level],
                             isSelected = level == state.selectedDalfLevel,
                             onClick = { viewModel.onDalfLevelSelected(level) },
                             colors = colors
@@ -184,6 +193,7 @@ internal fun TargetLevelSystem(
                     listOf("A1", "A2", "B1", "B2", "C1", "C2").forEach { level ->
                         LevelChip(
                             text = level,
+                            count = state.topicCounts[level],
                             isSelected = level == state.selectedGoetheLevel,
                             onClick = { viewModel.onGoetheLevelSelected(level) },
                             colors = colors
@@ -196,6 +206,7 @@ internal fun TargetLevelSystem(
                     listOf("TDN3", "TDN4", "TDN5").forEach { level ->
                         LevelChip(
                             text = level,
+                            count = state.topicCounts[level],
                             isSelected = level == state.selectedTestdafLevel,
                             onClick = { viewModel.onTestdafLevelSelected(level) },
                             colors = colors
@@ -208,6 +219,7 @@ internal fun TargetLevelSystem(
                     listOf("TOPIK1", "TOPIK2", "TOPIK3", "TOPIK4", "TOPIK5", "TOPIK6").forEach { level ->
                         LevelChip(
                             text = level.replace("TOPIK", "T"),
+                            count = state.topicCounts[level],
                             isSelected = level == state.selectedTopikLevel,
                             onClick = { viewModel.onTopikLevelSelected(level) },
                             colors = colors,
@@ -282,6 +294,7 @@ private fun LevelTypeSelectorOption(
 @Composable
 private fun RowScope.LevelChip(
     text: String,
+    count: Int?,
     isSelected: Boolean,
     onClick: () -> Unit,
     colors: AppColors,
@@ -296,15 +309,25 @@ private fun RowScope.LevelChip(
         color = if (isSelected) colors.accent else colors.surface,
         border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
     ) {
-        Box(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
-            contentAlignment = Alignment.Center
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 6.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             Text(
                 text = text,
                 color = if (isSelected) Color.White else colors.mainText,
                 fontSize = fontSize,
                 fontWeight = FontWeight.Bold
+            )
+            Spacer(Modifier.height(1.dp))
+            Text(
+                text = if (count != null) "$count" else "-",
+                color = if (isSelected) Color.White.copy(alpha = 0.8f) else colors.mutedText,
+                fontSize = 9.sp,
+                fontWeight = FontWeight.Normal
             )
         }
     }

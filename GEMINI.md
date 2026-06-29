@@ -35,476 +35,47 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 26** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Di chuyển thang điểm mục tiêu lên trên carousel chủ đề hiển thị và refactor tách component. | Hoàn thành |
 | **Session 27** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Tự động cuộn màn hình xuống dưới cùng khi người dùng focus vào các ô nhập liệu (Search / Custom Topic) và bàn phím ảo hiện lên. | Hoàn thành |
 | **Session 28** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Tách file TopicSelectionContent.kt và refactor giảm tải code smells. | Hoàn thành |
+| **Session 29** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Tái thiết kế UI/UX màn hình chọn chủ đề: dùng Vertical Cards và tích hợp chọn ngẫu nhiên. | Hoàn thành |
+| **Session 30** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Khắc phục hoàn toàn hiện tượng giật lag khi tải hoặc tìm kiếm chủ đề số lượng lớn (LazyColumn). | Hoàn thành |
+| **Session 31** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Sửa logic lọc cấp độ chủ đề (getCompatibleLevels) để hiển thị chính xác chủ đề của riêng cấp độ được chọn. | Hoàn thành |
+| **Session 32** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Gỡ bỏ icon School khỏi thẻ chủ đề đang chọn (TopicCarouselCard) để sửa lỗi rơi chữ của tên chủ đề. | Hoàn thành |
+| **Session 33** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Thống kê số lượng chủ đề cho mỗi level và hiển thị con số ngay trên UI Level Chips. | Hoàn thành |
+| **Session 34** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Gỡ bỏ nhãn/tag hiển thị level ở góc phải của thẻ chủ đề đang chọn và các thẻ danh sách. | Hoàn thành |
+| **Session 35** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Tự động cuộn hiển thị khung search lên trên cùng khi người dùng ấn vào thanh tìm kiếm. | Hoàn thành |
+| **Session 36** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Điều chỉnh khoảng cuộn (index 1 + 50.dp offset) khi focus khung search để có bố cục tự nhiên hơn. | Hoàn thành |
+| **Session 37** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Gỡ bỏ khoảng cách offset 50.dp, cuộn trực tiếp về phần tử index 1 khi focus ô tìm kiếm. | Hoàn thành |
+| **Session 38** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Khôi phục logic lọc cấp độ lũy kế (cumulative) để cho phép người dùng ở cấp độ cao có thể học lại các chủ đề cấp độ thấp. | Hoàn thành |
+| **Session 39** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Đồng bộ hóa hiển thị số lượng chủ đề lũy kế (cumulative count) lên trên các chip bộ chọn cấp độ. | Hoàn thành |
+| **Session 40** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Sắp xếp danh sách chủ đề theo cấp độ từ cao đến thấp để ưu tiên các chủ đề đúng với cấp độ đang chọn. | Hoàn thành |
+| **Session 41** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Thêm lớp phủ gradient mờ (vertical gradient brush Box) bên dưới nút Bắt đầu học để giao diện cuộn mượt mà hơn. | Hoàn thành |
+| **Session 42** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Áp dụng lớp phủ gradient mờ vertical tương tự bên dưới nút/phím chức năng của tất cả các màn hình chính (Luyện tập và Xem kết quả). | Hoàn thành |
 
 ---
 
 ## 📝 Chi tiết từng Session
 
-### 🟢 Session 1 (2026-06-29)
-
-- **Mục tiêu:** Tạo file `GEMINI.md` theo yêu cầu của người dùng để làm nơi lưu trữ và theo dõi các session làm việc tiếp theo.
-- **Hoạt động & Thay đổi:**
-  - Khởi tạo file `GEMINI.md` tại thư mục gốc của dự án.
-  - Thiết lập cấu trúc ghi chép thông tin chi tiết bao gồm: mục tiêu, các thay đổi chính, ghi chú kỹ thuật và các bước tiếp theo.
-- **Ghi chú kỹ thuật:**
-  - File này sẽ được cập nhật thủ công hoặc tự động trong các phiên làm việc tiếp theo để duy trì ngữ cảnh dự án.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng để thực hiện phát triển/refactor dự án.
-
----
-
-### 🟢 Session 2 (2026-06-29)
-
-- **Mục tiêu:** Nhóm 3 nút History, Profile, Pro: tăng chiều rộng hơn một chút để cải thiện UX và giúp người dùng dễ thao tác.
-- **Hoạt động & Thay đổi:**
-  - Chỉnh sửa file [TeacherScreen.kt](file:///D:/ai-english/shared/feature/ai-teacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/TeacherScreen.kt) tại phần header điều hướng bên phải.
-  - Tăng chiều rộng nút **History** và **Profile** từ `40.dp` lên `48.dp`.
-  - Tăng horizontal padding cho nút **PRO** từ `(start = 8.dp, end = 12.dp)` lên `(start = 12.dp, end = 16.dp)`.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Nhận phản hồi từ người dùng và tiếp tục hoàn thiện giao diện hoặc tính năng khác theo yêu cầu.
-
----
-
-### 🟢 Session 3 (2026-06-29)
-
-- **Mục tiêu:** Cấu hình tích hợp Novita API Service và hỗ trợ chuyển đổi AI Provider linh hoạt (Gemini hoặc Novita) trong Settings.
-- **Hoạt động & Thay đổi:**
-  - **Network layer:** Tạo [NovitaClient.kt](file:///D:/ai-english/shared/core/network/src/commonMain/kotlin/com/aienglish/core/network/client/NovitaClient.kt) thực thi các request OpenAI-compatible đến API Novita AI, đồng thời đăng ký DI trong [CoreNetworkModule.kt](file:///D:/ai-english/shared/core/network/src/commonMain/kotlin/com/aienglish/core/network/di/CoreNetworkModule.kt).
-  - **Common Settings:** Mở rộng [AppPreferences.kt](file:///D:/ai-english/shared/core/common/src/commonMain/kotlin/com/aienglish/core/common/prefs/AppPreferences.kt) để lưu `apiProvider` (dạng thường) và `novitaApiKey` (dạng bảo mật thông qua SecureStorage). Thực thi cụ thể trên cả [DesktopAppPreferences.kt](file:///D:/ai-english/shared/core/common/src/desktopMain/kotlin/com/aienglish/core/common/prefs/DesktopAppPreferences.kt) và [AndroidAppPreferences.kt](file:///D:/ai-english/shared/core/common/src/androidMain/kotlin/com/aienglish/core/common/prefs/AndroidAppPreferences.kt).
-  - **Repository Layer:** Cập nhật [TeacherRepositoryImpl.kt](file:///D:/ai-english/shared/feature/ai-teacher/data/src/commonMain/kotlin/com/aienglish/feature/aiteacher/data/repository/TeacherRepositoryImpl.kt) để tự động kiểm tra `apiProvider` và định tuyến request (Gemini API hoặc Novita API) kèm theo API key tương ứng. Đăng ký DI trong [TeacherDataModule.kt](file:///D:/ai-english/shared/feature/ai-teacher/data/src/commonMain/kotlin/com/aienglish/feature/aiteacher/data/di/TeacherDataModule.kt).
-  - **Profile Domain & Application:** Mở rộng model [UserProfile.kt](file:///D:/ai-english/shared/feature/profile/domain/src/commonMain/kotlin/com/aienglish/feature/profile/domain/model/UserProfile.kt), interface [ProfileRepository.kt](file:///D:/ai-english/shared/feature/profile/domain/src/commonMain/kotlin/com/aienglish/feature/profile/domain/repository/ProfileRepository.kt) và implementation [ProfileRepositoryImpl.kt](file:///D:/ai-english/shared/feature/profile/data/src/commonMain/kotlin/com/aienglish/feature/profile/data/repository/ProfileRepositoryImpl.kt). Tạo 3 usecase mới: [GetNovitaApiKeyUseCase.kt](file:///D:/ai-english/shared/feature/profile/application/src/commonMain/kotlin/com/aienglish/feature/profile/application/usecase/GetNovitaApiKeyUseCase.kt), [SaveNovitaApiKeyUseCase.kt](file:///D:/ai-english/shared/feature/profile/application/src/commonMain/kotlin/com/aienglish/feature/profile/application/usecase/SaveNovitaApiKeyUseCase.kt), [UpdateApiProviderUseCase.kt](file:///D:/ai-english/shared/feature/profile/application/src/commonMain/kotlin/com/aienglish/feature/profile/application/usecase/UpdateApiProviderUseCase.kt), đăng ký chúng trong [ProfileApplicationModule.kt](file:///D:/ai-english/shared/feature/profile/application/src/commonMain/kotlin/com/aienglish/feature/profile/application/di/ProfileApplicationModule.kt).
-  - **Profile UI & Presentation:** Nâng cấp [ProfileViewModel.kt](file:///D:/ai-english/shared/feature/profile/ui/src/commonMain/kotlin/com/aienglish/feature/profile/ui/viewmodel/ProfileViewModel.kt), đăng ký DI trong [ProfileUiModule.kt](file:///D:/ai-english/shared/feature/profile/ui/src/commonMain/kotlin/com/aienglish/feature/profile/ui/di/ProfileUiModule.kt). Tích hợp Segmented Control (đổi provider) và form cấu hình Novita API Key trong [ProfileSheet.kt](file:///D:/ai-english/shared/feature/profile/ui/src/commonMain/kotlin/com/aienglish/feature/profile/ui/screen/ProfileSheet.kt).
-- **Ghi chú kỹ thuật:**
-  - Build kiểm tra thành công với target Desktop, đảm bảo các modules tích hợp mượt mà.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 4 (2026-06-29)
-
-- **Mục tiêu:** Cải thiện độ chuẩn xác trong việc chấm điểm của AI (tránh trừ điểm lỗi viết hoa/thường, khoảng trắng, dấu câu) và bổ sung thêm các đáp án thay thế chuẩn khác (alternatives).
-- **Hoạt động & Thay đổi:**
-  - **Domain Model:** Mở rộng [EnglishLesson.kt](file:///D:/ai-english/shared/feature/ai-teacher/domain/src/commonMain/kotlin/com/aienglish/feature/aiteacher/domain/model/EnglishLesson.kt) thêm trường `alternatives: List<String> = emptyList()` vào model `EnglishSentence`.
-  - **Data Transfer Object:** Đồng bộ trường `alternatives` và cập nhật mapper tương ứng trong [EnglishLessonDto.kt](file:///D:/ai-english/shared/feature/ai-teacher/data/src/commonMain/kotlin/com/aienglish/feature/aiteacher/data/model/EnglishLessonDto.kt).
-  - **Prompt Configuration:** Cập nhật [EnglishPromptProvider.kt](file:///D:/ai-english/shared/feature/ai-teacher/data/src/commonMain/kotlin/com/aienglish/feature/aiteacher/data/repository/prompt/EnglishPromptProvider.kt):
-    - `getGenerateLessonSystemPrompt`: Yêu cầu AI sinh thêm mảng `alternatives` chứa 2-4 câu dịch tiếng Anh chuẩn khác nhau.
-    - `getEvaluateLessonSystemPrompt` & `getExplainSentenceSystemPrompt`: Thêm hướng dẫn chấm điểm **lenient grading** (không trừ điểm nếu chỉ khác biệt về viết hoa/thường, khoảng trắng, dấu câu, viết tắt; ưu tiên tính tương đương về mặt ý nghĩa - semantic equivalence).
-  - **User Interface:**
-    - Cập nhật [LessonContent.kt](file:///D:/ai-english/shared/feature/aiteacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/LessonContent.kt) để hiển thị đầy đủ câu đáp án chuẩn chính và danh sách các đáp án chuẩn thay thế khác ngay khi người dùng kiểm tra câu trả lời.
-    - Cập nhật [FeedbackContent.kt](file:///D:/ai-english/shared/feature/aiteacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/FeedbackContent.kt) hiển thị danh sách đáp án thay thế dưới dạng danh sách bullet point trong màn hình xem lại kết quả.
-- **Ghi chú kỹ thuật:**
-  - Biên dịch thành công với target Desktop, đảm bảo các API serialization tương thích mượt mà nhờ cơ chế default values của Kotlin.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 5 (2026-06-29)
-
-- **Mục tiêu:** Chuyển đổi GUID của người dùng ở chế độ Guest (chưa đăng nhập hoặc chọn Guest trial) mặc định thành chuỗi 16 số 0 (`"0000000000000000"`).
-- **Hoạt động & Thay đổi:**
-  - Cập nhật [HistoryRepositoryImpl.kt](file:///D:/ai-english/shared/feature/history/data/src/commonMain/kotlin/com/aienglish/feature/history/data/repository/HistoryRepositoryImpl.kt):
-    - `getCurrentUserId()`: Thay vì trả về `"guest"` như trước, nay trả về `"0000000000000000"` nếu người dùng chưa đăng nhập hoặc có email đăng nhập tạm thời là `"guest@aienglish.com"`.
-    - `getAllHistory()`: Đồng bộ hóa query flow để dùng GUID `"0000000000000000"` tải lịch sử học tập của Guest.
-    - Sửa phương thức tạo tài khoản mặc định `ensureUserExists` để gán chính xác `display_name = "Guest"` và `email = "guest@local"` khi `user_id` là `"0000000000000000"`.
-    - **Cơ chế migration dữ liệu cũ:** Bổ sung truy vấn `migrateGuestHistory` trong [LessonHistory.sq](file:///D:/ai-english/shared/core/database/src/commonMain/sqldelight/com/aienglish/core/database/LessonHistory.sq) và `deleteUserById` trong [UserSchema.sq](file:///D:/ai-english/shared/core/database/src/commonMain/sqldelight/com/aienglish/core/database/UserSchema.sq`). Thực thi lazy migration dữ liệu `checkAndMigrateGuestData()` chuyển toàn bộ lịch sử học tập cũ có ID là `"guest"` sang ID `"0000000000000000"`, sau đó xóa an toàn user `"guest"` cũ khi bắt đầu hoặc lấy lịch sử.
-    - **Sửa lỗi xung đột UNIQUE constraint email:** Do cả user `"guest"` cũ và user `"0000000000000000"` mới đều dùng chung email `"guest@local"`, câu lệnh `ensureUserExists` cho user mới bị SQLite bỏ qua (IGNORE). Dẫn đến lỗi vi phạm khóa ngoại (foreign key constraint) làm hủy bỏ toàn bộ Transaction và chặn đứng việc lưu lịch sử học tập mới. Tôi đã thêm logic tự động đổi email của user `"guest"` cũ thành tạm thời trước khi tạo user mới và thực hiện dịch chuyển lịch sử học tập, đồng thời dọn dẹp sạch cả tài khoản Guest có ID `"guest@aienglish.com"` cũ.
-    - **Sửa lỗi vòng lặp vô tận (Infinite Loop) của Database Flow:** Việc gọi `checkAndMigrateGuestData()` làm ghi/sửa đổi database trực tiếp bên trong block `flatMapLatest` (trước khi trả về database flow) làm kích hoạt database flow chạy lại vô hạn lần, khiến UI bị kẹt. Đã khắc phục bằng cách sử dụng một cờ `isMigrated` cùng với `Mutex` để bảo đảm việc migration chỉ thực thi chính xác duy nhất một lần khi khởi tạo hoặc gọi lần đầu tiên.
-- **Ghi chú kỹ thuật:**
-  - Biên dịch thành công cho cả 2 target Desktop và Android, bảo đảm tính nhất quán của cơ sở dữ liệu local SQLite.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 6 (2026-06-29)
-
-- **Mục tiêu:** Cải tiến UI hiển thị các đáp án chuẩn và giải thích: đồng bộ và tăng kích thước font chữ, đồng thời gộp các đáp án thành danh sách đánh số rõ ràng.
-- **Hoạt động & Thay đổi:**
-  - **Explanations Markdown ([MarkdownText.kt](file:///D:/ai-english/shared/feature/ai-teacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/MarkdownText.kt)):**
-    - Tăng kích thước font chữ của `Paragraph`, `Bullet`, `Ordered` block từ `13.sp` lên `15.sp` (lineHeight từ `20.sp` lên `22.sp`).
-    - Tăng font size của `Heading 1` và `Heading 2` lên `18.sp` và `16.sp`.
-  - **Lesson UI ([LessonContent.kt](file:///D:/ai-english/shared/feature/aiteacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/LessonContent.kt)):**
-    - Thay thế tiêu đề hiển thị từ "Đáp án chuẩn:" thành "Các đáp án chuẩn:" (cỡ chữ `13.sp` in đậm).
-    - Trình bày đáp án chính và các đáp án thay thế cùng chung một danh sách được đánh số thứ tự `1), 2), 3)...` có kích thước font `15.sp` đồng bộ.
-    - **Đồng bộ và tăng cỡ chữ Từ vựng chi tiết (Tokens):** Cấu hình thống nhất font size cho các tokens trên cả 3 ngôn ngữ (Anh, Nhật, Trung) gồm: từ chính `16.sp` Bold, phiên âm `11.sp`, từ loại / nghĩa dịch `10.sp`.
-    - **Sắp xếp lại thứ tự hiển thị Token:** Cập nhật thứ tự hiển thị các thành phần trong Token chip thành **Cách đọc ở trên cùng (phonetic/IPA), Từ chính ở giữa (word), và Loại từ/Nghĩa dịch ở dưới cùng (partOfSpeech)** để đồng bộ nhất quán trên toàn bộ các ngôn ngữ.
-  - **Review UI ([FeedbackContent.kt](file:///D:/ai-english/shared/feature/aiteacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/FeedbackContent.kt)):**
-    - Thiết kế lại `SentenceReviewCard` hiển thị khối "Các đáp án chuẩn:" đánh số thứ tự với kích thước font `15.sp` đồng bộ, kèm theo câu trả lời của user rõ ràng và thoáng hơn.
-- **Ghi chú kỹ thuật:**
-  - Biên dịch thành công cho cả hai target Desktop và Android.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 7 (2026-06-29)
-
-- **Mục tiêu:** Khắc phục lỗi crash ứng dụng khi khởi động trên thiết bị Android do không khớp khóa mã hóa (Android KeyStore AEADBadTagException) khi gỡ cài đặt và cài lại ứng dụng.
-- **Hoạt động & Thay đổi:**
-  - **Sửa Secure Storage trên Android ([AndroidSecureStorage.kt](file:///D:/ai-english/shared/core/common/src/androidMain/kotlin/com/aienglish/core/common/security/AndroidSecureStorage.kt)):**
-    - Bọc logic khởi tạo `EncryptedSharedPreferences` vào khối `try-catch`.
-    - Khi xảy ra lỗi (ví dụ `AEADBadTagException` do KeyStore bị lệch/hết hạn), tự động xóa file Preferences bị lỗi và xóa entry key cũ trong Android KeyStore (`masterKeyAlias`), sau đó thử tạo lại.
-    - Thêm fallback cuối cùng chuyển về sử dụng `SharedPreferences` thông thường nếu vẫn thất bại để đảm bảo ứng dụng **tuyệt đối không bị crash khi khởi động**.
-- **Ghi chú kỹ thuật:**
-  - Biên dịch thành công và cài đặt thành công lên thiết bị Android qua adb.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 8 (2026-06-29)
-
-- **Mục tiêu:** Sửa lỗi lịch sử học tập không ghi nhận bất kỳ bài nào sau khi người dùng bắt đầu bài học trên Android.
-- **Hoạt động & Thay đổi:**
-  - Xác định nguyên nhân gốc: thiếu cột `user_id` trong bảng `lesson_history` trên các thiết bị đã cài app trước đây.
-  - Tạo file [4.sqm](file:///D:/ai-english/shared/core/database/src/commonMain/sqldelight/com/aienglish/core/database/4.sqm): `ALTER TABLE lesson_history ADD COLUMN user_id TEXT NOT NULL DEFAULT '0000000000000000'`.
-  - Cập nhật [AndroidDriverFactory.kt](file:///D:/ai-english/shared/core/database/src/androidMain/kotlin/com/aienglish/core/database/driver/AndroidDriverFactory.kt): dùng `AndroidSqliteDriver` thuần, SQLDelight tự chạy migration qua `Schema.migrate()`.
-  - Cập nhật [DesktopDriverFactory.kt](file:///D:/ai-english/shared/core/database/src/desktopMain/kotlin/com/aienglish/core/database/driver/DesktopDriverFactory.kt): thêm logic đọc `PRAGMA user_version` và gọi `Schema.migrate()` thủ công cho Desktop/JVM.
-  - Loại bỏ callback `AfterVersion(3)` trùng lặp gây lỗi `duplicate column name`.
-- **Ghi chú kỹ thuật:**
-  - Build và cài đặt thành công lên Android.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 9 (2026-06-29)
-
-- **Mục tiêu:** Refactor toàn bộ hệ thống lưu trữ — loại bỏ JSON blob columns, chuyển sang structured DB tables hoàn toàn.
-- **Hoạt động & Thay đổi:**
-  - **DB Schema (5.sqm):** Thêm `alternatives_json TEXT` vào `lesson_question`; tạo bảng `lesson_feedback` (history_id, overall_score, review, sentence_scores_json).
-  - **LessonHistory.sq:** Xóa 4 cột JSON blob (`lesson_json`, `user_answers_json`, `explanations_json`, `feedback_json`) khỏi `lesson_history`. Thêm query `insertOrReplaceFeedback`, `getFeedbackForHistory`. Cập nhật `getAllHistoryWithCounts` không còn SELECT các cột JSON.
-  - **Domain Layer:** Xóa 4 field JSON khỏi `LessonHistory.kt`. Đơn giản hóa `HistoryRepository.kt` — `completeLesson` chỉ nhận `(id, score)`. Thay `parseHistory(json...)` bằng `loadHistory(historyId): TeacherLessonHistory?` trong `TeacherHistoryRepository.kt`.
-  - **Data Layer:** Rewrite `HistoryRepositoryImpl.kt` — không còn JSON parsing. Rewrite `TeacherHistoryRepositoryImpl.kt` — inject `AIEnglishDatabase` trực tiếp, implement `loadHistory()` từ structured tables, `saveQuestionsToDb()` nhận domain objects. Cập nhật DI trong `TeacherDataModule.kt`.
-  - **UI Layer:** `TeacherViewModel` — `onReviewLesson`/`onResumeLesson` gọi `loadHistory(id)` thay vì `parseHistory(json)`. `HistorySheet.kt` — `hasLessonData = totalCount > 0`.
-- **Ghi chú kỹ thuật:**
-  - Build thành công cho cả Desktop và Android. Chỉ còn alternatives và sentenceScores lưu dạng JSON array nhỏ gọn.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 10 (2026-06-29)
-
-- **Mục tiêu:** Squash toàn bộ migration files (1.sqm → 5.sqm) vào base schema; chuẩn hóa DB filename thành `ai_english.db` duy nhất, vĩnh viễn.
-- **Hoạt động & Thay đổi:**
-  - Xóa các file `1.sqm` → `5.sqm` — toàn bộ schema final đã được tổng hợp vào `LessonHistory.sq` và `UserSchema.sq`.
-  - Reset `version = 1` trong `build.gradle.kts` — khởi điểm mới, sạch sẽ.
-  - Đổi DB filename từ `ai_english_v5.db` → **`ai_english.db`** — không bao giờ đổi tên nữa.
-  - Đơn giản hóa `AndroidDriverFactory.kt` — `AndroidSqliteDriver` tự migrate qua `.sqm`.
-  - Cập nhật `DesktopDriverFactory.kt` — `PRAGMA user_version` tracking + `Schema.migrate()` cho Desktop.
-- **Ghi chú kỹ thuật:**
-  - Build thành công, cài đặt thành công. Quy tắc từ giờ: thêm schema → tạo `[N].sqm` + tăng `version = N`. Không đổi tên file DB.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
----
-
-### 🟢 Session 14 (2026-06-29)
-
-- **Mục tiêu:** Thiết kế lại Logo ứng dụng dựa trên hình khối gốc `logo_ai_lingua copy.png`, lặp lại thử nghiệm để tìm ra phong cách và màu sắc tốt nhất, đồng thời tự động hóa việc cập nhật lên thiết bị Android.
-- **Hoạt động & Thay đổi:**
-  - **Giữ nguyên Geometry:** Giữ chuẩn 100% hình khối của logo cũ (2 bong bóng chat lồng nhau + 1 ngôi sao AI), chỉ thay đổi chất liệu và màu sắc thông qua prompt tạo ảnh.
-  - **Vòng lặp chất liệu (Styles):**
-    - Chuyển từ **3D Clay** (đất sét) mập mạp sang **Glassmorphism / Acrylic** (kính mờ chuyên nghiệp).
-    - Chuyển sang **Flat 2D Vector** (tối giản, phẳng) học tập theo style của TikTok & Facebook để dễ nhận diện.
-  - **Vòng lặp màu sắc (Colors):**
-    - Chuyển tiếp từ *Neon/Luminous* (sáng chói nhưng có thể nhạt) sang **Deep & Rich Colors** (màu đặc, độ bão hòa cực cao, độ tương phản mạnh): Bong bóng trước là **Royal Blue**, bong bóng sau là **Rich Vibrant Orange**, ngôi sao là **Golden Yellow**.
-  - **Tích hợp Android:** Mỗi lần chốt ảnh, tự động chạy script Powershell đè ảnh vào tất cả thư mục `mipmap-*` (ic_launcher) và chạy `gradlew installDebug` để kiểm thử thực tế trên điện thoại.
-- **Ghi chú kỹ thuật:**
-  - Để tránh lỗi mất chi tiết khi dùng AI tạo ảnh, yêu cầu kiên quyết "Keep exact same shape and layout" kết hợp cùng `ImagePaths` của ảnh gốc làm nền tảng gen ảnh.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 15 (2026-06-29)
-
-- **Mục tiêu:** Nâng cấp trải nghiệm UX tại phần hiển thị "Từ vựng chi tiết" trong màn hình Luyện tập: giảm thiểu sự lộn xộn, tăng độ tương phản và tối ưu hóa cho việc học cụm từ thay vì từ rời rạc.
-- **Hoạt động & Thay đổi:**
-  - **Cải tiến UI (LessonContent.kt):** 
-    - Thêm cơ chế **Toggle Switch** ("Phân tích") để bật/tắt toàn bộ chi tiết (IPA, từ loại). Mặc định là Tắt để giao diện thoáng hơn.
-    - Thêm cơ chế **Tap-to-reveal**: Khi đang tắt phân tích, chạm vào một từ sẽ mở chi tiết riêng của từ đó.
-    - Bọc cụm `FlowRow` vào một `Card` có độ trong suốt `95%` (`colors.surface.copy(alpha = 0.95f)`) và viền góc tròn để che đi background pattern phức tạp bên dưới, giúp chữ trở nên dễ đọc và có độ tương phản cao hơn.
-  - **Cải tiến Data/AI Prompt (EnglishPromptProvider.kt & BaseLanguagePromptProvider.kt):** 
-    - Cập nhật System Prompt yêu cầu AI sinh từ vựng theo dạng **cụm từ (chunk/collocation)** (ví dụ "I'm", "my name") thay vì cắt nhỏ từng chữ lẻ.
-- **Ghi chú kỹ thuật:**
-  - `FlowRow` của Compose Multiplatform kết hợp `clickable` state per-index đã giải quyết triệt để yêu cầu hiển thị tùy chỉnh mượt mà.
-  - Biên dịch thành công cho Android qua `installDebug` task.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Đón nhận phản hồi trải nghiệm thực tế từ người dùng.
-
----
-
-### 🟢 Session 16 (2026-06-29)
-
-- **Mục tiêu:** Nâng cấp trải nghiệm UI/UX cho phần "Các đáp án chuẩn" ở cả màn hình Bài học và Ôn tập, đồng thời đồng bộ hóa khả năng sinh đáp án thay thế & chấm điểm nương tay (lenient grading) cho **tất cả** ngôn ngữ thay vì chỉ tiếng Anh.
-- **Hoạt động & Thay đổi:**
-  - **Text Highlighting thuật toán Client-side:** Viết hàm `highlightDifferences` tự động so sánh đáp án thay thế với đáp án chính để bôi đậm/tô màu từ đồng nghĩa. Hỗ trợ cả ngắt từ bằng dấu cách (Anh, Pháp...) và ngắt ký tự (Trung, Nhật - CJK) mà không cần can thiệp DB hay Prompt.
-  - **Tối ưu không gian bằng Accordion:** Chỉ hiển thị đáp án chính (số 1), ẩn các đáp án còn lại dưới dạng dropdown (Xem thêm X cách diễn đạt khác).
-  - **Bổ sung Action Buttons:** Thêm nút Copy (sử dụng `LocalClipboardManager`) cho từng câu và placeholder icon Loa (TTS).
-  - **Đồng bộ BaseLanguagePromptProvider:** 
-    - Thêm trường `alternatives` vào JSON Prompt chung để hỗ trợ sinh đáp án thay thế cho mọi ngôn ngữ.
-    - Cập nhật `getEvaluateLessonSystemPrompt` bắt buộc AI chấm "10/10" nếu tương đương ngữ nghĩa, bỏ qua lỗi vặt (dấu câu, viết hoa).
-- **Ghi chú kỹ thuật:**
-  - `highlightDifferences` giúp đem lại giá trị sư phạm lớn (learner dễ dàng nhận ra idiom/từ đồng nghĩa mới) với effort cực thấp, không break schema.
-  - Fix deprecated warnings: Chuyển icon sang bản `AutoMirrored`, thay thế `LocalClipboardManager` thành `LocalClipboard` trong các dự định tương lai.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Xem xét tích hợp giải pháp Text-To-Speech (TTS) thực thụ cho Kotlin Multiplatform.
-
----
-
-### 🟢 Session 17 (2026-06-29)
-
-- **Mục tiêu:** Căn chỉnh (Alignment) từ tiếng Anh gốc trong phần "Từ vựng chi tiết" để chúng luôn thẳng hàng ngang với nhau ở dưới cùng, không bị xô lệch khi bật/tắt hiển thị chi tiết (Phiên âm, Từ loại).
-- **Hoạt động & Thay đổi:**
-  - **Căn chỉnh Column:** Bổ sung `Modifier.align(Alignment.CenterVertically)` vào `Column` bọc mỗi token bên trong `FlowRow`.
-  - **Bảo toàn cấu trúc (Structural Placeholder):** Thay vì ẩn hoàn toàn thẻ `Text` của phiên âm và từ loại khi chúng rỗng, tôi đã đổi thành luôn render chúng với kích thước chuẩn nhưng đặt màu sắc thành `Color.Transparent` (vô hình).
-  - **Kết quả:** Vì mọi `Column` (đang được mở rộng chi tiết) đều có chung cấu trúc gồm: `Top (10-11sp)` + `Middle (16sp)` + `Bottom (10-11sp)`, phần chữ chính (Middle) luôn nằm chính xác ở vị trí trung tâm. Kết hợp với `Alignment.CenterVertically`, chữ chính của mọi từ (kể cả từ không có phiên âm hay từ loại) đều được gióng thẳng hàng ngang một cách hoàn hảo, sửa lỗi vỡ cấu trúc dòng đọc (baseline alignment).
-- **Ghi chú kỹ thuật:**
-  - Trong Compose Multiplatform, `FlowRow` mặc định căn đỉnh (`Alignment.Top`), gây ra lỗi từ ngắn bị đẩy lên bằng chiều cao với phiên âm của từ đầy đủ. Giải pháp dùng `CenterVertically` và placeholder text giải quyết triệt để vấn đề này mà không cần dùng Custom Layout hay `alignByBaseline` (vốn chưa hỗ trợ đầy đủ trên `FlowRow`).
-  - Đã biên dịch thành công cho Desktop/Android.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 18 (2026-06-29)
-
-- **Mục tiêu:** Sửa lỗi logic của nút Toggle "Phân tích" ở phần "Từ vựng chi tiết" (tắt switch nhưng một số từ vẫn hiển thị chi tiết). Đảm bảo tính toàn vẹn và ưu tiên tuyệt đối của trạng thái toggle.
-- **Hoạt động & Thay đổi:**
-- **Mục tiêu:** Cải thiện độ chuẩn xác trong việc chấm điểm của AI (tránh trừ điểm lỗi viết hoa/thường, khoảng trắng, dấu câu) và bổ sung thêm các đáp án thay thế chuẩn khác (alternatives).
-- **Hoạt động & Thay đổi:**
-  - **Domain Model:** Mở rộng [EnglishLesson.kt](file:///D:/ai-english/shared/feature/ai-teacher/domain/src/commonMain/kotlin/com/aienglish/feature/aiteacher/domain/model/EnglishLesson.kt) thêm trường `alternatives: List<String> = emptyList()` vào model `EnglishSentence`.
-  - **Data Transfer Object:** Đồng bộ trường `alternatives` và cập nhật mapper tương ứng trong [EnglishLessonDto.kt](file:///D:/ai-english/shared/feature/ai-teacher/data/src/commonMain/kotlin/com/aienglish/feature/aiteacher/data/model/EnglishLessonDto.kt).
-  - **Prompt Configuration:** Cập nhật [EnglishPromptProvider.kt](file:///D:/ai-english/shared/feature/ai-teacher/data/src/commonMain/kotlin/com/aienglish/feature/aiteacher/data/repository/prompt/EnglishPromptProvider.kt):
-    - `getGenerateLessonSystemPrompt`: Yêu cầu AI sinh thêm mảng `alternatives` chứa 2-4 câu dịch tiếng Anh chuẩn khác nhau.
-    - `getEvaluateLessonSystemPrompt` & `getExplainSentenceSystemPrompt`: Thêm hướng dẫn chấm điểm **lenient grading** (không trừ điểm nếu chỉ khác biệt về viết hoa/thường, khoảng trắng, dấu câu, viết tắt; ưu tiên tính tương đương về mặt ý nghĩa - semantic equivalence).
-  - **User Interface:**
-    - Cập nhật [LessonContent.kt](file:///D:/ai-english/feature/aiteacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/LessonContent.kt) để hiển thị đầy đủ câu đáp án chuẩn chính và danh sách các đáp án chuẩn thay thế khác ngay khi người dùng kiểm tra câu trả lời.
-    - Cập nhật [FeedbackContent.kt](file:///D:/ai-english/feature/aiteacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/FeedbackContent.kt) hiển thị danh sách đáp án thay thế dưới dạng danh sách bullet point trong màn hình xem lại kết quả.
-- **Ghi chú kỹ thuật:**
-  - Biên dịch thành công với target Desktop, đảm bảo các API serialization tương thích mượt mà nhờ cơ chế default values của Kotlin.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 5 (2026-06-29)
-
-- **Mục tiêu:** Chuyển đổi GUID của người dùng ở chế độ Guest (chưa đăng nhập hoặc chọn Guest trial) mặc định thành chuỗi 16 số 0 (`"0000000000000000"`).
-- **Hoạt động & Thay đổi:**
-  - Cập nhật [HistoryRepositoryImpl.kt](file:///D:/ai-english/shared/feature/history/data/src/commonMain/kotlin/com/aienglish/feature/history/data/repository/HistoryRepositoryImpl.kt):
-    - `getCurrentUserId()`: Thay vì trả về `"guest"` như trước, nay trả về `"0000000000000000"` nếu người dùng chưa đăng nhập hoặc có email đăng nhập tạm thời là `"guest@aienglish.com"`.
-    - `getAllHistory()`: Đồng bộ hóa query flow để dùng GUID `"0000000000000000"` tải lịch sử học tập của Guest.
-    - Sửa phương thức tạo tài khoản mặc định `ensureUserExists` để gán chính xác `display_name = "Guest"` và `email = "guest@local"` khi `user_id` là `"0000000000000000"`.
-    - **Cơ chế migration dữ liệu cũ:** Bổ sung truy vấn `migrateGuestHistory` trong [LessonHistory.sq](file:///D:/ai-english/shared/core/database/src/commonMain/sqldelight/com/aienglish/core/database/LessonHistory.sq) và `deleteUserById` trong [UserSchema.sq](file:///D:/ai-english/shared/core/database/src/commonMain/sqldelight/com/aienglish/core/database/UserSchema.sq). Thực thi lazy migration dữ liệu `checkAndMigrateGuestData()` chuyển toàn bộ lịch sử học tập cũ có ID là `"guest"` sang ID `"0000000000000000"`, sau đó xóa an toàn user `"guest"` cũ khi bắt đầu hoặc lấy lịch sử.
-    - **Sửa lỗi xung đột UNIQUE constraint email:** Do cả user `"guest"` cũ và user `"0000000000000000"` mới đều dùng chung email `"guest@local"`, câu lệnh `ensureUserExists` cho user mới bị SQLite bỏ qua (IGNORE). Dẫn đến lỗi vi phạm khóa ngoại (foreign key constraint) làm hủy bỏ toàn bộ Transaction và chặn đứng việc lưu lịch sử học tập mới. Tôi đã thêm logic tự động đổi email của user `"guest"` cũ thành tạm thời trước khi tạo user mới và thực hiện dịch chuyển lịch sử học tập, đồng thời dọn dẹp sạch cả tài khoản Guest có ID `"guest@aienglish.com"` cũ.
-    - **Sửa lỗi vòng lặp vô tận (Infinite Loop) của Database Flow:** Việc gọi `checkAndMigrateGuestData()` làm ghi/sửa đổi database trực tiếp bên trong block `flatMapLatest` (trước khi trả về database flow) làm kích hoạt database flow chạy lại vô hạn lần, khiến UI bị kẹt. Đã khắc phục bằng cách sử dụng một cờ `isMigrated` cùng với `Mutex` để bảo đảm việc migration chỉ thực thi chính xác duy nhất một lần khi khởi tạo hoặc gọi lần đầu tiên.
-- **Ghi chú kỹ thuật:**
-  - Biên dịch thành công cho cả 2 target Desktop và Android, bảo đảm tính nhất quán của cơ sở dữ liệu local SQLite.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 6 (2026-06-29)
-
-- **Mục tiêu:** Cải tiến UI hiển thị các đáp án chuẩn và giải thích: đồng bộ và tăng kích thước font chữ, đồng thời gộp các đáp án thành danh sách đánh số rõ ràng.
-- **Hoạt động & Thay đổi:**
-  - **Explanations Markdown ([MarkdownText.kt](file:///D:/ai-english/shared/feature/ai-teacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/MarkdownText.kt)):**
-    - Tăng kích thước font chữ của `Paragraph`, `Bullet`, `Ordered` block từ `13.sp` lên `15.sp` (lineHeight từ `20.sp` lên `22.sp`).
-    - Tăng font size của `Heading 1` và `Heading 2` lên `18.sp` và `16.sp`.
-  - **Lesson UI ([LessonContent.kt](file:///D:/ai-english/shared/feature/aiteacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/LessonContent.kt)):**
-    - Thay thế tiêu đề hiển thị từ "Đáp án chuẩn:" thành "Các đáp án chuẩn:" (cỡ chữ `13.sp` in đậm).
-    - Trình bày đáp án chính và các đáp án thay thế cùng chung một danh sách được đánh số thứ tự `1), 2), 3)...` có kích thước font `15.sp` đồng bộ.
-    - **Đồng bộ và tăng cỡ chữ Từ vựng chi tiết (Tokens):** Cấu hình thống nhất font size cho các tokens trên cả 3 ngôn ngữ (Anh, Nhật, Trung) gồm: từ chính `16.sp` Bold, phiên âm `11.sp`, từ loại / nghĩa dịch `10.sp`.
-    - **Sắp xếp lại thứ tự hiển thị Token:** Cập nhật thứ tự hiển thị các thành phần trong Token chip thành **Cách đọc ở trên cùng (phonetic/IPA), Từ chính ở giữa (word), và Loại từ/Nghĩa dịch ở dưới cùng (partOfSpeech)** để đồng bộ nhất quán trên toàn bộ các ngôn ngữ.
-  - **Review UI ([FeedbackContent.kt](file:///D:/ai-english/shared/feature/aiteacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/FeedbackContent.kt)):**
-    - Thiết kế lại `SentenceReviewCard` hiển thị khối "Các đáp án chuẩn:" đánh số thứ tự với kích thước font `15.sp` đồng bộ, kèm theo câu trả lời của user rõ ràng và thoáng hơn.
-- **Ghi chú kỹ thuật:**
-  - Biên dịch thành công cho cả hai target Desktop và Android.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 7 (2026-06-29)
-
-- **Mục tiêu:** Khắc phục lỗi crash ứng dụng khi khởi động trên thiết bị Android do không khớp khóa mã hóa (Android KeyStore AEADBadTagException) khi gỡ cài đặt và cài lại ứng dụng.
-- **Hoạt động & Thay đổi:**
-  - **Sửa Secure Storage trên Android ([AndroidSecureStorage.kt](file:///D:/ai-english/shared/core/common/src/androidMain/kotlin/com/aienglish/core/common/security/AndroidSecureStorage.kt)):**
-    - Bọc logic khởi tạo `EncryptedSharedPreferences` vào khối `try-catch`.
-    - Khi xảy ra lỗi (ví dụ `AEADBadTagException` do KeyStore bị lệch/hết hạn), tự động xóa file Preferences bị lỗi và xóa entry key cũ trong Android KeyStore (`masterKeyAlias`), sau đó thử tạo lại.
-    - Thêm fallback cuối cùng chuyển về sử dụng `SharedPreferences` thông thường nếu vẫn thất bại để đảm bảo ứng dụng **tuyệt đối không bị crash khi khởi động**.
-- **Ghi chú kỹ thuật:**
-  - Biên dịch thành công và cài đặt thành công lên thiết bị Android qua adb.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 8 (2026-06-29)
-
-- **Mục tiêu:** Sửa lỗi lịch sử học tập không ghi nhận bất kỳ bài nào sau khi người dùng bắt đầu bài học trên Android.
-- **Hoạt động & Thay đổi:**
-  - Xác định nguyên nhân gốc: thiếu cột `user_id` trong bảng `lesson_history` trên các thiết bị đã cài app trước đây.
-  - Tạo file [4.sqm](file:///D:/ai-english/shared/core/database/src/commonMain/sqldelight/com/aienglish/core/database/4.sqm): `ALTER TABLE lesson_history ADD COLUMN user_id TEXT NOT NULL DEFAULT '0000000000000000'`.
-  - Cập nhật [AndroidDriverFactory.kt](file:///D:/ai-english/shared/core/database/src/androidMain/kotlin/com/aienglish/core/database/driver/AndroidDriverFactory.kt): dùng `AndroidSqliteDriver` thuần, SQLDelight tự chạy migration qua `Schema.migrate()`.
-  - Cập nhật [DesktopDriverFactory.kt](file:///D:/ai-english/shared/core/database/src/desktopMain/kotlin/com/aienglish/core/database/driver/DesktopDriverFactory.kt): thêm logic đọc `PRAGMA user_version` và gọi `Schema.migrate()` thủ công cho Desktop/JVM.
-  - Loại bỏ callback `AfterVersion(3)` trùng lặp gây lỗi `duplicate column name`.
-- **Ghi chú kỹ thuật:**
-  - Build và cài đặt thành công lên Android.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 9 (2026-06-29)
-
-- **Mục tiêu:** Refactor toàn bộ hệ thống lưu trữ — loại bỏ JSON blob columns, chuyển sang structured DB tables hoàn toàn.
-- **Hoạt động & Thay đổi:**
-  - **DB Schema (5.sqm):** Thêm `alternatives_json TEXT` vào `lesson_question`; tạo bảng `lesson_feedback` (history_id, overall_score, review, sentence_scores_json).
-  - **LessonHistory.sq:** Xóa 4 cột JSON blob (`lesson_json`, `user_answers_json`, `explanations_json`, `feedback_json`) khỏi `lesson_history`. Thêm query `insertOrReplaceFeedback`, `getFeedbackForHistory`. Cập nhật `getAllHistoryWithCounts` không còn SELECT các cột JSON.
-  - **Domain Layer:** Xóa 4 field JSON khỏi `LessonHistory.kt`. Đơn giản hóa `HistoryRepository.kt` — `completeLesson` chỉ nhận `(id, score)`. Thay `parseHistory(json...)` bằng `loadHistory(historyId): TeacherLessonHistory?` trong `TeacherHistoryRepository.kt`.
-  - **Data Layer:** Rewrite `HistoryRepositoryImpl.kt` — không còn JSON parsing. Rewrite `TeacherHistoryRepositoryImpl.kt` — inject `AIEnglishDatabase` trực tiếp, implement `loadHistory()` từ structured tables, `saveQuestionsToDb()` nhận domain objects. Cập nhật DI trong `TeacherDataModule.kt`.
-  - **UI Layer:** `TeacherViewModel` — `onReviewLesson`/`onResumeLesson` gọi `loadHistory(id)` thay vì `parseHistory(json)`. `HistorySheet.kt` — `hasLessonData = totalCount > 0`.
-- **Ghi chú kỹ thuật:**
-  - Build thành công cho cả Desktop và Android. Chỉ còn alternatives và sentenceScores lưu dạng JSON array nhỏ gọn.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 10 (2026-06-29)
-
-- **Mục tiêu:** Squash toàn bộ migration files (1.sqm → 5.sqm) vào base schema; chuẩn hóa DB filename thành `ai_english.db` duy nhất, vĩnh viễn.
-- **Hoạt động & Thay đổi:**
-  - Xóa các file `1.sqm` → `5.sqm` — toàn bộ schema final đã được tổng hợp vào `LessonHistory.sq` và `UserSchema.sq`.
-  - Reset `version = 1` trong `build.gradle.kts` — khởi điểm mới, sạch sẽ.
-  - Đổi DB filename từ `ai_english_v5.db` → **`ai_english.db`** — không bao giờ đổi tên nữa.
-  - Đơn giản hóa `AndroidDriverFactory.kt` — `AndroidSqliteDriver` tự migrate qua `.sqm`.
-  - Cập nhật `DesktopDriverFactory.kt` — `PRAGMA user_version` tracking + `Schema.migrate()` cho Desktop.
-- **Ghi chú kỹ thuật:**
-  - Build thành công, cài đặt thành công. Quy tắc từ giờ: thêm schema → tạo `[N].sqm` + tăng `version = N`. Không đổi tên file DB.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
----
-
-### 🟢 Session 14 (2026-06-29)
-
-- **Mục tiêu:** Thiết kế lại Logo ứng dụng dựa trên hình khối gốc `logo_ai_lingua copy.png`, lặp lại thử nghiệm để tìm ra phong cách và màu sắc tốt nhất, đồng thời tự động hóa việc cập nhật lên thiết bị Android.
-- **Hoạt động & Thay đổi:**
-  - **Giữ nguyên Geometry:** Giữ chuẩn 100% hình khối của logo cũ (2 bong bóng chat lồng nhau + 1 ngôi sao AI), chỉ thay đổi chất liệu và màu sắc thông qua prompt tạo ảnh.
-  - **Vòng lặp chất liệu (Styles):**
-    - Chuyển từ **3D Clay** (đất sét) mập mạp sang **Glassmorphism / Acrylic** (kính mờ chuyên nghiệp).
-    - Chuyển sang **Flat 2D Vector** (tối giản, phẳng) học tập theo style của TikTok & Facebook để dễ nhận diện.
-  - **Vòng lặp màu sắc (Colors):**
-    - Chuyển tiếp từ *Neon/Luminous* (sáng chói nhưng có thể nhạt) sang **Deep & Rich Colors** (màu đặc, độ bão hòa cực cao, độ tương phản mạnh): Bong bóng trước là **Royal Blue**, bong bóng sau là **Rich Vibrant Orange**, ngôi sao là **Golden Yellow**.
-  - **Tích hợp Android:** Mỗi lần chốt ảnh, tự động chạy script Powershell đè ảnh vào tất cả thư mục `mipmap-*` (ic_launcher) và chạy `gradlew installDebug` để kiểm thử thực tế trên điện thoại.
-- **Ghi chú kỹ thuật:**
-  - Để tránh lỗi mất chi tiết khi dùng AI tạo ảnh, yêu cầu kiên quyết "Keep exact same shape and layout" kết hợp cùng `ImagePaths` của ảnh gốc làm nền tảng gen ảnh.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 15 (2026-06-29)
-
-- **Mục tiêu:** Nâng cấp trải nghiệm UX tại phần hiển thị "Từ vựng chi tiết" trong màn hình Luyện tập: giảm thiểu sự lộn xộn, tăng độ tương phản và tối ưu hóa cho việc học cụm từ thay vì từ rời rạc.
-- **Hoạt động & Thay đổi:**
-  - **Cải tiến UI (LessonContent.kt):** 
-    - Thêm cơ chế **Toggle Switch** ("Phân tích") để bật/tắt toàn bộ chi tiết (IPA, từ loại). Mặc định là Tắt để giao diện thoáng hơn.
-    - Thêm cơ chế **Tap-to-reveal**: Khi đang tắt phân tích, chạm vào một từ sẽ mở chi tiết riêng của từ đó.
-    - Bọc cụm `FlowRow` vào một `Card` có độ trong suốt `95%` (`colors.surface.copy(alpha = 0.95f)`) và viền góc tròn để che đi background pattern phức tạp bên dưới, giúp chữ trở nên dễ đọc và có độ tương phản cao hơn.
-  - **Cải tiến Data/AI Prompt (EnglishPromptProvider.kt & BaseLanguagePromptProvider.kt):** 
-    - Cập nhật System Prompt yêu cầu AI sinh từ vựng theo dạng **cụm từ (chunk/collocation)** (ví dụ "I'm", "my name") thay vì cắt nhỏ từng chữ lẻ.
-- **Ghi chú kỹ thuật:**
-  - `FlowRow` của Compose Multiplatform kết hợp `clickable` state per-index đã giải quyết triệt để yêu cầu hiển thị tùy chỉnh mượt mà.
-  - Biên dịch thành công cho Android qua `installDebug` task.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Đón nhận phản hồi trải nghiệm thực tế từ người dùng.
-
----
-
-### 🟢 Session 16 (2026-06-29)
-
-- **Mục tiêu:** Nâng cấp trải nghiệm UI/UX cho phần "Các đáp án chuẩn" ở cả màn hình Bài học và Ôn tập, đồng thời đồng bộ hóa khả năng sinh đáp án thay thế & chấm điểm nương tay (lenient grading) cho **tất cả** ngôn ngữ thay vì chỉ tiếng Anh.
-- **Hoạt động & Thay đổi:**
-  - **Text Highlighting thuật toán Client-side:** Viết hàm `highlightDifferences` tự động so sánh đáp án thay thế với đáp án chính để bôi đậm/tô màu từ đồng nghĩa. Hỗ trợ cả ngắt từ bằng dấu cách (Anh, Pháp...) và ngắt ký tự (Trung, Nhật - CJK) mà không cần can thiệp DB hay Prompt.
-  - **Tối ưu không gian bằng Accordion:** Chỉ hiển thị đáp án chính (số 1), ẩn các đáp án còn lại dưới dạng dropdown (Xem thêm X cách diễn đạt khác).
-  - **Bổ sung Action Buttons:** Thêm nút Copy (sử dụng `LocalClipboardManager`) cho từng câu và placeholder icon Loa (TTS).
-  - **Đồng bộ BaseLanguagePromptProvider:** 
-    - Thêm trường `alternatives` vào JSON Prompt chung để hỗ trợ sinh đáp án thay thế cho mọi ngôn ngữ.
-    - Cập nhật `getEvaluateLessonSystemPrompt` bắt buộc AI chấm "10/10" nếu tương đương ngữ nghĩa, bỏ qua lỗi vặt (dấu câu, viết hoa).
-- **Ghi chú kỹ thuật:**
-  - `highlightDifferences` giúp đem lại giá trị sư phạm lớn (learner dễ dàng nhận ra idiom/từ đồng nghĩa mới) với effort cực thấp, không break schema.
-  - Fix deprecated warnings: Chuyển icon sang bản `AutoMirrored`, thay thế `LocalClipboardManager` thành `LocalClipboard` trong các dự định tương lai.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Xem xét tích hợp giải pháp Text-To-Speech (TTS) thực thụ cho Kotlin Multiplatform.
-
----
-
-### 🟢 Session 17 (2026-06-29)
-
-- **Mục tiêu:** Căn chỉnh (Alignment) từ tiếng Anh gốc trong phần "Từ vựng chi tiết" để chúng luôn thẳng hàng ngang với nhau ở dưới cùng, không bị xô lệch khi bật/tắt hiển thị chi tiết (Phiên âm, Từ loại).
-- **Hoạt động & Thay đổi:**
-  - **Căn chỉnh Column:** Bổ sung `Modifier.align(Alignment.CenterVertically)` vào `Column` bọc mỗi token bên trong `FlowRow`.
-  - **Bảo toàn cấu trúc (Structural Placeholder):** Thay vì ẩn hoàn toàn thẻ `Text` của phiên âm và từ loại khi chúng rỗng, tôi đã đổi thành luôn render chúng với kích thước chuẩn nhưng đặt màu sắc thành `Color.Transparent` (vô hình).
-  - **Kết quả:** Vì mọi `Column` (đang được mở rộng chi tiết) đều có chung cấu trúc gồm: `Top (10-11sp)` + `Middle (16sp)` + `Bottom (10-11sp)`, phần chữ chính (Middle) luôn nằm chính xác ở vị trí trung tâm. Kết hợp với `Alignment.CenterVertically`, chữ chính của mọi từ (kể cả từ không có phiên âm hay từ loại) đều được gióng thẳng hàng ngang một cách hoàn hảo, sửa lỗi vỡ cấu trúc dòng đọc (baseline alignment).
-- **Ghi chú kỹ thuật:**
-  - Trong Compose Multiplatform, `FlowRow` mặc định căn đỉnh (`Alignment.Top`), gây ra lỗi từ ngắn bị đẩy lên bằng chiều cao với phiên âm của từ đầy đủ. Giải pháp dùng `CenterVertically` và placeholder text giải quyết triệt để vấn đề này mà không cần dùng Custom Layout hay `alignByBaseline` (vốn chưa hỗ trợ đầy đủ trên `FlowRow`).
-  - Đã biên dịch thành công cho Desktop/Android.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 18 (2026-06-29)
-
-- **Mục tiêu:** Sửa lỗi logic của nút Toggle "Phân tích" ở phần "Từ vựng chi tiết" (tắt switch nhưng một số từ vẫn hiển thị chi tiết). Đảm bảo tính toàn vẹn và ưu tiên tuyệt đối của trạng thái toggle.
-- **Hoạt động & Thay đổi:**
-  - **Phân tích vấn đề:** Lỗi xảy ra do cơ chế "Tap-to-reveal" (từ Session 15) lưu trạng thái mở rộng của từng từ độc lập vào biến `expandedTokens`. Nếu người dùng chạm vào một từ khi switch đang tắt, từ đó sẽ hiện chi tiết, gây hiểu lầm rằng switch bị lỗi logic hoặc bị kẹt.
-  - **Khắc phục:** Đã loại bỏ hoàn toàn cơ chế "Tap-to-reveal" cùng với state `expandedTokens` và thuộc tính `.clickable` khỏi các token (`Column`). 
-  - **Ràng buộc UI:** Ràng buộc trực tiếp biến `isDetailed` chỉ phụ thuộc duy nhất vào biến state `showDetailedTokens` (được điều khiển bởi Toggle Switch). Giờ đây, khi switch mang giá trị `false`, tất cả các thành phần phụ (Phiên âm, Từ loại) của mọi từ đều không được render, đảm bảo tuân thủ đúng yêu cầu "Visibility.GONE".
-- **Ghi chú kỹ thuật:**
-  - Biên dịch thành công cho Desktop/Android. Đã đẩy bản build cập nhật lên thiết bị qua ADB.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 19 (2026-06-29)
-
-- **Mục tiêu:** Bỏ hoàn toàn tính năng chấm điểm ở toàn bộ AI agents và ẩn điểm số khỏi giao diện người dùng theo yêu cầu.
-- **Hoạt động & Thay đổi:**
-  - **AI Prompt:** Sửa đổi `BaseLanguagePromptProvider` để loại bỏ yêu cầu trả về điểm số tổng và điểm từng câu trong `getEvaluateLessonSystemPrompt` và `getExplainSentenceSystemPrompt`.
-  - **Data Transfer Object:** Thêm các giá trị mặc định cho trường `score` (thành 0) và `sentenceScores` (thành mảng rỗng) trong `EnglishFeedbackDto` và `SentenceExplanationDto` tại `EnglishLessonDto.kt` để tránh lỗi Parse JSON khi AI không trả về các thông tin này.
-  - **UI/ViewModel:** Loại bỏ logic tính toán và xử lý điểm số trong `TeacherViewModel.kt`. Ẩn/Xóa tất cả các thành phần UI hiển thị điểm số trên `LessonContent.kt` và `FeedbackContent.kt`.
-  - **Lịch sử học tập (HistorySheet.kt):** Sửa lại logic phân nhóm (grouping), chuyển từ nhóm theo dải điểm sang nhóm theo trạng thái Hoàn thành và Chưa hoàn thành, đồng thời xóa các Badge hiển thị điểm của lịch sử.
-- **Ghi chú kỹ thuật:**
-  - Đã compile và build thành công trên ComposeApp Desktop mà không phát sinh lỗi.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
-
----
-
-### 🟢 Session 20 (2026-06-29)
-
-- **Mục tiêu:** Xóa nhãn (label) "Dịch sang tiếng A/B/C/X:" ở phần hiển thị câu hỏi của màn hình Luyện tập.
-- **Hoạt động & Thay đổi:**
-  - **LessonContent.kt:** Xác định và xóa đoạn code chứa khối `Text` hiển thị nhãn "Dịch sang $languageLabel:" cùng với khoảng trắng (`Spacer`) phía dưới nó trong component khung hiển thị câu hỏi.
-- **Ghi chú kỹ thuật:**
-  - Thay đổi nhỏ về UI, đã build và cài đặt thành công trên điện thoại Android qua ADB, cập nhật mã nguồn trên nhánh `dev`.
-- **Kế hoạch tiếp theo (Next Steps):**
-  - Chờ yêu cầu tiếp theo từ người dùng.
+### 📦 Lịch sử tích lũy (Session 1 - 20) (Đã nén)
+
+- **Session 1:** Khởi tạo file `GEMINI.md` để theo dõi tiến độ và lịch sử làm việc.
+- **Session 2:** Tăng chiều rộng các nút nhóm (History, Profile, Pro) ở header điều hướng phải từ `40.dp` lên `48.dp`.
+- **Session 3:** Tích hợp Novita API Service (OpenAI-compatible) và thêm tính năng chuyển đổi AI Provider trong Settings.
+- **Session 4:** Tối ưu hóa prompt AI chấm điểm nương tay (lenient grading), bỏ qua viết hoa/thường, khoảng trắng và thêm sinh mảng `alternatives`.
+- **Session 5:** Cấu hình mặc định Guest GUID thành 16 chữ số 0 (`0000000000000000`) và viết logic migrate an toàn dữ liệu lịch sử cũ.
+- **Session 6:** Nâng cấp cỡ chữ đáp án & giải thích lên `15.sp`, đồng bộ layout token chi tiết từ vựng theo dạng Cách đọc -> Từ chính -> Nghĩa.
+- **Session 7:** Khắc phục lỗi crash Android KeyStore `AEADBadTagException` bằng cơ chế tự xóa và tái tạo preferences khi cài đè ứng dụng.
+- **Session 8:** Viết migration database `4.sqm` bổ sung cột `user_id` vào bảng `lesson_history` cho Android & Desktop.
+- **Session 9:** Refactor loại bỏ các cột JSON blob khỏi DB, chuyển sang lưu trữ cấu trúc quan hệ (`lesson_feedback`, `lesson_question`, `alternatives`).
+- **Session 10:** Squash toàn bộ migration 1.sqm -> 5.sqm vào schema gốc, đổi tên file DB thành `ai_english.db` vĩnh viễn không đổi nữa.
+- **Session 11:** Thêm bảng màu Sunset Warmth, sửa nền Seigaiha, thêm tính năng Theme Switcher (Sunset Warmth, Nature Mint) trong Settings.
+- **Session 12:** Thêm theme thứ 3 là Berry Sorbet (Berry Red / Blush Cream) vào Settings.
+- **Session 13:** Refactor layout Token từ vựng chi tiết & tối ưu hóa các PromptProvider thông qua BaseLanguagePromptProvider.
+- **Session 14:** Thiết kế lại Logo dựa trên hình khối gốc, chọn phong cách Flat 2D Deep Colors nổi bật và tự động copy mipmap Android.
+- **Session 15:** Thêm switch bật/tắt Phân tích từ vựng, bọc Card tăng tương phản, nâng cấp prompt AI sinh từ vựng dạng Cụm từ (collocations).
+- **Session 16:** Nâng cấp UI đáp án chuẩn, highlight từ đồng nghĩa Client-side, gộp các đáp án thay thế bằng Accordion Xem thêm.
+- **Session 17:** Gióng thẳng hàng ngang các token từ vựng trong FlowRow bằng structural placeholders vô hình có kích thước cố định.
+- **Session 18:** Loại bỏ hoàn toàn cơ chế Tap-to-reveal của token từ vựng để nút Toggle Switch hoạt động chuẩn xác tuyệt đối.
+- **Session 19:** Loại bỏ hoàn toàn hệ thống tính điểm ở tất cả các agents AI và ẩn toàn bộ điểm số/dải điểm khỏi giao diện người dùng.
+- **Session 20:** Xóa nhãn "Dịch sang tiếng..." cùng Spacer thừa ở màn hình Bài học.
 
 ---
 
@@ -620,6 +191,207 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 
+---
+
+### 🟢 Session 29 (2026-06-29)
+
+- **Mục tiêu:** Tái thiết kế UI/UX màn hình chọn chủ đề để sửa các lỗi cắt chữ thô bạo (Text Truncation), trùng lặp tính năng duyệt (Redundancy) và cấu trúc nút ngẫu nhiên lỏng lẻo.
+- **Hoạt động & Thay đổi:**
+  - **TopicCarouselCard.kt**: Biến đổi Carousel vuốt ngang thành "Hero Card" tĩnh chất lượng cao hiển thị thông tin chủ đề đang chọn, bao gồm: icon học tập sinh động, nhãn phụ đề nhỏ và huy hiệu độ khó (Level Badge) tự động chuyển màu sắc theo level, đồng thời loại bỏ các phím điều hướng trái/phải dư thừa.
+  - **TopicSelectionContent.kt**:
+    - Chuyển đổi danh sách chủ đề cuộn ngang (`LazyRow` chips) thành **danh sách thẻ dọc (Vertical Cards)**.
+    - Mỗi thẻ chủ đề hiển thị đầy đủ tên câu (tự xuống dòng không cắt chữ), đi kèm số thứ tự nổi bật và huy hiệu mức độ khó bên góc phải.
+    - Tích hợp nút hành động "✨ Ngẫu nhiên" trực tiếp lên thanh tiêu đề của nhóm danh sách chủ đề (đứng cạnh nút Switcher chuyển chế độ nhập tự do) giúp giao diện gọn gàng và logic hơn.
+    - Dọn dẹp hoàn toàn `listState` (LazyListState) cũ không dùng tới.
+    - Loại bỏ hoàn toàn cơ chế cuộn xuống cuối trang khi focus vào ô tìm kiếm (Search Box), tránh việc tự động cuộn không cần thiết và tăng trải nghiệm khi số lượng chủ đề lớn; chỉ giữ lại cơ chế cuộn cho ô nhập chủ đề tùy chỉnh (Custom Topic) ở đáy trang.
+- **Ghi chú kỹ thuật:**
+  - Danh sách thẻ dọc được xếp tuần tự trong Column chính giúp tương thích hoàn hảo với cơ chế đẩy bàn phím ảo của Android mà không bị xung đột cuộn lồng nhau.
+  - Đã chạy biên dịch và cài đặt thử nghiệm ứng dụng thành công trên Android.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 30 (2026-06-29)
+
+- **Mục tiêu:** Khắc phục triệt để lỗi giật lag (frame drop) trên màn hình chọn chủ đề khi số lượng chủ đề lớn hoặc khi người dùng thực hiện tìm kiếm (search).
+- **Hoạt động & Thay đổi:**
+  - **TopicSelectionContent.kt**:
+    - Chuyển đổi toàn bộ bố cục màn hình chọn chủ đề từ `Column` cuộn thông thường (`Modifier.verticalScroll`) thành một **`LazyColumn` duy nhất**.
+    - Đưa tất cả các phần tử tĩnh (Header, Target Level System, Carousel Card, Search Bar, Custom Topic Box) vào làm các phần tử `item` của `LazyColumn`.
+    - Đưa danh sách chủ đề được lọc (`filteredTopics`) vào làm `itemsIndexed` của `LazyColumn` với cơ chế khóa duy nhất (`key = { _, pair -> pair.second.name }`), đảm bảo chỉ những chủ đề đang thực sự hiển thị trên màn hình mới được Compose đo đạc và render.
+    - Cập nhật cơ chế cuộn tự động khi focus vào ô nhập chủ đề tùy chỉnh: chuyển từ `scrollState.animateScrollTo(scrollState.maxValue)` sang sử dụng `lazyListState.animateScrollToItem(totalItems - 1)`.
+- **Ghi chú kỹ thuật:**
+  - Loại bỏ hoàn toàn việc render đồng thời hàng ngàn phần tử tĩnh trong `Column`, chuyển sang cơ chế tái sử dụng của `LazyColumn` giúp ứng dụng mượt mà tuyệt đối (60 FPS) kể cả với danh sách 10,000 chủ đề.
+  - Đã chạy biên dịch và cài đặt thử nghiệm thành công ứng dụng trên thiết bị Android qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 31 (2026-06-29)
+
+- **Mục tiêu:** Khắc phục lỗi lọc cấp độ chủ đề (`getCompatibleLevels`): Khi chọn cấp độ nâng cao (ví dụ: C1, B2) thì màn hình không được chứa các chủ đề của các cấp độ thấp hơn (A1, A2, B1...).
+- **Hoạt động & Thay đổi:**
+  - **TopicItem.kt**: Đơn giản hóa hàm `getCompatibleLevels(activeLevel)` để chỉ trả về chính xác cấp độ đang được chọn `listOf(activeLevel)`. Loại bỏ toàn bộ logic gom cụm cấp độ tích lũy (cumulative) cũ.
+- **Ghi chú kỹ thuật:**
+  - Việc trả về duy nhất cấp độ được chọn giúp câu lệnh SQL `WHERE levelCode IN (...)` trong Repository lọc chính xác 1-1, loại bỏ triệt để tình trạng các chủ đề dễ làm tràn và loãng danh sách bài học nâng cao.
+  - Dự án build thành công và cập nhật lên thiết bị qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 32 (2026-06-29)
+
+- **Mục tiêu:** Gỡ bỏ icon trang trí (`School` icon) khỏi thẻ chủ đề đang chọn (`TopicCarouselCard`) để tránh việc nén không gian ngang gây ra lỗi rơi chữ (text wrapping) cho các tên chủ đề dài.
+- **Hoạt động & Thay đổi:**
+  - **TopicCarouselCard.kt**: Loại bỏ hoàn toàn khối `Box` chứa `Icons.Rounded.School` cùng với khoảng cách `Spacer(Modifier.width(16.dp))` phía trước tên chủ đề. Dọn dẹp sạch sẽ các import không còn sử dụng.
+- **Ghi chú kỹ thuật:**
+  - Loại bỏ icon giúp phần chữ tiêu đề chính có thêm hơn `60.dp` không gian ngang trên màn hình điện thoại. Nhờ đó, các chủ đề dài có thể dàn trải trọn vẹn mà không gặp hiện tượng tự động xuống dòng (rơi chữ) thô kệch.
+  - Dự án build thành công và cập nhật lên thiết bị qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 33 (2026-06-29)
+
+- **Mục tiêu:** Thống kê số lượng chủ đề có trong mỗi level và hiển thị số lượng này trực tiếp lên giao diện của các nút chọn cấp độ (`LevelChip`).
+- **Hoạt động & Thay đổi:**
+  - **TeacherViewModel.kt**: 
+    - Thêm trường `topicCounts: Map<String, Int>` vào class `TeacherUiState`.
+    - Cập nhật hàm `loadTopics` để truy vấn toàn bộ chủ đề thuộc hệ thống điểm hiện tại (ví dụ: tất cả các level của CEFR hoặc JLPT), thực hiện gom nhóm (`groupBy`) theo `levelCode` để tính toán số lượng chủ đề cho mỗi level và cập nhật vào state.
+  - **TargetLevelSystem.kt**:
+    - Nâng cấp Composable `LevelChip` để nhận thêm tham số `count: Int?`.
+    - Thiết kế lại layout của `LevelChip` chuyển từ `Box` căn giữa sang `Column` chứa: Tên cấp độ ở dòng trên (cỡ chữ 13.sp, Bold) và số lượng chủ đề ở dòng dưới (cỡ chữ 9.sp, Regular).
+    - Truyền số lượng từ `state.topicCounts[level]` vào tất cả các lời gọi `LevelChip` tương ứng với mỗi hệ thống điểm.
+- **Ghi chú kỹ thuật:**
+  - Logic tính toán số lượng diễn ra bất đồng bộ trên luồng IO (`dispatchers.io`) của `loadTopicsJob` nên đảm bảo giao diện luôn phản hồi mượt mà không bị nghẽn (UI Thread block).
+  - Dự án build thành công và cài đặt thành công qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 34 (2026-06-29)
+
+- **Mục tiêu:** Gỡ bỏ hoàn toàn nhãn/tag hiển thị level ở góc phải của thẻ chủ đề đang chọn và tất cả các thẻ chủ đề trong danh sách, tránh việc hiển thị thông tin lặp lại thừa thãi khi người dùng đã lọc theo cấp độ ở trên.
+- **Hoạt động & Thay đổi:**
+  - **TopicCarouselCard.kt**: Loại bỏ nhãn Surface badge hiển thị level Code (`currentTopic.levelCode`) bên góc phải của thẻ.
+  - **TopicSelectionContent.kt**:
+    - Loại bỏ nhãn Surface badge hiển thị level Code (`topic.levelCode`) nằm ở phía bên phải trong mỗi thẻ chủ đề thuộc danh sách `itemsIndexed`.
+    - Xóa bỏ hoàn toàn hàm helper `getLevelColor` không còn sử dụng.
+- **Ghi chú kỹ thuật:**
+  - Thay đổi này giúp giao diện trở nên sạch sẽ và thoáng mắt hơn, đồng thời tăng diện tích hiển thị cho văn bản của các chủ đề (đặc biệt hữu ích đối với các dòng chủ đề dài).
+  - Dự án build thành công và cập nhật lên thiết bị Android thông qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 35 (2026-06-29)
+
+- **Mục tiêu:** Tự động cuộn khung tìm kiếm (`Search Bar`) lên trên cùng của màn hình khi người dùng bấm vào (focus) để nhập liệu, tránh tình trạng keyboard đẩy nút "Bắt đầu bài học" lên che khuất thanh tìm kiếm.
+- **Hoạt động & Thay đổi:**
+  - **TopicSelectionContent.kt**: Bổ sung hiệu ứng cuộn tự động bằng `LaunchedEffect(isSearchFocused)`. Khi `isSearchFocused` chuyển sang `true`, danh sách `LazyColumn` sẽ thực hiện cuộn mượt mà đưa ô tìm kiếm (ở vị trí phần tử index 6) lên đầu màn hình (`lazyListState.animateScrollToItem(6)`).
+- **Ghi chú kỹ thuật:**
+  - Việc cuộn ô tìm kiếm lên đầu danh sách đảm bảo nó nằm ở khoảng trống an toàn hoàn toàn phía trên bàn phím ảo và nút Bắt đầu, cải thiện tối đa UX nhập liệu.
+  - Dự án build thành công và cài đặt thành công qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 36 (2026-06-29)
+
+- **Mục tiêu:** Điều chỉnh vị trí cuộn khi người dùng click vào thanh tìm kiếm (`Search Bar`), thay vì cuộn hẳn lên kịch trần (index 6) thì chỉ cuộn lên một khoảng vừa phải (index 1 kèm offset 50.dp) để có bố cục trực quan và tự nhiên hơn.
+- **Hoạt động & Thay đổi:**
+  - **TopicSelectionContent.kt**: Thay đổi tham số cuộn của `lazyListState.animateScrollToItem` từ `index = 6` thành `index = 1` kết hợp với `scrollOffset` trị giá `50.dp` (được quy đổi ra pixel thông qua `density`).
+- **Ghi chú kỹ thuật:**
+  - Index 1 (vị trí Spacer bên dưới tiêu đề chào mừng) kèm offset `50.dp` giúp định vị thanh tìm kiếm được đẩy lên nằm một phần ở khu vực phía trên của danh sách, đảm bảo vừa hiển thị rõ ràng trước bàn phím ảo vừa giữ lại một phần ngữ cảnh tiêu đề trang.
+  - Dự án build thành công và cập nhật lên thiết bị Android thông qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 37 (2026-06-29)
+
+- **Mục tiêu:** Gỡ bỏ khoảng cách offset `50.dp` để màn hình chỉ cuộn chính xác về phần tử index 1 khi người dùng click vào thanh tìm kiếm.
+- **Hoạt động & Thay đổi:**
+  - **TopicSelectionContent.kt**: Loại bỏ việc tính toán và sử dụng `scrollOffset` của density. Thay vào đó, gọi trực tiếp `lazyListState.animateScrollToItem(index = 1)` khi `isSearchFocused` đổi sang `true`. Dọn dẹp sạch sẽ import `LocalDensity` không sử dụng.
+- **Ghi chú kỹ thuật:**
+  - Việc cuộn chính xác về phần tử index 1 (Spacer dưới tiêu đề chào mừng) mang lại giao diện cuộn sạch, tự nhiên, và định vị thanh tìm kiếm hiển thị trọn vẹn mà không bị che khuất.
+  - Dự án build thành công và cập nhật lên thiết bị Android thông qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 38 (2026-06-29)
+
+- **Mục tiêu:** Khôi phục lại logic lọc cấp độ lũy kế (cumulative) của chủ đề. Đảm bảo khi người dùng chọn cấp độ cao hơn (ví dụ: C1/C2 hoặc N1/N2), hệ thống vẫn hiển thị đầy đủ các chủ đề của cấp độ thấp hơn (A1, A2, N5, N4...) để luyện tập, chỉ thay đổi văn phong/độ phức tạp của bài viết do AI sinh ra.
+- **Hoạt động & Thay đổi:**
+  - **TopicItem.kt**: Khôi phục cấu trúc của hàm `getCompatibleLevels(activeLevel)` sử dụng mệnh đề `when` để trả về danh sách lũy kế từ cấp độ thấp nhất lên cấp độ đang chọn tương ứng với mỗi hệ thống điểm (CEFR, TOEIC, JLPT, HSK, TESTDAF, TOPIK).
+- **Ghi chú kỹ thuật:**
+  - Logic này cho phép người học nâng cao có thể ôn tập lại các chủ đề cơ bản (như Đặt món ăn, Phòng ngủ...) nhưng dưới góc độ ngữ pháp và từ vựng cao cấp, đúng tinh thần "độ khó của chủ đề dựa trên văn phong chứ không giới hạn nội dung".
+  - Dự án build thành công và cập nhật lên thiết bị Android thông qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 39 (2026-06-29)
+
+- **Mục tiêu:** Đồng bộ số lượng hiển thị trên thang chọn mục tiêu (`LevelChip`) khớp với số lượng chủ đề lũy kế mà cấp độ đó chứa.
+- **Hoạt động & Thay đổi:**
+  - **TeacherViewModel.kt**: Thay đổi logic tính toán `topicCounts` trong `loadTopics`. Sử dụng hàm `getCompatibleLevels(level)` để cộng dồn tổng số lượng chủ đề của level hiện tại cùng toàn bộ các level cấp thấp hơn (cumulative sum), thay vì chỉ đếm số chủ đề thuộc riêng level đó.
+- **Ghi chú kỹ thuật:**
+  - Nhờ sự thay đổi này, con số hiển thị trên mỗi nút chip level (ví dụ: C1 hiển thị tổng số lượng 120 chủ đề bao gồm cả A1, A2, B1, B2) sẽ khớp hoàn toàn 100% với số lượng phần tử thực tế xuất hiện ở danh sách hiển thị khi người học chọn cấp độ đó.
+  - Dự án build thành công và cập nhật lên thiết bị Android thông qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 40 (2026-06-29)
+
+- **Mục tiêu:** Sắp xếp danh sách các chủ đề từ cấp độ cao đến cấp độ thấp (theo level của hệ thống đang chọn) để người học ở trình độ cao nhìn thấy các chủ đề đúng trình độ của mình ở trên đầu danh sách.
+- **Hoạt động & Thay đổi:**
+  - **TeacherViewModel.kt**: Sắp xếp lại danh sách chủ đề được tải về (`rawList`) trước khi gán vào `topics` trong UI State. Logic sử dụng `compareByDescending<TopicItem> { compatible.indexOf(it.levelCode) }` để đưa các chủ đề có level tương đồng ở mức cao lên đầu, sau đó sắp xếp theo ID tăng dần (`.thenBy { it.id }`).
+- **Ghi chú kỹ thuật:**
+  - Logic sắp xếp theo thứ tự giảm dần của index level trong danh sách `compatible` đảm bảo thứ tự luôn chính xác với bất kỳ hệ thống phân loại nào (A1 -> C2, JLPT N5 -> N1, TOEIC 300 -> 900). Ví dụ: khi chọn B1, các chủ đề của B1 sẽ hiển thị trước, sau đó mới đến A2 và A1.
+  - Dự án build thành công và cập nhật lên thiết bị Android thông qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 41 (2026-06-29)
+
+- **Mục tiêu:** Thêm một lớp phủ gradient mờ theo chiều dọc (vertical gradient overlay) bên dưới/phía sau nút "Bắt đầu bài học" để che mờ các thẻ chủ đề cuộn bên dưới nút, mang lại hiệu ứng thị giác mượt mà và cao cấp hơn.
+- **Hoạt động & Thay đổi:**
+  - **TopicSelectionContent.kt**: Import `androidx.compose.ui.graphics.Brush`. Bổ sung một `Box` overlay với chiều cao `100.dp` được ghim ở `Alignment.BottomCenter` ngay phía sau nút bấm. Lớp phủ này sử dụng `Brush.verticalGradient` chuyển tiếp từ `Color.Transparent` sang màu nền chủ đạo của hệ thống `colors.background` (độ mờ alpha 0.8f -> 1.0f).
+- **Ghi chú kỹ thuật:**
+  - Lớp phủ gradient đảm bảo che phủ mịn các phần tử cuộn ở dưới, tạo chiều sâu cho giao diện người dùng và giúp nút hành động nổi bật rõ ràng, không bị rối văn bản nền.
+  - Dự án build thành công và cập nhật lên thiết bị Android thông qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 42 (2026-06-29)
+
+- **Mục tiêu:** Đồng bộ giao diện cao cấp: Áp dụng lớp phủ gradient mờ vertical tương tự dưới thanh nút bấm nổi cho toàn bộ các màn hình chính còn lại (Màn hình Luyện tập bài học & Màn hình Xem kết quả phản hồi).
+- **Hoạt động & Thay đổi:**
+  - **LessonContent.kt**: Import `androidx.compose.ui.graphics.Brush`. Thêm `Box` gradient overlay cao `100.dp` ghim ở bottom trước thanh chứa nút bấm chức năng (Previous Sentence, Check, Next).
+  - **FeedbackContent.kt**: Import `androidx.compose.ui.graphics.Brush`. Thêm `Box` gradient overlay cao `100.dp` ghim ở bottom trước thanh chứa nút Làm lại & Bài mới.
+- **Ghi chú kỹ thuật:**
+  - Việc phủ gradient mờ đồng nhất ở đáy cho toàn bộ màn hình giúp app mang phong cách thiết kế trọn vẹn, thống nhất và bảo toàn tính toàn vẹn thông tin khi cuộn nội dung ở mọi nơi.
+  - Dự án build thành công và cập nhật lên thiết bị Android thông qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.
-

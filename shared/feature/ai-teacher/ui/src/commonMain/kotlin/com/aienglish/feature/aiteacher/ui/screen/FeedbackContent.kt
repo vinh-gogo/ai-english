@@ -17,8 +17,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontStyle
@@ -92,6 +92,23 @@ fun FeedbackContent(
             Spacer(Modifier.height(80.dp))
             Spacer(Modifier.navigationBarsPadding())
         }
+
+        // ── Gradient Overlay behind the button ──
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp)
+                .align(Alignment.BottomCenter)
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Transparent,
+                            colors.background.copy(alpha = 0.8f),
+                            colors.background
+                        )
+                    )
+                )
+        )
 
         // Reset and Retry buttons
         Box(

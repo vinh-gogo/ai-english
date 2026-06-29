@@ -20,10 +20,11 @@ import androidx.compose.runtime.*
 import androidx.compose.animation.core.*
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -393,6 +394,23 @@ fun LessonContent(
             Spacer(Modifier.height(80.dp)) // Extra space so content can scroll past the floating footer
             Spacer(Modifier.navigationBarsPadding())
         }
+
+        // ── Gradient Overlay behind the button ──
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp)
+                .align(Alignment.BottomCenter)
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Transparent,
+                            colors.background.copy(alpha = 0.8f),
+                            colors.background
+                        )
+                    )
+                )
+        )
 
         // Pinned bottom action
         Box(
