@@ -144,3 +144,51 @@ val BS_ErrorContainer = Color(0xFFFFDAD6)
 val BS_OnError        = Color(0xFF93000A)
 val BS_Correct        = Color(0xFF2E7D32)
 val BS_Warning        = Color(0xFF7A5900)
+
+
+// ══════════════════════════════════════════════════════════════════════════
+//  THEME 4 — Nordic Slate (Slate Blue / Snow White)
+// ══════════════════════════════════════════════════════════════════════════
+
+// Primary (Slate)
+val SlateDeep      = Color(0xFF162839)
+val SlatePrimary   = Color(0xFF2C3E50)
+val SlateLight     = Color(0xFF506071)
+val SlatePale      = Color(0xFFB5C8DF)
+val SlateFixedDim  = Color(0xFFD1E4FB)
+val SlateDarkest   = Color(0xFF091D2E)
+val SlateContainer = Color(0xFF96A9BE)
+
+// Surfaces — Nordic Slate
+val NS_Surface                  = Color(0xFFF7FAF9)
+val NS_SurfaceDim               = Color(0xFFD7DBDA)
+val NS_SurfaceContainerLow      = Color(0xFFF1F4F3)
+val NS_SurfaceContainer         = Color(0xFFEBEEED)
+val NS_SurfaceContainerHigh     = Color(0xFFE6E9E8)
+val NS_SurfaceContainerHighest  = Color(0xFFE0E3E2)
+val NS_SurfaceWhite             = Color(0xFFFFFFFF)
+
+// On-Surface text — Nordic Slate
+val NS_OnSurface        = Color(0xFF181C1C)
+val NS_OnSurfaceVariant = Color(0xFF43474C)
+val NS_InverseSurface   = Color(0xFF2D3131)
+val NS_InverseOnSurface = Color(0xFFEEF1F0)
+val NS_Outline          = Color(0xFF74777D)
+val NS_OutlineVariant   = Color(0xFFC4C6CD)
+
+// Secondary — Nordic Slate (Mist)
+val NS_Secondary          = Color(0xFF506071)
+val NS_SecondaryContainer = Color(0xFFD3E4F8)
+val NS_OnSecondaryContainer = Color(0xFF566677)
+
+// Tertiary — Nordic Slate (Arctic Blue)
+val NS_Tertiary           = Color(0xFF002A3C)
+val NS_TertiaryContainer  = Color(0xFF1C4053)
+val NS_OnTertiaryContainer = Color(0xFF89ABC2)
+
+// Semantic — Nordic Slate
+val NS_Error          = Color(0xFFBA1A1A)
+val NS_ErrorContainer = Color(0xFFFFDAD6)
+val NS_OnError        = Color(0xFF93000A)
+val NS_Correct        = Color(0xFF2E7D32)
+val NS_Warning        = Color(0xFF7A5900)

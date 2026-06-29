@@ -11,7 +11,8 @@ import androidx.compose.ui.graphics.Color
 enum class AppTheme(val displayName: String, val emoji: String) {
     SUNSET_WARMTH("Sunset Warmth", "🌅"),
     NATURE_MINT("Nature Mint", "🌿"),
-    BERRY_SORBET("Berry Sorbet", "🍓")
+    BERRY_SORBET("Berry Sorbet", "🍓"),
+    NORDIC_SLATE("Nordic Slate", "🧱")
 }
 
 // ── App Color Tokens ──────────────────────────────────────────────────────
@@ -187,6 +188,49 @@ fun berrySorbetColors() = AppColors(
     m3OnSurfaceVariant     = BS_OnSurfaceVariant
 )
 
+// ── Nordic Slate Factory ─────────────────────────────────────────────────────────
+fun nordicSlateColors() = AppColors(
+    accent                 = SlateDeep,
+    accentHighlight        = SlatePrimary,
+    accentLight            = SlateFixedDim,
+    accentDark             = SlateDarkest,
+    background             = NS_Surface,
+    surface                = NS_SurfaceWhite,
+    surfaceElevated        = NS_SurfaceContainerLow,
+    surfaceContainer       = NS_SurfaceContainer,
+    surfaceContainerHigh   = NS_SurfaceContainerHigh,
+    surfaceContainerHighest = NS_SurfaceContainerHighest,
+    surfaceDim             = NS_SurfaceDim,
+    mainText               = NS_OnSurface,
+    mutedText              = NS_OnSurfaceVariant,
+    hintText               = NS_Outline,
+    border                 = NS_OutlineVariant,
+    inverseSurface         = NS_InverseSurface,
+    inverseOnSurface       = NS_InverseOnSurface,
+    secondaryContainer     = NS_SecondaryContainer,
+    onSecondaryContainer   = NS_OnSecondaryContainer,
+    tertiaryContainer      = NS_TertiaryContainer,
+    onTertiaryContainer    = NS_OnTertiaryContainer,
+    correct                = NS_Correct,
+    error                  = NS_Error,
+    errorContainer         = NS_ErrorContainer,
+    warning                = NS_Warning,
+    m3Primary              = SlateDeep,
+    m3PrimaryContainer     = SlatePrimary,
+    m3OnPrimaryContainer   = SlateContainer,
+    m3Secondary            = NS_Secondary,
+    m3SecondaryContainer   = NS_SecondaryContainer,
+    m3OnSecondaryContainer = NS_OnSecondaryContainer,
+    m3Tertiary             = NS_Tertiary,
+    m3TertiaryContainer    = NS_TertiaryContainer,
+    m3OnTertiaryContainer  = NS_OnTertiaryContainer,
+    m3Outline              = NS_Outline,
+    m3OutlineVariant       = NS_OutlineVariant,
+    m3InversePrimary       = SlatePale,
+    m3SurfaceVariant       = NS_SurfaceContainerHighest,
+    m3OnSurfaceVariant     = NS_OnSurfaceVariant
+)
+
 // ── Composition Locals ────────────────────────────────────────────────────
 val LocalAppColors = staticCompositionLocalOf<AppColors> { sunsetWarmthColors() }
 val LocalAppTheme  = staticCompositionLocalOf { AppTheme.SUNSET_WARMTH }
@@ -209,6 +253,7 @@ fun AIEnglishTheme(
         AppTheme.SUNSET_WARMTH -> sunsetWarmthColors()
         AppTheme.NATURE_MINT   -> natureMintColors()
         AppTheme.BERRY_SORBET  -> berrySorbetColors()
+        AppTheme.NORDIC_SLATE  -> nordicSlateColors()
     }
 
     val lightScheme = lightColorScheme(

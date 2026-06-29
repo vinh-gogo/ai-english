@@ -17,6 +17,8 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 8** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Sửa lỗi lịch sử không ghi nhận: migration `user_id` column (4.sqm), auto schema migration Android + Desktop. | Hoàn thành |
 | **Session 9** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Refactor: loại bỏ JSON blob storage, chuyển sang structured DB tables (lesson_question, lesson_feedback, alternatives). | Hoàn thành |
 | **Session 10** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Squash toàn bộ migration files vào base schema, chuẩn hóa DB filename thành `ai_english.db` duy nhất. | Hoàn thành |
+| **Session 11** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Cập nhật màu sắc Sunset Warmth, fix SeigaihaBackground, thêm tính năng chuyển đổi giao diện (Theme Switcher) trong Settings với 2 theme: Sunset Warmth & Nature Mint. | Hoàn thành |
+| **Session 12** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Thêm theme Berry Sorbet (Berry Red / Blush Cream) — tổng cộng 3 themes có thể chuyển đổi. | Hoàn thành |
 
 
 ---

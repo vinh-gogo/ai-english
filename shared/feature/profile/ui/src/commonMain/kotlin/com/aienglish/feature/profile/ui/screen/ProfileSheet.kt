@@ -1082,6 +1082,12 @@ private fun ThemeOptionCard(
             androidx.compose.ui.graphics.Color(0xFFFFF8F7),
             androidx.compose.ui.graphics.Color(0xFFFEB2C0)
         )
+        AppTheme.NORDIC_SLATE -> listOf(
+            androidx.compose.ui.graphics.Color(0xFF162839),
+            androidx.compose.ui.graphics.Color(0xFF2C3E50),
+            androidx.compose.ui.graphics.Color(0xFFF7FAF9),
+            androidx.compose.ui.graphics.Color(0xFFB5C8DF)
+        )
     }
 
     Row(
@@ -1120,6 +1126,7 @@ private fun ThemeOptionCard(
                     AppTheme.SUNSET_WARMTH -> "Ấm áp • Terracotta & Kem"
                     AppTheme.NATURE_MINT   -> "Tươi mát • Xanh Mint & Trắng"
                     AppTheme.BERRY_SORBET  -> "Năng động • Berry Đỏ & Kem Hồng"
+                    AppTheme.NORDIC_SLATE  -> "Tối giản • Slate Xám & Tuyết"
                 },
                 fontSize = 12.sp,
                 color = colors.mutedText
