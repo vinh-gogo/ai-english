@@ -495,5 +495,18 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 
+---
+
+### 🟢 Session 21 (2026-06-29)
+
+- **Mục tiêu:** Sửa lỗi giao diện hiển thị nhãn "Kết quả của bạn" trong màn hình Xem lại kết quả (Feedback Content).
+- **Hoạt động & Thay đổi:**
+  - **FeedbackContent.kt:** Loại bỏ khoảng trắng (`Spacer(Modifier.height(20.dp))`) dư thừa phía trên nhãn "Kết quả của bạn". Khoảng trắng dư thừa này được sinh ra do việc xóa Badge điểm số ở phần trước nhưng lại quên xóa Spacer đi kèm.
+  - Tăng kích thước font chữ của nhãn "Kết quả của bạn" từ `17.sp` lên `24.sp` để nổi bật hơn, đúng với vai trò là một Tiêu đề chính.
+- **Ghi chú kỹ thuật:**
+  - Đã build và cài đặt thành công bản Android mới lên thiết bị, push source code lên Github.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.

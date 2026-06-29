@@ -618,6 +618,19 @@ class TeacherViewModel(
     }
 
     fun onDismissError() = setState { copy(error = null) }
+    
+    fun onRetryCurrentLesson() {
+        setState {
+            copy(
+                userAnswers = emptyMap(),
+                checkedAnswers = emptySet(),
+                currentSentenceIndex = 0,
+                feedback = null,
+                error = null
+            )
+        }
+    }
+
     fun onReset() {
         val target = prefs.getLanguageTarget()
         val expectedType = when (target) {

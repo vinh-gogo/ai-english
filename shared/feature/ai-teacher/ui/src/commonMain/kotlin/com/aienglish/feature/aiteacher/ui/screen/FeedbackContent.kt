@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.automirrored.rounded.ArrowForward
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -92,7 +93,7 @@ fun FeedbackContent(
             Spacer(Modifier.navigationBarsPadding())
         }
 
-        // Reset button
+        // Reset and Retry buttons
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -101,16 +102,36 @@ fun FeedbackContent(
                 .navigationBarsPadding()
                 .padding(bottom = 14.dp)
         ) {
-            Button(
-                onClick = { viewModel.onReset() },
+            Row(
                 modifier = Modifier.fillMaxWidth().height(48.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colors.accent),
-                border = BorderStroke(2.dp, colors.border),
-                shape = CircleShape
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Icon(Icons.Rounded.Refresh, null)
-                Spacer(Modifier.width(8.dp))
-                Text("Luyện tập bài mới", fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+                Button(
+                    onClick = { viewModel.onRetryCurrentLesson() },
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colors.surface,
+                        contentColor = colors.mainText
+                    ),
+                    border = BorderStroke(1.dp, colors.border),
+                    shape = CircleShape
+                ) {
+                    Icon(Icons.Rounded.Refresh, contentDescription = "Làm lại")
+                    Spacer(Modifier.width(8.dp))
+                    Text("Làm lại", fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+                }
+
+                Button(
+                    onClick = { viewModel.onReset() },
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
+                    colors = ButtonDefaults.buttonColors(containerColor = colors.accent),
+                    border = BorderStroke(1.dp, colors.border),
+                    shape = CircleShape
+                ) {
+                    Icon(Icons.AutoMirrored.Rounded.ArrowForward, contentDescription = "Bài mới")
+                    Spacer(Modifier.width(8.dp))
+                    Text("Bài mới", fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+                }
             }
         }
     }
