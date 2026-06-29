@@ -51,6 +51,8 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 42** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Áp dụng lớp phủ gradient mờ vertical tương tự bên dưới nút/phím chức năng của tất cả các màn hình chính (Luyện tập và Xem kết quả). | Hoàn thành |
 | **Session 43** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Đóng gói mã nguồn lên Git và thêm lớp phủ gradient mờ vertical ở đầu trang (header) phía sau thanh công cụ trên cùng. | Hoàn thành |
 | **Session 44** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Sửa lỗi mất trạng thái chọn level và nội dung input đã nhập trên giao diện khi xem lại lịch sử bài học. | Hoàn thành |
+| **Session 45** | 2026-06-30 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Thêm hệ thống học tiếng Việt (VIET) cho người nói tiếng Anh: 3 cấp Tiểu học / Trung học / Đại học, 400 chủ đề đa lĩnh vực, full infrastructure (PromptProvider, ViewModel, UI, Settings, DB seeding). | Hoàn thành |
+| **Session 46** | 2026-06-30 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Mở rộng Vietnamese topics từ 300 lên 400: thêm 100 chủ đề mới bao quát IT, âm nhạc, thể thao, MXH, nội dung số, kinh doanh, thời trang, sức khỏe tâm thần, khoa học, pháp lý,... phân bổ 3 cấp. | Hoàn thành |
 
 ---
 
@@ -464,6 +466,46 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
   - **Hành động**: Đã hoàn tác toàn bộ thay đổi đối với `chinese_topics.json` và `TeacherViewModel.kt`, đưa các chủ đề tiếng Trung trở về trạng thái sạch sẽ nguyên bản.
 - **Ghi chú kỹ thuật:**
   - Git repository được giữ ở trạng thái sạch sẽ và đồng bộ hoàn toàn với bản gốc.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 45 (2026-06-30)
+
+- **Mục tiêu:** Thêm hệ thống học tiếng Việt cho người nói tiếng Anh (VIET system), với 3 cấp học: Tiểu học, Trung học, Đại học.
+- **Hoạt động & Thay đổi:**
+  - **VietnamesePromptProvider.kt:** Tạo mới — AI dạy tiếng Việt bằng tiếng Anh, implement đầy đủ tất cả abstract members của `BaseLanguagePromptProvider` (14 properties/functions).
+  - **PromptProviderFactory.kt:** Thêm `TIEU_HOC/TRUNG_HOC/DAI_HOC → VietnamesePromptProvider`.
+  - **LevelType.VIET:** Thêm vào tất cả các `when` block trong `TeacherViewModel`, `LessonContent`, `TargetLevelSystem`, `TopicSelectionContent`, `LanguageSettingsSection`, `HistoryViewModel`.
+  - **JsonResourceReader + Android/Desktop readers:** Thêm `readVietnameseTopicsEnJson()`.
+  - **TopicRepositoryImpl:** Seed + EN locale overlay cho VIET system.
+  - **learning_systems.json + learning_levels.json:** Thêm VIET system entries.
+  - **en/vietnamese_topics.json:** 300 topics ban đầu (100/cấp, IDs 7000–7299).
+  - **LanguageSettingsSection.kt:** Thêm "Tiếng Việt" vào dropdown chọn ngôn ngữ đích.
+  - **HistoryViewModel.kt:** Nhận diện `TIEU_HOC/TRUNG_HOC/DAI_HOC → "vi"`.
+  - **Seed check:** Cập nhật `ensureDatabaseSeeded()` để detect VIET topics < 400 và tự động reseed.
+- **Ghi chú kỹ thuật:**
+  - Fix 3 compile errors: missing abstract members, missing `when` branch VIET, syntax error trong `setState{}` block.
+  - BUILD SUCCESSFUL, đã cài lên `CPH2781` qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 46 (2026-06-30)
+
+- **Mục tiêu:** Mở rộng Vietnamese topics từ 300 lên 400 (thêm 100 chủ đề đa lĩnh vực), bao phủ đầy đủ các lĩnh vực còn thiếu.
+- **Hoạt động & Thay đổi:**
+  - **en/vietnamese_topics.json:** Thêm 100 chủ đề mới (IDs 7300–7399) phân bổ đồng đều 3 cấp:
+    - **Tiểu học (+24):** Âm nhạc, thể thao, nhắn tin cơ bản, smartphone, vẽ/nấu ăn, khoa học đơn giản, bảo tàng, thư viện, vườn thú, lễ hội, địa lý Việt Nam, thú cưng, TV thiếu nhi...
+    - **Trung học (+36):** V-pop, thể thao ngôi sao, Zalo/Messenger, slang/emoji, TikTok/YouTube, kiếm tiền MXH, freelance, IT/lập trình, kinh doanh/văn phòng, nhiếp ảnh, thời trang, sức khỏe tâm thần, gym, thiền, tài chính cá nhân, đầu tư, tình nguyện, trao đổi ngôn ngữ, trang trí nhà, e-learning, phim Việt, nhà hát, STEM, nhà đất...
+    - **Đại học (+40):** Ngành IT/outsourcing, an ninh mạng, blockchain/crypto, AI/data science, y tế/dược, tâm lý học, kiến trúc, nông nghiệp công nghệ cao, vũ trụ, luật báo chí, legal tech, kinh tế hành vi, nhân học, thời trang quốc tế, lý thuyết phim, quản trị công/e-gov, smart mobility, y học cổ truyền, luật hiến pháp so sánh, tài chính quốc tế, bất động sản đầu tư, chuỗi cung ứng, quan hệ quốc tế, nghiên cứu giới tính, triết học môi trường, tương lai công việc...
+  - **Auto-reseed:** `ensureDatabaseSeeded()` tự động reseed khi tổng VIET topics < 400 (không cần xóa data hay reinstall).
+  - Sync toàn bộ sang `composeApp` resources.
+- **Ghi chú kỹ thuật:**
+  - BUILD SUCCESSFUL (13s), đã cài lên `CPH2781` qua ADB.
+  - Tổng chủ đề VIET: **400** (Tiểu học: 124, Trung học: 136, Đại học: 140).
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 
