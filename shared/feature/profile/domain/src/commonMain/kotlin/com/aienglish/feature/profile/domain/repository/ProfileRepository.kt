@@ -16,6 +16,9 @@ interface ProfileRepository {
     suspend fun updateLanguageNative(lang: String)
     suspend fun updatePaidStatus(paid: Boolean)
     suspend fun updateAiResponseLength(length: String)
+    suspend fun getNovitaApiKey(): String
+    suspend fun saveNovitaApiKey(key: String)
+    suspend fun updateApiProvider(provider: String)
     
     suspend fun clearProfile()
 }

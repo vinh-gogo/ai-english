@@ -7,5 +7,6 @@ data class UserProfile(
     val languageNative: String,
     val languageTarget: String,
     val isPaid: Boolean,
-    val aiResponseLength: String
+    val aiResponseLength: String,
+    val apiProvider: String = "gemini"
 )

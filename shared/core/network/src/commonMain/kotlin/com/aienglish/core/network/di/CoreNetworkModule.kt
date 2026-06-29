@@ -1,6 +1,7 @@
 package com.aienglish.core.network.di
 
 import com.aienglish.core.network.client.GeminiClient
+import com.aienglish.core.network.client.NovitaClient
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -26,4 +27,5 @@ val coreNetworkModule = module {
         }
     }
     single { GeminiClient(get()) }
+    single { NovitaClient(get()) }
 }

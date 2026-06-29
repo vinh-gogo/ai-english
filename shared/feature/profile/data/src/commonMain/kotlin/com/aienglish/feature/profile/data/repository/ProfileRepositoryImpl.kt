@@ -20,7 +20,8 @@ class ProfileRepositoryImpl(
         prefs.languageNativeFlow,
         prefs.languageTargetFlow,
         prefs.isPaidFlow,
-        prefs.aiResponseLengthFlow
+        prefs.aiResponseLengthFlow,
+        prefs.apiProviderFlow
     ) { array ->
         UserProfile(
             name = array[0] as String?,
@@ -29,7 +30,8 @@ class ProfileRepositoryImpl(
             languageNative = array[3] as String,
             languageTarget = array[4] as String,
             isPaid = array[5] as Boolean,
-            aiResponseLength = array[6] as String
+            aiResponseLength = array[6] as String,
+            apiProvider = array[7] as String
         )
     }
 
@@ -67,6 +69,18 @@ class ProfileRepositoryImpl(
 
     override suspend fun updateAiResponseLength(length: String) = withContext(dispatchers.io) {
         prefs.saveAiResponseLength(length)
+    }
+
+    override suspend fun getNovitaApiKey(): String = withContext(dispatchers.io) {
+        prefs.getNovitaApiKey()
+    }
+
+    override suspend fun saveNovitaApiKey(key: String) = withContext(dispatchers.io) {
+        prefs.saveNovitaApiKey(key)
+    }
+
+    override suspend fun updateApiProvider(provider: String) = withContext(dispatchers.io) {
+        prefs.saveApiProvider(provider)
     }
 
     override suspend fun clearProfile() = withContext(dispatchers.io) {

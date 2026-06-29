@@ -15,4 +15,7 @@ val profileApplicationModule = module {
     factory { ClearProfileUseCase(get()) }
     factory { UpdatePaidStatusUseCase(get()) }
     factory { UpdateAiResponseLengthUseCase(get()) }
+    factory { GetNovitaApiKeyUseCase(get()) }
+    factory { SaveNovitaApiKeyUseCase(get()) }
+    factory { UpdateApiProviderUseCase(get()) }
 }

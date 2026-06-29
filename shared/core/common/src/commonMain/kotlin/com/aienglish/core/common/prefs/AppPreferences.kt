@@ -19,6 +19,10 @@ interface AppPreferences {
     fun setPaid(value: Boolean)
     fun getAiResponseLength(): String
     fun saveAiResponseLength(length: String)
+    fun getApiProvider(): String
+    fun saveApiProvider(provider: String)
+    fun getNovitaApiKey(): String
+    fun saveNovitaApiKey(key: String)
     fun clear()
 
     // Reactive preference streams
@@ -29,4 +33,6 @@ interface AppPreferences {
     val userEmailFlow: Flow<String?>
     val isSignedInFlow: Flow<Boolean>
     val aiResponseLengthFlow: Flow<String>
+    val apiProviderFlow: Flow<String>
+    val novitaApiKeyFlow: Flow<String>
 }

@@ -30,6 +30,12 @@ class DesktopAppPreferences(
     private val _aiResponseLength = MutableStateFlow(prefs.get("ai_response_length", "normal"))
     override val aiResponseLengthFlow = _aiResponseLength.asStateFlow()
 
+    private val _apiProvider = MutableStateFlow(prefs.get("api_provider", "gemini"))
+    override val apiProviderFlow = _apiProvider.asStateFlow()
+
+    private val _novitaApiKey = MutableStateFlow(secureStorage.getSecret("novita_api_key"))
+    override val novitaApiKeyFlow = _novitaApiKey.asStateFlow()
+
     override fun getApiKey(): String {
         val secured = secureStorage.getSecret("api_key")
         if (secured.isNotEmpty()) return secured
@@ -47,8 +53,34 @@ class DesktopAppPreferences(
         secureStorage.saveSecret("api_key", key)
     }
 
-    override fun getUserName() = prefs.get("user_name", null).takeIf { !it.isNullOrEmpty() }
+    override fun getApiProvider() = prefs.get("api_provider", "gemini")
 
+    override fun saveApiProvider(provider: String) {
+        prefs.put("api_provider", provider)
+        _apiProvider.value = provider
+    }
+
+    override fun getNovitaApiKey(): String {
+        val secured = secureStorage.getSecret("novita_api_key")
+        if (secured.isNotEmpty()) return secured
+
+        val legacy = prefs.get("novita_api_key", "")
+        if (legacy.isNotEmpty()) {
+            secureStorage.saveSecret("novita_api_key", legacy)
+            prefs.remove("novita_api_key")
+            _novitaApiKey.value = legacy
+            return legacy
+        }
+        return ""
+    }
+
+    override fun saveNovitaApiKey(key: String) {
+        secureStorage.saveSecret("novita_api_key", key)
+        _novitaApiKey.value = key
+    }
+
+    override fun getUserName() = prefs.get("user_name", null).takeIf { !it.isNullOrEmpty() }
+    
     override fun saveUserName(name: String?) {
         if (name != null) prefs.put("user_name", name) else prefs.remove("user_name")
         _userName.value = name
@@ -99,6 +131,7 @@ class DesktopAppPreferences(
     override fun clear() {
         prefs.clear()
         secureStorage.deleteSecret("api_key")
+        secureStorage.deleteSecret("novita_api_key")
         _userName.value = null
         _userEmail.value = null
         _isSignedIn.value = false
@@ -106,5 +139,7 @@ class DesktopAppPreferences(
         _languageTarget.value = "en"
         _isPaid.value = false
         _aiResponseLength.value = "normal"
+        _apiProvider.value = "gemini"
+        _novitaApiKey.value = ""
     }
 }

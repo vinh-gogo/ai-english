@@ -31,6 +31,12 @@ class AndroidAppPreferences(
     private val _aiResponseLength = MutableStateFlow(prefs.getString("ai_response_length", "normal") ?: "normal")
     override val aiResponseLengthFlow = _aiResponseLength.asStateFlow()
 
+    private val _apiProvider = MutableStateFlow(prefs.getString("api_provider", "gemini") ?: "gemini")
+    override val apiProviderFlow = _apiProvider.asStateFlow()
+
+    private val _novitaApiKey = MutableStateFlow(secureStorage.getSecret("novita_api_key"))
+    override val novitaApiKeyFlow = _novitaApiKey.asStateFlow()
+
     override fun getApiKey(): String {
         val secured = secureStorage.getSecret("api_key")
         if (secured.isNotEmpty()) return secured
@@ -46,6 +52,32 @@ class AndroidAppPreferences(
 
     override fun saveApiKey(key: String) {
         secureStorage.saveSecret("api_key", key)
+    }
+
+    override fun getApiProvider() = prefs.getString("api_provider", "gemini") ?: "gemini"
+
+    override fun saveApiProvider(provider: String) {
+        prefs.edit().putString("api_provider", provider).apply()
+        _apiProvider.value = provider
+    }
+
+    override fun getNovitaApiKey(): String {
+        val secured = secureStorage.getSecret("novita_api_key")
+        if (secured.isNotEmpty()) return secured
+
+        val legacy = prefs.getString("novita_api_key", "") ?: ""
+        if (legacy.isNotEmpty()) {
+            secureStorage.saveSecret("novita_api_key", legacy)
+            prefs.edit().remove("novita_api_key").apply()
+            _novitaApiKey.value = legacy
+            return legacy
+        }
+        return ""
+    }
+
+    override fun saveNovitaApiKey(key: String) {
+        secureStorage.saveSecret("novita_api_key", key)
+        _novitaApiKey.value = key
     }
 
     override fun getUserName() = prefs.getString("user_name", null)
@@ -100,6 +132,7 @@ class AndroidAppPreferences(
     override fun clear() {
         prefs.edit().clear().apply()
         secureStorage.deleteSecret("api_key")
+        secureStorage.deleteSecret("novita_api_key")
         _userName.value = null
         _userEmail.value = null
         _isSignedIn.value = false
@@ -107,5 +140,7 @@ class AndroidAppPreferences(
         _languageTarget.value = "en"
         _isPaid.value = false
         _aiResponseLength.value = "normal"
+        _apiProvider.value = "gemini"
+        _novitaApiKey.value = ""
     }
 }

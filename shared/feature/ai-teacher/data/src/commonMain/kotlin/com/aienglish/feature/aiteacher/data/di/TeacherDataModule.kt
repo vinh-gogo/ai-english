@@ -30,6 +30,7 @@ val teacherDataModule = module {
     single<TeacherRepository> {
         TeacherRepositoryImpl(
             geminiClient = get(),
+            novitaClient = get(),
             dispatchers = get(),
             prefs = get(),
             fallbackApiKey = get(named("fallback_api_key"))

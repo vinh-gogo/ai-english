@@ -7,6 +7,8 @@ import com.aienglish.core.common.result.AppError
 import com.aienglish.core.common.result.AppResult
 import com.aienglish.core.network.client.GeminiClient
 import com.aienglish.core.network.client.GEMINI_MODEL_CHAIN
+import com.aienglish.core.network.client.NovitaClient
+import com.aienglish.core.network.client.NOVITA_MODEL_CHAIN
 import com.aienglish.feature.aiteacher.domain.model.EnglishFeedback
 import com.aienglish.feature.aiteacher.domain.model.EnglishLesson
 import com.aienglish.feature.aiteacher.domain.repository.TeacherRepository
@@ -18,6 +20,7 @@ import kotlinx.serialization.json.Json
 
 class TeacherRepositoryImpl(
     private val geminiClient: GeminiClient,
+    private val novitaClient: NovitaClient,
     private val dispatchers: AppDispatchers,
     private val prefs: AppPreferences,
     private val fallbackApiKey: String   // from local.properties / BuildConfig
@@ -44,24 +47,39 @@ class TeacherRepositoryImpl(
         level: String
     ): AppResult<EnglishLesson> = withContext(dispatchers.io) {
         try {
-            val apiKey = resolveApiKey()
-            if (apiKey.isBlank()) {
-                return@withContext Either.Left(
-                    AppError.Network("Chưa có API Key. Vào Profile → cài Gemini API Key để bắt đầu.")
-                )
-            }
-
+            val providerType = prefs.getApiProvider()
             val nativeLang = prefs.getLanguageNative()
             val provider = PromptProviderFactory.getProvider(level)
             val systemPrompt = provider.getGenerateLessonSystemPrompt(level, nativeLang)
             val userPrompt = provider.getGenerateLessonUserPrompt(level, topic, nativeLang)
 
-            val rawResponse = geminiClient.generateContent(
-                apiKey = apiKey,
-                systemPrompt = systemPrompt,
-                userPrompt = userPrompt,
-                model = GEMINI_MODEL_CHAIN.first()
-            )
+            val rawResponse = if (providerType == "novita") {
+                val novitaKey = prefs.getNovitaApiKey()
+                if (novitaKey.isBlank()) {
+                    return@withContext Either.Left(
+                        AppError.Network("Chưa có Novita API Key. Vào Profile → cài Novita API Key để bắt đầu.")
+                    )
+                }
+                novitaClient.generateContent(
+                    apiKey = novitaKey,
+                    systemPrompt = systemPrompt,
+                    userPrompt = userPrompt,
+                    model = NOVITA_MODEL_CHAIN.first()
+                )
+            } else {
+                val apiKey = resolveApiKey()
+                if (apiKey.isBlank()) {
+                    return@withContext Either.Left(
+                        AppError.Network("Chưa có API Key. Vào Profile → cài Gemini API Key để bắt đầu.")
+                    )
+                }
+                geminiClient.generateContent(
+                    apiKey = apiKey,
+                    systemPrompt = systemPrompt,
+                    userPrompt = userPrompt,
+                    model = GEMINI_MODEL_CHAIN.first()
+                )
+            }
 
             val cleanedJson = sanitizeJson(rawResponse)
             val lesson = json.decodeFromString<EnglishLessonDto>(cleanedJson).toDomain()
@@ -79,13 +97,7 @@ class TeacherRepositoryImpl(
         level: String
     ): AppResult<EnglishFeedback> = withContext(dispatchers.io) {
         try {
-            val apiKey = resolveApiKey()
-            if (apiKey.isBlank()) {
-                return@withContext Either.Left(
-                    AppError.Network("Chưa có API Key. Vào Profile → cài Gemini API Key.")
-                )
-            }
-
+            val providerType = prefs.getApiProvider()
             val nativeLang = prefs.getLanguageNative()
             val provider = PromptProviderFactory.getProvider(level)
             val reports = answers.zip(sentences).mapIndexed { index, (answerAndTarget, nativeText) ->
@@ -103,12 +115,33 @@ class TeacherRepositoryImpl(
             val systemPrompt = provider.getEvaluateLessonSystemPrompt(level, topic, reports, nativeLang)
             val userPrompt = provider.getEvaluateLessonUserPrompt(nativeLang)
 
-            val rawResponse = geminiClient.generateContent(
-                apiKey = apiKey,
-                systemPrompt = systemPrompt,
-                userPrompt = userPrompt,
-                model = GEMINI_MODEL_CHAIN.first()
-            )
+            val rawResponse = if (providerType == "novita") {
+                val novitaKey = prefs.getNovitaApiKey()
+                if (novitaKey.isBlank()) {
+                    return@withContext Either.Left(
+                        AppError.Network("Chưa có Novita API Key. Vào Profile → cài Novita API Key.")
+                    )
+                }
+                novitaClient.generateContent(
+                    apiKey = novitaKey,
+                    systemPrompt = systemPrompt,
+                    userPrompt = userPrompt,
+                    model = NOVITA_MODEL_CHAIN.first()
+                )
+            } else {
+                val apiKey = resolveApiKey()
+                if (apiKey.isBlank()) {
+                    return@withContext Either.Left(
+                        AppError.Network("Chưa có API Key. Vào Profile → cài Gemini API Key.")
+                    )
+                }
+                geminiClient.generateContent(
+                    apiKey = apiKey,
+                    systemPrompt = systemPrompt,
+                    userPrompt = userPrompt,
+                    model = GEMINI_MODEL_CHAIN.first()
+                )
+            }
 
             val cleanedJson = sanitizeJson(rawResponse)
             val feedback = json.decodeFromString<EnglishFeedbackDto>(cleanedJson).toDomain()
@@ -126,13 +159,7 @@ class TeacherRepositoryImpl(
         level: String
     ): AppResult<com.aienglish.feature.aiteacher.domain.model.SentenceExplanation> = withContext(dispatchers.io) {
         try {
-            val apiKey = resolveApiKey()
-            if (apiKey.isBlank()) {
-                return@withContext Either.Left(
-                    AppError.Network("Chưa có API Key. Vào Profile → cài Gemini API Key.")
-                )
-            }
-
+            val providerType = prefs.getApiProvider()
             val nativeLang = prefs.getLanguageNative()
             val provider = PromptProviderFactory.getProvider(level)
             var systemPrompt = provider.getExplainSentenceSystemPrompt(level, vietnamese, targetEnglish, userAnswer, nativeLang)
@@ -145,12 +172,34 @@ class TeacherRepositoryImpl(
             }
             val userPrompt = provider.getExplainSentenceUserPrompt(nativeLang)
 
-            val rawResponse = geminiClient.generateContent(
-                apiKey = apiKey,
-                systemPrompt = systemPrompt,
-                userPrompt = userPrompt,
-                model = GEMINI_MODEL_CHAIN.first()
-            )
+            val rawResponse = if (providerType == "novita") {
+                val novitaKey = prefs.getNovitaApiKey()
+                if (novitaKey.isBlank()) {
+                    return@withContext Either.Left(
+                        AppError.Network("Chưa có Novita API Key. Vào Profile → cài Novita API Key.")
+                    )
+                }
+                novitaClient.generateContent(
+                    apiKey = novitaKey,
+                    systemPrompt = systemPrompt,
+                    userPrompt = userPrompt,
+                    model = NOVITA_MODEL_CHAIN.first()
+                )
+            } else {
+                val apiKey = resolveApiKey()
+                if (apiKey.isBlank()) {
+                    return@withContext Either.Left(
+                        AppError.Network("Chưa có API Key. Vào Profile → cài Gemini API Key.")
+                    )
+                }
+                geminiClient.generateContent(
+                    apiKey = apiKey,
+                    systemPrompt = systemPrompt,
+                    userPrompt = userPrompt,
+                    model = GEMINI_MODEL_CHAIN.first()
+                )
+            }
+
             val cleanedJson = sanitizeJson(rawResponse)
             val explanation = json.decodeFromString<com.aienglish.feature.aiteacher.data.model.SentenceExplanationDto>(cleanedJson).toDomain()
             Either.Right(explanation)

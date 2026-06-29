@@ -12,6 +12,10 @@ data class ProfileState(
     val apiKeyInput: String = "",
     val apiKeyVisible: Boolean = false,
     val apiKeySaved: Boolean = false,
+    val novitaApiKeyInput: String = "",
+    val novitaApiKeyVisible: Boolean = false,
+    val novitaApiKeySaved: Boolean = false,
+    val apiProvider: String = "gemini",
     val howToExpanded: Boolean = false,
     val isSigningIn: Boolean = false,
     val languageNative: String = "vi",
@@ -34,7 +38,10 @@ class ProfileViewModel(
     private val updateSignInStatusUseCase: UpdateSignInStatusUseCase,
     private val clearProfileUseCase: ClearProfileUseCase,
     private val updatePaidStatusUseCase: UpdatePaidStatusUseCase,
-    private val updateAiResponseLengthUseCase: UpdateAiResponseLengthUseCase
+    private val updateAiResponseLengthUseCase: UpdateAiResponseLengthUseCase,
+    private val getNovitaApiKeyUseCase: GetNovitaApiKeyUseCase,
+    private val saveNovitaApiKeyUseCase: SaveNovitaApiKeyUseCase,
+    private val updateApiProviderUseCase: UpdateApiProviderUseCase
 ) : BaseViewModel<ProfileState>(ProfileState()) {
 
     init {
@@ -49,7 +56,8 @@ class ProfileViewModel(
                         languageNative = profile.languageNative,
                         languageTarget = profile.languageTarget,
                         isPaid = profile.isPaid,
-                        aiResponseLength = profile.aiResponseLength
+                        aiResponseLength = profile.aiResponseLength,
+                        apiProvider = profile.apiProvider
                     )
                 }
             }
@@ -59,6 +67,12 @@ class ProfileViewModel(
         viewModelScope.launch {
             val key = getApiKeyUseCase()
             setState { copy(apiKeyInput = key) }
+        }
+
+        // Load Novita API key async
+        viewModelScope.launch {
+            val key = getNovitaApiKeyUseCase()
+            setState { copy(novitaApiKeyInput = key) }
         }
     }
 
@@ -84,6 +98,24 @@ class ProfileViewModel(
         viewModelScope.launch {
             saveApiKeyUseCase(key)
             setState { copy(apiKeySaved = true, error = null) }
+        }
+    }
+
+    fun onNovitaApiKeyChanged(key: String) = setState { copy(novitaApiKeyInput = key, novitaApiKeySaved = false) }
+    fun toggleNovitaApiKeyVisibility() = setState { copy(novitaApiKeyVisible = !novitaApiKeyVisible) }
+
+    fun saveNovitaApiKey() {
+        val key = currentState.novitaApiKeyInput.trim()
+        if (key.isEmpty()) { setState { copy(error = "Novita API Key không được để trống") }; return }
+        viewModelScope.launch {
+            saveNovitaApiKeyUseCase(key)
+            setState { copy(novitaApiKeySaved = true, error = null) }
+        }
+    }
+
+    fun onApiProviderChanged(provider: String) {
+        viewModelScope.launch {
+            updateApiProviderUseCase(provider)
         }
     }
 
