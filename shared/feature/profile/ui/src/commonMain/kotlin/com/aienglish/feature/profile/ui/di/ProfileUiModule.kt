@@ -10,6 +10,7 @@ val profileUiModule = module {
             getApiKeyUseCase = get(),
             saveApiKeyUseCase = get(),
             updateLanguageTargetUseCase = get(),
+            updateLanguageNativeUseCase = get(),
             updateDisplayNameUseCase = get(),
             updateUserEmailUseCase = get(),
             updateSignInStatusUseCase = get(),

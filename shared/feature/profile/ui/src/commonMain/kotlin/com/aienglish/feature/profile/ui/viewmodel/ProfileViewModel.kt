@@ -28,6 +28,7 @@ class ProfileViewModel(
     private val getApiKeyUseCase: GetApiKeyUseCase,
     private val saveApiKeyUseCase: SaveApiKeyUseCase,
     private val updateLanguageTargetUseCase: UpdateLanguageTargetUseCase,
+    private val updateLanguageNativeUseCase: UpdateLanguageNativeUseCase,
     private val updateDisplayNameUseCase: UpdateDisplayNameUseCase,
     private val updateUserEmailUseCase: UpdateUserEmailUseCase,
     private val updateSignInStatusUseCase: UpdateSignInStatusUseCase,
@@ -87,6 +88,12 @@ class ProfileViewModel(
     }
 
     fun toggleHowTo() = setState { copy(howToExpanded = !howToExpanded) }
+
+    fun onLanguageNativeChanged(lang: String) {
+        viewModelScope.launch {
+            updateLanguageNativeUseCase(lang)
+        }
+    }
 
     fun onLanguageTargetChanged(lang: String) {
         viewModelScope.launch {

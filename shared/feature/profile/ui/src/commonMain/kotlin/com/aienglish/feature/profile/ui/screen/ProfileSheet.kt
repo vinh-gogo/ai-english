@@ -457,17 +457,66 @@ private fun LanguageSettingsSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text("Ngôn ngữ mẹ đẻ", fontSize = 13.sp, color = colors.mainText, fontWeight = FontWeight.Medium)
-            Surface(
-                shape = RoundedCornerShape(8.dp),
-                color = colors.border.copy(0.3f)
-            ) {
-                Text(
-                    "Tiếng Việt",
-                    fontSize = 12.sp,
-                    color = colors.mutedText,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
-                )
+
+            var expanded by remember { mutableStateOf(false) }
+            val currentLabel = when (state.languageNative) {
+                "vi" -> "Tiếng Việt"
+                "en" -> "Tiếng Anh"
+                else -> "Tiếng Anh"
+            }
+
+            Box {
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(colors.border.copy(0.15f))
+                        .border(1.dp, colors.border.copy(0.2f), RoundedCornerShape(8.dp))
+                        .clickable { expanded = true }
+                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                ) {
+                    Box(
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            Text(
+                                currentLabel,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = colors.mainText
+                            )
+                            Icon(
+                                imageVector = Icons.Default.ArrowDropDown,
+                                contentDescription = null,
+                                tint = colors.mutedText,
+                                modifier = Modifier.size(16.dp)
+                            )
+                        }
+                    }
+                }
+
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                    modifier = Modifier.background(colors.surface)
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Tiếng Việt", fontSize = 13.sp, color = colors.mainText) },
+                        onClick = {
+                            vm.onLanguageNativeChanged("vi")
+                            expanded = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Tiếng Anh", fontSize = 13.sp, color = colors.mainText) },
+                        onClick = {
+                            vm.onLanguageNativeChanged("en")
+                            expanded = false
+                        }
+                    )
+                }
             }
         }
 

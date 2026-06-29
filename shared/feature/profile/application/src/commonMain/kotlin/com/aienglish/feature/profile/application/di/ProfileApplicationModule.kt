@@ -8,6 +8,7 @@ val profileApplicationModule = module {
     factory { GetApiKeyUseCase(get()) }
     factory { SaveApiKeyUseCase(get()) }
     factory { UpdateLanguageTargetUseCase(get()) }
+    factory { UpdateLanguageNativeUseCase(get()) }
     factory { UpdateDisplayNameUseCase(get()) }
     factory { UpdateUserEmailUseCase(get()) }
     factory { UpdateSignInStatusUseCase(get()) }

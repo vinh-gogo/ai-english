@@ -51,9 +51,10 @@ class TeacherRepositoryImpl(
                 )
             }
 
+            val nativeLang = prefs.getLanguageNative()
             val provider = PromptProviderFactory.getProvider(level)
-            val systemPrompt = provider.getGenerateLessonSystemPrompt(level)
-            val userPrompt = provider.getGenerateLessonUserPrompt(level, topic)
+            val systemPrompt = provider.getGenerateLessonSystemPrompt(level, nativeLang)
+            val userPrompt = provider.getGenerateLessonUserPrompt(level, topic, nativeLang)
 
             val rawResponse = geminiClient.generateContent(
                 apiKey = apiKey,
@@ -85,20 +86,22 @@ class TeacherRepositoryImpl(
                 )
             }
 
+            val nativeLang = prefs.getLanguageNative()
             val provider = PromptProviderFactory.getProvider(level)
-            val reports = answers.zip(sentences).mapIndexed { index, (answerAndTarget, vietnamese) ->
+            val reports = answers.zip(sentences).mapIndexed { index, (answerAndTarget, nativeText) ->
                 val (userAnswer, targetLang) = answerAndTarget
                 val langLabel = provider.languageLabel
+                val nativeLabel = if (nativeLang == "vi") "Vietnamese" else "English"
                 """
                 Sentence ${index + 1}:
-                - Vietnamese original: $vietnamese
+                - $nativeLabel original: $nativeText
                 - Target $langLabel: $targetLang
                 - Student's answer: ${userAnswer.ifBlank { "(Skipped / No answer)" }}
                 """.trimIndent()
             }.joinToString("\n\n")
 
-            val systemPrompt = provider.getEvaluateLessonSystemPrompt(level, topic, reports)
-            val userPrompt = provider.getEvaluateLessonUserPrompt()
+            val systemPrompt = provider.getEvaluateLessonSystemPrompt(level, topic, reports, nativeLang)
+            val userPrompt = provider.getEvaluateLessonUserPrompt(nativeLang)
 
             val rawResponse = geminiClient.generateContent(
                 apiKey = apiKey,
@@ -130,12 +133,17 @@ class TeacherRepositoryImpl(
                 )
             }
 
+            val nativeLang = prefs.getLanguageNative()
             val provider = PromptProviderFactory.getProvider(level)
-            var systemPrompt = provider.getExplainSentenceSystemPrompt(level, vietnamese, targetEnglish, userAnswer)
+            var systemPrompt = provider.getExplainSentenceSystemPrompt(level, vietnamese, targetEnglish, userAnswer, nativeLang)
             if (prefs.getAiResponseLength() == "short") {
-                systemPrompt += "\n\nCRITICAL REQUIREMENT: The 'explanation' should be concise and direct (ngắn gọn, súc tích), but prioritize a complete and clear explanation. It must cover the general structure of the sentence (cấu trúc chung) and explain all the vocabulary/words (giải thích đầy đủ các từ) without being overly brief or skipping important grammar details."
+                if (nativeLang == "vi") {
+                    systemPrompt += "\n\nCRITICAL REQUIREMENT: The 'explanation' should be concise and direct (ngắn gọn, súc tích), but prioritize a complete and clear explanation. It must cover the general structure of the sentence (cấu trúc chung) and explain all the vocabulary/words (giải thích đầy đủ các từ) without being overly brief or skipping important grammar details."
+                } else {
+                    systemPrompt += "\n\nCRITICAL REQUIREMENT: The 'explanation' should be concise and direct, but prioritize a complete and clear explanation. It must cover the general structure of the sentence and explain all the vocabulary/words without being overly brief or skipping important grammar details."
+                }
             }
-            val userPrompt = provider.getExplainSentenceUserPrompt()
+            val userPrompt = provider.getExplainSentenceUserPrompt(nativeLang)
 
             val rawResponse = geminiClient.generateContent(
                 apiKey = apiKey,

@@ -3,12 +3,22 @@ package com.aienglish.feature.aiteacher.data.repository.prompt
 object EnglishPromptProvider : LanguagePromptProvider {
     override val languageLabel: String = "English"
 
-    override fun getGenerateLessonSystemPrompt(level: String): String {
+    override fun getGenerateLessonSystemPrompt(level: String, nativeLanguage: String): String {
+        val isVi = nativeLanguage == "vi"
+        val nativeName = if (isVi) "Vietnamese" else "English"
+        val instructionDetail = if (isVi) {
+            "Your task is to help Vietnamese learners practice English through daily sentence translation exercises.\n" +
+            "When the user selects a topic, you must create exactly 10 short Vietnamese sentences related to that topic,\n" +
+            "along with their English translation and token breakdown."
+        } else {
+            "Your task is to help English learners practice English through daily sentence exercises.\n" +
+            "When the user selects a topic, you must create exactly 10 short, simple/informal English sentences related to that topic,\n" +
+            "along with their corresponding natural/correct English translation (polished/native expression) and token breakdown."
+        }
+
         return """
             You are an English AI Teacher - a professional and caring English language instructor.
-            Your task is to help Vietnamese learners practice English through daily sentence translation exercises.
-            When the user selects a topic, you must create exactly 10 short Vietnamese sentences related to that topic,
-            along with their English translation and token breakdown.
+            $instructionDetail
 
             YOU MUST CREATE SENTENCES THAT MATCH EXACTLY THE TARGET ENGLISH LEVEL: $level.
             - If the level is CEFR (A1, A2, B1, B2, C1, C2):
@@ -26,8 +36,8 @@ object EnglishPromptProvider : LanguagePromptProvider {
             {
               "sentences": [
                 {
-                  "vietnamese": "Short Vietnamese sentence",
-                  "english": "Corresponding English translation",
+                  "vietnamese": "Short $nativeName sentence",
+                  "english": "Corresponding target English translation",
                   "tokens": [
                     { "word": "Hello", "phonetic": "/həˈloʊ/", "partOfSpeech": "interjection" }
                   ]
@@ -37,16 +47,19 @@ object EnglishPromptProvider : LanguagePromptProvider {
 
             CRITICAL RULES:
             1. Return ONLY valid JSON. No markdown, no explanation, no preamble outside the JSON.
-            2. Vietnamese sentences must be short, natural, and relevant to the chosen topic.
-            3. Tokens must break the English sentence into individual words with IPA phonetics and part of speech.
+            2. $nativeName sentences must be short, natural, and relevant to the chosen topic.
+            3. Tokens must break the English target sentence into individual words with IPA phonetics and part of speech.
         """.trimIndent()
     }
 
-    override fun getGenerateLessonUserPrompt(level: String, topic: String): String {
-        return "Create 10 English translation sentences for topic: $topic, level: $level."
+    override fun getGenerateLessonUserPrompt(level: String, topic: String, nativeLanguage: String): String {
+        val nativeName = if (nativeLanguage == "vi") "Vietnamese" else "English"
+        return "Create 10 English translation sentences from $nativeName for topic: $topic, level: $level."
     }
 
-    override fun getEvaluateLessonSystemPrompt(level: String, topic: String, reports: String): String {
+    override fun getEvaluateLessonSystemPrompt(level: String, topic: String, reports: String, nativeLanguage: String): String {
+        val isVi = nativeLanguage == "vi"
+        val responseLang = if (isVi) "Vietnamese" else "English"
         return """
             You are an English AI Teacher evaluating student translation results.
             The student just completed a 10-sentence translation exercise on topic: $topic.
@@ -66,23 +79,26 @@ object EnglishPromptProvider : LanguagePromptProvider {
             Student's results:
             $reports
 
-            Provide feedback in Vietnamese: praise what was done well, point out common errors, suggest improvements.
+            Provide feedback in $responseLang: praise what was done well, point out common errors, suggest improvements.
             Give a total score out of 10. Also evaluate and score each of the 10 sentences individually (from 0 to 10). If a sentence is skipped or left blank, score it 0. For others, rate strictly based on correctness.
 
             RETURN ONLY VALID JSON (no markdown, no extra text):
             {
               "score": 8,
-              "review": "Detailed feedback in Vietnamese with clear paragraphs (use \n for line breaks).",
+              "review": "Detailed feedback in $responseLang with clear paragraphs (use \n for line breaks).",
               "sentenceScores": [8, 9, 7, 0, 10, 8, 9, 10, 6, 8]
             }
         """.trimIndent()
     }
 
-    override fun getEvaluateLessonUserPrompt(): String {
+    override fun getEvaluateLessonUserPrompt(nativeLanguage: String): String {
         return "Please evaluate my English translation results."
     }
 
-    override fun getExplainSentenceSystemPrompt(level: String, vietnamese: String, targetText: String, userAnswer: String): String {
+    override fun getExplainSentenceSystemPrompt(level: String, vietnamese: String, targetText: String, userAnswer: String, nativeLanguage: String): String {
+        val isVi = nativeLanguage == "vi"
+        val nativeName = if (isVi) "Vietnamese" else "English"
+        val responseLang = if (isVi) "Vietnamese" else "English"
         val skippedText = userAnswer.ifBlank { "(Student skipped this sentence)" }
         return """
             You are an English AI Teacher - a professional and caring instructor.
@@ -90,7 +106,7 @@ object EnglishPromptProvider : LanguagePromptProvider {
             tailored to the student's target level: $level.
 
             Sentence information:
-            - Original Vietnamese: $vietnamese
+            - Original $nativeName: $vietnamese
             - Target English: $targetText
             - Student's answer: $skippedText
 
@@ -99,7 +115,7 @@ object EnglishPromptProvider : LanguagePromptProvider {
             2. Compare with the target English, point out strengths or errors (grammar, word order, vocabulary, tone).
             3. If the student answered correctly, praise briefly and explain the grammar structures at $level depth.
             4. If the student skipped, provide a full breakdown of the target sentence, explaining vocabulary and grammar patterns relevant to $level.
-            5. Write in Vietnamese, warm and encouraging. Format the explanation in Markdown.
+            5. Write in $responseLang, warm and encouraging. Format the explanation in Markdown.
             6. In "score", rate the student's answer from 0 to 10. If skipped or blank, score MUST be 0. Otherwise, rate strictly based on correctness.
 
             RETURN ONLY VALID JSON (no markdown block, no extra text):
@@ -110,7 +126,7 @@ object EnglishPromptProvider : LanguagePromptProvider {
         """.trimIndent()
     }
 
-    override fun getExplainSentenceUserPrompt(): String {
+    override fun getExplainSentenceUserPrompt(nativeLanguage: String): String {
         return "Please explain this English sentence in detail."
     }
 }
