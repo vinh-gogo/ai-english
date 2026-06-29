@@ -163,13 +163,13 @@ fun TeacherScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Group 1: Back and Title (Height synchronized to 40dp)
+                // Group 1: Back and Title (Height synchronized to 48dp)
                 Row(
                     modifier = Modifier
-                        .height(40.dp)
+                        .height(48.dp)
                         .background(colors.surface, CircleShape)
                         .border(2.dp, colors.border, CircleShape)
-                        .padding(horizontal = 14.dp),
+                        .padding(horizontal = 16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (state.lesson != null || state.feedback != null) {
@@ -178,10 +178,10 @@ fun TeacherScreen(
                             contentDescription = "Back",
                             tint = colors.mainText,
                             modifier = Modifier
-                                .size(18.dp)
+                                .size(20.dp)
                                 .clickable { viewModel.onReset() }
                         )
-                        Spacer(Modifier.width(10.dp))
+                        Spacer(Modifier.width(12.dp))
                     }
                     Text(
                         text = when {
@@ -189,16 +189,16 @@ fun TeacherScreen(
                             state.lesson != null -> "Luyện tập"
                             else -> "AI Lingua"
                         },
-                        fontSize = 14.sp,
+                        fontSize = 15.sp,
                         fontWeight = FontWeight.Bold,
                         color = colors.mainText
                     )
                 }
 
-                // Group 2: History, Profile, Pro badge (Grouped inside a single 40dp capsule aligned to the right)
+                // Group 2: History, Profile, Pro badge (Grouped inside a single 48dp capsule aligned to the right)
                 Row(
                     modifier = Modifier
-                        .height(40.dp)
+                        .height(48.dp)
                         .background(colors.surface, CircleShape)
                         .border(2.dp, colors.border, CircleShape),
                     verticalAlignment = Alignment.CenterVertically
@@ -207,7 +207,7 @@ fun TeacherScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .width(32.dp)
+                            .width(40.dp)
                             .clip(RoundedCornerShape(topStart = 100.dp, bottomStart = 100.dp))
                             .clickable { showHistory = true },
                         contentAlignment = Alignment.Center
@@ -216,7 +216,7 @@ fun TeacherScreen(
                             Icons.Rounded.History,
                             contentDescription = "Lịch sử",
                             tint = colors.mutedText,
-                            modifier = Modifier.size(18.dp)
+                            modifier = Modifier.size(20.dp)
                         )
                     }
 
@@ -224,7 +224,7 @@ fun TeacherScreen(
                     Box(
                         modifier = Modifier
                             .width(1.dp)
-                            .height(16.dp)
+                            .height(20.dp)
                             .background(colors.border)
                     )
 
@@ -232,7 +232,7 @@ fun TeacherScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .width(32.dp)
+                            .width(40.dp)
                             .clip(RoundedCornerShape(0.dp))
                             .clickable { profileViewModel.showProfile() },
                         contentAlignment = Alignment.Center
@@ -240,7 +240,7 @@ fun TeacherScreen(
                         if (profileState.isSignedIn && profileState.displayName != null) {
                             Box(
                                 modifier = Modifier
-                                    .size(20.dp)
+                                    .size(24.dp)
                                     .clip(CircleShape)
                                     .background(colors.accent),
                                 contentAlignment = Alignment.Center
@@ -248,7 +248,7 @@ fun TeacherScreen(
                                 Text(
                                     profileState.displayName!!.first().uppercase(),
                                     color = Color.White,
-                                    fontSize = 10.sp,
+                                    fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold
                                 )
                             }
@@ -257,7 +257,7 @@ fun TeacherScreen(
                                 Icons.Rounded.AccountCircle,
                                 contentDescription = "Profile",
                                 tint = colors.mutedText,
-                                modifier = Modifier.size(18.dp)
+                                modifier = Modifier.size(20.dp)
                             )
                         }
                     }
@@ -266,7 +266,7 @@ fun TeacherScreen(
                     Box(
                         modifier = Modifier
                             .width(1.dp)
-                            .height(16.dp)
+                            .height(20.dp)
                             .background(colors.border)
                     )
 
@@ -276,7 +276,7 @@ fun TeacherScreen(
                             .fillMaxHeight()
                             .clip(RoundedCornerShape(topEnd = 100.dp, bottomEnd = 100.dp))
                             .clickable { proViewModel.onIntent(ProIntent.ShowVip) }
-                            .padding(start = 6.dp, end = 10.dp),
+                            .padding(start = 8.dp, end = 12.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
@@ -284,11 +284,11 @@ fun TeacherScreen(
                             imageVector = Icons.Rounded.WorkspacePremium,
                             contentDescription = "PRO",
                             tint = Color(0xFFFFB300),
-                            modifier = Modifier.size(16.dp)
+                            modifier = Modifier.size(18.dp)
                         )
                         Text(
                             text = if (profileState.isPaid) "PRO" else "GET",
-                            fontSize = 12.sp,
+                            fontSize = 13.sp,
                             fontWeight = FontWeight.Bold,
                             fontStyle = FontStyle.Italic,
                             color = Color(0xFFFFB300)
