@@ -187,7 +187,7 @@ fun TeacherScreen(
                         text = when {
                             state.feedback != null -> "Kết quả"
                             state.lesson != null -> "Luyện tập"
-                            else -> "AI Teacher"
+                            else -> "AI Lingua"
                         },
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold,

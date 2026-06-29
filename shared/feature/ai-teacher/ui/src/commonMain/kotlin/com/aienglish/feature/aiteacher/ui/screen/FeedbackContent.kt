@@ -83,7 +83,7 @@ fun FeedbackContent(
                 border = BorderStroke(1.dp, colors.border)
             ) {
                 Column(modifier = Modifier.padding(14.dp)) {
-                    Text("Nhận xét từ AI Teacher", color = colors.accent, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                    Text("Nhận xét từ AI Lingua", color = colors.accent, fontSize = 13.sp, fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(8.dp))
                     MarkdownText(feedback.review, colors)
                 }
