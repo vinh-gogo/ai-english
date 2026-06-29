@@ -30,10 +30,11 @@ class HistoryRepositoryImpl(
     private val queries get() = database.lessonHistoryQueries
 
     private fun getCurrentUserId(): String {
-        return if (prefs.isSignedIn()) {
-            prefs.getUserEmail() ?: "guest"
+        val email = prefs.getUserEmail()
+        return if (prefs.isSignedIn() && email != "guest@aienglish.com") {
+            email ?: "0000000000000000"
         } else {
-            "guest"
+            "0000000000000000"
         }
     }
 
@@ -43,8 +44,8 @@ class HistoryRepositoryImpl(
             val userId = getCurrentUserId()
             database.userSchemaQueries.ensureUserExists(
                 user_id = userId,
-                display_name = if (userId == "guest") "Guest" else userId.substringBefore("@"),
-                email = if (userId == "guest") "guest@local" else userId,
+                display_name = if (userId == "0000000000000000") "Guest" else userId.substringBefore("@"),
+                email = if (userId == "0000000000000000") "guest@local" else userId,
                 created_at = now,
                 updated_at = now
             )
@@ -78,7 +79,11 @@ class HistoryRepositoryImpl(
     @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     override fun getAllHistory(): Flow<List<LessonHistory>> =
         combine(prefs.isSignedInFlow, prefs.userEmailFlow) { signedIn, email ->
-            if (signedIn) email ?: "guest" else "guest"
+            if (signedIn && email != "guest@aienglish.com") {
+                email ?: "0000000000000000"
+            } else {
+                "0000000000000000"
+            }
         }.flatMapLatest { userId ->
             queries.getAllHistoryWithCounts(userId)
                 .asFlow()

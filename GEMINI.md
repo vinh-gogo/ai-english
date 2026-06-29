@@ -12,6 +12,7 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 2** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Tăng chiều rộng nhóm 3 nút (History, Profile, Pro). | Hoàn thành |
 | **Session 3** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Cấu hình Novita API Service và hỗ trợ chuyển đổi API Provider (Gemini / Novita). | Hoàn thành |
 | **Session 4** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Sửa logic chấm điểm AI & bổ sung các đáp án chuẩn thay thế (Alternatives). | Hoàn thành |
+| **Session 5** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Mặc định hóa GUID của Guest thành 16 chữ số 0. | Hoàn thành |
 
 ---
 
@@ -72,6 +73,21 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
     - Cập nhật [FeedbackContent.kt](file:///D:/ai-english/shared/feature/aiteacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/FeedbackContent.kt) hiển thị danh sách đáp án thay thế dưới dạng danh sách bullet point trong màn hình xem lại kết quả.
 - **Ghi chú kỹ thuật:**
   - Biên dịch thành công với target Desktop, đảm bảo các API serialization tương thích mượt mà nhờ cơ chế default values của Kotlin.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 5 (2026-06-29)
+
+- **Mục tiêu:** Chuyển đổi GUID của người dùng ở chế độ Guest (chưa đăng nhập hoặc chọn Guest trial) mặc định thành chuỗi 16 số 0 (`"0000000000000000"`).
+- **Hoạt động & Thay đổi:**
+  - Cập nhật [HistoryRepositoryImpl.kt](file:///D:/ai-english/shared/feature/history/data/src/commonMain/kotlin/com/aienglish/feature/history/data/repository/HistoryRepositoryImpl.kt):
+    - `getCurrentUserId()`: Thay vì trả về `"guest"` như trước, nay trả về `"0000000000000000"` nếu người dùng chưa đăng nhập hoặc có email đăng nhập tạm thời là `"guest@aienglish.com"`.
+    - `getAllHistory()`: Đồng bộ hóa query flow để dùng GUID `"0000000000000000"` tải lịch sử học tập của Guest.
+    - Sửa phương thức tạo tài khoản mặc định `ensureUserExists` để gán chính xác `display_name = "Guest"` và `email = "guest@local"` khi `user_id` là `"0000000000000000"`.
+- **Ghi chú kỹ thuật:**
+  - Biên dịch thành công cho cả 2 target Desktop và Android, bảo đảm tính nhất quán của cơ sở dữ liệu local SQLite.
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 
