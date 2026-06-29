@@ -176,7 +176,7 @@ fun TeacherScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxHeight()
-                                .width(40.dp)
+                                .width(32.dp)
                                 .clip(RoundedCornerShape(topStart = 100.dp, bottomStart = 100.dp))
                                 .clickable { viewModel.onReset() },
                             contentAlignment = Alignment.Center
@@ -185,7 +185,7 @@ fun TeacherScreen(
                                 Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Back",
                                 tint = colors.mainText,
-                                modifier = Modifier.size(20.dp)
+                                modifier = Modifier.size(18.dp)
                             )
                         }
 
@@ -201,7 +201,7 @@ fun TeacherScreen(
                         Row(
                             modifier = Modifier
                                 .fillMaxHeight()
-                                .padding(start = 12.dp, end = 16.dp),
+                                .padding(start = 8.dp, end = 12.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
@@ -220,7 +220,7 @@ fun TeacherScreen(
                         Row(
                             modifier = Modifier
                                 .fillMaxHeight()
-                                .padding(horizontal = 16.dp),
+                                .padding(horizontal = 12.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
