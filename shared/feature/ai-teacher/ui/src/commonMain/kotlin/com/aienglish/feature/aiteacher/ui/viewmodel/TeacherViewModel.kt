@@ -633,15 +633,23 @@ class TeacherViewModel(
 
     fun onReset() {
         val target = prefs.getLanguageTarget()
-        val expectedType = when (target) {
-            "ja" -> LevelType.JLPT
-            "zh" -> LevelType.HSK
-            "es" -> LevelType.DELE
-            "hi" -> LevelType.HINDI
-            "fr" -> LevelType.DELF
-            else -> LevelType.CEFR
+        val expectedType = if (target == currentState.targetLanguage) {
+            currentState.levelType
+        } else {
+            when (target) {
+                "ja" -> LevelType.JLPT
+                "zh" -> LevelType.HSK
+                "es" -> LevelType.DELE
+                "hi" -> LevelType.HINDI
+                "fr" -> LevelType.DELF
+                "de" -> LevelType.GOETHE
+                "ko" -> LevelType.TOPIK
+                else -> LevelType.CEFR
+            }
         }
         val expectedLevel = when (expectedType) {
+            LevelType.CEFR -> currentState.selectedCefrLevel
+            LevelType.TOEIC -> currentState.selectedToeicLevel
             LevelType.JLPT -> currentState.selectedJlptLevel
             LevelType.HSK -> currentState.selectedHskLevel
             LevelType.DELE -> currentState.selectedDeleLevel
@@ -649,7 +657,9 @@ class TeacherViewModel(
             LevelType.HINDI -> currentState.selectedHindiLevel
             LevelType.DELF -> currentState.selectedDelfLevel
             LevelType.DALF -> currentState.selectedDalfLevel
-            else -> currentState.selectedCefrLevel
+            LevelType.GOETHE -> currentState.selectedGoetheLevel
+            LevelType.TESTDAF -> currentState.selectedTestdafLevel
+            LevelType.TOPIK -> currentState.selectedTopikLevel
         }
         currentLessonHistoryId = null
         setState {

@@ -133,15 +133,15 @@ fun TopicSelectionContent(
                 )
                 Spacer(Modifier.width(10.dp))
                 val greetingText = when (state.targetLanguage) {
-                    "en" -> "Gia sư Tiếng Anh"
-                    "ja" -> "Gia sư Tiếng Nhật"
-                    "zh" -> "Gia sư Tiếng Trung"
-                    "es" -> "Gia sư Tiếng Tây Ban Nha"
-                    "hi" -> "Gia sư Tiếng Hindi"
-                    "fr" -> "Gia sư Tiếng Pháp"
-                    "de" -> "Gia sư Tiếng Đức"
-                    "ko" -> "Gia sư Tiếng Hàn"
-                    else -> "Gia sư Tiếng Anh"
+                    "en" -> "Trợ lý Tiếng Anh"
+                    "ja" -> "Trợ lý Tiếng Nhật"
+                    "zh" -> "Trợ lý Tiếng Trung"
+                    "es" -> "Trợ lý Tiếng Tây Ban Nha"
+                    "hi" -> "Trợ lý Tiếng Hindi"
+                    "fr" -> "Trợ lý Tiếng Pháp"
+                    "de" -> "Trợ lý Tiếng Đức"
+                    "ko" -> "Trợ lý Tiếng Hàn"
+                    else -> "Trợ lý Tiếng Anh"
                 }
                 Text(
                     greetingText,
