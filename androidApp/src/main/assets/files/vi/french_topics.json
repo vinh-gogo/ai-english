@@ -1,1801 +1,1801 @@
 [
   {
     "id": 4000,
-    "name": "Chào hỏi và giới thiệu bản thân (Bonjour, je m'appelle... - Xin chào, tôi tên là...)",
+    "name": "Chào hỏi và giới thiệu bản thân",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4001,
-    "name": "Hỏi thăm sức khỏe xã giao (Comment ça va ? - Bạn khỏe không?)",
+    "name": "Hỏi thăm sức khỏe xã giao",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4002,
-    "name": "Tên, tuổi và quốc tịch (Nom, âge et nationalité - Tên, tuổi và quốc tịch)",
+    "name": "Tên, tuổi và quốc tịch",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4003,
-    "name": "Số đếm từ 1 đến 100 (Les nombres de 1 à 100 - Số đếm từ 1 đến 100)",
+    "name": "Số đếm từ 1 đến 100",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4004,
-    "name": "Các ngày trong tuần và tháng trong năm (Les jours et les mois - Các ngày và tháng)",
+    "name": "Các ngày trong tuần và tháng trong năm",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4005,
-    "name": "Các màu sắc cơ bản (Les couleurs de base - Màu sắc cơ bản)",
+    "name": "Các màu sắc cơ bản",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4006,
-    "name": "Các thành viên trong gia đình (Les membres de la famille - Gia đình)",
+    "name": "Các thành viên trong gia đình",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4007,
-    "name": "Món ăn và đồ uống yêu thích (Plats et boissons préférés - Món ăn và đồ uống)",
+    "name": "Món ăn và đồ uống yêu thích",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4008,
-    "name": "Mô tả thời tiết hôm nay (Le temps qu'il fait aujourd'hui - Thời tiết hôm nay)",
+    "name": "Mô tả thời tiết hôm nay",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4009,
-    "name": "Hỏi đường đơn giản (Demander son chemin - Hỏi đường đi)",
+    "name": "Hỏi đường đơn giản",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4010,
-    "name": "Gọi tên các con vật nuôi (Les animaux de compagnie - Vật nuôi)",
+    "name": "Gọi tên các con vật nuôi",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4011,
-    "name": "Trang phục và quần áo hàng ngày (Les vêtements - Quần áo)",
+    "name": "Trang phục và quần áo hàng ngày",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4012,
-    "name": "Nói về sở thích cá nhân (Mes loisirs et passions - Sở thích cá nhân)",
+    "name": "Nói về sở thích cá nhân",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4013,
-    "name": "Mô tả ngôi nhà của bạn (Ma maison - Ngôi nhà của tôi)",
+    "name": "Mô tả ngôi nhà của bạn",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4014,
-    "name": "Hỏi giá tiền khi mua sắm (Combien ça coûte ? - Giá bao nhiêu?)",
+    "name": "Hỏi giá tiền khi mua sắm",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4015,
-    "name": "Thói quen vào buổi sáng (Ma routine du matin - Thói quen buổi sáng)",
+    "name": "Thói quen vào buổi sáng",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4016,
-    "name": "Thói quen vào buổi tối (Ma routine du soir - Thói quen buổi tối)",
+    "name": "Thói quen vào buổi tối",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4017,
-    "name": "Các loại quả và rau củ (Fruits et légumes - Trái cây và rau củ)",
+    "name": "Các loại quả và rau củ",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4018,
-    "name": "Trường học và môn học yêu thích (Mon école et mes matières - Trường học và môn học)",
+    "name": "Trường học và môn học yêu thích",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4019,
-    "name": "Nói về công việc hiện tại (Mon travail / métier - Công việc của tôi)",
+    "name": "Nói về công việc hiện tại",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4020,
-    "name": "Chào hỏi lịch sự trong công sở (Salutations formelles au travail - Chào hỏi ở công sở)",
+    "name": "Chào hỏi lịch sự trong công sở",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4021,
-    "name": "Kế hoạch cho ngày cuối tuần (Projets pour le week-end - Kế hoạch cuối tuần)",
+    "name": "Kế hoạch cho ngày cuối tuần",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4022,
-    "name": "Đi siêu thị mua thực phẩm (Faire les courses au supermarché - Đi siêu thị)",
+    "name": "Đi siêu thị mua thực phẩm",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4023,
-    "name": "Mô tả một người bạn thân (Décrire un bon ami - Mô tả bạn thân)",
+    "name": "Mô tả một người bạn thân",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4024,
-    "name": "Cách cảm ơn và xin lỗi (Remercier et s'excuser - Cảm ơn và xin lỗi)",
+    "name": "Cách cảm ơn và xin lỗi",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4025,
-    "name": "Các bộ phận trên cơ thể (Les parties du corps - Các bộ phận cơ thể)",
+    "name": "Các bộ phận trên cơ thể",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4026,
-    "name": "Gọi điện thoại đặt bàn đơn giản (Appel téléphonique simple - Gọi điện thoại đặt bàn)",
+    "name": "Gọi điện thoại đặt bàn đơn giản",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4027,
-    "name": "Nói về quê hương của mình (Ma ville natale - Quê hương của tôi)",
+    "name": "Nói về quê hương của mình",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4028,
-    "name": "Gọi món tại quán cà phê (Commander au café - Gọi món ở quán cà phê)",
+    "name": "Gọi món tại quán cà phê",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4029,
-    "name": "Phương tiện giao thông công cộng (Les transports en commun - Phương tiện giao thông)",
+    "name": "Phương tiện giao thông công cộng",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4030,
-    "name": "Đồ dùng học tập và văn phòng (Fournitures scolaires et de bureau - Đồ dùng học tập/văn phòng)",
+    "name": "Đồ dùng học tập và văn phòng",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4031,
-    "name": "Mô tả phòng ngủ của bạn (Ma chambre à coucher - Phòng ngủ của tôi)",
+    "name": "Mô tả phòng ngủ của bạn",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4032,
-    "name": "Mua vé tàu hỏa hoặc vé xe buýt (Acheter un billet de train/bus - Mua vé tàu/xe buýt)",
+    "name": "Mua vé tàu hỏa hoặc vé xe buýt",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4033,
-    "name": "Nói về bộ phim yêu thích (Mon film préféré - Bộ phim yêu thích)",
+    "name": "Nói về bộ phim yêu thích",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4034,
-    "name": "Nói về thể loại nhạc yêu thích (Mon genre de musique préféré - Nhạc yêu thích)",
+    "name": "Nói về thể loại nhạc yêu thích",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4035,
-    "name": "Các hoạt động thể thao thường ngày (Les activités sportives - Hoạt động thể thao)",
+    "name": "Các hoạt động thể thao thường ngày",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4036,
-    "name": "Các mùa trong năm (Les quatre saisons - Bốn mùa trong năm)",
+    "name": "Các mùa trong năm",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4037,
-    "name": "Chúc mừng sinh nhật đồng nghiệp (Souhaiter un bon anniversaire - Chúc mừng sinh nhật)",
+    "name": "Chúc mừng sinh nhật đồng nghiệp",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4038,
-    "name": "Nhờ sự giúp đỡ của người khác (Demander de l'aide - Nhờ giúp đỡ)",
+    "name": "Nhờ sự giúp đỡ của người khác",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4039,
-    "name": "Mô tả một ngày nghỉ thư thái (Une journée de détente - Một ngày thư giãn)",
+    "name": "Mô tả một ngày nghỉ thư thái",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4040,
-    "name": "Hỏi thăm thông tin liên lạc (Demander des coordonnées - Hỏi thông tin liên hệ)",
+    "name": "Hỏi thăm thông tin liên lạc",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4041,
-    "name": "Các đồ vật trong phòng khách (Les objets du salon - Đồ dùng phòng khách)",
+    "name": "Các đồ vật trong phòng khách",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4042,
-    "name": "Nói về bữa ăn sáng cùng gia đình (Le petit-déjeuner en famille - Bữa sáng gia đình)",
+    "name": "Nói về bữa ăn sáng cùng gia đình",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4043,
-    "name": "Đi nhà sách mua sách mới (À la librairie - Ở hiệu sách)",
+    "name": "Đi nhà sách mua sách mới",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4044,
-    "name": "Nói về dự định cho ngày mai (Mes projets pour demain - Dự định ngày mai)",
+    "name": "Nói về dự định cho ngày mai",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4045,
-    "name": "Các loại đồ uống nóng và lạnh (Boissons chaudes et froides - Đồ uống nóng và lạnh)",
+    "name": "Các loại đồ uống nóng và lạnh",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4046,
-    "name": "Lời chào tạm biệt và chúc may mắn (Dire au revoir et bonne chance - Tạm biệt và chúc may mắn)",
+    "name": "Lời chào tạm biệt và chúc may mắn",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4047,
-    "name": "Thói quen đọc sách mỗi ngày (L'habitude de lire - Thói quen đọc sách)",
+    "name": "Thói quen đọc sách mỗi ngày",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4048,
-    "name": "Mô tả một ngày làm việc bận rộn (Une journée de travail chargée - Ngày làm việc bận rộn)",
+    "name": "Mô tả một ngày làm việc bận rộn",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4049,
-    "name": "Các quốc gia và ngôn ngữ trên thế giới (Pays et langues du monde - Quốc gia và ngôn ngữ)",
+    "name": "Các quốc gia và ngôn ngữ trên thế giới",
     "systemCode": "DELF",
     "levelCode": "A1"
   },
   {
     "id": 4050,
-    "name": "Đi nhà hàng thưởng thức ẩm thực Pháp (Au restaurant français - Nhà hàng Pháp)",
+    "name": "Đi nhà hàng thưởng thức ẩm thực Pháp",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4051,
-    "name": "Đi khám sức khỏe tại bệnh viện (Chez le médecin / À l'hôpital - Khám sức khỏe)",
+    "name": "Đi khám sức khỏe tại bệnh viện",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4052,
-    "name": "Đón bạn bè ở sân bay Paris-Charles de Gaulle (À l'aéroport - Ở sân bay)",
+    "name": "Đón bạn bè ở sân bay Paris-Charles de Gaulle",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4053,
-    "name": "Thủ tục thuê căn hộ hoặc phòng trọ (Louer un appartement - Thuê căn hộ)",
+    "name": "Thủ tục thuê căn hộ hoặc phòng trọ",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4054,
-    "name": "Mua vé xem phim trực tuyến (Acheter des places de cinéma en ligne - Mua vé xem phim online)",
+    "name": "Mua vé xem phim trực tuyến",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4055,
-    "name": "So sánh ngoại hình và tính cách (Comparisons de personnes - So sánh ngoại hình/tính cách)",
+    "name": "So sánh ngoại hình và tính cách",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4056,
-    "name": "Thói quen ăn uống lành mạnh và cân bằng (Une alimentation saine - Ăn uống lành mạnh)",
+    "name": "Thói quen ăn uống lành mạnh và cân bằng",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4057,
-    "name": "Đi tiệm cắt tóc thay đổi kiểu tóc (Chez le coiffeur - Ở tiệm cắt tóc)",
+    "name": "Đi tiệm cắt tóc thay đổi kiểu tóc",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4058,
-    "name": "Chọn quà sinh nhật tặng người thân (Choisir un cadeau d'anniversaire - Chọn quà sinh nhật)",
+    "name": "Chọn quà sinh nhật tặng người thân",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4059,
-    "name": "Nói về cuộc sống thời sinh viên (La vie étudiante à l'université - Cuộc sống sinh viên)",
+    "name": "Nói về cuộc sống thời sinh viên",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4060,
-    "name": "Bàn bạc kế hoạch tổ chức tiệc cuối năm (Fête de fin d'année - Tiệc cuối năm)",
+    "name": "Bàn bạc kế hoạch tổ chức tiệc cuối năm",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4061,
-    "name": "Đăng ký gói mạng di động mới (Souscrire à un forfait mobile - Đăng ký gói mạng di động)",
+    "name": "Đăng ký gói mạng di động mới",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4062,
-    "name": "Giới thiệu văn phòng làm việc mới (Présenter son bureau - Giới thiệu văn phòng)",
+    "name": "Giới thiệu văn phòng làm việc mới",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4063,
-    "name": "Hỏi thăm thời gian giao dịch của ngân hàng (Horaires de la banque - Giờ làm việc ngân hàng)",
+    "name": "Hỏi thăm thời gian giao dịch của ngân hàng",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4064,
-    "name": "Thời tiết bốn mùa tại thành phố Nice (Le climat à Nice - Thời tiết ở Nice)",
+    "name": "Thời tiết bốn mùa tại thành phố Nice",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4065,
-    "name": "Nói về kế hoạch tương lai dài hạn (Projets d'avenir - Kế hoạch tương lai)",
+    "name": "Nói về kế hoạch tương lai dài hạn",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4066,
-    "name": "Thảo luận trận đấu bóng đá của đội tuyển Pháp (Match de football - Trận đấu bóng đá)",
+    "name": "Thảo luận trận đấu bóng đá của đội tuyển Pháp",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4067,
-    "name": "Mua sắm đồ điện máy gia dụng (Achat d'électroménager - Mua đồ điện máy)",
+    "name": "Mua sắm đồ điện máy gia dụng",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4068,
-    "name": "Công việc làm thêm thời sinh viên (Un job étudiant - Việc làm thêm sinh viên)",
+    "name": "Công việc làm thêm thời sinh viên",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4069,
-    "name": "Đặt vé máy bay khứ hồi đi Lyon (Réserver un vol pour Lyon - Đặt vé đi Lyon)",
+    "name": "Đặt vé máy bay khứ hồi đi Lyon",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4070,
-    "name": "Tìm hiểu các lễ hội truyền thống của Pháp (Fêtes traditionnelles françaises - Lễ hội Pháp)",
+    "name": "Tìm hiểu các lễ hội truyền thống của Pháp",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4071,
-    "name": "Hướng dẫn sử dụng máy pha cà phê văn phòng (Utiliser la machine à café - Dùng máy pha cà phê)",
+    "name": "Hướng dẫn sử dụng máy pha cà phê văn phòng",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4072,
-    "name": "Nói về các trò chơi điện tử yêu thích (Les jeux vidéo préférés - Trò chơi điện tử)",
+    "name": "Nói về các trò chơi điện tử yêu thích",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4073,
-    "name": "Tìm kiếm cơ hội việc làm sau tốt nghiệp (Recherche d'emploi - Tìm kiếm việc làm)",
+    "name": "Tìm kiếm cơ hội việc làm sau tốt nghiệp",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4074,
-    "name": "Lợi ích của việc chạy bộ buổi sáng (Les bienfaits du footing - Chạy bộ buổi sáng)",
+    "name": "Lợi ích của việc chạy bộ buổi sáng",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4075,
-    "name": "Mua sắm quần áo dịp giảm giá (Faire les soldes - Mua sắm giảm giá)",
+    "name": "Mua sắm quần áo dịp giảm giá",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4076,
-    "name": "Sử dụng mạng xã hội hàng ngày (Utiliser les réseaux sociaux - Dùng mạng xã hội)",
+    "name": "Sử dụng mạng xã hội hàng ngày",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4077,
-    "name": "Cảm xúc lần đầu tiên đến thăm tháp Eiffel (Première visite à la Tour Eiffel - Tháp Eiffel)",
+    "name": "Cảm xúc lần đầu tiên đến thăm tháp Eiffel",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4078,
-    "name": "Học bơi lội vào dịp hè (Apprendre à nager en été - Học bơi mùa hè)",
+    "name": "Học bơi lội vào dịp hè",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4079,
-    "name": "Gọi bánh ngọt và trà chiều (Commander des pâtisseries - Bánh ngọt và trà chiều)",
+    "name": "Gọi bánh ngọt và trà chiều",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4080,
-    "name": "Hỏi ý kiến bạn bè về phong cách thời trang (Demander un avis mode - Hỏi ý kiến thời trang)",
+    "name": "Hỏi ý kiến bạn bè về phong cách thời trang",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4081,
-    "name": "Mô tả tính cách thú cưng của bạn (Le caractère de mon animal - Tính cách thú cưng)",
+    "name": "Mô tả tính cách thú cưng của bạn",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4082,
-    "name": "Kế hoạch chuẩn bị hành lý đi du lịch (Préparer sa valise - Chuẩn bị hành lý)",
+    "name": "Kế hoạch chuẩn bị hành lý đi du lịch",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4083,
-    "name": "Hỏi đường đi đến bảo tàng Louvre (Aller au Musée du Louvre - Đến bảo tàng Louvre)",
+    "name": "Hỏi đường đi đến bảo tàng Louvre",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4084,
-    "name": "Gửi bưu kiện tại bưu điện (Envoyer un colis à la poste - Gửi bưu phẩm ở bưu điện)",
+    "name": "Gửi bưu kiện tại bưu điện",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4085,
-    "name": "Nói về nghề nghiệp mơ ước (Le métier de mes rêves - Nghề nghiệp mơ ước)",
+    "name": "Nói về nghề nghiệp mơ ước",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4086,
-    "name": "Tổ chức buổi dã ngoại ngoài trời (Organiser un pique-nique - Tổ chức dã ngoại)",
+    "name": "Tổ chức buổi dã ngoại ngoài trời",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4087,
-    "name": "Cách chăm sóc cây cảnh trong nhà (Prendre soin des plantes vertes - Chăm sóc cây cảnh)",
+    "name": "Cách chăm sóc cây cảnh trong nhà",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4088,
-    "name": "Bàn luận về việc đi ăn tối cùng đồng nghiệp (Dîner entre collègues - Ăn tối với đồng nghiệp)",
+    "name": "Bàn luận về việc đi ăn tối cùng đồng nghiệp",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4089,
-    "name": "Mua sắm giày thể thao mới (Acheter des baskets - Mua giày thể thao)",
+    "name": "Mua sắm giày thể thao mới",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4090,
-    "name": "Đăng ký thẻ thành viên phòng tập gym (S'inscrire à la salle de sport - Đăng ký phòng tập gym)",
+    "name": "Đăng ký thẻ thành viên phòng tập gym",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4091,
-    "name": "Học nấu một món ăn truyền thống Pháp (Apprendre à cuisiner français - Học nấu món Pháp)",
+    "name": "Học nấu một món ăn truyền thống Pháp",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4092,
-    "name": "Kể về chuyến đi chơi biển mùa hè (Vacances à la mer - Nghỉ mát ở biển)",
+    "name": "Kể về chuyến đi chơi biển mùa hè",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4093,
-    "name": "Đăng ký làm thẻ thư viện (Faire une carte de bibliothèque - Làm thẻ thư viện)",
+    "name": "Đăng ký làm thẻ thư viện",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4094,
-    "name": "Nói về sở thích cắm trại dã ngoại (Faire du camping - Sở thích cắm trại)",
+    "name": "Nói về sở thích cắm trại dã ngoại",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4095,
-    "name": "Bàn về bánh mì Baguette và phô mai Pháp (Baguette et fromage - Bánh mì và phô mai Pháp)",
+    "name": "Bàn về bánh mì Baguette và phô mai Pháp",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4096,
-    "name": "Cách lên kế hoạch cho một chuyến đi chơi xa (Planifier un voyage - Lập kế hoạch chuyến đi)",
+    "name": "Cách lên kế hoạch cho một chuyến đi chơi xa",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4097,
-    "name": "Mua sắm đồ trang trí nhà cửa (Acheter de la décoration - Mua đồ trang trí)",
+    "name": "Mua sắm đồ trang trí nhà cửa",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4098,
-    "name": "Thói quen tiết kiệm tiền hàng tháng (Épargner de l'argent - Tiết kiệm tiền)",
+    "name": "Thói quen tiết kiệm tiền hàng tháng",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4099,
-    "name": "Kể về một kỷ niệm đáng nhớ thời thơ ấu (Un souvenir d'enfance - Kỷ niệm thơ ấu)",
+    "name": "Kể về một kỷ niệm đáng nhớ thời thơ ấu",
     "systemCode": "DELF",
     "levelCode": "A2"
   },
   {
     "id": 4100,
-    "name": "Họp bàn dự án phát triển mới với đồng nghiệp (Réunion de travail - Họp bàn dự án)",
+    "name": "Họp bàn dự án phát triển mới với đồng nghiệp",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4101,
-    "name": "Báo cáo tiến độ công việc hàng tuần (Rapport d'activité hebdomadaire - Báo cáo công việc tuần)",
+    "name": "Báo cáo tiến độ công việc hàng tuần",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4102,
-    "name": "Nói về lịch sử và văn hóa phong phú của Pháp (Histoire et culture françaises - Lịch sử văn hóa Pháp)",
+    "name": "Nói về lịch sử và văn hóa phong phú của Pháp",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4103,
-    "name": "Tham quan bảo tàng nghệ thuật Centre Pompidou (Visite au Centre Pompidou - Tham quan bảo tàng)",
+    "name": "Tham quan bảo tàng nghệ thuật Centre Pompidou",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4104,
-    "name": "Tìm hiểu về nghệ thuật ẩm thực tinh tế của Pháp (La gastronomie française - Ẩm thực Pháp)",
+    "name": "Tìm hiểu về nghệ thuật ẩm thực tinh tế của Pháp",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4105,
-    "name": "Nói về tác phẩm văn học nổi tiếng Les Misérables (Những người khốn khổ - Les Misérables)",
+    "name": "Nói về tác phẩm văn học nổi tiếng Les Misérables",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4106,
-    "name": "Thảo luận về vấn đề bảo vệ môi trường đô thị (Problèmes environnementaux urbains - Môi trường đô thị)",
+    "name": "Thảo luận về vấn đề bảo vệ môi trường đô thị",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4107,
-    "name": "Bảo tồn các loài động vật hoang dã (Protection de la faune sauvage - Bảo vệ động vật hoang dã)",
+    "name": "Bảo tồn các loài động vật hoang dã",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4108,
-    "name": "Tầm quan trọng của việc học ngoại ngữ thứ ba (Importance d'apprendre les langues - Học ngoại ngữ)",
+    "name": "Tầm quan trọng của việc học ngoại ngữ thứ ba",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4109,
-    "name": "Trải nghiệm du lịch phượt bằng xe đạp tại thung lũng sông Loire (Vélo dans la Loire - Phượt xe đạp)",
+    "name": "Trải nghiệm du lịch phượt bằng xe đạp tại thung lũng sông Loire",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4110,
-    "name": "Xu hướng mua sắm trực tuyến ngày nay (Les tendances du e-commerce - Mua sắm online)",
+    "name": "Xu hướng mua sắm trực tuyến ngày nay",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4111,
-    "name": "Mô tả những phẩm chất tốt đẹp của bạn bè (Qualités d'un ami - Phẩm chất bạn bè)",
+    "name": "Mô tả những phẩm chất tốt đẹp của bạn bè",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4112,
-    "name": "Thử thách khi sống và học tập ở nước ngoài (Vivre et étudier à l'étranger - Sống/học tập ở nước ngoài)",
+    "name": "Thử thách khi sống và học tập ở nước ngoài",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4113,
-    "name": "Cách giảm căng thẳng sau giờ làm việc hiệu quả (Gérer le stress au travail - Giảm stress công việc)",
+    "name": "Cách giảm căng thẳng sau giờ làm việc hiệu quả",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4114,
-    "name": "Lợi ích của việc đọc sách giấy truyền thống (Bienfaits de la lecture sur papier - Đọc sách giấy)",
+    "name": "Lợi ích của việc đọc sách giấy truyền thống",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4115,
-    "name": "Tham gia câu lạc bộ âm nhạc hoặc nhạc cụ (Rejoindre un club de musique - CLB âm nhạc)",
+    "name": "Tham gia câu lạc bộ âm nhạc hoặc nhạc cụ",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4116,
-    "name": "Chế độ ăn chay và sức khỏe tim mạch (Régime végétarien et santé - Ăn chay và sức khỏe)",
+    "name": "Chế độ ăn chay và sức khỏe tim mạch",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4117,
-    "name": "Cách quản lý thời gian cá nhân khoa học (Gestion efficace du temps - Quản lý thời gian)",
+    "name": "Cách quản lý thời gian cá nhân khoa học",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4118,
-    "name": "Tổ chức buổi tiệc nướng BBQ ngoài vườn (Faire un barbecue - Tiệc nướng BBQ)",
+    "name": "Tổ chức buổi tiệc nướng BBQ ngoài vườn",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4119,
-    "name": "Chia sẻ kinh nghiệm phỏng vấn xin visa du học (Entretien de visa étudiant - Phỏng vấn visa)",
+    "name": "Chia sẻ kinh nghiệm phỏng vấn xin visa du học",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4120,
-    "name": "Ngày hội thể thao tại trường học (La journée sportive à l'école - Ngày hội thể thao)",
+    "name": "Ngày hội thể thao tại trường học",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4121,
-    "name": "Ảnh hưởng tiêu cực và tích cực của mạng xã hội (Impact des réseaux sociaux - Ảnh hưởng mạng xã hội)",
+    "name": "Ảnh hưởng tiêu cực và tích cực của mạng xã hội",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4122,
-    "name": "Các bước sơ cứu chấn thương cơ bản tại nhà (Gestes de premiers secours - Sơ cứu chấn thương)",
+    "name": "Các bước sơ cứu chấn thương cơ bản tại nhà",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4123,
-    "name": "Trào lưu sống tối giản trong giới trẻ (Le mode de vie minimaliste - Sống tối giản)",
+    "name": "Trào lưu sống tối giản trong giới trẻ",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4124,
-    "name": "Mua sắm hoa tươi trang trí nhà cửa đón Giáng sinh (Décorations de Noël - Trang trí Giáng sinh)",
+    "name": "Mua sắm hoa tươi trang trí nhà cửa đón Giáng sinh",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4125,
-    "name": "Đam mê nghệ thuật nhiếp ảnh đường phố (La photographie de rue - Nhiếp ảnh đường phố)",
+    "name": "Đam mê nghệ thuật nhiếp ảnh đường phố",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4126,
-    "name": "Trải nghiệm đi tàu điện ngầm Paris giờ cao điểm (Le métro aux heures de pointe - Tàu điện ngầm)",
+    "name": "Trải nghiệm đi tàu điện ngầm Paris giờ cao điểm",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4127,
-    "name": "Thảo luận về hình thức học đại học trực tuyến (L'apprentissage en ligne - Học trực tuyến)",
+    "name": "Thảo luận về hình thức học đại học trực tuyến",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4128,
-    "name": "Cách sản xuất một video ngắn sáng tạo (Créer une courte vidéo - Làm video ngắn)",
+    "name": "Cách sản xuất một video ngắn sáng tạo",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4129,
-    "name": "Thủ tục gia hạn hộ chiếu tại đại sứ quán (Renouvellement de passeport - Gia hạn hộ chiếu)",
+    "name": "Thủ tục gia hạn hộ chiếu tại đại sứ quán",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4130,
-    "name": "Nói về thần tượng hoặc người truyền cảm hứng (Mon modèle inspirant - Người truyền cảm hứng)",
+    "name": "Nói về thần tượng hoặc người truyền cảm hứng",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4131,
-    "name": "Ý thức giữ gìn vệ sinh và mỹ quan đô thị (Propreté et civisme urbain - Vệ sinh đô thị)",
+    "name": "Ý thức giữ gìn vệ sinh và mỹ quan đô thị",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4132,
-    "name": "Cách sửa chữa các vật dụng gia đình đơn giản (Bricolage à la maison - Sửa chữa đồ gia đình)",
+    "name": "Cách sửa chữa các vật dụng gia đình đơn giản",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4133,
-    "name": "Tham quan phố cổ và thưởng thức cà phê vỉa hè (Promenade dans le vieux quartier - Cà phê vỉa hè)",
+    "name": "Tham quan phố cổ và thưởng thức cà phê vỉa hè",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4134,
-    "name": "Kỷ niệm ngày đầu tiên đi làm tại công ty (Premier jour d'intégration - Ngày đầu đi làm)",
+    "name": "Kỷ niệm ngày đầu tiên đi làm tại công ty",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4135,
-    "name": "Chuẩn bị bài thuyết trình thuyết phục trước đám đông (Préparer une présentation - Chuẩn bị thuyết trình)",
+    "name": "Chuẩn bị bài thuyết trình thuyết phục trước đám đông",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4136,
-    "name": "Tiết kiệm năng lượng điện nước trong gia đình (Économiser l'énergie - Tiết kiệm điện nước)",
+    "name": "Tiết kiệm năng lượng điện nước trong gia đình",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4137,
-    "name": "Đi cắm trại trên núi vào mùa thu (Camping en montagne en automne - Cắm trại mùa thu)",
+    "name": "Đi cắm trại trên núi vào mùa thu",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4138,
-    "name": "Đăng ký mua bảo hiểm y tế toàn diện (Souscrire à une assurance santé - Bảo hiểm y tế)",
+    "name": "Đăng ký mua bảo hiểm y tế toàn diện",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4139,
-    "name": "Vai trò và giá trị của tình cảm gia đình (Les valeurs familiales - Giá trị gia đình)",
+    "name": "Vai trò và giá trị của tình cảm gia đình",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4140,
-    "name": "Tìm hiểu về ngày lễ Quốc khánh Pháp 14 tháng 7 (La fête nationale du 14 juillet - Quốc khánh Pháp)",
+    "name": "Tìm hiểu về ngày lễ Quốc khánh Pháp 14 tháng 7",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4141,
-    "name": "Tìm hiểu văn hóa thưởng thức rượu vang Pháp (La culture du vin en France - Văn hóa rượu vang)",
+    "name": "Tìm hiểu văn hóa thưởng thức rượu vang Pháp",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4142,
-    "name": "Cách viết một bức thư công việc trang trọng (Rédiger un courriel formel - Viết thư công sở)",
+    "name": "Cách viết một bức thư công việc trang trọng",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4143,
-    "name": "Nói về trải nghiệm đi xem biểu diễn thời trang (Assister à un défilé de mode - Xem biểu diễn thời trang)",
+    "name": "Nói về trải nghiệm đi xem biểu diễn thời trang",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4144,
-    "name": "Kế hoạch tiết kiệm tài chính để mua nhà (Épargner pour un projet immobilier - Tiết kiệm mua nhà)",
+    "name": "Kế hoạch tiết kiệm tài chính để mua nhà",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4145,
-    "name": "Bảo tồn các công trình kiến trúc cổ kính (Préservation des monuments anciens - Bảo tồn kiến trúc)",
+    "name": "Bảo tồn các công trình kiến trúc cổ kính",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4146,
-    "name": "Cách xử lý khi gặp sự cố mất hành lý lúc du lịch (Perte de bagages en voyage - Mất hành lý khi đi du lịch)",
+    "name": "Cách xử lý khi gặp sự cố mất hành lý lúc du lịch",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4147,
-    "name": "Thảo luận về lợi ích của việc thiền định (Les bienfaits de la méditation - Lợi ích của thiền định)",
+    "name": "Thảo luận về lợi ích của việc thiền định",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4148,
-    "name": "Vai trò của các hoạt động thể thao tập thể (Le sport collectif - Hoạt động thể thao tập thể)",
+    "name": "Vai trò của các hoạt động thể thao tập thể",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4149,
-    "name": "Cảm xúc khi đạt được một mục tiêu lớn trong đời (Atteindre un objectif majeur - Đạt được mục tiêu lớn)",
+    "name": "Cảm xúc khi đạt được một mục tiêu lớn trong đời",
     "systemCode": "DELF",
     "levelCode": "B1"
   },
   {
     "id": 4150,
-    "name": "Phỏng vấn xin việc tại tập đoàn đa quốc gia (Entretien d'embauche international - Phỏng vấn xin việc)",
+    "name": "Phỏng vấn xin việc tại tập đoàn đa quốc gia",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4151,
-    "name": "Đàm phán mức lương và các chế độ đãi ngộ (Négociation salariale - Đàm phán mức lương)",
+    "name": "Đàm phán mức lương và các chế độ đãi ngộ",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4152,
-    "name": "Thảo luận xu hướng phát triển của Trí tuệ nhân tạo - AI (L'essor de l'IA - Trí tuệ nhân tạo)",
+    "name": "Thảo luận xu hướng phát triển của Trí tuệ nhân tạo - AI",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4153,
-    "name": "Tác động của biến đổi khí hậu toàn cầu (Conséquences du changement climatique - Biến đổi khí hậu)",
+    "name": "Tác động của biến đổi khí hậu toàn cầu",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4154,
-    "name": "Tìm hiểu kiến trúc độc đáo của nhà thờ Đức Bà Paris (Notre-Dame de Paris - Nhà thờ Đức Bà)",
+    "name": "Tìm hiểu kiến trúc độc đáo của nhà thờ Đức Bà Paris",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4155,
-    "name": "Lịch sử và vẻ đẹp kiến trúc lâu đài Versailles (Le château de Versailles - Lâu đài Versailles)",
+    "name": "Lịch sử và vẻ đẹp kiến trúc lâu đài Versailles",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4156,
-    "name": "Kinh nghiệm khởi nghiệp kinh doanh công nghệ (Créer une start-up technologique - Khởi nghiệp)",
+    "name": "Kinh nghiệm khởi nghiệp kinh doanh công nghệ",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4157,
-    "name": "Phân tích thị trường chứng khoán và đầu tư tài chính (Investissement en bourse - Thị trường chứng khoán)",
+    "name": "Phân tích thị trường chứng khoán và đầu tư tài chính",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4158,
-    "name": "Quản lý tài chính cá nhân thông minh (Gestion des finances personnelles - Tài chính cá nhân)",
+    "name": "Quản lý tài chính cá nhân thông minh",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4159,
-    "name": "Phong trào bảo vệ môi trường và tiêu dùng xanh (Consommation écoresponsable - Tiêu dùng xanh)",
+    "name": "Phong trào bảo vệ môi trường và tiêu dùng xanh",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4160,
-    "name": "Thương mại điện tử làm thay đổi ngành bán lẻ (E-commerce vs commerce physique - Thương mại điện tử)",
+    "name": "Thương mại điện tử làm thay đổi ngành bán lẻ",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4161,
-    "name": "Ý nghĩa lịch sử của cuộc Cách mạng Pháp năm 1789 (La Révolution française - Cách mạng Pháp)",
+    "name": "Ý nghĩa lịch sử của cuộc Cách mạng Pháp năm 1789",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4162,
-    "name": "Tầm quan trọng của việc phát triển tư duy phản biện (Développer l'esprit critique - Tư duy phản biện)",
+    "name": "Tầm quan trọng của việc phát triển tư duy phản biện",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4163,
-    "name": "Bàn về thách thức của vấn đề già hóa dân số (Le vieillissement de la population - Già hóa dân số)",
+    "name": "Bàn về thách thức của vấn đề già hóa dân số",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4164,
-    "name": "Lợi ích sức khỏe của chế độ ăn Địa Trung Hải (Le régime méditerranéen - Chế độ ăn Địa Trung Hải)",
+    "name": "Lợi ích sức khỏe của chế độ ăn Địa Trung Hải",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4165,
-    "name": "Cách xin học bổng du học của chính phủ Pháp (Bourses du gouvernement français - Học bổng chính phủ Pháp)",
+    "name": "Cách xin học bổng du học của chính phủ Pháp",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4166,
-    "name": "Giải pháp thúc đẩy phân loại rác thải tại nguồn (Gestion et tri des déchets - Phân loại rác thải)",
+    "name": "Giải pháp thúc đẩy phân loại rác thải tại nguồn",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4167,
-    "name": "Ảnh hưởng của quảng cáo đến tâm lý người tiêu dùng (Influence de la publicité - Ảnh hưởng quảng cáo)",
+    "name": "Ảnh hưởng của quảng cáo đến tâm lý người tiêu dùng",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4168,
-    "name": "Vấn đề bảo mật thông tin trên môi trường internet (Protection des données en ligne - Bảo mật thông tin)",
+    "name": "Vấn đề bảo mật thông tin trên môi trường internet",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4169,
-    "name": "Sự cân bằng giữa công việc và cuộc sống cá nhân (Équilibre vie pro et vie perso - Cân bằng công việc/cuộc sống)",
+    "name": "Sự cân bằng giữa công việc và cuộc sống cá nhân",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4170,
-    "name": "Những đóng góp khoa học lớn của nước Pháp (Découvertes scientifiques françaises - Đóng góp khoa học Pháp)",
+    "name": "Những đóng góp khoa học lớn của nước Pháp",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4171,
-    "name": "Lợi ích của việc rèn luyện sự tập trung và chánh niệm (La pleine conscience - Chánh niệm)",
+    "name": "Lợi ích của việc rèn luyện sự tập trung và chánh niệm",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4172,
-    "name": "Xu hướng chuyển dịch sang sử dụng ô tô điện (La transition vers les voitures électriques - Xe ô tô điện)",
+    "name": "Xu hướng chuyển dịch sang sử dụng ô tô điện",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4173,
-    "name": "Vai trò của công tác hướng nghiệp cho học sinh (L'orientation professionnelle - Hướng nghiệp)",
+    "name": "Vai trò của công tác hướng nghiệp cho học sinh",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4174,
-    "name": "Sự khác biệt về quan điểm giữa các thế hệ (Le conflit de générations - Khác biệt thế hệ)",
+    "name": "Sự khác biệt về quan điểm giữa các thế hệ",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4175,
-    "name": "Ảnh hưởng của du lịch đại chúng đến đời sống bản địa (Le tourisme de masse - Du lịch đại chúng)",
+    "name": "Ảnh hưởng của du lịch đại chúng đến đời sống bản địa",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4176,
-    "name": "Khủng hoảng tâm lý của người trẻ trong xã hội hiện đại (Crise existentielle des jeunes - Khủng hoảng tâm lý người trẻ)",
+    "name": "Khủng hoảng tâm lý của người trẻ trong xã hội hiện đại",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4177,
-    "name": "Tương lai của ngành năng lượng tái tạo (L'avenir des énergies renouvelables - Năng lượng tái tạo)",
+    "name": "Tương lai của ngành năng lượng tái tạo",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4178,
-    "name": "Tìm hiểu các điệu nhảy đương đại và cổ điển (La danse contemporaine et classique - Nghệ thuật múa)",
+    "name": "Tìm hiểu các điệu nhảy đương đại và cổ điển",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4179,
-    "name": "Kinh nghiệm tự học thi chứng chỉ tiếng Pháp (Préparer le DELF B2 - Ôn thi DELF B2)",
+    "name": "Kinh nghiệm tự học thi chứng chỉ tiếng Pháp",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4180,
-    "name": "Ảnh hưởng của trò chơi điện tử trực tuyến đến giới trẻ (Impact des jeux vidéo - Trò chơi điện tử và giới trẻ)",
+    "name": "Ảnh hưởng của trò chơi điện tử trực tuyến đến giới trẻ",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4181,
-    "name": "Vai trò của Trí tuệ cảm xúc - EQ trong quản lý (L'intelligence émotionnelle - Trí tuệ cảm xúc)",
+    "name": "Vai trò của Trí tuệ cảm xúc - EQ trong quản lý",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4182,
-    "name": "Lối sống làm việc tự do và thời gian linh hoạt (Le mode de vie des freelances - Làm việc tự do)",
+    "name": "Lối sống làm việc tự do và thời gian linh hoạt",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4183,
-    "name": "Cách duy trì mối quan hệ đồng nghiệp bền vững (Relations professionnelles harmonieuses - Quan hệ đồng nghiệp)",
+    "name": "Cách duy trì mối quan hệ đồng nghiệp bền vững",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4184,
-    "name": "Giải pháp nâng cao an toàn giao thông đường bộ (Améliorer la sécurité routière - An toàn giao thông)",
+    "name": "Giải pháp nâng cao an toàn giao thông đường bộ",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4185,
-    "name": "Tìm hiểu về ngành sản xuất nước hoa nổi tiếng của Pháp (L'industrie du parfum en France - Nước hoa Pháp)",
+    "name": "Tìm hiểu về ngành sản xuất nước hoa nổi tiếng của Pháp",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4186,
-    "name": "Ý nghĩa và giá trị của việc học tập suốt đời (L'apprentissage tout au long de la vie - Học tập suốt đời)",
+    "name": "Ý nghĩa và giá trị của việc học tập suốt đời",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4187,
-    "name": "Tác động của sách điện tử đối với văn hóa đọc (L'e-book et l'avenir du livre - Sách điện tử)",
+    "name": "Tác động của sách điện tử đối với văn hóa đọc",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4188,
-    "name": "Kinh nghiệm quản trị dự án quy mô vừa và lớn (Gestion de projet en entreprise - Quản lý dự án)",
+    "name": "Kinh nghiệm quản trị dự án quy mô vừa và lớn",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4189,
-    "name": "Tầm quan trọng của giấc ngủ đối với sức khỏe tinh thần (L'importance du sommeil - Tầm quan trọng của giấc ngủ)",
+    "name": "Tầm quan trọng của giấc ngủ đối với sức khỏe tinh thần",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4190,
-    "name": "Tốc độ đô thị hóa nhanh và hệ lụy xã hội (L'urbanisation galopante - Hệ lụy đô thị hóa)",
+    "name": "Tốc độ đô thị hóa nhanh và hệ lụy xã hội",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4191,
-    "name": "Vai trò bảo tồn di sản thế giới của tổ chức UNESCO (Le rôle de l'UNESCO - Vai trò của UNESCO)",
+    "name": "Vai trò bảo tồn di sản thế giới của tổ chức UNESCO",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4192,
-    "name": "Cách định hình và phát triển thương hiệu cá nhân (Développer sa marque personnelle - Thương hiệu cá nhân)",
+    "name": "Cách định hình và phát triển thương hiệu cá nhân",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4193,
-    "name": "Phân tích các danh họa nổi tiếng Monet, Renoir và Matisse (Les peintres impressionnistes - Tranh ấn tượng Pháp)",
+    "name": "Phân tích các danh họa nổi tiếng Monet, Renoir và Matisse",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4194,
-    "name": "Cẩm nang du lịch bụi nước ngoài an toàn và tiết kiệm (Voyager seul à l'étranger - Du lịch bụi nước ngoài)",
+    "name": "Cẩm nang du lịch bụi nước ngoài an toàn và tiết kiệm",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4195,
-    "name": "Xu hướng làm việc từ xa của các doanh nghiệp (Le travail à distance / Télétravail - Làm việc từ xa)",
+    "name": "Xu hướng làm việc từ xa của các doanh nghiệp",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4196,
-    "name": "Tầm quan trọng của thái độ sống tích cực và bao dung (L'optimisme et la bienveillance - Thái độ sống tích cực)",
+    "name": "Tầm quan trọng của thái độ sống tích cực và bao dung",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4197,
-    "name": "Chiến lược phát triển kinh tế xanh bền vững (L'économie verte - Phát triển kinh tế xanh)",
+    "name": "Chiến lược phát triển kinh tế xanh bền vững",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4198,
-    "name": "Bảo vệ đa dạng sinh học trong các hệ sinh thái (Préservation de la biodiversité - Đa dạng sinh học)",
+    "name": "Bảo vệ đa dạng sinh học trong các hệ sinh thái",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4199,
-    "name": "Vai trò của nước Pháp trong Liên minh Châu Âu - EU (La France au sein de l'UE - Nước Pháp trong EU)",
+    "name": "Vai trò của nước Pháp trong Liên minh Châu Âu - EU",
     "systemCode": "DELF",
     "levelCode": "B2"
   },
   {
     "id": 4200,
-    "name": "Thách thức đạo đức của công nghệ nhân bản vô tính (Les défis éthiques du clonage - Nhân bản vô tính)",
+    "name": "Thách thức đạo đức của công nghệ nhân bản vô tính",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4201,
-    "name": "Tác động của toàn cầu hóa đến văn hóa bản địa (La mondialisation et l'identité culturelle - Toàn cầu hóa và văn hóa)",
+    "name": "Tác động của toàn cầu hóa đến văn hóa bản địa",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4202,
-    "name": "Vai trò của giáo dục đại học trong thời đại số (L'enseignement supérieur à l'ère du numérique - Giáo dục thời đại số)",
+    "name": "Vai trò của giáo dục đại học trong thời đại số",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4203,
-    "name": "Phân tích triết học hiện sinh của Jean-Paul Sartre (L'existentialisme de Sartre - Triết học hiện sinh Sartre)",
+    "name": "Phân tích triết học hiện sinh của Jean-Paul Sartre",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4204,
-    "name": "Nghệ thuật ngoại giao và vai trò trung gian hòa giải (L'art de la diplomatie - Nghệ thuật ngoại giao)",
+    "name": "Nghệ thuật ngoại giao và vai trò trung gian hòa giải",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4205,
-    "name": "Tương lai của kinh tế tuần hoàn và tái chế vật liệu (L'avenir de l'économie circulaire - Kinh tế tuần hoàn)",
+    "name": "Tương lai của kinh tế tuần hoàn và tái chế vật liệu",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4206,
-    "name": "Vấn đề đô thị hóa bền vững và thành phố thông minh (Villes intelligentes et durables - Đô thị hóa bền vững)",
+    "name": "Vấn đề đô thị hóa bền vững và thành phố thông minh",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4207,
-    "name": "Quyền riêng tư cá nhân và sự giám sát của dữ liệu lớn (Vie privée et Big Data - Quyền riêng tư dữ liệu lớn)",
+    "name": "Quyền riêng tư cá nhân và sự giám sát của dữ liệu lớn",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4208,
-    "name": "Thảo luận về chính sách di cư của các quốc gia châu Âu (Les politiques migratoires en Europe - Chính sách di cư châu Âu)",
+    "name": "Thảo luận về chính sách di cư của các quốc gia châu Âu",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4209,
-    "name": "Vai trò của báo chí chính thống trước vấn đề tin giả (Les médias face aux fake news - Báo chí và tin giả)",
+    "name": "Vai trò của báo chí chính thống trước vấn đề tin giả",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4210,
-    "name": "Phân tích cuộc khủng hoảng nợ công toàn cầu (La crise de la dette publique mondiale - Khủng hoảng nợ công)",
+    "name": "Phân tích cuộc khủng hoảng nợ công toàn cầu",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4211,
-    "name": "Tác động xã hội của việc tự động hóa và robot (L'automatisation et l'avenir de l'emploi - Tác động tự động hóa)",
+    "name": "Tác động xã hội của việc tự động hóa và robot",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4212,
-    "name": "Đa dạng ngôn ngữ và nguy cơ biến mất của các sinh ngữ (La disparition des langues - Nguy cơ biến mất ngôn ngữ)",
+    "name": "Đa dạng ngôn ngữ và nguy cơ biến mất của các sinh ngữ",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4213,
-    "name": "Phân tích tư tưởng nữ quyền trong tác phẩm của Simone de Beauvoir (Le féminisme de Simone de Beauvoir - Tư tưởng nữ quyền)",
+    "name": "Phân tích tư tưởng nữ quyền trong tác phẩm của Simone de Beauvoir",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4214,
-    "name": "Bảo tồn đa dạng sinh học đại dương và biến đổi khí hậu (Biodiversité marine et climat - Bảo tồn sinh học đại dương)",
+    "name": "Bảo tồn đa dạng sinh học đại dương và biến đổi khí hậu",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4215,
-    "name": "Vai trò của nghệ thuật đương đại trong phản ánh xã hội (L'art contemporain et la société - Nghệ thuật phản ánh xã hội)",
+    "name": "Vai trò của nghệ thuật đương đại trong phản ánh xã hội",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4216,
-    "name": "Tương lai của tiền điện tử và công nghệ Blockchain (L'avenir des crypto-monnaies - Tiền điện tử & Blockchain)",
+    "name": "Tương lai của tiền điện tử và công nghệ Blockchain",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4217,
-    "name": "Ảnh hưởng của mạng xã hội đến tâm lý học đường (Réseaux sociaux et santé mentale - Sức khỏe tâm thần học đường)",
+    "name": "Ảnh hưởng của mạng xã hội đến tâm lý học đường",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4218,
-    "name": "An ninh lương thực toàn cầu trước nguy cơ hạn hán (Sécurité alimentaire mondiale - An ninh lương thực)",
+    "name": "An ninh lương thực toàn cầu trước nguy cơ hạn hán",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4219,
-    "name": "Đạo đức học trong y khoa và quyền trợ tử (L'éthique médicale et l'euthanasie - Đạo đức y khoa và trợ tử)",
+    "name": "Đạo đức học trong y khoa và quyền trợ tử",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4220,
-    "name": "Thảo luận về cuộc cách mạng công nghiệp lần thứ tư (La quatrième révolution industrielle - Cách mạng công nghiệp 4.0)",
+    "name": "Thảo luận về cuộc cách mạng công nghiệp lần thứ tư",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4221,
-    "name": "Phân tích tác phẩm điện ảnh kinh điển của Làn sóng mới Pháp (La Nouvelle Vague - Làn sóng mới điện ảnh Pháp)",
+    "name": "Phân tích tác phẩm điện ảnh kinh điển của Làn sóng mới Pháp",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4222,
-    "name": "Bảo tồn di sản văn hóa phi vật thể của nhân loại (Le patrimoine culturel immatériel - Di sản văn hóa phi vật thể)",
+    "name": "Bảo tồn di sản văn hóa phi vật thể của nhân loại",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4223,
-    "name": "Xu hướng phát triển của y học cá thể hóa (La médecine personnalisée - Y học cá thể hóa)",
+    "name": "Xu hướng phát triển của y học cá thể hóa",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4224,
-    "name": "Thách thức của việc hội nhập văn hóa đối với người nhập cư (L'intégration culturelle - Hội nhập văn hóa người nhập cư)",
+    "name": "Thách thức của việc hội nhập văn hóa đối với người nhập cư",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4225,
-    "name": "Vai trò của các tổ chức phi chính phủ - NGO trên thế giới (Le rôle des ONG mondiales - Vai trò các tổ chức NGO)",
+    "name": "Vai trò của các tổ chức phi chính phủ - NGO trên thế giới",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4226,
-    "name": "Khủng hoảng năng lượng và các giải pháp thay thế hạt nhân (Transition énergétique et nucléaire - Khủng hoảng năng lượng)",
+    "name": "Khủng hoảng năng lượng và các giải pháp thay thế hạt nhân",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4227,
-    "name": "Phân tích tâm lý học hành vi người tiêu dùng hiện đại (Psychologie du consommateur - Tâm lý hành vi tiêu dùng)",
+    "name": "Phân tích tâm lý học hành vi người tiêu dùng hiện đại",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4228,
-    "name": "Vai trò của sở hữu trí tuệ trong kỷ nguyên số (La propriété intellectuelle à l'ère du Web - Sở hữu trí tuệ số)",
+    "name": "Vai trò của sở hữu trí tuệ trong kỷ nguyên số",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4229,
-    "name": "Đánh giá tính hiệu quả của các hiệp định thương mại tự do (Les traités de libre-échange - Hiệp định thương mại tự do)",
+    "name": "Đánh giá tính hiệu quả của các hiệp định thương mại tự do",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4230,
-    "name": "Tương lai của ngành hàng không trước sức ép giảm khí thải (L'aviation verte - Hàng không xanh)",
+    "name": "Tương lai của ngành hàng không trước sức ép giảm khí thải",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4231,
-    "name": "Tác động của đô thị hóa đến sức khỏe tâm thần (Urbanisation et bien-être mental - Đô thị hóa và tâm thần)",
+    "name": "Tác động của đô thị hóa đến sức khỏe tâm thần",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4232,
-    "name": "Phân tích cấu trúc ngữ nghĩa tiếng Pháp cổ và hiện đại (Évolution de la langue française - Tiến hóa tiếng Pháp)",
+    "name": "Phân tích cấu trúc ngữ nghĩa tiếng Pháp cổ và hiện đại",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4233,
-    "name": "Vai trò của kiến trúc biểu tượng trong định hình đô thị (L'architecture comme symbole - Kiến trúc biểu tượng)",
+    "name": "Vai trò của kiến trúc biểu tượng trong định hình đô thị",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4234,
-    "name": "Đánh giá sự phát triển của du lịch sinh thái bền vững (Le tourisme durable - Du lịch sinh thái bền vững)",
+    "name": "Đánh giá sự phát triển của du lịch sinh thái bền vững",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4235,
-    "name": "Tầm quan trọng của khoa học vũ trụ đối với nhân loại (La recherche spatiale - Nghiên cứu khoa học vũ trụ)",
+    "name": "Tầm quan trọng của khoa học vũ trụ đối với nhân loại",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4236,
-    "name": "Phân tích các lý thuyết kinh tế học vĩ mô hiện đại (Théories macroéconomiques modernes - Lý thuyết kinh tế vĩ mô)",
+    "name": "Phân tích các lý thuyết kinh tế học vĩ mô hiện đại",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4237,
-    "name": "Vấn đề công lý và bình đẳng giới trong việc làm (Égalité des sexes au travail - Công lý bình đẳng giới)",
+    "name": "Vấn đề công lý và bình đẳng giới trong việc làm",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4238,
-    "name": "Vai trò của tình nguyện viên trong cứu trợ thiên tai (Le volontariat en cas de catastrophe - Cứu trợ thiên tai)",
+    "name": "Vai trò của tình nguyện viên trong cứu trợ thiên tai",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4239,
-    "name": "Xu hướng làm việc linh hoạt và mô hình văn phòng ảo (Le coworking et les bureaux virtuels - Làm việc linh hoạt)",
+    "name": "Xu hướng làm việc linh hoạt và mô hình văn phòng ảo",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4240,
-    "name": "Tầm ảnh hưởng của văn hóa Pháp đối với thế giới (Le soft power culturel français - Sức mạnh mềm văn hóa Pháp)",
+    "name": "Tầm ảnh hưởng của văn hóa Pháp đối với thế giới",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4241,
-    "name": "Phân tích triết lý nhân sinh trong văn học cổ điển (Philosophie dans la littérature classique - Triết lý văn học)",
+    "name": "Phân tích triết lý nhân sinh trong văn học cổ điển",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4242,
-    "name": "Tác động của tiếng ồn đô thị đến sức khỏe cộng đồng (La pollution sonore en ville - Tiếng ồn đô thị)",
+    "name": "Tác động của tiếng ồn đô thị đến sức khỏe cộng đồng",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4243,
-    "name": "Đạo đức trong việc phát triển và ứng dụng công nghệ gene (Éthique et génie génétique - Đạo đức công nghệ gene)",
+    "name": "Đạo đức trong việc phát triển và ứng dụng công nghệ gene",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4244,
-    "name": "Phân tích cơ cấu và tầm ảnh hưởng của tổ chức Pháp thoại - OIF (La Francophonie - Cộng đồng Pháp thoại)",
+    "name": "Phân tích cơ cấu và tầm ảnh hưởng của tổ chức Pháp thoại - OIF",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4245,
-    "name": "Tương lai của phương tiện giao thông tự hành (Véhicules autonomes - Giao thông tự hành)",
+    "name": "Tương lai của phương tiện giao thông tự hành",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4246,
-    "name": "Vấn đề bất bình đẳng giàu nghèo trong xã hội hiện đại (Les inégalités de richesse - Bất bình đẳng giàu nghèo)",
+    "name": "Vấn đề bất bình đẳng giàu nghèo trong xã hội hiện đại",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4247,
-    "name": "Vai trò của bảo tàng trong giáo dục lịch sử cho thế hệ trẻ (Le rôle éducatif des musées - Vai trò giáo dục bảo tàng)",
+    "name": "Vai trò của bảo tàng trong giáo dục lịch sử cho thế hệ trẻ",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4248,
-    "name": "Phân tích các mô hình phúc lợi xã hội tại Bắc Âu và Pháp (Les modèles d'État-providence - Mô hình phúc lợi xã hội)",
+    "name": "Phân tích các mô hình phúc lợi xã hội tại Bắc Âu và Pháp",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4249,
-    "name": "Đánh giá mối quan hệ giữa tăng trưởng kinh tế và bảo vệ môi trường (Croissance vs environnement - Tăng trưởng và môi trường)",
+    "name": "Đánh giá mối quan hệ giữa tăng trưởng kinh tế và bảo vệ môi trường",
     "systemCode": "DALF",
     "levelCode": "C1"
   },
   {
     "id": 4250,
-    "name": "Thuyết tương đối và các khám phá vật lý lượng tử mới (Relativité et physique quantique - Vật lý lượng tử)",
+    "name": "Thuyết tương đối và các khám phá vật lý lượng tử mới",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4251,
-    "name": "Thảo luận triết học về bản chất của ý thức con người (La nature de la conscience - Bản chất ý thức con người)",
+    "name": "Thảo luận triết học về bản chất của ý thức con người",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4252,
-    "name": "Vai trò của tư duy phản biện trong nghiên cứu khoa học (Esprit critique et recherche - Tư duy phản biện khoa học)",
+    "name": "Vai trò của tư duy phản biện trong nghiên cứu khoa học",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4253,
-    "name": "Sự tiến hóa của ngôn ngữ học cấu trúc (L'évolution de la linguistique structurale - Ngôn ngữ học cấu trúc)",
+    "name": "Sự tiến hóa của ngôn ngữ học cấu trúc",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4254,
-    "name": "Địa chính trị toàn cầu và sự dịch chuyển quyền lực kinh tế (Géopolitique mondiale - Địa chính trị toàn cầu)",
+    "name": "Địa chính trị toàn cầu và sự dịch chuyển quyền lực kinh tế",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4255,
-    "name": "Trách nhiệm xã hội của các tập đoàn công nghệ khổng lồ (Responsabilité des géants du Web - Trách nhiệm của Big Tech)",
+    "name": "Trách nhiệm xã hội của các tập đoàn công nghệ khổng lồ",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4256,
-    "name": "Đánh giá sự bền vững của hệ thống tài chính toàn cầu (Pérennité du système financier - Hệ thống tài chính toàn cầu)",
+    "name": "Đánh giá sự bền vững của hệ thống tài chính toàn cầu",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4257,
-    "name": "Tương lai của loài người trước viễn cảnh chinh phục sao Hỏa (Colonisation de Mars - Chinh phục sao Hỏa)",
+    "name": "Tương lai của loài người trước viễn cảnh chinh phục sao Hỏa",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4258,
-    "name": "Đạo đức học sinh học và việc thiết kế gene người (Bioéthique et bébés sur mesure - Đạo đức học sinh học)",
+    "name": "Đạo đức học sinh học và việc thiết kế gene người",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4259,
-    "name": "Tác động của các thuật toán AI đối với dân chủ (Algorithmes et démocratie - Thuật toán AI và dân chủ)",
+    "name": "Tác động của các thuật toán AI đối với dân chủ",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4260,
-    "name": "Phân tích sâu về các học thuyết triết học phương Tây (Doctrines philosophiques occidentales - Học thuyết triết học Tây phương)",
+    "name": "Phân tích sâu về các học thuyết triết học phương Tây",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4261,
-    "name": "Vai trò của các siêu đô thị trong phát triển kinh tế vùng (Mégalopoles et développement - Siêu đô thị kinh tế vùng)",
+    "name": "Vai trò của các siêu đô thị trong phát triển kinh tế vùng",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4262,
-    "name": "Thách thức của việc bảo tồn tài nguyên nước ngọt toàn cầu (Crise mondiale de l'eau - Tài nguyên nước ngọt)",
+    "name": "Thách thức của việc bảo tồn tài nguyên nước ngọt toàn cầu",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4263,
-    "name": "Đánh giá tác động lâu dài của đại dịch đối với xã hội (Conséquences post-pandémiques - Tác động xã hội sau đại dịch)",
+    "name": "Đánh giá tác động lâu dài của đại dịch đối với xã hội",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4264,
-    "name": "Tương lai của việc làm trước sự phát triển của tự động hóa (Fin du travail - Tự động hóa hoàn toàn)",
+    "name": "Tương lai của việc làm trước sự phát triển của tự động hóa",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4265,
-    "name": "Phân tích giá trị nghệ thuật của dòng tranh ấn tượng Pháp (L'impressionnisme - Trường phái ấn tượng)",
+    "name": "Phân tích giá trị nghệ thuật của dòng tranh ấn tượng Pháp",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4266,
-    "name": "Vai trò của giáo dục thẩm mỹ trong trường học (L'éducation esthétique - Giáo dục thẩm mỹ)",
+    "name": "Vai trò của giáo dục thẩm mỹ trong trường học",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4267,
-    "name": "Thảo luận về bản chất của thời gian và không gian (Le temps et l'espace - Không gian và thời gian)",
+    "name": "Thảo luận về bản chất của thời gian và không gian",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4268,
-    "name": "Đánh giá chiến lược năng lượng hạt nhân toàn cầu (Le futur du nucléaire civil - Năng lượng hạt nhân dân dụng)",
+    "name": "Đánh giá chiến lược năng lượng hạt nhân toàn cầu",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4269,
-    "name": "Vấn đề công bằng xã hội trong phân phối vắc xin toàn cầu (Justice vaccinale mondiale - Phân phối vắc xin toàn cầu)",
+    "name": "Vấn đề công bằng xã hội trong phân phối vắc xin toàn cầu",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4270,
-    "name": "Phân tích các xu hướng nghệ thuật đương đại thế kỷ 21 (Tendances artistiques du XXIe siècle - Nghệ thuật đương đại)",
+    "name": "Phân tích các xu hướng nghệ thuật đương đại thế kỷ 21",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4271,
-    "name": "Vai trò của sở hữu trí tuệ trong công nghệ sinh học (Brevets et biotechnologie - Sở hữu trí tuệ công nghệ sinh học)",
+    "name": "Vai trò của sở hữu trí tuệ trong công nghệ sinh học",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4272,
-    "name": "Đánh giá sự trỗi dậy của các nền kinh tế mới nổi (L'essor des pays émergents - Nền kinh tế mới nổi)",
+    "name": "Đánh giá sự trỗi dậy của các nền kinh tế mới nổi",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4273,
-    "name": "Tác động của sự ấm lên toàn cầu đối với băng tan ở hai cực (Fonte des glaces - Băng tan ở hai cực)",
+    "name": "Tác động của sự ấm lên toàn cầu đối với băng tan ở hai cực",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4274,
-    "name": "Thảo luận về quyền con người và luật pháp quốc tế (Droits de l'homme et droit international - Quyền con người)",
+    "name": "Thảo luận về quyền con người và luật pháp quốc tế",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4275,
-    "name": "Phân tích các trào lưu tư tưởng xã hội học hiện đại (Courants de pensée sociologique - Trào lưu xã hội học)",
+    "name": "Phân tích các trào lưu tư tưởng xã hội học hiện đại",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4276,
-    "name": "Vai trò của nghiên cứu cơ bản đối với tiến bộ công nghệ (Recherche fondamentale et progrès - Tiến bộ công nghệ)",
+    "name": "Vai trò của nghiên cứu cơ bản đối với tiến bộ công nghệ",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4277,
-    "name": "Đánh giá chính sách bảo trợ xã hội và thu nhập cơ bản (Revenu universel - Thu nhập cơ bản vô điều kiện)",
+    "name": "Đánh giá chính sách bảo trợ xã hội và thu nhập cơ bản",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4278,
-    "name": "Tương lai của các liên minh quân sự và an ninh đa phương (Alliances militaires et sécurité - Liên minh quân sự)",
+    "name": "Tương lai của các liên minh quân sự và an ninh đa phương",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4279,
-    "name": "Phân tích các tác phẩm giao hưởng cổ điển vĩ đại (La musique symphonique - Nhạc giao hưởng cổ điển)",
+    "name": "Phân tích các tác phẩm giao hưởng cổ điển vĩ đại",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4280,
-    "name": "Đạo đức trong nghiên cứu khoa học thần kinh (Éthique et neurosciences - Khoa học thần kinh và đạo đức)",
+    "name": "Đạo đức trong nghiên cứu khoa học thần kinh",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4281,
-    "name": "Đánh giá hiệu quả của các tổ chức quốc tế như LHQ và WTO (Efficacité de l'ONU - Hiệu quả của Liên Hợp Quốc)",
+    "name": "Đánh giá hiệu quả của các tổ chức quốc tế như LHQ và WTO",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4282,
-    "name": "Tác động của việc khai thác khoáng sản vũ trụ (Exploitation minière spatiale - Khai thác khoáng sản vũ trụ)",
+    "name": "Tác động của việc khai thác khoáng sản vũ trụ",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4283,
-    "name": "Phân tích mối quan hệ giữa tôn giáo và thế tục trong xã hội (Laïcité et religion - Tôn giáo và thế tục xã hội)",
+    "name": "Phân tích mối quan hệ giữa tôn giáo và thế tục trong xã hội",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4284,
-    "name": "Đánh giá tính khả thi của giao thông siêu tốc Hyperloop (Le projet Hyperloop - Dự án tàu siêu tốc Hyperloop)",
+    "name": "Đánh giá tính khả thi của giao thông siêu tốc Hyperloop",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4285,
-    "name": "Tầm quan trọng của đa dạng sinh học rừng rậm nhiệt đới (La forêt amazonienne - Đa dạng sinh học rừng Amazon)",
+    "name": "Tầm quan trọng của đa dạng sinh học rừng rậm nhiệt đới",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4286,
-    "name": "Phân tích sự phát triển của tư duy triết học phương Đông (Philosophie orientale - Triết học phương Đông)",
+    "name": "Phân tích sự phát triển của tư duy triết học phương Đông",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4287,
-    "name": "Vấn đề sở hữu dữ liệu cá nhân trong kỷ nguyên kinh tế số (Propriété des données - Sở hữu dữ liệu số)",
+    "name": "Vấn đề sở hữu dữ liệu cá nhân trong kỷ nguyên kinh tế số",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4288,
-    "name": "Vai trò của văn học trong việc lưu giữ ký ức lịch sử (Littérature et mémoire - Văn học và ký ức lịch sử)",
+    "name": "Vai trò của văn học trong việc lưu giữ ký ức lịch sử",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4289,
-    "name": "Đánh giá các mô hình quản trị doanh nghiệp hiện đại (Modèles de gouvernance - Quản trị doanh nghiệp hiện đại)",
+    "name": "Đánh giá các mô hình quản trị doanh nghiệp hiện đại",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4290,
-    "name": "Tương lai của ngành nông nghiệp công nghệ cao và thủy canh (Agriculture verticale - Nông nghiệp thẳng đứng)",
+    "name": "Tương lai của ngành nông nghiệp công nghệ cao và thủy canh",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4291,
-    "name": "Phân tích tâm lý học nhận thức và quá trình ra quyết định (Psychologie cognitive - Tâm lý học nhận thức)",
+    "name": "Phân tích tâm lý học nhận thức và quá trình ra quyết định",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4292,
-    "name": "Vai trò của nghệ thuật sân khấu cổ điển trong đời sống hiện đại (Le théâtre classique - Nghệ thuật sân khấu cổ điển)",
+    "name": "Vai trò của nghệ thuật sân khấu cổ điển trong đời sống hiện đại",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4293,
-    "name": "Đánh giá tính khả thi của các thành phố nổi trên đại dương (Villes flottantes - Thành phố nổi đại dương)",
+    "name": "Đánh giá tính khả thi của các thành phố nổi trên đại dương",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4294,
-    "name": "Phân tích các cuộc khủng hoảng tài chính trong lịch sử (Histoire des crises financières - Lịch sử khủng hoảng tài chính)",
+    "name": "Phân tích các cuộc khủng hoảng tài chính trong lịch sử",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4295,
-    "name": "Tương lai của việc bảo mật thông tin bằng công nghệ lượng tử (Cryptographie quantique - Mật mã lượng tử)",
+    "name": "Tương lai của việc bảo mật thông tin bằng công nghệ lượng tử",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4296,
-    "name": "Vấn đề bảo vệ các cộng đồng dân tộc thiểu số và thổ dân (Droits des minorités - Quyền dân tộc thiểu số)",
+    "name": "Vấn đề bảo vệ các cộng đồng dân tộc thiểu số và thổ dân",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4297,
-    "name": "Vai trò của di sản kiến trúc trong phát triển du lịch bền vững (Patrimoine et tourisme - Di sản kiến trúc và du lịch)",
+    "name": "Vai trò của di sản kiến trúc trong phát triển du lịch bền vững",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4298,
-    "name": "Phân tích sự tương tác giữa ngôn ngữ và tư duy (Langage et pensée - Tương tác ngôn ngữ và tư duy)",
+    "name": "Phân tích sự tương tác giữa ngôn ngữ và tư duy",
     "systemCode": "DALF",
     "levelCode": "C2"
   },
   {
     "id": 4299,
-    "name": "Đánh giá sự bền vững của các mô hình phát triển kinh tế xanh (Économie verte et limites - Kinh tế xanh và giới hạn)",
+    "name": "Đánh giá sự bền vững của các mô hình phát triển kinh tế xanh",
     "systemCode": "DALF",
     "levelCode": "C2"
   }
