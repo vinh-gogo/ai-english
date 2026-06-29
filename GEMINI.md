@@ -523,5 +523,18 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 
+---
+
+### 🟢 Session 23 (2026-06-29)
+
+- **Mục tiêu:** Cập nhật nhãn chào mừng ở màn hình chọn chủ đề từ "AI X chào bạn!" thành "Gia sư Tiếng X" và căn trái.
+- **Hoạt động & Thay đổi:**
+  - **TopicSelectionContent.kt:** Cập nhật logic `greetingText` dựa trên `state.targetLanguage` để thay thế chuỗi "AI [Language] chào bạn!" bằng dạng "Gia sư Tiếng [Language]" (Ví dụ: "Gia sư Tiếng Anh", "Gia sư Tiếng Nhật", "Gia sư Tiếng Trung",...).
+  - Đổi thuộc tính `horizontalArrangement = Arrangement.Center` của `Row` tiêu đề này thành `horizontalArrangement = Arrangement.Start` để căn lề trái như yêu cầu.
+- **Ghi chú kỹ thuật:**
+  - Phù hợp với việc cá nhân hóa giao diện như một trợ lý gia sư thực thụ. Đã build và cập nhật qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.
