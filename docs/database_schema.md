@@ -83,7 +83,7 @@ erDiagram
 
     lesson_history {
         INTEGER id PK
-        TEXT user_id
+        TEXT user_id FK
         TEXT topic
         TEXT level
         INTEGER score
@@ -121,6 +121,7 @@ erDiagram
     learning_levels ||--o{ users : "assigned to"
     quota ||--o{ users : "bounds"
     users ||--o{ payments : "makes"
+    users ||--o{ lesson_history : "performs"
     learning_levels ||--o{ learning_topics : "contains"
     
     i18n_locales ||--o{ i18n_translations : "localizes"
