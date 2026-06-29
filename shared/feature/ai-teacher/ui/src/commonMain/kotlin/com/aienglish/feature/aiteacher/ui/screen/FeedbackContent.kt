@@ -52,8 +52,7 @@ fun FeedbackContent(
         ) {
             Spacer(Modifier.height(78.dp)) // 18dp top pad + 48dp header + 12dp bottom gap = 78dp
 
-            Spacer(Modifier.height(20.dp))
-            Text("Kết quả của bạn", fontSize = 17.sp, fontWeight = FontWeight.Bold, color = colors.mainText)
+            Text("Kết quả của bạn", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = colors.mainText)
             Text(
                 "${state.selectedTopic} · CEFR ${state.selectedCefrLevel}",
                 fontSize = 12.sp,
