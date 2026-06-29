@@ -107,12 +107,6 @@ fun LessonContent(
             ) {
                 Column(modifier = Modifier.padding(14.dp)) {
                     Text(
-                        "Dịch sang $languageLabel:",
-                        fontSize = 12.sp,
-                        color = colors.mutedText
-                    )
-                    Spacer(Modifier.height(6.dp))
-                    Text(
                         sentence.vietnamese,
                         fontSize = 17.sp,
                         fontWeight = FontWeight.Bold,
