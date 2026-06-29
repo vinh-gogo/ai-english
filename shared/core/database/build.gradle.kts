@@ -36,6 +36,7 @@ sqldelight {
         create("AIEnglishDatabase") {
             packageName.set("com.aienglish.core.database")
             srcDirs.setFrom("src/commonMain/sqldelight")
+            version = 4
         }
     }
 }
