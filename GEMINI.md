@@ -508,5 +508,20 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 
+---
+
+### 🟢 Session 22 (2026-06-29)
+
+- **Mục tiêu:** Thêm nút "Làm lại" vào bên trái nút "Luyện tập bài mới" ở màn hình Xem lại kết quả, đồng thời cập nhật icon cho phù hợp.
+- **Hoạt động & Thay đổi:**
+  - **TeacherViewModel.kt:** Thêm hàm `onRetryCurrentLesson()` để xóa các câu trả lời hiện tại (`userAnswers`, `checkedAnswers`, `feedback`), đưa `currentSentenceIndex` về 0 để người dùng có thể thi lại chính bài học vừa rồi (không ghi đè lịch sử thành bài mới).
+  - **FeedbackContent.kt:** Chuyển đổi khối chứa nút "Luyện tập bài mới" thành một `Row` chia đều 2 cột (weight 1f).
+  - Thêm nút "Làm lại" vào bên trái, sử dụng icon `Refresh` (mũi tên xoay vòng).
+  - Rút gọn text của nút "Luyện tập bài mới" thành "Bài mới", và đổi icon của nó từ `Refresh` sang `ArrowForward` (mũi tên đi tới) cho đúng với ngữ nghĩa chuyển sang bài học tiếp theo.
+- **Ghi chú kỹ thuật:**
+  - Thiết kế bằng Compose đảm bảo 2 nút có chiều cao bằng nhau (`48.dp`) và giãn cách đều (`12.dp`). Đã build và chạy mượt mà trên Android qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.

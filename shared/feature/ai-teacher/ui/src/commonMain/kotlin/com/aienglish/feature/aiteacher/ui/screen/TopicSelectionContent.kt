@@ -122,7 +122,7 @@ fun TopicSelectionContent(
             // Header icon + title side-by-side
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
+                horizontalArrangement = Arrangement.Start,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Icon(
@@ -133,15 +133,15 @@ fun TopicSelectionContent(
                 )
                 Spacer(Modifier.width(10.dp))
                 val greetingText = when (state.targetLanguage) {
-                    "en" -> "AI English chào bạn!"
-                    "ja" -> "AI Japanese chào bạn!"
-                    "zh" -> "AI Chinese chào bạn!"
-                    "es" -> "AI Spanish chào bạn!"
-                    "hi" -> "AI Hindi chào bạn!"
-                    "fr" -> "AI French chào bạn!"
-                    "de" -> "AI German chào bạn!"
-                    "ko" -> "AI Korea chào bạn!"
-                    else -> "AI English chào bạn!"
+                    "en" -> "Gia sư Tiếng Anh"
+                    "ja" -> "Gia sư Tiếng Nhật"
+                    "zh" -> "Gia sư Tiếng Trung"
+                    "es" -> "Gia sư Tiếng Tây Ban Nha"
+                    "hi" -> "Gia sư Tiếng Hindi"
+                    "fr" -> "Gia sư Tiếng Pháp"
+                    "de" -> "Gia sư Tiếng Đức"
+                    "ko" -> "Gia sư Tiếng Hàn"
+                    else -> "Gia sư Tiếng Anh"
                 }
                 Text(
                     greetingText,
