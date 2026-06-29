@@ -69,7 +69,8 @@ class HistoryRepositoryImpl(
                     }
                     isMigrated = true
                 } catch (e: Exception) {
-                    // Ignore or log
+                    println("DATABASE MIGRATION ERROR: ${e.message}")
+                    e.printStackTrace()
                 }
             }
         }

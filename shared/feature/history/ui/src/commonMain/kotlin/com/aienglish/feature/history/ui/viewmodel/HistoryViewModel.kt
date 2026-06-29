@@ -52,6 +52,8 @@ class HistoryViewModel(
                 setState { copy(items = filteredItems, isLoading = false, error = null) }
             }
             .catch { e ->
+                println("HistoryViewModel observe error: ${e.message}")
+                e.printStackTrace()
                 setState { copy(isLoading = false, error = e.message ?: "Lỗi tải lịch sử bài học") }
             }
             .launchIn(viewModelScope)
