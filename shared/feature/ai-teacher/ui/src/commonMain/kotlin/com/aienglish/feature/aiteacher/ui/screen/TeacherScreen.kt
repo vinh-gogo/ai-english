@@ -195,32 +195,43 @@ fun TeacherScreen(
                     )
                 }
 
-                // Group 2: History, Profile, Pro badge
+                // Group 2: History, Profile, Pro badge (Standalone 48dp buttons matching footer design style)
                 Row(
-                    modifier = Modifier
-                        .height(48.dp)
-                        .background(colors.surface, CircleShape)
-                        .border(2.dp, colors.border, CircleShape)
-                        .padding(horizontal = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    // History
-                    Icon(
-                        Icons.Rounded.History,
-                        contentDescription = "Lịch sử",
-                        tint = colors.mutedText,
+                    // History Button (Circular, 48dp)
+                    Box(
                         modifier = Modifier
-                            .size(20.dp)
-                            .clickable { showHistory = true }
-                    )
+                            .size(48.dp)
+                            .clip(CircleShape)
+                            .background(colors.surface)
+                            .border(2.dp, colors.border, CircleShape)
+                            .clickable { showHistory = true },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            Icons.Rounded.History,
+                            contentDescription = "Lịch sử",
+                            tint = colors.mutedText,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
 
-                    // Profile
-                    Box(modifier = Modifier.clickable { profileViewModel.showProfile() }) {
+                    // Profile Button (Circular, 48dp)
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(CircleShape)
+                            .background(colors.surface)
+                            .border(2.dp, colors.border, CircleShape)
+                            .clickable { profileViewModel.showProfile() },
+                        contentAlignment = Alignment.Center
+                    ) {
                         if (profileState.isSignedIn && profileState.displayName != null) {
                             Box(
                                 modifier = Modifier
-                                    .size(20.dp)
+                                    .size(24.dp)
                                     .clip(CircleShape)
                                     .background(colors.accent),
                                 contentAlignment = Alignment.Center
@@ -228,7 +239,7 @@ fun TeacherScreen(
                                 Text(
                                     profileState.displayName!!.first().uppercase(),
                                     color = Color.White,
-                                    fontSize = 10.sp,
+                                    fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold
                                 )
                             }
@@ -242,21 +253,27 @@ fun TeacherScreen(
                         }
                     }
 
-                    // PRO
+                    // PRO Button (Capsule, 48dp)
                     Row(
-                        modifier = Modifier.clickable { proViewModel.onIntent(ProIntent.ShowVip) },
+                        modifier = Modifier
+                            .height(48.dp)
+                            .clip(CircleShape)
+                            .background(colors.surface)
+                            .border(2.dp, colors.border, CircleShape)
+                            .clickable { proViewModel.onIntent(ProIntent.ShowVip) }
+                            .padding(horizontal = 14.dp),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.WorkspacePremium,
                             contentDescription = "PRO",
                             tint = Color(0xFFFFB300),
-                            modifier = Modifier.size(16.dp)
+                            modifier = Modifier.size(18.dp)
                         )
                         Text(
                             text = if (profileState.isPaid) "PRO" else "GET",
-                            fontSize = 12.sp,
+                            fontSize = 13.sp,
                             fontWeight = FontWeight.Bold,
                             fontStyle = FontStyle.Italic,
                             color = Color(0xFFFFB300)
