@@ -3,11 +3,14 @@ package com.aienglish.feature.history.data.repository
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.aienglish.core.common.dispatchers.AppDispatchers
+import com.aienglish.core.common.prefs.AppPreferences
 import com.aienglish.core.database.AIEnglishDatabase
 import com.aienglish.feature.history.domain.model.HistoryStatus
 import com.aienglish.feature.history.domain.model.LessonHistory
 import com.aienglish.feature.history.domain.repository.HistoryRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.TimeZone
@@ -20,15 +23,25 @@ private val jsonParser = Json { ignoreUnknownKeys = true }
 
 class HistoryRepositoryImpl(
     private val database: AIEnglishDatabase,
+    private val prefs: AppPreferences,
     private val dispatchers: AppDispatchers
 ) : HistoryRepository {
 
     private val queries get() = database.lessonHistoryQueries
 
+    private fun getCurrentUserId(): String {
+        return if (prefs.isSignedIn()) {
+            prefs.getUserEmail() ?: "guest"
+        } else {
+            "guest"
+        }
+    }
+
     override suspend fun startLesson(topic: String, level: String): Long =
         withContext(dispatchers.io) {
             val now = Clock.System.now().toEpochMilliseconds()
-            queries.insertLesson(topic, level, now)
+            val userId = getCurrentUserId()
+            queries.insertLesson(userId, topic, level, now)
             queries.getLastInsertId().executeAsOne()
         }
 
@@ -55,50 +68,55 @@ class HistoryRepositoryImpl(
         }
     }
 
+    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     override fun getAllHistory(): Flow<List<LessonHistory>> =
-        queries.getAllHistoryWithCounts()
-            .asFlow()
-            .mapToList(dispatchers.io)
-            .map { rows ->
-                rows.map { row ->
-                    var total = row.total_count.toInt()
-                    var completed = row.completed_count.toInt()
-                    
-                    // Fallback to JSON parsing for legacy data
-                    if (total == 0) {
-                        completed = row.explanations_json?.let { data ->
-                            try {
-                                jsonParser.parseToJsonElement(data).jsonObject.size
-                            } catch (e: Exception) {
-                                0
-                            }
-                        } ?: 0
-                        total = row.lesson_json?.let { data ->
-                            try {
-                                jsonParser.parseToJsonElement(data).jsonObject["sentences"]?.jsonArray?.size
-                            } catch (e: Exception) {
-                                null
-                            }
-                        } ?: 10
+        combine(prefs.isSignedInFlow, prefs.userEmailFlow) { signedIn, email ->
+            if (signedIn) email ?: "guest" else "guest"
+        }.flatMapLatest { userId ->
+            queries.getAllHistoryWithCounts(userId)
+                .asFlow()
+                .mapToList(dispatchers.io)
+                .map { rows ->
+                    rows.map { row ->
+                        var total = row.total_count.toInt()
+                        var completed = row.completed_count.toInt()
+                        
+                        // Fallback to JSON parsing for legacy data
+                        if (total == 0) {
+                            completed = row.explanations_json?.let { data ->
+                                try {
+                                    jsonParser.parseToJsonElement(data).jsonObject.size
+                                } catch (e: Exception) {
+                                    0
+                                }
+                            } ?: 0
+                            total = row.lesson_json?.let { data ->
+                                try {
+                                    jsonParser.parseToJsonElement(data).jsonObject["sentences"]?.jsonArray?.size
+                                } catch (e: Exception) {
+                                    null
+                                }
+                            } ?: 10
+                        }
+                        
+                        LessonHistory(
+                            id = row.id,
+                            topic = row.topic,
+                            level = row.level,
+                            score = row.score?.toInt(),
+                            status = HistoryStatus.from(row.status),
+                            createdAt = row.created_at,
+                            completedAt = row.completed_at,
+                            lessonData = row.lesson_json,
+                            userAnswersData = row.user_answers_json,
+                            explanationsData = row.explanations_json,
+                            feedbackData = row.feedback_json,
+                            completedCount = completed,
+                            totalCount = total
+                        )
                     }
-                    
-                    LessonHistory(
-                        id = row.id,
-                        topic = row.topic,
-                        level = row.level,
-                        score = row.score?.toInt(),
-                        status = HistoryStatus.from(row.status),
-                        createdAt = row.created_at,
-                        completedAt = row.completed_at,
-                        lessonData = row.lesson_json,
-                        userAnswersData = row.user_answers_json,
-                        explanationsData = row.explanations_json,
-                        feedbackData = row.feedback_json,
-                        completedCount = completed,
-                        totalCount = total
-                    )
                 }
-            }
+        }
 
     override suspend fun clearHistory(ids: List<Long>) {
         withContext(dispatchers.io) {

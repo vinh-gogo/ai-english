@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS lesson_history (
     id INTEGER PRIMARY KEY,
+    user_id TEXT NOT NULL DEFAULT 'guest',
     topic TEXT NOT NULL,
     level TEXT NOT NULL,
     score INTEGER,
@@ -13,8 +14,8 @@ CREATE TABLE IF NOT EXISTS lesson_history (
 );
 
 insertLesson:
-INSERT INTO lesson_history (topic, level, status, created_at)
-VALUES (?, ?, 'IN_PROGRESS', ?);
+INSERT INTO lesson_history (user_id, topic, level, status, created_at)
+VALUES (?, ?, ?, 'IN_PROGRESS', ?);
 
 getLastInsertId:
 SELECT last_insert_rowid();
@@ -25,7 +26,7 @@ SET status = 'COMPLETED', score = ?, completed_at = ?, lesson_json = ?, user_ans
 WHERE id = ?;
 
 getAllHistory:
-SELECT * FROM lesson_history ORDER BY created_at DESC;
+SELECT * FROM lesson_history WHERE user_id = ? ORDER BY created_at DESC;
 
 clearHistory:
 DELETE FROM lesson_history;
@@ -98,5 +99,7 @@ SELECT
     (SELECT COUNT(*) FROM lesson_question q WHERE q.history_id = h.id) AS total_count,
     (SELECT COUNT(q.ai_explanation) FROM lesson_question q WHERE q.history_id = h.id) AS completed_count
 FROM lesson_history h
+WHERE h.user_id = ?
 ORDER BY h.created_at DESC;
+
 

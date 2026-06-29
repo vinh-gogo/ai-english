@@ -83,6 +83,7 @@ erDiagram
 
     lesson_history {
         INTEGER id PK
+        TEXT user_id
         TEXT topic
         TEXT level
         INTEGER score
