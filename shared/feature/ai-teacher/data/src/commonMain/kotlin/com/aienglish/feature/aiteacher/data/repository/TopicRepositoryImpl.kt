@@ -234,4 +234,22 @@ class TopicRepositoryImpl(
                 }
             }
         }
+
+    override suspend fun addCustomTopic(name: String, systemCode: String, levelCode: String): Unit =
+        withContext(dispatchers.io) {
+            try {
+                val allTopics = database.userSchemaQueries.getAllTopics().executeAsList()
+                val maxId = allTopics.filter { it.system_code == systemCode }.maxOfOrNull { it.topic_id } ?: 10000L
+                val newId = maxId + 1
+                database.userSchemaQueries.insertTopic(
+                    topic_id = newId,
+                    name = name,
+                    system_code = systemCode,
+                    level_code = levelCode
+                )
+            } catch (e: Exception) {
+                println("Error inserting custom topic in TopicRepositoryImpl: ${e.message}")
+            }
+        }
 }
+

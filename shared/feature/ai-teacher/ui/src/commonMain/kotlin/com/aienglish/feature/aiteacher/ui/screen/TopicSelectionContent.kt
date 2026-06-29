@@ -51,13 +51,10 @@ fun TopicSelectionContent(
     var isSearchFocused by remember { mutableStateOf(false) }
     var isCustomTopicFocused by remember { mutableStateOf(false) }
 
-    // Scroll to bottom when custom topic text field is focused
-    LaunchedEffect(isCustomTopicFocused, lazyListState.layoutInfo.totalItemsCount) {
+    // Scroll to show custom topic card when focused
+    LaunchedEffect(isCustomTopicFocused) {
         if (isCustomTopicFocused) {
-            val totalItems = lazyListState.layoutInfo.totalItemsCount
-            if (totalItems > 0) {
-                lazyListState.animateScrollToItem(totalItems - 1)
-            }
+            lazyListState.animateScrollToItem(index = 3)
         }
     }
 
@@ -94,11 +91,12 @@ fun TopicSelectionContent(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
-            .padding(horizontal = 16.dp)
     ) {
         LazyColumn(
             state = lazyListState,
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -156,8 +154,16 @@ fun TopicSelectionContent(
 
             // ── Carousel Card (styled with uniform accent color) ──
             item {
-                TopicCarouselCard(state, colors, currentTopic)
+                TopicCarouselCard(
+                    state = state,
+                    colors = colors,
+                    currentTopic = currentTopic,
+                    onCustomTopicInputChanged = { viewModel.onCustomTopicInputChanged(it) },
+                    onFocusChanged = { isCustomTopicFocused = it },
+                    onAddClick = { viewModel.showSaveToDbDialog() }
+                )
             }
+
 
             item {
                 Spacer(Modifier.height(16.dp))
@@ -300,26 +306,7 @@ fun TopicSelectionContent(
                 Spacer(Modifier.height(8.dp))
             }
 
-            if (state.isCustomTopicMode) {
-                item {
-                    OutlinedTextField(
-                        value = state.customTopicInput,
-                        onValueChange = { viewModel.onCustomTopicInputChanged(it) },
-                        modifier = Modifier.fillMaxWidth().onFocusChanged { isCustomTopicFocused = it.isFocused },
-                        shape = RoundedCornerShape(12.dp),
-                        placeholder = { Text("Nhập chủ đề bạn tùy chỉnh", color = colors.hintText, fontSize = 13.sp) },
-                        singleLine = true,
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = colors.accent,
-                            unfocusedBorderColor = colors.border,
-                            focusedContainerColor = colors.surface,
-                            unfocusedContainerColor = colors.surface,
-                            focusedTextColor = colors.mainText,
-                            unfocusedTextColor = colors.mainText
-                        )
-                    )
-                }
-            } else {
+            if (!state.isCustomTopicMode) {
                 // ── Vertical list of topic cards (fixes truncation completely) ──
                 if (filteredTopics.isEmpty()) {
                     item {
@@ -439,6 +426,7 @@ fun TopicSelectionContent(
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
                 .navigationBarsPadding()
+                .padding(horizontal = 16.dp)
                 .padding(bottom = 14.dp)
                 .height(48.dp),
             colors = ButtonDefaults.buttonColors(
@@ -452,5 +440,44 @@ fun TopicSelectionContent(
             Spacer(Modifier.width(8.dp))
             Text("Bắt đầu bài học", fontSize = 16.sp, fontWeight = FontWeight.Bold)
         }
+
+        if (state.showSaveToDbDialog) {
+            AlertDialog(
+                onDismissRequest = { viewModel.dismissSaveToDbDialog() },
+                title = { 
+                    Text(
+                        text = "Lưu chủ đề", 
+                        fontSize = 16.sp, 
+                        fontWeight = FontWeight.Bold,
+                        color = colors.mainText
+                    ) 
+                },
+                text = { 
+                    Text(
+                        text = "Bạn có muốn lưu chủ đề \"${state.customTopicInput}\" vào danh sách để sử dụng lại sau này không?",
+                        fontSize = 14.sp,
+                        color = colors.mainText
+                    ) 
+                },
+                confirmButton = {
+                    TextButton(
+                        onClick = { viewModel.saveCustomTopicToDb(state.customTopicInput) }
+                    ) {
+                        Text("Lưu", color = colors.accent, fontWeight = FontWeight.Bold)
+                    }
+                },
+                dismissButton = {
+                    TextButton(
+                        onClick = { viewModel.dismissSaveToDbDialog() }
+                    ) {
+                        Text("Hủy", color = colors.mutedText)
+                    }
+                },
+                containerColor = colors.surface,
+                textContentColor = colors.mainText,
+                titleContentColor = colors.mainText
+            )
+        }
     }
 }
+

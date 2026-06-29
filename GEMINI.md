@@ -53,6 +53,7 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 44** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Sửa lỗi mất trạng thái chọn level và nội dung input đã nhập trên giao diện khi xem lại lịch sử bài học. | Hoàn thành |
 | **Session 45** | 2026-06-30 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Thêm hệ thống học tiếng Việt (VIET) cho người nói tiếng Anh: 3 cấp Tiểu học / Trung học / Đại học, 400 chủ đề đa lĩnh vực, full infrastructure (PromptProvider, ViewModel, UI, Settings, DB seeding). | Hoàn thành |
 | **Session 46** | 2026-06-30 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Mở rộng Vietnamese topics từ 300 lên 400: thêm 100 chủ đề mới bao quát IT, âm nhạc, thể thao, MXH, nội dung số, kinh doanh, thời trang, sức khỏe tâm thần, khoa học, pháp lý,... phân bổ 3 cấp. | Hoàn thành |
+| **Session 47** | 2026-06-30 | Antigravity | `9c45f4be-b4c2-4534-b153-c08a5ee10f2a` | Tích hợp ô nhập chủ đề tùy chỉnh vào thẻ "Chủ đề đang chọn" khi chọn chế độ "Tự nhập" và xóa OutlinedTextField cũ. | Hoàn thành |
 
 ---
 
@@ -511,5 +512,44 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 
 ---
 
+### 🟢 Session 47 (2026-06-30)
+
+- **Mục tiêu:** Tích hợp ô nhập chủ đề tùy chỉnh vào trong thẻ "Chủ đề đang chọn" khi chọn chế độ "Tự nhập" và sửa lỗi tràn viền của lớp phủ gradient phía sau các nút ghim đáy.
+- **Hoạt động & Thay đổi:**
+  - **TopicCarouselCard.kt:** Cập nhật Composable nhận callback `onCustomTopicInputChanged` và `onFocusChanged`. Khi ở chế độ `isCustomTopicMode`, thay thế Text hiển thị tĩnh bằng `BasicTextField` cho phép nhập trực tiếp, đồng thời thay đổi viền thẻ Card dày hơn và hiển thị màu `accent` khi TextField được focus. Chuyển đổi icon chỉnh sửa thành icon thêm mới `Icons.Rounded.Add` (+) và đưa lên góc trên cùng bên trái (top-left), nằm ngay trước nhãn tiêu đề Card để tối ưu không gian hiển thị trên màn hình hẹp của Android.
+  - **TopicSelectionContent.kt & LessonContent.kt:** 
+    - Truyền callback xử lý sự thay đổi nội dung tự nhập, trạng thái focus và click (+) từ `TopicCarouselCard`. 
+    - Loại bỏ khung `OutlinedTextField` nhập chủ đề tùy chỉnh ở cuối màn hình. 
+    - Tích hợp component `AlertDialog` Compose để hỏi người dùng: *"Bạn có muốn lưu chủ đề này vào danh sách để sử dụng lại sau này không?"* khi click vào icon (+).
+    - Cập nhật `LaunchedEffect` của `isCustomTopicFocused` để cuộn danh sách hiển thị đúng vị trí thẻ `TopicCarouselCard` (index 3).
+    - **Sửa lỗi tràn viền gradient**: Loại bỏ `.padding(horizontal = 16.dp)` của Box cha ngoài cùng, chuyển thuộc tính này vào trong nội dung cuộn (`LazyColumn`/`Column`) và các container của Button/IconButton. Điều này cho phép lớp phủ gradient vertical che mờ ở đáy màn hình tràn sát rìa trái/phải một cách hoàn hảo, không còn bị hở khoảng trống.
+    - **Đồng bộ hóa hàng đáp án**: Thêm Composable `AnswerRow` dùng chung cho các dòng đáp án chuẩn. Đồng bộ hóa hàng hiển thị đáp án chính (số 1) và các cách diễn đạt thay thế (số 2, 3,...) với cùng cấu trúc: có icon check tròn màu xanh lá ở đầu dòng, chữ hiển thị 15.sp Medium, và hàng nút Volume + Copy ở bên phải, căn lề thẳng tắp tăm tắp, chống lệch dòng và rớt chữ.
+    - **Tích hợp nút Giải thích chi tiết**: Bổ sung nút `Giải thích` (OutlinedButton với icon `Info` / `ExpandLess`) ngay dưới Card đáp án chuẩn. Khi người dùng click, trạng thái `isExplanationExpanded` (tự động reset theo index câu `idx`) được kích hoạt để gọi AI giải thích và hiển thị nội dung giải thích, giúp giao diện màn hình luyện tập đồng nhất trải nghiệm với màn hình kết quả.
+  - **FeedbackContent.kt:**
+    - **Sửa lỗi sai level**: Đổi `state.selectedCefrLevel` cố định thành `state.selectedLevelText` động để hiển thị chính xác cấp độ của bài học tương ứng theo JLPT/TOEIC/CEFR/HSK/VIET.
+    - **Tăng khoảng cách**: Thêm `Spacer(Modifier.height(10.dp))` phía dưới tiêu đề và tăng khoảng cách đến Review Card lên `24.dp`.
+    - **Căn lề đồng đều & Đồng nhất padding (Sửa lỗi co chiều rộng)**:
+      - Loại bỏ `horizontalAlignment = Alignment.CenterHorizontally` khỏi Column cha cuộn dọc ở màn hình kết quả để tránh lỗi đo lường kích thước trong Compose làm co rút chiều rộng Card. Toàn bộ giao diện chuyển về căn lề trái mặc định (`Start`) tự nhiên.
+      - Loại bỏ các modifier `.align(Alignment.Start)` dư thừa của tiêu đề và Chips.
+      - Thống nhất độ rộng lề bằng cách chỉnh sửa padding bên trong Column của cả Card Nhận xét AI và Card câu hỏi (`SentenceReviewCard`) đều thành **`16.dp`** (thay vì 14.dp và 12.dp lệch nhau trước đó).
+      - Chuyển padding ngang của `AnswerRow` trong `LessonContent.kt` sang `16.dp` để thẳng hàng tăm tắp với viền.
+    - **Tái thiết kế Tags hiển thị**: 
+      - Nâng cấp dòng văn bản mô tả dạng thô cũ thành cấu trúc các nhãn thẻ (Chips) bo tròn cao cấp, có background màu dịu (accent copy và mutedText copy) kèm đường viền tinh tế và tích hợp các icon tương ứng (`Icons.Default.Bookmark` và `Icons.Default.Star`). 
+      - Sử dụng cấu trúc `Row` có `Modifier.fillMaxWidth()` và `IntrinsicSize.Min` để hai thẻ Chips tự động cao bằng nhau tuyệt đối (đồng bộ chiều cao theo thẻ cao nhất).
+      - **Tái cấu trúc Level Chip (dạng dọc)**: Chuyển đổi hiển thị ngang thành dạng dọc Column: Icon Star ở trên, dòng 1 hiển thị tên hệ thống (CEFR/TOEIC/JLPT...), dòng 2 hiển thị giá trị cụ thể (B1/500/N3...) giúp thẻ gọn gàng và tinh tế.
+      - **Di chuyển icon Topic lên Top-Left**: Thay đổi `verticalAlignment` của Row trong Topic Chip thành `Alignment.Top` kết hợp padding top 2.dp, đưa biểu tượng Bookmark luôn cố định ở góc trên bên trái sát dòng chữ đầu tiên của chủ đề thay vì bị lơ lửng ở giữa khi chủ đề xuống nhiều dòng.
+    - **Đồng bộ hóa hàng đáp án**: Tách logic hiển thị sang Composable `AnswerRow` thống nhất với màn hình luyện tập để giao diện đồng đều hoàn hảo.
+  - **TeacherViewModel.kt & TopicRepository:**
+    - Cấu hình `TeacherUiState` hỗ trợ thuộc tính `showSaveToDbDialog` và getter `currentLevelCode`.
+    - Định nghĩa hàm `addCustomTopic` trong interface `TopicRepository` và class `TopicRepositoryImpl` để lưu chủ đề mới vào SQLite database (`INSERT OR REPLACE INTO learning_topics`).
+    - Thêm các phương thức `showSaveToDbDialog()`, `dismissSaveToDbDialog()` và `saveCustomTopicToDb(name)`. Khi người dùng xác nhận "Lưu" trên Dialog, tiến hành lưu chủ đề tùy chọn vào Database và tự động reload danh sách chủ đề qua `loadTopics()`.
+- **Ghi chú kỹ thuật:**
+  - Build và deploy trực tiếp bản debug lên máy khách qua ADB thành công.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.
+

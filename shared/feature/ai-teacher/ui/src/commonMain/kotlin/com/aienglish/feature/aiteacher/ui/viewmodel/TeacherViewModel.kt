@@ -47,6 +47,7 @@ data class TeacherUiState(
     val isCustomTopicMode: Boolean = false,
     val customTopicInput: String = "",
     val topicCounts: Map<String, Int> = emptyMap(),
+    val showSaveToDbDialog: Boolean = false,
 
     // Lesson state
     val isGeneratingLesson: Boolean = false,
@@ -68,6 +69,22 @@ data class TeacherUiState(
     val error: String? = null
 ) {
     val selectedTopic: String get() = if (isCustomTopicMode) customTopicInput else topics.getOrNull(selectedTopicIndex)?.name ?: ""
+    val currentLevelCode: String get() = when (levelType) {
+        LevelType.CEFR -> selectedCefrLevel
+        LevelType.TOEIC -> selectedToeicLevel
+        LevelType.JLPT -> selectedJlptLevel
+        LevelType.HSK -> selectedHskLevel
+        LevelType.DELE -> selectedDeleLevel
+        LevelType.SIELE -> selectedSieleLevel
+        LevelType.HINDI -> selectedHindiLevel
+        LevelType.DELF -> selectedDelfLevel
+        LevelType.DALF -> selectedDalfLevel
+        LevelType.GOETHE -> selectedGoetheLevel
+        LevelType.TESTDAF -> selectedTestdafLevel
+        LevelType.TOPIK -> selectedTopikLevel
+        LevelType.VIET  -> selectedVietLevel
+    }
+
     val selectedLevelText: String get() = when (levelType) {
         LevelType.CEFR -> selectedCefrLevel
         LevelType.TOEIC -> "TOEIC $selectedToeicLevel"
@@ -509,10 +526,12 @@ class TeacherViewModel(
                 )
             }
 
+
             // Save to history DB (IN_PROGRESS)
             currentLessonHistoryId = try {
                 teacherHistoryRepository.startLesson(topic, level)
             } catch (e: Exception) { null }
+
 
             generateLesson("user", topic, level).fold(
                 ifLeft = { err -> setState { copy(isGeneratingLesson = false, error = err.message) } },
@@ -961,8 +980,35 @@ class TeacherViewModel(
         }
     }
 
-    fun setCustomTopicMode(enabled: Boolean) = setState { copy(isCustomTopicMode = enabled) }
+    fun setCustomTopicMode(enabled: Boolean) = setState { 
+        copy(
+            isCustomTopicMode = enabled,
+            showSaveToDbDialog = false
+        ) 
+    }
     fun onCustomTopicInputChanged(input: String) = setState { copy(customTopicInput = input) }
+    fun showSaveToDbDialog() {
+        if (currentState.customTopicInput.isNotBlank()) {
+            setState { copy(showSaveToDbDialog = true) }
+        }
+    }
+    fun dismissSaveToDbDialog() = setState { copy(showSaveToDbDialog = false) }
+    fun saveCustomTopicToDb(name: String) {
+        val state = currentState
+        if (name.isBlank()) return
+        viewModelScope.launch {
+            try {
+                val systemCode = state.levelType.name
+                val levelCode = state.currentLevelCode
+                topicRepository.addCustomTopic(name, systemCode, levelCode)
+                loadTopics(state.levelType, levelCode)
+                setState { copy(showSaveToDbDialog = false) }
+            } catch (e: Exception) {
+                // Ignore
+            }
+        }
+    }
+
 
     fun fetchMonthlyUsage(onResult: (usage: Int, limit: Int) -> Unit) {
         viewModelScope.launch {

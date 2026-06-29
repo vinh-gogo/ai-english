@@ -2,6 +2,7 @@ package com.aienglish.feature.aiteacher.ui.screen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -29,7 +30,11 @@ import com.aienglish.core.designsystem.theme.AppColors
 import com.aienglish.feature.aiteacher.domain.model.EnglishSentence
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherUiState
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
+import com.aienglish.feature.aiteacher.ui.viewmodel.LevelType
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun FeedbackContent(
     state: TeacherUiState,
@@ -38,6 +43,45 @@ fun FeedbackContent(
 ) {
     val feedback = state.feedback ?: return
     val lesson = state.lesson
+
+    val levelSystemAndValue = remember(state.levelType, state) {
+        val system = when (state.levelType) {
+            LevelType.CEFR -> "CEFR"
+            LevelType.TOEIC -> "TOEIC"
+            LevelType.JLPT -> "JLPT"
+            LevelType.HSK -> "HSK"
+            LevelType.DELE -> "DELE"
+            LevelType.SIELE -> "SIELE"
+            LevelType.HINDI -> "Hindi"
+            LevelType.DELF -> "DELF"
+            LevelType.DALF -> "DALF"
+            LevelType.GOETHE -> "Goethe"
+            LevelType.TESTDAF -> "TestDaF"
+            LevelType.TOPIK -> "TOPIK"
+            LevelType.VIET -> "VIET"
+        }
+        val value = when (state.levelType) {
+            LevelType.CEFR -> state.selectedCefrLevel
+            LevelType.TOEIC -> state.selectedToeicLevel
+            LevelType.JLPT -> state.selectedJlptLevel
+            LevelType.HSK -> state.selectedHskLevel.removePrefix("HSK")
+            LevelType.DELE -> state.selectedDeleLevel
+            LevelType.SIELE -> state.selectedSieleLevel
+            LevelType.HINDI -> state.selectedHindiLevel
+            LevelType.DELF -> state.selectedDelfLevel
+            LevelType.DALF -> state.selectedDalfLevel
+            LevelType.GOETHE -> state.selectedGoetheLevel
+            LevelType.TESTDAF -> state.selectedTestdafLevel
+            LevelType.TOPIK -> state.selectedTopikLevel.removePrefix("TOPIK")
+            LevelType.VIET -> when (state.selectedVietLevel) {
+                "TIEU_HOC" -> "Tiểu học"
+                "TRUNG_HOC" -> "Trung học"
+                "DAI_HOC" -> "Đại học"
+                else -> state.selectedVietLevel
+            }
+        }
+        Pair(system, value)
+    }
 
     Box(
         modifier = Modifier
@@ -48,26 +92,98 @@ fun FeedbackContent(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(horizontal = 16.dp)
         ) {
             Spacer(Modifier.height(78.dp)) // 18dp top pad + 48dp header + 12dp bottom gap = 78dp
 
-            Text("Kết quả của bạn", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = colors.mainText)
-            val annotatedSubtitle = remember(state.selectedTopic, state.selectedCefrLevel, colors) {
-                androidx.compose.ui.text.buildAnnotatedString {
-                    append(buildInlineAnnotatedString(state.selectedTopic, colors))
-                    append(" · CEFR ")
-                    append(state.selectedCefrLevel)
+            Text(
+                text = "Kết quả của bạn",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = colors.mainText
+            )
+            
+            Spacer(Modifier.height(10.dp))
+
+            // Subtitle Tags (Topic & Level Chips stretched to match full width of the card below)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Min)
+                    .padding(vertical = 4.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Topic Chip
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight()
+                        .background(colors.accent.copy(alpha = 0.08f), RoundedCornerShape(8.dp))
+                        .border(1.dp, colors.accent.copy(alpha = 0.2f), RoundedCornerShape(8.dp))
+                        .padding(horizontal = 10.dp, vertical = 8.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.Top,
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Bookmark,
+                            contentDescription = null,
+                            tint = colors.accent,
+                            modifier = Modifier
+                                .size(13.dp)
+                                .padding(top = 2.dp)
+                        )
+                        Spacer(Modifier.width(6.dp))
+                        Text(
+                            text = buildInlineAnnotatedString(state.selectedTopic, colors),
+                            color = colors.accent,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
+
+                // Level Chip (Vertical Layout)
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .background(colors.mutedText.copy(alpha = 0.08f), RoundedCornerShape(8.dp))
+                        .border(1.dp, colors.mutedText.copy(alpha = 0.2f), RoundedCornerShape(8.dp))
+                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxHeight()
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Star,
+                            contentDescription = null,
+                            tint = colors.mutedText,
+                            modifier = Modifier.size(14.dp)
+                        )
+                        Spacer(Modifier.height(2.dp))
+                        Text(
+                            text = levelSystemAndValue.first,
+                            color = colors.mutedText,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = levelSystemAndValue.second,
+                            color = colors.mutedText,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
                 }
             }
-            Text(
-                text = annotatedSubtitle,
-                fontSize = 12.sp,
-                color = colors.hintText
-            )
 
-            Spacer(Modifier.height(14.dp))
+
+            Spacer(Modifier.height(24.dp))
+
 
             // Review card
             Card(
@@ -76,7 +192,7 @@ fun FeedbackContent(
                 shape = RoundedCornerShape(14.dp),
                 border = BorderStroke(1.dp, colors.border)
             ) {
-                Column(modifier = Modifier.padding(14.dp)) {
+                Column(modifier = Modifier.padding(16.dp)) {
                     Text("Nhận xét từ AI Lingua", color = colors.accent, fontSize = 13.sp, fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(8.dp))
                     MarkdownText(feedback.review, colors)
@@ -180,7 +296,7 @@ private fun SentenceReviewCard(
         shape = RoundedCornerShape(12.dp),
         border = BorderStroke(1.dp, colors.border)
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
+        Column(modifier = Modifier.padding(16.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Start,
@@ -199,25 +315,13 @@ private fun SentenceReviewCard(
             )
             Spacer(Modifier.height(4.dp))
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
-                        Icon(Icons.Rounded.CheckCircle, null, tint = colors.correct, modifier = Modifier.size(14.dp))
-                        Spacer(Modifier.width(6.dp))
-                        Text("1) ${sentence.english}", color = colors.correct, fontSize = 15.sp, fontWeight = FontWeight.Medium)
-                    }
-                    Row {
-                        IconButton(onClick = { /* TODO TTS */ }, modifier = Modifier.size(32.dp)) {
-                            Icon(Icons.Default.VolumeUp, "Nghe", tint = colors.mutedText, modifier = Modifier.size(18.dp))
-                        }
-                        IconButton(onClick = { clipboardManager.setText(AnnotatedString(sentence.english)) }, modifier = Modifier.size(32.dp)) {
-                            Icon(Icons.Default.ContentCopy, "Copy", tint = colors.mutedText, modifier = Modifier.size(16.dp))
-                        }
-                    }
-                }
+                AnswerRow(
+                    number = 1,
+                    text = AnnotatedString(sentence.english),
+                    colors = colors,
+                    clipboardManager = clipboardManager,
+                    plainText = sentence.english
+                )
                 
                 if (sentence.alternatives.isNotEmpty()) {
                     Box(
@@ -228,7 +332,7 @@ private fun SentenceReviewCard(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            if (showAlternatives) "Thu gọn" else "+ Xem thêm ${sentence.alternatives.size} cách diễn đạt khác",
+                            text = if (showAlternatives) "Thu gọn" else "+ Xem thêm ${sentence.alternatives.size} cách diễn đạt khác",
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
                             color = colors.accent
@@ -237,26 +341,16 @@ private fun SentenceReviewCard(
 
                     if (showAlternatives) {
                         sentence.alternatives.forEachIndexed { altIndex, alt ->
-                            Row(
-                                modifier = Modifier.fillMaxWidth().padding(start = 20.dp, bottom = 4.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    text = highlightDifferences(sentence.english, alt, colors),
-                                    fontSize = 15.sp,
-                                    fontWeight = FontWeight.Medium,
-                                    modifier = Modifier.weight(1f)
-                                )
-                                Row {
-                                    IconButton(onClick = { /* TODO TTS */ }, modifier = Modifier.size(32.dp)) {
-                                        Icon(Icons.Default.VolumeUp, "Nghe", tint = colors.mutedText, modifier = Modifier.size(18.dp))
-                                    }
-                                    IconButton(onClick = { clipboardManager.setText(AnnotatedString(alt)) }, modifier = Modifier.size(32.dp)) {
-                                        Icon(Icons.Default.ContentCopy, "Copy", tint = colors.mutedText, modifier = Modifier.size(16.dp))
-                                    }
-                                }
+                            val annotatedAlt = remember(sentence.english, alt, colors) {
+                                highlightDifferences(sentence.english, alt, colors)
                             }
+                            AnswerRow(
+                                number = altIndex + 2,
+                                text = annotatedAlt,
+                                colors = colors,
+                                clipboardManager = clipboardManager,
+                                plainText = alt
+                            )
                         }
                     }
                 }
@@ -324,3 +418,72 @@ private fun SentenceReviewCard(
         }
     }
 }
+
+@Composable
+private fun AnswerRow(
+    number: Int,
+    text: AnnotatedString,
+    colors: AppColors,
+    clipboardManager: androidx.compose.ui.platform.ClipboardManager,
+    plainText: String,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.weight(1f)
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.CheckCircle,
+                contentDescription = null,
+                tint = colors.correct,
+                modifier = Modifier.size(16.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                text = remember(number, text) {
+                    androidx.compose.ui.text.buildAnnotatedString {
+                        append("$number) ")
+                        append(text)
+                    }
+                },
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Medium,
+                color = colors.mainText
+            )
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(
+                onClick = { /* TODO TTS */ },
+                modifier = Modifier.size(32.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.VolumeUp,
+                    contentDescription = "Nghe",
+                    tint = colors.mutedText,
+                    modifier = Modifier.size(18.dp)
+                )
+            }
+            IconButton(
+                onClick = { clipboardManager.setText(AnnotatedString(plainText)) },
+                modifier = Modifier.size(32.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ContentCopy,
+                    contentDescription = "Copy",
+                    tint = colors.mutedText,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
+        }
+    }
+}
+

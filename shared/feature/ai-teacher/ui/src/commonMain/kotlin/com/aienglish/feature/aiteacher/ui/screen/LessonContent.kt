@@ -14,6 +14,8 @@ import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -52,6 +54,7 @@ fun LessonContent(
     val sentence = lesson.sentences.getOrNull(idx) ?: return
     
     var showDetailedTokens by remember { mutableStateOf(false) }
+    var isExplanationExpanded by remember(idx) { mutableStateOf(false) }
     val userAnswer = state.userAnswers[idx] ?: ""
     val hasChecked = state.checkedAnswers.contains(idx)
     val languageLabel = when (state.levelType) {
@@ -70,12 +73,12 @@ fun LessonContent(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
-            .padding(horizontal = 16.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp)
         ) {
             Spacer(Modifier.height(78.dp)) // 18dp top pad + 48dp header + 12dp bottom gap = 78dp
             // Progress row (giống Sensei AI)
@@ -158,28 +161,15 @@ fun LessonContent(
                     colors = CardDefaults.cardColors(containerColor = colors.surface),
                     border = BorderStroke(1.dp, colors.border)
                 ) {
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth().padding(start = 14.dp, top = 8.dp, bottom = 8.dp, end = 4.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "1) ${sentence.english}",
-                                fontSize = 15.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                color = colors.mainText,
-                                modifier = Modifier.weight(1f)
-                            )
-                            Row {
-                                IconButton(onClick = { /* TODO TTS */ }, modifier = Modifier.size(36.dp)) {
-                                    Icon(Icons.Default.VolumeUp, "Nghe", tint = colors.mutedText, modifier = Modifier.size(20.dp))
-                                }
-                                IconButton(onClick = { clipboardManager.setText(AnnotatedString(sentence.english)) }, modifier = Modifier.size(36.dp)) {
-                                    Icon(Icons.Default.ContentCopy, "Copy", tint = colors.mutedText, modifier = Modifier.size(18.dp))
-                                }
-                            }
-                        }
+                    Column(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
+                        AnswerRow(
+                            number = 1,
+                            text = AnnotatedString(sentence.english),
+                            colors = colors,
+                            clipboardManager = clipboardManager,
+                            plainText = sentence.english,
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
 
                         if (sentence.alternatives.isNotEmpty()) {
                             HorizontalDivider(color = colors.border, thickness = 0.5.dp)
@@ -191,7 +181,7 @@ fun LessonContent(
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    if (showAlternatives) "Thu gọn" else "+ Xem thêm ${sentence.alternatives.size} cách diễn đạt khác",
+                                    text = if (showAlternatives) "Thu gọn" else "+ Xem thêm ${sentence.alternatives.size} cách diễn đạt khác",
                                     fontSize = 13.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = colors.accent
@@ -199,34 +189,51 @@ fun LessonContent(
                             }
 
                             if (showAlternatives) {
-                                Column(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
-                                    sentence.alternatives.forEachIndexed { altIndex, alt ->
-                                        Row(
-                                            modifier = Modifier.fillMaxWidth().padding(start = 14.dp, end = 4.dp, top = 4.dp, bottom = 4.dp),
-                                            horizontalArrangement = Arrangement.SpaceBetween,
-                                            verticalAlignment = Alignment.CenterVertically
-                                        ) {
-                                            Text(
-                                                text = highlightDifferences(sentence.english, alt, colors),
-                                                fontSize = 15.sp,
-                                                fontWeight = FontWeight.Medium,
-                                                modifier = Modifier.weight(1f)
-                                            )
-                                            Row {
-                                                IconButton(onClick = { /* TODO TTS */ }, modifier = Modifier.size(36.dp)) {
-                                                    Icon(Icons.Default.VolumeUp, "Nghe", tint = colors.mutedText, modifier = Modifier.size(20.dp))
-                                                }
-                                                IconButton(onClick = { clipboardManager.setText(AnnotatedString(alt)) }, modifier = Modifier.size(36.dp)) {
-                                                    Icon(Icons.Default.ContentCopy, "Copy", tint = colors.mutedText, modifier = Modifier.size(18.dp))
-                                                }
-                                            }
-                                        }
+                                sentence.alternatives.forEachIndexed { altIndex, alt ->
+                                    val annotatedAlt = remember(sentence.english, alt, colors) {
+                                        highlightDifferences(sentence.english, alt, colors)
                                     }
+                                    AnswerRow(
+                                        number = altIndex + 2,
+                                        text = annotatedAlt,
+                                        colors = colors,
+                                        clipboardManager = clipboardManager,
+                                        plainText = alt,
+                                        modifier = Modifier.padding(horizontal = 16.dp)
+                                    )
                                 }
                             }
                         }
                     }
                 }
+                
+                Spacer(Modifier.height(8.dp))
+                OutlinedButton(
+                    onClick = {
+                        isExplanationExpanded = !isExplanationExpanded
+                        if (isExplanationExpanded) {
+                            viewModel.onExplainSentence(idx)
+                        }
+                    },
+                    modifier = Modifier.height(30.dp),
+                    border = BorderStroke(1.dp, colors.accent.copy(0.5f)),
+                    shape = RoundedCornerShape(8.dp),
+                    contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp)
+                ) {
+                    Icon(
+                        if (isExplanationExpanded) Icons.Default.ExpandLess else Icons.Default.Info,
+                        null,
+                        tint = colors.accent,
+                        modifier = Modifier.size(12.dp)
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(
+                        if (isExplanationExpanded) "Thu gọn" else if (state.explanations.containsKey(idx)) "Xem lại" else "Giải thích",
+                        color = colors.accent,
+                        fontSize = 11.sp
+                    )
+                }
+                
                 Spacer(Modifier.height(14.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -370,22 +377,24 @@ fun LessonContent(
 
 
                 // Explanation card if available
-                val explanation = state.explanations[idx]
-                if (state.explainingSentenceIndex == idx) {
-                    Spacer(Modifier.height(10.dp))
-                    ExplanationSkeleton(colors)
-                } else if (explanation != null) {
-                    Spacer(Modifier.height(10.dp))
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(12.dp),
-                        colors = CardDefaults.cardColors(containerColor = colors.surfaceElevated),
-                        border = BorderStroke(0.5.dp, colors.border)
-                    ) {
-                        Column(modifier = Modifier.padding(12.dp)) {
-                            Text("💡 Giải thích chi tiết:", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = colors.accent)
-                            Spacer(Modifier.height(4.dp))
-                            MarkdownText(explanation, colors)
+                if (isExplanationExpanded) {
+                    val explanation = state.explanations[idx]
+                    if (state.explainingSentenceIndex == idx) {
+                        Spacer(Modifier.height(10.dp))
+                        ExplanationSkeleton(colors)
+                    } else if (explanation != null) {
+                        Spacer(Modifier.height(10.dp))
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = CardDefaults.cardColors(containerColor = colors.surfaceElevated),
+                            border = BorderStroke(0.5.dp, colors.border)
+                        ) {
+                            Column(modifier = Modifier.padding(12.dp)) {
+                                Text("💡 Giải thích chi tiết:", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = colors.accent)
+                                Spacer(Modifier.height(4.dp))
+                                MarkdownText(explanation, colors)
+                            }
                         }
                     }
                 }
@@ -419,6 +428,7 @@ fun LessonContent(
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
                 .navigationBarsPadding()
+                .padding(horizontal = 16.dp)
                 .padding(bottom = 14.dp)
         ) {
             if (!hasChecked) {
@@ -609,6 +619,74 @@ internal fun highlightDifferences(main: String, alt: String, colors: AppColors):
                 }
             }
             if (index < altWords.size - 1) append(" ")
+        }
+    }
+}
+
+@Composable
+private fun AnswerRow(
+    number: Int,
+    text: AnnotatedString,
+    colors: AppColors,
+    clipboardManager: androidx.compose.ui.platform.ClipboardManager,
+    plainText: String,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.weight(1f)
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.CheckCircle,
+                contentDescription = null,
+                tint = colors.correct,
+                modifier = Modifier.size(16.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                text = remember(number, text) {
+                    androidx.compose.ui.text.buildAnnotatedString {
+                        append("$number) ")
+                        append(text)
+                    }
+                },
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Medium,
+                color = colors.mainText
+            )
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(
+                onClick = { /* TODO TTS */ },
+                modifier = Modifier.size(32.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.VolumeUp,
+                    contentDescription = "Nghe",
+                    tint = colors.mutedText,
+                    modifier = Modifier.size(18.dp)
+                )
+            }
+            IconButton(
+                onClick = { clipboardManager.setText(AnnotatedString(plainText)) },
+                modifier = Modifier.size(32.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ContentCopy,
+                    contentDescription = "Copy",
+                    tint = colors.mutedText,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
         }
     }
 }
