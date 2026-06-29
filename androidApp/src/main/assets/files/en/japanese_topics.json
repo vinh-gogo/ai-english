@@ -973,7 +973,7 @@
   },
   {
     "id": 462,
-    "name": "Register to participate in volunteer activities to protect the environment",
+    "name": "Volunteering for environmental protection activities",
     "systemCode": "JLPT",
     "levelCode": "N4"
   },
@@ -1201,7 +1201,7 @@
   },
   {
     "id": 500,
-    "name": "Discuss the Japanese culture of bowing (Ojigi).",
+    "name": "Discuss the Japanese culture of bowing (Ojigi)",
     "systemCode": "JLPT",
     "levelCode": "N4"
   },
@@ -1213,7 +1213,7 @@
   },
   {
     "id": 502,
-    "name": "Talking about coming of age ceremony (Seijin no Hi) in Japan",
+    "name": "Talking about coming of age ceremonyin Japan",
     "systemCode": "JLPT",
     "levelCode": "N4"
   },
@@ -1333,7 +1333,7 @@
   },
   {
     "id": 522,
-    "name": "The issue of preserving traditional culture in the era of globalization",
+    "name": "Preserving traditional culture in the globalization era",
     "systemCode": "JLPT",
     "levelCode": "N4"
   },
@@ -1357,7 +1357,7 @@
   },
   {
     "id": 526,
-    "name": "Discuss renewable energy (wind, solar, nuclear)",
+    "name": "Discuss renewable energy",
     "systemCode": "JLPT",
     "levelCode": "N4"
   },
@@ -1471,13 +1471,13 @@
   },
   {
     "id": 545,
-    "name": "The development of self-driving cars and the future of the transportation industry",
+    "name": "Self-driving cars and the future of transportation",
     "systemCode": "JLPT",
     "levelCode": "N3"
   },
   {
     "id": 546,
-    "name": "Kaizen concept - The philosophy of continuous improvement of Japanese businesses",
+    "name": "Kaizen philosophy and continuous business improvement",
     "systemCode": "JLPT",
     "levelCode": "N3"
   },
@@ -1627,7 +1627,7 @@
   },
   {
     "id": 571,
-    "name": "The importance of environmental protection education from elementary school level",
+    "name": "Environmental education from elementary school",
     "systemCode": "JLPT",
     "levelCode": "N3"
   },
@@ -1693,13 +1693,13 @@
   },
   {
     "id": 582,
-    "name": "The development of sustainable smart cities (Smart Cities).",
+    "name": "The development of sustainable smart cities (Smart Cities)",
     "systemCode": "JLPT",
     "levelCode": "N3"
   },
   {
     "id": 583,
-    "name": "Discuss apology culture (O-jigi and Apology culture) in Japan",
+    "name": "Discuss apology culturein Japan",
     "systemCode": "JLPT",
     "levelCode": "N3"
   },
@@ -1795,7 +1795,7 @@
   },
   {
     "id": 599,
-    "name": "The problem of agricultural land degradation and solutions to improve land",
+    "name": "Agricultural land degradation and remediation",
     "systemCode": "JLPT",
     "levelCode": "N3"
   },
@@ -1849,13 +1849,13 @@
   },
   {
     "id": 608,
-    "name": "Discuss the development of large-scale clean water filtration technologies",
+    "name": "Large-scale clean water filtration technologies",
     "systemCode": "JLPT",
     "levelCode": "N3"
   },
   {
     "id": 609,
-    "name": "The problem of discrimination against people with disabilities and solutions for inclusion",
+    "name": "Disability discrimination and inclusive society solutions",
     "systemCode": "JLPT",
     "levelCode": "N3"
   },
@@ -1969,7 +1969,7 @@
   },
   {
     "id": 628,
-    "name": "Discuss the impact of increasing university tuition on educational opportunities",
+    "name": "Rising university tuition and educational access",
     "systemCode": "JLPT",
     "levelCode": "N3"
   },
@@ -1993,7 +1993,7 @@
   },
   {
     "id": 632,
-    "name": "Discuss the development of personalized medicine (Personalized Medicine)",
+    "name": "Discuss the development of personalized medicine",
     "systemCode": "JLPT",
     "levelCode": "N3"
   },
@@ -2065,7 +2065,7 @@
   },
   {
     "id": 644,
-    "name": "The problem of land desertification due to climate change and improper farming",
+    "name": "Land desertification from climate change and farming",
     "systemCode": "JLPT",
     "levelCode": "N3"
   },
@@ -2095,7 +2095,7 @@
   },
   {
     "id": 649,
-    "name": "The problem of water pollution due to plant protection chemicals in agriculture",
+    "name": "Agricultural chemical pollution of water sources",
     "systemCode": "JLPT",
     "levelCode": "N3"
   },
@@ -2113,7 +2113,7 @@
   },
   {
     "id": 652,
-    "name": "Discuss the trend of using environmentally friendly natural textile fibers",
+    "name": "Eco-friendly natural textile fiber trends",
     "systemCode": "JLPT",
     "levelCode": "N3"
   },
@@ -2131,7 +2131,7 @@
   },
   {
     "id": 655,
-    "name": "The importance of improving the quality of education in highland and remote areas",
+    "name": "Education quality in highland and remote communities",
     "systemCode": "JLPT",
     "levelCode": "N3"
   },
@@ -2149,7 +2149,7 @@
   },
   {
     "id": 658,
-    "name": "Discussing the development of carbon capture technologies (Carbon Capture)",
+    "name": "Carbon capture technology development",
     "systemCode": "JLPT",
     "levelCode": "N3"
   },
@@ -2197,7 +2197,7 @@
   },
   {
     "id": 666,
-    "name": "Kado concept - Japanese flower arranging art and harmony between heaven and earth",
+    "name": "Kado: Japanese flower arranging and its philosophy",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
@@ -2215,7 +2215,7 @@
   },
   {
     "id": 669,
-    "name": "Quality control problems of imported medicines and inspection solutions",
+    "name": "Imported medicine quality control and inspection",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
@@ -2227,7 +2227,7 @@
   },
   {
     "id": 671,
-    "name": "The role of marine protected areas in the recovery of precious fish species",
+    "name": "Marine protected areas and fish species recovery",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
@@ -2239,13 +2239,13 @@
   },
   {
     "id": 673,
-    "name": "Discuss the impact of electronic books (E-books) on the traditional publishing industry",
+    "name": "Impact of e-books on traditional publishing",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
   {
     "id": 674,
-    "name": "The problem of increasing the amount of hazardous medical waste and treatment options",
+    "name": "Medical waste management and treatment solutions",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
@@ -2257,7 +2257,7 @@
   },
   {
     "id": 676,
-    "name": "Shodo concept - Japanese calligraphy and philosophy of character training",
+    "name": "Shodo: Japanese calligraphy and discipline",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
@@ -2275,7 +2275,7 @@
   },
   {
     "id": 679,
-    "name": "The issue of protecting personal health data in the electronic hospital system",
+    "name": "Protecting personal health data in digital hospitals",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
@@ -2293,7 +2293,7 @@
   },
   {
     "id": 682,
-    "name": "Discuss the trend of using packaging made from bagasse and natural coconut fiber",
+    "name": "Bagasse and natural fiber sustainable packaging trends",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
@@ -2305,7 +2305,7 @@
   },
   {
     "id": 684,
-    "name": "The problem of clean water shortage in developing countries and solutions",
+    "name": "Clean water shortage in developing countries",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
@@ -2323,49 +2323,49 @@
   },
   {
     "id": 687,
-    "name": "Discuss the impact of fine dust (PM2.5) on the human respiratory system",
+    "name": "PM2.5 fine dust and respiratory health impacts",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
   {
     "id": 688,
-    "name": "Discuss the use of recycled materials in the production of new electronic components",
+    "name": "Recycled materials in electronics manufacturing",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
   {
     "id": 689,
-    "name": "The problem of increasing rates of mental illness due to the intense pressure of urban life",
+    "name": "Mental health issues from urban life pressure",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
   {
     "id": 690,
-    "name": "The importance of maintaining a balanced lifestyle between work and leisure",
+    "name": "Work-life balance and healthy lifestyle habits",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
   {
     "id": 691,
-    "name": "The role of cultivating the habit of reading books every day in developing linguistic thinking",
+    "name": "Daily reading habits and linguistic development",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
   {
     "id": 692,
-    "name": "Discuss sustainable fashion design trends (Eco-fashion) that are environmentally friendly",
+    "name": "Sustainable and eco-friendly fashion trends",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
   {
     "id": 693,
-    "name": "Discuss the impact of warehouse automation on transportation logistics efficiency",
+    "name": "Warehouse automation and logistics efficiency",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
   {
     "id": 694,
-    "name": "The problem of natural forest area reduction due to exploitation of land for industrial and urban purposes",
+    "name": "Deforestation and land use for industrial development",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
@@ -2383,19 +2383,19 @@
   },
   {
     "id": 697,
-    "name": "Discussion on the development trend of forest ecotourism (Forest Ecotourism)",
+    "name": "Forest ecotourism development trends",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
   {
     "id": 698,
-    "name": "Discussing the use of energy from ocean waves to produce clean electricity",
+    "name": "Ocean wave energy for clean electricity generation",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
   {
     "id": 699,
-    "name": "The problem of surface water pollution due to untreated wastewater from small factories",
+    "name": "Factory wastewater and surface water pollution",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
@@ -2479,7 +2479,7 @@
   },
   {
     "id": 713,
-    "name": "Behind the scenes of video making (Behind the scenes)",
+    "name": "Behind the scenes of video making",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
@@ -2647,7 +2647,7 @@
   },
   {
     "id": 741,
-    "name": "Follow famous virtual streamers (VTubers).",
+    "name": "Follow famous virtual streamers (VTubers)",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
@@ -2821,7 +2821,7 @@
   },
   {
     "id": 770,
-    "name": "Search for restaurant information via social networks instead of Google",
+    "name": "Finding restaurants through social media instead of search engines",
     "systemCode": "JLPT",
     "levelCode": "N2"
   },
@@ -2881,7 +2881,7 @@
   },
   {
     "id": 780,
-    "name": "World electronic sports tournament (Esports).",
+    "name": "World electronic sports tournament (Esports)",
     "systemCode": "JLPT",
     "levelCode": "N1"
   },
@@ -2947,13 +2947,13 @@
   },
   {
     "id": 791,
-    "name": "How to overcome difficult levels (Boss fight tips)",
+    "name": "How to overcome difficult levels",
     "systemCode": "JLPT",
     "levelCode": "N1"
   },
   {
     "id": 792,
-    "name": "New game introduction event (Game show/Tokyo Game Show)",
+    "name": "New game introduction event",
     "systemCode": "JLPT",
     "levelCode": "N1"
   },
@@ -3007,7 +3007,7 @@
   },
   {
     "id": 801,
-    "name": "Discuss excellent game background music (Game OST).",
+    "name": "Discuss excellent game background music (Game OST)",
     "systemCode": "JLPT",
     "levelCode": "N1"
   },
@@ -3049,7 +3049,7 @@
   },
   {
     "id": 808,
-    "name": "Life simulation games (Life simulation games)",
+    "name": "Life simulation games",
     "systemCode": "JLPT",
     "levelCode": "N1"
   },
@@ -3091,7 +3091,7 @@
   },
   {
     "id": 815,
-    "name": "How to create a unique game mod (Game modding).",
+    "name": "How to create a unique game mod (Game modding)",
     "systemCode": "JLPT",
     "levelCode": "N1"
   },
@@ -3115,13 +3115,13 @@
   },
   {
     "id": 819,
-    "name": "Fighting games that require quick button pressing skills (Fighting games)",
+    "name": "Competitive fighting games and skill mechanics",
     "systemCode": "JLPT",
     "levelCode": "N1"
   },
   {
     "id": 820,
-    "name": "Traditional Japanese cross-country relay race (Ekiden).",
+    "name": "Traditional Japanese cross-country relay race (Ekiden)",
     "systemCode": "JLPT",
     "levelCode": "N1"
   },
@@ -3271,7 +3271,7 @@
   },
   {
     "id": 845,
-    "name": "Organize the company's 5-player mini football tournament (Futsal).",
+    "name": "Organize the company's 5-player mini football tournament (Futsal)",
     "systemCode": "JLPT",
     "levelCode": "N1"
   },
@@ -3439,13 +3439,13 @@
   },
   {
     "id": 873,
-    "name": "Discuss the trend of listening to Lo-fi music when studying and working",
+    "name": "Lo-fi music trends for studying and working",
     "systemCode": "JLPT",
     "levelCode": "N1"
   },
   {
     "id": 874,
-    "name": "Experience the unique pet cafe (Cats, Dogs, Owls).",
+    "name": "Experience the unique pet cafe",
     "systemCode": "JLPT",
     "levelCode": "N1"
   },
@@ -3553,7 +3553,7 @@
   },
   {
     "id": 892,
-    "name": "How to teach yourself how to draw Manga style illustrations on your tablet",
+    "name": "Self-teaching Manga illustration on a tablet",
     "systemCode": "JLPT",
     "levelCode": "N1"
   },
@@ -3595,7 +3595,7 @@
   },
   {
     "id": 899,
-    "name": "The habit of going to bookstores to look at beautiful book covers on weekends",
+    "name": "Weekend bookstore visits and book cover aesthetics",
     "systemCode": "JLPT",
     "levelCode": "N1"
   }
