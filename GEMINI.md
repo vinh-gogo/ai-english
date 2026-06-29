@@ -548,5 +548,18 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 
+---
+
+### 🟢 Session 25 (2026-06-29)
+
+- **Mục tiêu:** Khắc phục lỗi reset/revert các lựa chọn hệ thống điểm và cấp độ (Level Type & Value) khi người dùng thoát ra màn hình chọn chủ đề.
+- **Hoạt động & Thay đổi:**
+  - **TeacherViewModel.kt:** Chỉnh sửa hàm `onReset()`. Trước đó, mỗi khi thoát màn hình Luyện tập hoặc Xem kết quả, hàm này luôn tính toán lại mặc định Level Type dựa trên ngôn ngữ đích (khiến TOEIC bị reset về CEFR B1).
+  - Logic mới kiểm tra: Nếu ngôn ngữ đích không thay đổi so với `currentState.targetLanguage`, ta giữ nguyên `currentState.levelType` và cấp độ tương ứng. Chỉ khi có sự thay đổi ngôn ngữ đích (từ Settings) mới tiến hành cập nhật lại hệ thống thang điểm mặc định cho ngôn ngữ mới.
+- **Ghi chú kỹ thuật:**
+  - Đảm bảo trải nghiệm liền mạch, người dùng không cần phải chọn lại thang điểm TOEIC/JLPT nhiều lần. Đã test, build và cập nhật qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.
