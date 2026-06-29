@@ -23,7 +23,18 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 14** | 2026-06-29 | Claude Sonnet 4.6 | `16d7e0fa-80ff-43af-9dcc-87d9a481a702` | Lặp (iterate) thiết kế lại Logo dựa trên hình khối gốc: thử nghiệm từ phong cách Glassmorphism chuyên nghiệp đến Flat 2D (TikTok/FB style), tối ưu độ bão hòa Deep/Rich colors, cập nhật trực tiếp lên mipmap Android. | Hoàn thành |
 | **Session 15** | 2026-06-29 | Gemini 3.1 Pro | `f6c34fd4-afd8-448c-98e5-b576a6f1844b` | Cải thiện UX phần Từ vựng chi tiết: cơ chế Tap-to-reveal (ẩn/hiện chi tiết bằng công tắc và khi chạm), bọc thẻ Card để tăng độ tương phản, cập nhật gom cụm từ (chunking) thay vì từ đơn. | Hoàn thành |
 | **Session 16** | 2026-06-29 | Gemini 3.1 Pro | `f6c34fd4-afd8-448c-98e5-b576a6f1844b` | Nâng cấp UI "Các đáp án chuẩn" (Highlighting từ đồng nghĩa CJK-aware, Accordion gọn gàng) và cập nhật AI Prompt cho tất cả ngôn ngữ. | Hoàn thành |
-
+| **Session 17** | 2026-06-29 | Gemini 3.1 Pro | `f6c34fd4-afd8-448c-98e5-b576a6f1844b` | Căn chỉnh các token từ vựng chi tiết luôn thẳng hàng ngang bất kể việc bật/tắt hiển thị IPA, từ loại. | Hoàn thành |
+| **Session 18** | 2026-06-29 | Gemini 3.1 Pro | `f6c34fd4-afd8-448c-98e5-b576a6f1844b` | Loại bỏ cơ chế "Tap-to-reveal" để toggle switch "Phân tích" hoạt động chính xác tuyệt đối. | Hoàn thành |
+| **Session 19** | 2026-06-29 | Gemini 3.1 Pro | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Bỏ hoàn toàn tính năng chấm điểm ở toàn bộ AI agents và ẩn điểm số khỏi giao diện người dùng. | Hoàn thành |
+| **Session 20** | 2026-06-29 | Gemini 3.1 Pro | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Xóa nhãn "Dịch sang tiếng A/B/C/X:" ở phần hiển thị câu hỏi của màn hình Luyện tập. | Hoàn thành |
+| **Session 21** | 2026-06-29 | Gemini 3.1 Pro | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Sửa lỗi giao diện hiển thị nhãn "Kết quả của bạn" (xóa Spacer dư thừa, tăng font size). | Hoàn thành |
+| **Session 22** | 2026-06-29 | Gemini 3.1 Pro | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Thêm nút "Làm lại" vào bên trái nút "Bài mới" ở màn hình Xem lại kết quả, cập nhật icon. | Hoàn thành |
+| **Session 23** | 2026-06-29 | Gemini 3.1 Pro | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Cập nhật nhãn chào mừng ở màn hình chọn chủ đề thành "Gia sư Tiếng X" và căn trái. | Hoàn thành |
+| **Session 24** | 2026-06-29 | Gemini 3.1 Pro | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Cập nhật lại nhãn tiêu đề chào mừng của màn hình chủ đề thành "Trợ lý Tiếng X". | Hoàn thành |
+| **Session 25** | 2026-06-29 | Gemini 3.1 Pro | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Khắc phục lỗi reset/revert hệ thống điểm/cấp độ khi thoát màn hình. | Hoàn thành |
+| **Session 26** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Di chuyển thang điểm mục tiêu lên trên carousel chủ đề hiển thị và refactor tách component. | Hoàn thành |
+| **Session 27** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Tự động cuộn màn hình xuống dưới cùng khi người dùng focus vào các ô nhập liệu (Search / Custom Topic) và bàn phím ảo hiện lên. | Hoàn thành |
+| **Session 28** | 2026-06-29 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Tách file TopicSelectionContent.kt và refactor giảm tải code smells. | Hoàn thành |
 
 ---
 
@@ -561,5 +572,54 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 
+---
+
+### 🟢 Session 26 (2026-06-29)
+
+- **Mục tiêu:** Di chuyển phần chọn thang điểm mục tiêu lên phía trên carousel hiển thị chủ đề của màn hình chọn chủ đề.
+- **Hoạt động & Thay đổi:**
+  - **TopicSelectionContent.kt:**
+    - Trích xuất phần giao diện "Thang điểm mục tiêu" và các nút chọn cấp độ thành một hàm Composable riêng biệt `TargetLevelSystem(...)`.
+    - Trích xuất khối hiển thị "Carousel Card" thành hàm Composable riêng biệt `TopicCarouselCard(...)`.
+    - Thay đổi thứ tự sắp xếp trong `Column` chính: Gọi `TargetLevelSystem` ở phía trên và `TopicCarouselCard` ở phía dưới.
+- **Ghi chú kỹ thuật:**
+  - Tách các Composable con giúp giữ cấu trúc của code trong sạch, dễ đọc và bảo trì hơn. Giao diện mới hiển thị thang điểm mục tiêu ngay dưới phần tiêu đề chào mừng.
+  - Biên dịch và triển khai ứng dụng Android thành công thông qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 27 (2026-06-29)
+
+- **Mục tiêu:** Tự động cuộn màn hình xuống dưới cùng để tránh bị nút "Bắt đầu bài học" che khuất khi người dùng mở bàn phím ảo để nhập tìm kiếm hoặc nhập chủ đề tự do.
+- **Hoạt động & Thay đổi:**
+  - **TopicSelectionContent.kt:**
+    - Lưu trạng thái `scrollState` thay vì gọi trực tiếp `rememberScrollState()` inline để có thể điều khiển vị trí cuộn chương trình.
+    - Định nghĩa các trạng thái focus `isSearchFocused` (cho thanh tìm kiếm) và `isCustomTopicFocused` (cho ô nhập chủ đề tự chọn).
+    - Lắng nghe sự kiện thay đổi focus trên các ô nhập liệu thông qua `.onFocusChanged { ... }`.
+    - Sử dụng `LaunchedEffect` theo dõi các thay đổi của `isSearchFocused`, `isCustomTopicFocused` và `scrollState.maxValue`. Khi có focus và kích thước màn hình thay đổi (do bàn phím ảo xuất hiện làm tăng `scrollState.maxValue`), chương trình sẽ kích hoạt cuộn mượt mà xuống dưới cùng của danh sách (`scrollState.animateScrollTo(scrollState.maxValue)`).
+- **Ghi chú kỹ thuật:**
+  - Do màn hình chính đã có sẵn `Spacer(Modifier.height(80.dp))` ở cuối danh sách cuộn (lớn hơn chiều cao của nút start button là 48.dp + padding), việc cuộn xuống hết cỡ sẽ đẩy hoàn toàn phần ô nhập liệu lên trên nút bắt đầu đang ghim ở đáy, ngăn chặn triệt để tình trạng che khuất thông tin.
+  - Đã build và chạy kiểm thử thành công trên Android.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 28 (2026-06-29)
+
+- **Mục tiêu:** Tách file `TopicSelectionContent.kt` và refactor tối ưu hóa để giảm bớt code smells (Single Responsibility, modularity, duplicate logic).
+- **Hoạt động & Thay đổi:**
+  - Tạo file [TopicCarouselCard.kt](file:///D:/ai-english/shared/feature/ai-teacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/TopicCarouselCard.kt) để chứa Composable `TopicCarouselCard`. Tối ưu tái sử dụng biến `currentTopicIndex` giúp loại bỏ việc tính toán `indexOfFirst` lặp lại 3 lần.
+  - Tạo file [TargetLevelSystem.kt](file:///D:/ai-english/shared/feature/ai-teacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/TargetLevelSystem.kt) để chứa Composable `TargetLevelSystem`. Tối ưu tạo helper composable `LevelChip`, `LevelTypeSelectorOption` và `SingleLevelSystemLabel` để tái sử dụng toàn bộ cấu trúc giao diện chọn cấp độ, giúp loại bỏ hàng trăm dòng code trùng lặp.
+  - Xóa các hàm `TopicCarouselCard` và `TargetLevelSystem` ở cuối file `TopicSelectionContent.kt`, biến chúng thành các hàm internal để gọi trực tiếp xuyên file trong cùng package. Loại bỏ các biến cục bộ không còn sử dụng (`levelColor`, `currentTopicLevel`, `currentTopicColor`).
+- **Ghi chú kỹ thuật:**
+  - Refactoring này giúp file `TopicSelectionContent.kt` giảm từ ~1050 dòng xuống còn **~370 dòng**, `TargetLevelSystem.kt` giảm xuống chỉ còn **~240 dòng** nhờ viết helper composable loại bỏ trùng lặp logic, cải thiện khả năng đọc code, bảo trì, hiệu năng recomposition và tối ưu tài nguyên tối đa.
+  - Dự án build thành công và cài đặt lên thiết bị qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.
+
