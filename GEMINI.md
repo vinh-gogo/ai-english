@@ -87,6 +87,7 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
     - `getCurrentUserId()`: Thay vì trả về `"guest"` như trước, nay trả về `"0000000000000000"` nếu người dùng chưa đăng nhập hoặc có email đăng nhập tạm thời là `"guest@aienglish.com"`.
     - `getAllHistory()`: Đồng bộ hóa query flow để dùng GUID `"0000000000000000"` tải lịch sử học tập của Guest.
     - Sửa phương thức tạo tài khoản mặc định `ensureUserExists` để gán chính xác `display_name = "Guest"` và `email = "guest@local"` khi `user_id` là `"0000000000000000"`.
+    - **Cơ chế migration dữ liệu cũ:** Bổ sung truy vấn `migrateGuestHistory` trong [LessonHistory.sq](file:///D:/ai-english/shared/core/database/src/commonMain/sqldelight/com/aienglish/core/database/LessonHistory.sq) và `deleteUserById` trong [UserSchema.sq](file:///D:/ai-english/shared/core/database/src/commonMain/sqldelight/com/aienglish/core/database/UserSchema.sq`). Thực thi lazy migration dữ liệu `checkAndMigrateGuestData()` chuyển toàn bộ lịch sử học tập cũ có ID là `"guest"` sang ID `"0000000000000000"`, sau đó xóa an toàn user `"guest"` cũ khi bắt đầu hoặc lấy lịch sử.
 - **Ghi chú kỹ thuật:**
   - Biên dịch thành công cho cả 2 target Desktop và Android, bảo đảm tính nhất quán của cơ sở dữ liệu local SQLite.
 - **Kế hoạch tiếp theo (Next Steps):**

@@ -38,8 +38,24 @@ class HistoryRepositoryImpl(
         }
     }
 
+    private suspend fun checkAndMigrateGuestData() = withContext(dispatchers.io) {
+        val now = Clock.System.now().toEpochMilliseconds()
+        database.transaction {
+            database.userSchemaQueries.ensureUserExists(
+                user_id = "0000000000000000",
+                display_name = "Guest",
+                email = "guest@local",
+                created_at = now,
+                updated_at = now
+            )
+            database.lessonHistoryQueries.migrateGuestHistory()
+            database.userSchemaQueries.deleteUserById("guest")
+        }
+    }
+
     override suspend fun startLesson(topic: String, level: String): Long =
         withContext(dispatchers.io) {
+            checkAndMigrateGuestData()
             val now = Clock.System.now().toEpochMilliseconds()
             val userId = getCurrentUserId()
             database.userSchemaQueries.ensureUserExists(
@@ -85,6 +101,7 @@ class HistoryRepositoryImpl(
                 "0000000000000000"
             }
         }.flatMapLatest { userId ->
+            checkAndMigrateGuestData()
             queries.getAllHistoryWithCounts(userId)
                 .asFlow()
                 .mapToList(dispatchers.io)
