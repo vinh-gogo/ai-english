@@ -182,10 +182,7 @@ fun HistorySheet(
                     val items = state.items
                     val completedCount = remember(items) { items.count { it.status == HistoryStatus.COMPLETED } }
                     val groups = remember(items) {
-                        val excellent = mutableListOf<HistoryItemState>()
-                        val good = mutableListOf<HistoryItemState>()
-                        val average = mutableListOf<HistoryItemState>()
-                        val weak = mutableListOf<HistoryItemState>()
+                        val completed = mutableListOf<HistoryItemState>()
                         val pending = mutableListOf<HistoryItemState>()
 
                         items.forEach { item ->
@@ -203,24 +200,15 @@ fun HistorySheet(
                                 rawItem = item
                             )
                             if (item.status == HistoryStatus.COMPLETED) {
-                                val score = item.score ?: 0
-                                when {
-                                    score >= 9 -> excellent.add(uiState)
-                                    score >= 7 -> good.add(uiState)
-                                    score >= 5 -> average.add(uiState)
-                                    else -> weak.add(uiState)
-                                }
+                                completed.add(uiState)
                             } else {
                                 pending.add(uiState)
                             }
                         }
                         listOf(
-                            GroupData("Xuất sắc (9 - 10 điểm)", excellent, colors.correct),
-                            GroupData("Tốt (7 - 8 điểm)", good, colors.accent),
-                            GroupData("Trung bình (5 - 6 điểm)", average, Color(0xFFFFA726)),
-                            GroupData("Yếu (Dưới 5 điểm)", weak, colors.error),
+                            GroupData("Đã hoàn thành", completed, colors.correct),
                             GroupData("Chưa hoàn thành", pending, colors.mutedText)
-                        )
+                        ).filter { it.items.isNotEmpty() }
                     }
 
                     LazyColumn(
@@ -473,37 +461,9 @@ private fun HistoryItem(
         // Action Buttons
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Score Badge (căn lề bên trái)
-            if (isCompleted) {
-                val scoreVal = itemState.score ?: 0
-                val scoreColor = when {
-                    scoreVal >= 9 -> colors.correct
-                    scoreVal >= 5 -> colors.warning
-                    else -> colors.error
-                }
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(scoreColor.copy(0.08f))
-                        .border(0.5.dp, scoreColor.copy(0.2f), RoundedCornerShape(8.dp))
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-                ) {
-                    Text(
-                        text = "$scoreVal/10 điểm",
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = scoreColor
-                    )
-                }
-            } else {
-                Spacer(Modifier.width(1.dp))
-            }
-
-            Spacer(Modifier.weight(1f))
-
             // Action buttons on the right
             if (itemState.status == HistoryStatus.IN_PROGRESS && itemState.hasLessonData) {
                 Box(

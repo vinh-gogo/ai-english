@@ -52,23 +52,7 @@ fun FeedbackContent(
         ) {
             Spacer(Modifier.height(78.dp)) // 18dp top pad + 48dp header + 12dp bottom gap = 78dp
 
-            // Score badge
-            Box(
-                modifier = Modifier
-                    .size(80.dp)
-                    .clip(CircleShape)
-                    .background(
-                        when {
-                            feedback.score >= 9 -> colors.correct
-                            feedback.score >= 5 -> colors.warning
-                            else -> colors.error
-                        }
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("${feedback.score}/10", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.ExtraBold)
-            }
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(20.dp))
             Text("Kết quả của bạn", fontSize = 17.sp, fontWeight = FontWeight.Bold, color = colors.mainText)
             Text(
                 "${state.selectedTopic} · CEFR ${state.selectedCefrLevel}",
@@ -155,19 +139,10 @@ private fun SentenceReviewCard(
         Column(modifier = Modifier.padding(12.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text("Câu ${index + 1}", color = colors.hintText, fontSize = 11.sp)
-                val sentenceScore = state.feedback?.sentenceScores?.getOrNull(index)
-                if (sentenceScore != null) {
-                    Text(
-                        text = "Điểm: $sentenceScore/10",
-                        color = if (sentenceScore >= 9) colors.correct else if (sentenceScore >= 5) colors.warning else colors.error,
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
             }
             Spacer(Modifier.height(6.dp))
             Text(sentence.vietnamese, color = colors.mainText, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)

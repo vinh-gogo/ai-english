@@ -345,7 +345,7 @@ class TeacherViewModel(
                         copy(
                             explainingSentenceIndex = null,
                             explanations = explanations + (index to result.explanation),
-                            sentenceScores = sentenceScores + (index to result.score)
+                            sentenceScores = sentenceScores + (index to 0)
                         )
                     }
                     saveCurrentProgress()
@@ -443,25 +443,9 @@ class TeacherViewModel(
             evaluateLesson("user", state.selectedTopic, answers, sentences, level).fold(
                 ifLeft = { err -> setState { copy(isEvaluating = false, error = err.message) } },
                 ifRight = { fb ->
-                    val sanitizedSentenceScores = if (fb.sentenceScores.size == lesson.sentences.size) {
-                        fb.sentenceScores.mapIndexed { index, score ->
-                            val userAnswer = state.userAnswers[index] ?: ""
-                            if (userAnswer.isBlank()) 0 else score
-                        }
-                    } else {
-                        lesson.sentences.mapIndexed { index, _ ->
-                            val userAnswer = state.userAnswers[index] ?: ""
-                            if (userAnswer.isBlank()) 0 else (fb.sentenceScores.getOrNull(index) ?: 0)
-                        }
-                    }
-                    val calculatedScore = if (sanitizedSentenceScores.isNotEmpty()) {
-                        ((sanitizedSentenceScores.sum() / sanitizedSentenceScores.size.toDouble()) + 0.5).toInt()
-                    } else {
-                        fb.score
-                    }
                     val sanitizedFb = fb.copy(
-                        score = calculatedScore,
-                        sentenceScores = sanitizedSentenceScores
+                        score = 0,
+                        sentenceScores = emptyList()
                     )
 
                     setState { copy(isEvaluating = false, feedback = sanitizedFb) }

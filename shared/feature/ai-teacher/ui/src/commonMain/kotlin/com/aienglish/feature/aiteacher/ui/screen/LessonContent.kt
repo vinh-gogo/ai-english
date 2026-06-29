@@ -438,7 +438,6 @@ fun LessonContent(
                 }
             } else {
                 val isExplaining = state.explainingSentenceIndex == idx
-                val sentenceScore = state.sentenceScores[idx]
                 if (idx < total - 1) {
                     // Next sentence
                     Row(
@@ -475,40 +474,6 @@ fun LessonContent(
                             } else {
                                 Text("Câu tiếp theo", color = Color.White)
                                 Icon(Icons.Default.ChevronRight, null)
-                            }
-                        }
-
-                        if (!isExplaining && sentenceScore != null) {
-                            Card(
-                                shape = CircleShape,
-                                colors = CardDefaults.cardColors(
-                                    containerColor = colors.surface
-                                ),
-                                border = BorderStroke(
-                                    2.dp,
-                                    when {
-                                        sentenceScore >= 9 -> colors.correct
-                                        sentenceScore >= 5 -> colors.warning
-                                        else -> colors.error
-                                    }
-                                ),
-                                modifier = Modifier.height(48.dp).padding(horizontal = 4.dp)
-                            ) {
-                                Box(
-                                    modifier = Modifier.fillMaxHeight().padding(horizontal = 14.dp),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Text(
-                                        text = "$sentenceScore/10",
-                                        fontWeight = FontWeight.ExtraBold,
-                                        fontSize = 15.sp,
-                                        color = when {
-                                            sentenceScore >= 9 -> colors.correct
-                                            sentenceScore >= 5 -> colors.warning
-                                            else -> colors.error
-                                        }
-                                    )
-                                }
                             }
                         }
                     }
@@ -551,40 +516,6 @@ fun LessonContent(
                                 Text("AI đang giải thích...", color = Color.White)
                             } else {
                                 Text("Xem đánh giá", color = Color.White, fontWeight = FontWeight.Bold)
-                            }
-                        }
-
-                        if (!isExplaining && !state.isEvaluating && sentenceScore != null) {
-                            Card(
-                                shape = CircleShape,
-                                colors = CardDefaults.cardColors(
-                                    containerColor = colors.surface
-                                ),
-                                border = BorderStroke(
-                                    2.dp,
-                                    when {
-                                        sentenceScore >= 9 -> colors.correct
-                                        sentenceScore >= 5 -> colors.warning
-                                        else -> colors.error
-                                    }
-                                ),
-                                modifier = Modifier.height(48.dp).padding(horizontal = 4.dp)
-                            ) {
-                                Box(
-                                    modifier = Modifier.fillMaxHeight().padding(horizontal = 14.dp),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Text(
-                                        text = "$sentenceScore/10",
-                                        fontWeight = FontWeight.ExtraBold,
-                                        fontSize = 15.sp,
-                                        color = when {
-                                            sentenceScore >= 9 -> colors.correct
-                                            sentenceScore >= 5 -> colors.warning
-                                            else -> colors.error
-                                        }
-                                    )
-                                }
                             }
                         }
                     }

@@ -96,11 +96,9 @@ abstract class BaseLanguagePromptProvider : LanguagePromptProvider {
         }
 
         val evalDetails = if (isEn) {
-            "Provide feedback in English: praise what was done well, point out common errors ($evalCommonErrorsEn) if any, and suggest improvements.\n" +
-            "Give a total score out of 10. Also evaluate and score each of the 10 sentences individually (from 0 to 10). If a sentence is skipped or left blank, score it 0. For others, rate strictly based on correctness."
+            "Provide feedback in English: praise what was done well, point out common errors ($evalCommonErrorsEn) if any, and suggest improvements."
         } else {
-            "Hãy đánh giá tổng quan bằng tiếng Việt, khen ngợi những chỗ học sinh làm tốt, chỉ ra các lỗi sai phổ biến ($evalCommonErrorsVi) nếu có và đề xuất cách cải thiện ngắn gọn.\n" +
-            "Cuối cùng, cho học sinh một số điểm tổng trên thang điểm 10. Hãy chấm điểm cho từng câu trong số 10 câu (từ 0 đến 10 điểm) dựa trên bài làm của học sinh. Nếu câu bị bỏ qua hoặc bỏ trống, bắt buộc chấm 0 điểm. Các câu khác chấm điểm khách quan theo mức độ chính xác."
+            "Hãy đánh giá tổng quan bằng tiếng Việt, khen ngợi những chỗ học sinh làm tốt, chỉ ra các lỗi sai phổ biến ($evalCommonErrorsVi) nếu có và đề xuất cách cải thiện ngắn gọn."
         }
 
         val reviewPlaceholder = if (isEn) "Detailed feedback in English with clear paragraphs (use \n for line breaks)." else "Lời nhận xét chi tiết bằng tiếng Việt có định dạng rõ ràng (sử dụng dấu xuống dòng \n để phân đoạn ý)."
@@ -116,22 +114,19 @@ abstract class BaseLanguagePromptProvider : LanguagePromptProvider {
 
             $evalDetails
 
-            HƯỚNG DẪN CHẤM ĐIỂM NGHIÊM NGẶT:
-            - Tập trung vào SỰ TƯƠNG ĐƯƠNG NGỮ NGHĨA: Nếu câu trả lời của học sinh diễn đạt đúng ý nghĩa một cách tự nhiên (ngay cả khi dùng từ đồng nghĩa, cấu trúc khác, hoặc chủ động/bị động so với đáp án gốc), BẠN BẮT BUỘC phải chấm 10/10.
-            - KHÔNG TRỪ ĐIỂM đối với các lỗi nhỏ không ảnh hưởng đến ý nghĩa như: viết hoa/thường, dấu câu (thiếu dấu chấm, phẩy), khoảng trắng dư thừa, hoặc viết tắt thông dụng. Các trường hợp này phải đạt 10/10.
-            - Chỉ trừ điểm đối với các lỗi sai ngữ pháp thực sự, dùng sai từ, hoặc dịch sai hoàn toàn ý nghĩa.
+            HƯỚNG DẪN ĐÁNH GIÁ NGHIÊM NGẶT:
+            - Tập trung vào SỰ TƯƠNG ĐƯƠNG NGỮ NGHĨA: Nếu câu trả lời của học sinh diễn đạt đúng ý nghĩa một cách tự nhiên (ngay cả khi dùng từ đồng nghĩa, cấu trúc khác, hoặc chủ động/bị động so với đáp án gốc), hãy khen ngợi.
+            - KHÔNG khắt khe với các lỗi nhỏ không ảnh hưởng đến ý nghĩa như: viết hoa/thường, dấu câu (thiếu dấu chấm, phẩy), khoảng trắng dư thừa, hoặc viết tắt thông dụng.
+            - Chỉ phê bình đối với các lỗi sai ngữ pháp thực sự, dùng sai từ, hoặc dịch sai hoàn toàn ý nghĩa.
 
             BẠN BẮT BUỘC PHẢI TRẢ VỀ ĐẦU RA DƯỚI DẠNG JSON HỢP LỆ THEO ĐÚNG CẤU TRÚC SAU:
             {
-              "score": 8,
-              "review": "$reviewPlaceholder",
-              "sentenceScores": [8, 9, 7, 0, 10, 8, 9, 10, 6, 8]
+              "review": "$reviewPlaceholder"
             }
 
             LƯU Ý QUAN TRỌNG:
             1. Đảm bảo toàn bộ câu trả lời chỉ chứa chuỗi JSON hợp lệ. Không viết thêm chữ giải thích bên ngoài JSON.
             2. Viết bằng $responseLang tự nhiên, mang tính khuyến khích học tập.
-            3. Trường 'sentenceScores' phải là một mảng chứa đúng 10 số nguyên tương ứng với điểm số của Câu 1 đến Câu 10.
         """.trimIndent()
     }
 
@@ -165,7 +160,6 @@ abstract class BaseLanguagePromptProvider : LanguagePromptProvider {
             3. If correct, praise briefly and explain grammar structures relevant to $certName level $level.
             4. If skipped, provide translation and detailed grammar/vocabulary breakdown for self-study at $certName level $level.
             5. Write in English, warm and encouraging. Format explanation in Markdown.
-            6. In 'score', rate the student's answer from 0 to 10. If skipped or blank, score MUST be 0.
             """.trimIndent()
         } else {
             """
@@ -174,7 +168,6 @@ abstract class BaseLanguagePromptProvider : LanguagePromptProvider {
             3. Nếu học sinh viết đúng, hãy khen ngợi ngắn gọn và giải thích thêm các cấu trúc ngữ pháp sử dụng trong câu để họ hiểu sâu hơn. Giải thích ngữ pháp hãy tập trung vào các điểm ngữ pháp trình độ $level có trong câu.
             4. Nếu học sinh Bỏ qua, hãy dịch mẫu và phân tích tường nhận ngữ pháp, từ vựng từng phần để học sinh tự học. Giải thích chi tiết các mẫu ngữ pháp tương ứng trình độ $level.
             5. Viết bằng tiếng Việt tự nhiên, ấm áp, khuyến khích học tập. Văn bản giải thích sử dụng định dạng Markdown.
-            6. Tại trường 'score', chấm điểm câu trả lời của học sinh từ 0 đến 10. Nếu câu trả lời trống hoặc bỏ qua, bắt buộc chấm 0 điểm. Các câu khác chấm điểm khách quan theo mức độ chính xác.
             """.trimIndent()
         }
 
@@ -191,7 +184,6 @@ abstract class BaseLanguagePromptProvider : LanguagePromptProvider {
 
             BẠN BẮT BUỘC PHẢI TRẢ VỀ ĐẦU RA DƯỚI DẠNG JSON HỢP LỆ THEO ĐÚNG CẤU TRÚC SAU:
             {
-              "score": 8,
               "explanation": "$explanationPlaceholder"
             }
         """.trimIndent()

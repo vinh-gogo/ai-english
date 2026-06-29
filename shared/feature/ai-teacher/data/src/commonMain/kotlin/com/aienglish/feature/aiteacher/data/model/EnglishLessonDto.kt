@@ -48,7 +48,7 @@ data class EnglishTokenDto(
 
 @Serializable
 data class EnglishFeedbackDto(
-    val score: Int,
+    val score: Int = 0,
     val review: String,
     val sentenceScores: List<Int> = emptyList()
 ) {
@@ -61,7 +61,7 @@ data class EnglishFeedbackDto(
 
 @Serializable
 data class SentenceExplanationDto(
-    val score: Int,
+    val score: Int = 0,
     val explanation: String
 ) {
     fun toDomain(): SentenceExplanation = SentenceExplanation(
