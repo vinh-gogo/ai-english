@@ -163,10 +163,10 @@ fun TeacherScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Group 1: Back and Title (Height synchronized to 52dp)
+                // Group 1: Back and Title (Height synchronized to 48dp)
                 Row(
                     modifier = Modifier
-                        .height(52.dp)
+                        .height(48.dp)
                         .background(colors.surface, CircleShape)
                         .border(2.dp, colors.border, CircleShape)
                         .padding(horizontal = 16.dp),
@@ -195,10 +195,10 @@ fun TeacherScreen(
                     )
                 }
 
-                // Group 2: History, Profile, Pro badge (Grouped inside a single 52dp capsule aligned to the right)
+                // Group 2: History, Profile, Pro badge (Grouped inside a single 48dp capsule aligned to the right)
                 Row(
                     modifier = Modifier
-                        .height(52.dp)
+                        .height(48.dp)
                         .background(colors.surface, CircleShape)
                         .border(2.dp, colors.border, CircleShape),
                     verticalAlignment = Alignment.CenterVertically
@@ -216,7 +216,7 @@ fun TeacherScreen(
                             Icons.Rounded.History,
                             contentDescription = "Lịch sử",
                             tint = colors.mutedText,
-                            modifier = Modifier.size(22.dp)
+                            modifier = Modifier.size(20.dp)
                         )
                     }
 
@@ -224,7 +224,7 @@ fun TeacherScreen(
                     Box(
                         modifier = Modifier
                             .width(1.dp)
-                            .height(24.dp)
+                            .height(20.dp)
                             .background(colors.border)
                     )
 
@@ -240,7 +240,7 @@ fun TeacherScreen(
                         if (profileState.isSignedIn && profileState.displayName != null) {
                             Box(
                                 modifier = Modifier
-                                    .size(26.dp)
+                                    .size(24.dp)
                                     .clip(CircleShape)
                                     .background(colors.accent),
                                 contentAlignment = Alignment.Center
@@ -248,7 +248,7 @@ fun TeacherScreen(
                                 Text(
                                     profileState.displayName!!.first().uppercase(),
                                     color = Color.White,
-                                    fontSize = 12.sp,
+                                    fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold
                                 )
                             }
@@ -257,7 +257,7 @@ fun TeacherScreen(
                                 Icons.Rounded.AccountCircle,
                                 contentDescription = "Profile",
                                 tint = colors.mutedText,
-                                modifier = Modifier.size(22.dp)
+                                modifier = Modifier.size(20.dp)
                             )
                         }
                     }
@@ -266,7 +266,7 @@ fun TeacherScreen(
                     Box(
                         modifier = Modifier
                             .width(1.dp)
-                            .height(24.dp)
+                            .height(20.dp)
                             .background(colors.border)
                     )
 
@@ -284,7 +284,7 @@ fun TeacherScreen(
                             imageVector = Icons.Rounded.WorkspacePremium,
                             contentDescription = "PRO",
                             tint = Color(0xFFFFB300),
-                            modifier = Modifier.size(20.dp)
+                            modifier = Modifier.size(18.dp)
                         )
                         Text(
                             text = if (profileState.isPaid) "PRO" else "GET",
