@@ -13,6 +13,7 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 3** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Cấu hình Novita API Service và hỗ trợ chuyển đổi API Provider (Gemini / Novita). | Hoàn thành |
 | **Session 4** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Sửa logic chấm điểm AI & bổ sung các đáp án chuẩn thay thế (Alternatives). | Hoàn thành |
 | **Session 5** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Mặc định hóa GUID của Guest thành 16 chữ số 0. | Hoàn thành |
+| **Session 6** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Cải tiến UI: Đồng bộ và tăng cỡ chữ Đáp án & Giải thích, hiển thị list đáp án chuẩn đánh số. | Hoàn thành |
 
 ---
 
@@ -88,6 +89,25 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
     - Sửa phương thức tạo tài khoản mặc định `ensureUserExists` để gán chính xác `display_name = "Guest"` và `email = "guest@local"` khi `user_id` là `"0000000000000000"`.
 - **Ghi chú kỹ thuật:**
   - Biên dịch thành công cho cả 2 target Desktop và Android, bảo đảm tính nhất quán của cơ sở dữ liệu local SQLite.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 6 (2026-06-29)
+
+- **Mục tiêu:** Cải tiến UI hiển thị các đáp án chuẩn và giải thích: đồng bộ và tăng kích thước font chữ, đồng thời gộp các đáp án thành danh sách đánh số rõ ràng.
+- **Hoạt động & Thay đổi:**
+  - **Explanations Markdown ([MarkdownText.kt](file:///D:/ai-english/shared/feature/ai-teacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/MarkdownText.kt)):**
+    - Tăng kích thước font chữ của `Paragraph`, `Bullet`, `Ordered` block từ `13.sp` lên `15.sp` (lineHeight từ `20.sp` lên `22.sp`).
+    - Tăng font size của `Heading 1` và `Heading 2` lên `18.sp` và `16.sp`.
+  - **Lesson UI ([LessonContent.kt](file:///D:/ai-english/shared/feature/aiteacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/LessonContent.kt)):**
+    - Thay thế tiêu đề hiển thị từ "Đáp án chuẩn:" thành "Các đáp án chuẩn:" (cỡ chữ `13.sp` in đậm).
+    - Trình bày đáp án chính và các đáp án thay thế cùng chung một danh sách được đánh số thứ tự `1), 2), 3)...` có kích thước font `15.sp` đồng bộ.
+  - **Review UI ([FeedbackContent.kt](file:///D:/ai-english/shared/feature/aiteacher/ui/src/commonMain/kotlin/com/aienglish/feature/aiteacher/ui/screen/FeedbackContent.kt)):**
+    - Thiết kế lại `SentenceReviewCard` hiển thị khối "Các đáp án chuẩn:" đánh số thứ tự với kích thước font `15.sp` đồng bộ, kèm theo câu trả lời của user rõ ràng và thoáng hơn.
+- **Ghi chú kỹ thuật:**
+  - Biên dịch thành công cho cả hai target Desktop và Android.
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 

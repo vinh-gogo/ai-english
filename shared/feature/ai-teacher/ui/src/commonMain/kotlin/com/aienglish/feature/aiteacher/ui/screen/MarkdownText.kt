@@ -296,15 +296,15 @@ fun MarkdownText(
                 is Block.Heading -> {
                     val annotated = remember<AnnotatedString>(block.text) { buildInlineAnnotatedString(block.text, colors) }
                     val hSize = when (block.level) {
-                        1 -> 16.sp
-                        2 -> 14.sp
-                        else -> 13.sp
+                        1 -> 18.sp
+                        2 -> 16.sp
+                        else -> 15.sp
                     }
                     Text(
                         text = annotated,
                         fontSize = hSize,
                         color = colors.mainText,
-                        lineHeight = 22.sp,
+                        lineHeight = 24.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(top = 6.dp, bottom = 2.dp)
                     )
@@ -313,9 +313,9 @@ fun MarkdownText(
                     val annotated = remember<AnnotatedString>(block.text) { buildInlineAnnotatedString(block.text, colors) }
                     Text(
                         text = annotated,
-                        fontSize = 13.sp,
+                        fontSize = 15.sp,
                         color = colors.mutedText,
-                        lineHeight = 20.sp
+                        lineHeight = 22.sp
                     )
                 }
                 is Block.Bullet -> {
@@ -326,17 +326,17 @@ fun MarkdownText(
                     ) {
                         Text(
                             text = "•",
-                            fontSize = 13.sp,
+                            fontSize = 15.sp,
                             color = colors.accent,
-                            lineHeight = 20.sp,
+                            lineHeight = 22.sp,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.width(16.dp)
                         )
                         Text(
                             text = annotated,
-                            fontSize = 13.sp,
+                            fontSize = 15.sp,
                             color = colors.mutedText,
-                            lineHeight = 20.sp
+                            lineHeight = 22.sp
                         )
                     }
                 }
@@ -348,17 +348,17 @@ fun MarkdownText(
                     ) {
                         Text(
                             text = block.index,
-                            fontSize = 13.sp,
+                            fontSize = 15.sp,
                             color = colors.accent,
-                            lineHeight = 20.sp,
+                            lineHeight = 22.sp,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.width(24.dp)
                         )
                         Text(
                             text = annotated,
-                            fontSize = 13.sp,
+                            fontSize = 15.sp,
                             color = colors.mutedText,
-                            lineHeight = 20.sp
+                            lineHeight = 22.sp
                         )
                     }
                 }

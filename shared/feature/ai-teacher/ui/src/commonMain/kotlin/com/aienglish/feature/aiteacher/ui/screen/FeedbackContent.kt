@@ -164,32 +164,37 @@ private fun SentenceReviewCard(
                     )
                 }
             }
+            Spacer(Modifier.height(6.dp))
+            Text(sentence.vietnamese, color = colors.mainText, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+            Spacer(Modifier.height(6.dp))
+            Text(
+                "Các đáp án chuẩn:",
+                color = colors.mutedText,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold
+            )
             Spacer(Modifier.height(4.dp))
-            Text(sentence.vietnamese, color = colors.mainText, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
-            Spacer(Modifier.height(4.dp))
-            Column {
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Rounded.CheckCircle, null, tint = colors.correct, modifier = Modifier.size(13.dp))
-                    Spacer(Modifier.width(4.dp))
-                    Text(sentence.english, color = colors.correct, fontSize = 12.sp, fontStyle = FontStyle.Italic)
+                    Icon(Icons.Rounded.CheckCircle, null, tint = colors.correct, modifier = Modifier.size(14.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text("1) ${sentence.english}", color = colors.correct, fontSize = 15.sp, fontWeight = FontWeight.Medium)
                 }
-                if (sentence.alternatives.isNotEmpty()) {
-                    sentence.alternatives.forEach { alt ->
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(start = 17.dp, top = 2.dp)
-                        ) {
-                            Text("• $alt", color = colors.mutedText, fontSize = 11.sp, fontStyle = FontStyle.Italic)
-                        }
+                sentence.alternatives.forEachIndexed { altIndex, alt ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(start = 20.dp)
+                    ) {
+                        Text("${altIndex + 2}) $alt", color = colors.correct, fontSize = 15.sp, fontWeight = FontWeight.Medium)
                     }
                 }
             }
             if (!userAnswer.isNullOrBlank()) {
-                Spacer(Modifier.height(3.dp))
+                Spacer(Modifier.height(6.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Default.Edit, null, tint = colors.mutedText, modifier = Modifier.size(11.dp))
-                    Spacer(Modifier.width(4.dp))
-                    Text(userAnswer, color = colors.mutedText, fontSize = 12.sp)
+                    Icon(Icons.Default.Edit, null, tint = colors.mutedText, modifier = Modifier.size(14.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text("Câu trả lời của bạn: $userAnswer", color = colors.mutedText, fontSize = 14.sp)
                 }
             }
             Spacer(Modifier.height(8.dp))

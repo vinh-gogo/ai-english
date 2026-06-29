@@ -137,39 +137,31 @@ fun LessonContent(
             if (hasChecked) {
                 Spacer(Modifier.height(12.dp))
                 Text(
-                    "Đáp án chuẩn:",
-                    fontSize = 12.sp,
+                    "Các đáp án chuẩn:",
+                    fontSize = 13.sp,
                     fontWeight = FontWeight.Bold,
                     color = colors.mutedText
                 )
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(6.dp))
                 Text(
-                    text = sentence.english,
+                    text = "1) ${sentence.english}",
                     fontSize = 15.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = colors.mainText
                 )
-                if (sentence.alternatives.isNotEmpty()) {
-                    Spacer(Modifier.height(8.dp))
+                sentence.alternatives.forEachIndexed { altIndex, alt ->
+                    Spacer(Modifier.height(4.dp))
                     Text(
-                        "Các đáp án chuẩn khác:",
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = colors.mutedText
+                        text = "${altIndex + 2}) $alt",
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = colors.mainText
                     )
-                    sentence.alternatives.forEach { alt ->
-                        Text(
-                            text = "• $alt",
-                            fontSize = 13.sp,
-                            color = colors.mutedText,
-                            modifier = Modifier.padding(start = 8.dp, top = 2.dp, bottom = 2.dp)
-                        )
-                    }
                 }
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(14.dp))
                 Text(
                     "Từ vựng chi tiết:",
-                    fontSize = 11.sp,
+                    fontSize = 13.sp,
                     fontWeight = FontWeight.Bold,
                     color = colors.mutedText
                 )
