@@ -1,0 +1,3602 @@
+[
+  {
+    "id": 300,
+    "name": "Introduce yourself",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 301,
+    "name": "Greet every day",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 302,
+    "name": "Ask about health",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 303,
+    "name": "Ask for directions",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 304,
+    "name": "Order food at the restaurant",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 305,
+    "name": "Shopping for clothes",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 306,
+    "name": "Go to the supermarket to buy food",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 307,
+    "name": "At the checkout counter",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 308,
+    "name": "Take the bus and train",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 309,
+    "name": "Buy train tickets/movie tickets",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 310,
+    "name": "Ask for time",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 311,
+    "name": "Weather and seasons",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 312,
+    "name": "Introducing the family",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 313,
+    "name": "Talk about hobbies",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 314,
+    "name": "Make weekend plans",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 315,
+    "name": "See you friends",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 316,
+    "name": "House description",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 317,
+    "name": "Go on vacation",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 318,
+    "name": "At the airport",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 319,
+    "name": "Hotel check-in and check-out",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 320,
+    "name": "Make an appointment",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 321,
+    "name": "Go get a haircut at the salon",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 322,
+    "name": "Medical examination at the hospital",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 323,
+    "name": "Buy medicine at the pharmacy",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 324,
+    "name": "Open a bank account",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 325,
+    "name": "Go to the post office to send mail",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 326,
+    "name": "Exchange foreign currency",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 327,
+    "name": "Daily office work",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 328,
+    "name": "Job interview",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 329,
+    "name": "Introducing the project",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 330,
+    "name": "Make a work phone call",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 331,
+    "name": "Write office emails",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 332,
+    "name": "Teamwork",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 333,
+    "name": "Please take leave",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 334,
+    "name": "Join the meeting",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 335,
+    "name": "Overtime and extra work",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 336,
+    "name": "Order online",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 337,
+    "name": "Reflects service quality",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 338,
+    "name": "Dinner with colleagues",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 339,
+    "name": "New member welcome party",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 340,
+    "name": "Happy birthday",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 341,
+    "name": "Holiday gifts",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 342,
+    "name": "Go to the movies",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 343,
+    "name": "Go sing Karaoke",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 344,
+    "name": "Go to an amusement park",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 345,
+    "name": "Visit the museum",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 346,
+    "name": "Take a walk in the park",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 347,
+    "name": "Cherry blossom season",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 348,
+    "name": "Summer fireworks festival",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 349,
+    "name": "Admire autumn red leaves",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 350,
+    "name": "Winter skiing",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 351,
+    "name": "Go buy books at the bookstore",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 352,
+    "name": "Learn Japanese every day",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 353,
+    "name": "Talk about favorite sports",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 354,
+    "name": "Play musical instruments and sing",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 355,
+    "name": "Go shopping for electronics",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 356,
+    "name": "Pet care",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 357,
+    "name": "Family cooking",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 358,
+    "name": "Clean the house",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 359,
+    "name": "Planting trees and gardening",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 360,
+    "name": "Talk about summer vacation",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 361,
+    "name": "Talk about homeland",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 362,
+    "name": "Share your future dreams",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 363,
+    "name": "Memorable memories of school days",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 364,
+    "name": "First time coming to Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 365,
+    "name": "International cultural exchange",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 366,
+    "name": "Chat about Japanese cuisine",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 367,
+    "name": "Favorite Vietnamese dish",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 368,
+    "name": "Habit of reading books at night",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 369,
+    "name": "Watch Anime and read Manga",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 370,
+    "name": "Exercise in the morning",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 371,
+    "name": "Shopping for souvenirs",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 372,
+    "name": "Rent a house in Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 373,
+    "name": "Looking for a part-time job (Arubaito)",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 374,
+    "name": "How to classify waste",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 375,
+    "name": "Meet new neighbors",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 376,
+    "name": "Sign up for a library card",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 377,
+    "name": "Lost items and reported to the police",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 378,
+    "name": "Furniture damage incident",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 379,
+    "name": "Having bad weather (storm, earthquake)",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 380,
+    "name": "Send checked baggage",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 381,
+    "name": "The flight was delayed",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 382,
+    "name": "Lost at the big train station",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 383,
+    "name": "Shopping at convenience stores (Konbini)",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 384,
+    "name": "Enjoy the tea ceremony",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 385,
+    "name": "Experience an Onsen bath",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 386,
+    "name": "Try on Yukata/Kimono outfits",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 387,
+    "name": "Visiting temples and pagodas on the first day of the year (Hatsumode)",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 388,
+    "name": "Go to the flea market",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 389,
+    "name": "Make a weight loss plan",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 390,
+    "name": "Go camping",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 391,
+    "name": "Take landscape photos",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 392,
+    "name": "Talk about favorite idol/singer",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 393,
+    "name": "Shopping for beauty cosmetics",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 394,
+    "name": "Use social networks",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 395,
+    "name": "Discussing new technology AI",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 396,
+    "name": "Read the morning news",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 397,
+    "name": "Make a plan to save money",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 398,
+    "name": "Learn a new skill",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 399,
+    "name": "Reflect on yourself",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 400,
+    "name": "Make an appointment with your doctor",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 401,
+    "name": "Borrow library books",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 402,
+    "name": "Receive souvenirs",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 403,
+    "name": "Go on a picnic at Mount Fuji",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 404,
+    "name": "Take a flower arranging class (Ikebana)",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 405,
+    "name": "Get an ID card at the district committee",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 406,
+    "name": "Rent public bicycles",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 407,
+    "name": "Buy Shinkansen train tickets",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 408,
+    "name": "Talk about favorite pets",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 409,
+    "name": "Experience making sushi",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 410,
+    "name": "Go see a shrine festival (Matsuri)",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 411,
+    "name": "Shop for used items at the antique market",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 412,
+    "name": "How to use a vending machine for water",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 413,
+    "name": "Make a weekly study schedule",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 414,
+    "name": "Describe your friends' appearance",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 415,
+    "name": "Talking about today's weather",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 416,
+    "name": "Shopping for home furniture",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 417,
+    "name": "Take a walk on the beach in the summer",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 418,
+    "name": "Make your own lunch to take to work (Bento)",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 419,
+    "name": "Clean up trash in the neighborhood",
+    "systemCode": "JLPT",
+    "levelCode": "N5"
+  },
+  {
+    "id": 420,
+    "name": "Talk about winter vacation plans",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 421,
+    "name": "Share about hometown dishes",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 422,
+    "name": "Join a school sports club",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 423,
+    "name": "Ask for information at the Information Desk",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 424,
+    "name": "Prepare luggage for business trip",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 425,
+    "name": "Talk about the habit of sleeping late",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 426,
+    "name": "Go for regular dental check-ups",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 427,
+    "name": "Sign up for a Japanese cooking class",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 428,
+    "name": "Shopping for school supplies",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 429,
+    "name": "Help the elderly cross the street",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 430,
+    "name": "Writing New Year greeting cards (Nengajo)",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 431,
+    "name": "Go see an art exhibition",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 432,
+    "name": "Rent a dance studio",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 433,
+    "name": "Search for lost items on the train",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 434,
+    "name": "Buy fresh flowers for mom",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 435,
+    "name": "Discuss spicy food",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 436,
+    "name": "Experience trying on Happi shirts",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 437,
+    "name": "Buy tickets to a classical concert",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 438,
+    "name": "Clearing snow in front of the house in winter",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 439,
+    "name": "Introducing famous places in Hanoi/Saigon",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 440,
+    "name": "Visit Tokyo Tower (Tokyo Tower)",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 441,
+    "name": "Go shopping at Akihabara electronics district",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 442,
+    "name": "Learn how to write Hiragana/Katakana",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 443,
+    "name": "Share your feelings when learning Kanji",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 444,
+    "name": "Go to the zoo to see pandas",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 445,
+    "name": "Pick up relatives at the train station",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 446,
+    "name": "Discuss healthy lifestyle",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 447,
+    "name": "Talk about a busy Sunday",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 448,
+    "name": "Share your interest in watching documentaries",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 449,
+    "name": "Book round-trip air tickets",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 450,
+    "name": "Instructions on how to take the subway",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 451,
+    "name": "Write a daily diary in Japanese",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 452,
+    "name": "Go to Akihabara electronics supermarket",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 453,
+    "name": "Discuss the benefits of waking up early",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 454,
+    "name": "Share your experience of getting lost at Shinjuku station",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 455,
+    "name": "Discuss raising cats/dogs",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 456,
+    "name": "Part-time interview (Arubaito)",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 457,
+    "name": "Discuss Japanese team work culture",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 458,
+    "name": "Resolve minor conflicts with colleagues",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 459,
+    "name": "Discuss the cultural differences between Vietnam and Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 460,
+    "name": "Share your experiences on saving money when living alone",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 461,
+    "name": "Report work progress to superiors (Hou-Ren-So)",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 462,
+    "name": "Register to participate in volunteer activities to protect the environment",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 463,
+    "name": "Discuss the healthy eating trend among young people",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 464,
+    "name": "Planning a company year-end party (Bonenkai)",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 465,
+    "name": "Discussion about learning Japanese through Anime",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 466,
+    "name": "Tell about your experience working at a convenience store",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 467,
+    "name": "Discuss the importance of properly classifying waste",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 468,
+    "name": "Register to take the JLPT exam online",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 469,
+    "name": "Share your experience studying for the JLPT N3 exam",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 470,
+    "name": "Discuss the reading habits of Japanese people on the train",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 471,
+    "name": "Meet and exchange business cards (Meishi)",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 472,
+    "name": "Discuss the trend of cashless payment in Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 473,
+    "name": "Experience working part-time at a traditional restaurant (Izakaya)",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 474,
+    "name": "Discuss the popularity of Japanese cuisine in the world",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 475,
+    "name": "Talk about your plans for a summer internship",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 476,
+    "name": "Share how to balance study and work",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 477,
+    "name": "Discussion about fast delivery service in Japan (Takkyubin)",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 478,
+    "name": "Present ideas on preserving traditional ancient villages",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 479,
+    "name": "Discussing Vintage fashion trends of young people",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 480,
+    "name": "How to behave when attending a Japanese wedding",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 481,
+    "name": "Discuss the harmful effects of staying up late scrolling on the phone",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 482,
+    "name": "Discussing Japanese queuing culture",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 483,
+    "name": "Plan to study abroad on your own in Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 484,
+    "name": "Discuss the role of physical activity in brain health",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 485,
+    "name": "Talk about the art of Origami paper folding",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 486,
+    "name": "Discuss how to reduce stress in life",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 487,
+    "name": "Share your favorite childhood toy",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 488,
+    "name": "Discuss smart shopping habits during price storms",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 489,
+    "name": "Talk about changes in the homeland after 10 years",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 490,
+    "name": "Discuss the benefits and harms of the Internet for children",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 491,
+    "name": "Plan an alumni reunion",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 492,
+    "name": "Tell about a teacher who inspired you",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 493,
+    "name": "Discuss souvenir gift culture (Omiyage) in Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 494,
+    "name": "Share a self-help book you like the most",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 495,
+    "name": "Discuss the importance of learning a second foreign language",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 496,
+    "name": "Discuss protecting wildlife",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 497,
+    "name": "Share how to manage time effectively (Pomodoro)",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 498,
+    "name": "Discussing the trend of solo travel (Solo Travel)",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 499,
+    "name": "Talking about the development of electric vehicles (EV)",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 500,
+    "name": "Discuss the Japanese culture of bowing (Ojigi).",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 501,
+    "name": "Share your favorite Japanese song",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 502,
+    "name": "Talking about coming of age ceremony (Seijin no Hi) in Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 503,
+    "name": "Discuss the problem of food waste in restaurants",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 504,
+    "name": "Discuss methods of recycling old plastic items",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 505,
+    "name": "Talk about the current global climate change",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 506,
+    "name": "Discuss the healthy breakfast habits of Japanese people",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 507,
+    "name": "Discuss the importance of sleep for work performance",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 508,
+    "name": "Share experiences of renting apartments in big cities",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 509,
+    "name": "Discuss the culture of group Karaoke singing",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 510,
+    "name": "Discuss preparing for the scholarship interview",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 511,
+    "name": "Talk about the role of libraries in the digital era",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 512,
+    "name": "Discuss the effects of weather on human mood",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 513,
+    "name": "Share your feelings when taking the Shinkansen for the first time",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 514,
+    "name": "Discuss the habit of using cloth bags to protect the environment",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 515,
+    "name": "Discuss toasting culture at office parties",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 516,
+    "name": "Population aging and labor shortage in Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 517,
+    "name": "The problem of decreasing birth rate (Shoushika) and solutions",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 518,
+    "name": "Telework trend after the pandemic",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 519,
+    "name": "Impact of Artificial Intelligence (AI) on the labor market",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 520,
+    "name": "The concept of Ikigai - The Japanese way of life",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 521,
+    "name": "Omotenashi thinking in the Japanese service industry",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 522,
+    "name": "The issue of preserving traditional culture in the era of globalization",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 523,
+    "name": "Monozukuri concept - Artisan spirit in Japanese manufacturing",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 524,
+    "name": "The impact of social networks on the mental health of adolescents",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 525,
+    "name": "Climate change and commitment to reducing carbon emissions (Net Zero)",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 526,
+    "name": "Discuss renewable energy (wind, solar, nuclear)",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 527,
+    "name": "Gap between rich and poor in modern society",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 528,
+    "name": "Gender equality issues in the workplace",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 529,
+    "name": "Trend of late marriage and single lifestyle",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 530,
+    "name": "The importance of STEM education for future generations",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 531,
+    "name": "The rise of e-commerce and its impact on traditional retail",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 532,
+    "name": "Cyber ​​security issues and personal information protection",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 533,
+    "name": "Wabi-Sabi concept - The beauty of imperfection",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 534,
+    "name": "Minimalism and Danshari lifestyle",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 535,
+    "name": "Impact of mass tourism (Overtourism) on local people's lives",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 536,
+    "name": "Discussing the culture of overwork (Karoshi) in Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 537,
+    "name": "The importance of mental health in the workplace environment",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 538,
+    "name": "The problem of ocean plastic waste and global solutions",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 539,
+    "name": "The impact of globalization on linguistic diversity",
+    "systemCode": "JLPT",
+    "levelCode": "N4"
+  },
+  {
+    "id": 540,
+    "name": "The role of the elderly in the Silver Economy",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 541,
+    "name": "Discuss the use of virtual reality (VR) technology in medicine",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 542,
+    "name": "Discussing the ethics of biotechnology research and gene editing",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 543,
+    "name": "The problem of over-urbanization and rural degradation",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 544,
+    "name": "The importance of reading paper books in the digital age",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 545,
+    "name": "The development of self-driving cars and the future of the transportation industry",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 546,
+    "name": "Kaizen concept - The philosophy of continuous improvement of Japanese businesses",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 547,
+    "name": "The problem of electronic waste and sustainable treatment methods",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 548,
+    "name": "Business ethics and corporate social responsibility (CSR)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 549,
+    "name": "Differences in Japanese people's indirect communication thinking",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 550,
+    "name": "Discuss the role of art in the development of human thinking",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 551,
+    "name": "Discuss the influence of mass media on public opinion",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 552,
+    "name": "Noise pollution problem in big cities",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 553,
+    "name": "Zen philosophy and application in modern design",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 554,
+    "name": "The importance of biodiversity to the earth's ecosystem",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 555,
+    "name": "Change in traditional family structure",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 556,
+    "name": "Immigration and foreign labor issues in Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 557,
+    "name": "Discuss the higher education system and career orientation",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 558,
+    "name": "Discuss the concept of happiness in a consumer society",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 559,
+    "name": "The importance of lifelong learning (Lifelong Learning)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 560,
+    "name": "The role of non-governmental organizations (NGOs) in disaster relief",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 561,
+    "name": "The development of smart agriculture and food security",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 562,
+    "name": "Discuss the influence of Japanese popular culture",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 563,
+    "name": "Discussing the future of cryptocurrency and Blockchain technology",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 564,
+    "name": "The problem of loneliness in modern society (Kodokushi lifestyle)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 565,
+    "name": "The importance of conserving freshwater resources",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 566,
+    "name": "Kintsugi concept - The art of healing cracks with gold",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 567,
+    "name": "The role of critical thinking training (Critical Thinking)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 568,
+    "name": "Discussion on free trade agreements (FTAs)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 569,
+    "name": "Discussing the development of 3D printing technology in construction",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 570,
+    "name": "Vấn đề bảo vệ quyền sở hữu trí tuệ toàn cầu",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 571,
+    "name": "The importance of environmental protection education from elementary school level",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 572,
+    "name": "Depletion of fishery resources due to overfishing",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 573,
+    "name": "Discuss green consumption trends and organic products",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 574,
+    "name": "Discuss the educational philosophy of Japanese schools",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 575,
+    "name": "The role of women in business leadership",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 576,
+    "name": "Issues of geopolitical tension and international economic cooperation",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 577,
+    "name": "Shinrin-yoku concept - Forest bathing for mental therapy",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 578,
+    "name": "Discuss the development of car sharing services (Ride-sharing)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 579,
+    "name": "Discussing the use of robots to care for the elderly in Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 580,
+    "name": "The problem of textile waste and fast fashion (Fast Fashion)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 581,
+    "name": "The importance of maintaining traditional local festivals",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 582,
+    "name": "The development of sustainable smart cities (Smart Cities).",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 583,
+    "name": "Discuss apology culture (O-jigi and Apology culture) in Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 584,
+    "name": "Discuss the effects of urbanization on bird life and wild animals",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 585,
+    "name": "The role of social insurance in ensuring old age security",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 586,
+    "name": "The problem of light pollution in big cities",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 587,
+    "name": "Mottainai concept - The spirit of respect and anti-waste",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 588,
+    "name": "Discussion of Japanese Gardening Art (Nihon Teien)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 589,
+    "name": "Discuss the future of space exploration",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 590,
+    "name": "The problem of groundwater depletion due to industrial exploitation",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 591,
+    "name": "The importance of practicing adaptability (Resilience)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 592,
+    "name": "The development of biotechnology in creating new drugs",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 593,
+    "name": "Discuss smart public transportation systems",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 594,
+    "name": "Discussing the ethics of using AI in the creative arts",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 595,
+    "name": "The importance of balancing conservation and tourism development",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 596,
+    "name": "Bushido concept - Bushido spirit in modern society",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 597,
+    "name": "Discuss the development of circular economy (Circular Economy)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 598,
+    "name": "Discussing the trend of recycling domestic wastewater",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 599,
+    "name": "The problem of agricultural land degradation and solutions to improve land",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 600,
+    "name": "The importance of protecting coastal mangrove forests",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 601,
+    "name": "The role of soft skills training for new graduates",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 602,
+    "name": "Discuss tea drinking culture and office conversations",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 603,
+    "name": "Discuss the development of Nano technology and medical applications",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 604,
+    "name": "Youth unemployment problem and start-up support programs",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 605,
+    "name": "The importance of developing environmentally friendly transportation",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 606,
+    "name": "Concepts of Giri and Ninjo - Duty and humanity in Japanese culture",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 607,
+    "name": "Discuss the importance of maintaining world peace",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 608,
+    "name": "Discuss the development of large-scale clean water filtration technologies",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 609,
+    "name": "The problem of discrimination against people with disabilities and solutions for inclusion",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 610,
+    "name": "The importance of investing in basic scientific research projects",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 611,
+    "name": "The role of social media in natural disaster warnings",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 612,
+    "name": "Discuss the trend of ecological urbanization (Eco-urbanism)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 613,
+    "name": "Discuss the use of drones in agriculture and delivery",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 614,
+    "name": "The problem of increasing single-use plastic waste in households",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 615,
+    "name": "The importance of educating about gender equality early on",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 616,
+    "name": "Ukiyo concept - The floating world and the spirit of Edo art",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 617,
+    "name": "Discuss the impact of climate change on world crops",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 618,
+    "name": "Discussing the energy transition from fossils to clean hydrogen",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 619,
+    "name": "Food safety and hygiene issues in the global supply chain",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 620,
+    "name": "The importance of developing self-learning skills",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 621,
+    "name": "The role of nature reserves in wildlife protection",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 622,
+    "name": "Discuss the trend of flexible working (Flexitime)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 623,
+    "name": "Discuss the impact of audiobooks on reading habits",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 624,
+    "name": "The problem of microplastic pollution in food and drinking water",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 625,
+    "name": "The importance of preserving ocean coral reefs",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 626,
+    "name": "Shinto philosophy and Japanese worship of nature",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 627,
+    "name": "Discuss the development of real-time translation technology",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 628,
+    "name": "Discuss the impact of increasing university tuition on educational opportunities",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 629,
+    "name": "The issue of ensuring rights for seasonal workers (Gig Economy)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 630,
+    "name": "The importance of maintaining and developing ethnic minority languages",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 631,
+    "name": "The role of cultivating the habit of self-reflection",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 632,
+    "name": "Discuss the development of personalized medicine (Personalized Medicine)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 633,
+    "name": "Discussing energy-saving green architectural design trends",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 634,
+    "name": "The problem of depletion of rare mineral resources in the world",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 635,
+    "name": "The importance of raising awareness about road traffic safety",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 636,
+    "name": "Hannya concept - Mask image in Noh theater art",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 637,
+    "name": "Discuss the impact of urbanization on urban water tables",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 638,
+    "name": "Discuss the use of geothermal energy in volcanic areas",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 639,
+    "name": "The issue of animal rights protection in scientific laboratories",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 640,
+    "name": "The importance of training emotional intelligence (EQ) for children",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 641,
+    "name": "The role of promoting sustainable cultural tourism",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 642,
+    "name": "Discuss the trend of using biodegradable materials (Biodegradable)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 643,
+    "name": "Discuss the impact of online learning on students' social skills",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 644,
+    "name": "The problem of land desertification due to climate change and improper farming",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 645,
+    "name": "The importance of protecting indigenous plant genetic resources",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 646,
+    "name": "The concept of mono no aware - The profound sadness of impermanence",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 647,
+    "name": "Discuss the development of electric vehicle fast charging technology",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 648,
+    "name": "Discussing the future of space mining (Space Mining)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 649,
+    "name": "The problem of water pollution due to plant protection chemicals in agriculture",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 650,
+    "name": "The importance of practicing negotiation skills",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 651,
+    "name": "The role of preserving traditional craft villages",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 652,
+    "name": "Discuss the trend of using environmentally friendly natural textile fibers",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 653,
+    "name": "Discuss the impact of using automatic robots in packaging lines",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 654,
+    "name": "The problem of increasing methane emissions from livestock farming",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 655,
+    "name": "The importance of improving the quality of education in highland and remote areas",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 656,
+    "name": "Sado concept - The art of tea ceremony and welcoming ceremony",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 657,
+    "name": "Discuss the importance of building a tsunami warning system",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 658,
+    "name": "Discussing the development of carbon capture technologies (Carbon Capture)",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 659,
+    "name": "The issue of protecting consumers against false online advertising",
+    "systemCode": "JLPT",
+    "levelCode": "N3"
+  },
+  {
+    "id": 660,
+    "name": "The importance of investing in public health research projects",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 661,
+    "name": "The role of youth in participating in local social activities",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 662,
+    "name": "Discuss the trend of human-centered urban planning",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 663,
+    "name": "Discussing the use of drones to monitor forest fires and rescue",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 664,
+    "name": "The problem of increasing bulky waste in large cities today",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 665,
+    "name": "The importance of personal finance education for high school students",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 666,
+    "name": "Kado concept - Japanese flower arranging art and harmony between heaven and earth",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 667,
+    "name": "Discuss the impact of climate change on global sea level rise",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 668,
+    "name": "Discussing the development of economical smart grids",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 669,
+    "name": "Quality control problems of imported medicines and inspection solutions",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 670,
+    "name": "The importance of developing creative thinking",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 671,
+    "name": "The role of marine protected areas in the recovery of precious fish species",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 672,
+    "name": "Discuss the modern trend of hybrid work",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 673,
+    "name": "Discuss the impact of electronic books (E-books) on the traditional publishing industry",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 674,
+    "name": "The problem of increasing the amount of hazardous medical waste and treatment options",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 675,
+    "name": "The importance of improving capacity to respond to chemical leaks",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 676,
+    "name": "Shodo concept - Japanese calligraphy and philosophy of character training",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 677,
+    "name": "Discuss the effects of traffic noise on cardiovascular health",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 678,
+    "name": "Discussing trends in urban agriculture development (Urban Agriculture)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 679,
+    "name": "The issue of protecting personal health data in the electronic hospital system",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 680,
+    "name": "The importance of maintaining and spreading children's folk games",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 681,
+    "name": "The role of improving resistance through a balanced diet",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 682,
+    "name": "Discuss the trend of using packaging made from bagasse and natural coconut fiber",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 683,
+    "name": "Discuss the impact of group learning on students' training results",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 684,
+    "name": "The problem of clean water shortage in developing countries and solutions",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 685,
+    "name": "The importance of ensuring equal access to education for poor children",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 686,
+    "name": "Concept of Rakugo - The art of traditional Japanese stand-up comedy",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 687,
+    "name": "Discuss the impact of fine dust (PM2.5) on the human respiratory system",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 688,
+    "name": "Discuss the use of recycled materials in the production of new electronic components",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 689,
+    "name": "The problem of increasing rates of mental illness due to the intense pressure of urban life",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 690,
+    "name": "The importance of maintaining a balanced lifestyle between work and leisure",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 691,
+    "name": "The role of cultivating the habit of reading books every day in developing linguistic thinking",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 692,
+    "name": "Discuss sustainable fashion design trends (Eco-fashion) that are environmentally friendly",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 693,
+    "name": "Discuss the impact of warehouse automation on transportation logistics efficiency",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 694,
+    "name": "The problem of natural forest area reduction due to exploitation of land for industrial and urban purposes",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 695,
+    "name": "The importance of improving school injury prevention skills",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 696,
+    "name": "Noh concept - Japan's long-standing traditional mask theater art",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 697,
+    "name": "Discussion on the development trend of forest ecotourism (Forest Ecotourism)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 698,
+    "name": "Discussing the use of energy from ocean waves to produce clean electricity",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 699,
+    "name": "The problem of surface water pollution due to untreated wastewater from small factories",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 700,
+    "name": "Dance cover trend on TikTok",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 701,
+    "name": "How to edit short videos with millions of views",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 702,
+    "name": "Use trending background music (BGM)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 703,
+    "name": "Makeup Transformation Challenge",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 704,
+    "name": "Video review of street food (Mukbang)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 705,
+    "name": "Content Creation",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 706,
+    "name": "Use funny filters on TikTok",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 707,
+    "name": "Interact with fans via livestream",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 708,
+    "name": "How to tag trending hashtags",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 709,
+    "name": "Livestream sales (Live commerce) on social networks",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 710,
+    "name": "The trend of making funny photos and videos (Memes)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 711,
+    "name": "Video sharing life hacks (Life hacks)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 712,
+    "name": "Telling short stories through video (Storytelling)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 713,
+    "name": "Behind the scenes of video making (Behind the scenes)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 714,
+    "name": "Late night chat via livestream (ASMR)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 715,
+    "name": "Short video instructions for exercising at home",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 716,
+    "name": "Duet dance challenge",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 717,
+    "name": "Share a beautiful working corner (Desk setup)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 718,
+    "name": "Brief technology product review",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 719,
+    "name": "Short travel videos (Travel vlog)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 720,
+    "name": "How to choose an effective video posting time frame",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 721,
+    "name": "Respond to viewer comments with video",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 722,
+    "name": "Short video about adorable pets",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 723,
+    "name": "Instructions for coordinating fast fashion outfits (OOTD)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 724,
+    "name": "Lip-sync trend of famous dialogues",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 725,
+    "name": "Creative collaboration with other TikTokers",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 726,
+    "name": "Challenge to eat hot spicy food online",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 727,
+    "name": "Food product reviews (Food review)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 728,
+    "name": "Video sharing experiences in learning foreign languages ​​quickly",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 729,
+    "name": "How to make short handmade crafts",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 730,
+    "name": "Challenge not to use your phone for 24 hours",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 731,
+    "name": "Short video introducing good books",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 732,
+    "name": "Create a free dance challenge",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 733,
+    "name": "Classic style transformation video (Retro)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 734,
+    "name": "How to make cooling drinks at home",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 735,
+    "name": "Livestream to exchange and answer questions",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 736,
+    "name": "The trend of creating short quick painting videos (Speed ​​painting)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 737,
+    "name": "Extremely neat bedroom cleaning challenge",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 738,
+    "name": "Short video showing how to tie a tie and scarf",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 739,
+    "name": "Share your feelings after a day at work through a short vlog",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 740,
+    "name": "Idol support culture (Oshikatsu) in Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 741,
+    "name": "Follow famous virtual streamers (VTubers).",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 742,
+    "name": "Chat anonymously on social network X (Twitter)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 743,
+    "name": "Send cute stickers via LINE app",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 744,
+    "name": "How to stay engaged on Instagram Stories",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 745,
+    "name": "Organize fan meeting events (Offline meetups)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 746,
+    "name": "Buy items to support idols (Merchandise)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 747,
+    "name": "Join online fan communities (Fandom)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 748,
+    "name": "The trend of taking instant photos in classic style",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 749,
+    "name": "Collect idol photo cards (Trading cards)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 750,
+    "name": "How to protect social network accounts from hackers",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 751,
+    "name": "The impact of virtual idol culture on young people",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 752,
+    "name": "How to write an attractive bio",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 753,
+    "name": "Discuss unfollowing friends online",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 754,
+    "name": "Japanese style selfie (Purikura) trend",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 755,
+    "name": "Use beauty filters when taking photos on your phone",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 756,
+    "name": "Discussing the network phenomenon (Viral phenomenon)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 757,
+    "name": "The attraction of online concerts (Online concert)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 758,
+    "name": "Write a blog to share your personal diary every day",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 759,
+    "name": "Habit of dropping hearts and commenting online",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 760,
+    "name": "The trend of collecting cartoon character badges (Can badge)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 761,
+    "name": "Celebrate a virtual idol's birthday",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 762,
+    "name": "Discussing the issue of cyberbullying",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 763,
+    "name": "How to properly manage time using social networks",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 764,
+    "name": "The trend of writing movie reviews on personal pages",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 765,
+    "name": "Participate in opinion surveys on social networks",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 766,
+    "name": "Discuss the development of K-Pop idols in Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 767,
+    "name": "How to take beautiful food photos for Instagram",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 768,
+    "name": "Use sub-accounts on social networks",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 769,
+    "name": "The influence of articles sharing personal opinions",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 770,
+    "name": "Search for restaurant information via social networks instead of Google",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 771,
+    "name": "Discuss the late-night confession podcast trend",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 772,
+    "name": "Experience participating in the author's autograph session (Fansign)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 773,
+    "name": "How to distinguish fake news on social networks",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 774,
+    "name": "Discuss sharing photos of children on social media",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 775,
+    "name": "The development of moving stickers on messaging applications",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 776,
+    "name": "The trend of sharing favorite playlists on Spotify",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 777,
+    "name": "Discuss making friends with strangers via social networks",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 778,
+    "name": "How to write an article calling for charitable donations online",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 779,
+    "name": "Feeling of fear of missing out information (FOMO syndrome)",
+    "systemCode": "JLPT",
+    "levelCode": "N2"
+  },
+  {
+    "id": 780,
+    "name": "World electronic sports tournament (Esports).",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 781,
+    "name": "Popular mobile games (Mobile games) in Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 782,
+    "name": "The attraction of the Nintendo Switch gaming console line",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 783,
+    "name": "Open-world RPG",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 784,
+    "name": "Discuss the evolution of Indie games",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 785,
+    "name": "Horror puzzle games",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 786,
+    "name": "How to build a strong squad in strategy games",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 787,
+    "name": "Watch game streams (Game streams)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 788,
+    "name": "The trend of playing co-op games with friends on the weekend",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 789,
+    "name": "Discussing new generation 3D game graphics",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 790,
+    "name": "Augmented reality games (AR games) on mobile",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 791,
+    "name": "How to overcome difficult levels (Boss fight tips)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 792,
+    "name": "New game introduction event (Game show/Tokyo Game Show)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 793,
+    "name": "Online magic card games (Card games)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 794,
+    "name": "Discuss the deep storylines in role-playing games",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 795,
+    "name": "The trend of playing classic retro games on old systems",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 796,
+    "name": "How to choose professional gaming accessories (Gaming gear)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 797,
+    "name": "Discussion about depositing money to buy costumes in the game (Gacha)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 798,
+    "name": "Organize internal game tournaments in schools",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 799,
+    "name": "Experience playing simulated games on your computer",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 800,
+    "name": "The speed game trend (Speedrun) is to clear games quickly",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 801,
+    "name": "Discuss excellent game background music (Game OST).",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 802,
+    "name": "The impact of games on quick reflexes",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 803,
+    "name": "How to balance time playing games and studying for exams",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 804,
+    "name": "Battle Royale games",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 805,
+    "name": "Design game characters according to personal style",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 806,
+    "name": "Discuss updates (DLC) and game fixes",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 807,
+    "name": "The development of the female gamer community",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 808,
+    "name": "Life simulation games (Life simulation games)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 809,
+    "name": "Search for gaming teammates via voice chat applications",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 810,
+    "name": "Discuss ethics in violent game design",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 811,
+    "name": "Experience playing games at high-end internet cafes (Gaming Cafe)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 812,
+    "name": "How to write game reviews on the Steam website",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 813,
+    "name": "The trend of playing prison escape games and group puzzles",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 814,
+    "name": "Discuss the future of cloud gaming technology (Cloud Gaming)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 815,
+    "name": "How to create a unique game mod (Game modding).",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 816,
+    "name": "The attraction of peaceful farm games",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 817,
+    "name": "Esports friendly match between universities",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 818,
+    "name": "Discuss game addiction and prevention measures",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 819,
+    "name": "Fighting games that require quick button pressing skills (Fighting games)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 820,
+    "name": "Traditional Japanese cross-country relay race (Ekiden).",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 821,
+    "name": "The attraction of professional baseball in Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 822,
+    "name": "Japanese National Football Championship (J-League)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 823,
+    "name": "Traditional Sumo martial arts and ancient rituals",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 824,
+    "name": "Skateboarding trend among young people",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 825,
+    "name": "Practice 3x3 street basketball on weekends",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 826,
+    "name": "Badminton and tennis classes for working people",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 827,
+    "name": "Indoor sport climbing (Bouldering/Climbing)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 828,
+    "name": "Snowboarding in winter",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 829,
+    "name": "Participate in school sports day (Undokai)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 830,
+    "name": "Road cycling conquers mountain passes",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 831,
+    "name": "Gym/Fitness to improve your physique",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 832,
+    "name": "Evening jogging around the park lake relieves stress",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 833,
+    "name": "Practice Yoga and meditation at home in the morning",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 834,
+    "name": "Warm-up movements to avoid injuries when playing sports",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 835,
+    "name": "The importance of rehydration and electrolytes during exercise",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 836,
+    "name": "Discuss the spirit of fair sports (Fair play)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 837,
+    "name": "Watch live sports matches at large stadiums",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 838,
+    "name": "Pilates exercise trend to improve upright posture",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 839,
+    "name": "Join a traditional archery club (Kyudo)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 840,
+    "name": "Discuss high-protein diets for athletes",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 841,
+    "name": "Catch ball game on the weekend (Catch ball)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 842,
+    "name": "Experience surfing at summer beaches",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 843,
+    "name": "The development of extreme sports (Extreme sports)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 844,
+    "name": "Discuss the benefits of swimming for bones and joints",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 845,
+    "name": "Organize the company's 5-player mini football tournament (Futsal).",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 846,
+    "name": "Team spirit in team sports",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 847,
+    "name": "Physical preparation for long-distance Marathons",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 848,
+    "name": "Learn about the martial art of Kendo (Sword Doing)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 849,
+    "name": "Weekend mountain climbing and sightseeing trend (Trekking)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 850,
+    "name": "Harmful effects of physical inactivity on cardiovascular health",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 851,
+    "name": "Discuss the success of Japanese Olympic athletes",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 852,
+    "name": "How to choose running shoes that are suitable for your feet",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 853,
+    "name": "Practice stretching exercises before bed",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 854,
+    "name": "Entertaining mini golf game with colleagues and partners",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 855,
+    "name": "Learn about the Japanese self-defense martial art Judo",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 856,
+    "name": "Discussing the inclusion of e-sports in the official sports festival",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 857,
+    "name": "Practice jumping rope to effectively reduce excess fat at home",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 858,
+    "name": "Experience SUP boating on peaceful rivers and lakes",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 859,
+    "name": "Habit of monitoring health indicators with smart watches",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 860,
+    "name": "The attraction of Retro culture of the Showa and Heisei periods",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 861,
+    "name": "The trend of collecting classic vinyl records",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 862,
+    "name": "Go for a classic style coffee shop (Kissaten) in Tokyo",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 863,
+    "name": "Collecting stickers and decorating notebooks (Journaling)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 864,
+    "name": "Experience a cozy family Karaoke room",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 865,
+    "name": "Participate in cosplay festivals and dress up as Anime characters",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 866,
+    "name": "The popularity of Harajuku street fashion style",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 867,
+    "name": "Experience music shopping at Tower Records stores",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 868,
+    "name": "Participate in the idol's handshake event",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 869,
+    "name": "The attraction of legendary Studio Ghibli animated films",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 870,
+    "name": "The trend of collecting cartoon character models (Figures)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 871,
+    "name": "Go hunting for used brands at Second-hand stores in Shimokitazawa",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 872,
+    "name": "Attend a J-Pop music concert at Tokyo Dome stadium",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 873,
+    "name": "Discuss the trend of listening to Lo-fi music when studying and working",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 874,
+    "name": "Experience the unique pet cafe (Cats, Dogs, Owls).",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 875,
+    "name": "The trend of making scented candles and perfumes at home",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 876,
+    "name": "Discuss the differences between Eastern and Western popular culture",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 877,
+    "name": "The attraction of Vietnamese youth music to foreign listeners",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 878,
+    "name": "Explore the vibrant night food markets",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 879,
+    "name": "Collect toys from automatic egg vending machines (Gachapon)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 880,
+    "name": "Coloring books to relieve pressure (Coloring books)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 881,
+    "name": "Discuss making your own podcast to share everyday life stories",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 882,
+    "name": "Experience watching a traditional comedy performance (Rakugo)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 883,
+    "name": "The trend of taking photos with old digital cameras (Y2K style)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 884,
+    "name": "Discussion about independent art theater culture (Mini theater)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 885,
+    "name": "Street food festival and skewered dishes (Yakitori)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 886,
+    "name": "The influence of Korean dramas in Japan",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 887,
+    "name": "Bedroom layout in Japanese minimalist style",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 888,
+    "name": "Glamping trend in nature",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 889,
+    "name": "Join a weekend handmade pottery class",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 890,
+    "name": "Discuss the popularity of Japanese City Pop music in the 80s",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 891,
+    "name": "Experience drinking afternoon tea in the style of British aristocrats",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 892,
+    "name": "How to teach yourself how to draw Manga style illustrations on your tablet",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 893,
+    "name": "The trend of collecting limited edition sports shoes (Sneakerhead)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 894,
+    "name": "Discuss the role of independent bookstores in the neighborhood",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 895,
+    "name": "Experience participating in a realistic escape game (Escape room)",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 896,
+    "name": "The trend of dyeing your hair in fashionable colors at home",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 897,
+    "name": "Discuss the fun of summer outdoor beer festivals",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 898,
+    "name": "Experience making sand art or diamond paintings",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  },
+  {
+    "id": 899,
+    "name": "The habit of going to bookstores to look at beautiful book covers on weekends",
+    "systemCode": "JLPT",
+    "levelCode": "N1"
+  }
+]

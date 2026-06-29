@@ -48,12 +48,12 @@ class TopicRepositoryImpl(
             
             val isEn = prefs.getLanguageNative() == "en"
             
-            if (isEn && (systemCode == "TOPIK" || systemCode == "HSK")) {
+            if (isEn && (systemCode == "TOPIK" || systemCode == "HSK" || systemCode == "JLPT")) {
                 try {
-                    val enTopicsJson = if (systemCode == "TOPIK") {
-                        jsonResourceReader.readKoreanTopicsEnJson()
-                    } else {
-                        jsonResourceReader.readChineseTopicsEnJson()
+                    val enTopicsJson = when (systemCode) {
+                        "TOPIK" -> jsonResourceReader.readKoreanTopicsEnJson()
+                        "HSK" -> jsonResourceReader.readChineseTopicsEnJson()
+                        else -> jsonResourceReader.readJapaneseTopicsEnJson()
                     }
                     val enTopicsList = json.decodeFromString<List<JsonTopicItem>>(enTopicsJson.removeBom().trim())
                     val enTopicsMap = enTopicsList.associateBy { it.id }

@@ -18,6 +18,7 @@ class DesktopJsonResourceReader : JsonResourceReader {
     override suspend fun readKoreanTopicsJson(): String = readResource("composeResources/files/vi/korean_topics.json")
     override suspend fun readKoreanTopicsEnJson(): String = readResource("composeResources/files/en/korean_topics.json")
     override suspend fun readChineseTopicsEnJson(): String = readResource("composeResources/files/en/chinese_topics.json")
+    override suspend fun readJapaneseTopicsEnJson(): String = readResource("composeResources/files/en/japanese_topics.json")
 
     private suspend fun readResource(path: String): String = withContext(Dispatchers.IO) {
         val stream = Thread.currentThread().contextClassLoader.getResourceAsStream(path)
