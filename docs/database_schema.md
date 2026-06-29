@@ -9,7 +9,7 @@ erDiagram
     users {
         TEXT user_id PK
         TEXT display_name
-        TEXT email UNIQUE
+        TEXT email UK
         TEXT password_hash
         TEXT salt
         TEXT avatar_path
@@ -32,7 +32,7 @@ erDiagram
     }
 
     learning_levels {
-        TEXT system_code PK, FK
+        TEXT system_code PK "FK"
         TEXT level_code PK
         TEXT name
     }
@@ -69,15 +69,15 @@ erDiagram
     }
 
     i18n_translations {
-        TEXT key_id PK, FK
-        TEXT locale_code PK, FK
+        TEXT key_id PK "FK"
+        TEXT locale_code PK "FK"
         TEXT translation_text
     }
 
     learning_topics {
         INTEGER topic_id PK
         TEXT name
-        TEXT system_code PK, FK
+        TEXT system_code PK "FK"
         TEXT level_code FK
     }
 
