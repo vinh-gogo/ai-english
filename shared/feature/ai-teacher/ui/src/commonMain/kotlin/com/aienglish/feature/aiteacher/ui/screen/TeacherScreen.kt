@@ -41,6 +41,7 @@ import com.aienglish.feature.profile.ui.viewmodel.ProfileViewModel
 import com.aienglish.feature.pro.ui.screen.VipSheet
 import com.aienglish.feature.pro.ui.viewmodel.ProViewModel
 import com.aienglish.feature.pro.ui.intent.ProIntent
+import com.aienglish.feature.history.domain.model.LessonHistory
 import org.koin.compose.koinInject
 
 // ─────────────────────────────────────────────────────────────
@@ -97,13 +98,26 @@ fun TeacherScreen(
                 )
             }
             // History sheet overlay
+            val handleReview = remember(viewModel) {
+                { item: LessonHistory -> viewModel.onReviewLesson(item) }
+            }
+            val handleReTest = remember(viewModel) {
+                { item: LessonHistory -> viewModel.onReTestLesson(item) }
+            }
+            val handleContinue = remember(viewModel) {
+                { item: LessonHistory -> viewModel.onResumeLesson(item) }
+            }
+            val handleDismissHistory = remember {
+                { showHistory = false }
+            }
+
             if (showHistory) {
                 HistorySheet(
                     historyViewModel = historyViewModel,
-                    onReview = { item -> viewModel.onReviewLesson(item) },
-                    onReTest = { item -> viewModel.onReTestLesson(item) },
-                    onContinue = { item -> viewModel.onResumeLesson(item) },
-                    onDismiss = { showHistory = false }
+                    onReview = handleReview,
+                    onReTest = handleReTest,
+                    onContinue = handleContinue,
+                    onDismiss = handleDismissHistory
                 )
             }
             AnimatedContent(

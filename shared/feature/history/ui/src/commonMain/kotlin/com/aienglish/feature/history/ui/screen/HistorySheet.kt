@@ -3,12 +3,14 @@ package com.aienglish.feature.history.ui.screen
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.MenuBook
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
@@ -32,13 +34,23 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonArray
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 
-private val jsonParser = Json { ignoreUnknownKeys = true }
+@androidx.compose.runtime.Immutable
+data class HistoryItemState(
+    val id: Long,
+    val topic: String,
+    val level: String,
+    val score: Int?,
+    val status: HistoryStatus,
+    val createdAt: Long,
+    val completedCount: Int,
+    val totalCount: Int,
+    val formattedDate: String,
+    val hasLessonData: Boolean,
+    val rawItem: LessonHistory
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,6 +62,26 @@ fun HistorySheet(
     historyViewModel: HistoryViewModel = koinInject()
 ) {
     val state by historyViewModel.state.collectAsState()
+    
+    val handleReview = remember(onReview, onDismiss) {
+        { item: LessonHistory ->
+            onReview(item)
+            onDismiss()
+        }
+    }
+    val handleReTest = remember(onReTest, onDismiss) {
+        { item: LessonHistory ->
+            onReTest(item)
+            onDismiss()
+        }
+    }
+    val handleContinue = remember(onContinue, onDismiss) {
+        { item: LessonHistory ->
+            onContinue(item)
+            onDismiss()
+        }
+    }
+
     val colors = LocalAppColors.current
     var showClearDialog by remember { mutableStateOf(false) }
     var isAnimationFinished by remember { mutableStateOf(false) }
@@ -148,24 +180,38 @@ fun HistorySheet(
 
                 else -> {
                     val items = state.items
+                    val completedCount = remember(items) { items.count { it.status == HistoryStatus.COMPLETED } }
                     val groups = remember(items) {
-                        val excellent = mutableListOf<LessonHistory>()
-                        val good = mutableListOf<LessonHistory>()
-                        val average = mutableListOf<LessonHistory>()
-                        val weak = mutableListOf<LessonHistory>()
-                        val pending = mutableListOf<LessonHistory>()
+                        val excellent = mutableListOf<HistoryItemState>()
+                        val good = mutableListOf<HistoryItemState>()
+                        val average = mutableListOf<HistoryItemState>()
+                        val weak = mutableListOf<HistoryItemState>()
+                        val pending = mutableListOf<HistoryItemState>()
 
                         items.forEach { item ->
+                            val uiState = HistoryItemState(
+                                id = item.id,
+                                topic = item.topic,
+                                level = item.level,
+                                score = item.score,
+                                status = item.status,
+                                createdAt = item.createdAt,
+                                completedCount = item.completedCount,
+                                totalCount = item.totalCount,
+                                formattedDate = formatDate(item.createdAt),
+                                hasLessonData = !item.lessonData.isNullOrEmpty(),
+                                rawItem = item
+                            )
                             if (item.status == HistoryStatus.COMPLETED) {
                                 val score = item.score ?: 0
                                 when {
-                                    score >= 9 -> excellent.add(item)
-                                    score >= 7 -> good.add(item)
-                                    score >= 5 -> average.add(item)
-                                    else -> weak.add(item)
+                                    score >= 9 -> excellent.add(uiState)
+                                    score >= 7 -> good.add(uiState)
+                                    score >= 5 -> average.add(uiState)
+                                    else -> weak.add(uiState)
                                 }
                             } else {
-                                pending.add(item)
+                                pending.add(uiState)
                             }
                         }
                         listOf(
@@ -187,10 +233,9 @@ fun HistorySheet(
                     ) {
                         // Summary chip
                         item {
-                            val completed = items.count { it.status == HistoryStatus.COMPLETED }
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                SummaryChip("${items.size} bài", Icons.Rounded.MenuBook, colors.accent, colors)
-                                SummaryChip("$completed hoàn thành", Icons.Rounded.CheckCircle, colors.correct, colors)
+                                SummaryChip("${items.size} bài", Icons.AutoMirrored.Rounded.MenuBook, colors.accent)
+                                SummaryChip("$completedCount hoàn thành", Icons.Rounded.CheckCircle, colors.correct)
                             }
                         }
 
@@ -231,23 +276,14 @@ fun HistorySheet(
 
                                 items(
                                     items = group.items,
-                                    key = { "item_${it.id}_${it.status}" }
-                                ) { item ->
+                                    key = { it.id }
+                                ) { itemState ->
                                     HistoryItem(
-                                        item = item,
+                                        itemState = itemState,
                                         colors = colors,
-                                        onReview = {
-                                            onReview(item)
-                                            onDismiss()
-                                        },
-                                        onReTest = {
-                                            onReTest(item)
-                                            onDismiss()
-                                        },
-                                        onContinue = {
-                                            onContinue(item)
-                                            onDismiss()
-                                        }
+                                        onReview = handleReview,
+                                        onReTest = handleReTest,
+                                        onContinue = handleContinue
                                     )
                                 }
                             }
@@ -296,8 +332,7 @@ fun HistorySheet(
 private fun SummaryChip(
     text: String,
     icon: androidx.compose.ui.graphics.vector.ImageVector,
-    color: Color,
-    colors: AppColors
+    color: Color
 ) {
     Row(
         modifier = Modifier
@@ -314,208 +349,221 @@ private fun SummaryChip(
 
 @Composable
 private fun HistoryItem(
-    item: LessonHistory,
+    itemState: HistoryItemState,
     colors: AppColors,
-    onReview: () -> Unit,
-    onReTest: () -> Unit,
-    onContinue: () -> Unit
+    onReview: (LessonHistory) -> Unit,
+    onReTest: (LessonHistory) -> Unit,
+    onContinue: (LessonHistory) -> Unit
 ) {
-    val isCompleted = item.status == HistoryStatus.COMPLETED
-    val completed = remember(item.explanationsData) {
-        item.explanationsData?.let { data ->
-            try {
-                jsonParser.parseToJsonElement(data).jsonObject.size
-            } catch (e: Exception) {
-                0
-            }
-        } ?: 0
-    }
-    val total = remember(item.lessonData) {
-        item.lessonData?.let { data ->
-            try {
-                jsonParser.parseToJsonElement(data).jsonObject["sentences"]?.jsonArray?.size
-            } catch (e: Exception) {
-                null
-            }
-        } ?: 10
-    }
+    val item = itemState.rawItem
+    val isCompleted = itemState.status == HistoryStatus.COMPLETED
+    val completed = itemState.completedCount
+    val total = itemState.totalCount
 
-    Card(
-        colors = CardDefaults.cardColors(containerColor = colors.surface),
-        shape = RoundedCornerShape(12.dp),
-        border = BorderStroke(1.dp, colors.border),
-        modifier = Modifier.fillMaxWidth()
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(colors.surface)
+            .border(1.dp, colors.border, RoundedCornerShape(12.dp))
+            .padding(12.dp)
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            // Left Status Icon (Refined Squircle style)
+            val iconColor = if (isCompleted) colors.correct else Color(0xFFFFA726)
+            Box(
+                modifier = Modifier
+                    .size(36.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(iconColor.copy(0.08f))
+                    .border(0.5.dp, iconColor.copy(0.15f), RoundedCornerShape(10.dp)),
+                contentAlignment = Alignment.Center
             ) {
-                // Left Status Icon (Refined Squircle style)
-                val iconColor = if (isCompleted) colors.correct else Color(0xFFFFA726)
-                Box(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .clip(RoundedCornerShape(10.dp))
-                        .background(iconColor.copy(0.08f))
-                        .border(0.5.dp, iconColor.copy(0.15f), RoundedCornerShape(10.dp)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    if (isCompleted) {
-                        Icon(
-                            Icons.Rounded.Check, null,
-                            tint = iconColor,
-                            modifier = Modifier.size(18.dp)
-                        )
-                    } else {
-                        Icon(
-                            Icons.Rounded.HourglassBottom, null,
-                            tint = iconColor,
-                            modifier = Modifier.size(16.dp)
-                        )
-                    }
-                }
-
-                // Content
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    // Topic + Level badge
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        Text(
-                            text = item.topic,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 14.sp,
-                            color = colors.mainText,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.weight(1f)
-                        )
-                        // Level badge
-                        Box(
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(6.dp))
-                                .background(colors.accent.copy(0.15f))
-                                .padding(horizontal = 7.dp, vertical = 2.dp)
-                        ) {
-                            Text(
-                                text = item.level,
-                                fontSize = 10.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = colors.accent
-                            )
-                        }
-                    }
-
-                    // Status + date
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(6.dp)
-                    ) {
-                        val statusText = if (isCompleted) "✓ Hoàn thành" else "⏳ Đang học ($completed/$total câu)"
-                        Text(
-                            text = statusText,
-                            fontSize = 12.sp,
-                            color = iconColor,
-                            fontWeight = FontWeight.Medium,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        Text("·", fontSize = 12.sp, color = colors.border)
-                        Text(
-                            text = formatDate(item.createdAt),
-                            fontSize = 12.sp,
-                            color = colors.hintText,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
+                if (isCompleted) {
+                    Icon(
+                        Icons.Rounded.Check, null,
+                        tint = iconColor,
+                        modifier = Modifier.size(18.dp)
+                    )
+                } else {
+                    Icon(
+                        Icons.Rounded.HourglassBottom, null,
+                        tint = iconColor,
+                        modifier = Modifier.size(16.dp)
+                    )
                 }
             }
 
-            Spacer(Modifier.height(8.dp))
-            HorizontalDivider(color = colors.border.copy(alpha = 0.5f))
-            Spacer(Modifier.height(8.dp))
-
-            // Action Buttons
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+            // Content
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                // Score Badge (căn lề bên trái)
-                if (isCompleted) {
-                    val scoreVal = item.score ?: 0
-                    val scoreColor = when {
-                        scoreVal >= 9 -> colors.correct
-                        scoreVal >= 5 -> colors.warning
-                        else -> colors.error
-                    }
+                // Topic + Level badge
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = itemState.topic,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp,
+                        color = colors.mainText,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f)
+                    )
+                    // Level badge
                     Box(
                         modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(scoreColor.copy(0.08f))
-                            .border(0.5.dp, scoreColor.copy(0.2f), RoundedCornerShape(8.dp))
-                            .padding(horizontal = 8.dp, vertical = 4.dp)
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(colors.accent.copy(0.15f))
+                            .padding(horizontal = 7.dp, vertical = 2.dp)
                     ) {
                         Text(
-                            text = "$scoreVal/10 điểm",
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.ExtraBold,
-                            color = scoreColor
+                            text = itemState.level,
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = colors.accent
                         )
                     }
-                } else {
-                    Spacer(Modifier.width(1.dp))
                 }
 
-                Spacer(Modifier.weight(1f))
+                // Status + date
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    val statusText = if (isCompleted) "✓ Hoàn thành" else "⏳ Đang học ($completed/$total câu)"
+                    Text(
+                        text = statusText,
+                        fontSize = 12.sp,
+                        color = iconColor,
+                        fontWeight = FontWeight.Medium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text("·", fontSize = 12.sp, color = colors.border)
+                    Text(
+                        text = itemState.formattedDate,
+                        fontSize = 12.sp,
+                        color = colors.hintText,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
+        }
 
-                // Action buttons on the right
-                if (item.status == HistoryStatus.IN_PROGRESS && !item.lessonData.isNullOrEmpty()) {
-                    TextButton(
-                        onClick = onContinue,
-                        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
-                        modifier = Modifier.height(32.dp)
+        Spacer(Modifier.height(8.dp))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(1.dp)
+                .background(colors.border.copy(alpha = 0.5f))
+        )
+        Spacer(Modifier.height(8.dp))
+
+        // Action Buttons
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Score Badge (căn lề bên trái)
+            if (isCompleted) {
+                val scoreVal = itemState.score ?: 0
+                val scoreColor = when {
+                    scoreVal >= 9 -> colors.correct
+                    scoreVal >= 5 -> colors.warning
+                    else -> colors.error
+                }
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(scoreColor.copy(0.08f))
+                        .border(0.5.dp, scoreColor.copy(0.2f), RoundedCornerShape(8.dp))
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                ) {
+                    Text(
+                        text = "$scoreVal/10 điểm",
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        color = scoreColor
+                    )
+                }
+            } else {
+                Spacer(Modifier.width(1.dp))
+            }
+
+            Spacer(Modifier.weight(1f))
+
+            // Action buttons on the right
+            if (itemState.status == HistoryStatus.IN_PROGRESS && itemState.hasLessonData) {
+                Box(
+                    modifier = Modifier
+                        .height(32.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable { onContinue(item) }
+                        .padding(horizontal = 10.dp, vertical = 4.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
                     ) {
                         Icon(Icons.Rounded.PlayArrow, null, modifier = Modifier.size(14.dp), tint = colors.accent)
                         Spacer(Modifier.width(4.dp))
                         Text("Tiếp tục", fontSize = 12.sp, color = colors.accent, fontWeight = FontWeight.Bold)
                     }
-                    Spacer(Modifier.width(8.dp))
                 }
+                Spacer(Modifier.width(8.dp))
+            }
 
-                if (item.status == HistoryStatus.COMPLETED && !item.lessonData.isNullOrEmpty()) {
-                    TextButton(
-                        onClick = onReview,
-                        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
-                        modifier = Modifier.height(32.dp)
+            if (itemState.status == HistoryStatus.COMPLETED && itemState.hasLessonData) {
+                Box(
+                    modifier = Modifier
+                        .height(32.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable { onReview(item) }
+                        .padding(horizontal = 10.dp, vertical = 4.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
                     ) {
                         Icon(Icons.Rounded.Visibility, null, modifier = Modifier.size(14.dp), tint = colors.accent)
                         Spacer(Modifier.width(4.dp))
                         Text("Xem lại", fontSize = 12.sp, color = colors.accent, fontWeight = FontWeight.Bold)
                     }
-                    Spacer(Modifier.width(8.dp))
                 }
+                Spacer(Modifier.width(8.dp))
+            }
 
-                Button(
-                    onClick = onReTest,
-                    colors = ButtonDefaults.buttonColors(containerColor = colors.accent.copy(alpha = 0.08f)),
-                    contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
-                    shape = RoundedCornerShape(8.dp),
-                    modifier = Modifier.height(32.dp)
+            Box(
+                modifier = Modifier
+                    .height(32.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(colors.accent.copy(alpha = 0.08f))
+                    .clickable { onReTest(item) }
+                    .padding(horizontal = 10.dp, vertical = 4.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
                 ) {
                     Icon(Icons.Rounded.Replay, null, modifier = Modifier.size(14.dp), tint = colors.accent)
                     Spacer(Modifier.width(4.dp))
                     Text(
-                        text = if (item.status == HistoryStatus.COMPLETED) "Luyện tập lại" else "Làm lại",
+                        text = if (itemState.status == HistoryStatus.COMPLETED) "Luyện tập lại" else "Làm lại",
                         fontSize = 12.sp,
                         color = colors.accent,
                         fontWeight = FontWeight.Bold
@@ -556,6 +604,6 @@ private fun formatDate(epochMs: Long): String {
 
 private data class GroupData(
     val title: String,
-    val items: List<LessonHistory>,
+    val items: List<HistoryItemState>,
     val color: Color
 )

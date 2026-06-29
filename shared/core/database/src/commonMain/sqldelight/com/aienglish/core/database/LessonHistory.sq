@@ -38,3 +38,65 @@ UPDATE lesson_history
 SET lesson_json = ?, user_answers_json = ?, explanations_json = ?
 WHERE id = ?;
 
+
+CREATE TABLE IF NOT EXISTS lesson_question (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    history_id INTEGER NOT NULL,
+    sentence_index INTEGER NOT NULL,
+    vietnamese TEXT NOT NULL,
+    english TEXT NOT NULL,
+    explanation TEXT,
+    user_answer TEXT,
+    ai_score INTEGER,
+    ai_explanation TEXT,
+    UNIQUE(history_id, sentence_index) ON CONFLICT REPLACE,
+    FOREIGN KEY(history_id) REFERENCES lesson_history(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS lesson_question_token (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    question_id INTEGER NOT NULL,
+    word TEXT NOT NULL,
+    phonetic TEXT,
+    part_of_speech TEXT,
+    FOREIGN KEY(question_id) REFERENCES lesson_question(id) ON DELETE CASCADE
+);
+
+insertQuestion:
+INSERT OR REPLACE INTO lesson_question (history_id, sentence_index, vietnamese, english, explanation, user_answer, ai_score, ai_explanation)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+
+insertToken:
+INSERT INTO lesson_question_token (question_id, word, phonetic, part_of_speech)
+VALUES (?, ?, ?, ?);
+
+deleteTokensForQuestion:
+DELETE FROM lesson_question_token WHERE question_id = ?;
+
+getQuestionId:
+SELECT id FROM lesson_question WHERE history_id = ? AND sentence_index = ?;
+
+getQuestionsForHistory:
+SELECT * FROM lesson_question WHERE history_id = ? ORDER BY sentence_index ASC;
+
+getTokensForQuestion:
+SELECT * FROM lesson_question_token WHERE question_id = ?;
+
+getAllHistoryWithCounts:
+SELECT 
+    h.id,
+    h.topic,
+    h.level,
+    h.score,
+    h.status,
+    h.created_at,
+    h.completed_at,
+    h.lesson_json,
+    h.user_answers_json,
+    h.explanations_json,
+    h.feedback_json,
+    (SELECT COUNT(*) FROM lesson_question q WHERE q.history_id = h.id) AS total_count,
+    (SELECT COUNT(q.ai_explanation) FROM lesson_question q WHERE q.history_id = h.id) AS completed_count
+FROM lesson_history h
+ORDER BY h.created_at DESC;
+

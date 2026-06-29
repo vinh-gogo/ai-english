@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS lesson_question (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    history_id INTEGER NOT NULL,
+    sentence_index INTEGER NOT NULL,
+    vietnamese TEXT NOT NULL,
+    english TEXT NOT NULL,
+    explanation TEXT,
+    user_answer TEXT,
+    ai_score INTEGER,
+    ai_explanation TEXT,
+    UNIQUE(history_id, sentence_index) ON CONFLICT REPLACE,
+    FOREIGN KEY(history_id) REFERENCES lesson_history(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS lesson_question_token (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    question_id INTEGER NOT NULL,
+    word TEXT NOT NULL,
+    phonetic TEXT,
+    part_of_speech TEXT,
+    FOREIGN KEY(question_id) REFERENCES lesson_question(id) ON DELETE CASCADE
+);

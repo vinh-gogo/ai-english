@@ -11,7 +11,9 @@ data class LessonHistory(
     val lessonData: String? = null,
     val userAnswersData: String? = null,
     val explanationsData: String? = null,
-    val feedbackData: String? = null
+    val feedbackData: String? = null,
+    val completedCount: Int = 0,
+    val totalCount: Int = 0
 )
 
 enum class HistoryStatus {
