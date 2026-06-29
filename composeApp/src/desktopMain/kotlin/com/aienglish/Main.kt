@@ -1,5 +1,7 @@
 package com.aienglish
 
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
@@ -9,6 +11,7 @@ import com.aienglish.core.network.di.coreNetworkModule
 import com.aienglish.core.common.di.coreCommonModule
 import com.aienglish.core.common.di.desktopCoreCommonModule
 import com.aienglish.core.common.prefs.AppPreferences
+import com.aienglish.core.designsystem.theme.AppTheme
 import com.aienglish.core.database.di.coreDatabaseModule
 import org.koin.core.qualifier.named
 import com.aienglish.feature.aiteacher.application.di.teacherApplicationModule
@@ -72,6 +75,7 @@ fun main() {
     }
 
     application {
+        val appPreferences = org.koin.java.KoinJavaComponent.getKoin().get<AppPreferences>()
         val windowState = rememberWindowState(width = 400.dp, height = 800.dp)
         Window(
             onCloseRequest = ::exitApplication,
@@ -79,7 +83,12 @@ fun main() {
             state = windowState,
             icon = androidx.compose.ui.res.painterResource("logo_ai_lingua.png")
         ) {
-            AIEnglishTheme {
+            val themeName by appPreferences.appThemeFlow.collectAsState(
+                initial = appPreferences.getAppTheme()
+            )
+            val theme = AppTheme.entries.find { it.name == themeName } ?: AppTheme.SUNSET_WARMTH
+
+            AIEnglishTheme(theme = theme) {
                 TeacherScreen()
             }
         }

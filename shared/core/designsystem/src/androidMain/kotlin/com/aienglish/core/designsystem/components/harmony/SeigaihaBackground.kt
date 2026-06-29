@@ -16,11 +16,11 @@ import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
 import androidx.compose.ui.platform.LocalDensity
-import com.aienglish.core.designsystem.theme.SurfaceContainerHighest
+import com.aienglish.core.designsystem.theme.SW_SurfaceContainerHighest
 
 @Composable
 actual fun SeigaihaBackground(isDark: Boolean) {
-    val bgColor = SurfaceContainerHighest
+    val bgColor = SW_SurfaceContainerHighest
     // Terracotta at 15% alpha gives a warm, subtle pattern on light background
     val patternColor = androidx.compose.ui.graphics.Color(0xFF944A00).copy(alpha = 0.15f)
     

@@ -1,7 +1,11 @@
 package com.aienglish.feature.profile.ui.viewmodel
 
+import com.aienglish.core.common.prefs.AppPreferences
 import com.aienglish.core.common.viewmodel.BaseViewModel
+import com.aienglish.core.designsystem.theme.AppTheme
 import com.aienglish.feature.profile.application.usecase.*
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 data class ProfileState(
@@ -24,7 +28,8 @@ data class ProfileState(
     val monthlyLimit: Int = 5,
     val isPaid: Boolean = false,
     val error: String? = null,
-    val aiResponseLength: String = "normal"
+    val aiResponseLength: String = "normal",
+    val appTheme: AppTheme = AppTheme.SUNSET_WARMTH
 )
 
 class ProfileViewModel(
@@ -41,7 +46,8 @@ class ProfileViewModel(
     private val updateAiResponseLengthUseCase: UpdateAiResponseLengthUseCase,
     private val getNovitaApiKeyUseCase: GetNovitaApiKeyUseCase,
     private val saveNovitaApiKeyUseCase: SaveNovitaApiKeyUseCase,
-    private val updateApiProviderUseCase: UpdateApiProviderUseCase
+    private val updateApiProviderUseCase: UpdateApiProviderUseCase,
+    private val appPreferences: AppPreferences
 ) : BaseViewModel<ProfileState>(ProfileState()) {
 
     init {
@@ -74,6 +80,12 @@ class ProfileViewModel(
             val key = getNovitaApiKeyUseCase()
             setState { copy(novitaApiKeyInput = key) }
         }
+
+        // Load saved theme
+        appPreferences.appThemeFlow.onEach { themeName ->
+            val theme = AppTheme.entries.find { it.name == themeName } ?: AppTheme.SUNSET_WARMTH
+            setState { copy(appTheme = theme) }
+        }.launchIn(viewModelScope)
     }
 
     fun updateMonthlyUsage(usage: Int, limit: Int) {
@@ -117,6 +129,11 @@ class ProfileViewModel(
         viewModelScope.launch {
             updateApiProviderUseCase(provider)
         }
+    }
+
+    fun onThemeChanged(theme: AppTheme) {
+        appPreferences.saveAppTheme(theme.name)
+        setState { copy(appTheme = theme) }
     }
 
     fun toggleHowTo() = setState { copy(howToExpanded = !howToExpanded) }

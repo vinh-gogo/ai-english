@@ -23,6 +23,8 @@ interface AppPreferences {
     fun saveApiProvider(provider: String)
     fun getNovitaApiKey(): String
     fun saveNovitaApiKey(key: String)
+    fun getAppTheme(): String
+    fun saveAppTheme(theme: String)
     fun clear()
 
     // Reactive preference streams
@@ -35,4 +37,5 @@ interface AppPreferences {
     val aiResponseLengthFlow: Flow<String>
     val apiProviderFlow: Flow<String>
     val novitaApiKeyFlow: Flow<String>
+    val appThemeFlow: Flow<String>
 }

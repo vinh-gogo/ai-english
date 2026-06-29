@@ -19,7 +19,9 @@ val profileUiModule = module {
             updateAiResponseLengthUseCase = get(),
             getNovitaApiKeyUseCase = get(),
             saveNovitaApiKeyUseCase = get(),
-            updateApiProviderUseCase = get()
+            updateApiProviderUseCase = get(),
+            appPreferences = get()
         )
     }
 }
+

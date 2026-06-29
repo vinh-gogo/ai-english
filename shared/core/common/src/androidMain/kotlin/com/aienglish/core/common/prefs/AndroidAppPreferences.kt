@@ -37,6 +37,9 @@ class AndroidAppPreferences(
     private val _novitaApiKey = MutableStateFlow(secureStorage.getSecret("novita_api_key"))
     override val novitaApiKeyFlow = _novitaApiKey.asStateFlow()
 
+    private val _appTheme = MutableStateFlow(prefs.getString("app_theme", "SUNSET_WARMTH") ?: "SUNSET_WARMTH")
+    override val appThemeFlow = _appTheme.asStateFlow()
+
     override fun getApiKey(): String {
         val secured = secureStorage.getSecret("api_key")
         if (secured.isNotEmpty()) return secured
@@ -127,6 +130,13 @@ class AndroidAppPreferences(
     override fun saveAiResponseLength(length: String) {
         prefs.edit().putString("ai_response_length", length).apply()
         _aiResponseLength.value = length
+    }
+
+    override fun getAppTheme() = prefs.getString("app_theme", "SUNSET_WARMTH") ?: "SUNSET_WARMTH"
+
+    override fun saveAppTheme(theme: String) {
+        prefs.edit().putString("app_theme", theme).apply()
+        _appTheme.value = theme
     }
 
     override fun clear() {

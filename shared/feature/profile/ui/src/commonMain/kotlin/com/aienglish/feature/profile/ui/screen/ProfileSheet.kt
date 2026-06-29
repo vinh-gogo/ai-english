@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalUriHandler
 import com.aienglish.core.designsystem.theme.AppColors
+import com.aienglish.core.designsystem.theme.AppTheme
 import com.aienglish.core.designsystem.theme.LocalAppColors
 import com.aienglish.feature.profile.ui.viewmodel.ProfileState
 import com.aienglish.feature.profile.ui.viewmodel.ProfileViewModel
@@ -107,8 +108,11 @@ fun ProfileSheet(
                 }
                 HorizontalDivider(color = colors.border)
                 QuotaSection(state, profileViewModel, colors)
+                HorizontalDivider(color = colors.border)
+                ThemeSection(state, profileViewModel, colors)
                 Spacer(Modifier.height(16.dp))
             }
+
         }
     }
 }
@@ -994,6 +998,142 @@ private fun HowToGetNovitaApiKeySection(state: ProfileState, vm: ProfileViewMode
                     }
                 }
             }
+        }
+    }
+}
+
+// ── Theme Section ─────────────────────────────────────────────────────────
+@Composable
+private fun ThemeSection(
+    state: ProfileState,
+    viewModel: ProfileViewModel,
+    colors: AppColors
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        // Section header
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Icon(
+                Icons.Rounded.Palette,
+                contentDescription = null,
+                tint = colors.accent,
+                modifier = Modifier.size(20.dp)
+            )
+            Text(
+                "Giao diện",
+                fontSize = 15.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = colors.mainText
+            )
+        }
+
+        Text(
+            "Chọn bảng màu và phong cách giao diện cho app",
+            fontSize = 13.sp,
+            color = colors.mutedText,
+            lineHeight = 18.sp
+        )
+
+        // Theme cards
+        AppTheme.entries.forEach { theme ->
+            ThemeOptionCard(
+                theme = theme,
+                isSelected = state.appTheme == theme,
+                colors = colors,
+                onSelect = { viewModel.onThemeChanged(theme) }
+            )
+        }
+    }
+}
+
+@Composable
+private fun ThemeOptionCard(
+    theme: AppTheme,
+    isSelected: Boolean,
+    colors: AppColors,
+    onSelect: () -> Unit
+) {
+    val borderColor = if (isSelected) colors.accent else colors.border
+    val bgColor     = if (isSelected) colors.accent.copy(alpha = 0.06f) else colors.surface
+
+    // Preview swatches per theme
+    val swatches = when (theme) {
+        AppTheme.SUNSET_WARMTH -> listOf(
+            androidx.compose.ui.graphics.Color(0xFF944A00),
+            androidx.compose.ui.graphics.Color(0xFFE67E22),
+            androidx.compose.ui.graphics.Color(0xFFFFF8F6),
+            androidx.compose.ui.graphics.Color(0xFFFFDCC5)
+        )
+        AppTheme.NATURE_MINT -> listOf(
+            androidx.compose.ui.graphics.Color(0xFF006D36),
+            androidx.compose.ui.graphics.Color(0xFF50C878),
+            androidx.compose.ui.graphics.Color(0xFFF8FAF8),
+            androidx.compose.ui.graphics.Color(0xFF83FBA5)
+        )
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(bgColor)
+            .border(1.5.dp, borderColor, RoundedCornerShape(12.dp))
+            .clickable(onClick = onSelect)
+            .padding(horizontal = 16.dp, vertical = 14.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        // Color swatches preview
+        Row(horizontalArrangement = Arrangement.spacedBy((-8).dp)) {
+            swatches.forEachIndexed { index, color ->
+                Box(
+                    modifier = Modifier
+                        .size(28.dp)
+                        .clip(CircleShape)
+                        .background(color)
+                        .border(1.5.dp, colors.border.copy(alpha = 0.4f), CircleShape)
+                )
+            }
+        }
+
+        Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(
+                "${theme.emoji} ${theme.displayName}",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = colors.mainText
+            )
+            Text(
+                when (theme) {
+                    AppTheme.SUNSET_WARMTH -> "Ấm áp • Terracotta & Kem"
+                    AppTheme.NATURE_MINT   -> "Tươi mát • Xanh Mint & Trắng"
+                },
+                fontSize = 12.sp,
+                color = colors.mutedText
+            )
+        }
+
+        // Selected indicator
+        if (isSelected) {
+            Icon(
+                Icons.Rounded.CheckCircle,
+                contentDescription = "Đang dùng",
+                tint = colors.accent,
+                modifier = Modifier.size(22.dp)
+            )
+        } else {
+            Box(
+                modifier = Modifier
+                    .size(22.dp)
+                    .clip(CircleShape)
+                    .border(1.5.dp, colors.border, CircleShape)
+            )
         }
     }
 }
