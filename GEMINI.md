@@ -14,6 +14,7 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 4** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Sửa logic chấm điểm AI & bổ sung các đáp án chuẩn thay thế (Alternatives). | Hoàn thành |
 | **Session 5** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Mặc định hóa GUID của Guest thành 16 chữ số 0. | Hoàn thành |
 | **Session 6** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Cải tiến UI: Đồng bộ và tăng cỡ chữ Đáp án & Giải thích, hiển thị list đáp án chuẩn đánh số. | Hoàn thành |
+| **Session 7** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Sửa lỗi crash Android do EncryptedSharedPreferences (KeyStore AEADBadTagException). | Hoàn thành |
 
 ---
 
@@ -113,6 +114,21 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
     - Thiết kế lại `SentenceReviewCard` hiển thị khối "Các đáp án chuẩn:" đánh số thứ tự với kích thước font `15.sp` đồng bộ, kèm theo câu trả lời của user rõ ràng và thoáng hơn.
 - **Ghi chú kỹ thuật:**
   - Biên dịch thành công cho cả hai target Desktop và Android.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 7 (2026-06-29)
+
+- **Mục tiêu:** Khắc phục lỗi crash ứng dụng khi khởi động trên thiết bị Android do không khớp khóa mã hóa (Android KeyStore AEADBadTagException) khi gỡ cài đặt và cài lại ứng dụng.
+- **Hoạt động & Thay đổi:**
+  - **Sửa Secure Storage trên Android ([AndroidSecureStorage.kt](file:///D:/ai-english/shared/core/common/src/androidMain/kotlin/com/aienglish/core/common/security/AndroidSecureStorage.kt)):**
+    - Bọc logic khởi tạo `EncryptedSharedPreferences` vào khối `try-catch`.
+    - Khi xảy ra lỗi (ví dụ `AEADBadTagException` do KeyStore bị lệch/hết hạn), tự động xóa file Preferences bị lỗi và xóa entry key cũ trong Android KeyStore (`masterKeyAlias`), sau đó thử tạo lại.
+    - Thêm fallback cuối cùng chuyển về sử dụng `SharedPreferences` thông thường nếu vẫn thất bại để đảm bảo ứng dụng **tuyệt đối không bị crash khi khởi động**.
+- **Ghi chú kỹ thuật:**
+  - Biên dịch thành công và cài đặt thành công lên thiết bị Android qua adb.
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 

@@ -6,7 +6,26 @@ import androidx.security.crypto.MasterKeys
 
 class AndroidSecureStorage(context: Context) : SecureStorage {
     private val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
-    private val sharedPrefs = EncryptedSharedPreferences.create(
+    
+    private val sharedPrefs = try {
+        createSharedPrefs(context)
+    } catch (e: Exception) {
+        println("SecureStorage: Error creating EncryptedSharedPreferences, resetting... ${e.message}")
+        try {
+            context.deleteSharedPreferences("ai_english_secure_prefs")
+            val keyStore = java.security.KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
+            keyStore.deleteEntry(masterKeyAlias)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+        try {
+            createSharedPrefs(context)
+        } catch (ex: Exception) {
+            context.getSharedPreferences("ai_english_secure_prefs_fallback", Context.MODE_PRIVATE)
+        }
+    }
+
+    private fun createSharedPrefs(context: Context) = EncryptedSharedPreferences.create(
         "ai_english_secure_prefs",
         masterKeyAlias,
         context,
