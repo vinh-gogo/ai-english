@@ -5,37 +5,24 @@ import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.aienglish.core.database.AIEnglishDatabase
 
-private val LEGACY_DB_NAMES = listOf(
-    "ai_english.db",
-    "ai_english_v1.db",
-    "ai_english_v2.db",
-    "ai_english_v3.db",
-    "ai_english_v4.db"
-)
-
-private const val CURRENT_DB_NAME = "ai_english_v5.db"
+private const val DB_NAME = "ai_english.db"
 
 /**
  * Tạo Android SQLite driver.
- * Tự động dọn dẹp các file database cũ (v1–v4) khi khởi động.
  *
- * Khi thay đổi schema trong tương lai:
- * 1. Cập nhật trực tiếp file .sq tương ứng
- * 2. Tạo file [N].sqm cho ALTER TABLE / data migration
+ * DB duy nhất: ai_english.db — không bao giờ đổi tên.
+ * - Fresh install: Schema.create() tạo toàn bộ schema mới nhất.
+ * - Upgrade: AndroidSqliteDriver tự gọi Schema.migrate(oldVersion, newVersion),
+ *   chạy các file .sqm theo thứ tự.
+ *
+ * Khi thay đổi schema:
+ * 1. Cập nhật trực tiếp file .sq
+ * 2. Tạo [N].sqm với ALTER TABLE
  * 3. Tăng version = N trong build.gradle.kts
- * 4. Thêm tên DB cũ vào LEGACY_DB_NAMES nếu đổi tên file
  */
-fun createAndroidDriver(context: Context): SqlDriver {
-    // Dọn dẹp các file DB cũ thành rác
-    LEGACY_DB_NAMES.forEach { oldName ->
-        try {
-            context.deleteDatabase(oldName)
-        } catch (_: Exception) { }
-    }
-
-    return AndroidSqliteDriver(
+fun createAndroidDriver(context: Context): SqlDriver =
+    AndroidSqliteDriver(
         schema = AIEnglishDatabase.Schema,
         context = context,
-        name = CURRENT_DB_NAME
+        name = DB_NAME
     )
-}

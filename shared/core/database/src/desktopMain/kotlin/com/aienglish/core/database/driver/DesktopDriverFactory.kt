@@ -1,43 +1,31 @@
 package com.aienglish.core.database.driver
 
+import app.cash.sqldelight.db.QueryResult
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.aienglish.core.database.AIEnglishDatabase
 import java.io.File
 import java.util.Properties
 
-private val LEGACY_DB_NAMES = listOf(
-    "ai_english.db",
-    "ai_english_v1.db",
-    "ai_english_v2.db",
-    "ai_english_v3.db",
-    "ai_english_v4.db"
-)
-
-private const val CURRENT_DB_NAME = "ai_english_v5.db"
+private const val DB_NAME = "ai_english.db"
 
 /**
  * Tạo Desktop (JVM) SQLite driver.
- * Tự động dọn dẹp các file database cũ (v1–v4) trong ~/.ai-english/ khi khởi động.
  *
- * Khi thay đổi schema trong tương lai:
- * 1. Cập nhật trực tiếp file .sq tương ứng
- * 2. Tạo file [N].sqm cho ALTER TABLE / data migration
+ * DB duy nhất: ai_english.db — không bao giờ đổi tên.
+ * - Fresh install: Schema.create() tạo toàn bộ schema mới nhất và ghi user_version.
+ * - Upgrade: đọc PRAGMA user_version, gọi Schema.migrate(old, new) để chạy
+ *   các file .sqm còn thiếu theo thứ tự, sau đó cập nhật user_version.
+ *
+ * Khi thay đổi schema:
+ * 1. Cập nhật trực tiếp file .sq
+ * 2. Tạo [N].sqm với ALTER TABLE
  * 3. Tăng version = N trong build.gradle.kts
- * 4. Thêm tên DB cũ vào LEGACY_DB_NAMES nếu đổi tên file
  */
 fun createDesktopDriver(): SqlDriver {
     val dbDir = File(System.getProperty("user.home"), ".ai-english")
     dbDir.mkdirs()
-
-    // Dọn dẹp các file DB cũ thành rác
-    LEGACY_DB_NAMES.forEach { oldName ->
-        try {
-            File(dbDir, oldName).takeIf { it.exists() }?.delete()
-        } catch (_: Exception) { }
-    }
-
-    val dbFile = File(dbDir, CURRENT_DB_NAME)
+    val dbFile = File(dbDir, DB_NAME)
     val isNew = !dbFile.exists()
 
     val driver = JdbcSqliteDriver(
@@ -46,7 +34,22 @@ fun createDesktopDriver(): SqlDriver {
     )
 
     if (isNew) {
+        // Fresh install: tạo schema và ghi version
         AIEnglishDatabase.Schema.create(driver)
+        driver.execute(null, "PRAGMA user_version = ${AIEnglishDatabase.Schema.version}", 0)
+    } else {
+        // Upgrade: kiểm tra version và migrate nếu cần
+        val currentVersion = driver
+            .executeQuery(null, "PRAGMA user_version", { cursor ->
+                QueryResult.Value(if (cursor.next().value) cursor.getLong(0) ?: 0L else 0L)
+            }, 0)
+            .value
+
+        val targetVersion = AIEnglishDatabase.Schema.version
+        if (currentVersion < targetVersion) {
+            AIEnglishDatabase.Schema.migrate(driver, currentVersion, targetVersion)
+            driver.execute(null, "PRAGMA user_version = $targetVersion", 0)
+        }
     }
 
     return driver
