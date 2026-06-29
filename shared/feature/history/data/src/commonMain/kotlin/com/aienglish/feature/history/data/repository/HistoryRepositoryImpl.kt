@@ -18,6 +18,8 @@ import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.Clock
 import kotlin.time.ExperimentalTime
 import kotlinx.serialization.json.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 private val jsonParser = Json { ignoreUnknownKeys = true }
 
@@ -28,6 +30,8 @@ class HistoryRepositoryImpl(
 ) : HistoryRepository {
 
     private val queries get() = database.lessonHistoryQueries
+    private val migrationMutex = Mutex()
+    private var isMigrated = false
 
     private fun getCurrentUserId(): String {
         val email = prefs.getUserEmail()
@@ -38,25 +42,36 @@ class HistoryRepositoryImpl(
         }
     }
 
-    private suspend fun checkAndMigrateGuestData() = withContext(dispatchers.io) {
-        val now = Clock.System.now().toEpochMilliseconds()
-        database.transaction {
-            // Avoid UNIQUE constraint conflict on email = 'guest@local' by updating 'guest' user's email first
-            database.userSchemaQueries.updateUserEmail(
-                email = "guest_old_${now}@local",
-                user_id = "guest"
-            )
-            database.userSchemaQueries.ensureUserExists(
-                user_id = "0000000000000000",
-                display_name = "Guest",
-                email = "guest@local",
-                created_at = now,
-                updated_at = now
-            )
-            database.lessonHistoryQueries.migrateGuestHistory()
-            database.lessonHistoryQueries.migrateGuestEmailHistory()
-            database.userSchemaQueries.deleteUserById("guest")
-            database.userSchemaQueries.deleteUserById("guest@aienglish.com")
+    private suspend fun checkAndMigrateGuestData() {
+        if (isMigrated) return
+        migrationMutex.withLock {
+            if (isMigrated) return
+            withContext(dispatchers.io) {
+                try {
+                    val now = Clock.System.now().toEpochMilliseconds()
+                    database.transaction {
+                        // Avoid UNIQUE constraint conflict on email = 'guest@local' by updating 'guest' user's email first
+                        database.userSchemaQueries.updateUserEmail(
+                            email = "guest_old_${now}@local",
+                            user_id = "guest"
+                        )
+                        database.userSchemaQueries.ensureUserExists(
+                            user_id = "0000000000000000",
+                            display_name = "Guest",
+                            email = "guest@local",
+                            created_at = now,
+                            updated_at = now
+                        )
+                        database.lessonHistoryQueries.migrateGuestHistory()
+                        database.lessonHistoryQueries.migrateGuestEmailHistory()
+                        database.userSchemaQueries.deleteUserById("guest")
+                        database.userSchemaQueries.deleteUserById("guest@aienglish.com")
+                    }
+                    isMigrated = true
+                } catch (e: Exception) {
+                    // Ignore or log
+                }
+            }
         }
     }
 
