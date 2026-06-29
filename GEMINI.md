@@ -21,6 +21,8 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 13** | 2026-06-29 | Claude Sonnet 4.6 | `16d7e0fa-80ff-43af-9dcc-87d9a481a702` | Tối ưu Layout token "Từ vựng chi tiết" & Refactor tối ưu hóa 7 PromptProvider bằng cách chuyển sang kế thừa BaseLanguagePromptProvider. | Hoàn thành |
 | **Session 12** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Thêm theme Berry Sorbet (Berry Red / Blush Cream) — tổng cộng 3 themes có thể chuyển đổi. | Hoàn thành |
 | **Session 14** | 2026-06-29 | Claude Sonnet 4.6 | `16d7e0fa-80ff-43af-9dcc-87d9a481a702` | Lặp (iterate) thiết kế lại Logo dựa trên hình khối gốc: thử nghiệm từ phong cách Glassmorphism chuyên nghiệp đến Flat 2D (TikTok/FB style), tối ưu độ bão hòa Deep/Rich colors, cập nhật trực tiếp lên mipmap Android. | Hoàn thành |
+| **Session 15** | 2026-06-29 | Gemini 3.1 Pro | `f6c34fd4-afd8-448c-98e5-b576a6f1844b` | Cải thiện UX phần Từ vựng chi tiết: cơ chế Tap-to-reveal (ẩn/hiện chi tiết bằng công tắc và khi chạm), bọc thẻ Card để tăng độ tương phản, cập nhật gom cụm từ (chunking) thay vì từ đơn. | Hoàn thành |
+| **Session 16** | 2026-06-29 | Gemini 3.1 Pro | `f6c34fd4-afd8-448c-98e5-b576a6f1844b` | Nâng cấp UI "Các đáp án chuẩn" (Highlighting từ đồng nghĩa CJK-aware, Accordion gọn gàng) và cập nhật AI Prompt cho tất cả ngôn ngữ. | Hoàn thành |
 
 
 ---
@@ -207,6 +209,70 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 
+---
+
+### 🟢 Session 15 (2026-06-29)
+
+- **Mục tiêu:** Nâng cấp trải nghiệm UX tại phần hiển thị "Từ vựng chi tiết" trong màn hình Luyện tập: giảm thiểu sự lộn xộn, tăng độ tương phản và tối ưu hóa cho việc học cụm từ thay vì từ rời rạc.
+- **Hoạt động & Thay đổi:**
+  - **Cải tiến UI (LessonContent.kt):** 
+    - Thêm cơ chế **Toggle Switch** ("Phân tích") để bật/tắt toàn bộ chi tiết (IPA, từ loại). Mặc định là Tắt để giao diện thoáng hơn.
+    - Thêm cơ chế **Tap-to-reveal**: Khi đang tắt phân tích, chạm vào một từ sẽ mở chi tiết riêng của từ đó.
+    - Bọc cụm `FlowRow` vào một `Card` có độ trong suốt `95%` (`colors.surface.copy(alpha = 0.95f)`) và viền góc tròn để che đi background pattern phức tạp bên dưới, giúp chữ trở nên dễ đọc và có độ tương phản cao hơn.
+  - **Cải tiến Data/AI Prompt (EnglishPromptProvider.kt & BaseLanguagePromptProvider.kt):** 
+    - Cập nhật System Prompt yêu cầu AI sinh từ vựng theo dạng **cụm từ (chunk/collocation)** (ví dụ "I'm", "my name") thay vì cắt nhỏ từng chữ lẻ.
+- **Ghi chú kỹ thuật:**
+  - `FlowRow` của Compose Multiplatform kết hợp `clickable` state per-index đã giải quyết triệt để yêu cầu hiển thị tùy chỉnh mượt mà.
+  - Biên dịch thành công cho Android qua `installDebug` task.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Đón nhận phản hồi trải nghiệm thực tế từ người dùng.
+
+---
+
+### 🟢 Session 16 (2026-06-29)
+
+- **Mục tiêu:** Nâng cấp trải nghiệm UI/UX cho phần "Các đáp án chuẩn" ở cả màn hình Bài học và Ôn tập, đồng thời đồng bộ hóa khả năng sinh đáp án thay thế & chấm điểm nương tay (lenient grading) cho **tất cả** ngôn ngữ thay vì chỉ tiếng Anh.
+- **Hoạt động & Thay đổi:**
+  - **Text Highlighting thuật toán Client-side:** Viết hàm `highlightDifferences` tự động so sánh đáp án thay thế với đáp án chính để bôi đậm/tô màu từ đồng nghĩa. Hỗ trợ cả ngắt từ bằng dấu cách (Anh, Pháp...) và ngắt ký tự (Trung, Nhật - CJK) mà không cần can thiệp DB hay Prompt.
+  - **Tối ưu không gian bằng Accordion:** Chỉ hiển thị đáp án chính (số 1), ẩn các đáp án còn lại dưới dạng dropdown (Xem thêm X cách diễn đạt khác).
+  - **Bổ sung Action Buttons:** Thêm nút Copy (sử dụng `LocalClipboardManager`) cho từng câu và placeholder icon Loa (TTS).
+  - **Đồng bộ BaseLanguagePromptProvider:** 
+    - Thêm trường `alternatives` vào JSON Prompt chung để hỗ trợ sinh đáp án thay thế cho mọi ngôn ngữ.
+    - Cập nhật `getEvaluateLessonSystemPrompt` bắt buộc AI chấm "10/10" nếu tương đương ngữ nghĩa, bỏ qua lỗi vặt (dấu câu, viết hoa).
+- **Ghi chú kỹ thuật:**
+  - `highlightDifferences` giúp đem lại giá trị sư phạm lớn (learner dễ dàng nhận ra idiom/từ đồng nghĩa mới) với effort cực thấp, không break schema.
+  - Fix deprecated warnings: Chuyển icon sang bản `AutoMirrored`, thay thế `LocalClipboardManager` thành `LocalClipboard` trong các dự định tương lai.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Xem xét tích hợp giải pháp Text-To-Speech (TTS) thực thụ cho Kotlin Multiplatform.
+
+---
+
+### 🟢 Session 17 (2026-06-29)
+
+- **Mục tiêu:** Căn chỉnh (Alignment) từ tiếng Anh gốc trong phần "Từ vựng chi tiết" để chúng luôn thẳng hàng ngang với nhau ở dưới cùng, không bị xô lệch khi bật/tắt hiển thị chi tiết (Phiên âm, Từ loại).
+- **Hoạt động & Thay đổi:**
+  - **Căn chỉnh Column:** Bổ sung `Modifier.align(Alignment.CenterVertically)` vào `Column` bọc mỗi token bên trong `FlowRow`.
+  - **Bảo toàn cấu trúc (Structural Placeholder):** Thay vì ẩn hoàn toàn thẻ `Text` của phiên âm và từ loại khi chúng rỗng, tôi đã đổi thành luôn render chúng với kích thước chuẩn nhưng đặt màu sắc thành `Color.Transparent` (vô hình).
+  - **Kết quả:** Vì mọi `Column` (đang được mở rộng chi tiết) đều có chung cấu trúc gồm: `Top (10-11sp)` + `Middle (16sp)` + `Bottom (10-11sp)`, phần chữ chính (Middle) luôn nằm chính xác ở vị trí trung tâm. Kết hợp với `Alignment.CenterVertically`, chữ chính của mọi từ (kể cả từ không có phiên âm hay từ loại) đều được gióng thẳng hàng ngang một cách hoàn hảo, sửa lỗi vỡ cấu trúc dòng đọc (baseline alignment).
+- **Ghi chú kỹ thuật:**
+  - Trong Compose Multiplatform, `FlowRow` mặc định căn đỉnh (`Alignment.Top`), gây ra lỗi từ ngắn bị đẩy lên bằng chiều cao với phiên âm của từ đầy đủ. Giải pháp dùng `CenterVertically` và placeholder text giải quyết triệt để vấn đề này mà không cần dùng Custom Layout hay `alignByBaseline` (vốn chưa hỗ trợ đầy đủ trên `FlowRow`).
+  - Đã biên dịch thành công cho Desktop/Android.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 18 (2026-06-29)
+
+- **Mục tiêu:** Sửa lỗi logic của nút Toggle "Phân tích" ở phần "Từ vựng chi tiết" (tắt switch nhưng một số từ vẫn hiển thị chi tiết). Đảm bảo tính toàn vẹn và ưu tiên tuyệt đối của trạng thái toggle.
+- **Hoạt động & Thay đổi:**
+  - **Phân tích vấn đề:** Lỗi xảy ra do cơ chế "Tap-to-reveal" (từ Session 15) lưu trạng thái mở rộng của từng từ độc lập vào biến `expandedTokens`. Nếu người dùng chạm vào một từ khi switch đang tắt, từ đó sẽ hiện chi tiết, gây hiểu lầm rằng switch bị lỗi logic hoặc bị kẹt.
+  - **Khắc phục:** Đã loại bỏ hoàn toàn cơ chế "Tap-to-reveal" cùng với state `expandedTokens` và thuộc tính `.clickable` khỏi các token (`Column`). 
+  - **Ràng buộc UI:** Ràng buộc trực tiếp biến `isDetailed` chỉ phụ thuộc duy nhất vào biến state `showDetailedTokens` (được điều khiển bởi Toggle Switch). Giờ đây, khi switch mang giá trị `false`, tất cả các thành phần phụ (Phiên âm, Từ loại) của mọi từ đều không được render, đảm bảo tuân thủ đúng yêu cầu "Visibility.GONE".
+- **Ghi chú kỹ thuật:**
+  - Biên dịch thành công cho Desktop/Android. Đã đẩy bản build cập nhật lên thiết bị qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.
-

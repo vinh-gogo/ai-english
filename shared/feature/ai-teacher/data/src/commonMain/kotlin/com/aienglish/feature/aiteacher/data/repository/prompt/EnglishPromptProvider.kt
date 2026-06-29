@@ -53,8 +53,8 @@ object EnglishPromptProvider : LanguagePromptProvider {
             1. Return ONLY valid JSON. No markdown, no explanation, no preamble outside the JSON.
             2. $nativeName sentences must be short, natural, and relevant to the chosen topic.
             3. Alternatives must list 2-4 other correct ways to translate the sentence in English (using synonyms, contractions, or slightly different structures).
-            4. Tokens must break the main English target sentence into individual words with IPA phonetics and part of speech.
-            5. NEVER create a token whose "word" is a standalone punctuation mark (e.g. ",", ".", "!", "?", ":", ";"). If a word is followed by punctuation, merge the punctuation into the word token (e.g. "everyone," not "everyone" + ","). Punctuation tokens waste space and break reading flow.
+            4. Tokens must break the main English target sentence into meaningful chunks (e.g. collocations, phrases like "I'm", "my name", "look forward to") rather than single isolated words. Each chunk must have its IPA phonetics and part of speech/meaning.
+            5. NEVER create a token whose "word" is a standalone punctuation mark (e.g. ",", ".", "!", "?", ":", ";"). If a word or chunk is followed by punctuation, merge the punctuation into the word token (e.g. "everyone," not "everyone" + ","). Punctuation tokens waste space and break reading flow.
         """.trimIndent()
     }
 

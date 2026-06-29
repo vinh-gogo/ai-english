@@ -2,6 +2,7 @@ package com.aienglish.feature.aiteacher.ui.screen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -17,6 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -140,6 +143,8 @@ private fun SentenceReviewCard(
     colors: AppColors
 ) {
     var isExpanded by remember { mutableStateOf(false) }
+    var showAlternatives by remember { mutableStateOf(false) }
+    val clipboardManager = LocalClipboardManager.current
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -175,17 +180,65 @@ private fun SentenceReviewCard(
             )
             Spacer(Modifier.height(4.dp))
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Rounded.CheckCircle, null, tint = colors.correct, modifier = Modifier.size(14.dp))
-                    Spacer(Modifier.width(6.dp))
-                    Text("1) ${sentence.english}", color = colors.correct, fontSize = 15.sp, fontWeight = FontWeight.Medium)
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
+                        Icon(Icons.Rounded.CheckCircle, null, tint = colors.correct, modifier = Modifier.size(14.dp))
+                        Spacer(Modifier.width(6.dp))
+                        Text("1) ${sentence.english}", color = colors.correct, fontSize = 15.sp, fontWeight = FontWeight.Medium)
+                    }
+                    Row {
+                        IconButton(onClick = { /* TODO TTS */ }, modifier = Modifier.size(32.dp)) {
+                            Icon(Icons.Default.VolumeUp, "Nghe", tint = colors.mutedText, modifier = Modifier.size(18.dp))
+                        }
+                        IconButton(onClick = { clipboardManager.setText(AnnotatedString(sentence.english)) }, modifier = Modifier.size(32.dp)) {
+                            Icon(Icons.Default.ContentCopy, "Copy", tint = colors.mutedText, modifier = Modifier.size(16.dp))
+                        }
+                    }
                 }
-                sentence.alternatives.forEachIndexed { altIndex, alt ->
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(start = 20.dp)
+                
+                if (sentence.alternatives.isNotEmpty()) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { showAlternatives = !showAlternatives }
+                            .padding(vertical = 6.dp),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Text("${altIndex + 2}) $alt", color = colors.correct, fontSize = 15.sp, fontWeight = FontWeight.Medium)
+                        Text(
+                            if (showAlternatives) "Thu gọn" else "+ Xem thêm ${sentence.alternatives.size} cách diễn đạt khác",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = colors.accent
+                        )
+                    }
+
+                    if (showAlternatives) {
+                        sentence.alternatives.forEachIndexed { altIndex, alt ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(start = 20.dp, bottom = 4.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = highlightDifferences(sentence.english, alt, colors),
+                                    fontSize = 15.sp,
+                                    fontWeight = FontWeight.Medium,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                Row {
+                                    IconButton(onClick = { /* TODO TTS */ }, modifier = Modifier.size(32.dp)) {
+                                        Icon(Icons.Default.VolumeUp, "Nghe", tint = colors.mutedText, modifier = Modifier.size(18.dp))
+                                    }
+                                    IconButton(onClick = { clipboardManager.setText(AnnotatedString(alt)) }, modifier = Modifier.size(32.dp)) {
+                                        Icon(Icons.Default.ContentCopy, "Copy", tint = colors.mutedText, modifier = Modifier.size(16.dp))
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

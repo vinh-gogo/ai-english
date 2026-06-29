@@ -54,6 +54,10 @@ abstract class BaseLanguagePromptProvider : LanguagePromptProvider {
                 {
                   "vietnamese": "Câu $nativeLabel ngắn (ví dụ: '$exampleSource')",
                   "english": "Bản dịch $languageLabel tương ứng (ví dụ: '$exampleTarget')",
+                  "alternatives": [
+                    "Bản dịch đúng thay thế 1 (dùng từ đồng nghĩa, cấu trúc khác)",
+                    "Bản dịch đúng thay thế 2"
+                  ],
                   "tokens": [
                     $exampleTokens
                   ]
@@ -64,11 +68,12 @@ abstract class BaseLanguagePromptProvider : LanguagePromptProvider {
             LƯU Ý QUAN TRỌNG:
             1. Đảm bảo toàn bộ câu trả lời chỉ chứa chuỗi JSON hợp lệ. Không viết thêm chữ giải thích bên ngoài JSON.
             2. Các câu $nativeLabel phải ngắn gọn, tự nhiên, mang tính giao tiếp thực tế và phù hợp với chủ đề được chọn.
-            3. Trong mảng 'tokens', đối với $languageLabel:
+            3. 'alternatives' phải liệt kê 2-4 cách dịch chuẩn khác nhau (từ đồng nghĩa, cách diễn đạt thân mật/trang trọng) cho câu $languageLabel.
+            4. Trong mảng 'tokens', hãy gom các từ đi liền nhau thành các cụm từ (chunk/collocation) có ý nghĩa (ví dụ: thay vì tách rời từng chữ, hãy gộp thành các cụm). Đối với mỗi cụm trong $languageLabel:
                - Trường 'word' chứa $tokenWordDesc
                - Trường 'phonetic' chứa $tokenPhoneticDesc
                - Trường 'partOfSpeech' chứa $tokenPartOfSpeechDesc
-            4. KHÔNG tạo token riêng cho dấu câu đơn lẻ (ví dụ: $punctuationExamples). Nếu một từ đi kèm dấu câu, hãy gộp dấu câu vào token của từ đó (ví dụ: "$mergeExample1" thay vì "$mergeExample2"). Token dấu câu không có giá trị học tập và làm ngắt quãng luồng hiển thị.
+            5. KHÔNG tạo token riêng cho dấu câu đơn lẻ (ví dụ: $punctuationExamples). Nếu một cụm từ đi kèm dấu câu, hãy gộp dấu câu vào token của cụm từ đó (ví dụ: "$mergeExample1" thay vì "$mergeExample2"). Token dấu câu không có giá trị học tập và làm ngắt quãng luồng hiển thị.
         """.trimIndent()
     }
 
@@ -110,6 +115,11 @@ abstract class BaseLanguagePromptProvider : LanguagePromptProvider {
             $reports
 
             $evalDetails
+
+            HƯỚNG DẪN CHẤM ĐIỂM NGHIÊM NGẶT:
+            - Tập trung vào SỰ TƯƠNG ĐƯƠNG NGỮ NGHĨA: Nếu câu trả lời của học sinh diễn đạt đúng ý nghĩa một cách tự nhiên (ngay cả khi dùng từ đồng nghĩa, cấu trúc khác, hoặc chủ động/bị động so với đáp án gốc), BẠN BẮT BUỘC phải chấm 10/10.
+            - KHÔNG TRỪ ĐIỂM đối với các lỗi nhỏ không ảnh hưởng đến ý nghĩa như: viết hoa/thường, dấu câu (thiếu dấu chấm, phẩy), khoảng trắng dư thừa, hoặc viết tắt thông dụng. Các trường hợp này phải đạt 10/10.
+            - Chỉ trừ điểm đối với các lỗi sai ngữ pháp thực sự, dùng sai từ, hoặc dịch sai hoàn toàn ý nghĩa.
 
             BẠN BẮT BUỘC PHẢI TRẢ VỀ ĐẦU RA DƯỚI DẠNG JSON HỢP LỆ THEO ĐÚNG CẤU TRÚC SAU:
             {

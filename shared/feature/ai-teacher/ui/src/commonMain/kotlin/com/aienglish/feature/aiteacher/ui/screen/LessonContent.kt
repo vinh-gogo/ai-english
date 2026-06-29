@@ -3,6 +3,7 @@ package com.aienglish.feature.aiteacher.ui.screen
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -11,18 +12,25 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.animation.core.*
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.AppColors
@@ -41,6 +49,8 @@ fun LessonContent(
     val total = lesson.sentences.size
     val idx = state.currentSentenceIndex
     val sentence = lesson.sentences.getOrNull(idx) ?: return
+    
+    var showDetailedTokens by remember { mutableStateOf(false) }
     val userAnswer = state.userAnswers[idx] ?: ""
     val hasChecked = state.checkedAnswers.contains(idx)
     val languageLabel = when (state.levelType) {
@@ -136,6 +146,9 @@ fun LessonContent(
             // After checking — show answer and tokens
             if (hasChecked) {
                 Spacer(Modifier.height(12.dp))
+                var showAlternatives by remember { mutableStateOf(false) }
+                val clipboardManager = LocalClipboardManager.current
+
                 Text(
                     "Các đáp án chuẩn:",
                     fontSize = 13.sp,
@@ -143,28 +156,109 @@ fun LessonContent(
                     color = colors.mutedText
                 )
                 Spacer(Modifier.height(6.dp))
-                Text(
-                    text = "1) ${sentence.english}",
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = colors.mainText
-                )
-                sentence.alternatives.forEachIndexed { altIndex, alt ->
-                    Spacer(Modifier.height(4.dp))
-                    Text(
-                        text = "${altIndex + 2}) $alt",
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = colors.mainText
-                    )
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = CardDefaults.cardColors(containerColor = colors.surface),
+                    border = BorderStroke(1.dp, colors.border)
+                ) {
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth().padding(start = 14.dp, top = 8.dp, bottom = 8.dp, end = 4.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "1) ${sentence.english}",
+                                fontSize = 15.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = colors.mainText,
+                                modifier = Modifier.weight(1f)
+                            )
+                            Row {
+                                IconButton(onClick = { /* TODO TTS */ }, modifier = Modifier.size(36.dp)) {
+                                    Icon(Icons.Default.VolumeUp, "Nghe", tint = colors.mutedText, modifier = Modifier.size(20.dp))
+                                }
+                                IconButton(onClick = { clipboardManager.setText(AnnotatedString(sentence.english)) }, modifier = Modifier.size(36.dp)) {
+                                    Icon(Icons.Default.ContentCopy, "Copy", tint = colors.mutedText, modifier = Modifier.size(18.dp))
+                                }
+                            }
+                        }
+
+                        if (sentence.alternatives.isNotEmpty()) {
+                            HorizontalDivider(color = colors.border, thickness = 0.5.dp)
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { showAlternatives = !showAlternatives }
+                                    .padding(vertical = 10.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    if (showAlternatives) "Thu gọn" else "+ Xem thêm ${sentence.alternatives.size} cách diễn đạt khác",
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = colors.accent
+                                )
+                            }
+
+                            if (showAlternatives) {
+                                Column(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
+                                    sentence.alternatives.forEachIndexed { altIndex, alt ->
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth().padding(start = 14.dp, end = 4.dp, top = 4.dp, bottom = 4.dp),
+                                            horizontalArrangement = Arrangement.SpaceBetween,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Text(
+                                                text = highlightDifferences(sentence.english, alt, colors),
+                                                fontSize = 15.sp,
+                                                fontWeight = FontWeight.Medium,
+                                                modifier = Modifier.weight(1f)
+                                            )
+                                            Row {
+                                                IconButton(onClick = { /* TODO TTS */ }, modifier = Modifier.size(36.dp)) {
+                                                    Icon(Icons.Default.VolumeUp, "Nghe", tint = colors.mutedText, modifier = Modifier.size(20.dp))
+                                                }
+                                                IconButton(onClick = { clipboardManager.setText(AnnotatedString(alt)) }, modifier = Modifier.size(36.dp)) {
+                                                    Icon(Icons.Default.ContentCopy, "Copy", tint = colors.mutedText, modifier = Modifier.size(18.dp))
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
                 Spacer(Modifier.height(14.dp))
-                Text(
-                    "Từ vựng chi tiết:",
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = colors.mutedText
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        "Từ vựng chi tiết:",
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = colors.mutedText
+                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .clickable { showDetailedTokens = !showDetailedTokens }
+                            .padding(4.dp)
+                    ) {
+                        Text("Phân tích", fontSize = 12.sp, color = colors.mutedText)
+                        Spacer(Modifier.width(4.dp))
+                        Switch(
+                            checked = showDetailedTokens,
+                            onCheckedChange = { showDetailedTokens = it },
+                            modifier = Modifier.scale(0.7f).height(24.dp)
+                        )
+                    }
+                }
                 Spacer(Modifier.height(6.dp))
 
                 // Token chips in FlowRow (no cards/borders, clean wraps like Sensei AI)
@@ -172,26 +266,38 @@ fun LessonContent(
                 val isPunctuation: (String) -> Boolean = { w ->
                     w.all { c -> !c.isLetterOrDigit() } && w.isNotEmpty()
                 }
-                FlowRow(
+                Card(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    colors = CardDefaults.cardColors(containerColor = colors.surface.copy(alpha = 0.95f)),
+                    border = BorderStroke(1.dp, colors.border)
                 ) {
+                    FlowRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(14.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
                     val isJapanese = state.selectedLevelText.startsWith("N")
                     val isChinese = state.selectedLevelText.startsWith("HSK")
                     sentence.tokens
                         .filter { !isPunctuation(it.word) }
-                        .forEach { token ->
+                        .forEachIndexed { tokenIndex, token ->
+                        val isDetailed = showDetailedTokens
+
                         Column(
-                            modifier = Modifier.padding(vertical = 4.dp),
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .padding(horizontal = 6.dp, vertical = 4.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             if (isJapanese) {
                                 // Japanese layout: Furigana (Top), Kanji (Middle), Romaji (Bottom)
-                                if (token.partOfSpeech.isNotEmpty()) {
+                                if (isDetailed) {
                                     Text(
-                                        text = token.partOfSpeech,
-                                        color = colors.hintText,
+                                        text = token.partOfSpeech.ifEmpty { " " },
+                                        color = if (token.partOfSpeech.isEmpty()) Color.Transparent else colors.hintText,
                                         fontSize = 10.sp,
                                         fontWeight = FontWeight.Normal
                                     )
@@ -202,21 +308,21 @@ fun LessonContent(
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Bold
                                 )
-                                if (token.phonetic.isNotEmpty()) {
+                                if (isDetailed) {
                                     Text(
-                                        text = token.phonetic,
-                                        color = colors.hintText,
+                                        text = token.phonetic.ifEmpty { " " },
+                                        color = if (token.phonetic.isEmpty()) Color.Transparent else colors.hintText,
                                         fontSize = 11.sp,
                                         fontWeight = FontWeight.Light
                                     )
                                 }
                             } else if (isChinese) {
                                 // Chinese layout: Pinyin (Top), Hanzi (Middle), Vietnamese Meaning/POS (Bottom)
-                                if (token.phonetic.isNotEmpty()) {
+                                if (isDetailed) {
                                     Text(
-                                        text = token.phonetic,
+                                        text = token.phonetic.ifEmpty { " " },
                                         // IPA/phonetic as subtle supporting role, not competing with main word
-                                        color = colors.mutedText,
+                                        color = if (token.phonetic.isEmpty()) Color.Transparent else colors.mutedText,
                                         fontSize = 11.sp,
                                         fontWeight = FontWeight.Normal
                                     )
@@ -227,21 +333,21 @@ fun LessonContent(
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Bold
                                 )
-                                if (token.partOfSpeech.isNotEmpty()) {
+                                if (isDetailed) {
                                     Text(
-                                        text = token.partOfSpeech,
-                                        color = colors.hintText,
+                                        text = token.partOfSpeech.ifEmpty { " " },
+                                        color = if (token.partOfSpeech.isEmpty()) Color.Transparent else colors.hintText,
                                         fontSize = 10.sp,
                                         fontWeight = FontWeight.Normal
                                     )
                                 }
                             } else {
                                 // English layout: IPA (Top), Word (Middle), Part of Speech (Bottom)
-                                if (token.phonetic.isNotEmpty()) {
+                                if (isDetailed) {
                                     Text(
-                                        text = token.phonetic,
+                                        text = token.phonetic.ifEmpty { " " },
                                         // IPA is supporting info — use muted tone so main word stays dominant
-                                        color = colors.mutedText,
+                                        color = if (token.phonetic.isEmpty()) Color.Transparent else colors.mutedText,
                                         fontSize = 11.sp
                                     )
                                 }
@@ -251,16 +357,17 @@ fun LessonContent(
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Bold
                                 )
-                                if (token.partOfSpeech.isNotEmpty()) {
+                                if (isDetailed) {
                                     Text(
-                                        text = token.partOfSpeech,
-                                        color = colors.hintText,
+                                        text = token.partOfSpeech.ifEmpty { " " },
+                                        color = if (token.partOfSpeech.isEmpty()) Color.Transparent else colors.hintText,
                                         fontSize = 10.sp,
                                         fontStyle = FontStyle.Italic
                                     )
                                 }
                             }
                         }
+                    }
                     }
                 }
 
@@ -537,6 +644,27 @@ private fun ExplanationSkeleton(colors: AppColors) {
                     .clip(RoundedCornerShape(4.dp))
                     .background(colors.border)
             )
+        }
+    }
+}
+
+internal fun highlightDifferences(main: String, alt: String, colors: AppColors): AnnotatedString {
+    val mainWords = main.split(" ")
+    val altWords = alt.split(" ")
+    return buildAnnotatedString {
+        altWords.forEachIndexed { index, word ->
+            val cleanWord = word.trim(',', '.', '?', '!', ';', ':')
+            val isDifferent = mainWords.none { it.contains(cleanWord, ignoreCase = true) }
+            if (isDifferent) {
+                withStyle(SpanStyle(color = colors.accent, fontWeight = FontWeight.Bold)) {
+                    append(word)
+                }
+            } else {
+                withStyle(SpanStyle(color = colors.mainText)) {
+                    append(word)
+                }
+            }
+            if (index < altWords.size - 1) append(" ")
         }
     }
 }
