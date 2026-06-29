@@ -41,6 +41,69 @@ class TeacherRepositoryImpl(
             .trim()
     }
 
+    /**
+     * Robustly extract score + explanation from AI response.
+     * Handles cases where the explanation field contains unescaped quotes,
+     * newlines, markdown special characters, etc. that would break standard
+     * JSON deserialization.
+     *
+     * Strategy:
+     * 1. Strip markdown fences
+     * 2. Extract "score" via regex (safe, always a number)
+     * 3. Extract "explanation" as everything between the first "explanation":\ "
+     *    and the last " before the closing }
+     * 4. Fallback: if no JSON structure detected, treat entire response as explanation
+     */
+    private fun extractExplanationSafe(
+        raw: String
+    ): com.aienglish.feature.aiteacher.data.model.SentenceExplanationDto {
+        val cleaned = sanitizeJson(raw)
+
+        // Fast path: try standard parse first (works if AI behaved correctly)
+        try {
+            return json.decodeFromString<com.aienglish.feature.aiteacher.data.model.SentenceExplanationDto>(cleaned)
+        } catch (_: Exception) { /* fall through to manual extraction */ }
+
+        // Extract score (always a simple number, no risk)
+        val scoreRegex = Regex("\"score\"\\s*:\\s*(\\d+(?:\\.\\d+)?)")  
+        val score = scoreRegex.find(cleaned)?.groupValues?.get(1)?.toFloatOrNull()?.toInt() ?: 0
+
+        // Extract explanation: find "explanation" key then grab everything until
+        // the last closing brace, stripping outer quotes carefully.
+        val explanationKeyRegex = Regex("\"explanation\"\\s*:\\s*\"")
+        val keyMatch = explanationKeyRegex.find(cleaned)
+        val explanation: String = if (keyMatch != null) {
+            // Content starts right after the opening quote of the value
+            val contentStart = keyMatch.range.last + 1
+            val content = cleaned.substring(contentStart)
+            // Walk backward from end to find closing } of JSON, skipping whitespace
+            // The explanation value ends at the last '"' before optional whitespace + '}'
+            val trailingPattern = Regex("\"\\s*\\}\\s*$")
+            val trailingMatch = trailingPattern.find(content)
+            if (trailingMatch != null) {
+                content.substring(0, trailingMatch.range.first)
+            } else {
+                // Fallback: just drop the last quote if present
+                content.trimEnd().removeSuffix("}").trimEnd().removeSuffix("\"")
+            }
+        } else {
+            // No JSON structure at all — treat entire response as explanation text
+            cleaned
+        }
+
+        // Unescape common JSON escape sequences that the AI may have used
+        val unescaped = explanation
+            .replace("\\n", "\n")
+            .replace("\\t", "\t")
+            .replace("\\\"", "\"")
+            .replace("\\\\", "\\")
+
+        return com.aienglish.feature.aiteacher.data.model.SentenceExplanationDto(
+            score = score,
+            explanation = unescaped
+        )
+    }
+
     override suspend fun generateLesson(
         userId: String,
         topic: String,
@@ -200,8 +263,7 @@ class TeacherRepositoryImpl(
                 )
             }
 
-            val cleanedJson = sanitizeJson(rawResponse)
-            val explanation = json.decodeFromString<com.aienglish.feature.aiteacher.data.model.SentenceExplanationDto>(cleanedJson).toDomain()
+            val explanation = extractExplanationSafe(rawResponse).toDomain()
             Either.Right(explanation)
         } catch (e: Exception) {
             Either.Left(AppError.Network(friendlyError(e.message)))
