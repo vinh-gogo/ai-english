@@ -48,11 +48,12 @@ class TopicRepositoryImpl(
             
             val isEn = prefs.getLanguageNative() == "en"
             
-            if (isEn && (systemCode == "TOPIK" || systemCode == "HSK" || systemCode == "JLPT")) {
+            if (isEn && (systemCode == "TOPIK" || systemCode == "HSK" || systemCode == "JLPT" || systemCode == "VIET")) {
                 try {
                     val enTopicsJson = when (systemCode) {
                         "TOPIK" -> jsonResourceReader.readKoreanTopicsEnJson()
                         "HSK" -> jsonResourceReader.readChineseTopicsEnJson()
+                        "VIET" -> jsonResourceReader.readVietnameseTopicsEnJson()
                         else -> jsonResourceReader.readJapaneseTopicsEnJson()
                     }
                     val enTopicsList = json.decodeFromString<List<JsonTopicItem>>(enTopicsJson.removeBom().trim())
@@ -101,6 +102,7 @@ class TopicRepositoryImpl(
             val frenchTopicsJson = jsonResourceReader.readFrenchTopicsJson()
             val germanTopicsJson = jsonResourceReader.readGermanTopicsJson()
             val koreanTopicsJson = jsonResourceReader.readKoreanTopicsJson()
+            val vietnameseTopicsEnJson = jsonResourceReader.readVietnameseTopicsEnJson()
 
             database.transaction {
                 try {
@@ -114,6 +116,7 @@ class TopicRepositoryImpl(
                     val frenchTopics = json.decodeFromString<List<JsonTopicItem>>(frenchTopicsJson.removeBom().trim())
                     val germanTopics = json.decodeFromString<List<JsonTopicItem>>(germanTopicsJson.removeBom().trim())
                     val koreanTopics = json.decodeFromString<List<JsonTopicItem>>(koreanTopicsJson.removeBom().trim())
+                    val vietnameseTopics = json.decodeFromString<List<JsonTopicItem>>(vietnameseTopicsEnJson.removeBom().trim())
                     
                     // 0. Clear old topics
                     database.userSchemaQueries.deleteAllTopics()
@@ -208,6 +211,16 @@ class TopicRepositoryImpl(
 
                     // 10. Insert Korean Topics
                     koreanTopics.forEach { topic ->
+                        database.userSchemaQueries.insertTopic(
+                            topic_id = topic.id.toLong(),
+                            name = topic.name,
+                            system_code = topic.systemCode,
+                            level_code = topic.levelCode
+                        )
+                    }
+
+                    // 11. Insert Vietnamese Topics (EN locale)
+                    vietnameseTopics.forEach { topic ->
                         database.userSchemaQueries.insertTopic(
                             topic_id = topic.id.toLong(),
                             name = topic.name,

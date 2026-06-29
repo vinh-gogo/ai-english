@@ -43,6 +43,7 @@ internal fun TargetLevelSystem(
                 "ja" -> SingleLevelSystemLabel("JLPT", colors)
                 "zh" -> SingleLevelSystemLabel("HSK", colors)
                 "ko" -> SingleLevelSystemLabel("TOPIK", colors)
+                "vi" -> SingleLevelSystemLabel("Tiếng Việt", colors)
                 "hi" -> SingleLevelSystemLabel("Hindi", colors)
                 "es" -> DualLevelSystemSelector(
                     LevelType.DELE, "DELE",
@@ -224,6 +225,24 @@ internal fun TargetLevelSystem(
                             onClick = { viewModel.onTopikLevelSelected(level) },
                             colors = colors,
                             fontSize = 11.sp
+                        )
+                    }
+                }
+            }
+            LevelType.VIET -> {
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    listOf(
+                        "TIEU_HOC" to "Tiểu học",
+                        "TRUNG_HOC" to "Trung học",
+                        "DAI_HOC" to "Đại học"
+                    ).forEach { (code, label) ->
+                        LevelChip(
+                            text = label,
+                            count = state.topicCounts[code],
+                            isSelected = code == state.selectedVietLevel,
+                            onClick = { viewModel.onVietLevelSelected(code) },
+                            colors = colors,
+                            fontSize = 10.sp
                         )
                     }
                 }

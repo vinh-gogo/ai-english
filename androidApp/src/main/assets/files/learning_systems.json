@@ -53,5 +53,10 @@
         "systemCode": "TOPIK",
         "description": "Test of Proficiency in Korean",
         "name": "TOPIK"
+    },
+    {
+        "systemCode": "VIET",
+        "description": "Vietnamese Language Proficiency by School Level",
+        "name": "Tiếng Việt"
     }
 ]

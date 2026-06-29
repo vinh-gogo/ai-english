@@ -21,7 +21,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
 enum class LevelType {
-    CEFR, TOEIC, JLPT, HSK, DELE, SIELE, HINDI, DELF, DALF, GOETHE, TESTDAF, TOPIK
+    CEFR, TOEIC, JLPT, HSK, DELE, SIELE, HINDI, DELF, DALF, GOETHE, TESTDAF, TOPIK, VIET
 }
 
 data class TeacherUiState(
@@ -42,6 +42,7 @@ data class TeacherUiState(
     val selectedGoetheLevel: String = "B1",
     val selectedTestdafLevel: String = "TDN4",
     val selectedTopikLevel: String = "TOPIK3",
+    val selectedVietLevel: String = "TIEU_HOC",
     val targetLanguage: String = "en",
     val isCustomTopicMode: Boolean = false,
     val customTopicInput: String = "",
@@ -80,6 +81,7 @@ data class TeacherUiState(
         LevelType.GOETHE -> "Goethe $selectedGoetheLevel"
         LevelType.TESTDAF -> "TestDaF $selectedTestdafLevel"
         LevelType.TOPIK -> selectedTopikLevel
+        LevelType.VIET  -> selectedVietLevel
     }
 }
 
@@ -97,6 +99,7 @@ data class TopicSelectionState(
     val selectedGoetheLevel: String,
     val selectedTestdafLevel: String,
     val selectedTopikLevel: String,
+    val selectedVietLevel: String,
     val topicSearchQuery: String,
     val isCustomTopicMode: Boolean,
     val customTopicInput: String,
@@ -134,6 +137,7 @@ class TeacherViewModel(
                 selectedGoetheLevel = currentState.selectedGoetheLevel,
                 selectedTestdafLevel = currentState.selectedTestdafLevel,
                 selectedTopikLevel = currentState.selectedTopikLevel,
+                selectedVietLevel = currentState.selectedVietLevel,
                 topicSearchQuery = currentState.topicSearchQuery,
                 isCustomTopicMode = currentState.isCustomTopicMode,
                 customTopicInput = currentState.customTopicInput,
@@ -152,6 +156,7 @@ class TeacherViewModel(
             "fr" -> LevelType.DELF
             "de" -> LevelType.GOETHE
             "ko" -> LevelType.TOPIK
+            "vi" -> LevelType.VIET
             else -> LevelType.CEFR
         }
         val expectedLevel = when (expectedType) {
@@ -165,6 +170,7 @@ class TeacherViewModel(
             LevelType.GOETHE -> currentState.selectedGoetheLevel
             LevelType.TESTDAF -> currentState.selectedTestdafLevel
             LevelType.TOPIK -> currentState.selectedTopikLevel
+            LevelType.VIET  -> currentState.selectedVietLevel
             else -> currentState.selectedCefrLevel
         }
         setState {
@@ -193,10 +199,11 @@ class TeacherViewModel(
         val currentFrenchTopics = topicRepository.getTopics("DELF", listOf("A1"))
         val currentGermanTopics = topicRepository.getTopics("GOETHE", listOf("A1"))
         val currentKoreanTopics = topicRepository.getTopics("TOPIK", listOf("TOPIK1"))
+        val currentVietTopics = topicRepository.getTopics("VIET", listOf("TIEU_HOC"))
         val hasBoldTopic = currentToeicTopics.any { it.name.contains("**") }
         if (currentTopics.isEmpty() || !hasBoldTopic || currentJapaneseTopics.size < 120 || currentChineseTopics.isEmpty() || 
             currentToeicTopics.isEmpty() || currentDeleTopics.isEmpty() || currentHindiTopics.isEmpty() ||
-            currentFrenchTopics.isEmpty() || currentGermanTopics.isEmpty() || currentKoreanTopics.isEmpty()) {
+            currentFrenchTopics.isEmpty() || currentGermanTopics.isEmpty() || currentKoreanTopics.isEmpty() || currentVietTopics.isEmpty()) {
             topicRepository.seedDatabase()
         }
     }
@@ -214,7 +221,8 @@ class TeacherViewModel(
             LevelType.DALF -> "DALF"
             LevelType.GOETHE -> "GOETHE"
             LevelType.TESTDAF -> "TESTDAF"
-            LevelType.TOPIK -> "TOPIK"
+            LevelType.TOPIK   -> "TOPIK"
+            LevelType.VIET    -> "VIET"
         }
         loadTopicsJob?.cancel()
         loadTopicsJob = viewModelScope.launch {
@@ -240,7 +248,8 @@ class TeacherViewModel(
                     LevelType.DALF -> listOf("C1", "C2")
                     LevelType.GOETHE -> listOf("A1", "A2", "B1", "B2", "C1", "C2")
                     LevelType.TESTDAF -> listOf("TDN3", "TDN4", "TDN5")
-                    LevelType.TOPIK -> listOf("TOPIK1", "TOPIK2", "TOPIK3", "TOPIK4", "TOPIK5", "TOPIK6")
+                    LevelType.TOPIK   -> listOf("TOPIK1", "TOPIK2", "TOPIK3", "TOPIK4", "TOPIK5", "TOPIK6")
+                    LevelType.VIET    -> listOf("TIEU_HOC", "TRUNG_HOC", "DAI_HOC")
                 }
                 val allTopics = topicRepository.getTopics(systemCode, allLevels)
                 val rawCounts = allTopics.groupBy { it.levelCode }.mapValues { it.value.size }
@@ -273,6 +282,7 @@ class TeacherViewModel(
                 "fr" -> LevelType.DELF
                 "de" -> LevelType.GOETHE
                 "ko" -> LevelType.TOPIK
+                "vi" -> LevelType.VIET
                 else -> LevelType.CEFR
             }
             val expectedLevel = when (expectedType) {
@@ -285,7 +295,8 @@ class TeacherViewModel(
                 LevelType.DALF -> currentState.selectedDalfLevel
                 LevelType.GOETHE -> currentState.selectedGoetheLevel
                 LevelType.TESTDAF -> currentState.selectedTestdafLevel
-                LevelType.TOPIK -> currentState.selectedTopikLevel
+                LevelType.TOPIK    -> currentState.selectedTopikLevel
+                LevelType.VIET     -> currentState.selectedVietLevel
                 else -> currentState.selectedCefrLevel
             }
             setState {
@@ -315,7 +326,8 @@ class TeacherViewModel(
             LevelType.DALF -> currentState.selectedDalfLevel
             LevelType.GOETHE -> currentState.selectedGoetheLevel
             LevelType.TESTDAF -> currentState.selectedTestdafLevel
-            LevelType.TOPIK -> currentState.selectedTopikLevel
+            LevelType.TOPIK   -> currentState.selectedTopikLevel
+            LevelType.VIET    -> currentState.selectedVietLevel
         }
         setState { copy(levelType = type) }
         loadTopics(type, activeLevel)
@@ -379,6 +391,11 @@ class TeacherViewModel(
     fun onTopikLevelSelected(level: String) {
         setState { copy(selectedTopikLevel = level) }
         loadTopics(LevelType.TOPIK, level)
+    }
+
+    fun onVietLevelSelected(level: String) {
+        setState { copy(selectedVietLevel = level) }
+        loadTopics(LevelType.VIET, level)
     }
 
     // ── Lesson Navigation ──
@@ -602,7 +619,8 @@ class TeacherViewModel(
                     LevelType.DALF -> "DALF"
                     LevelType.GOETHE -> "GOETHE"
                     LevelType.TESTDAF -> "TESTDAF"
-                    LevelType.TOPIK -> "TOPIK"
+                    LevelType.TOPIK   -> "TOPIK"
+                    LevelType.VIET    -> "VIET"
                 }
                 
                 val compatible = getCompatibleLevels(levelValue)
@@ -664,7 +682,8 @@ class TeacherViewModel(
                     LevelType.DALF -> "DALF"
                     LevelType.GOETHE -> "GOETHE"
                     LevelType.TESTDAF -> "TESTDAF"
-                    LevelType.TOPIK -> "TOPIK"
+                    LevelType.TOPIK   -> "TOPIK"
+                    LevelType.VIET    -> "VIET"
                 }
 
                 val compatible = getCompatibleLevels(levelValue)
@@ -684,8 +703,11 @@ class TeacherViewModel(
                         selectedSieleLevel = if (expectedType == LevelType.SIELE) levelValue else selectedSieleLevel,
                         selectedHindiLevel = if (expectedType == LevelType.HINDI) levelValue else selectedHindiLevel,
                         selectedDelfLevel = if (expectedType == LevelType.DELF) levelValue else selectedDelfLevel,
-                        selectedDalfLevel = if (expectedType == LevelType.DALF) levelValue else selectedDalfLevel
-                    )
+                        selectedDalfLevel = if (expectedType == LevelType.DALF) levelValue else selectedDalfLevel,
+                        selectedGoetheLevel = if (expectedType == LevelType.GOETHE) levelValue else selectedGoetheLevel,
+                        selectedTestdafLevel = if (expectedType == LevelType.TESTDAF) levelValue else selectedTestdafLevel,
+                        selectedTopikLevel = if (expectedType == LevelType.TOPIK) levelValue else selectedTopikLevel,
+                        selectedVietLevel = if (expectedType == LevelType.VIET) levelValue else selectedVietLevel,
                 }
                 onStartLesson()
             } catch (e: Exception) {
@@ -729,6 +751,7 @@ class TeacherViewModel(
                     selectedGoetheLevel = snapshot.selectedGoetheLevel,
                     selectedTestdafLevel = snapshot.selectedTestdafLevel,
                     selectedTopikLevel = snapshot.selectedTopikLevel,
+                    selectedVietLevel = snapshot.selectedVietLevel,
                     topicSearchQuery = snapshot.topicSearchQuery,
                     isCustomTopicMode = snapshot.isCustomTopicMode,
                     customTopicInput = snapshot.customTopicInput,
@@ -753,7 +776,8 @@ class TeacherViewModel(
                 LevelType.DALF -> snapshot.selectedDalfLevel
                 LevelType.GOETHE -> snapshot.selectedGoetheLevel
                 LevelType.TESTDAF -> snapshot.selectedTestdafLevel
-                LevelType.TOPIK -> snapshot.selectedTopikLevel
+                LevelType.TOPIK   -> snapshot.selectedTopikLevel
+                LevelType.VIET    -> snapshot.selectedVietLevel
             }
             loadTopics(snapshot.levelType, expectedLevel, restoreTopicIndex = snapshot.selectedTopicIndex)
         } else {
@@ -767,7 +791,8 @@ class TeacherViewModel(
                     "hi" -> LevelType.HINDI
                     "fr" -> LevelType.DELF
                     "de" -> LevelType.GOETHE
-                    "ko" -> LevelType.TOPIK
+            "ko" -> LevelType.TOPIK
+                    "vi" -> LevelType.VIET
                     else -> LevelType.CEFR
                 }
             }
@@ -783,7 +808,8 @@ class TeacherViewModel(
                 LevelType.DALF -> currentState.selectedDalfLevel
                 LevelType.GOETHE -> currentState.selectedGoetheLevel
                 LevelType.TESTDAF -> currentState.selectedTestdafLevel
-                LevelType.TOPIK -> currentState.selectedTopikLevel
+                LevelType.TOPIK    -> currentState.selectedTopikLevel
+                LevelType.VIET     -> currentState.selectedVietLevel
             }
             currentLessonHistoryId = null
             setState {
@@ -828,6 +854,7 @@ class TeacherViewModel(
             isGoethe -> LevelType.GOETHE
             isTestdaf -> LevelType.TESTDAF
             isTopik -> LevelType.TOPIK
+            level == "TIEU_HOC" || level == "TRUNG_HOC" || level == "DAI_HOC" -> LevelType.VIET
             else -> LevelType.CEFR
         }
         val levelValue = when {
@@ -880,7 +907,8 @@ class TeacherViewModel(
                     LevelType.DALF -> "DALF"
                     LevelType.GOETHE -> "GOETHE"
                     LevelType.TESTDAF -> "TESTDAF"
-                    LevelType.TOPIK -> "TOPIK"
+                    LevelType.TOPIK   -> "TOPIK"
+                    LevelType.VIET    -> "VIET"
                 }
 
                 val compatible = getCompatibleLevels(levelValue)
@@ -915,6 +943,7 @@ class TeacherViewModel(
                         selectedHindiLevel = if (expectedType == LevelType.HINDI) levelValue else selectedHindiLevel,
                         selectedDelfLevel = if (expectedType == LevelType.DELF) levelValue else selectedDelfLevel,
                         selectedDalfLevel = if (expectedType == LevelType.DALF) levelValue else selectedDalfLevel,
+                        selectedVietLevel = if (expectedType == LevelType.VIET) levelValue else selectedVietLevel,
                         lesson = teacherHistory.lesson,
                         userAnswers = teacherHistory.userAnswers,
                         explanations = teacherHistory.explanations,

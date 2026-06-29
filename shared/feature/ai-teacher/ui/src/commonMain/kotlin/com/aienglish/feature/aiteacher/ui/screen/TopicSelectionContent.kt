@@ -129,6 +129,7 @@ fun TopicSelectionContent(
                         "fr" -> "Trợ lý Tiếng Pháp"
                         "de" -> "Trợ lý Tiếng Đức"
                         "ko" -> "Trợ lý Tiếng Hàn"
+                        "vi" -> "Trợ lý Tiếng Việt"
                         else -> "Trợ lý Tiếng Anh"
                     }
                     Text(

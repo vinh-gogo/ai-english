@@ -37,6 +37,7 @@ class HistoryViewModel(
             level.startsWith("DELF") || level.startsWith("DALF") -> "fr"
             level.startsWith("Goethe") || level.startsWith("TestDaF") -> "de"
             level.startsWith("TOPIK") -> "ko"
+            level == "TIEU_HOC" || level == "TRUNG_HOC" || level == "DAI_HOC" -> "vi"
             else -> "en"
         }
     }

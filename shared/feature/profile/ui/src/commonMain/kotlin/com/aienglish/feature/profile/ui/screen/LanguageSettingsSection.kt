@@ -107,6 +107,7 @@ internal fun LanguageSettingsSection(
                 "fr" -> "Tiếng Pháp"
                 "de" -> "Tiếng Đức"
                 "ko" -> "Tiếng Hàn"
+                "vi" -> "Tiếng Việt"
                 else -> "Tiếng Anh"
             }
 
@@ -140,7 +141,8 @@ internal fun LanguageSettingsSection(
                         "hi" to "Tiếng Hindi",
                         "fr" to "Tiếng Pháp",
                         "de" to "Tiếng Đức",
-                        "ko" to "Tiếng Hàn"
+                        "ko" to "Tiếng Hàn",
+                        "vi" to "Tiếng Việt"
                     ).forEach { (code, label) ->
                         DropdownMenuItem(
                             text = { Text(label, fontSize = 13.sp, color = colors.mainText) },

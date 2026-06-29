@@ -10,6 +10,7 @@ object PromptProviderFactory {
             level.startsWith("DELF") || level.startsWith("DALF") -> FrenchPromptProvider
             level.startsWith("Goethe") || level.startsWith("TestDaF") -> GermanPromptProvider
             level.startsWith("TOPIK") -> KoreanPromptProvider
+            level == "TIEU_HOC" || level == "TRUNG_HOC" || level == "DAI_HOC" -> VietnamesePromptProvider
             else -> EnglishPromptProvider
         }
     }

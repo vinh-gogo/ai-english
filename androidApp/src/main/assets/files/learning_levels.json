@@ -263,5 +263,20 @@
         "systemCode": "TOPIK",
         "levelCode": "TOPIK6",
         "name": "TOPIK 6"
+    },
+    {
+        "systemCode": "VIET",
+        "levelCode": "TIEU_HOC",
+        "name": "Tiểu học"
+    },
+    {
+        "systemCode": "VIET",
+        "levelCode": "TRUNG_HOC",
+        "name": "Trung học"
+    },
+    {
+        "systemCode": "VIET",
+        "levelCode": "DAI_HOC",
+        "name": "Đại học"
     }
 ]
