@@ -163,21 +163,18 @@ fun TeacherScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Group 1: Back and Title (Segmented control style, height 48dp)
+                // Group 1: Back and Title (Height 48dp)
                 Row(
-                    modifier = Modifier
-                        .height(48.dp)
-                        .background(colors.surface, CircleShape)
-                        .border(2.dp, colors.border, CircleShape),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (state.lesson != null || state.feedback != null) {
-                        // Back Button Segment (Rounded on the left, flat on the right)
+                        // Standalone Circular Back Button (Perfect 48x48 circle)
                         Box(
                             modifier = Modifier
-                                .fillMaxHeight()
-                                .width(32.dp)
-                                .clip(RoundedCornerShape(topStart = 100.dp, bottomStart = 100.dp))
+                                .size(48.dp)
+                                .clip(CircleShape)
+                                .background(colors.surface)
+                                .border(2.dp, colors.border, CircleShape)
                                 .clickable { viewModel.onReset() },
                             contentAlignment = Alignment.Center
                         ) {
@@ -185,41 +182,16 @@ fun TeacherScreen(
                                 Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Back",
                                 tint = colors.mainText,
-                                modifier = Modifier.size(18.dp)
-                            )
-                        }
-
-                        // Divider
-                        Box(
-                            modifier = Modifier
-                                .width(1.dp)
-                                .height(20.dp)
-                                .background(colors.border)
-                        )
-
-                        // Title Text Segment (with safe padding)
-                        Row(
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .padding(start = 8.dp, end = 12.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = when {
-                                    state.feedback != null -> "Kết quả"
-                                    state.lesson != null -> "Luyện tập"
-                                    else -> "AI Lingua"
-                                },
-                                fontSize = 15.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = colors.mainText
+                                modifier = Modifier.size(20.dp)
                             )
                         }
                     } else {
-                        // Title Text only (standard padding)
+                        // Title Text only capsule (standard padding, height 48dp)
                         Row(
                             modifier = Modifier
-                                .fillMaxHeight()
+                                .height(48.dp)
+                                .background(colors.surface, CircleShape)
+                                .border(2.dp, colors.border, CircleShape)
                                 .padding(horizontal = 12.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
