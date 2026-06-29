@@ -707,7 +707,8 @@ class TeacherViewModel(
                         selectedGoetheLevel = if (expectedType == LevelType.GOETHE) levelValue else selectedGoetheLevel,
                         selectedTestdafLevel = if (expectedType == LevelType.TESTDAF) levelValue else selectedTestdafLevel,
                         selectedTopikLevel = if (expectedType == LevelType.TOPIK) levelValue else selectedTopikLevel,
-                        selectedVietLevel = if (expectedType == LevelType.VIET) levelValue else selectedVietLevel,
+                        selectedVietLevel = if (expectedType == LevelType.VIET) levelValue else selectedVietLevel
+                    )
                 }
                 onStartLesson()
             } catch (e: Exception) {

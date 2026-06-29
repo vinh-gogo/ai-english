@@ -63,6 +63,7 @@ fun LessonContent(
         LevelType.DELF, LevelType.DALF -> "tiếng Pháp"
         LevelType.GOETHE, LevelType.TESTDAF -> "tiếng Đức"
         LevelType.TOPIK -> "tiếng Hàn"
+        LevelType.VIET  -> "tiếng Việt"
     }
 
     Box(
