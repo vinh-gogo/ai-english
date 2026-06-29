@@ -428,5 +428,20 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 
+### 🟢 Session 45 (2026-06-29)
+
+- **Mục tiêu:** Làm nổi bật phần vế sau (ý chính) của mỗi chủ đề thuộc nhóm TOEIC 300 bằng cách thêm dấu `**` trong file JSON và xử lý hiển thị chữ in đậm động trên UI.
+- **Hoạt động & Thay đổi:**
+  - **JSON**: Cập nhật file `english_topics.json` của cả 2 module Android và Desktop, thêm dấu `**` bao quanh vế sau của tất cả 75 chủ đề thuộc nhóm TOEIC 300 (ví dụ: `"name": "Luyện tập chào hỏi khách hàng tại quầy lễ tân **ở sảnh tòa nhà**"`).
+  - **TeacherViewModel.kt**: Bổ sung kiểm tra `hasBoldTopic` trong hàm `ensureDatabaseSeeded`. Nếu database cũ đã seed nhưng chưa có dấu `**`, hệ thống sẽ tự động kích hoạt `seedDatabase()` để làm sạch và gieo lại dữ liệu mới từ asset JSON, giúp hiển thị định dạng in đậm ngay lập tức mà không cần xóa cache/cài lại ứng dụng.
+  - **TopicCarouselCard.kt**, **TopicSelectionContent.kt**, **FeedbackContent.kt**: Thay đổi hiển thị tên chủ đề từ String thô sang `buildInlineAnnotatedString` để tự động parse cú pháp markdown `**` thành `FontWeight.Bold`, đồng thời điều chỉnh base font weight của text sang `FontWeight.Medium` để phần vế sau in đậm thực sự nổi bật sắc nét.
+- **Ghi chú kỹ thuật:**
+  - `buildInlineAnnotatedString` là hàm tiện ích có sẵn giúp chuyển đổi inline markdown trực tiếp thành Jetpack Compose `AnnotatedString` có hiệu năng cao.
+  - Dự án biên dịch thành công 100% trên các nền tảng (BUILD SUCCESSFUL) và push code trực tiếp lên nhánh `dev` của Git.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.
