@@ -199,3 +199,6 @@ SELECT * FROM payments WHERE user_id = ? ORDER BY created_at DESC;
 
 deleteUserById:
 DELETE FROM users WHERE user_id = ?;
+
+updateUserEmail:
+UPDATE users SET email = ? WHERE user_id = ?;

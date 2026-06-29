@@ -41,6 +41,11 @@ class HistoryRepositoryImpl(
     private suspend fun checkAndMigrateGuestData() = withContext(dispatchers.io) {
         val now = Clock.System.now().toEpochMilliseconds()
         database.transaction {
+            // Avoid UNIQUE constraint conflict on email = 'guest@local' by updating 'guest' user's email first
+            database.userSchemaQueries.updateUserEmail(
+                email = "guest_old_${now}@local",
+                user_id = "guest"
+            )
             database.userSchemaQueries.ensureUserExists(
                 user_id = "0000000000000000",
                 display_name = "Guest",
@@ -49,7 +54,9 @@ class HistoryRepositoryImpl(
                 updated_at = now
             )
             database.lessonHistoryQueries.migrateGuestHistory()
+            database.lessonHistoryQueries.migrateGuestEmailHistory()
             database.userSchemaQueries.deleteUserById("guest")
+            database.userSchemaQueries.deleteUserById("guest@aienglish.com")
         }
     }
 

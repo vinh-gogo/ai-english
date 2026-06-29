@@ -106,4 +106,7 @@ ORDER BY h.created_at DESC;
 migrateGuestHistory:
 UPDATE lesson_history SET user_id = '0000000000000000' WHERE user_id = 'guest';
 
+migrateGuestEmailHistory:
+UPDATE lesson_history SET user_id = '0000000000000000' WHERE user_id = 'guest@aienglish.com';
+
 
