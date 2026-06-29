@@ -16,38 +16,43 @@ import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
 import androidx.compose.ui.platform.LocalDensity
-import com.aienglish.core.designsystem.theme.SW_SurfaceContainerHighest
+import com.aienglish.core.designsystem.theme.LocalAppColors
 
 @Composable
 actual fun SeigaihaBackground(isDark: Boolean) {
-    val bgColor = SW_SurfaceContainerHighest
-    // Terracotta at 15% alpha gives a warm, subtle pattern on light background
-    val patternColor = androidx.compose.ui.graphics.Color(0xFF944A00).copy(alpha = 0.15f)
-    
+    val colors = LocalAppColors.current
+    val bgColor = colors.surfaceContainerHighest
+    // Use accent at 15% alpha as pattern — reacts to theme change
+    val patternColor = colors.accent.copy(alpha = 0.15f)
+
     val density = LocalDensity.current
     val scale = 1.5f
     val rowStep = 20f * scale
     val colStep = 60f * scale
     val maxRadius = 30f * scale
     val strokeWidth = 1f * scale
-    
+
     val radii = remember { floatArrayOf(30f * scale, 24f * scale, 18f * scale, 12f * scale, 6f * scale) }
     val strokeStyle = remember { Stroke(width = strokeWidth) }
 
     var cachedBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
     var cachedSize by remember { mutableStateOf(Size.Zero) }
+    var cachedBgColor by remember { mutableStateOf(Color.Unspecified) }
+    var cachedPatternColor by remember { mutableStateOf(Color.Unspecified) }
     val drawScope = remember { CanvasDrawScope() }
 
     Canvas(modifier = Modifier.fillMaxSize()) {
         val width = size.width
         val height = size.height
-        
-        if (cachedBitmap == null || cachedSize != size) {
+
+        if (cachedBitmap == null || cachedSize != size
+            || cachedBgColor != bgColor || cachedPatternColor != patternColor) {
+
             val bitmapWidth = width.toInt().coerceAtLeast(1)
             val bitmapHeight = height.toInt().coerceAtLeast(1)
             val newBitmap = ImageBitmap(bitmapWidth, bitmapHeight)
             val newCanvas = androidx.compose.ui.graphics.Canvas(newBitmap)
-            
+
             drawScope.draw(
                 density = this,
                 layoutDirection = layoutDirection,
@@ -63,7 +68,7 @@ actual fun SeigaihaBackground(isDark: Boolean) {
                 for (r in -1..rows) {
                     val yOffset = r * rowStep
                     val isOddRow = r % 2 != 0
-                    
+
                     for (c in -1..cols) {
                         val xOffset = c * colStep + (if (isOddRow) colStep / 2f else 0f)
                         val centerX = xOffset
@@ -79,8 +84,8 @@ actual fun SeigaihaBackground(isDark: Boolean) {
                             size = Size(maxRadius * 2, maxRadius * 2),
                             style = Fill
                         )
-                        
-                        // Draw concentric waves (zero allocation loop)
+
+                        // Draw concentric waves
                         for (i in 0 until radii.size) {
                             val radius = radii[i]
                             drawArc(
@@ -98,6 +103,8 @@ actual fun SeigaihaBackground(isDark: Boolean) {
             }
             cachedBitmap = newBitmap
             cachedSize = size
+            cachedBgColor = bgColor
+            cachedPatternColor = patternColor
         }
 
         cachedBitmap?.let {

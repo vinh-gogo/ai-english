@@ -16,14 +16,15 @@ import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
 import androidx.compose.ui.platform.LocalDensity
-import com.aienglish.core.designsystem.theme.SW_SurfaceContainerHighest
+import com.aienglish.core.designsystem.theme.LocalAppColors
 
 @Composable
 actual fun SeigaihaBackground(isDark: Boolean) {
-    val bgColor = SW_SurfaceContainerHighest
-    // Terracotta at 15% alpha gives a warm, subtle pattern on light background
-    val patternColor = androidx.compose.ui.graphics.Color(0xFF944A00).copy(alpha = 0.15f)
-    
+    val colors = LocalAppColors.current
+    val bgColor = colors.surfaceContainerHighest
+    // Use accent at 15% alpha as pattern — reacts to theme change
+    val patternColor = colors.accent.copy(alpha = 0.15f)
+
     val density = LocalDensity.current
     val scale = 1.5f
     val rowStep = 20f * scale
@@ -36,13 +37,17 @@ actual fun SeigaihaBackground(isDark: Boolean) {
 
     var cachedBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
     var cachedSize by remember { mutableStateOf(Size.Zero) }
+    var cachedBgColor by remember { mutableStateOf(Color.Unspecified) }
+    var cachedPatternColor by remember { mutableStateOf(Color.Unspecified) }
     val drawScope = remember { CanvasDrawScope() }
 
     Canvas(modifier = Modifier.fillMaxSize()) {
         val width = size.width
         val height = size.height
-        
-        if (cachedBitmap == null || cachedSize != size) {
+
+        if (cachedBitmap == null || cachedSize != size
+            || cachedBgColor != bgColor || cachedPatternColor != patternColor) {
+
             val bitmapWidth = width.toInt().coerceAtLeast(1)
             val bitmapHeight = height.toInt().coerceAtLeast(1)
             val newBitmap = ImageBitmap(bitmapWidth, bitmapHeight)
@@ -98,6 +103,8 @@ actual fun SeigaihaBackground(isDark: Boolean) {
             }
             cachedBitmap = newBitmap
             cachedSize = size
+            cachedBgColor = bgColor
+            cachedPatternColor = patternColor
         }
 
         cachedBitmap?.let {
