@@ -536,5 +536,17 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 
+---
+
+### 🟢 Session 24 (2026-06-29)
+
+- **Mục tiêu:** Cập nhật lại nhãn tiêu đề chào mừng của màn hình chủ đề thành "Trợ lý Tiếng X" thay vì "Gia sư Tiếng X" theo phản hồi mới nhất.
+- **Hoạt động & Thay đổi:**
+  - **TopicSelectionContent.kt:** Sửa các chuỗi từ `"Gia sư Tiếng [Language]"` thành `"Trợ lý Tiếng [Language]"` (ví dụ: "Trợ lý Tiếng Anh", "Trợ lý Tiếng Nhật", "Trợ lý Tiếng Trung",...).
+- **Ghi chú kỹ thuật:**
+  - Update nhanh về Text UI, đã build và cài đặt thành công qua ADB, push code lên Git.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.
