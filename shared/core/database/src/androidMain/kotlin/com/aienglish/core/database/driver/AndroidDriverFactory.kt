@@ -6,21 +6,20 @@ import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.aienglish.core.database.AIEnglishDatabase
 
 /**
- * Tạo Android SQLite driver với tự động migration schema.
+ * Tạo Android SQLite driver.
  *
- * Cơ chế hoạt động:
- * - DB mới (fresh install): Schema.create() tạo toàn bộ schema mới nhất
- * - DB cũ (upgrade): Schema.migrate(oldVersion, newVersion) tự chạy
- *   các file .sqm theo thứ tự (ví dụ: 2.sqm → 3.sqm → 4.sqm)
+ * Schema được định nghĩa hoàn toàn trong các file .sq.
+ * Không còn migration files (.sqm) — schema là final version.
  *
- * Khi thêm schema mới:
- * 1. Tạo file [N].sqm với câu lệnh ALTER TABLE
- * 2. Tăng version = N trong build.gradle.kts
- * Không cần sửa file này.
+ * Khi thay đổi schema trong tương lai:
+ * 1. Cập nhật trực tiếp file .sq tương ứng
+ * 2. Tạo file [N].sqm cho ALTER TABLE / data migration
+ * 3. Tăng version = N trong build.gradle.kts
+ * AndroidSqliteDriver tự động gọi Schema.migrate() khi phát hiện version cũ hơn.
  */
 fun createAndroidDriver(context: Context): SqlDriver =
     AndroidSqliteDriver(
         schema = AIEnglishDatabase.Schema,
         context = context,
-        name = "ai_english_v4.db"
+        name = "ai_english_v5.db"
     )

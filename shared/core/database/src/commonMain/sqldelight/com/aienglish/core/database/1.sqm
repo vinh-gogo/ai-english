@@ -1,4 +1,0 @@
-ALTER TABLE lesson_history ADD COLUMN lesson_json TEXT;
-ALTER TABLE lesson_history ADD COLUMN user_answers_json TEXT;
-ALTER TABLE lesson_history ADD COLUMN explanations_json TEXT;
-ALTER TABLE lesson_history ADD COLUMN feedback_json TEXT;
