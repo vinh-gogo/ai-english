@@ -96,3 +96,51 @@ val NM_ErrorContainer = Color(0xFFFFDAD6)
 val NM_OnError        = Color(0xFF93000A)
 val NM_Correct        = Color(0xFF006D36)   // Mint itself = success
 val NM_Warning        = Color(0xFF7A5900)
+
+
+// ══════════════════════════════════════════════════════════════════════════
+//  THEME 3 — Berry Sorbet (Berry Red / Warm Cream)
+// ══════════════════════════════════════════════════════════════════════════
+
+// Primary (Berry Red)
+val BerryRed       = Color(0xFFB60E3D)
+val BerryBright    = Color(0xFFDA3054)
+val BerryLight     = Color(0xFFFFB2B8)
+val BerryPale      = Color(0xFFFFDADB)
+val BerryDark      = Color(0xFF91002D)
+val BerryDeep      = Color(0xFF40000F)
+val BerryDarkest   = Color(0xFF29161A)
+
+// Surfaces — Berry Sorbet
+val BS_Surface                  = Color(0xFFFFF8F7)
+val BS_SurfaceDim               = Color(0xFFF4D2D6)
+val BS_SurfaceContainerLow      = Color(0xFFFFF0F1)
+val BS_SurfaceContainer         = Color(0xFFFFE9EB)
+val BS_SurfaceContainerHigh     = Color(0xFFFFE1E5)
+val BS_SurfaceContainerHighest  = Color(0xFFFDDADF)
+val BS_SurfaceWhite             = Color(0xFFFFFFFF)
+
+// On-Surface text — Berry Sorbet
+val BS_OnSurface        = Color(0xFF29161A)
+val BS_OnSurfaceVariant = Color(0xFF5A4042)
+val BS_InverseSurface   = Color(0xFF402B2E)
+val BS_InverseOnSurface = Color(0xFFFFECEE)
+val BS_Outline          = Color(0xFF8E6F71)
+val BS_OutlineVariant   = Color(0xFFE2BEC0)
+
+// Secondary — Berry Sorbet (Soft Pink)
+val BS_Secondary          = Color(0xFF884D59)
+val BS_SecondaryContainer = Color(0xFFFEB2C0)
+val BS_OnSecondaryContainer = Color(0xFF7A414E)
+
+// Tertiary — Berry Sorbet (Blush Mauve)
+val BS_Tertiary           = Color(0xFF63595C)
+val BS_TertiaryContainer  = Color(0xFF7D7275)
+val BS_OnTertiaryContainer = Color(0xFFFFFBFF)
+
+// Semantic — Berry Sorbet
+val BS_Error          = Color(0xFFBA1A1A)
+val BS_ErrorContainer = Color(0xFFFFDAD6)
+val BS_OnError        = Color(0xFF93000A)
+val BS_Correct        = Color(0xFF2E7D32)
+val BS_Warning        = Color(0xFF7A5900)

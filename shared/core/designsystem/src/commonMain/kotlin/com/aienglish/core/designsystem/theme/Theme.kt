@@ -10,7 +10,8 @@ import androidx.compose.ui.graphics.Color
 // ── App Theme Enum ────────────────────────────────────────────────────────
 enum class AppTheme(val displayName: String, val emoji: String) {
     SUNSET_WARMTH("Sunset Warmth", "🌅"),
-    NATURE_MINT("Nature Mint", "🌿")
+    NATURE_MINT("Nature Mint", "🌿"),
+    BERRY_SORBET("Berry Sorbet", "🍓")
 }
 
 // ── App Color Tokens ──────────────────────────────────────────────────────
@@ -143,6 +144,49 @@ fun natureMintColors() = AppColors(
     m3OnSurfaceVariant     = NM_OnSurfaceVariant
 )
 
+// ── Berry Sorbet Factory ─────────────────────────────────────────────────────────
+fun berrySorbetColors() = AppColors(
+    accent                 = BerryRed,
+    accentHighlight        = BerryBright,
+    accentLight            = BerryPale,
+    accentDark             = BerryDark,
+    background             = BS_Surface,
+    surface                = BS_SurfaceWhite,
+    surfaceElevated        = BS_SurfaceContainerLow,
+    surfaceContainer       = BS_SurfaceContainer,
+    surfaceContainerHigh   = BS_SurfaceContainerHigh,
+    surfaceContainerHighest = BS_SurfaceContainerHighest,
+    surfaceDim             = BS_SurfaceDim,
+    mainText               = BS_OnSurface,
+    mutedText              = BS_OnSurfaceVariant,
+    hintText               = BS_Outline,
+    border                 = BS_OutlineVariant,
+    inverseSurface         = BS_InverseSurface,
+    inverseOnSurface       = BS_InverseOnSurface,
+    secondaryContainer     = BS_SecondaryContainer,
+    onSecondaryContainer   = BS_OnSecondaryContainer,
+    tertiaryContainer      = BS_TertiaryContainer,
+    onTertiaryContainer    = BS_OnTertiaryContainer,
+    correct                = BS_Correct,
+    error                  = BS_Error,
+    errorContainer         = BS_ErrorContainer,
+    warning                = BS_Warning,
+    m3Primary              = BerryRed,
+    m3PrimaryContainer     = BerryBright,
+    m3OnPrimaryContainer   = BerryDeep,
+    m3Secondary            = BS_Secondary,
+    m3SecondaryContainer   = BS_SecondaryContainer,
+    m3OnSecondaryContainer = BS_OnSecondaryContainer,
+    m3Tertiary             = BS_Tertiary,
+    m3TertiaryContainer    = BS_TertiaryContainer,
+    m3OnTertiaryContainer  = BS_OnTertiaryContainer,
+    m3Outline              = BS_Outline,
+    m3OutlineVariant       = BS_OutlineVariant,
+    m3InversePrimary       = BerryLight,
+    m3SurfaceVariant       = BS_SurfaceContainerHighest,
+    m3OnSurfaceVariant     = BS_OnSurfaceVariant
+)
+
 // ── Composition Locals ────────────────────────────────────────────────────
 val LocalAppColors = staticCompositionLocalOf<AppColors> { sunsetWarmthColors() }
 val LocalAppTheme  = staticCompositionLocalOf { AppTheme.SUNSET_WARMTH }
@@ -164,6 +208,7 @@ fun AIEnglishTheme(
     val colors = when (theme) {
         AppTheme.SUNSET_WARMTH -> sunsetWarmthColors()
         AppTheme.NATURE_MINT   -> natureMintColors()
+        AppTheme.BERRY_SORBET  -> berrySorbetColors()
     }
 
     val lightScheme = lightColorScheme(
