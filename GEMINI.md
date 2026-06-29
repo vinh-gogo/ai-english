@@ -455,6 +455,18 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 
+### 🟢 Session 47 (2026-06-29)
+
+- **Mục tiêu:** Cân nhắc và đánh giá lại định dạng in đậm vế sau đối với tệp `chinese_topics.json`.
+- **Hoạt động & Thay đổi:**
+  - **Phân tích học thuật**: Sau khi phân tích dòng cấu trúc của file `chinese_topics.json`, nhận thấy các chủ đề tiếng Trung (HSK1 - HSK6) đều là các chủ đề độc lập, duy nhất và khác biệt hoàn toàn về ngữ cảnh lẫn cấu trúc cú pháp ở từng hàng (không giống tiếng Anh vốn được sinh theo nhóm 4 câu chia sẻ chung cụm từ hành động/tiền tố dài và chỉ đổi vế sau).
+  - Do đó, việc sử dụng thuật toán tự động tách từ nối để in đậm nửa sau câu sẽ dẫn đến các kết quả phân tách ngớ ngẩn làm hỏng ngữ nghĩa hiển thị (ví dụ: `"Chào hỏi **và làm quen cơ bản**"`).
+  - **Hành động**: Đã hoàn tác toàn bộ thay đổi đối với `chinese_topics.json` và `TeacherViewModel.kt`, đưa các chủ đề tiếng Trung trở về trạng thái sạch sẽ nguyên bản.
+- **Ghi chú kỹ thuật:**
+  - Git repository được giữ ở trạng thái sạch sẽ và đồng bộ hoàn toàn với bản gốc.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
 ---
 
 > [!NOTE]
