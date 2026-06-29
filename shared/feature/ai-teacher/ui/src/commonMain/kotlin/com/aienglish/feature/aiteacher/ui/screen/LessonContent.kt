@@ -168,6 +168,10 @@ fun LessonContent(
                 Spacer(Modifier.height(6.dp))
 
                 // Token chips in FlowRow (no cards/borders, clean wraps like Sensei AI)
+                // Filter out pure punctuation tokens (e.g. ",", ".", "!", "?") — they add no vocabulary value
+                val isPunctuation: (String) -> Boolean = { w ->
+                    w.all { c -> !c.isLetterOrDigit() } && w.isNotEmpty()
+                }
                 FlowRow(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -175,7 +179,9 @@ fun LessonContent(
                 ) {
                     val isJapanese = state.selectedLevelText.startsWith("N")
                     val isChinese = state.selectedLevelText.startsWith("HSK")
-                    sentence.tokens.forEach { token ->
+                    sentence.tokens
+                        .filter { !isPunctuation(it.word) }
+                        .forEach { token ->
                         Column(
                             modifier = Modifier.padding(vertical = 4.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
@@ -209,7 +215,8 @@ fun LessonContent(
                                 if (token.phonetic.isNotEmpty()) {
                                     Text(
                                         text = token.phonetic,
-                                        color = colors.accent,
+                                        // IPA/phonetic as subtle supporting role, not competing with main word
+                                        color = colors.mutedText,
                                         fontSize = 11.sp,
                                         fontWeight = FontWeight.Normal
                                     )
@@ -233,7 +240,8 @@ fun LessonContent(
                                 if (token.phonetic.isNotEmpty()) {
                                     Text(
                                         text = token.phonetic,
-                                        color = colors.accent,
+                                        // IPA is supporting info — use muted tone so main word stays dominant
+                                        color = colors.mutedText,
                                         fontSize = 11.sp
                                     )
                                 }

@@ -18,7 +18,9 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 9** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Refactor: loại bỏ JSON blob storage, chuyển sang structured DB tables (lesson_question, lesson_feedback, alternatives). | Hoàn thành |
 | **Session 10** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Squash toàn bộ migration files vào base schema, chuẩn hóa DB filename thành `ai_english.db` duy nhất. | Hoàn thành |
 | **Session 11** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Cập nhật màu sắc Sunset Warmth, fix SeigaihaBackground, thêm tính năng chuyển đổi giao diện (Theme Switcher) trong Settings với 2 theme: Sunset Warmth & Nature Mint. | Hoàn thành |
+| **Session 13** | 2026-06-29 | Claude Sonnet 4.6 | `16d7e0fa-80ff-43af-9dcc-87d9a481a702` | Tối ưu Layout token "Từ vựng chi tiết" & Refactor tối ưu hóa 7 PromptProvider bằng cách chuyển sang kế thừa BaseLanguagePromptProvider. | Hoàn thành |
 | **Session 12** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Thêm theme Berry Sorbet (Berry Red / Blush Cream) — tổng cộng 3 themes có thể chuyển đổi. | Hoàn thành |
+| **Session 14** | 2026-06-29 | Claude Sonnet 4.6 | `16d7e0fa-80ff-43af-9dcc-87d9a481a702` | Lặp (iterate) thiết kế lại Logo dựa trên hình khối gốc: thử nghiệm từ phong cách Glassmorphism chuyên nghiệp đến Flat 2D (TikTok/FB style), tối ưu độ bão hòa Deep/Rich colors, cập nhật trực tiếp lên mipmap Android. | Hoàn thành |
 
 
 ---
@@ -186,6 +188,24 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
   - Chờ yêu cầu tiếp theo từ người dùng.
 
 ---
+
+---
+
+### 🟢 Session 14 (2026-06-29)
+
+- **Mục tiêu:** Thiết kế lại Logo ứng dụng dựa trên hình khối gốc `logo_ai_lingua copy.png`, lặp lại thử nghiệm để tìm ra phong cách và màu sắc tốt nhất, đồng thời tự động hóa việc cập nhật lên thiết bị Android.
+- **Hoạt động & Thay đổi:**
+  - **Giữ nguyên Geometry:** Giữ chuẩn 100% hình khối của logo cũ (2 bong bóng chat lồng nhau + 1 ngôi sao AI), chỉ thay đổi chất liệu và màu sắc thông qua prompt tạo ảnh.
+  - **Vòng lặp chất liệu (Styles):**
+    - Chuyển từ **3D Clay** (đất sét) mập mạp sang **Glassmorphism / Acrylic** (kính mờ chuyên nghiệp).
+    - Chuyển sang **Flat 2D Vector** (tối giản, phẳng) học tập theo style của TikTok & Facebook để dễ nhận diện.
+  - **Vòng lặp màu sắc (Colors):**
+    - Chuyển tiếp từ *Neon/Luminous* (sáng chói nhưng có thể nhạt) sang **Deep & Rich Colors** (màu đặc, độ bão hòa cực cao, độ tương phản mạnh): Bong bóng trước là **Royal Blue**, bong bóng sau là **Rich Vibrant Orange**, ngôi sao là **Golden Yellow**.
+  - **Tích hợp Android:** Mỗi lần chốt ảnh, tự động chạy script Powershell đè ảnh vào tất cả thư mục `mipmap-*` (ic_launcher) và chạy `gradlew installDebug` để kiểm thử thực tế trên điện thoại.
+- **Ghi chú kỹ thuật:**
+  - Để tránh lỗi mất chi tiết khi dùng AI tạo ảnh, yêu cầu kiên quyết "Keep exact same shape and layout" kết hợp cùng `ImagePaths` của ảnh gốc làm nền tảng gen ảnh.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
 
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.
