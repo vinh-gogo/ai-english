@@ -41,6 +41,13 @@ class HistoryRepositoryImpl(
         withContext(dispatchers.io) {
             val now = Clock.System.now().toEpochMilliseconds()
             val userId = getCurrentUserId()
+            database.userSchemaQueries.ensureUserExists(
+                user_id = userId,
+                display_name = if (userId == "guest") "Guest" else userId.substringBefore("@"),
+                email = if (userId == "guest") "guest@local" else userId,
+                created_at = now,
+                updated_at = now
+            )
             queries.insertLesson(userId, topic, level, now)
             queries.getLastInsertId().executeAsOne()
         }

@@ -167,6 +167,12 @@ SELECT * FROM users WHERE email = ? AND deleted_at IS NULL;
 softDeleteUser:
 UPDATE users SET deleted_at = ? WHERE user_id = ?;
 
+ensureUserExists:
+INSERT OR IGNORE INTO users (
+    user_id, display_name, email, auth_provider, language_native, language_target, created_at, updated_at
+) VALUES (?, ?, ?, 'email', 'vi', 'en', ?, ?);
+
+
 -- Quota Queries
 insertQuota:
 INSERT OR REPLACE INTO quota (quota_id, package_type, account_type, is_paid, created_at, updated_at)

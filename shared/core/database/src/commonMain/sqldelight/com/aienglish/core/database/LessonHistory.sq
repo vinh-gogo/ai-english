@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS lesson_history (
     lesson_json TEXT,
     user_answers_json TEXT,
     explanations_json TEXT,
-    feedback_json TEXT
+    feedback_json TEXT,
+    FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 insertLesson:
