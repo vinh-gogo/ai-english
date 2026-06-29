@@ -203,12 +203,12 @@ fun TeacherScreen(
                         .border(2.dp, colors.border, CircleShape),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // History Button (Perfect 52x52 circle bounds)
+                    // History Button (Rounded on the left, flat on the right)
                     Box(
                         modifier = Modifier
                             .fillMaxHeight()
                             .width(52.dp)
-                            .clip(CircleShape)
+                            .clip(RoundedCornerShape(topStart = 26.dp, bottomStart = 26.dp))
                             .clickable { showHistory = true },
                         contentAlignment = Alignment.Center
                     ) {
@@ -228,12 +228,12 @@ fun TeacherScreen(
                             .background(colors.border)
                     )
 
-                    // Profile Button (Perfect 52x52 circle bounds)
+                    // Profile Button (Perfect rectangle/square click ripple in the middle)
                     Box(
                         modifier = Modifier
                             .fillMaxHeight()
                             .width(52.dp)
-                            .clip(CircleShape)
+                            .clip(RoundedCornerShape(0.dp))
                             .clickable { profileViewModel.showProfile() },
                         contentAlignment = Alignment.Center
                     ) {
@@ -270,11 +270,11 @@ fun TeacherScreen(
                             .background(colors.border)
                     )
 
-                    // PRO Button
+                    // PRO Button (Rounded on the right, flat on the left)
                     Row(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .clip(CircleShape)
+                            .clip(RoundedCornerShape(topEnd = 26.dp, bottomEnd = 26.dp))
                             .clickable { proViewModel.onIntent(ProIntent.ShowVip) }
                             .padding(start = 12.dp, end = 16.dp),
                         verticalAlignment = Alignment.CenterVertically,
