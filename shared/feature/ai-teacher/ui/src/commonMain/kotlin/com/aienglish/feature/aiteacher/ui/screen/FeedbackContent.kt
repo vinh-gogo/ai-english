@@ -54,8 +54,15 @@ fun FeedbackContent(
             Spacer(Modifier.height(78.dp)) // 18dp top pad + 48dp header + 12dp bottom gap = 78dp
 
             Text("Kết quả của bạn", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = colors.mainText)
+            val annotatedSubtitle = remember(state.selectedTopic, state.selectedCefrLevel, colors) {
+                androidx.compose.ui.text.buildAnnotatedString {
+                    append(buildInlineAnnotatedString(state.selectedTopic, colors))
+                    append(" · CEFR ")
+                    append(state.selectedCefrLevel)
+                }
+            }
             Text(
-                "${state.selectedTopic} · CEFR ${state.selectedCefrLevel}",
+                text = annotatedSubtitle,
                 fontSize = 12.sp,
                 color = colors.hintText
             )

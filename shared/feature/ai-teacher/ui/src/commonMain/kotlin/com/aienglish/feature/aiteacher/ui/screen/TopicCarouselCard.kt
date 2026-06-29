@@ -46,14 +46,16 @@ internal fun TopicCarouselCard(
                     color = colors.accent
                 )
                 Spacer(Modifier.height(4.dp))
+                val topicNameText = currentTopic?.name ?: "Chưa chọn chủ đề"
+                val annotatedTopicName = if (state.isCustomTopicMode) {
+                    androidx.compose.ui.text.AnnotatedString(if (state.customTopicInput.isBlank()) "Hãy nhập chủ đề tự do bên dưới..." else state.customTopicInput)
+                } else {
+                    buildInlineAnnotatedString(topicNameText, colors)
+                }
                 Text(
-                    text = if (state.isCustomTopicMode) {
-                        if (state.customTopicInput.isBlank()) "Hãy nhập chủ đề tự do bên dưới..." else state.customTopicInput
-                    } else {
-                        currentTopic?.name ?: "Chưa chọn chủ đề"
-                    },
+                    text = annotatedTopicName,
                     fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.Medium,
                     color = if (state.isCustomTopicMode && state.customTopicInput.isBlank()) colors.hintText else colors.mainText,
                     maxLines = 3
                 )

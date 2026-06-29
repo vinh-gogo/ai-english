@@ -381,9 +381,9 @@ fun TopicSelectionContent(
 
                                 // Full topic name wrapping to multiple lines if needed
                                 Text(
-                                    text = topic.name,
+                                    text = buildInlineAnnotatedString(topic.name, colors),
                                     color = colors.mainText,
-                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                                    fontWeight = if (isSelected) FontWeight.Medium else FontWeight.Normal,
                                     fontSize = 13.5.sp,
                                     modifier = Modifier.weight(1f)
                                 )
