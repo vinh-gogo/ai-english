@@ -483,5 +483,17 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 
+---
+
+### 🟢 Session 20 (2026-06-29)
+
+- **Mục tiêu:** Xóa nhãn (label) "Dịch sang tiếng A/B/C/X:" ở phần hiển thị câu hỏi của màn hình Luyện tập.
+- **Hoạt động & Thay đổi:**
+  - **LessonContent.kt:** Xác định và xóa đoạn code chứa khối `Text` hiển thị nhãn "Dịch sang $languageLabel:" cùng với khoảng trắng (`Spacer`) phía dưới nó trong component khung hiển thị câu hỏi.
+- **Ghi chú kỹ thuật:**
+  - Thay đổi nhỏ về UI, đã build và cài đặt thành công trên điện thoại Android qua ADB, cập nhật mã nguồn trên nhánh `dev`.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.
