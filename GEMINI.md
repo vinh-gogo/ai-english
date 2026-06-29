@@ -14,7 +14,10 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 4** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Sửa logic chấm điểm AI & bổ sung các đáp án chuẩn thay thế (Alternatives). | Hoàn thành |
 | **Session 5** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Mặc định hóa GUID của Guest thành 16 chữ số 0. | Hoàn thành |
 | **Session 6** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Cải tiến UI: Đồng bộ và tăng cỡ chữ Đáp án & Giải thích, hiển thị list đáp án chuẩn đánh số. | Hoàn thành |
-| **Session 7** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Sửa lỗi crash Android do EncryptedSharedPreferences (KeyStore AEADBadTagException). | Hoàn thành |
+| **Session 8** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Sửa lỗi lịch sử không ghi nhận: migration `user_id` column (4.sqm), auto schema migration Android + Desktop. | Hoàn thành |
+| **Session 9** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Refactor: loại bỏ JSON blob storage, chuyển sang structured DB tables (lesson_question, lesson_feedback, alternatives). | Hoàn thành |
+| **Session 10** | 2026-06-29 | Gemini 3.5 Flash | `55431b0c-91ea-46a3-8468-72552d62451a` | Squash toàn bộ migration files vào base schema, chuẩn hóa DB filename thành `ai_english.db` duy nhất. | Hoàn thành |
+
 
 ---
 
@@ -134,5 +137,54 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 
 ---
 
+### 🟢 Session 8 (2026-06-29)
+
+- **Mục tiêu:** Sửa lỗi lịch sử học tập không ghi nhận bất kỳ bài nào sau khi người dùng bắt đầu bài học trên Android.
+- **Hoạt động & Thay đổi:**
+  - Xác định nguyên nhân gốc: thiếu cột `user_id` trong bảng `lesson_history` trên các thiết bị đã cài app trước đây.
+  - Tạo file [4.sqm](file:///D:/ai-english/shared/core/database/src/commonMain/sqldelight/com/aienglish/core/database/4.sqm): `ALTER TABLE lesson_history ADD COLUMN user_id TEXT NOT NULL DEFAULT '0000000000000000'`.
+  - Cập nhật [AndroidDriverFactory.kt](file:///D:/ai-english/shared/core/database/src/androidMain/kotlin/com/aienglish/core/database/driver/AndroidDriverFactory.kt): dùng `AndroidSqliteDriver` thuần, SQLDelight tự chạy migration qua `Schema.migrate()`.
+  - Cập nhật [DesktopDriverFactory.kt](file:///D:/ai-english/shared/core/database/src/desktopMain/kotlin/com/aienglish/core/database/driver/DesktopDriverFactory.kt): thêm logic đọc `PRAGMA user_version` và gọi `Schema.migrate()` thủ công cho Desktop/JVM.
+  - Loại bỏ callback `AfterVersion(3)` trùng lặp gây lỗi `duplicate column name`.
+- **Ghi chú kỹ thuật:**
+  - Build và cài đặt thành công lên Android.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 9 (2026-06-29)
+
+- **Mục tiêu:** Refactor toàn bộ hệ thống lưu trữ — loại bỏ JSON blob columns, chuyển sang structured DB tables hoàn toàn.
+- **Hoạt động & Thay đổi:**
+  - **DB Schema (5.sqm):** Thêm `alternatives_json TEXT` vào `lesson_question`; tạo bảng `lesson_feedback` (history_id, overall_score, review, sentence_scores_json).
+  - **LessonHistory.sq:** Xóa 4 cột JSON blob (`lesson_json`, `user_answers_json`, `explanations_json`, `feedback_json`) khỏi `lesson_history`. Thêm query `insertOrReplaceFeedback`, `getFeedbackForHistory`. Cập nhật `getAllHistoryWithCounts` không còn SELECT các cột JSON.
+  - **Domain Layer:** Xóa 4 field JSON khỏi `LessonHistory.kt`. Đơn giản hóa `HistoryRepository.kt` — `completeLesson` chỉ nhận `(id, score)`. Thay `parseHistory(json...)` bằng `loadHistory(historyId): TeacherLessonHistory?` trong `TeacherHistoryRepository.kt`.
+  - **Data Layer:** Rewrite `HistoryRepositoryImpl.kt` — không còn JSON parsing. Rewrite `TeacherHistoryRepositoryImpl.kt` — inject `AIEnglishDatabase` trực tiếp, implement `loadHistory()` từ structured tables, `saveQuestionsToDb()` nhận domain objects. Cập nhật DI trong `TeacherDataModule.kt`.
+  - **UI Layer:** `TeacherViewModel` — `onReviewLesson`/`onResumeLesson` gọi `loadHistory(id)` thay vì `parseHistory(json)`. `HistorySheet.kt` — `hasLessonData = totalCount > 0`.
+- **Ghi chú kỹ thuật:**
+  - Build thành công cho cả Desktop và Android. Chỉ còn alternatives và sentenceScores lưu dạng JSON array nhỏ gọn.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 10 (2026-06-29)
+
+- **Mục tiêu:** Squash toàn bộ migration files (1.sqm → 5.sqm) vào base schema; chuẩn hóa DB filename thành `ai_english.db` duy nhất, vĩnh viễn.
+- **Hoạt động & Thay đổi:**
+  - Xóa các file `1.sqm` → `5.sqm` — toàn bộ schema final đã được tổng hợp vào `LessonHistory.sq` và `UserSchema.sq`.
+  - Reset `version = 1` trong `build.gradle.kts` — khởi điểm mới, sạch sẽ.
+  - Đổi DB filename từ `ai_english_v5.db` → **`ai_english.db`** — không bao giờ đổi tên nữa.
+  - Đơn giản hóa `AndroidDriverFactory.kt` — `AndroidSqliteDriver` tự migrate qua `.sqm`.
+  - Cập nhật `DesktopDriverFactory.kt` — `PRAGMA user_version` tracking + `Schema.migrate()` cho Desktop.
+- **Ghi chú kỹ thuật:**
+  - Build thành công, cài đặt thành công. Quy tắc từ giờ: thêm schema → tạo `[N].sqm` + tăng `version = N`. Không đổi tên file DB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.
+
