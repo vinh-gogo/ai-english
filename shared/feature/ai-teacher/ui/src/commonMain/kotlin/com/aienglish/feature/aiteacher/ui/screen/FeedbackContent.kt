@@ -420,7 +420,7 @@ private fun SentenceReviewCard(
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             IconButton(
                                 onClick = {
-                                    clipboardManager.setText(AnnotatedString(getDisplayExplanation(explanation)))
+                                    clipboardManager.setText(AnnotatedString(getDisplayExplanation(explanation, state.targetLanguage)))
                                 },
                                 modifier = Modifier.size(28.dp)
                             ) {
@@ -462,7 +462,7 @@ private fun SentenceReviewCard(
                         border = BorderStroke(0.5.dp, colors.border)
                     ) {
                         Column(modifier = Modifier.padding(10.dp)) {
-                            MarkdownText(getDisplayExplanation(explanation), colors)
+                            MarkdownText(getDisplayExplanation(explanation, state.targetLanguage), colors)
                         }
                     }
                 }
@@ -540,17 +540,27 @@ private fun AnswerRow(
     }
 }
 
-private fun getDisplayExplanation(explanation: String): String {
+private fun getDisplayExplanation(explanation: String, targetLanguage: String): String {
     if (explanation.trim().startsWith("[") && explanation.trim().endsWith("]")) {
         val list = mutableListOf<String>()
         try {
             val pattern = Regex("\\{\\s*\"text\"\\s*:\\s*\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"\\s*,\\s*\"lang\"\\s*:\\s*\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"\\s*\\}")
             for (match in pattern.findAll(explanation)) {
-                val textVal = match.groupValues[1]
+                var textVal = match.groupValues[1]
                     .replace("\\\"", "\"")
                     .replace("\\n", "\n")
                     .replace("\\t", "\t")
                     .replace("\\\\", "\\")
+                val langVal = match.groupValues[2]
+                
+                // Neu la ngon ngu muc tieu thi boc trong ngoac kep va in dam
+                if (langVal.lowercase() == targetLanguage.lowercase() && textVal.trim().isNotEmpty()) {
+                    val leadingSpaces = textVal.takeWhile { it.isWhitespace() }
+                    val trailingSpaces = textVal.takeLastWhile { it.isWhitespace() }
+                    val body = textVal.trim()
+                    val cleanBody = body.removeSurrounding("\"").removeSurrounding("'")
+                    textVal = "$leadingSpaces**\"$cleanBody\"**$trailingSpaces"
+                }
                 list.add(textVal)
             }
             if (list.isNotEmpty()) {
