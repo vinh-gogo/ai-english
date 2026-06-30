@@ -178,6 +178,8 @@ class DesktopTtsPlayer(
 
                 if (!currentJob.isActive) return@launch
 
+                // 1. Generate audio for all segments
+                val generatedChunks = mutableListOf<Pair<FloatArray, Int>>()
                 for ((segText, segLang) in segments) {
                     if (!currentJob.isActive) break
                     val cleanText = cleanMarkdownSymbols(segText).trim()
@@ -185,32 +187,62 @@ class DesktopTtsPlayer(
                     val tts = if (segLang == "vi") viTts else enTts
                     tts ?: continue
                     val audio = tts.generate(cleanText, 0)
-                    if (!currentJob.isActive) break
-                    if (audio.samples.isEmpty()) continue
-                    val sampleRate = audio.sampleRate.toFloat()
-                    val byteBuffer = ByteArray(audio.samples.size * 2)
-                    for (i in audio.samples.indices) {
-                        val v = (audio.samples[i] * 32767.0f).coerceIn(-32768f, 32767f).toInt()
+                    if (audio.samples.isNotEmpty()) {
+                        generatedChunks.add(Pair(audio.samples, audio.sampleRate))
+                    }
+                }
+
+                if (!currentJob.isActive || generatedChunks.isEmpty()) return@launch
+
+                // 2. Determine target sample rate (use maximum sample rate)
+                val targetSampleRate = generatedChunks.maxOf { it.second }
+
+                // 3. Resample and concatenate all samples
+                var totalLength = 0
+                val processedChunks = generatedChunks.map { (samples, rate) ->
+                    val resampled = if (rate != targetSampleRate) {
+                        resample(samples, rate, targetSampleRate)
+                    } else {
+                        samples
+                    }
+                    totalLength += resampled.size
+                    resampled
+                }
+
+                val combinedSamples = FloatArray(totalLength)
+                var destPos = 0
+                for (chunk in processedChunks) {
+                    System.arraycopy(chunk, 0, combinedSamples, destPos, chunk.size)
+                    destPos += chunk.size
+                }
+
+                // 4. Play combined samples in a single SourceDataLine
+                if (combinedSamples.isNotEmpty() && currentJob.isActive) {
+                    val sampleRate = targetSampleRate.toFloat()
+                    val byteBuffer = ByteArray(combinedSamples.size * 2)
+                    for (i in combinedSamples.indices) {
+                        val v = (combinedSamples[i] * 32767.0f).coerceIn(-32768f, 32767f).toInt()
                         byteBuffer[i * 2] = (v and 0xFF).toByte()
                         byteBuffer[i * 2 + 1] = ((v shr 8) and 0xFF).toByte()
                     }
-                    if (!currentJob.isActive) break
-                    val format = AudioFormat(sampleRate, 16, 1, true, false)
-                    val dataLine = AudioSystem.getSourceDataLine(format)
-                    line = dataLine
-                    dataLine.apply {
-                        open(format); start()
-                        val chunkSize = 4096
-                        var offset = 0
-                        while (currentJob.isActive && offset < byteBuffer.size) {
-                            val length = minOf(chunkSize, byteBuffer.size - offset)
-                            val written = write(byteBuffer, offset, length)
-                            if (written <= 0) break
-                            offset += written
+                    if (currentJob.isActive) {
+                        val format = AudioFormat(sampleRate, 16, 1, true, false)
+                        val dataLine = AudioSystem.getSourceDataLine(format)
+                        line = dataLine
+                        dataLine.apply {
+                            open(format); start()
+                            val chunkSize = 4096
+                            var offset = 0
+                            while (currentJob.isActive && offset < byteBuffer.size) {
+                                val length = minOf(chunkSize, byteBuffer.size - offset)
+                                val written = write(byteBuffer, offset, length)
+                                if (written <= 0) break
+                                offset += written
+                            }
+                            drain(); close()
                         }
-                        drain(); close()
+                        line = null
                     }
-                    line = null
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -502,6 +534,23 @@ class DesktopTtsPlayer(
                 }
             }
         }
-        println("Downloaded file successfully: ${destination.name}")
+    }
+
+    private fun resample(samples: FloatArray, fromRate: Int, toRate: Int): FloatArray {
+        if (fromRate == toRate) return samples
+        val ratio = toRate.toDouble() / fromRate.toDouble()
+        val newLength = (samples.size * ratio).toInt()
+        val resampled = FloatArray(newLength)
+        for (i in 0 until newLength) {
+            val origIndex = i / ratio
+            val index = origIndex.toInt()
+            val frac = origIndex - index
+            if (index + 1 < samples.size) {
+                resampled[i] = (samples[index] * (1.0 - frac) + samples[index + 1] * frac).toFloat()
+            } else if (index < samples.size) {
+                resampled[i] = samples[index]
+            }
+        }
+        return resampled
     }
 }

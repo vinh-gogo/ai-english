@@ -170,7 +170,8 @@ class AndroidTtsPlayer(
 
                 if (!currentJob.isActive) return@launch
 
-                // Phat tung doan theo ngon ngu
+                // 1. Generate audio for all segments
+                val generatedChunks = mutableListOf<Pair<FloatArray, Int>>()
                 for ((segText, segLang) in segments) {
                     if (!currentJob.isActive) break
                     val cleanText = cleanMarkdownSymbols(segText).trim()
@@ -178,14 +179,42 @@ class AndroidTtsPlayer(
                     val tts = if (segLang == "vi") viTts else enTts
                     tts ?: continue
                     val audio = tts.generate(cleanText, 0)
-                    if (!currentJob.isActive) break
                     if (audio.samples.isNotEmpty()) {
-                        val shortSamples = ShortArray(audio.samples.size) { i ->
-                            (audio.samples[i] * 32767.0f).toInt().coerceIn(-32768, 32767).toShort()
-                        }
-                        if (!currentJob.isActive) break
-                        playShortSamples(shortSamples, audio.sampleRate, currentJob)
+                        generatedChunks.add(Pair(audio.samples, audio.sampleRate))
                     }
+                }
+
+                if (!currentJob.isActive || generatedChunks.isEmpty()) return@launch
+
+                // 2. Determine target sample rate (use maximum sample rate)
+                val targetSampleRate = generatedChunks.maxOf { it.second }
+
+                // 3. Resample and concatenate all samples
+                var totalLength = 0
+                val processedChunks = generatedChunks.map { (samples, rate) ->
+                    val resampled = if (rate != targetSampleRate) {
+                        resample(samples, rate, targetSampleRate)
+                    } else {
+                        samples
+                    }
+                    totalLength += resampled.size
+                    resampled
+                }
+
+                val combinedSamples = FloatArray(totalLength)
+                var destPos = 0
+                for (chunk in processedChunks) {
+                    System.arraycopy(chunk, 0, combinedSamples, destPos, chunk.size)
+                    destPos += chunk.size
+                }
+
+                // 4. Play combined samples in a single AudioTrack
+                if (combinedSamples.isNotEmpty()) {
+                    val shortSamples = ShortArray(combinedSamples.size) { i ->
+                        (combinedSamples[i] * 32767.0f).toInt().coerceIn(-32768, 32767).toShort()
+                    }
+                    if (!currentJob.isActive) return@launch
+                    playShortSamples(shortSamples, targetSampleRate, currentJob)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -510,5 +539,23 @@ class AndroidTtsPlayer(
                 mediaPlayer = null
             }
         }
+    }
+
+    private fun resample(samples: FloatArray, fromRate: Int, toRate: Int): FloatArray {
+        if (fromRate == toRate) return samples
+        val ratio = toRate.toDouble() / fromRate.toDouble()
+        val newLength = (samples.size * ratio).toInt()
+        val resampled = FloatArray(newLength)
+        for (i in 0 until newLength) {
+            val origIndex = i / ratio
+            val index = origIndex.toInt()
+            val frac = origIndex - index
+            if (index + 1 < samples.size) {
+                resampled[i] = (samples[index] * (1.0 - frac) + samples[index + 1] * frac).toFloat()
+            } else if (index < samples.size) {
+                resampled[i] = samples[index]
+            }
+        }
+        return resampled
     }
 }
