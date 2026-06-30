@@ -141,9 +141,10 @@ object EnglishPromptProvider : LanguagePromptProvider {
 
             CRITICAL FORMAT REQUIREMENTS:
             1. The 'explanation' field MUST be a JSON array of objects, where each object has the structure { "text": "...", "lang": "..." }.
-            2. Split your entire explanation into consecutive segments. Assign 'lang' as "vi" for segments written in Vietnamese, and "en" for all target English words, phrases, or sentences.
-            3. Make sure to separate English phrases from Vietnamese text clearly. Do not mix English and Vietnamese inside a single segment with the same 'lang'.
-            4. Combining the 'text' fields of all segments in order should reconstruct the complete markdown-formatted explanation (you can use markdown symbols like **, *, ###, \n inside the 'text' values).
+            2. DO NOT use any markdown formatting symbols (like **, *, _, ###, `) in any 'text' values. Write plain, raw text only. You can use standard newlines '\n' for line breaks and '-' for bullet points.
+            3. Split your entire explanation into very short consecutive segments. Assign 'lang' as "vi" for segments written in Vietnamese, and "en" for all target English words, phrases, or sentences.
+            4. You MUST isolate every single target English word or phrase from the surrounding Vietnamese explanations into its own segment with "lang": "en", even if they occur inside the same short sentence. Do not mix English and Vietnamese inside a single segment with the same 'lang'.
+            5. Combining the 'text' fields of all segments in order should reconstruct the complete plain text explanation clearly.
         """.trimIndent()
     }
 

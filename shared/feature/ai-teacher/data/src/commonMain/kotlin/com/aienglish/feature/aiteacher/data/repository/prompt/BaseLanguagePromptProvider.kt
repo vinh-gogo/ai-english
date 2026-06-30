@@ -193,9 +193,10 @@ abstract class BaseLanguagePromptProvider : LanguagePromptProvider {
 
             LƯU Ý QUAN TRỌNG VỀ ĐỊNH DẠNG:
             1. Trường 'explanation' BẮT BUỘC phải là một mảng JSON của các đối tượng { "text", "lang" }.
-            2. Hãy chia nhỏ nội dung giải thích thành các phân đoạn liên tiếp. Chỉ định 'lang' là "vi" cho các phần giải thích bằng tiếng Việt, và '$targetLanguageCode' cho tất cả các từ, cụm từ hoặc câu bằng ngôn ngữ mục tiêu.
-            3. Hãy chắc chắn rằng bạn tách biệt rõ ràng từ/cụm từ ngôn ngữ mục tiêu ra khỏi câu giải thích tiếng Việt. Không viết lẫn lộn tiếng Việt và ngôn ngữ mục tiêu trong cùng một đối tượng có chung 'lang'.
-            4. Khi gộp tất cả trường 'text' của các đối tượng trong mảng theo thứ tự, ta sẽ nhận được một lời giải thích hoàn chỉnh được định dạng bằng Markdown đẹp mắt (bạn hoàn toàn có thể sử dụng các ký tự **, *, ###, \n bên trong trường 'text').
+            2. KHÔNG ĐƯỢC sử dụng các ký tự định dạng markdown như **, *, _, ###, ` trong bất kỳ trường 'text' nào. Hãy viết chữ trơn hoàn toàn (plain text). Có thể dùng kí tự xuống dòng '\n' để ngắt dòng và dấu gạch đầu dòng '-' để tạo danh sách.
+            3. Hãy chia nhỏ nội dung giải thích thành các phân đoạn rất ngắn liên tiếp. Chỉ định 'lang' là "vi" cho tiếng Việt, và '$targetLanguageCode' cho tất cả các từ, cụm từ hoặc câu ví dụ bằng ngôn ngữ mục tiêu.
+            4. BẮT BUỘC tách biệt cực kỳ triệt để từng chữ hoặc cụm từ ngôn ngữ mục tiêu ra khỏi câu tiếng Việt giải thích xung quanh thành các đối tượng riêng biệt với đúng thuộc tính 'lang', kể cả khi chúng nằm trong cùng một câu ngắn. Không viết lẫn lộn tiếng Việt và ngôn ngữ mục tiêu trong cùng một đối tượng.
+            5. Gộp tất cả trường 'text' của các đối tượng trong mảng theo đúng thứ tự sẽ tạo ra văn bản giải thích hoàn chỉnh, rõ ràng, dễ đọc cho học sinh.
         """.trimIndent()
     }
 

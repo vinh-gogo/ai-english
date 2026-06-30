@@ -140,7 +140,9 @@ class AndroidTtsPlayer(
             playJob = scope.launch {
                 try {
                     for ((segText, segLang) in segments) {
-                        val encodedText = java.net.URLEncoder.encode(segText.trim(), "UTF-8")
+                        val cleanText = cleanMarkdownSymbols(segText).trim()
+                        if (cleanText.isEmpty()) continue
+                        val encodedText = java.net.URLEncoder.encode(cleanText, "UTF-8")
                         val url = "https://translate.google.com/translate_tts?ie=UTF-8&tl=$segLang&client=tw-ob&q=$encodedText"
                         playUrl(url)
                     }
@@ -171,9 +173,11 @@ class AndroidTtsPlayer(
                 // Phat tung doan theo ngon ngu
                 for ((segText, segLang) in segments) {
                     if (!currentJob.isActive) break
+                    val cleanText = cleanMarkdownSymbols(segText).trim()
+                    if (cleanText.isEmpty()) continue
                     val tts = if (segLang == "vi") viTts else enTts
                     tts ?: continue
-                    val audio = tts.generate(segText.trim(), 0)
+                    val audio = tts.generate(cleanText, 0)
                     if (!currentJob.isActive) break
                     if (audio.samples.isNotEmpty()) {
                         val shortSamples = ShortArray(audio.samples.size) { i ->

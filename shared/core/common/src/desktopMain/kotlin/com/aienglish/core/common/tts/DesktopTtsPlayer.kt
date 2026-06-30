@@ -153,8 +153,10 @@ class DesktopTtsPlayer(
                 val currentJob = coroutineContext[Job]!!
                 for ((segText, segLang) in segments) {
                     if (!currentJob.isActive) break
+                    val cleanText = cleanMarkdownSymbols(segText).trim()
+                    if (cleanText.isEmpty()) continue
                     _isLoading.value = true
-                    playGoogleTts(segText, segLang, currentJob)
+                    playGoogleTts(cleanText, segLang, currentJob)
                 }
             }
             return
@@ -178,9 +180,11 @@ class DesktopTtsPlayer(
 
                 for ((segText, segLang) in segments) {
                     if (!currentJob.isActive) break
+                    val cleanText = cleanMarkdownSymbols(segText).trim()
+                    if (cleanText.isEmpty()) continue
                     val tts = if (segLang == "vi") viTts else enTts
                     tts ?: continue
-                    val audio = tts.generate(segText.trim(), 0)
+                    val audio = tts.generate(cleanText, 0)
                     if (!currentJob.isActive) break
                     if (audio.samples.isEmpty()) continue
                     val sampleRate = audio.sampleRate.toFloat()
