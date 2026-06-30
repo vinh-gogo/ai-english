@@ -249,10 +249,11 @@ class TeacherViewModel(
 
                 val compatible = getCompatibleLevels(levelCode)
                 val rawList = topicRepository.getTopics(systemCode, compatible)
-                val sortedList = rawList.sortedWith(
-                    compareByDescending<TopicItem> { compatible.indexOf(it.levelCode) }
-                        .thenBy { it.id }
-                )
+                val grouped = rawList.groupBy { it.levelCode }
+                val sortedList = compatible.reversed().flatMap { lvl ->
+                    val topicsInLvl = grouped[lvl] ?: emptyList()
+                    topicsInLvl.shuffled()
+                }
 
                 val allLevels = when (levelType) {
                     LevelType.CEFR -> listOf("A1", "A2", "B1", "B2", "C1", "C2")
@@ -330,6 +331,28 @@ class TeacherViewModel(
     // ── Topic Selection ──
     fun onTopicIndexSelected(index: Int) = setState { copy(selectedTopicIndex = index) }
     fun onTopicSearchChange(query: String) = setState { copy(topicSearchQuery = query) }
+    
+    fun onRemoveTopic(id: Int) {
+        val systemCode = when (currentState.levelType) {
+            LevelType.CEFR -> "CEFR"
+            LevelType.TOEIC -> "TOEIC"
+            LevelType.JLPT -> "JLPT"
+            LevelType.HSK -> "HSK"
+            LevelType.DELE -> "DELE"
+            LevelType.SIELE -> "SIELE"
+            LevelType.HINDI -> "HINDI"
+            LevelType.DELF -> "DELF"
+            LevelType.DALF -> "DALF"
+            LevelType.GOETHE -> "GOETHE"
+            LevelType.TESTDAF -> "TESTDAF"
+            LevelType.TOPIK   -> "TOPIK"
+            LevelType.VIET    -> "VIET"
+        }
+        viewModelScope.launch {
+            topicRepository.deleteTopic(id, systemCode)
+            loadTopics(currentState.levelType, currentState.currentLevelCode)
+        }
+    }
     
     fun onLevelTypeSelected(type: LevelType) {
         val activeLevel = when (type) {

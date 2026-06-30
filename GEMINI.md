@@ -54,6 +54,12 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 45** | 2026-06-30 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Thêm hệ thống học tiếng Việt (VIET) cho người nói tiếng Anh: 3 cấp Tiểu học / Trung học / Đại học, 400 chủ đề đa lĩnh vực, full infrastructure (PromptProvider, ViewModel, UI, Settings, DB seeding). | Hoàn thành |
 | **Session 46** | 2026-06-30 | Antigravity | `54f4cc15-1ecd-4a16-ba0c-ddc3bd33d99b` | Mở rộng Vietnamese topics từ 300 lên 400: thêm 100 chủ đề mới bao quát IT, âm nhạc, thể thao, MXH, nội dung số, kinh doanh, thời trang, sức khỏe tâm thần, khoa học, pháp lý,... phân bổ 3 cấp. | Hoàn thành |
 | **Session 47** | 2026-06-30 | Antigravity | `9c45f4be-b4c2-4534-b153-c08a5ee10f2a` | Tích hợp ô nhập chủ đề tùy chỉnh vào thẻ "Chủ đề đang chọn" khi chọn chế độ "Tự nhập" và xóa OutlinedTextField cũ. | Hoàn thành |
+| **Session 48** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Di chuyển icon (+) lên góc trên cùng bên phải trong thẻ "Chủ đề đang chọn" ở chế độ tự nhập. | Hoàn thành |
+| **Session 49** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Thay đổi hiển thị số chỉ mục của các chủ đề thành hình chữ nhật nhỏ nằm ở góc trên cùng bên trái và bo tròn các góc để tương thích với Card. | Hoàn thành |
+| **Session 50** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Loại bỏ hoàn toàn tính năng/nút "Ngẫu nhiên" ở danh sách chủ đề, giữ nguyên thứ tự label số index. | Hoàn thành |
+| **Session 51** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Xáo trộn ngẫu nhiên danh sách các chủ đề trong cùng một level và khôi phục nút Ngẫu nhiên ở UI. | Hoàn thành |
+| **Session 52** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Tự động hiển thị nút "Quay lại đầu trang" (Scroll to Top) khi cuộn xuống qua phần tử thứ 10. | Hoàn thành |
+| **Session 53** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Nhấn giữ (long press) các dòng chủ đề hiển thị nút "Xóa" ở trung tâm và hỗ trợ xóa khỏi database. | Hoàn thành |
 
 ---
 
@@ -545,6 +551,99 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
     - Thêm các phương thức `showSaveToDbDialog()`, `dismissSaveToDbDialog()` và `saveCustomTopicToDb(name)`. Khi người dùng xác nhận "Lưu" trên Dialog, tiến hành lưu chủ đề tùy chọn vào Database và tự động reload danh sách chủ đề qua `loadTopics()`.
 - **Ghi chú kỹ thuật:**
   - Build và deploy trực tiếp bản debug lên máy khách qua ADB thành công.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 48 (2026-06-30)
+
+- **Mục tiêu:** Di chuyển icon (+) sang góc trên cùng bên phải (top-right) trong thẻ "Chủ đề đang chọn" (TopicCarouselCard) ở chế độ tự nhập (Custom Topic Mode).
+- **Hoạt động & Thay đổi:**
+  - **TopicCarouselCard.kt:** Thay đổi thuộc tính `horizontalArrangement` của `Row` tiêu đề từ `Arrangement.Start` thành `Arrangement.SpaceBetween`. Di chuyển khối kiểm tra điều kiện `if (state.isCustomTopicMode)` chứa `IconButton` (+) xuống phía dưới composable `Text("CHỦ ĐỀ ĐANG CHỌN")`. Bố cục mới này đẩy nhãn chữ sang góc trái và nút (+) sang góc phải của Card một cách tự nhiên và gọn gàng hơn.
+- **Ghi chú kỹ thuật:**
+  - Build và kiểm thử thành công trên Desktop.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 49 (2026-06-30)
+
+- **Mục tiêu:** Thay đổi số chỉ mục (index badge) của các chủ đề trong danh sách: làm số nhỏ lại, đặt ở rìa góc trên-trái, và đổi bounding box thành hình chữ nhật bo tròn các góc để tương thích với độ cong của Card.
+- **Hoạt động & Thay đổi:**
+  - **TopicSelectionContent.kt:**
+    - Thay thế bố cục `Row` bên trong Card chủ đề bằng `Box` để cho phép badge index dính sát vào rìa góc trên cùng bên trái (0,0).
+    - Thay đổi hình dáng (shape) của badge từ `CircleShape` sang `RoundedCornerShape(topStart = 12.dp, topEnd = 4.dp, bottomEnd = 4.dp, bottomStart = 4.dp)`. Góc trên-trái (`topStart = 12.dp`) giúp ôm khít hoàn hảo góc bo cong của Card, trong khi các góc khác được bo tròn nhẹ `4.dp` để loại bỏ hoàn toàn các góc vuông sắc nhọn thô cứng, đồng bộ với phong cách thiết kế bo tròn của toàn ứng dụng.
+    - Giảm kích thước font chữ của số từ `12.sp` xuống `9.sp` và giảm padding trong badge xuống `horizontal = 8.dp, vertical = 4.dp` để làm số nhỏ lại.
+    - Đặt padding bắt đầu (`start = 42.dp`) cho `Text` hiển thị chủ đề để đảm bảo toàn bộ tên chủ đề của các Card thẳng hàng tăm tắp và không bị đè lên bởi badge chỉ mục.
+- **Ghi chú kỹ thuật:**
+  - Build và kiểm thử thành công trên Desktop & Android qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 50 (2026-06-30)
+
+- **Mục tiêu:** Loại bỏ nút "Ngẫu nhiên" (xáo trộn/chọn ngẫu nhiên) trong danh sách chủ đề và bảo toàn việc đánh số thứ tự (badge index) các chủ đề hiển thị một cách nhất quán.
+- **Hoạt động & Thay đổi:**
+  - **TopicSelectionContent.kt:**
+    - Xóa bỏ block composable hiển thị nút "Ngẫu nhiên" (`if (!state.isCustomTopicMode && filteredTopics.isNotEmpty()) { Row { ... } }`) trong phần header danh sách chủ đề.
+    - Giữ nguyên cơ chế render số chỉ mục dựa trên index hiển thị `i` (`${i + 1}`) của list để đảm bảo label số index luôn đúng thứ tự từ 1 đến N.
+- **Ghi chú kỹ thuật:**
+  - Build và kiểm thử thành công trên Desktop & Android qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 51 (2026-06-30)
+
+- **Mục tiêu:** Xáo trộn ngẫu nhiên danh sách các chủ đề thuộc cùng một level để tránh tình trạng lặp từ ở các dòng kề nhau, đồng thời giữ lại/khôi phục lại nút "Ngẫu nhiên" ở giao diện danh sách chủ đề.
+- **Hoạt động & Thay đổi:**
+  - **TeacherViewModel.kt:**
+    - Cập nhật logic sắp xếp danh sách chủ đề trong hàm `loadTopics`. 
+    - Nhóm danh sách chủ đề theo `levelCode`, sau đó gọi `.shuffled()` để xáo trộn ngẫu nhiên các chủ đề trong cùng một level.
+    - Kết hợp các nhóm lại theo thứ tự level từ cao xuống thấp thông qua `flatMap` giúp giữ nguyên độ ưu tiên của level đang chọn nhưng nội dung các chủ đề cùng level luôn được xáo trộn để mang lại sự đa dạng.
+  - **TopicSelectionContent.kt:**
+    - Khôi phục lại block composable chứa nút "Ngẫu nhiên" (sử dụng icon `Icons.Rounded.AutoAwesome`) bên cạnh nút "Tự nhập" trong phần header của danh sách chủ đề.
+- **Ghi chú kỹ thuật:**
+  - Build và kiểm thử thành công trên Desktop & Android qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 52 (2026-06-30)
+
+- **Mục tiêu:** Hiển thị nút quay lại đầu trang (Scroll to Top) khi người dùng cuộn danh sách chủ đề xuống từ phần tử (row) thứ 10 trở đi.
+- **Hoạt động & Thay đổi:**
+  - **TopicSelectionContent.kt:**
+    - Định nghĩa trạng thái `showScrollToTop` sử dụng `derivedStateOf` lắng nghe sự thay đổi của `lazyListState.firstVisibleItemIndex >= 10`.
+    - Thêm nút `SmallFloatingActionButton` dạng hình tròn (`shape = CircleShape`) với icon `Icons.Rounded.ArrowUpward` ở góc dưới cùng bên phải (`Alignment.BottomEnd`).
+    - Cấu hình padding bottom của nút là `76.dp` để nó được ghim cố định ngay phía trên nút "Bắt đầu bài học" (khoảng cách vừa vặn 14.dp so với mép trên nút Bắt đầu), mang lại trải nghiệm cuộn thuận tiện và tự nhiên.
+    - **Tối ưu hóa độ mượt mà của Animation**: Sử dụng kỹ thuật nhảy nhanh (fast-jump) trung gian: Nếu người dùng đang cuộn ở vị trí quá xa (> 10), khi nhấn nút, danh sách sẽ nhảy tức thời về index 10 bằng `scrollToItem(10)` trước, sau đó mới chạy `animateScrollToItem(0)` để cuộn mượt mà nốt khoảng cách ngắn còn lại. Kỹ thuật này giúp loại bỏ hoàn toàn tình trạng lag giật khung hình do Compose phải render quá nhiều phần tử trung gian trong danh sách dài.
+- **Ghi chú kỹ thuật:**
+  - Build và kiểm thử thành công trên Desktop & Android qua ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 53 (2026-06-30)
+
+- **Mục tiêu:** Nhấn và giữ (long press) các dòng chủ đề để hiển thị nút "Xóa" (Remove) ở trung tâm của mỗi dòng và cho phép xóa chủ đề đó khỏi danh sách/database.
+- **Hoạt động & Thay đổi:**
+  - **UserSchema.sq:** Định nghĩa query `deleteTopic` xóa chủ đề trong bảng `learning_topics` dựa theo `system_code` và `topic_id`.
+  - **TopicRepository.kt & TopicRepositoryImpl.kt:** Thêm phương thức `deleteTopic(id: Int, systemCode: String)` để thực thi xóa bản ghi trong database.
+  - **TeacherViewModel.kt:** Thêm handler `onRemoveTopic(id: Int)` lấy ra `systemCode` tương ứng và thực hiện xóa chủ đề, đồng thời tự động reload danh sách chủ đề qua `loadTopics(...)` để giao diện cập nhật ngay lập tức.
+  - **TopicSelectionContent.kt:**
+    - Định nghĩa trạng thái `longPressedTopicId` lưu trữ id chủ đề đang được nhấn giữ.
+    - Thay thế `.clickable { ... }` của Card bằng `.combinedClickable(onClick = { ... }, onLongClick = { ... })` để lắng nghe sự kiện long press.
+    - Thiết lập overlay che mờ Card khi có sự kiện nhấn giữ thông qua `matchParentSize()`, ở giữa hiển thị nút "Xóa" (IconButton màu đỏ có icon `Icons.Default.Delete`). Khi bấm nút Xóa sẽ gọi `viewModel.onRemoveTopic` và reset trạng thái nhấn giữ.
+- **Ghi chú kỹ thuật:**
+  - Build và kiểm thử thành công trên Desktop & Android qua ADB.
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
 

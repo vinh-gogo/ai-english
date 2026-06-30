@@ -143,6 +143,9 @@ SELECT * FROM learning_topics WHERE system_code = ? AND level_code IN ?;
 deleteAllTopics:
 DELETE FROM learning_topics;
 
+deleteTopic:
+DELETE FROM learning_topics WHERE system_code = ? AND topic_id = ?;
+
 -- Secure User Queries
 createUser:
 INSERT INTO users (

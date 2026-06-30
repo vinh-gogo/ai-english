@@ -50,9 +50,15 @@ internal fun TopicCarouselCard(
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Text(
+                    text = "CHỦ ĐỀ ĐANG CHỌN",
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = colors.accent
+                )
                 if (state.isCustomTopicMode) {
                     IconButton(
                         onClick = onAddClick,
@@ -65,14 +71,7 @@ internal fun TopicCarouselCard(
                             modifier = Modifier.size(18.dp)
                         )
                     }
-                    Spacer(Modifier.width(6.dp))
                 }
-                Text(
-                    text = "CHỦ ĐỀ ĐANG CHỌN",
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = colors.accent
-                )
             }
 
             Spacer(Modifier.height(4.dp))

@@ -14,15 +14,18 @@ import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.School
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.material.icons.rounded.List
+import androidx.compose.material.icons.rounded.ArrowUpward
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,6 +53,7 @@ fun TopicSelectionContent(
     val selectedIdx = state.selectedTopicIndex
     var isSearchFocused by remember { mutableStateOf(false) }
     var isCustomTopicFocused by remember { mutableStateOf(false) }
+    var longPressedTopicId by remember { mutableStateOf<Int?>(null) }
 
     // Scroll to show custom topic card when focused
     LaunchedEffect(isCustomTopicFocused) {
@@ -331,7 +335,15 @@ fun TopicSelectionContent(
                                 .fillMaxWidth()
                                 .padding(vertical = 4.dp)
                                 .clip(RoundedCornerShape(12.dp))
-                                .clickable { viewModel.onTopicIndexSelected(idx) },
+                                .combinedClickable(
+                                    onClick = { 
+                                        longPressedTopicId = null
+                                        viewModel.onTopicIndexSelected(idx) 
+                                    },
+                                    onLongClick = { 
+                                        longPressedTopicId = topic.id 
+                                    }
+                                ),
                             shape = RoundedCornerShape(12.dp),
                             colors = CardDefaults.cardColors(
                                 containerColor = if (isSelected) colors.surfaceElevated else colors.surface
@@ -341,31 +353,30 @@ fun TopicSelectionContent(
                                 color = if (isSelected) colors.accent else colors.border
                             )
                         ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                                verticalAlignment = Alignment.CenterVertically
+                            Box(
+                                modifier = Modifier.fillMaxWidth()
                             ) {
-                                // Circular badge on the left showing index
+                                // Rectangular index badge at the top-left edge
                                 Box(
                                     modifier = Modifier
-                                        .size(28.dp)
                                         .background(
                                             color = if (isSelected) colors.accent else colors.border.copy(alpha = 0.5f),
-                                            shape = CircleShape
-                                        ),
-                                    contentAlignment = Alignment.Center
+                                            shape = RoundedCornerShape(
+                                                topStart = 12.dp,
+                                                topEnd = 4.dp,
+                                                bottomEnd = 4.dp,
+                                                bottomStart = 4.dp
+                                            )
+                                        )
+                                        .padding(horizontal = 8.dp, vertical = 4.dp)
                                 ) {
                                     Text(
                                         text = "${i + 1}",
                                         color = if (isSelected) Color.White else colors.mutedText,
-                                        fontSize = 12.sp,
+                                        fontSize = 9.sp,
                                         fontWeight = FontWeight.Bold
                                     )
                                 }
-
-                                Spacer(Modifier.width(12.dp))
 
                                 // Full topic name wrapping to multiple lines if needed
                                 Text(
@@ -373,8 +384,48 @@ fun TopicSelectionContent(
                                     color = colors.mainText,
                                     fontWeight = if (isSelected) FontWeight.Medium else FontWeight.Normal,
                                     fontSize = 13.5.sp,
-                                    modifier = Modifier.weight(1f)
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(start = 42.dp, end = 16.dp, top = 12.dp, bottom = 12.dp)
                                 )
+
+                                // Overlay with Remove button in the center
+                                if (longPressedTopicId == topic.id) {
+                                    Box(
+                                        modifier = Modifier
+                                            .matchParentSize()
+                                            .background(colors.background.copy(alpha = 0.85f))
+                                            .clickable { longPressedTopicId = null },
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Button(
+                                            onClick = {
+                                                viewModel.onRemoveTopic(topic.id)
+                                                longPressedTopicId = null
+                                            },
+                                            colors = ButtonDefaults.buttonColors(
+                                                containerColor = colors.error
+                                            ),
+                                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
+                                            shape = RoundedCornerShape(8.dp),
+                                            modifier = Modifier.height(32.dp)
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Default.Delete,
+                                                contentDescription = "Remove",
+                                                modifier = Modifier.size(16.dp),
+                                                tint = Color.White
+                                            )
+                                            Spacer(Modifier.width(6.dp))
+                                            Text(
+                                                text = "Xóa",
+                                                color = Color.White,
+                                                fontSize = 12.sp,
+                                                fontWeight = FontWeight.Bold
+                                            )
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -439,6 +490,39 @@ fun TopicSelectionContent(
             Icon(Icons.Default.PlayArrow, null, modifier = Modifier.size(20.dp))
             Spacer(Modifier.width(8.dp))
             Text("Bắt đầu bài học", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+        }
+
+        val showScrollToTop by remember {
+            derivedStateOf {
+                lazyListState.firstVisibleItemIndex >= 10
+            }
+        }
+        val coroutineScope = rememberCoroutineScope()
+
+        if (showScrollToTop) {
+            SmallFloatingActionButton(
+                onClick = {
+                    coroutineScope.launch {
+                        if (lazyListState.firstVisibleItemIndex > 10) {
+                            lazyListState.scrollToItem(10)
+                        }
+                        lazyListState.animateScrollToItem(0)
+                    }
+                },
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .navigationBarsPadding()
+                    .padding(end = 16.dp, bottom = 76.dp),
+                containerColor = colors.accent,
+                contentColor = Color.White,
+                shape = CircleShape
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.ArrowUpward,
+                    contentDescription = "Scroll to top",
+                    modifier = Modifier.size(20.dp)
+                )
+            }
         }
 
         if (state.showSaveToDbDialog) {

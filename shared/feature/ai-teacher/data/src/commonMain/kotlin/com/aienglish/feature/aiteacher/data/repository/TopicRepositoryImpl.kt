@@ -251,5 +251,17 @@ class TopicRepositoryImpl(
                 println("Error inserting custom topic in TopicRepositoryImpl: ${e.message}")
             }
         }
+
+    override suspend fun deleteTopic(id: Int, systemCode: String): Unit =
+        withContext(dispatchers.io) {
+            try {
+                database.userSchemaQueries.deleteTopic(
+                    system_code = systemCode,
+                    topic_id = id.toLong()
+                )
+            } catch (e: Exception) {
+                println("Error deleting topic in TopicRepositoryImpl: ${e.message}")
+            }
+        }
 }
 

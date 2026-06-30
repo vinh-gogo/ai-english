@@ -6,5 +6,6 @@ interface TopicRepository {
     suspend fun getTopics(systemCode: String, levelCodes: List<String>): List<TopicItem>
     suspend fun seedDatabase()
     suspend fun addCustomTopic(name: String, systemCode: String, levelCode: String)
+    suspend fun deleteTopic(id: Int, systemCode: String)
 }
 
