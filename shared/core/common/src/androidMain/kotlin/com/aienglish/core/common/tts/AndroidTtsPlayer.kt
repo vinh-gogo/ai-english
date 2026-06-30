@@ -395,12 +395,11 @@ class AndroidTtsPlayer(
 
     // ── Speed profiles ─────────────────────────────────────────────────────────
 
-    /** Vietnamese Adam */
     private fun speedLengthScale(speedSetting: String) = when (speedSetting) {
-        "slow"   -> 1.5f
-        "normal" -> 1.3f   // user-confirmed
-        "fast"   -> 1.1f
-        else     -> 1.3f
+        "slow"   -> 1.25f
+        "normal" -> 1.0f
+        "fast"   -> 0.85f
+        else     -> 1.0f
     }
 
     /** English lessac */
