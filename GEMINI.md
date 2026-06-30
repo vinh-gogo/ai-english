@@ -66,6 +66,7 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 57** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Tích hợp thành công động cơ phát âm offline KMP TTS (Android & Desktop) sử dụng giọng nam Adam (tốc độ chậm 1.15) cho tiếng Việt. | Hoàn thành |
 | **Session 58** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Fix crash SIGABRT (espeak_Initialize), dọn assets espeak-ng-data còn 9 ngôn ngữ, bỏ dấu ** trước khi đọc TTS, thêm giọng English lessac-medium (lengthScale=1.3) cho chủ đề tiếng Anh. | Hoàn thành |
 | **Session 59** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Tự động phát âm thanh khi chọn chủ đề, thêm loading spinner cho TTS, xóa bỏ toggle "Giải thích chi tiết" (luôn hiển thị tự động). | Hoàn thành |
+| **Session 60** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Tối ưu hóa hiệu năng render danh sách chủ đề bằng cách cô lập recomposition cho từng row riêng biệt. | Hoàn thành |
 
 ---
 
@@ -754,6 +755,20 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
     - Luôn hiển thị giải thích chi tiết (dưới dạng Skeleton loading khi đang tải và dạng Card chi tiết khi đã tải xong).
   - **Sequential TTS:** Cập nhật phương thức `playMixed(text)` ở core TTS player để tự động bóc tách từng câu song ngữ Anh-Việt, phát hiện ngôn ngữ của câu và phát tuần tự bằng đúng model (Adam cho Việt, Lessac cho Anh).
   - **TeacherViewModel.kt:** Tối ưu hóa hàm `onExplainSentence` tránh gửi nhiều request API trùng lặp khi đang tải.
+
+---
+
+### 🟢 Session 60 (2026-06-30)
+
+- **Mục tiêu:** Tối ưu hóa hiệu năng render danh sách chủ đề bằng cách cô lập recomposition cho từng row riêng biệt.
+- **Hoạt động & Thay đổi:**
+  - **TopicSelectionContent.kt:** 
+    - Tách logic hiển thị của mỗi hàng chủ đề ra một Composable con độc lập `@Composable private fun TopicRowItem(...)`.
+    - Khi người dùng click chọn chủ đề hoặc trạng thái loading của TTS thay đổi, chỉ có duy nhất các hàng chịu ảnh hưởng trực tiếp (hàng được chọn mới và hàng bị bỏ chọn cũ) mới recompose (vẽ lại).
+    - Các hàng chủ đề khác có tham số đầu vào không thay đổi sẽ kích hoạt cơ chế tự động bỏ qua (**Skipped**) của Jetpack Compose.
+- **Ghi chú kỹ thuật:**
+  - Giảm thiểu đáng kể UI lag và CPU overhead khi cuộn danh sách lớn hoặc click chuyển đổi nhanh các chủ đề.
+  - Build và cài đặt thành công APK tối ưu qua ADB.
 
 ---
 

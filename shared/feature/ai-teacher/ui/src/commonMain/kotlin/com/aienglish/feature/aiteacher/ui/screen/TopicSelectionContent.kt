@@ -332,128 +332,31 @@ fun TopicSelectionContent(
                         val topic = pair.second
                         val isSelected = idx == selectedIdx
 
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 4.dp)
-                                .clip(RoundedCornerShape(12.dp))
-                                .combinedClickable(
-                                    onClick = { 
-                                        longPressedTopicId = null
-                                        viewModel.onTopicIndexSelected(idx) 
-                                    },
-                                    onLongClick = { 
-                                        longPressedTopicId = topic.id 
-                                    }
-                                ),
-                            shape = RoundedCornerShape(12.dp),
-                            colors = CardDefaults.cardColors(
-                                containerColor = if (isSelected) colors.surfaceElevated else colors.surface
-                            ),
-                            border = BorderStroke(
-                                width = if (isSelected) 2.dp else 1.dp,
-                                color = if (isSelected) colors.accent else colors.border
-                            )
-                        ) {
-                            Box(
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                // Rectangular index badge - goc tren-trai, hinh chu nhat nho
-                                Box(
-                                    modifier = Modifier
-                                        .background(
-                                            color = if (isSelected) colors.accent else colors.border.copy(alpha = 0.5f),
-                                            shape = RoundedCornerShape(
-                                                topStart = 12.dp,
-                                                topEnd = 0.dp,
-                                                bottomEnd = 4.dp,
-                                                bottomStart = 0.dp
-                                            )
-                                        )
-                                        .padding(horizontal = 6.dp, vertical = 2.dp)
-                                ) {
-                                    Text(
-                                        text = "${i + 1}",
-                                        color = if (isSelected) Color.White else colors.mutedText,
-                                        fontSize = 8.sp,
-                                        fontWeight = FontWeight.Medium
-                                    )
-                                }
-
-                                // Play audio button - spinner khi dang tai model
-                                IconButton(
-                                    onClick = { viewModel.speakTopic(topic.name) },
-                                    modifier = Modifier
-                                        .align(Alignment.CenterStart)
-                                        .padding(start = 12.dp)
-                                        .size(28.dp)
-                                ) {
-                                    if (isTtsLoading) {
-                                        CircularProgressIndicator(
-                                            modifier = Modifier.size(14.dp),
-                                            strokeWidth = 2.dp,
-                                            color = if (isSelected) colors.accent else colors.mutedText
-                                        )
-                                    } else {
-                                        Icon(
-                                            imageVector = Icons.Default.VolumeUp,
-                                            contentDescription = "Nghe chu de",
-                                            tint = if (isSelected) colors.accent else colors.mutedText,
-                                            modifier = Modifier.size(16.dp)
-                                        )
-                                    }
-                                }
-
-                                // Full topic name wrapping to multiple lines if needed (Padded to clear controls)
-                                Text(
-                                    text = buildInlineAnnotatedString(topic.name, colors),
-                                    color = colors.mainText,
-                                    fontWeight = if (isSelected) FontWeight.Medium else FontWeight.Normal,
-                                    fontSize = 13.5.sp,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(start = 48.dp, end = 16.dp, top = 12.dp, bottom = 12.dp)
-                                )
-
-                                // Overlay with Remove button in the center
-                                if (longPressedTopicId == topic.id) {
-                                    Box(
-                                        modifier = Modifier
-                                            .matchParentSize()
-                                            .background(colors.background.copy(alpha = 0.85f))
-                                            .clickable { longPressedTopicId = null },
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        Button(
-                                            onClick = {
-                                                viewModel.onRemoveTopic(topic.id)
-                                                longPressedTopicId = null
-                                            },
-                                            colors = ButtonDefaults.buttonColors(
-                                                containerColor = colors.error
-                                            ),
-                                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
-                                            shape = RoundedCornerShape(8.dp),
-                                            modifier = Modifier.height(32.dp)
-                                        ) {
-                                            Icon(
-                                                imageVector = Icons.Default.Delete,
-                                                contentDescription = "Remove",
-                                                modifier = Modifier.size(16.dp),
-                                                tint = Color.White
-                                            )
-                                            Spacer(Modifier.width(6.dp))
-                                            Text(
-                                                text = "Xóa",
-                                                color = Color.White,
-                                                fontSize = 12.sp,
-                                                fontWeight = FontWeight.Bold
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        TopicRowItem(
+                            topic = topic,
+                            i = i,
+                            isSelected = isSelected,
+                            isTtsLoading = isSelected && isTtsLoading,
+                            isLongPressed = longPressedTopicId == topic.id,
+                            onClick = {
+                                longPressedTopicId = null
+                                viewModel.onTopicIndexSelected(idx)
+                            },
+                            onLongClick = {
+                                longPressedTopicId = topic.id
+                            },
+                            onDismissLongClick = {
+                                longPressedTopicId = null
+                            },
+                            onSpeak = {
+                                viewModel.speakTopic(topic.name)
+                            },
+                            onRemove = {
+                                viewModel.onRemoveTopic(topic.id)
+                                longPressedTopicId = null
+                            },
+                            colors = colors
+                        )
                     }
                 }
             }
@@ -590,4 +493,136 @@ fun TopicSelectionContent(
         }
     }
 }
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun TopicRowItem(
+    topic: TopicItem,
+    i: Int,
+    isSelected: Boolean,
+    isTtsLoading: Boolean,
+    isLongPressed: Boolean,
+    onClick: () -> Unit,
+    onLongClick: () -> Unit,
+    onDismissLongClick: () -> Unit,
+    onSpeak: () -> Unit,
+    onRemove: () -> Unit,
+    colors: AppColors
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = onLongClick
+            ),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (isSelected) colors.surfaceElevated else colors.surface
+        ),
+        border = BorderStroke(
+            width = if (isSelected) 2.dp else 1.dp,
+            color = if (isSelected) colors.accent else colors.border
+        )
+    ) {
+        Box(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            // Rectangular index badge - goc tren-trai, hinh chu nhat nho
+            Box(
+                modifier = Modifier
+                    .background(
+                        color = if (isSelected) colors.accent else colors.border.copy(alpha = 0.5f),
+                        shape = RoundedCornerShape(
+                            topStart = 12.dp,
+                            topEnd = 0.dp,
+                            bottomEnd = 4.dp,
+                            bottomStart = 0.dp
+                        )
+                    )
+                    .padding(horizontal = 6.dp, vertical = 2.dp)
+            ) {
+                Text(
+                    text = "${i + 1}",
+                    color = if (isSelected) Color.White else colors.mutedText,
+                    fontSize = 8.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+
+            // Play audio button - spinner khi dang tai model
+            IconButton(
+                onClick = onSpeak,
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .padding(start = 12.dp)
+                    .size(28.dp)
+            ) {
+                if (isTtsLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(14.dp),
+                        strokeWidth = 2.dp,
+                        color = if (isSelected) colors.accent else colors.mutedText
+                    )
+                } else {
+                    Icon(
+                        imageVector = Icons.Default.VolumeUp,
+                        contentDescription = "Nghe chu de",
+                        tint = if (isSelected) colors.accent else colors.mutedText,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
+            }
+
+            // Full topic name wrapping to multiple lines if needed (Padded to clear controls)
+            Text(
+                text = buildInlineAnnotatedString(topic.name, colors),
+                color = colors.mainText,
+                fontWeight = if (isSelected) FontWeight.Medium else FontWeight.Normal,
+                fontSize = 13.5.sp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 48.dp, end = 16.dp, top = 12.dp, bottom = 12.dp)
+            )
+
+            // Overlay with Remove button in the center
+            if (isLongPressed) {
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .background(colors.background.copy(alpha = 0.85f))
+                        .clickable { onDismissLongClick() },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Button(
+                        onClick = onRemove,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colors.error
+                        ),
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
+                        shape = RoundedCornerShape(8.dp),
+                        modifier = Modifier.height(32.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Remove",
+                            modifier = Modifier.size(16.dp),
+                            tint = Color.White
+                        )
+                        Spacer(Modifier.width(6.dp))
+                        Text(
+                            text = "Xóa",
+                            color = Color.White,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
 
