@@ -889,6 +889,17 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 
 ---
 
+### 🟢 Session 67 (2026-06-30)
+
+- **Mục tiêu:** Thay đổi cách sắp xếp 2 nút hành động (Nghe / VolumeUp và Sao chép / ContentCopy) của mỗi dòng đáp án chuẩn từ hàng ngang (Row) sang hàng dọc (Column) để tối ưu hóa diện tích hiển thị.
+- **Hoạt động & Thay đổi:**
+  - **LessonContent.kt & FeedbackContent.kt (UI):**
+    - Sửa đổi cấu trúc component `AnswerRow`.
+    - Chuyển đổi khối chứa 2 nút `IconButton` từ `Row` (verticalAlignment = CenterVertically) sang `Column` (horizontalAlignment = CenterHorizontally, verticalArrangement = Center).
+    - Căn chỉnh lại khoảng cách và kích thước nút để đảm bảo trải nghiệm nhấn chuẩn xác, không bị dính nút và cân đối về mặt thị giác trên giao diện danh sách đáp án chuẩn.
+
+---
+
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.
 
