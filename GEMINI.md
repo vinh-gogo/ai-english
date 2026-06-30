@@ -67,6 +67,7 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 58** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Fix crash SIGABRT (espeak_Initialize), dọn assets espeak-ng-data còn 9 ngôn ngữ, bỏ dấu ** trước khi đọc TTS, thêm giọng English lessac-medium (lengthScale=1.3) cho chủ đề tiếng Anh. | Hoàn thành |
 | **Session 59** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Tự động phát âm thanh khi chọn chủ đề, thêm loading spinner cho TTS, xóa bỏ toggle "Giải thích chi tiết" (luôn hiển thị tự động). | Hoàn thành |
 | **Session 60** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Tối ưu hóa hiệu năng render danh sách chủ đề bằng cách cô lập recomposition cho từng row riêng biệt. | Hoàn thành |
+| **Session 61** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Khắc phục lỗi phát âm đè lên nhau (overlapping audio) khi chuyển nhanh giữa các chủ đề. | Hoàn thành |
 
 ---
 
@@ -769,6 +770,19 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 - **Ghi chú kỹ thuật:**
   - Giảm thiểu đáng kể UI lag và CPU overhead khi cuộn danh sách lớn hoặc click chuyển đổi nhanh các chủ đề.
   - Build và cài đặt thành công APK tối ưu qua ADB.
+
+---
+
+### 🟢 Session 61 (2026-06-30)
+
+- **Mục tiêu:** Khắc phục lỗi phát âm đè lên nhau (overlapping audio) khi chuyển nhanh giữa các chủ đề.
+- **Hoạt động & Thay đổi:**
+  - **AndroidTtsPlayer.kt & DesktopTtsPlayer.kt:**
+    - Khai báo thuộc tính `playJob: Job?` để theo dõi và quản lý coroutine phát âm thanh hiện tại.
+    - Khi có yêu cầu phát âm thanh mới (`play` hoặc `playMixed`), coroutine cũ sẽ lập tức bị hủy bỏ (`playJob?.cancel()`) và đóng/dừng các luồng phát âm (`AudioTrack`/`SourceDataLine`) đang hoạt động.
+    - Chia nhỏ mảng buffer âm thanh khi ghi xuống luồng phát (`ShortArray` / `ByteArray`) thành các khối nhỏ (chunk size), liên tục kiểm tra `job.isActive` để dừng phát âm thanh ngay lập tức khi coroutine bị hủy.
+- **Ghi chú kỹ thuật:**
+  - Đảm bảo âm thanh cũ tắt hẳn lập tức khi người dùng click chọn hàng chủ đề mới, loại bỏ hoàn toàn hiện tượng âm thanh phát đè lên nhau.
 
 ---
 

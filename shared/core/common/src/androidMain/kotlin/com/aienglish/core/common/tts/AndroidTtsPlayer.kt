@@ -25,6 +25,7 @@ class AndroidTtsPlayer(
 
     private var audioTrack: AudioTrack? = null
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+    private var playJob: Job? = null
 
     private val _isLoading = MutableStateFlow(false)
     override val isLoading: StateFlow<Boolean> = _isLoading
@@ -36,8 +37,12 @@ class AndroidTtsPlayer(
             return
         }
 
-        scope.launch {
+        playJob?.cancel()
+        stop()
+
+        playJob = scope.launch {
             try {
+                val currentJob = coroutineContext[Job]!!
                 val speedSetting = prefs.getTtsSpeed()
 
                 // Reinit ca hai neu speed thay doi
@@ -52,6 +57,8 @@ class AndroidTtsPlayer(
                     _isLoading.value = true
                 }
                 copyTtsAssetsIfNeeded()
+
+                if (!currentJob.isActive) return@launch
 
                 val currentTts = when (lang) {
                     "vi" -> {
@@ -74,17 +81,20 @@ class AndroidTtsPlayer(
                 currentTtsSpeed = speedSetting
                 _isLoading.value = false
 
+                if (!currentJob.isActive) return@launch
+
                 val audio = currentTts.generate(text, 0)
                 val sampleRate = audio.sampleRate
                 val samples = audio.samples
-                if (samples.isEmpty()) return@launch
+                if (samples.isEmpty() || !currentJob.isActive) return@launch
 
                 val shortSamples = ShortArray(samples.size) { i ->
                     (samples[i] * 32767.0f).toInt().coerceIn(-32768, 32767).toShort()
                 }
 
-                stop()
-                playShortSamples(shortSamples, sampleRate)
+                if (!currentJob.isActive) return@launch
+
+                playShortSamples(shortSamples, sampleRate, currentJob)
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
@@ -94,8 +104,12 @@ class AndroidTtsPlayer(
     }
 
     override fun playMixed(text: String) {
-        scope.launch {
+        playJob?.cancel()
+        stop()
+
+        playJob = scope.launch {
             try {
+                val currentJob = coroutineContext[Job]!!
                 // Dam bao ca 2 engine san sang
                 _isLoading.value = true
                 copyTtsAssetsIfNeeded()
@@ -106,20 +120,22 @@ class AndroidTtsPlayer(
                 currentTtsSpeed = speedSetting
                 _isLoading.value = false
 
-                stop()
+                if (!currentJob.isActive) return@launch
 
                 // Phat tung doan theo ngon ngu
                 val segments = splitByLanguage(text)
                 for ((segText, segLang) in segments) {
+                    if (!currentJob.isActive) break
                     val tts = if (segLang == "vi") viTts else enTts
                     tts ?: continue
                     val audio = tts.generate(segText.trim(), 0)
+                    if (!currentJob.isActive) break
                     if (audio.samples.isNotEmpty()) {
                         val shortSamples = ShortArray(audio.samples.size) { i ->
                             (audio.samples[i] * 32767.0f).toInt().coerceIn(-32768, 32767).toShort()
                         }
-                        // playShortSamples dung drain()nen block cho den het moi doan
-                        playShortSamples(shortSamples, audio.sampleRate)
+                        if (!currentJob.isActive) break
+                        playShortSamples(shortSamples, audio.sampleRate, currentJob)
                     }
                 }
             } catch (e: Exception) {
@@ -272,7 +288,7 @@ class AndroidTtsPlayer(
 
     // ── AudioTrack Stream playback ─────────────────────────────────────────────
 
-    private fun playShortSamples(shortSamples: ShortArray, sampleRate: Int) {
+    private fun playShortSamples(shortSamples: ShortArray, sampleRate: Int, job: Job) {
         val minBufferSize = AudioTrack.getMinBufferSize(
             sampleRate,
             AudioFormat.CHANNEL_OUT_MONO,
@@ -302,7 +318,7 @@ class AndroidTtsPlayer(
 
         val chunkSize = minBufferSize / 2
         var offset = 0
-        while (offset < shortSamples.size) {
+        while (job.isActive && offset < shortSamples.size) {
             val length = minOf(chunkSize, shortSamples.size - offset)
             val written = track.write(shortSamples, offset, length)
             if (written <= 0) break

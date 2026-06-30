@@ -28,6 +28,7 @@ class DesktopTtsPlayer(
     private var line: SourceDataLine? = null
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var isDownloading = false
+    private var playJob: Job? = null
 
     private val dbDir = File(System.getProperty("user.home"), ".ai-english")
     private val modelsDir = File(dbDir, "models")
@@ -46,8 +47,12 @@ class DesktopTtsPlayer(
             return
         }
 
-        scope.launch {
+        playJob?.cancel()
+        stop()
+
+        playJob = scope.launch {
             try {
+                val currentJob = coroutineContext[Job]!!
                 if (!checkAndDownloadAssets()) {
                     _isLoading.value = true
                     println("Cannot play TTS: assets are downloading...")
@@ -59,6 +64,8 @@ class DesktopTtsPlayer(
                     viTts = null
                     enTts = null
                 }
+
+                if (!currentJob.isActive) return@launch
 
                 val currentTts = when (lang) {
                     "vi" -> {
@@ -75,10 +82,12 @@ class DesktopTtsPlayer(
                 currentTtsSpeed = speedSetting
                 _isLoading.value = false
 
+                if (!currentJob.isActive) return@launch
+
                 val audio = currentTts.generate(text, 0)
                 val sampleRate = audio.sampleRate.toFloat()
                 val samples = audio.samples
-                if (samples.isEmpty()) return@launch
+                if (samples.isEmpty() || !currentJob.isActive) return@launch
 
                 val byteBuffer = ByteArray(samples.size * 2)
                 for (i in samples.indices) {
@@ -87,16 +96,26 @@ class DesktopTtsPlayer(
                     byteBuffer[i * 2 + 1] = ((value shr 8) and 0xFF).toByte()
                 }
 
-                stop()
+                if (!currentJob.isActive) return@launch
 
                 val format = AudioFormat(sampleRate, 16, 1, true, false)
-                line = AudioSystem.getSourceDataLine(format).apply {
+                val dataLine = AudioSystem.getSourceDataLine(format)
+                line = dataLine
+                dataLine.apply {
                     open(format)
                     start()
-                    write(byteBuffer, 0, byteBuffer.size)
+                    val chunkSize = 4096
+                    var offset = 0
+                    while (currentJob.isActive && offset < byteBuffer.size) {
+                        val length = minOf(chunkSize, byteBuffer.size - offset)
+                        val written = write(byteBuffer, offset, length)
+                        if (written <= 0) break
+                        offset += written
+                    }
                     drain()
                     close()
                 }
+                line = null
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
@@ -106,8 +125,12 @@ class DesktopTtsPlayer(
     }
 
     override fun playMixed(text: String) {
-        scope.launch {
+        playJob?.cancel()
+        stop()
+
+        playJob = scope.launch {
             try {
+                val currentJob = coroutineContext[Job]!!
                 _isLoading.value = true
                 if (!checkAndDownloadAssets()) return@launch
                 val speedSetting = prefs.getTtsSpeed()
@@ -117,13 +140,15 @@ class DesktopTtsPlayer(
                 currentTtsSpeed = speedSetting
                 _isLoading.value = false
 
-                stop()
+                if (!currentJob.isActive) return@launch
 
                 val segments = splitByLanguage(text)
                 for ((segText, segLang) in segments) {
+                    if (!currentJob.isActive) break
                     val tts = if (segLang == "vi") viTts else enTts
                     tts ?: continue
                     val audio = tts.generate(segText.trim(), 0)
+                    if (!currentJob.isActive) break
                     if (audio.samples.isEmpty()) continue
                     val sampleRate = audio.sampleRate.toFloat()
                     val byteBuffer = ByteArray(audio.samples.size * 2)
@@ -132,12 +157,23 @@ class DesktopTtsPlayer(
                         byteBuffer[i * 2] = (v and 0xFF).toByte()
                         byteBuffer[i * 2 + 1] = ((v shr 8) and 0xFF).toByte()
                     }
+                    if (!currentJob.isActive) break
                     val format = AudioFormat(sampleRate, 16, 1, true, false)
-                    AudioSystem.getSourceDataLine(format).apply {
+                    val dataLine = AudioSystem.getSourceDataLine(format)
+                    line = dataLine
+                    dataLine.apply {
                         open(format); start()
-                        write(byteBuffer, 0, byteBuffer.size)
+                        val chunkSize = 4096
+                        var offset = 0
+                        while (currentJob.isActive && offset < byteBuffer.size) {
+                            val length = minOf(chunkSize, byteBuffer.size - offset)
+                            val written = write(byteBuffer, offset, length)
+                            if (written <= 0) break
+                            offset += written
+                        }
                         drain(); close()
                     }
+                    line = null
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
