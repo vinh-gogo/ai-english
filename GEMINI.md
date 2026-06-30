@@ -882,6 +882,9 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
     - **Khử khoảng lặng padding và tự động chèn khoảng dừng thông minh:**
       * Sử dụng hàm `trimSilence` lọc bỏ hoàn toàn các khoảng lặng đệm (padding silence) ở đầu và cuối do mô hình VITS tự động sinh ra cho các phân đoạn thô (tránh việc tiếng Việt và tiếng Anh bị đứt quãng ngay giữa câu).
       * Phân tích văn bản gốc của phân đoạn để tự động chèn khoảng dừng tự nhiên bằng hàm `appendSilence`: Nếu phân đoạn kết thúc bằng dấu câu (`.`, `?`, `!`, `\n`), chèn **`300ms`** lặng; nếu kết thúc bằng `:` hoặc `;`, chèn **`150ms`** lặng; nếu kết thúc bằng `,`, chèn **`100ms`** lặng. Các phân đoạn nối ngôn ngữ thông thường (không có dấu câu) sẽ được nối trực tiếp với **`0ms`** trễ.
+    - **Tự động giữ cao độ giọng (Intonation/Pitch Contour) liền mạch giữa câu:**
+      * Khi các phân đoạn ngắn được tổng hợp độc lập, mô hình VITS thường coi chúng là kết thúc câu và hạ thấp giọng (drop pitch) ở chữ cuối cùng, tạo cảm giác giọng đọc bị hụt hoặc ngang bất thường.
+      * Tích hợp hàm `shouldAppendContinuation` để tự động phát hiện các từ/phân đoạn chuyển tiếp không phải ranh giới dấu câu (kết thúc bằng chữ cái, chữ số hoặc ngoặc đơn). Hệ thống tự động đính kèm dấu phẩy `,` vào cuối văn bản gửi sang engine TTS để mô hình giữ nguyên cao độ tiếp tục (continuation tone), sau đó dùng `trimSilence` loại bỏ khoảng lặng của dấu phẩy này trước khi ghép nối. Âm điệu chuyển tiếp giữa tiếng Việt và tiếng Anh nhờ đó cực kỳ tự nhiên, tròn âm và không bị tụt giọng.
 
 ---
 
