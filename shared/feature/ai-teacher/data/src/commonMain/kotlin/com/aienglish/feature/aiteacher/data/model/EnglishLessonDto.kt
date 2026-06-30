@@ -6,6 +6,9 @@ import com.aienglish.feature.aiteacher.domain.model.EnglishSentence
 import com.aienglish.feature.aiteacher.domain.model.EnglishToken
 import com.aienglish.feature.aiteacher.domain.model.SentenceExplanation
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.contentOrNull
 
 @Serializable
 data class EnglishLessonDto(
@@ -62,12 +65,19 @@ data class EnglishFeedbackDto(
 @Serializable
 data class SentenceExplanationDto(
     val score: Int = 0,
-    val explanation: String
+    val explanation: JsonElement
 ) {
-    fun toDomain(): SentenceExplanation = SentenceExplanation(
-        score = score,
-        explanation = explanation
-    )
+    fun toDomain(): SentenceExplanation {
+        val expStr = if (explanation is JsonPrimitive) {
+            explanation.contentOrNull ?: explanation.toString()
+        } else {
+            explanation.toString()
+        }
+        return SentenceExplanation(
+            score = score,
+            explanation = expStr
+        )
+    }
 }
 
 // Domain to DTO mapping functions

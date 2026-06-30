@@ -4,6 +4,7 @@ object HindiPromptProvider : BaseLanguagePromptProvider() {
     override val languageLabel: String = "tiếng Hindi"
     override val aiName: String = "Guru AI"
     override val targetLanguageName: String = "Hindi"
+    override val targetLanguageCode: String = "hi"
     override val certName: String = "HINDI"
     
     override val exampleSource: String = "Xin chào, bạn khỏe không?"

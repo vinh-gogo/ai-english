@@ -133,8 +133,17 @@ object EnglishPromptProvider : LanguagePromptProvider {
             RETURN ONLY VALID JSON (no markdown block, no extra text):
             {
               "score": 8,
-              "explanation": "Detailed explanation text formatted in Markdown."
+              "explanation": [
+                { "text": "Đoạn văn bản giải thích...", "lang": "vi" },
+                { "text": "English target word or phrase", "lang": "en" }
+              ]
             }
+
+            CRITICAL FORMAT REQUIREMENTS:
+            1. The 'explanation' field MUST be a JSON array of objects, where each object has the structure { "text": "...", "lang": "..." }.
+            2. Split your entire explanation into consecutive segments. Assign 'lang' as "vi" for segments written in Vietnamese, and "en" for all target English words, phrases, or sentences.
+            3. Make sure to separate English phrases from Vietnamese text clearly. Do not mix English and Vietnamese inside a single segment with the same 'lang'.
+            4. Combining the 'text' fields of all segments in order should reconstruct the complete markdown-formatted explanation (you can use markdown symbols like **, *, ###, \n inside the 'text' values).
         """.trimIndent()
     }
 

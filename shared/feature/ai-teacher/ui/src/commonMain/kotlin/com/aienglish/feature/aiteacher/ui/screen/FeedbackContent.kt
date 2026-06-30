@@ -420,7 +420,7 @@ private fun SentenceReviewCard(
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             IconButton(
                                 onClick = {
-                                    clipboardManager.setText(AnnotatedString(explanation))
+                                    clipboardManager.setText(AnnotatedString(getDisplayExplanation(explanation)))
                                 },
                                 modifier = Modifier.size(28.dp)
                             ) {
@@ -462,7 +462,7 @@ private fun SentenceReviewCard(
                         border = BorderStroke(0.5.dp, colors.border)
                     ) {
                         Column(modifier = Modifier.padding(10.dp)) {
-                            MarkdownText(explanation, colors)
+                            MarkdownText(getDisplayExplanation(explanation), colors)
                         }
                     }
                 }
@@ -538,5 +538,28 @@ private fun AnswerRow(
             }
         }
     }
+}
+
+private fun getDisplayExplanation(explanation: String): String {
+    if (explanation.trim().startsWith("[") && explanation.trim().endsWith("]")) {
+        val list = mutableListOf<String>()
+        try {
+            val pattern = Regex("\\{\\s*\"text\"\\s*:\\s*\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"\\s*,\\s*\"lang\"\\s*:\\s*\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"\\s*\\}")
+            for (match in pattern.findAll(explanation)) {
+                val textVal = match.groupValues[1]
+                    .replace("\\\"", "\"")
+                    .replace("\\n", "\n")
+                    .replace("\\t", "\t")
+                    .replace("\\\\", "\\")
+                list.add(textVal)
+            }
+            if (list.isNotEmpty()) {
+                return list.joinToString("")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    return explanation
 }
 

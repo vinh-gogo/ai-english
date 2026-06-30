@@ -3,6 +3,7 @@ package com.aienglish.feature.aiteacher.data.repository.prompt
 object VietnamesePromptProvider : BaseLanguagePromptProvider() {
     override val aiName: String = "AI Vietnamese Teacher"
     override val targetLanguageName: String = "Vietnamese"
+    override val targetLanguageCode: String = "vi"
     override val languageLabel: String = "Vietnamese"
     override val certName: String = "VIET"
 

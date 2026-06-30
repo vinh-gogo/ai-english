@@ -68,39 +68,47 @@ class TeacherRepositoryImpl(
         val scoreRegex = Regex("\"score\"\\s*:\\s*(\\d+(?:\\.\\d+)?)")  
         val score = scoreRegex.find(cleaned)?.groupValues?.get(1)?.toFloatOrNull()?.toInt() ?: 0
 
-        // Extract explanation: find "explanation" key then grab everything until
-        // the last closing brace, stripping outer quotes carefully.
-        val explanationKeyRegex = Regex("\"explanation\"\\s*:\\s*\"")
-        val keyMatch = explanationKeyRegex.find(cleaned)
-        val explanation: String = if (keyMatch != null) {
-            // Content starts right after the opening quote of the value
-            val contentStart = keyMatch.range.last + 1
+        val arrayMatch = Regex("\"explanation\"\\s*:\\s*\\[").find(cleaned)
+        val stringMatch = Regex("\"explanation\"\\s*:\\s*\"").find(cleaned)
+
+        val explanationElement: kotlinx.serialization.json.JsonElement = if (arrayMatch != null) {
+            val contentStart = arrayMatch.range.last - 0 // Starts with '['
             val content = cleaned.substring(contentStart)
-            // Walk backward from end to find closing } of JSON, skipping whitespace
-            // The explanation value ends at the last '"' before optional whitespace + '}'
+            val trailingPattern = Regex("\\]\\s*\\}\\s*$")
+            val trailingMatch = trailingPattern.find(content)
+            val jsonArrayStr = if (trailingMatch != null) {
+                content.substring(0, trailingMatch.range.first + 1)
+            } else {
+                content.trimEnd().removeSuffix("}").trim()
+            }
+            try {
+                json.parseToJsonElement(jsonArrayStr)
+            } catch (e: Exception) {
+                kotlinx.serialization.json.JsonPrimitive("")
+            }
+        } else if (stringMatch != null) {
+            val contentStart = stringMatch.range.last + 1
+            val content = cleaned.substring(contentStart)
             val trailingPattern = Regex("\"\\s*\\}\\s*$")
             val trailingMatch = trailingPattern.find(content)
-            if (trailingMatch != null) {
+            val str = if (trailingMatch != null) {
                 content.substring(0, trailingMatch.range.first)
             } else {
-                // Fallback: just drop the last quote if present
                 content.trimEnd().removeSuffix("}").trimEnd().removeSuffix("\"")
             }
+            val unescaped = str
+                .replace("\\n", "\n")
+                .replace("\\t", "\t")
+                .replace("\\\"", "\"")
+                .replace("\\\\", "\\")
+            kotlinx.serialization.json.JsonPrimitive(unescaped)
         } else {
-            // No JSON structure at all — treat entire response as explanation text
-            cleaned
+            kotlinx.serialization.json.JsonPrimitive(cleaned)
         }
-
-        // Unescape common JSON escape sequences that the AI may have used
-        val unescaped = explanation
-            .replace("\\n", "\n")
-            .replace("\\t", "\t")
-            .replace("\\\"", "\"")
-            .replace("\\\\", "\\")
 
         return com.aienglish.feature.aiteacher.data.model.SentenceExplanationDto(
             score = score,
-            explanation = unescaped
+            explanation = explanationElement
         )
     }
 

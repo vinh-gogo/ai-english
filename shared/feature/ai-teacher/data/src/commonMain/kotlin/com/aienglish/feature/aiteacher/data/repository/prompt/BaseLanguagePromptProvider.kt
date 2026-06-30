@@ -3,6 +3,7 @@ package com.aienglish.feature.aiteacher.data.repository.prompt
 abstract class BaseLanguagePromptProvider : LanguagePromptProvider {
     abstract val aiName: String
     abstract val targetLanguageName: String
+    abstract val targetLanguageCode: String
     abstract val certName: String
     
     abstract val exampleSource: String
@@ -184,8 +185,17 @@ abstract class BaseLanguagePromptProvider : LanguagePromptProvider {
 
             BẠN BẮT BUỘC PHẢI TRẢ VỀ ĐẦU RA DƯỚI DẠNG JSON HỢP LỆ THEO ĐÚNG CẤU TRÚC SAU:
             {
-              "explanation": "$explanationPlaceholder"
+              "explanation": [
+                { "text": "Đoạn văn bản giải thích ngữ pháp...", "lang": "vi" },
+                { "text": "vocabulary_or_example_phrase", "lang": "$targetLanguageCode" }
+              ]
             }
+
+            LƯU Ý QUAN TRỌNG VỀ ĐỊNH DẠNG:
+            1. Trường 'explanation' BẮT BUỘC phải là một mảng JSON của các đối tượng { "text", "lang" }.
+            2. Hãy chia nhỏ nội dung giải thích thành các phân đoạn liên tiếp. Chỉ định 'lang' là "vi" cho các phần giải thích bằng tiếng Việt, và '$targetLanguageCode' cho tất cả các từ, cụm từ hoặc câu bằng ngôn ngữ mục tiêu.
+            3. Hãy chắc chắn rằng bạn tách biệt rõ ràng từ/cụm từ ngôn ngữ mục tiêu ra khỏi câu giải thích tiếng Việt. Không viết lẫn lộn tiếng Việt và ngôn ngữ mục tiêu trong cùng một đối tượng có chung 'lang'.
+            4. Khi gộp tất cả trường 'text' của các đối tượng trong mảng theo thứ tự, ta sẽ nhận được một lời giải thích hoàn chỉnh được định dạng bằng Markdown đẹp mắt (bạn hoàn toàn có thể sử dụng các ký tự **, *, ###, \n bên trong trường 'text').
         """.trimIndent()
     }
 

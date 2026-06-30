@@ -4,6 +4,7 @@ object JapanesePromptProvider : BaseLanguagePromptProvider() {
     override val languageLabel: String = "tiếng Nhật"
     override val aiName: String = "Sensei AI"
     override val targetLanguageName: String = "Japanese"
+    override val targetLanguageCode: String = "ja"
     override val certName: String = "JLPT"
     
     override val exampleSource: String = "Xin chào, bạn khỏe không?"

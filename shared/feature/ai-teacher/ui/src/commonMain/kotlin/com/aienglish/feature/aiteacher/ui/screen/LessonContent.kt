@@ -389,7 +389,7 @@ fun LessonContent(
                                         val clipboardManager = LocalClipboardManager.current
                                         IconButton(
                                             onClick = {
-                                                clipboardManager.setText(AnnotatedString(explanation))
+                                                clipboardManager.setText(AnnotatedString(getDisplayExplanation(explanation)))
                                             },
                                             modifier = Modifier.size(28.dp)
                                         ) {
@@ -427,7 +427,7 @@ fun LessonContent(
                                     }
                                 }
                                 Spacer(Modifier.height(4.dp))
-                                MarkdownText(explanation, colors)
+                                MarkdownText(getDisplayExplanation(explanation), colors)
                             }
                         }
                     }
@@ -724,4 +724,27 @@ private fun AnswerRow(
             }
         }
     }
+}
+
+private fun getDisplayExplanation(explanation: String): String {
+    if (explanation.trim().startsWith("[") && explanation.trim().endsWith("]")) {
+        val list = mutableListOf<String>()
+        try {
+            val pattern = Regex("\\{\\s*\"text\"\\s*:\\s*\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"\\s*,\\s*\"lang\"\\s*:\\s*\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"\\s*\\}")
+            for (match in pattern.findAll(explanation)) {
+                val textVal = match.groupValues[1]
+                    .replace("\\\"", "\"")
+                    .replace("\\n", "\n")
+                    .replace("\\t", "\t")
+                    .replace("\\\\", "\\")
+                list.add(textVal)
+            }
+            if (list.isNotEmpty()) {
+                return list.joinToString("")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    return explanation
 }

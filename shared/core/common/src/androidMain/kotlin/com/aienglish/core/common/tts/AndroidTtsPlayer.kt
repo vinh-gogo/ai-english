@@ -129,10 +129,16 @@ class AndroidTtsPlayer(
         playJob?.cancel()
         stop()
 
+        val isJsonArray = text.trim().startsWith("[") && text.trim().endsWith("]")
+        val segments = if (isJsonArray) {
+            parseSegmentsManual(text)
+        } else {
+            splitByLanguage(text)
+        }
+
         if (prefs.getTtsEngine() == "google") {
             playJob = scope.launch {
                 try {
-                    val segments = splitByLanguage(text)
                     for ((segText, segLang) in segments) {
                         val encodedText = java.net.URLEncoder.encode(segText.trim(), "UTF-8")
                         val url = "https://translate.google.com/translate_tts?ie=UTF-8&tl=$segLang&client=tw-ob&q=$encodedText"
@@ -163,7 +169,6 @@ class AndroidTtsPlayer(
                 if (!currentJob.isActive) return@launch
 
                 // Phat tung doan theo ngon ngu
-                val segments = splitByLanguage(text)
                 for ((segText, segLang) in segments) {
                     if (!currentJob.isActive) break
                     val tts = if (segLang == "vi") viTts else enTts
@@ -184,6 +189,26 @@ class AndroidTtsPlayer(
                 _isLoading.value = false
             }
         }
+    }
+
+    private fun parseSegmentsManual(jsonStr: String): List<Pair<String, String>> {
+        val list = mutableListOf<Pair<String, String>>()
+        try {
+            // Regex match cap key-value { "text": "...", "lang": "..." } ho tro text co chua escape quotes \"
+            val pattern = Regex("\\{\\s*\"text\"\\s*:\\s*\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"\\s*,\\s*\"lang\"\\s*:\\s*\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"\\s*\\}")
+            for (match in pattern.findAll(jsonStr)) {
+                val textVal = match.groupValues[1]
+                    .replace("\\\"", "\"")
+                    .replace("\\n", "\n")
+                    .replace("\\t", "\t")
+                    .replace("\\\\", "\\")
+                val langVal = match.groupValues[2]
+                list.add(Pair(textVal, langVal))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return list
     }
 
     // ── Language detection & splitting ──────────────────────────────────────────

@@ -4,6 +4,7 @@ object ChinesePromptProvider : BaseLanguagePromptProvider() {
     override val languageLabel: String = "tiếng Trung"
     override val aiName: String = "Laoshi AI"
     override val targetLanguageName: String = "Chinese"
+    override val targetLanguageCode: String = "zh"
     override val certName: String = "HSK"
     
     override val exampleSource: String = "Xin chào, bạn khỏe không?"

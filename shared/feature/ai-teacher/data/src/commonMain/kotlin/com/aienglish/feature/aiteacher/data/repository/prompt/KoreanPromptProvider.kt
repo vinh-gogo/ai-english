@@ -4,6 +4,7 @@ object KoreanPromptProvider : BaseLanguagePromptProvider() {
     override val languageLabel: String = "tiếng Hàn"
     override val aiName: String = "Seonsaengnim AI"
     override val targetLanguageName: String = "Korean"
+    override val targetLanguageCode: String = "ko"
     override val certName: String = "TOPIK"
     
     override val exampleSource: String = "Xin chào, bạn khỏe không?"

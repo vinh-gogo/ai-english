@@ -4,6 +4,7 @@ object GermanPromptProvider : BaseLanguagePromptProvider() {
     override val languageLabel: String = "tiếng Đức"
     override val aiName: String = "Lehrer AI"
     override val targetLanguageName: String = "German"
+    override val targetLanguageCode: String = "de"
     override val certName: String = "TIẾNG ĐỨC (GOETHE HOẶC TESTDAF)"
     
     override val exampleSource: String = "Chào mừng bạn đến với Berlin."
