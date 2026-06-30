@@ -12,6 +12,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -315,7 +316,9 @@ fun MarkdownText(
                         text = annotated,
                         fontSize = 15.sp,
                         color = colors.mutedText,
-                        lineHeight = 22.sp
+                        lineHeight = 22.sp,
+                        textAlign = TextAlign.Justify,
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
                 is Block.Bullet -> {
@@ -336,7 +339,9 @@ fun MarkdownText(
                             text = annotated,
                             fontSize = 15.sp,
                             color = colors.mutedText,
-                            lineHeight = 22.sp
+                            lineHeight = 22.sp,
+                            textAlign = TextAlign.Justify,
+                            modifier = Modifier.weight(1f)
                         )
                     }
                 }
@@ -358,7 +363,9 @@ fun MarkdownText(
                             text = annotated,
                             fontSize = 15.sp,
                             color = colors.mutedText,
-                            lineHeight = 22.sp
+                            lineHeight = 22.sp,
+                            textAlign = TextAlign.Justify,
+                            modifier = Modifier.weight(1f)
                         )
                     }
                 }
