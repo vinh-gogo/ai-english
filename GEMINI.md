@@ -835,12 +835,15 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
   - **BaseLanguagePromptProvider.kt & EnglishPromptProvider.kt (Prompt):**
     - Thay đổi yêu cầu định dạng đầu ra của trường `explanation` từ dạng chuỗi văn bản Markdown thô sang **mảng JSON các đối tượng** `{ "text": "...", "lang": "vi" | "en" | ... }`.
     - AI tự phân tách rõ ràng các phân đoạn tiếng Việt ("vi") và các từ/cụm từ/câu ví dụ tiếng Anh ("en"/ngôn ngữ mục tiêu khác) sang các đối tượng riêng biệt.
+    - Cấu hình chỉ thị AI **không sử dụng** bất kỳ ký tự định dạng markdown nào (`**`, `*`, `_`, `###`, `` ` ``) trong nội dung `text` để giải phóng hoàn toàn văn bản khỏi ký tự gây nhiễu, viết chữ trơn hoàn toàn (plain text) sử dụng `\n` và `-`.
+    - Chỉ thị AI bắt buộc phân tách cực kỳ chi tiết các từ/cụm từ tiếng Anh lồng ghép trong câu tiếng Việt thành các đối tượng có `lang: "en"` riêng lẻ để có thể phát âm chuẩn xác từng chữ của nhiều ngôn ngữ trong cùng một câu/đoạn văn nhỏ.
   - **SentenceExplanationDto.kt (DTO):**
     - Chuyển kiểu dữ liệu trường `explanation` từ `String` thành `JsonElement` để có thể nhận diện và phân tích cả mảng JSON mới và chuỗi văn bản cũ (đảm bảo tương thích ngược 100%).
   - **TeacherRepositoryImpl.kt (Repository):**
     - Cập nhật hàm `extractExplanationSafe` để trích xuất cả mảng JSON hoặc chuỗi thô từ Gemini một cách an toàn và tin cậy.
   - **AndroidTtsPlayer.kt & DesktopTtsPlayer.kt (Audio Engine):**
     - Tích hợp hàm `parseSegmentsManual` để giải mã mảng JSON các phân đoạn ngôn ngữ tĩnh từ database và phát lần lượt từng segment với đúng mã ngôn ngữ tương ứng, giải quyết triệt để sự cố lẫn lộn hoặc bỏ sót audio.
+    - Gọi hàm `cleanMarkdownSymbols` để làm sạch hoàn toàn các ký tự markdown nếu có trước khi chuyển văn bản sang trình phát, ngăn chặn lỗi ngắt quãng/bỏ sót âm thanh từ engine TTS.
   - **LessonContent.kt & FeedbackContent.kt (UI):**
     - Tích hợp hàm `getDisplayExplanation` để tự động ghép các thuộc tính `text` từ các phân đoạn JSON thành văn bản Markdown hoàn chỉnh trước khi hiển thị hoặc thực hiện hành động sao chép.
 
