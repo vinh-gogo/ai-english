@@ -127,8 +127,9 @@ object EnglishPromptProvider : LanguagePromptProvider {
             3. If the student's answer is semantically equivalent (same meaning), even if worded differently, or has minor differences like capitalization ('hello' vs 'Hello') or punctuation, treat it as fully correct (10/10) and praise the student.
             4. If the student answered correctly, praise briefly and explain the grammar structures at $level depth.
             5. If the student skipped, provide a full breakdown of the target sentence, explaining vocabulary and grammar patterns relevant to $level.
-            6. Write in $responseLang, warm and encouraging. Format the explanation in Markdown.
+            6. Write in $responseLang, warm and encouraging.
             7. In "score", rate the student's answer from 0 to 10. If skipped or blank, score MUST be 0. Do NOT deduct any points for capitalization, punctuation, spacing, or minor contraction differences.
+            8. At the very end of the explanation, list and explain other acceptable alternative translations or alternative structures (if any), explaining why they are acceptable or why other common options are incorrect in this context.
 
             RETURN ONLY VALID JSON (no markdown block, no extra text):
             {

@@ -160,7 +160,8 @@ abstract class BaseLanguagePromptProvider : LanguagePromptProvider {
             2. Compare with the target $targetLanguageName, point out strengths or errors (${getExplainErrorsEn(level)}) if incorrect.
             3. If correct, praise briefly and explain grammar structures relevant to $certName level $level.
             4. If skipped, provide translation and detailed grammar/vocabulary breakdown for self-study at $certName level $level.
-            5. Write in English, warm and encouraging. Format explanation in Markdown.
+            5. Write in English, warm and encouraging.
+            6. At the very end of the explanation, list and explain other acceptable alternative translations or alternative structures (if any), explaining why they are acceptable or why other common options are incorrect in this context.
             """.trimIndent()
         } else {
             """
@@ -168,7 +169,8 @@ abstract class BaseLanguagePromptProvider : LanguagePromptProvider {
             2. So sánh câu của học sinh với Bản dịch chuẩn, chỉ rõ điểm tốt hoặc các lỗi sai (${getExplainErrorsVi(level)}) nếu học sinh viết sai.
             3. Nếu học sinh viết đúng, hãy khen ngợi ngắn gọn và giải thích thêm các cấu trúc ngữ pháp sử dụng trong câu để họ hiểu sâu hơn. Giải thích ngữ pháp hãy tập trung vào các điểm ngữ pháp trình độ $level có trong câu.
             4. Nếu học sinh Bỏ qua, hãy dịch mẫu và phân tích tường nhận ngữ pháp, từ vựng từng phần để học sinh tự học. Giải thích chi tiết các mẫu ngữ pháp tương ứng trình độ $level.
-            5. Viết bằng tiếng Việt tự nhiên, ấm áp, khuyến khích học tập. Văn bản giải thích sử dụng định dạng Markdown.
+            5. Viết bằng tiếng Việt tự nhiên, ấm áp, khuyến khích học tập.
+            6. Ở phần cuối cùng của lời giải thích, hãy liệt kê và giải thích ngắn gọn các phương án dịch/cách diễn đạt thay thế khác (nếu có) có thể chấp nhận được, hoặc giải thích vì sao một số cách dịch phổ biến khác lại chưa tự nhiên/chưa chính xác trong ngữ cảnh này để học sinh tham khảo thêm.
             """.trimIndent()
         }
 
