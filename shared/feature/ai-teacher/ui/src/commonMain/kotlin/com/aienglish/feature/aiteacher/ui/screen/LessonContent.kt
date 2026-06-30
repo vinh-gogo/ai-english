@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalClipboardManager
+import com.aienglish.core.common.tts.ExplanationParser
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -730,17 +731,11 @@ private fun getDisplayExplanation(explanation: String, targetLanguage: String): 
     if (explanation.trim().startsWith("[") && explanation.trim().endsWith("]")) {
         val list = mutableListOf<String>()
         try {
-            val pattern = Regex("\\{\\s*\"text\"\\s*:\\s*\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"\\s*,\\s*\"lang\"\\s*:\\s*\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"\\s*\\}")
-            for (match in pattern.findAll(explanation)) {
-                var textVal = match.groupValues[1]
-                    .replace("\\\"", "\"")
-                    .replace("\\n", "\n")
-                    .replace("\\t", "\t")
-                    .replace("\\\\", "\\")
-                val langVal = match.groupValues[2]
-                
+            val segments = ExplanationParser.parseSegments(explanation)
+            for ((text, lang) in segments) {
+                var textVal = text
                 // Neu la ngon ngu muc tieu thi boc trong ngoac kep va in dam
-                if (langVal.lowercase() == targetLanguage.lowercase() && textVal.trim().isNotEmpty()) {
+                if (lang.lowercase() == targetLanguage.lowercase() && textVal.trim().isNotEmpty()) {
                     val leadingSpaces = textVal.takeWhile { it.isWhitespace() }
                     val trailingSpaces = textVal.takeLastWhile { it.isWhitespace() }
                     val body = textVal.trim()

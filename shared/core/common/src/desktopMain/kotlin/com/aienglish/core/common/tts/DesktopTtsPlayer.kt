@@ -143,7 +143,7 @@ class DesktopTtsPlayer(
 
         val isJsonArray = text.trim().startsWith("[") && text.trim().endsWith("]")
         val segments = if (isJsonArray) {
-            parseSegmentsManual(text)
+            ExplanationParser.parseSegments(text)
         } else {
             splitByLanguage(text)
         }
@@ -220,25 +220,7 @@ class DesktopTtsPlayer(
         }
     }
 
-    private fun parseSegmentsManual(jsonStr: String): List<Pair<String, String>> {
-        val list = mutableListOf<Pair<String, String>>()
-        try {
-            // Regex match cap key-value { "text": "...", "lang": "..." } ho tro text co chua escape quotes \"
-            val pattern = Regex("\\{\\s*\"text\"\\s*:\\s*\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"\\s*,\\s*\"lang\"\\s*:\\s*\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"\\s*\\}")
-            for (match in pattern.findAll(jsonStr)) {
-                val textVal = match.groupValues[1]
-                    .replace("\\\"", "\"")
-                    .replace("\\n", "\n")
-                    .replace("\\t", "\t")
-                    .replace("\\\\", "\\")
-                val langVal = match.groupValues[2]
-                list.add(Pair(textVal, langVal))
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return list
-    }
+
 
     private fun splitByLanguage(text: String): List<Pair<String, String>> {
         val targetLang = prefs.getLanguageTarget().lowercase()

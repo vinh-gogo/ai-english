@@ -52,6 +52,7 @@ kotlin {
             implementation(libs.arrow.core)
             implementation(libs.koin.core)
             implementation(libs.napier)
+            implementation(libs.kotlinx.serialization.json)
         }
         androidMain.dependencies {
             implementation(libs.coroutines.android)
