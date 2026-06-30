@@ -850,6 +850,18 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 
 ---
 
+### 🟢 Session 65 (2026-06-30)
+
+- **Mục tiêu:** Cập nhật UI hiển thị giải thích chi tiết: Tự động bọc các chữ phát tiếng Anh (hoặc ngôn ngữ mục tiêu đang học) trong dấu ngoặc kép và định dạng in đậm.
+- **Hoạt động & Thay đổi:**
+  - **LessonContent.kt & FeedbackContent.kt (UI):**
+    - Cải tiến hàm `getDisplayExplanation` chấp nhận tham số `targetLanguage` để nhận diện phân đoạn ngôn ngữ mục tiêu đang học (ví dụ: "en").
+    - Đối với các phân đoạn văn bản có ngôn ngữ trùng khớp với `targetLanguage` (không phải tiếng mẹ đẻ như tiếng Việt "vi"), hệ thống tự động bọc nội dung trong dấu ngoặc kép và định dạng in đậm bằng cú pháp markdown `**"từ_vựng"**`.
+    - Bảo toàn và xử lý chính xác các khoảng trắng ở đầu/cuối của các phân đoạn để đảm bảo câu văn sau khi ghép nối hiển thị thẳng hàng, liền mạch và tự nhiên.
+    - Loại bỏ các dấu ngoặc kép hoặc ngoặc đơn dư thừa có sẵn của phân đoạn để tránh hiện tượng bọc trùng lặp.
+
+---
+
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.
 
