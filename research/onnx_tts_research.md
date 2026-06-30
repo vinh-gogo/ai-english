@@ -334,7 +334,31 @@ Vì file mô hình `.onnx` có dung lượng từ **15MB - 50MB**, chúng ta có
 
 ---
 
-## 5. Tổng Kết Đánh Giá Giải Pháp
+## 5. Chương Trình Chạy Thử Cục Bộ (Local Audio Test - 100% Free & Offline)
+
+Để giúp bạn nghe thử trực tiếp chất lượng âm thanh sinh ra từ mô hình ONNX offline ngay trên máy tính Windows mà không cần cài đặt Python hay cấu hình phức tạp, tôi đã tạo sẵn một dự án con Java độc lập tại thư mục `research/audio-test/`.
+
+### Cách chạy thử trên máy tính của bạn:
+
+1. **Mở terminal ở thư mục gốc của dự án** (`D:\ai-english`).
+2. **Chạy lệnh duy nhất sau**:
+   ```powershell
+   .\gradlew -p research/audio-test run
+   ```
+
+### Cơ chế hoạt động của chương trình test:
+* **Tự động tải dependencies**: Gradle sẽ tự động tải thư viện Java API `sherpa-onnx-v1.12.10.jar` và native binaries `sherpa-onnx-native-lib-win-x64-v1.12.10.jar` trực tiếp từ GitHub Releases của tác giả về thư mục `lib/` cục bộ.
+* **Tải model offline**: Ở lần chạy đầu tiên, chương trình sẽ tự động download mô hình tiếng Việt siêu nhẹ `vi_VN-vivos-x_low.onnx` (~15MB), file từ điển phát âm `lexicon.txt` và file token từ Hugging Face về thư mục `models/` cục bộ. Những lần chạy sau sẽ load trực tiếp không tải lại.
+* **Sinh âm thanh và phát ra loa**: 
+  - Mô hình ONNX sẽ nhận dạng và dịch chữ viết sang dạng sóng âm thanh (PCM array) hoàn toàn offline.
+  - Sử dụng Java Sound API (`SourceDataLine`) để phát trực tiếp mảng âm thanh ra loa máy tính của bạn với tần số lấy mẫu chuẩn của mô hình (16kHz).
+
+Bạn có thể xem trực tiếp mã nguồn của chương trình test tại:
+📂 **[AudioTest.java](file:///D:/ai-english/research/audio-test/src/main/java/com/aienglish/research/AudioTest.java)**
+
+---
+
+## 6. Tổng Kết Đánh Giá Giải Pháp
 
 1.  **Chi phí**: **0đ (Hoàn toàn miễn phí)**. Không giới hạn ký tự đọc, không lo phát sinh chi phí API.
 2.  **Khả năng hoạt động**: **100% Offline**. Rất phù hợp với định hướng *offline-first* của dự án.

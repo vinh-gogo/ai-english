@@ -1,0 +1,9 @@
+# Ignore local libraries and compiled targets
+/lib/
+/build/
+.gradle/
+
+# Ignore downloaded models and phonemization data
+/models/
+/espeak-ng-data/
+/vits-piper-en_US-amy-low/

@@ -61,6 +61,7 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 52** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Tự động hiển thị nút "Quay lại đầu trang" (Scroll to Top) khi cuộn xuống qua phần tử thứ 10. | Hoàn thành |
 | **Session 53** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Nhấn giữ (long press) các dòng chủ đề hiển thị nút "Xóa" ở trung tâm và hỗ trợ xóa khỏi database. | Hoàn thành |
 | **Session 54** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Nghiên cứu và đề xuất giải pháp phát âm thanh (TTS) offline, local-only, free 100% bằng ONNX cho tiếng Anh & tiếng Việt trên KMP. | Hoàn thành |
+| **Session 55** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Chạy thử nghiệm thành công phát âm thanh TTS offline local 100% (Tiếng Anh & Tiếng Việt) sử dụng Sherpa-ONNX + Piper models không qua Python. | Hoàn thành |
 
 ---
 
@@ -662,6 +663,25 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
   - Lưu tài liệu nghiên cứu tại `research/onnx_tts_research.md`.
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng để triển khai code.
+
+---
+
+### 🟢 Session 55 (2026-06-30)
+
+- **Mục tiêu:** Chạy thử nghiệm thành công phát âm thanh Text-To-Speech (TTS) hoàn toàn offline local, free 100% cho cả Tiếng Anh và Tiếng Việt trong dự án Java/Kotlin mà không qua Python.
+- **Hoạt động & Thay đổi:**
+  - **build.gradle.kts (audio-test):**
+    - Cấu hình compile task và JVM execution task bắt buộc sử dụng encoding UTF-8 để tránh lỗi ký tự tiếng Việt có dấu.
+    - Thêm task Gradle `downloadEspeakData` tải gói ngữ âm `espeak-ng-data.tar.bz2` (khoảng 3MB) từ GitHub Releases và tự động giải nén bằng lệnh `tar` hệ thống để phục vụ phonemization offline cho Piper.
+    - Thêm task Gradle `downloadEnglishModel` tải trọn gói mô hình tiếng Anh chính thức `vits-piper-en_US-amy-low.tar.bz2` (khoảng 15MB) đã nhúng sẵn metadata tương thích với Sherpa-ONNX.
+  - **AudioTest.java:**
+    - Tách logic nạp model, sinh sóng âm thanh (ONNX inference) và phát ra loa bằng Java Sound API (`SourceDataLine`) thành một hàm dùng chung `runTts(...)` gọn gàng.
+    - Thiết lập download model và tokens tiếng Việt `vi_VN-vivos-x_low` từ Hugging Face qua HTTP Connection có set Header `User-Agent: Mozilla/5.0` để bypass lỗi HTTP 401.
+    - Thực thi phát thử nghiệm âm thanh hai thứ tiếng Việt và Anh liên tiếp hoàn tất 100% thành công, không gặp bất cứ lỗi OOV (Out Of Vocabulary) hay lỗi metadata.
+- **Ghi chú kỹ thuật:**
+  - Chương trình chạy thử nghiệm hoạt động hoàn hảo tại folder `research/audio-test/` của dự án.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Bắt đầu triển khai tích hợp giải pháp TTS offline này vào Core App (Android & Desktop) bằng KMP expect/actual class theo tài liệu thiết kế.
 
 ---
 
