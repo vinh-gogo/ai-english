@@ -139,12 +139,13 @@ object EnglishPromptProvider : LanguagePromptProvider {
               ]
             }
 
-            CRITICAL FORMAT REQUIREMENTS:
+            CRITICAL FORMAT AND DETAIL REQUIREMENTS:
             1. The 'explanation' field MUST be a JSON array of objects, where each object has the structure { "text": "...", "lang": "..." }.
-            2. DO NOT use any markdown formatting symbols (like **, *, _, ###, `) in any 'text' values. Write plain, raw text only. You can use standard newlines '\n' for line breaks and '-' for bullet points.
-            3. Split your entire explanation into very short consecutive segments. Assign 'lang' as "vi" for segments written in Vietnamese, and "en" for all target English words, phrases, or sentences.
-            4. You MUST isolate every single target English word or phrase from the surrounding Vietnamese explanations into its own segment with "lang": "en", even if they occur inside the same short sentence. Do not mix English and Vietnamese inside a single segment with the same 'lang'.
-            5. Combining the 'text' fields of all segments in order should reconstruct the complete plain text explanation clearly.
+            2. DO NOT make the explanation brief, short, or simplified because of the JSON format requirement. The explanation MUST be EXTREMELY DETAILED, COMPLETE, and COMPREHENSIVE (fully cover grammar rules, sentence patterns, vocabulary parts of speech, word types, translations, and all key terms). The JSON array can contain many objects (e.g., 20 to 40 elements) to deliver this comprehensive detail.
+            3. DO NOT use any markdown formatting symbols (like **, *, _, ###, `) in any 'text' values. Write plain, raw text only. You can use standard newlines '\n' for line breaks and '-' for bullet points to structure your response.
+            4. Split your entire explanation into very short consecutive segments. Assign 'lang' as "vi" for segments written in Vietnamese, and "en" for all target English words, phrases, or sentences.
+            5. You MUST isolate every single target English word or phrase from the surrounding Vietnamese explanations into its own segment with "lang": "en", even if they occur inside the same short sentence. Do not mix English and Vietnamese inside a single segment with the same 'lang'.
+            6. Combining the 'text' fields of all segments in order should reconstruct the complete plain text explanation clearly.
         """.trimIndent()
     }
 

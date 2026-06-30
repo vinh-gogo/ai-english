@@ -191,12 +191,13 @@ abstract class BaseLanguagePromptProvider : LanguagePromptProvider {
               ]
             }
 
-            LƯU Ý QUAN TRỌNG VỀ ĐỊNH DẠNG:
+            LƯU Ý QUAN TRỌNG VỀ ĐỊNH DẠNG VÀ ĐỘ CHI TIẾT:
             1. Trường 'explanation' BẮT BUỘC phải là một mảng JSON của các đối tượng { "text", "lang" }.
-            2. KHÔNG ĐƯỢC sử dụng các ký tự định dạng markdown như **, *, _, ###, ` trong bất kỳ trường 'text' nào. Hãy viết chữ trơn hoàn toàn (plain text). Có thể dùng kí tự xuống dòng '\n' để ngắt dòng và dấu gạch đầu dòng '-' để tạo danh sách.
-            3. Hãy chia nhỏ nội dung giải thích thành các phân đoạn rất ngắn liên tiếp. Chỉ định 'lang' là "vi" cho tiếng Việt, và '$targetLanguageCode' cho tất cả các từ, cụm từ hoặc câu ví dụ bằng ngôn ngữ mục tiêu.
-            4. BẮT BUỘC tách biệt cực kỳ triệt để từng chữ hoặc cụm từ ngôn ngữ mục tiêu ra khỏi câu tiếng Việt giải thích xung quanh thành các đối tượng riêng biệt với đúng thuộc tính 'lang', kể cả khi chúng nằm trong cùng một câu ngắn. Không viết lẫn lộn tiếng Việt và ngôn ngữ mục tiêu trong cùng một đối tượng.
-            5. Gộp tất cả trường 'text' của các đối tượng trong mảng theo đúng thứ tự sẽ tạo ra văn bản giải thích hoàn chỉnh, rõ ràng, dễ đọc cho học sinh.
+            2. KHÔNG ĐƯỢC phép viết ngắn gọn, rút ngắn hoặc bỏ bớt nội dung giải thích vì lý do định dạng JSON. Lời giải thích phải CỰC KỲ CHI TIẾT, ĐẦY ĐỦ VÀ TOÀN DIỆN (bao gồm giải thích rõ ràng cấu trúc chung, phân tích cặn kẽ ngữ pháp, từ loại, nghĩa, và tất cả từ vựng cốt lõi của câu). Mảng JSON có thể chứa nhiều đối tượng liên tiếp (ví dụ từ 20 đến 40 đối tượng) để truyền tải trọn vẹn lời giải thích đầy đủ này.
+            3. KHÔNG ĐƯỢC sử dụng các ký tự định dạng markdown như **, *, _, ###, ` trong bất kỳ trường 'text' nào. Hãy viết chữ trơn hoàn toàn (plain text). Có thể dùng kí tự xuống dòng '\n' để ngắt dòng và dấu gạch đầu dòng '-' để tạo cấu trúc danh sách rõ ràng.
+            4. Hãy chia nhỏ nội dung giải thích thành các phân đoạn rất ngắn liên tiếp. Chỉ định 'lang' là "vi" cho tiếng Việt, và '$targetLanguageCode' cho tất cả các từ, cụm từ hoặc câu ví dụ bằng ngôn ngữ mục tiêu.
+            5. BẮT BUỘC tách biệt cực kỳ triệt để từng chữ hoặc cụm từ ngôn ngữ mục tiêu ra khỏi câu tiếng Việt giải thích xung quanh thành các đối tượng riêng biệt với đúng thuộc tính 'lang', kể cả khi chúng nằm trong cùng một câu ngắn. Không viết lẫn lộn tiếng Việt và ngôn ngữ mục tiêu trong cùng một đối tượng.
+            6. Gộp tất cả trường 'text' của các đối tượng trong mảng theo đúng thứ tự sẽ tạo ra văn bản giải thích hoàn chỉnh, rõ ràng, dễ đọc cho học sinh.
         """.trimIndent()
     }
 
