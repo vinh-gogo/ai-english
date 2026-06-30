@@ -29,7 +29,8 @@ data class ProfileState(
     val isPaid: Boolean = false,
     val error: String? = null,
     val aiResponseLength: String = "normal",
-    val appTheme: AppTheme = AppTheme.SUNSET_WARMTH
+    val appTheme: AppTheme = AppTheme.SUNSET_WARMTH,
+    val ttsSpeed: String = "slow"
 )
 
 class ProfileViewModel(
@@ -86,6 +87,11 @@ class ProfileViewModel(
             val theme = AppTheme.entries.find { it.name == themeName } ?: AppTheme.SUNSET_WARMTH
             setState { copy(appTheme = theme) }
         }.launchIn(viewModelScope)
+
+        // Load TTS Speed
+        appPreferences.ttsSpeedFlow.onEach { speed ->
+            setState { copy(ttsSpeed = speed) }
+        }.launchIn(viewModelScope)
     }
 
     fun updateMonthlyUsage(usage: Int, limit: Int) {
@@ -134,6 +140,11 @@ class ProfileViewModel(
     fun onThemeChanged(theme: AppTheme) {
         appPreferences.saveAppTheme(theme.name)
         setState { copy(appTheme = theme) }
+    }
+
+    fun onTtsSpeedChanged(speed: String) {
+        appPreferences.saveTtsSpeed(speed)
+        setState { copy(ttsSpeed = speed) }
     }
 
     fun toggleHowTo() = setState { copy(howToExpanded = !howToExpanded) }

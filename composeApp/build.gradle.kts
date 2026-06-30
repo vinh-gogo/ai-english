@@ -20,6 +20,7 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose)
                 implementation(libs.koin.compose.viewmodel)
+                implementation(libs.datetime)
                 implementation(project(":shared:core:common"))
                 implementation(project(":shared:core:database"))
                 implementation(project(":shared:core:network"))

@@ -168,6 +168,7 @@ fun LessonContent(
                             colors = colors,
                             clipboardManager = clipboardManager,
                             plainText = sentence.english,
+                            onPlayTts = { viewModel.speak(sentence.english, state.targetLanguage) },
                             modifier = Modifier.padding(horizontal = 16.dp)
                         )
 
@@ -199,6 +200,7 @@ fun LessonContent(
                                         colors = colors,
                                         clipboardManager = clipboardManager,
                                         plainText = alt,
+                                        onPlayTts = { viewModel.speak(alt, state.targetLanguage) },
                                         modifier = Modifier.padding(horizontal = 16.dp)
                                     )
                                 }
@@ -630,6 +632,7 @@ private fun AnswerRow(
     colors: AppColors,
     clipboardManager: androidx.compose.ui.platform.ClipboardManager,
     plainText: String,
+    onPlayTts: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -666,7 +669,7 @@ private fun AnswerRow(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
-                onClick = { /* TODO TTS */ },
+                onClick = onPlayTts,
                 modifier = Modifier.size(32.dp)
             ) {
                 Icon(

@@ -39,6 +39,9 @@ class DesktopAppPreferences(
     private val _appTheme = MutableStateFlow(prefs.get("app_theme", "SUNSET_WARMTH"))
     override val appThemeFlow = _appTheme.asStateFlow()
 
+    private val _ttsSpeed = MutableStateFlow(prefs.get("tts_speed", "slow"))
+    override val ttsSpeedFlow = _ttsSpeed.asStateFlow()
+
     override fun getApiKey(): String {
         val secured = secureStorage.getSecret("api_key")
         if (secured.isNotEmpty()) return secured
@@ -138,6 +141,13 @@ class DesktopAppPreferences(
         _appTheme.value = theme
     }
 
+    override fun getTtsSpeed() = prefs.get("tts_speed", "slow")
+
+    override fun saveTtsSpeed(speed: String) {
+        prefs.put("tts_speed", speed)
+        _ttsSpeed.value = speed
+    }
+
     override fun clear() {
         prefs.clear()
         secureStorage.deleteSecret("api_key")
@@ -151,5 +161,6 @@ class DesktopAppPreferences(
         _aiResponseLength.value = "normal"
         _apiProvider.value = "gemini"
         _novitaApiKey.value = ""
+        _ttsSpeed.value = "slow"
     }
 }

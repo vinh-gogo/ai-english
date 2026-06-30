@@ -117,12 +117,49 @@ val downloadEnglishModel by tasks.registering {
     }
 }
 
+val downloadEnglishLessacModel by tasks.registering {
+    doLast {
+        val destFile = file("vits-piper-en_US-lessac-medium.tar.bz2")
+        val destDir = file("vits-piper-en_US-lessac-medium")
+        if (!destDir.exists()) {
+            if (!destFile.exists()) {
+                println("Downloading vits-piper-en_US-lessac-medium.tar.bz2...")
+                try {
+                    val url = URI.create("https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-en_US-lessac-medium.tar.bz2").toURL()
+                    url.openStream().use { input ->
+                        destFile.outputStream().use { output ->
+                            input.copyTo(output)
+                        }
+                    }
+                    println("Downloaded Lessac English model successfully!")
+                } catch (e: Exception) {
+                    println("Error downloading Lessac English model: ${e.message}")
+                    throw e
+                }
+            }
+            println("Extracting Lessac English model using native 'tar' tool...")
+            val process = ProcessBuilder("tar", "-xf", destFile.absolutePath)
+                .directory(file("."))
+                .inheritIO()
+                .start()
+            val exitCode = process.waitFor()
+            if (exitCode != 0) {
+                throw GradleException("tar command failed with exit code $exitCode")
+            }
+            println("Extracted Lessac English model successfully!")
+            destFile.delete()
+        } else {
+            println("Lessac English model already exists, skipping.")
+        }
+    }
+}
+
 tasks.named("compileJava") {
     dependsOn(downloadLibs)
 }
 
 tasks.named("run") {
-    dependsOn(downloadLibs, downloadEspeakData, downloadEnglishModel)
+    dependsOn(downloadLibs, downloadEspeakData, downloadEnglishModel, downloadEnglishLessacModel)
 }
 
 tasks.withType<JavaCompile> {

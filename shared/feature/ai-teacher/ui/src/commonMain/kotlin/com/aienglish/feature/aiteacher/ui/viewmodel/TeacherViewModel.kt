@@ -1,6 +1,7 @@
 package com.aienglish.feature.aiteacher.ui.viewmodel
 
 import com.aienglish.core.common.prefs.AppPreferences
+import com.aienglish.core.common.tts.TtsPlayer
 import com.aienglish.core.common.viewmodel.BaseViewModel
 import com.aienglish.feature.aiteacher.application.usecase.EvaluateEnglishLessonUseCase
 import com.aienglish.feature.aiteacher.application.usecase.ExplainSentenceUseCase
@@ -130,8 +131,23 @@ class TeacherViewModel(
     private val teacherHistoryRepository: TeacherHistoryRepository,
     private val topicRepository: TopicRepository,
     private val prefs: AppPreferences,
-    private val historyRepository: HistoryRepository
+    private val historyRepository: HistoryRepository,
+    private val ttsPlayer: TtsPlayer
 ) : BaseViewModel<TeacherUiState>(TeacherUiState()) {
+
+    fun speak(text: String, languageCode: String) {
+        ttsPlayer.play(text, languageCode)
+    }
+
+    fun speakTopic(topicName: String) {
+        val nativeLang = prefs.getLanguageNative()
+        val cleanText = topicName.replace("**", "").trim()
+        ttsPlayer.play(cleanText, nativeLang)
+    }
+
+    fun stopSpeaking() {
+        ttsPlayer.stop()
+    }
 
     // Track current lesson DB id for history update
     private var currentLessonHistoryId: Long? = null

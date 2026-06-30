@@ -62,6 +62,8 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 53** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Nhấn giữ (long press) các dòng chủ đề hiển thị nút "Xóa" ở trung tâm và hỗ trợ xóa khỏi database. | Hoàn thành |
 | **Session 54** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Nghiên cứu và đề xuất giải pháp phát âm thanh (TTS) offline, local-only, free 100% bằng ONNX cho tiếng Anh & tiếng Việt trên KMP. | Hoàn thành |
 | **Session 55** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Chạy thử nghiệm thành công phát âm thanh TTS offline local 100% (Tiếng Anh & Tiếng Việt) sử dụng Sherpa-ONNX + Piper models không qua Python. | Hoàn thành |
+| **Session 56** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Nghiên cứu & Thử nghiệm mô hình tiếng Việt mới NGHI-TTS (NghiMe Studio), kiểm thử chất lượng và điều chỉnh tốc độ nói (lengthScale). | Hoàn thành |
+| **Session 57** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Tích hợp thành công động cơ phát âm offline KMP TTS (Android & Desktop) sử dụng giọng nam Adam (tốc độ chậm 1.15) cho tiếng Việt. | Hoàn thành |
 
 ---
 
@@ -683,6 +685,47 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
   - Chương trình chạy thử nghiệm hoạt động hoàn hảo tại folder `research/audio-test/` của dự án.
 - **Kế hoạch tiếp theo (Next Steps):**
   - Dựa trên kết quả thẩm định chất lượng các model của người dùng, tiến hành triển khai tích hợp TTS vào Core App (Android & Desktop) bằng KMP expect/actual class.
+
+---
+
+### 🟢 Session 56 (2026-06-30)
+
+- **Mục tiêu:** Thử nghiệm mô hình Kokoro Vietnamese và tìm kiếm/chạy thử các mô hình giọng nói tiếng Việt offline khác để khắc phục hiện tượng âm thanh bị vang của mô hình `vais1000`.
+- **Hoạt động & Thay đổi:**
+  - **AudioTest.java**:
+    - Tích hợp lớp `OfflineTtsKokoroModelConfig` và tải mô hình `Kokoro-Vietnamese` (`kokoro_vi.onnx`) để chạy thử. Kết quả thử nghiệm ghi nhận lỗi crash native do tệp ONNX thiếu metadata `sample_rate` và lõi C++ của `sherpa-onnx` chưa hỗ trợ G2P tiếng Việt cho Kokoro.
+    - Tìm kiếm và tích hợp bộ sưu tập mô hình chất lượng cao **NGHI-TTS (NghiMe Studio)** từ HF mirror `doof-ferb/nghitts-copy` bao gồm giọng đọc Minh Thư (`minhthu.onnx`), Phương Trang (`phuongtrang.onnx`) và tệp ngữ âm `nghitts-tokens.txt`.
+    - Thử nghiệm các mức tốc độ đọc chậm khác nhau (`lengthScale = 1.1`, `1.15`, `1.2`) cho giọng Phương Trang để tránh hiện tượng đọc quá nhanh, giúp tối ưu cho học từ vựng.
+    - Tải và chạy thử nghiệm thêm các giọng nói giả lập đặc sắc khác của NghiMe Studio: giọng đọc Nguyễn Ngọc Ngạn (`ngocngan3701.onnx`), giọng nam Adam (`adam1.onnx`), giọng nam Chiếu Thành (`chieuthanh.onnx`), giọng nữ Ban Mai (`banmai.onnx`), và giọng nữ Mỹ Tâm (`mytam2.onnx`) ở cả tốc độ chuẩn (`1.0`) và làm chậm (`1.15`).
+    - Tạo tài liệu nghiên cứu mới tại [nghitts_research.md](file:///D:/ai-english/research/nghitts_research.md) để ghi nhận chi tiết cấu hình, tham số tốc độ tối ưu và hướng dẫn nạp mô hình.
+- **Ghi chú kỹ thuật:**
+  - Biên dịch và chạy thành công trên JVM (`BUILD SUCCESSFUL`). Các tệp âm thanh đầu ra `output-vi-minhthu.wav`, `output-vi-phuongtrang-slow-*.wav`, `output-vi-ngocngan*.wav`, `output-vi-adam*.wav`, `output-vi-chieuthanh*.wav`, `output-vi-banmai*.wav`, và `output-vi-mytam*.wav` được sinh ra ổn định.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Triển khai tích hợp TTS vào Core App bằng KMP (Android & Desktop) hỗ trợ Dual-Mode (Online API & Offline local NGHI-TTS).
+
+---
+
+### 🟢 Session 57 (2026-06-30)
+
+- **Mục tiêu:** Tích hợp cơ chế phát âm tiếng Việt offline TTS vào core app bằng Kotlin Multiplatform, sử dụng duy nhất giọng nam Adam làm chậm (speed 1.15) cho Desktop và hỗ trợ Native TTS cho Android.
+- **Hoạt động & Thay đổi:**
+  - **TtsPlayer.kt:** Tạo interface core phát âm âm thanh `TtsPlayer` trong commonMain.
+  - **AndroidTtsPlayer.kt:** Sử dụng engine `android.speech.tts.TextToSpeech` có sẵn trên hệ thống, điều chỉnh tốc độ nói `0.85f` cho tiếng Việt để giọng đọc truyền cảm và tự nhiên hơn.
+  - **DesktopTtsPlayer.kt:** 
+    *   Tự động tải xuống mô hình `adam1.onnx`, `tokens.txt` và `espeak-ng-data.tar.bz2` (giải nén qua công cụ hệ thống `tar`) về vùng lưu trữ cục bộ `.ai-english` khi người dùng nhấn nút Nghe lần đầu.
+    *   Sử dụng Piper/VITS thông qua JNI `sherpa-onnx` để tổng hợp giọng nói của Adam làm chậm ở tốc độ `lengthScale = 1.15f`.
+  - **TeacherViewModel.kt:** Inject `TtsPlayer`, bổ sung các hàm điều phối `speak()` & `stopSpeaking()`, và thêm hàm `speakTopic(topicName)` tự động dùng ngôn ngữ mẹ đẻ của người dùng (`prefs.getLanguageNative()`) để phát âm chuẩn xác.
+  - **LessonContent.kt & FeedbackContent.kt:** Kết nối nút phát âm loa (`VolumeUp`) của thẻ đáp án chính và các cách diễn đạt thay thế (`AnswerRow`) để gọi đến `viewModel.speak()`.
+  - **LanguageSettingsSection.kt:** Tích hợp tùy chọn điều chỉnh tốc độ giọng đọc TTS (Chậm, Thường, Nhanh) vào Profile Sheet, sử dụng bố cục dọc (Column) và chia đều chiều rộng nút (weight 1f) để tương thích hoàn hảo trên thiết bị di động Android.
+  - **TopicSelectionContent.kt:** Thêm nút phát loa (`VolumeUp`) ở góc bên trái mỗi dòng chủ đề trong danh sách chọn lựa, gọi `viewModel.speakTopic(topic.name)` để phát âm offline tên chủ đề theo ngôn ngữ mẹ đẻ của người dùng.
+  - **AndroidTtsPlayer.kt:** Gỡ bỏ hoàn toàn sự phụ thuộc vào động cơ hệ thống Google TTS (`android.speech.tts.TextToSpeech`), chuyển sang sử dụng bộ thư viện native `sherpa-onnx` để tổng hợp giọng nói offline của Adam tiếng Việt tương tự trên Desktop.
+  - **Android Gradle Task:** Thêm task `prepareAndroidTtsAssets` vào `androidApp/build.gradle.kts` để sao chép trực tiếp các tệp mô hình giọng nói (`adam1.onnx`, `tokens.txt` và `espeak-ng-data`) từ thư mục cache Desktop sang thư mục `assets/vits/` của Android tại thời điểm build (tải xuống tự động nếu cache trống).
+  - **Gradle Fixes:** Khắc phục lỗi cast kiểu dữ liệu `sampleRate` (Float), tải thư viện `sherpa-onnx-static-link-onnxruntime-1.12.10.aar` từ Hugging Face để làm dependency nội bộ cho Android, và sửa lỗi Gradle Configuration Cache.
+- **Ghi chú kỹ thuật:**
+  - Ứng dụng Android biên dịch thành công và được cài đặt trực tiếp lên thiết bị/giả lập (`androidApp-debug.apk`) thông qua ADB.
+  - Loại bỏ hoàn toàn Google TTS, 100% âm thanh tiếng Việt sử dụng offline giọng Adam.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Tiếp tục phát triển và tối ưu hóa hệ thống TTS ngoại tuyến cho các ngôn ngữ khác.
 
 ---
 

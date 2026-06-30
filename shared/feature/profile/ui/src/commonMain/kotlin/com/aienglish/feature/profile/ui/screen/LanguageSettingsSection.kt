@@ -204,5 +204,49 @@ internal fun LanguageSettingsSection(
                 )
             }
         }
+
+        // Tốc độ phát âm (TTS Speech Speed)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(12.dp))
+                .background(colors.surface)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text("Tốc độ phát âm", fontSize = 13.sp, color = colors.mainText, fontWeight = FontWeight.Medium)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(colors.border.copy(alpha = 0.15f))
+                    .padding(2.dp)
+            ) {
+                val currentSpeed = state.ttsSpeed
+                listOf(
+                    "slow" to "Chậm",
+                    "normal" to "Thường",
+                    "fast" to "Nhanh"
+                ).forEach { (code, label) ->
+                    val isSelected = currentSpeed == code
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(if (isSelected) colors.accent else Color.Transparent)
+                            .clickable { vm.onTtsSpeedChanged(code) }
+                            .padding(vertical = 8.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = label,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = if (isSelected) Color.White else colors.mutedText
+                        )
+                    }
+                }
+            }
+        }
     }
 }

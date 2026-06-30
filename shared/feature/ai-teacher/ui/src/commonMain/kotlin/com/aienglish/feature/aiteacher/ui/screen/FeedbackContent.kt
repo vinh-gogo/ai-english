@@ -320,7 +320,8 @@ private fun SentenceReviewCard(
                     text = AnnotatedString(sentence.english),
                     colors = colors,
                     clipboardManager = clipboardManager,
-                    plainText = sentence.english
+                    plainText = sentence.english,
+                    onPlayTts = { viewModel.speak(sentence.english, state.targetLanguage) }
                 )
                 
                 if (sentence.alternatives.isNotEmpty()) {
@@ -349,7 +350,8 @@ private fun SentenceReviewCard(
                                 text = annotatedAlt,
                                 colors = colors,
                                 clipboardManager = clipboardManager,
-                                plainText = alt
+                                plainText = alt,
+                                onPlayTts = { viewModel.speak(alt, state.targetLanguage) }
                             )
                         }
                     }
@@ -426,6 +428,7 @@ private fun AnswerRow(
     colors: AppColors,
     clipboardManager: androidx.compose.ui.platform.ClipboardManager,
     plainText: String,
+    onPlayTts: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -462,7 +465,7 @@ private fun AnswerRow(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
-                onClick = { /* TODO TTS */ },
+                onClick = onPlayTts,
                 modifier = Modifier.size(32.dp)
             ) {
                 Icon(

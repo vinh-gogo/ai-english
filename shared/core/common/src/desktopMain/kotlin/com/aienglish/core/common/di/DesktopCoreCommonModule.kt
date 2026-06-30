@@ -8,4 +8,5 @@ import org.koin.dsl.module
 val desktopCoreCommonModule = module {
     single<com.aienglish.core.common.security.SecureStorage> { com.aienglish.core.common.security.DesktopSecureStorage() }
     single<AppPreferences> { DesktopAppPreferences(get()) }
+    single<com.aienglish.core.common.tts.TtsPlayer> { com.aienglish.core.common.tts.DesktopTtsPlayer(get()) }
 }

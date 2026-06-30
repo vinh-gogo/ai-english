@@ -18,7 +18,8 @@ val teacherUiModule = module {
             teacherHistoryRepository = get(),
             topicRepository = get(),
             prefs = get(),
-            historyRepository = get()
+            historyRepository = get(),
+            ttsPlayer = get()
         )
     }
 }

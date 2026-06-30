@@ -9,4 +9,5 @@ import org.koin.dsl.module
 val androidCoreCommonModule = module {
     single<com.aienglish.core.common.security.SecureStorage> { com.aienglish.core.common.security.AndroidSecureStorage(androidContext()) }
     single<AppPreferences> { AndroidAppPreferences(androidContext(), get()) }
+    single<com.aienglish.core.common.tts.TtsPlayer> { com.aienglish.core.common.tts.AndroidTtsPlayer(androidContext(), get()) }
 }

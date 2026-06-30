@@ -1,4 +1,6 @@
 import java.util.Properties
+import java.net.URI
+import java.io.File
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -71,4 +73,57 @@ dependencies {
     implementation(project(":shared:feature:pro:application"))
     implementation(project(":shared:feature:pro:data"))
     implementation(project(":shared:feature:pro:ui"))
+}
+
+val prepareAndroidTtsAssets by tasks.registering {
+    val assetsDir = project.layout.projectDirectory.dir("src/main/assets/vits").asFile
+    doLast {
+        if (!assetsDir.exists()) assetsDir.mkdirs()
+        
+        val adamFile = File(assetsDir, "adam1.onnx")
+        val tokensFile = File(assetsDir, "tokens.txt")
+        val espeakDir = File(assetsDir, "espeak-ng-data")
+        
+        // 1. Download tokens.txt
+        if (!tokensFile.exists()) {
+            println("Downloading tokens.txt for Android VITS...")
+            val url = URI.create("https://huggingface.co/doof-ferb/nghitts-copy/resolve/main/sherpa-onnx/tokens.txt").toURL()
+            url.openStream().use { input -> tokensFile.outputStream().use { output -> input.copyTo(output) } }
+        }
+        
+        // 2. Download adam1.onnx
+        if (!adamFile.exists()) {
+            println("Downloading adam1.onnx for Android VITS...")
+            val url = URI.create("https://huggingface.co/doof-ferb/nghitts-copy/resolve/main/sherpa-onnx/adam1.onnx").toURL()
+            url.openStream().use { input -> adamFile.outputStream().use { output -> input.copyTo(output) } }
+        }
+        
+        // 3. Copy or extract espeak-ng-data
+        if (!espeakDir.exists()) {
+            val userHome = System.getProperty("user.home")
+            val cacheEspeak = File(userHome, ".ai-english/espeak-ng-data")
+            if (cacheEspeak.exists()) {
+                println("Copying espeak-ng-data from desktop cache to Android assets...")
+                project.copy {
+                    from(cacheEspeak)
+                    into(espeakDir)
+                }
+            } else {
+                println("Downloading espeak-ng-data.tar.bz2...")
+                val tarFile = File(temporaryDir, "espeak-ng-data.tar.bz2")
+                val url = URI.create("https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/espeak-ng-data.tar.bz2").toURL()
+                url.openStream().use { input -> tarFile.outputStream().use { output -> input.copyTo(output) } }
+                val process = ProcessBuilder("tar", "-xf", tarFile.absolutePath, "-C", assetsDir.absolutePath).start()
+                val exitCode = process.waitFor()
+                if (exitCode != 0) {
+                    throw RuntimeException("Failed to extract espeak-ng-data. Exit code: $exitCode")
+                }
+                tarFile.delete()
+            }
+        }
+    }
+}
+
+tasks.matching { it.name == "preBuild" }.all {
+    dependsOn(prepareAndroidTtsAssets)
 }

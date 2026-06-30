@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.School
 import androidx.compose.material.icons.rounded.Edit
@@ -356,7 +357,7 @@ fun TopicSelectionContent(
                             Box(
                                 modifier = Modifier.fillMaxWidth()
                             ) {
-                                // Rectangular index badge at the top-left edge
+                                // Rectangular index badge at the top-left edge (Restored refined user style)
                                 Box(
                                     modifier = Modifier
                                         .background(
@@ -378,7 +379,23 @@ fun TopicSelectionContent(
                                     )
                                 }
 
-                                // Full topic name wrapping to multiple lines if needed
+                                // Play audio button vertically centered on the left
+                                IconButton(
+                                    onClick = { viewModel.speakTopic(topic.name) },
+                                    modifier = Modifier
+                                        .align(Alignment.CenterStart)
+                                        .padding(start = 12.dp)
+                                        .size(28.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.VolumeUp,
+                                        contentDescription = "Nghe chủ đề",
+                                        tint = if (isSelected) colors.accent else colors.mutedText,
+                                        modifier = Modifier.size(16.dp)
+                                    )
+                                }
+
+                                // Full topic name wrapping to multiple lines if needed (Padded to clear controls)
                                 Text(
                                     text = buildInlineAnnotatedString(topic.name, colors),
                                     color = colors.mainText,
@@ -386,7 +403,7 @@ fun TopicSelectionContent(
                                     fontSize = 13.5.sp,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(start = 42.dp, end = 16.dp, top = 12.dp, bottom = 12.dp)
+                                        .padding(start = 48.dp, end = 16.dp, top = 12.dp, bottom = 12.dp)
                                 )
 
                                 // Overlay with Remove button in the center

@@ -25,6 +25,8 @@ interface AppPreferences {
     fun saveNovitaApiKey(key: String)
     fun getAppTheme(): String
     fun saveAppTheme(theme: String)
+    fun getTtsSpeed(): String
+    fun saveTtsSpeed(speed: String)
     fun clear()
 
     // Reactive preference streams
@@ -38,4 +40,5 @@ interface AppPreferences {
     val apiProviderFlow: Flow<String>
     val novitaApiKeyFlow: Flow<String>
     val appThemeFlow: Flow<String>
+    val ttsSpeedFlow: Flow<String>
 }

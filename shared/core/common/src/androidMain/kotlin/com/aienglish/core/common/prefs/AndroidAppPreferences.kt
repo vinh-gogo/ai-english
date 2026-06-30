@@ -40,6 +40,9 @@ class AndroidAppPreferences(
     private val _appTheme = MutableStateFlow(prefs.getString("app_theme", "SUNSET_WARMTH") ?: "SUNSET_WARMTH")
     override val appThemeFlow = _appTheme.asStateFlow()
 
+    private val _ttsSpeed = MutableStateFlow(prefs.getString("tts_speed", "slow") ?: "slow")
+    override val ttsSpeedFlow = _ttsSpeed.asStateFlow()
+
     override fun getApiKey(): String {
         val secured = secureStorage.getSecret("api_key")
         if (secured.isNotEmpty()) return secured
@@ -139,6 +142,13 @@ class AndroidAppPreferences(
         _appTheme.value = theme
     }
 
+    override fun getTtsSpeed() = prefs.getString("tts_speed", "slow") ?: "slow"
+
+    override fun saveTtsSpeed(speed: String) {
+        prefs.edit().putString("tts_speed", speed).apply()
+        _ttsSpeed.value = speed
+    }
+
     override fun clear() {
         prefs.edit().clear().apply()
         secureStorage.deleteSecret("api_key")
@@ -152,5 +162,6 @@ class AndroidAppPreferences(
         _aiResponseLength.value = "normal"
         _apiProvider.value = "gemini"
         _novitaApiKey.value = ""
+        _ttsSpeed.value = "slow"
     }
 }
