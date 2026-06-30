@@ -877,6 +877,8 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
       * Tốc độ **Chậm (Slow)**: Thay đổi xuống **`1.1f`** (chậm vừa phải để học từ vựng rõ ràng).
       * Tốc độ **Nhanh (Fast)**: Thay đổi xuống **`0.7f`**.
     - Việc tăng tốc độ tiếng Việt Adam giúp cân bằng hoàn hảo trải nghiệm đọc song ngữ Anh - Việt, không tạo cảm giác lệch nhịp khi chuyển đổi ngôn ngữ.
+    - **Loại bỏ hoàn toàn độ trễ nối (gap) giữa các phân đoạn:** Thay vì tạo, phát và giải phóng AudioTrack / SourceDataLine liên tục cho mỗi phân đoạn ngắn (gây ra độ trễ 100ms - 300ms do khởi tạo phần cứng), hệ thống chuyển sang **tích lũy và ghép nối toàn bộ FloatArray audio samples của các phân đoạn lại thành một bộ đệm duy nhất** trước khi phát.
+    - **Thuật toán Nội suy Tuyến tính (Linear Interpolation Resampling):** Tích hợp hàm `resample` tự động quy đổi đồng nhất tần số lấy mẫu (Sample Rate) của các phân đoạn khác tần số về cùng một tần số mục tiêu cao nhất trước khi ghép mảng, đảm bảo âm thanh chuyển giao mượt mà 100% không có khoảng lặng ngắt quãng.
 
 ---
 
