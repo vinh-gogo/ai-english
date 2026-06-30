@@ -60,6 +60,7 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 51** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Xáo trộn ngẫu nhiên danh sách các chủ đề trong cùng một level và khôi phục nút Ngẫu nhiên ở UI. | Hoàn thành |
 | **Session 52** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Tự động hiển thị nút "Quay lại đầu trang" (Scroll to Top) khi cuộn xuống qua phần tử thứ 10. | Hoàn thành |
 | **Session 53** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Nhấn giữ (long press) các dòng chủ đề hiển thị nút "Xóa" ở trung tâm và hỗ trợ xóa khỏi database. | Hoàn thành |
+| **Session 54** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Nghiên cứu và đề xuất giải pháp phát âm thanh (TTS) offline, local-only, free 100% bằng ONNX cho tiếng Anh & tiếng Việt trên KMP. | Hoàn thành |
 
 ---
 
@@ -646,6 +647,21 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
   - Build và kiểm thử thành công trên Desktop & Android qua ADB.
 - **Kế hoạch tiếp theo (Next Steps):**
   - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 54 (2026-06-30)
+
+- **Mục tiêu:** Nghiên cứu giải pháp phát âm thanh (Text-to-Speech) chạy local-only, offline 100%, hoàn toàn miễn phí (không trả phí API) bằng mô hình ONNX cho cả tiếng Anh và tiếng Việt trong dự án Kotlin Multiplatform (KMP).
+- **Hoạt động & Thay đổi:**
+  - **onnx_tts_research.md (Mới):** Tạo tài liệu nghiên cứu chi tiết lưu trữ trong thư mục `research/`.
+  - Nghiên cứu các mô hình tối ưu: Đề xuất **Piper TTS** (VITS-based mã nguồn mở MIT, siêu nhẹ ~15MB-50MB, chất lượng cao, có sẵn giọng đọc tiếng Anh và tiếng Việt chuẩn).
+  - Đề xuất Engine suy luận: Khuyên dùng **Sherpa-ONNX** (Apache-2.0 License, tích hợp sẵn phonemization offline bằng C++, hỗ trợ hoàn hảo JNI cho Android và Desktop JVM).
+  - Xây dựng bản vẽ kiến trúc luồng dữ liệu (Mermaid) và hướng dẫn tích hợp code mẫu chi tiết cho `expect`/`actual` trên cả Android (`androidMain`) và Desktop (`desktopMain`).
+- **Ghi chú kỹ thuật:**
+  - Lưu tài liệu nghiên cứu tại `research/onnx_tts_research.md`.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng để triển khai code.
 
 ---
 
