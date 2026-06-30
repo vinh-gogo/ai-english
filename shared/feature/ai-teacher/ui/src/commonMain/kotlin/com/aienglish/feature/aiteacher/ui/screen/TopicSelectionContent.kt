@@ -52,6 +52,7 @@ fun TopicSelectionContent(
 ) {
     val lazyListState = rememberLazyListState()
     val selectedIdx = state.selectedTopicIndex
+    val isTtsLoading by viewModel.isTtsLoading.collectAsState()
     var isSearchFocused by remember { mutableStateOf(false) }
     var isCustomTopicFocused by remember { mutableStateOf(false) }
     var longPressedTopicId by remember { mutableStateOf<Int?>(null) }
@@ -357,29 +358,29 @@ fun TopicSelectionContent(
                             Box(
                                 modifier = Modifier.fillMaxWidth()
                             ) {
-                                // Rectangular index badge at the top-left edge (Restored refined user style)
+                                // Rectangular index badge - goc tren-trai, hinh chu nhat nho
                                 Box(
                                     modifier = Modifier
                                         .background(
                                             color = if (isSelected) colors.accent else colors.border.copy(alpha = 0.5f),
                                             shape = RoundedCornerShape(
                                                 topStart = 12.dp,
-                                                topEnd = 4.dp,
+                                                topEnd = 0.dp,
                                                 bottomEnd = 4.dp,
-                                                bottomStart = 4.dp
+                                                bottomStart = 0.dp
                                             )
                                         )
-                                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                                        .padding(horizontal = 6.dp, vertical = 2.dp)
                                 ) {
                                     Text(
                                         text = "${i + 1}",
                                         color = if (isSelected) Color.White else colors.mutedText,
-                                        fontSize = 9.sp,
-                                        fontWeight = FontWeight.Bold
+                                        fontSize = 8.sp,
+                                        fontWeight = FontWeight.Medium
                                     )
                                 }
 
-                                // Play audio button vertically centered on the left
+                                // Play audio button - spinner khi dang tai model
                                 IconButton(
                                     onClick = { viewModel.speakTopic(topic.name) },
                                     modifier = Modifier
@@ -387,12 +388,20 @@ fun TopicSelectionContent(
                                         .padding(start = 12.dp)
                                         .size(28.dp)
                                 ) {
-                                    Icon(
-                                        imageVector = Icons.Default.VolumeUp,
-                                        contentDescription = "Nghe chủ đề",
-                                        tint = if (isSelected) colors.accent else colors.mutedText,
-                                        modifier = Modifier.size(16.dp)
-                                    )
+                                    if (isTtsLoading) {
+                                        CircularProgressIndicator(
+                                            modifier = Modifier.size(14.dp),
+                                            strokeWidth = 2.dp,
+                                            color = if (isSelected) colors.accent else colors.mutedText
+                                        )
+                                    } else {
+                                        Icon(
+                                            imageVector = Icons.Default.VolumeUp,
+                                            contentDescription = "Nghe chu de",
+                                            tint = if (isSelected) colors.accent else colors.mutedText,
+                                            modifier = Modifier.size(16.dp)
+                                        )
+                                    }
                                 }
 
                                 // Full topic name wrapping to multiple lines if needed (Padded to clear controls)

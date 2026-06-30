@@ -15,6 +15,7 @@ import com.aienglish.feature.aiteacher.domain.repository.TeacherHistoryRepositor
 import com.aienglish.feature.history.domain.model.LessonHistory
 import com.aienglish.feature.history.domain.repository.HistoryRepository
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
@@ -135,19 +136,38 @@ class TeacherViewModel(
     private val ttsPlayer: TtsPlayer
 ) : BaseViewModel<TeacherUiState>(TeacherUiState()) {
 
+    /** Loading state TTS: true khi dang copy model assets hoac khoi tao engine */
+    val isTtsLoading: StateFlow<Boolean> = ttsPlayer.isLoading
+
     fun speak(text: String, languageCode: String) {
         ttsPlayer.play(text, languageCode)
     }
 
     fun speakTopic(topicName: String) {
-        val nativeLang = prefs.getLanguageNative()
         val cleanText = topicName.replace("**", "").trim()
-        ttsPlayer.play(cleanText, nativeLang)
+        // Khi học tiếng Việt (target=vi) → topic hiển thị bằng tiếng Anh → đọc bằng giọng Anh
+        // Khi học các ngôn ngữ khác → topic bằng tiếng Việt → đọc bằng giọng Việt
+        val ttsLang = if (currentState.targetLanguage == "vi") "en" else "vi"
+        ttsPlayer.play(cleanText, ttsLang)
     }
 
     fun stopSpeaking() {
         ttsPlayer.stop()
     }
+
+    /**
+     * Phat explanation hon hop tieng Viet + tieng Anh:
+     * - Xoa markdown symbols truoc
+     * - Goi playMixed() de tu dong chon giong phu hop cho tung cau
+     */
+    fun speakExplanation(rawText: String) {
+        val cleanText = rawText
+            .replace(Regex("\\*\\*|\\*|##?\\s?|`+"), "")
+            .replace(Regex("\\n{3,}"), "\n\n")
+            .trim()
+        ttsPlayer.playMixed(cleanText)
+    }
+
 
     // Track current lesson DB id for history update
     private var currentLessonHistoryId: Long? = null
@@ -344,8 +364,13 @@ class TeacherViewModel(
         }
     }
 
-    // ── Topic Selection ──
-    fun onTopicIndexSelected(index: Int) = setState { copy(selectedTopicIndex = index) }
+    // -- Topic Selection --
+    fun onTopicIndexSelected(index: Int) {
+        setState { copy(selectedTopicIndex = index) }
+        // Tu dong phat audio ten chu de khi chon
+        val selectedTopic = currentState.topics.getOrNull(index) ?: return
+        speakTopic(selectedTopic.name)
+    }
     fun onTopicSearchChange(query: String) = setState { copy(topicSearchQuery = query) }
     
     fun onRemoveTopic(id: Int) {
@@ -620,7 +645,7 @@ class TeacherViewModel(
 
     fun onExplainSentence(index: Int) {
         val state = currentState
-        if (state.explanations.containsKey(index)) return
+        if (state.explanations.containsKey(index) || state.explainingSentenceIndex == index) return
 
         val lesson = state.lesson ?: return
         val level = state.selectedLevelText

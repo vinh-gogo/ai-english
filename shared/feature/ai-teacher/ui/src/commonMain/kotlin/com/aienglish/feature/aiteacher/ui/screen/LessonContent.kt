@@ -54,9 +54,15 @@ fun LessonContent(
     val sentence = lesson.sentences.getOrNull(idx) ?: return
     
     var showDetailedTokens by remember { mutableStateOf(false) }
-    var isExplanationExpanded by remember(idx) { mutableStateOf(false) }
     val userAnswer = state.userAnswers[idx] ?: ""
     val hasChecked = state.checkedAnswers.contains(idx)
+
+    LaunchedEffect(idx, hasChecked) {
+        if (hasChecked) {
+            viewModel.onExplainSentence(idx)
+        }
+    }
+
     val languageLabel = when (state.levelType) {
         LevelType.CEFR, LevelType.TOEIC -> "tiếng Anh"
         LevelType.JLPT -> "tiếng Nhật"
@@ -209,33 +215,6 @@ fun LessonContent(
                     }
                 }
                 
-                Spacer(Modifier.height(8.dp))
-                OutlinedButton(
-                    onClick = {
-                        isExplanationExpanded = !isExplanationExpanded
-                        if (isExplanationExpanded) {
-                            viewModel.onExplainSentence(idx)
-                        }
-                    },
-                    modifier = Modifier.height(30.dp),
-                    border = BorderStroke(1.dp, colors.accent.copy(0.5f)),
-                    shape = RoundedCornerShape(8.dp),
-                    contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp)
-                ) {
-                    Icon(
-                        if (isExplanationExpanded) Icons.Default.ExpandLess else Icons.Default.Info,
-                        null,
-                        tint = colors.accent,
-                        modifier = Modifier.size(12.dp)
-                    )
-                    Spacer(Modifier.width(4.dp))
-                    Text(
-                        if (isExplanationExpanded) "Thu gọn" else if (state.explanations.containsKey(idx)) "Xem lại" else "Giải thích",
-                        color = colors.accent,
-                        fontSize = 11.sp
-                    )
-                }
-                
                 Spacer(Modifier.height(14.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -379,7 +358,7 @@ fun LessonContent(
 
 
                 // Explanation card if available
-                if (isExplanationExpanded) {
+                if (hasChecked) {
                     val explanation = state.explanations[idx]
                     if (state.explainingSentenceIndex == idx) {
                         Spacer(Modifier.height(10.dp))
@@ -393,7 +372,43 @@ fun LessonContent(
                             border = BorderStroke(0.5.dp, colors.border)
                         ) {
                             Column(modifier = Modifier.padding(12.dp)) {
-                                Text("💡 Giải thích chi tiết:", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = colors.accent)
+                                // Header: nhan + nut audio
+                                val isTtsLoading by viewModel.isTtsLoading.collectAsState()
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Text(
+                                        "💡 Giải thích chi tiết:",
+                                        fontSize = 11.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = colors.accent
+                                    )
+                                    IconButton(
+                                        onClick = {
+                                            // speakExplanation tu dong detect ngon ngu tung cau
+                                            // va phat dung giong (Adam cho VI, Lessac cho EN)
+                                            viewModel.speakExplanation(explanation)
+                                        },
+                                        modifier = Modifier.size(28.dp)
+                                    ) {
+                                        if (isTtsLoading) {
+                                            CircularProgressIndicator(
+                                                modifier = Modifier.size(14.dp),
+                                                strokeWidth = 2.dp,
+                                                color = colors.accent
+                                            )
+                                        } else {
+                                            Icon(
+                                                imageVector = Icons.Default.VolumeUp,
+                                                contentDescription = "Nghe giai thich",
+                                                tint = colors.accent,
+                                                modifier = Modifier.size(16.dp)
+                                            )
+                                        }
+                                    }
+                                }
                                 Spacer(Modifier.height(4.dp))
                                 MarkdownText(explanation, colors)
                             }

@@ -64,6 +64,8 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 55** | 2026-06-30 | Antigravity | `59abccb0-a99a-40e9-adfb-104ca2daee00` | Chạy thử nghiệm thành công phát âm thanh TTS offline local 100% (Tiếng Anh & Tiếng Việt) sử dụng Sherpa-ONNX + Piper models không qua Python. | Hoàn thành |
 | **Session 56** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Nghiên cứu & Thử nghiệm mô hình tiếng Việt mới NGHI-TTS (NghiMe Studio), kiểm thử chất lượng và điều chỉnh tốc độ nói (lengthScale). | Hoàn thành |
 | **Session 57** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Tích hợp thành công động cơ phát âm offline KMP TTS (Android & Desktop) sử dụng giọng nam Adam (tốc độ chậm 1.15) cho tiếng Việt. | Hoàn thành |
+| **Session 58** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Fix crash SIGABRT (espeak_Initialize), dọn assets espeak-ng-data còn 9 ngôn ngữ, bỏ dấu ** trước khi đọc TTS, thêm giọng English lessac-medium (lengthScale=1.3) cho chủ đề tiếng Anh. | Hoàn thành |
+| **Session 59** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Tự động phát âm thanh khi chọn chủ đề, thêm loading spinner cho TTS, xóa bỏ toggle "Giải thích chi tiết" (luôn hiển thị tự động). | Hoàn thành |
 
 ---
 
@@ -726,6 +728,32 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
   - Loại bỏ hoàn toàn Google TTS, 100% âm thanh tiếng Việt sử dụng offline giọng Adam.
 - **Kế hoạch tiếp theo (Next Steps):**
   - Tiếp tục phát triển và tối ưu hóa hệ thống TTS ngoại tuyến cho các ngôn ngữ khác.
+
+---
+
+### 🟢 Session 58 (2026-06-30)
+
+- **Mục tiêu:** Sửa lỗi crash SIGABRT (espeak_Initialize), tối ưu hóa assets espeak-ng-data, thêm giọng English lessac cho chủ đề tiếng Anh.
+- **Hoạt động & Thay đổi:**
+  - Sửa lỗi crash JNI SIGABRT trên Android bằng cách sao chép assets ra filesDir của ứng dụng và khởi tạo với `assetManager = null`.
+  - Tối ưu hóa dung lượng assets bằng cách loại bỏ các file espeak-ng-data không dùng tới, chỉ giữ lại 9 ngôn ngữ cần thiết.
+  - Loại bỏ các ký tự `**` khỏi văn bản tên topic trước khi phát âm.
+  - Thêm cấu hình mô hình `en_US-lessac-medium.onnx` ở tốc độ `1.3f` cho giọng đọc tiếng Anh khi ngôn ngữ đích học là tiếng Việt.
+
+---
+
+### 🟢 Session 59 (2026-06-30)
+
+- **Mục tiêu:** Tự động phát âm thanh khi chọn chủ đề, thêm chỉ báo loading khi nạp model TTS, và luôn hiển thị phần giải thích chi tiết trong màn hình luyện tập mà không cần toggle.
+- **Hoạt động & Thay đổi:**
+  - **TtsPlayer.kt & implementation:** Thêm StateFlow `isLoading` để giao diện biết khi nào TTS engine đang chuẩn bị tài nguyên.
+  - **TopicSelectionContent.kt:** Tích hợp auto-play khi người dùng click vào chủ đề và hiển thị loading spinner trên icon phát loa khi đang nạp mô hình.
+  - **LessonContent.kt:**
+    - Xóa bỏ nút toggle và biến trạng thái ẩn/hiện "Giải thích chi tiết".
+    - Thêm `LaunchedEffect` tự động gửi yêu cầu lấy giải thích từ AI (`viewModel.onExplainSentence()`) ngay khi người dùng kiểm tra đáp án (`hasChecked == true`).
+    - Luôn hiển thị giải thích chi tiết (dưới dạng Skeleton loading khi đang tải và dạng Card chi tiết khi đã tải xong).
+  - **Sequential TTS:** Cập nhật phương thức `playMixed(text)` ở core TTS player để tự động bóc tách từng câu song ngữ Anh-Việt, phát hiện ngôn ngữ của câu và phát tuần tự bằng đúng model (Adam cho Việt, Lessac cho Anh).
+  - **TeacherViewModel.kt:** Tối ưu hóa hàm `onExplainSentence` tránh gửi nhiều request API trùng lặp khi đang tải.
 
 ---
 

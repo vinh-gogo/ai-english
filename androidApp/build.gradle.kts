@@ -77,47 +77,56 @@ dependencies {
 
 val prepareAndroidTtsAssets by tasks.registering {
     val assetsDir = project.layout.projectDirectory.dir("src/main/assets/vits").asFile
+    val enAssetsDir = File(assetsDir, "en")
     doLast {
         if (!assetsDir.exists()) assetsDir.mkdirs()
-        
+        if (!enAssetsDir.exists()) enAssetsDir.mkdirs()
+
+        // ── Tiếng Việt: NGHI-TTS Adam ──────────────────────────────────────────
         val adamFile = File(assetsDir, "adam1.onnx")
         val tokensFile = File(assetsDir, "tokens.txt")
         val espeakDir = File(assetsDir, "espeak-ng-data")
-        
-        // 1. Download tokens.txt
+
         if (!tokensFile.exists()) {
-            println("Downloading tokens.txt for Android VITS...")
+            println("Downloading VI tokens.txt...")
             val url = URI.create("https://huggingface.co/doof-ferb/nghitts-copy/resolve/main/sherpa-onnx/tokens.txt").toURL()
             url.openStream().use { input -> tokensFile.outputStream().use { output -> input.copyTo(output) } }
         }
-        
-        // 2. Download adam1.onnx
         if (!adamFile.exists()) {
-            println("Downloading adam1.onnx for Android VITS...")
+            println("Downloading adam1.onnx...")
             val url = URI.create("https://huggingface.co/doof-ferb/nghitts-copy/resolve/main/sherpa-onnx/adam1.onnx").toURL()
             url.openStream().use { input -> adamFile.outputStream().use { output -> input.copyTo(output) } }
         }
-        
-        // 3. Copy or extract espeak-ng-data
+
+        // ── Tiếng Anh: Piper lessac-medium ─────────────────────────────────────
+        val lessacFile  = File(enAssetsDir, "en_US-lessac-medium.onnx")
+        val enTokensFile = File(enAssetsDir, "tokens.txt")
+
+        if (!enTokensFile.exists()) {
+            println("Downloading EN tokens.txt (lessac)...")
+            val url = URI.create("https://huggingface.co/csukuangfj/vits-piper-en_US-lessac-medium/resolve/main/tokens.txt").toURL()
+            url.openStream().use { input -> enTokensFile.outputStream().use { output -> input.copyTo(output) } }
+        }
+        if (!lessacFile.exists()) {
+            println("Downloading en_US-lessac-medium.onnx (~60MB)...")
+            val url = URI.create("https://huggingface.co/csukuangfj/vits-piper-en_US-lessac-medium/resolve/main/en_US-lessac-medium.onnx").toURL()
+            url.openStream().use { input -> lessacFile.outputStream().use { output -> input.copyTo(output) } }
+        }
+
+        // ── espeak-ng-data (dùng chung cho cả VI và EN) ─────────────────────────
         if (!espeakDir.exists()) {
             val userHome = System.getProperty("user.home")
             val cacheEspeak = File(userHome, ".ai-english/espeak-ng-data")
             if (cacheEspeak.exists()) {
                 println("Copying espeak-ng-data from desktop cache to Android assets...")
-                project.copy {
-                    from(cacheEspeak)
-                    into(espeakDir)
-                }
+                project.copy { from(cacheEspeak); into(espeakDir) }
             } else {
                 println("Downloading espeak-ng-data.tar.bz2...")
                 val tarFile = File(temporaryDir, "espeak-ng-data.tar.bz2")
                 val url = URI.create("https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/espeak-ng-data.tar.bz2").toURL()
                 url.openStream().use { input -> tarFile.outputStream().use { output -> input.copyTo(output) } }
                 val process = ProcessBuilder("tar", "-xf", tarFile.absolutePath, "-C", assetsDir.absolutePath).start()
-                val exitCode = process.waitFor()
-                if (exitCode != 0) {
-                    throw RuntimeException("Failed to extract espeak-ng-data. Exit code: $exitCode")
-                }
+                if (process.waitFor() != 0) throw RuntimeException("Failed to extract espeak-ng-data")
                 tarFile.delete()
             }
         }
