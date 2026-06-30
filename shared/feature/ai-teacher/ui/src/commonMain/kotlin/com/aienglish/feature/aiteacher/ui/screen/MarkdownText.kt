@@ -8,11 +8,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -324,10 +326,12 @@ fun MarkdownText(
                 is Block.Bullet -> {
                     val annotated = remember(block.text, colors) {
                         buildAnnotatedString {
-                            withStyle(SpanStyle(color = colors.accent, fontWeight = FontWeight.Bold)) {
-                                append("•   ")
+                            withStyle(ParagraphStyle(textIndent = TextIndent(firstLine = 0.sp, restLine = 16.sp))) {
+                                withStyle(SpanStyle(color = colors.accent, fontWeight = FontWeight.Bold)) {
+                                    append("•\u00A0\u00A0\u00A0")
+                                }
+                                append(buildInlineAnnotatedString(block.text, colors))
                             }
-                            append(buildInlineAnnotatedString(block.text, colors))
                         }
                     }
                     Text(
@@ -342,10 +346,12 @@ fun MarkdownText(
                 is Block.Ordered -> {
                     val annotated = remember(block.index, block.text, colors) {
                         buildAnnotatedString {
-                            withStyle(SpanStyle(color = colors.accent, fontWeight = FontWeight.Bold)) {
-                                append("${block.index}  ")
+                            withStyle(ParagraphStyle(textIndent = TextIndent(firstLine = 0.sp, restLine = 24.sp))) {
+                                withStyle(SpanStyle(color = colors.accent, fontWeight = FontWeight.Bold)) {
+                                    append("${block.index}\u00A0\u00A0")
+                                }
+                                append(buildInlineAnnotatedString(block.text, colors))
                             }
-                            append(buildInlineAnnotatedString(block.text, colors))
                         }
                     }
                     Text(
