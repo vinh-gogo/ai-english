@@ -674,14 +674,15 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
     - Cấu hình compile task và JVM execution task bắt buộc sử dụng encoding UTF-8 để tránh lỗi ký tự tiếng Việt có dấu.
     - Thêm task Gradle `downloadEspeakData` tải gói ngữ âm `espeak-ng-data.tar.bz2` (khoảng 3MB) từ GitHub Releases và tự động giải nén bằng lệnh `tar` hệ thống để phục vụ phonemization offline cho Piper.
     - Thêm task Gradle `downloadEnglishModel` tải trọn gói mô hình tiếng Anh chính thức `vits-piper-en_US-amy-low.tar.bz2` (khoảng 15MB) đã nhúng sẵn metadata tương thích với Sherpa-ONNX.
-  - **AudioTest.java:**
-    - Tách logic nạp model, sinh sóng âm thanh (ONNX inference) và phát ra loa bằng Java Sound API (`SourceDataLine`) thành một hàm dùng chung `runTts(...)` gọn gàng.
-    - Thiết lập download model và tokens tiếng Việt `vi_VN-vivos-x_low` từ Hugging Face qua HTTP Connection có set Header `User-Agent: Mozilla/5.0` để bypass lỗi HTTP 401.
-    - Thực thi phát thử nghiệm âm thanh hai thứ tiếng Việt và Anh liên tiếp hoàn tất 100% thành công, không gặp bất cứ lỗi OOV (Out Of Vocabulary) hay lỗi metadata.
+  - **AudioTest.java & .gitignore:**
+    - Nâng cấp hàm `runTts(...)` hỗ trợ ghi mảng bytes PCM thô thành file âm thanh định dạng `.wav` tiêu chuẩn thông qua Java Sound API (`AudioSystem.write`).
+    - Thêm cấu hình ignore `/*.wav` vào `.gitignore` của subproject để giữ Git repository sạch sẽ.
+    - Phát triển và tải thêm hai mô hình tiếng Việt thay thế chất lượng cao hơn: `vi_VN-25hours_single-low` (16kHz) và `vi_VN-vais1000-medium` (22.05kHz - chất lượng Studio).
+    - Tạo 3 file audio tiếng Việt so sánh tương ứng (`output-vi-vivos.wav`, `output-vi-25hours.wav`, `output-vi-vais1000.wav`) cùng file tiếng Anh `output-en.wav` để người dùng thẩm định chất lượng.
 - **Ghi chú kỹ thuật:**
   - Chương trình chạy thử nghiệm hoạt động hoàn hảo tại folder `research/audio-test/` của dự án.
 - **Kế hoạch tiếp theo (Next Steps):**
-  - Bắt đầu triển khai tích hợp giải pháp TTS offline này vào Core App (Android & Desktop) bằng KMP expect/actual class theo tài liệu thiết kế.
+  - Dựa trên kết quả thẩm định chất lượng các model của người dùng, tiến hành triển khai tích hợp TTS vào Core App (Android & Desktop) bằng KMP expect/actual class.
 
 ---
 
