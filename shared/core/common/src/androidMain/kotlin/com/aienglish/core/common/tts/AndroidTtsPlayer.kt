@@ -171,7 +171,7 @@ class AndroidTtsPlayer(
                 if (!currentJob.isActive) return@launch
 
                 // 1. Generate audio for all segments
-                val generatedChunks = mutableListOf<Pair<FloatArray, Int>>()
+                val generatedChunks = mutableListOf<Triple<FloatArray, Int, String>>()
                 for ((segText, segLang) in segments) {
                     if (!currentJob.isActive) break
                     val cleanText = cleanMarkdownSymbols(segText).trim()
@@ -180,7 +180,7 @@ class AndroidTtsPlayer(
                     tts ?: continue
                     val audio = tts.generate(cleanText, 0)
                     if (audio.samples.isNotEmpty()) {
-                        generatedChunks.add(Pair(audio.samples, audio.sampleRate))
+                        generatedChunks.add(Triple(audio.samples, audio.sampleRate, segText))
                     }
                 }
 
@@ -189,16 +189,31 @@ class AndroidTtsPlayer(
                 // 2. Determine target sample rate (use maximum sample rate)
                 val targetSampleRate = generatedChunks.maxOf { it.second }
 
-                // 3. Resample and concatenate all samples
+                // 3. Resample, trim silence, and add natural pauses where punctuation exists
                 var totalLength = 0
-                val processedChunks = generatedChunks.map { (samples, rate) ->
-                    val resampled = if (rate != targetSampleRate) {
-                        resample(samples, rate, targetSampleRate)
-                    } else {
-                        samples
+                val processedChunks = generatedChunks.map { (samples, rate, originalText) ->
+                    // A. Trim leading/trailing silence from the model output
+                    var processed = trimSilence(samples, 0.005f)
+                    
+                    // B. Resample if rate doesn't match target
+                    if (rate != targetSampleRate) {
+                        processed = resample(processed, rate, targetSampleRate)
                     }
-                    totalLength += resampled.size
-                    resampled
+                    
+                    // C. Add artificial pause for sentence boundaries
+                    val trimmedText = originalText.trim()
+                    val lastChar = trimmedText.lastOrNull()
+                    if (lastChar != null) {
+                        if (lastChar == '.' || lastChar == '?' || lastChar == '!' || lastChar == '\n') {
+                            processed = appendSilence(processed, 0.3f, targetSampleRate)
+                        } else if (lastChar == ':' || lastChar == ';') {
+                            processed = appendSilence(processed, 0.15f, targetSampleRate)
+                        } else if (lastChar == ',') {
+                            processed = appendSilence(processed, 0.1f, targetSampleRate)
+                        }
+                    }
+                    totalLength += processed.size
+                    processed
                 }
 
                 val combinedSamples = FloatArray(totalLength)
@@ -557,5 +572,26 @@ class AndroidTtsPlayer(
             }
         }
         return resampled
+    }
+
+    private fun trimSilence(samples: FloatArray, threshold: Float): FloatArray {
+        var start = 0
+        while (start < samples.size && kotlin.math.abs(samples[start]) < threshold) {
+            start++
+        }
+        var end = samples.size - 1
+        while (end >= start && kotlin.math.abs(samples[end]) < threshold) {
+            end--
+        }
+        if (start > end) return FloatArray(0)
+        return samples.copyOfRange(start, end + 1)
+    }
+
+    private fun appendSilence(samples: FloatArray, durationSeconds: Float, sampleRate: Int): FloatArray {
+        val silenceLength = (sampleRate * durationSeconds).toInt()
+        if (silenceLength <= 0) return samples
+        val result = FloatArray(samples.size + silenceLength)
+        System.arraycopy(samples, 0, result, 0, samples.size)
+        return result
     }
 }
