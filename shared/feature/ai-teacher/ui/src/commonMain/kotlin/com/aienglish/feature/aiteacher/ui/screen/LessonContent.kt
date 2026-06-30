@@ -698,8 +698,9 @@ private fun AnswerRow(
                 color = colors.mainText
             )
         }
-        Row(
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             IconButton(
                 onClick = onPlayTts,
