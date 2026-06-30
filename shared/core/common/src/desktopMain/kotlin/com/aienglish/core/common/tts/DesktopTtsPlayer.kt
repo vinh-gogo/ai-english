@@ -326,10 +326,10 @@ class DesktopTtsPlayer(
 
     private fun initViTts(speedSetting: String): OfflineTts {
         val lengthScale = when (speedSetting) {
-            "slow"   -> 1.25f
-            "normal" -> 1.0f
-            "fast"   -> 0.85f
-            else     -> 1.0f
+            "slow"   -> 1.1f
+            "normal" -> 0.85f
+            "fast"   -> 0.7f
+            else     -> 0.85f
         }
         val vitsConfig = OfflineTtsVitsModelConfig.builder()
             .setModel(File(modelsDir, "adam1.onnx").absolutePath)
