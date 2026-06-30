@@ -161,11 +161,10 @@ class TeacherViewModel(
      * - Goi playMixed() de tu dong chon giong phu hop cho tung cau
      */
     fun speakExplanation(rawText: String) {
-        val cleanText = rawText
-            .replace(Regex("\\*\\*|\\*|##?\\s?|`+"), "")
+        val normalizedText = rawText
             .replace(Regex("\\n{3,}"), "\n\n")
             .trim()
-        ttsPlayer.playMixed(cleanText)
+        ttsPlayer.playMixed(normalizedText)
     }
 
 

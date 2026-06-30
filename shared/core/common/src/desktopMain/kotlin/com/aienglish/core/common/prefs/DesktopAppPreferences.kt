@@ -42,6 +42,12 @@ class DesktopAppPreferences(
     private val _ttsSpeed = MutableStateFlow(prefs.get("tts_speed", "slow"))
     override val ttsSpeedFlow = _ttsSpeed.asStateFlow()
 
+    private val _ttsEngine = MutableStateFlow(prefs.get("tts_engine", "onnx"))
+    override val ttsEngineFlow = _ttsEngine.asStateFlow()
+
+    private val _ttsVoiceEn = MutableStateFlow(prefs.get("tts_voice_en", "lessac"))
+    override val ttsVoiceEnFlow = _ttsVoiceEn.asStateFlow()
+
     override fun getApiKey(): String {
         val secured = secureStorage.getSecret("api_key")
         if (secured.isNotEmpty()) return secured
@@ -148,6 +154,20 @@ class DesktopAppPreferences(
         _ttsSpeed.value = speed
     }
 
+    override fun getTtsEngine() = prefs.get("tts_engine", "onnx")
+
+    override fun saveTtsEngine(engine: String) {
+        prefs.put("tts_engine", engine)
+        _ttsEngine.value = engine
+    }
+
+    override fun getTtsVoiceEn() = prefs.get("tts_voice_en", "lessac")
+
+    override fun saveTtsVoiceEn(voice: String) {
+        prefs.put("tts_voice_en", voice)
+        _ttsVoiceEn.value = voice
+    }
+
     override fun clear() {
         prefs.clear()
         secureStorage.deleteSecret("api_key")
@@ -162,5 +182,7 @@ class DesktopAppPreferences(
         _apiProvider.value = "gemini"
         _novitaApiKey.value = ""
         _ttsSpeed.value = "slow"
+        _ttsEngine.value = "onnx"
+        _ttsVoiceEn.value = "lessac"
     }
 }

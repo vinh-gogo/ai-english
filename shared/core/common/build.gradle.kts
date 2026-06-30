@@ -62,6 +62,7 @@ kotlin {
         val desktopMain by getting {
             dependencies {
                 implementation(fileTree("lib") { include("*.jar") })
+                implementation(libs.jlayer)
             }
         }
     }

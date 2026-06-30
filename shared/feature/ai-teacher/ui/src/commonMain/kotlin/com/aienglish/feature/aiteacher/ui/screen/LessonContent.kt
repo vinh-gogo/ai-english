@@ -385,27 +385,44 @@ fun LessonContent(
                                         fontWeight = FontWeight.Bold,
                                         color = colors.accent
                                     )
-                                    IconButton(
-                                        onClick = {
-                                            // speakExplanation tu dong detect ngon ngu tung cau
-                                            // va phat dung giong (Adam cho VI, Lessac cho EN)
-                                            viewModel.speakExplanation(explanation)
-                                        },
-                                        modifier = Modifier.size(28.dp)
-                                    ) {
-                                        if (isTtsLoading) {
-                                            CircularProgressIndicator(
-                                                modifier = Modifier.size(14.dp),
-                                                strokeWidth = 2.dp,
-                                                color = colors.accent
-                                            )
-                                        } else {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        val clipboardManager = LocalClipboardManager.current
+                                        IconButton(
+                                            onClick = {
+                                                clipboardManager.setText(AnnotatedString(explanation))
+                                            },
+                                            modifier = Modifier.size(28.dp)
+                                        ) {
                                             Icon(
-                                                imageVector = Icons.Default.VolumeUp,
-                                                contentDescription = "Nghe giai thich",
+                                                imageVector = Icons.Default.ContentCopy,
+                                                contentDescription = "Sao chep giai thich",
                                                 tint = colors.accent,
                                                 modifier = Modifier.size(16.dp)
                                             )
+                                        }
+                                        Spacer(Modifier.width(4.dp))
+                                        IconButton(
+                                            onClick = {
+                                                // speakExplanation tu dong detect ngon ngu tung cau
+                                                // va phat dung giong (Adam cho VI, Lessac cho EN)
+                                                viewModel.speakExplanation(explanation)
+                                            },
+                                            modifier = Modifier.size(28.dp)
+                                        ) {
+                                            if (isTtsLoading) {
+                                                CircularProgressIndicator(
+                                                    modifier = Modifier.size(14.dp),
+                                                    strokeWidth = 2.dp,
+                                                    color = colors.accent
+                                                )
+                                            } else {
+                                                Icon(
+                                                    imageVector = Icons.Default.VolumeUp,
+                                                    contentDescription = "Nghe giai thich",
+                                                    tint = colors.accent,
+                                                    modifier = Modifier.size(16.dp)
+                                                )
+                                            }
                                         }
                                     }
                                 }

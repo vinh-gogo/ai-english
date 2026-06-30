@@ -98,8 +98,9 @@ val prepareAndroidTtsAssets by tasks.registering {
             url.openStream().use { input -> adamFile.outputStream().use { output -> input.copyTo(output) } }
         }
 
-        // ── Tiếng Anh: Piper lessac-medium ─────────────────────────────────────
+        // ── Tiếng Anh: Piper lessac-medium & amy-low ────────────────────────────
         val lessacFile  = File(enAssetsDir, "en_US-lessac-medium.onnx")
+        val amyFile  = File(enAssetsDir, "en_US-amy-low.onnx")
         val enTokensFile = File(enAssetsDir, "tokens.txt")
 
         if (!enTokensFile.exists()) {
@@ -111,6 +112,11 @@ val prepareAndroidTtsAssets by tasks.registering {
             println("Downloading en_US-lessac-medium.onnx (~60MB)...")
             val url = URI.create("https://huggingface.co/csukuangfj/vits-piper-en_US-lessac-medium/resolve/main/en_US-lessac-medium.onnx").toURL()
             url.openStream().use { input -> lessacFile.outputStream().use { output -> input.copyTo(output) } }
+        }
+        if (!amyFile.exists()) {
+            println("Downloading en_US-amy-low.onnx (~60MB)...")
+            val url = URI.create("https://huggingface.co/csukuangfj/vits-piper-en_US-amy-low/resolve/main/en_US-amy-low.onnx").toURL()
+            url.openStream().use { input -> amyFile.outputStream().use { output -> input.copyTo(output) } }
         }
 
         // ── espeak-ng-data (dùng chung cho cả VI và EN) ─────────────────────────

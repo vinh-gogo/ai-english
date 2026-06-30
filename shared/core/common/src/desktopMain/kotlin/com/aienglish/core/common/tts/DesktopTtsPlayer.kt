@@ -25,10 +25,12 @@ class DesktopTtsPlayer(
     private var viTts: OfflineTts? = null
     private var enTts: OfflineTts? = null
     private var currentTtsSpeed: String? = null
+    private var currentTtsVoice: String? = null
     private var line: SourceDataLine? = null
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var isDownloading = false
     private var playJob: Job? = null
+    private var googlePlayer: javazoom.jl.player.Player? = null
 
     private val dbDir = File(System.getProperty("user.home"), ".ai-english")
     private val modelsDir = File(dbDir, "models")
@@ -50,6 +52,15 @@ class DesktopTtsPlayer(
         playJob?.cancel()
         stop()
 
+        if (prefs.getTtsEngine() == "google") {
+            playJob = scope.launch {
+                val currentJob = coroutineContext[Job]!!
+                _isLoading.value = true
+                playGoogleTts(text, lang, currentJob)
+            }
+            return
+        }
+
         playJob = scope.launch {
             try {
                 val currentJob = coroutineContext[Job]!!
@@ -60,7 +71,8 @@ class DesktopTtsPlayer(
                 }
 
                 val speedSetting = prefs.getTtsSpeed()
-                if (currentTtsSpeed != speedSetting) {
+                val voiceSetting = prefs.getTtsVoiceEn()
+                if (currentTtsSpeed != speedSetting || currentTtsVoice != voiceSetting) {
                     viTts = null
                     enTts = null
                 }
@@ -80,6 +92,7 @@ class DesktopTtsPlayer(
                 } ?: run { _isLoading.value = false; return@launch }
 
                 currentTtsSpeed = speedSetting
+                currentTtsVoice = voiceSetting
                 _isLoading.value = false
 
                 if (!currentJob.isActive) return@launch
@@ -128,16 +141,31 @@ class DesktopTtsPlayer(
         playJob?.cancel()
         stop()
 
+        if (prefs.getTtsEngine() == "google") {
+            playJob = scope.launch {
+                val currentJob = coroutineContext[Job]!!
+                val segments = splitByLanguage(text)
+                for ((segText, segLang) in segments) {
+                    if (!currentJob.isActive) break
+                    _isLoading.value = true
+                    playGoogleTts(segText, segLang, currentJob)
+                }
+            }
+            return
+        }
+
         playJob = scope.launch {
             try {
                 val currentJob = coroutineContext[Job]!!
                 _isLoading.value = true
                 if (!checkAndDownloadAssets()) return@launch
                 val speedSetting = prefs.getTtsSpeed()
-                if (currentTtsSpeed != speedSetting) { viTts = null; enTts = null }
+                val voiceSetting = prefs.getTtsVoiceEn()
+                if (currentTtsSpeed != speedSetting || currentTtsVoice != voiceSetting) { viTts = null; enTts = null }
                 if (viTts == null) viTts = initViTts(speedSetting)
                 if (enTts == null) enTts = initEnTts(speedSetting)
                 currentTtsSpeed = speedSetting
+                currentTtsVoice = voiceSetting
                 _isLoading.value = false
 
                 if (!currentJob.isActive) return@launch
@@ -184,18 +212,97 @@ class DesktopTtsPlayer(
     }
 
     private fun splitByLanguage(text: String): List<Pair<String, String>> {
-        val chunks = text.split(Regex("(?<=[.!?])\\s+|\\n"))
-            .map { it.trim() }.filter { it.isNotBlank() }
+        val targetLang = prefs.getLanguageTarget().lowercase()
+        val viChars = "àáảãạăắặẳẵâấầẩẫậđèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵ" +
+                "ÀÁẢÃẠĂẮẶẲẴÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆÌÍỈĨỊÒÓỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÙÚỦŨỤƯỨỪỬỮỰỲÝỶỸỴ"
+        
+        fun isVi(t: String): Boolean = t.any { it in viChars }
+
+        // Nhan dien cum tu dac biet: **bold**, *italic*, `code`, "quotes", 'quotes', /phonetic/, (parentheses)
+        val pattern = Regex("\\*\\*(.*?)\\*\\*|\\*(.*?)\\*|`([^`]+)`|\\\"([^\\\"]+)\\\"|'([^']+)'|/([^/\\n]+)/|\\(([^)]+)\\)")
+        
         val segments = mutableListOf<Pair<String, String>>()
-        for (chunk in chunks) {
-            val lang = if (isVietnamese(chunk)) "vi" else "en"
-            if (segments.isNotEmpty() && segments.last().second == lang) {
-                segments[segments.size - 1] = Pair(segments.last().first + " " + chunk, lang)
-            } else {
+        var lastIdx = 0
+        
+        fun addPlainSegments(plainText: String) {
+            val rawChunks = plainText.split(Regex("(?<=[.!?])\\s+|\\n"))
+                .map { it.trim() }
+                .filter { it.isNotBlank() }
+            for (chunk in rawChunks) {
+                val lang = if (isVi(chunk)) "vi" else targetLang
                 segments.add(Pair(chunk, lang))
             }
         }
-        return segments
+
+        for (match in pattern.findAll(text)) {
+            val start = match.range.first
+            val end = match.range.last + 1
+            
+            if (start > lastIdx) {
+                val plainText = text.substring(lastIdx, start)
+                addPlainSegments(plainText)
+            }
+            
+            val content = match.groupValues.firstOrNull { it.isNotEmpty() && it != match.value } ?: match.value
+            val cleanedContent = content.trim()
+            if (cleanedContent.isNotEmpty()) {
+                val lang = if (isVi(cleanedContent)) "vi" else targetLang
+                segments.add(Pair(cleanedContent, lang))
+            }
+            
+            lastIdx = end
+        }
+        
+        if (lastIdx < text.length) {
+            val plainText = text.substring(lastIdx)
+            addPlainSegments(plainText)
+        }
+        
+        // Post-process: chuan hoa markdown, cat ngan neu dai hon 180 ky tu, gop cung ngon ngu
+        val finalSegments = mutableListOf<Pair<String, String>>()
+        for ((segText, segLang) in segments) {
+            val cleaned = cleanMarkdownSymbols(segText).trim()
+            if (cleaned.isEmpty()) continue
+            
+            val subPieces = splitIfTooLong(cleaned, 180)
+            for (piece in subPieces) {
+                val last = finalSegments.lastOrNull()
+                if (last != null && last.second == segLang && (last.first.length + piece.length + 1) < 180) {
+                    finalSegments[finalSegments.size - 1] = Pair(last.first + " " + piece, segLang)
+                } else {
+                    finalSegments.add(Pair(piece, segLang))
+                }
+            }
+        }
+        
+        return finalSegments
+    }
+
+    private fun cleanMarkdownSymbols(text: String): String {
+        return text
+            .replace(Regex("\\*\\*|\\*|##?\\s?|`+"), "")
+            .trim()
+    }
+
+    private fun splitIfTooLong(text: String, maxLen: Int): List<String> {
+        if (text.length <= maxLen) return listOf(text)
+        val subChunks = text.split(Regex("(?<=[,;])\\s+"))
+        val result = mutableListOf<String>()
+        var current = ""
+        for (sub in subChunks) {
+            if (current.isEmpty()) {
+                current = sub
+            } else if (current.length + sub.length + 1 <= maxLen) {
+                current += ", " + sub
+            } else {
+                result.add(current)
+                current = sub
+            }
+        }
+        if (current.isNotEmpty()) {
+            result.add(current)
+        }
+        return result
     }
 
     private fun isVietnamese(text: String): Boolean {
@@ -232,8 +339,11 @@ class DesktopTtsPlayer(
             "fast"   -> 1.1f
             else     -> 1.3f
         }
+        val voiceSetting = prefs.getTtsVoiceEn()
+        val modelFileName = if (voiceSetting == "amy") "en_US-amy-low.onnx" else "en_US-lessac-medium.onnx"
+
         val vitsConfig = OfflineTtsVitsModelConfig.builder()
-            .setModel(File(enModelsDir, "en_US-lessac-medium.onnx").absolutePath)
+            .setModel(File(enModelsDir, modelFileName).absolutePath)
             .setTokens(File(enModelsDir, "tokens.txt").absolutePath)
             .setDataDir(espeakDir.absolutePath)
             .setNoiseScale(0.667f).setNoiseScaleW(0.8f)
@@ -256,16 +366,48 @@ class DesktopTtsPlayer(
             e.printStackTrace()
         }
         line = null
+
+        try {
+            googlePlayer?.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        googlePlayer = null
+    }
+
+    private fun playGoogleTts(text: String, lang: String, job: Job) {
+        try {
+            val encodedText = java.net.URLEncoder.encode(text, "UTF-8")
+            val urlString = "https://translate.google.com/translate_tts?ie=UTF-8&tl=$lang&client=tw-ob&q=$encodedText"
+            val url = java.net.URI.create(urlString).toURL()
+            val conn = url.openConnection()
+            conn.setRequestProperty("User-Agent", "Mozilla/5.0")
+            
+            val player = javazoom.jl.player.Player(conn.inputStream)
+            googlePlayer = player
+            
+            if (job.isActive) {
+                _isLoading.value = false
+                player.play()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            _isLoading.value = false
+            googlePlayer = null
+        }
     }
 
     private fun checkAndDownloadAssets(): Boolean {
         synchronized(this) {
             val adamFile = File(modelsDir, "adam1.onnx")
             val tokensFile = File(modelsDir, "tokens.txt")
-            val lessacFile = File(enModelsDir, "en_US-lessac-medium.onnx")
+            
+            val voiceSetting = prefs.getTtsVoiceEn()
+            val targetEnModelFile = if (voiceSetting == "amy") File(enModelsDir, "en_US-amy-low.onnx") else File(enModelsDir, "en_US-lessac-medium.onnx")
             val enTokensFile = File(enModelsDir, "tokens.txt")
 
-            if (adamFile.exists() && tokensFile.exists() && lessacFile.exists() && enTokensFile.exists() && espeakDir.exists()) {
+            if (adamFile.exists() && tokensFile.exists() && targetEnModelFile.exists() && enTokensFile.exists() && espeakDir.exists()) {
                 return true
             }
 
@@ -277,9 +419,24 @@ class DesktopTtsPlayer(
                     // Vietnamese
                     if (!tokensFile.exists()) downloadFile("https://huggingface.co/doof-ferb/nghitts-copy/resolve/main/sherpa-onnx/tokens.txt", tokensFile)
                     if (!adamFile.exists()) downloadFile("https://huggingface.co/doof-ferb/nghitts-copy/resolve/main/sherpa-onnx/adam1.onnx", adamFile)
-                    // English
-                    if (!enTokensFile.exists()) downloadFile("https://huggingface.co/csukuangfj/vits-piper-en_US-lessac-medium/resolve/main/tokens.txt", enTokensFile)
-                    if (!lessacFile.exists()) downloadFile("https://huggingface.co/csukuangfj/vits-piper-en_US-lessac-medium/resolve/main/en_US-lessac-medium.onnx", lessacFile)
+                    
+                    // English Tokens
+                    if (!enTokensFile.exists()) {
+                        val tokenUrl = if (voiceSetting == "amy") {
+                            "https://huggingface.co/csukuangfj/vits-piper-en_US-amy-low/resolve/main/tokens.txt"
+                        } else {
+                            "https://huggingface.co/csukuangfj/vits-piper-en_US-lessac-medium/resolve/main/tokens.txt"
+                        }
+                        downloadFile(tokenUrl, enTokensFile)
+                    }
+
+                    // English Model
+                    if (voiceSetting == "amy") {
+                        if (!targetEnModelFile.exists()) downloadFile("https://huggingface.co/csukuangfj/vits-piper-en_US-amy-low/resolve/main/en_US-amy-low.onnx", targetEnModelFile)
+                    } else {
+                        if (!targetEnModelFile.exists()) downloadFile("https://huggingface.co/csukuangfj/vits-piper-en_US-lessac-medium/resolve/main/en_US-lessac-medium.onnx", targetEnModelFile)
+                    }
+
                     // espeak-ng-data
                     if (!espeakDir.exists()) {
                         val tarFile = File(dbDir, "espeak-ng-data.tar.bz2")

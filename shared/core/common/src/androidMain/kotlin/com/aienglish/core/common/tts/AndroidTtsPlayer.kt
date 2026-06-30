@@ -12,6 +12,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.io.File
+import kotlin.coroutines.resume
 
 class AndroidTtsPlayer(
     private val context: Context,
@@ -22,6 +23,8 @@ class AndroidTtsPlayer(
     private var viTts: OfflineTts? = null
     private var enTts: OfflineTts? = null
     private var currentTtsSpeed: String? = null
+    private var currentTtsVoice: String? = null
+    private var mediaPlayer: android.media.MediaPlayer? = null
 
     private var audioTrack: AudioTrack? = null
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -40,13 +43,31 @@ class AndroidTtsPlayer(
         playJob?.cancel()
         stop()
 
+        if (prefs.getTtsEngine() == "google") {
+            playJob = scope.launch {
+                try {
+                    _isLoading.value = true
+                    val encodedText = java.net.URLEncoder.encode(text, "UTF-8")
+                    val url = "https://translate.google.com/translate_tts?ie=UTF-8&tl=$lang&client=tw-ob&q=$encodedText"
+                    _isLoading.value = false
+                    playUrl(url)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                } finally {
+                    _isLoading.value = false
+                }
+            }
+            return
+        }
+
         playJob = scope.launch {
             try {
                 val currentJob = coroutineContext[Job]!!
                 val speedSetting = prefs.getTtsSpeed()
+                val voiceSetting = prefs.getTtsVoiceEn()
 
-                // Reinit ca hai neu speed thay doi
-                if (currentTtsSpeed != speedSetting) {
+                // Reinit ca hai neu speed hoac voice thay doi
+                if (currentTtsSpeed != speedSetting || currentTtsVoice != voiceSetting) {
                     viTts = null
                     enTts = null
                 }
@@ -79,6 +100,7 @@ class AndroidTtsPlayer(
                 } ?: run { _isLoading.value = false; return@launch }
 
                 currentTtsSpeed = speedSetting
+                currentTtsVoice = voiceSetting
                 _isLoading.value = false
 
                 if (!currentJob.isActive) return@launch
@@ -107,6 +129,22 @@ class AndroidTtsPlayer(
         playJob?.cancel()
         stop()
 
+        if (prefs.getTtsEngine() == "google") {
+            playJob = scope.launch {
+                try {
+                    val segments = splitByLanguage(text)
+                    for ((segText, segLang) in segments) {
+                        val encodedText = java.net.URLEncoder.encode(segText.trim(), "UTF-8")
+                        val url = "https://translate.google.com/translate_tts?ie=UTF-8&tl=$segLang&client=tw-ob&q=$encodedText"
+                        playUrl(url)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+            return
+        }
+
         playJob = scope.launch {
             try {
                 val currentJob = coroutineContext[Job]!!
@@ -114,10 +152,12 @@ class AndroidTtsPlayer(
                 _isLoading.value = true
                 copyTtsAssetsIfNeeded()
                 val speedSetting = prefs.getTtsSpeed()
-                if (currentTtsSpeed != speedSetting) { viTts = null; enTts = null }
+                val voiceSetting = prefs.getTtsVoiceEn()
+                if (currentTtsSpeed != speedSetting || currentTtsVoice != voiceSetting) { viTts = null; enTts = null }
                 if (viTts == null) viTts = initViTts(speedSetting)
                 if (enTts == null) enTts = initEnTts(speedSetting)
                 currentTtsSpeed = speedSetting
+                currentTtsVoice = voiceSetting
                 _isLoading.value = false
 
                 if (!currentJob.isActive) return@launch
@@ -153,28 +193,99 @@ class AndroidTtsPlayer(
      * Cac doan cung ngon ngu duoc gop lai de giam overhead.
      */
     private fun splitByLanguage(text: String): List<Pair<String, String>> {
-        // Tach theo cac ranh gioi cau va dong moi
-        val chunks = text.split(Regex("(?<=[.!?])\\s+|\\n"))
-            .map { it.trim() }
-            .filter { it.isNotBlank() }
+        val targetLang = prefs.getLanguageTarget().lowercase()
+        val viChars = "àáảãạăắặẳẵâấầẩẫậđèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵ" +
+                "ÀÁẢÃẠĂẮẶẲẴÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆÌÍỈĨỊÒÓỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÙÚỦŨỤƯỨỪỬỮỰỲÝỶỸỴ"
+        
+        fun isVi(t: String): Boolean = t.any { it in viChars }
 
+        // Nhan dien cum tu dac biet: **bold**, *italic*, `code`, "quotes", 'quotes', /phonetic/, (parentheses)
+        val pattern = Regex("\\*\\*(.*?)\\*\\*|\\*(.*?)\\*|`([^`]+)`|\\\"([^\\\"]+)\\\"|'([^']+)'|/([^/\\n]+)/|\\(([^)]+)\\)")
+        
         val segments = mutableListOf<Pair<String, String>>()
-        for (chunk in chunks) {
-            val lang = if (isVietnamese(chunk)) "vi" else "en"
-            if (segments.isNotEmpty() && segments.last().second == lang) {
-                // Gop voi doan truoc neu cung ngon ngu
-                segments[segments.size - 1] = Pair(segments.last().first + " " + chunk, lang)
-            } else {
+        var lastIdx = 0
+        
+        fun addPlainSegments(plainText: String) {
+            val rawChunks = plainText.split(Regex("(?<=[.!?])\\s+|\\n"))
+                .map { it.trim() }
+                .filter { it.isNotBlank() }
+            for (chunk in rawChunks) {
+                val lang = if (isVi(chunk)) "vi" else targetLang
                 segments.add(Pair(chunk, lang))
             }
         }
-        return segments
+
+        for (match in pattern.findAll(text)) {
+            val start = match.range.first
+            val end = match.range.last + 1
+            
+            if (start > lastIdx) {
+                val plainText = text.substring(lastIdx, start)
+                addPlainSegments(plainText)
+            }
+            
+            val content = match.groupValues.firstOrNull { it.isNotEmpty() && it != match.value } ?: match.value
+            val cleanedContent = content.trim()
+            if (cleanedContent.isNotEmpty()) {
+                val lang = if (isVi(cleanedContent)) "vi" else targetLang
+                segments.add(Pair(cleanedContent, lang))
+            }
+            
+            lastIdx = end
+        }
+        
+        if (lastIdx < text.length) {
+            val plainText = text.substring(lastIdx)
+            addPlainSegments(plainText)
+        }
+        
+        // Post-process: chuan hoa markdown, cat ngan neu dai hon 180 ky tu, gop cung ngon ngu
+        val finalSegments = mutableListOf<Pair<String, String>>()
+        for ((segText, segLang) in segments) {
+            val cleaned = cleanMarkdownSymbols(segText).trim()
+            if (cleaned.isEmpty()) continue
+            
+            val subPieces = splitIfTooLong(cleaned, 180)
+            for (piece in subPieces) {
+                val last = finalSegments.lastOrNull()
+                if (last != null && last.second == segLang && (last.first.length + piece.length + 1) < 180) {
+                    finalSegments[finalSegments.size - 1] = Pair(last.first + " " + piece, segLang)
+                } else {
+                    finalSegments.add(Pair(piece, segLang))
+                }
+            }
+        }
+        
+        return finalSegments
     }
 
-    /**
-     * Detect tieng Viet dua tren su ton tai cua ky tu co dau dac trung.
-     * Tieng Anh chi dung ASCII, khong co nhung ky tu nay.
-     */
+    private fun cleanMarkdownSymbols(text: String): String {
+        return text
+            .replace(Regex("\\*\\*|\\*|##?\\s?|`+"), "")
+            .trim()
+    }
+
+    private fun splitIfTooLong(text: String, maxLen: Int): List<String> {
+        if (text.length <= maxLen) return listOf(text)
+        val subChunks = text.split(Regex("(?<=[,;])\\s+"))
+        val result = mutableListOf<String>()
+        var current = ""
+        for (sub in subChunks) {
+            if (current.isEmpty()) {
+                current = sub
+            } else if (current.length + sub.length + 1 <= maxLen) {
+                current += ", " + sub
+            } else {
+                result.add(current)
+                current = sub
+            }
+        }
+        if (current.isNotEmpty()) {
+            result.add(current)
+        }
+        return result
+    }
+
     private fun isVietnamese(text: String): Boolean {
         val viChars = "àáảãạăắặẳẵâấầẩẫậđèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵ" +
                 "ÀÁẢÃẠĂẮẶẲẴÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆÌÍỈĨỊÒÓỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÙÚỦŨỤƯỨỪỬỮỰỲÝỶỸỴ"
@@ -247,8 +358,11 @@ class AndroidTtsPlayer(
         val enDir = File(context.filesDir, "vits/en").absolutePath
         val espeakDir = File(context.filesDir, "vits/espeak-ng-data").absolutePath
 
+        val voiceSetting = prefs.getTtsVoiceEn()
+        val modelFile = if (voiceSetting == "amy") "en_US-amy-low.onnx" else "en_US-lessac-medium.onnx"
+
         val vitsConfig = OfflineTtsVitsModelConfig().apply {
-            model = "$enDir/en_US-lessac-medium.onnx"
+            model = "$enDir/$modelFile"
             tokens = "$enDir/tokens.txt"
             dataDir = espeakDir
             noiseScale = 0.667f
@@ -340,5 +454,51 @@ class AndroidTtsPlayer(
             e.printStackTrace()
         }
         audioTrack = null
+
+        try {
+            mediaPlayer?.apply {
+                if (isPlaying) stop()
+                release()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        mediaPlayer = null
+    }
+
+    private suspend fun playUrl(url: String) = suspendCancellableCoroutine<Unit> { continuation ->
+        val mp = android.media.MediaPlayer().apply {
+            setAudioAttributes(
+                android.media.AudioAttributes.Builder()
+                    .setContentType(android.media.AudioAttributes.CONTENT_TYPE_SPEECH)
+                    .setUsage(android.media.AudioAttributes.USAGE_MEDIA)
+                    .build()
+            )
+            val headers = mapOf("User-Agent" to "Mozilla/5.0")
+            setDataSource(context, android.net.Uri.parse(url), headers)
+            setOnPreparedListener { player ->
+                player.start()
+            }
+            setOnCompletionListener { player ->
+                player.release()
+                if (continuation.isActive) continuation.resume(Unit)
+            }
+            setOnErrorListener { player, _, _ ->
+                player.release()
+                if (continuation.isActive) continuation.resume(Unit)
+                true
+            }
+            prepareAsync()
+        }
+        mediaPlayer = mp
+        continuation.invokeOnCancellation {
+            try {
+                mp.stop()
+                mp.release()
+            } catch (e: Exception) {}
+            if (mediaPlayer == mp) {
+                mediaPlayer = null
+            }
+        }
     }
 }

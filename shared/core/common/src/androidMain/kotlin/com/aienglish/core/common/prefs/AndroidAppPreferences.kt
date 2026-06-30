@@ -43,6 +43,12 @@ class AndroidAppPreferences(
     private val _ttsSpeed = MutableStateFlow(prefs.getString("tts_speed", "slow") ?: "slow")
     override val ttsSpeedFlow = _ttsSpeed.asStateFlow()
 
+    private val _ttsEngine = MutableStateFlow(prefs.getString("tts_engine", "onnx") ?: "onnx")
+    override val ttsEngineFlow = _ttsEngine.asStateFlow()
+
+    private val _ttsVoiceEn = MutableStateFlow(prefs.getString("tts_voice_en", "lessac") ?: "lessac")
+    override val ttsVoiceEnFlow = _ttsVoiceEn.asStateFlow()
+
     override fun getApiKey(): String {
         val secured = secureStorage.getSecret("api_key")
         if (secured.isNotEmpty()) return secured
@@ -149,6 +155,20 @@ class AndroidAppPreferences(
         _ttsSpeed.value = speed
     }
 
+    override fun getTtsEngine() = prefs.getString("tts_engine", "onnx") ?: "onnx"
+
+    override fun saveTtsEngine(engine: String) {
+        prefs.edit().putString("tts_engine", engine).apply()
+        _ttsEngine.value = engine
+    }
+
+    override fun getTtsVoiceEn() = prefs.getString("tts_voice_en", "lessac") ?: "lessac"
+
+    override fun saveTtsVoiceEn(voice: String) {
+        prefs.edit().putString("tts_voice_en", voice).apply()
+        _ttsVoiceEn.value = voice
+    }
+
     override fun clear() {
         prefs.edit().clear().apply()
         secureStorage.deleteSecret("api_key")
@@ -163,5 +183,7 @@ class AndroidAppPreferences(
         _apiProvider.value = "gemini"
         _novitaApiKey.value = ""
         _ttsSpeed.value = "slow"
+        _ttsEngine.value = "onnx"
+        _ttsVoiceEn.value = "lessac"
     }
 }

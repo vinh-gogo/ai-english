@@ -30,7 +30,9 @@ data class ProfileState(
     val error: String? = null,
     val aiResponseLength: String = "normal",
     val appTheme: AppTheme = AppTheme.SUNSET_WARMTH,
-    val ttsSpeed: String = "slow"
+    val ttsSpeed: String = "slow",
+    val ttsEngine: String = "onnx",
+    val ttsVoiceEn: String = "lessac"
 )
 
 class ProfileViewModel(
@@ -92,6 +94,16 @@ class ProfileViewModel(
         appPreferences.ttsSpeedFlow.onEach { speed ->
             setState { copy(ttsSpeed = speed) }
         }.launchIn(viewModelScope)
+
+        // Load TTS Engine
+        appPreferences.ttsEngineFlow.onEach { engine ->
+            setState { copy(ttsEngine = engine) }
+        }.launchIn(viewModelScope)
+
+        // Load TTS Voice En
+        appPreferences.ttsVoiceEnFlow.onEach { voice ->
+            setState { copy(ttsVoiceEn = voice) }
+        }.launchIn(viewModelScope)
     }
 
     fun updateMonthlyUsage(usage: Int, limit: Int) {
@@ -145,6 +157,16 @@ class ProfileViewModel(
     fun onTtsSpeedChanged(speed: String) {
         appPreferences.saveTtsSpeed(speed)
         setState { copy(ttsSpeed = speed) }
+    }
+
+    fun onTtsEngineChanged(engine: String) {
+        appPreferences.saveTtsEngine(engine)
+        setState { copy(ttsEngine = engine) }
+    }
+
+    fun onTtsVoiceEnChanged(voice: String) {
+        appPreferences.saveTtsVoiceEn(voice)
+        setState { copy(ttsVoiceEn = voice) }
     }
 
     fun toggleHowTo() = setState { copy(howToExpanded = !howToExpanded) }

@@ -27,6 +27,13 @@ interface AppPreferences {
     fun saveAppTheme(theme: String)
     fun getTtsSpeed(): String
     fun saveTtsSpeed(speed: String)
+
+    fun getTtsEngine(): String
+    fun saveTtsEngine(engine: String)
+
+    fun getTtsVoiceEn(): String
+    fun saveTtsVoiceEn(voice: String)
+
     fun clear()
 
     // Reactive preference streams
@@ -41,4 +48,6 @@ interface AppPreferences {
     val novitaApiKeyFlow: Flow<String>
     val appThemeFlow: Flow<String>
     val ttsSpeedFlow: Flow<String>
+    val ttsEngineFlow: Flow<String>
+    val ttsVoiceEnFlow: Flow<String>
 }

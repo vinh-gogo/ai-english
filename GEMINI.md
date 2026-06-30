@@ -68,6 +68,7 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 59** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Tự động phát âm thanh khi chọn chủ đề, thêm loading spinner cho TTS, xóa bỏ toggle "Giải thích chi tiết" (luôn hiển thị tự động). | Hoàn thành |
 | **Session 60** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Tối ưu hóa hiệu năng render danh sách chủ đề bằng cách cô lập recomposition cho từng row riêng biệt. | Hoàn thành |
 | **Session 61** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Khắc phục lỗi phát âm đè lên nhau (overlapping audio) khi chuyển nhanh giữa các chủ đề. | Hoàn thành |
+| **Session 62** | 2026-06-30 | Antigravity | `b933a38c-5ae1-4304-a547-bc73e4226c01` | Thêm cài đặt lựa chọn nền tảng giọng đọc (Google TTS vs ONNX) và giọng đọc Tiếng Anh (Amy vs Lessac) dưới phần Cài đặt ngôn ngữ. | Hoàn thành |
 
 ---
 
@@ -783,6 +784,47 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
     - Chia nhỏ mảng buffer âm thanh khi ghi xuống luồng phát (`ShortArray` / `ByteArray`) thành các khối nhỏ (chunk size), liên tục kiểm tra `job.isActive` để dừng phát âm thanh ngay lập tức khi coroutine bị hủy.
 - **Ghi chú kỹ thuật:**
   - Đảm bảo âm thanh cũ tắt hẳn lập tức khi người dùng click chọn hàng chủ đề mới, loại bỏ hoàn toàn hiện tượng âm thanh phát đè lên nhau.
+
+---
+
+### 🟢 Session 62 (2026-06-30)
+
+- **Mục tiêu:** Thêm cài đặt lựa chọn nền tảng giọng đọc (Google TTS vs ONNX) và giọng đọc Tiếng Anh (Amy vs Lessac) dưới phần Cài đặt ngôn ngữ.
+- **Hoạt động & Thay đổi:**
+  - **AppPreferences.kt, AndroidAppPreferences.kt, DesktopAppPreferences.kt:**
+    - Bổ sung cấu hình `ttsEngine` (mặc định: `onnx`, tuỳ chọn: `google` / `onnx`) và `ttsVoiceEn` (mặc định: `lessac`, tuỳ chọn: `amy` / `lessac`).
+    - Đồng bộ hóa các luồng Flow phản ứng (`ttsEngineFlow`, `ttsVoiceEnFlow`).
+  - **ProfileViewModel.kt & ProfileState.kt:**
+    - Cập nhật State và ViewModel để phản chiếu và thay đổi lựa chọn nền tảng/giọng nói TTS từ Settings.
+  - **LanguageSettingsSection.kt (UI):**
+    - Thêm 2 cụm cài đặt UI trực quan bằng selector chip: "Nền tảng giọng đọc" (Google TTS / ONNX) và "Giọng đọc Tiếng Anh (ONNX)" (Amy / Lessac, chỉ hiển thị khi chọn nền tảng ONNX).
+  - **AndroidTtsPlayer.kt & DesktopTtsPlayer.kt:**
+    - Tích hợp động cơ phát âm Google TTS online (`translate_tts` qua URL, tự động detect ngôn ngữ và phát bằng `MediaPlayer` trên Android hoặc thư viện `JLayer` trên Desktop JVM).
+    - Hỗ trợ thay đổi model ONNX linh hoạt tại runtime (tải động `en_US-amy-low.onnx` trên Desktop khi chuyển sang giọng Amy, hoặc tải trước ở Gradle task trên Android).
+  - **Build & Dependency:**
+    - Thêm dependency `javazoom:jlayer:1.0.1` vào desktop target để giải nén và chơi MP3 stream trực tuyến từ Google TTS.
+    - Cập nhật Gradle Android assets task để tự động tải mô hình `en_US-amy-low.onnx` về đóng gói.
+- **Ghi chú kỹ thuật:**
+  - Tính năng hoạt động mượt mà, kiểm tra build và cài đặt thành công trên cả Windows Desktop và thiết bị Android thật qua ADB.
+
+---
+
+### 🟢 Session 63 (2026-06-30)
+
+- **Mục tiêu:** Tinh giản cài đặt TTS (xóa thuật ngữ ONNX), sửa lỗi phát âm tiếng Việt bị mất trong giải thích từ vựng, và bổ sung nút copy cho giải thích chi tiết.
+- **Hoạt động & Thay đổi:**
+  - **LanguageSettingsSection.kt (UI):**
+    - Đổi tên các nút chọn nền tảng từ "Google TTS (Online)" và "ONNX (Offline)" thành **Trực tuyến** và **Ngoại tuyến** để thân thiện hơn với người dùng.
+    - Hiển thị thông tin giọng đọc Tiếng Việt tĩnh (`Adam (Nam)`) dưới dạng hàng thông tin khi chọn Ngoại tuyến.
+    - Ẩn nhãn "(ONNX)" khỏi lựa chọn giọng đọc Tiếng Anh.
+  - **AndroidTtsPlayer.kt & DesktopTtsPlayer.kt (Audio) & TeacherViewModel.kt:**
+    - Khắc phục triệt để lỗi không nhận diện được các từ/cụm từ Tiếng Anh lồng ghép trong các dòng giải thích Tiếng Việt (ví dụ: các từ vựng đứng trước dấu hai chấm, đặt trong dấu ngoặc kép `""`, nháy đơn `''`, dấu gạch chéo `/phonetic/`, hoặc định dạng markdown `**bold**`, `*italic*`).
+    - Giữ nguyên các định dạng markdown khi truyền văn bản từ `TeacherViewModel` sang `playMixed` để giữ ngữ cảnh.
+    - Cải tiến thuật toán `splitByLanguage` sử dụng Regex để tách biệt các cụm từ tiếng Anh được định dạng nổi bật này ra khỏi các đoạn văn tiếng Việt giải thích xung quanh, đảm bảo các từ tiếng Anh được phát âm chuẩn bằng giọng Anh, còn nội dung giải thích tiếng Việt được phát âm bằng giọng Việt.
+    - Đồng thời, áp dụng cơ chế tự động chia nhỏ các phân đoạn dài quá **180 ký tự** để tránh lỗi HTTP 400 từ Google TTS.
+  - **LessonContent.kt & FeedbackContent.kt (UI):**
+    - Bổ sung nút Copy (`Icons.Default.ContentCopy`) bên cạnh nút phát âm thanh tại phần tiêu đề "Giải thích chi tiết" trên cả màn hình Luyện tập và màn hình Xem kết quả phản hồi.
+    - Người dùng có thể chạm để sao chép toàn bộ văn bản giải thích ngữ pháp vào Clipboard.
 
 ---
 

@@ -248,5 +248,115 @@ internal fun LanguageSettingsSection(
                 }
             }
         }
+
+        // Nền tảng giọng đọc (Voice Provider Platform)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(12.dp))
+                .background(colors.surface)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text("Nền tảng giọng đọc", fontSize = 13.sp, color = colors.mainText, fontWeight = FontWeight.Medium)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(colors.border.copy(alpha = 0.15f))
+                    .padding(2.dp)
+            ) {
+                val currentEngine = state.ttsEngine
+                listOf(
+                    "google" to "Trực tuyến",
+                    "onnx" to "Ngoại tuyến"
+                ).forEach { (code, label) ->
+                    val isSelected = currentEngine == code
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(if (isSelected) colors.accent else Color.Transparent)
+                            .clickable { vm.onTtsEngineChanged(code) }
+                            .padding(vertical = 8.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = label,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = if (isSelected) Color.White else colors.mutedText
+                        )
+                    }
+                }
+            }
+
+            val desc = if (state.ttsEngine == "google") {
+                "Hỗ trợ mọi ngôn ngữ (yêu cầu Internet)"
+            } else {
+                "Không cần mạng (chỉ hỗ trợ Anh & Việt)"
+            }
+            Text(desc, fontSize = 11.sp, color = colors.mutedText)
+        }
+
+        // Voice details/selection (Visible only when engine is Offline)
+        if (state.ttsEngine == "onnx") {
+            // Giọng Tiếng Việt
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(colors.surface)
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Giọng Tiếng Việt", fontSize = 13.sp, color = colors.mainText, fontWeight = FontWeight.Medium)
+                Text("Adam (Nam)", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = colors.mutedText)
+            }
+
+            // Giọng Tiếng Anh
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(colors.surface)
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text("Giọng Tiếng Anh", fontSize = 13.sp, color = colors.mainText, fontWeight = FontWeight.Medium)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(colors.border.copy(alpha = 0.15f))
+                        .padding(2.dp)
+                ) {
+                    val currentVoice = state.ttsVoiceEn
+                    listOf(
+                        "amy" to "Amy (Nữ)",
+                        "lessac" to "Lessac (Nam)"
+                    ).forEach { (code, label) ->
+                        val isSelected = currentVoice == code
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(if (isSelected) colors.accent else Color.Transparent)
+                                .clickable { vm.onTtsVoiceEnChanged(code) }
+                                .padding(vertical = 8.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = label,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = if (isSelected) Color.White else colors.mutedText
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 }

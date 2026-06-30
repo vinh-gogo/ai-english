@@ -20,6 +20,7 @@ mockk = "1.13.13"
 androidx-security-crypto = "1.1.0-alpha06"
 
 [libraries]
+jlayer = { module = "javazoom:jlayer", version = "1.0.1" }
 # Coroutines
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
