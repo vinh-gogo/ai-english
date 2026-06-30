@@ -859,6 +859,11 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
     - Đối với các phân đoạn văn bản có ngôn ngữ trùng khớp với `targetLanguage` (không phải tiếng mẹ đẻ như tiếng Việt "vi"), hệ thống tự động bọc nội dung trong dấu ngoặc kép và định dạng in đậm bằng cú pháp markdown `**"từ_vựng"**`.
     - Bảo toàn và xử lý chính xác các khoảng trắng ở đầu/cuối của các phân đoạn để đảm bảo câu văn sau khi ghép nối hiển thị thẳng hàng, liền mạch và tự nhiên.
     - Loại bỏ các dấu ngoặc kép hoặc ngoặc đơn dư thừa có sẵn của phân đoạn để tránh hiện tượng bọc trùng lặp.
+  - **ExplanationParser.kt (New Common Utility):**
+    - Tạo object `ExplanationParser` dùng chung ở module `shared/core/common` sử dụng thư viện `kotlinx-serialization-json` chính thức để giải mã mảng JSON các phân đoạn ngôn ngữ thay thế cho cơ chế Regex cũ.
+    - Cơ chế mới giúp loại bỏ hoàn toàn các lỗi khớp trượt khi AI thay đổi thứ tự thuộc tính trong JSON (ví dụ `"lang"` đứng trước `"text"`), giải quyết triệt để sự cố biến mất từ tiếng Anh hoặc nhận diện sai ngôn ngữ.
+  - **AndroidTtsPlayer.kt & DesktopTtsPlayer.kt & UI files:**
+    - Loại bỏ hoàn toàn hàm `parseSegmentsManual` tự viết và Regex đi kèm, thay thế bằng `ExplanationParser.parseSegments` giúp code mượt mà, đồng nhất 100% giữa trình phát Audio và trình hiển thị UI.
 
 ---
 
