@@ -322,52 +322,40 @@ fun MarkdownText(
                     )
                 }
                 is Block.Bullet -> {
-                    val annotated = remember<AnnotatedString>(block.text) { buildInlineAnnotatedString(block.text, colors) }
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.Top
-                    ) {
-                        Text(
-                            text = "•",
-                            fontSize = 15.sp,
-                            color = colors.accent,
-                            lineHeight = 22.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.width(16.dp)
-                        )
-                        Text(
-                            text = annotated,
-                            fontSize = 15.sp,
-                            color = colors.mutedText,
-                            lineHeight = 22.sp,
-                            textAlign = TextAlign.Justify,
-                            modifier = Modifier.weight(1f)
-                        )
+                    val annotated = remember(block.text, colors) {
+                        buildAnnotatedString {
+                            withStyle(SpanStyle(color = colors.accent, fontWeight = FontWeight.Bold)) {
+                                append("•   ")
+                            }
+                            append(buildInlineAnnotatedString(block.text, colors))
+                        }
                     }
+                    Text(
+                        text = annotated,
+                        fontSize = 15.sp,
+                        color = colors.mutedText,
+                        lineHeight = 22.sp,
+                        textAlign = TextAlign.Justify,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
                 is Block.Ordered -> {
-                    val annotated = remember<AnnotatedString>(block.text) { buildInlineAnnotatedString(block.text, colors) }
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.Top
-                    ) {
-                        Text(
-                            text = block.index,
-                            fontSize = 15.sp,
-                            color = colors.accent,
-                            lineHeight = 22.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.width(24.dp)
-                        )
-                        Text(
-                            text = annotated,
-                            fontSize = 15.sp,
-                            color = colors.mutedText,
-                            lineHeight = 22.sp,
-                            textAlign = TextAlign.Justify,
-                            modifier = Modifier.weight(1f)
-                        )
+                    val annotated = remember(block.index, block.text, colors) {
+                        buildAnnotatedString {
+                            withStyle(SpanStyle(color = colors.accent, fontWeight = FontWeight.Bold)) {
+                                append("${block.index}  ")
+                            }
+                            append(buildInlineAnnotatedString(block.text, colors))
+                        }
                     }
+                    Text(
+                        text = annotated,
+                        fontSize = 15.sp,
+                        color = colors.mutedText,
+                        lineHeight = 22.sp,
+                        textAlign = TextAlign.Justify,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
             }
         }
