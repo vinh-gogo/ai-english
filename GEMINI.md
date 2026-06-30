@@ -900,6 +900,17 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 
 ---
 
+### 🟢 Session 68 (2026-06-30)
+
+- **Mục tiêu:** Căn lề đều hai bên (Justify) cho toàn bộ nội dung giải thích chi tiết để cải thiện tính thẩm mỹ và bố cục giao diện học tập.
+- **Hoạt động & Thay đổi:**
+  - **MarkdownText.kt (UI):**
+    - Nhập thêm thư viện `androidx.compose.ui.text.style.TextAlign`.
+    - Điều chỉnh lại các component hiển thị văn bản giải thích gồm `Block.Paragraph`, `Block.Bullet` và `Block.Ordered`.
+    - Thêm thuộc tính `textAlign = TextAlign.Justify` và cấu hình các modifier tương ứng (`Modifier.fillMaxWidth()` cho Paragraph, `Modifier.weight(1f)` cho Bullet/Ordered) giúp văn bản được căn đều đặn và phẳng phiu ở cả hai mép trái và phải của thẻ Card, tránh việc nhấp nhô lề phải khi hiển thị tiếng Việt và tiếng Anh lồng nhau.
+
+---
+
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.
 
