@@ -178,7 +178,14 @@ class AndroidTtsPlayer(
                     if (cleanText.isEmpty()) continue
                     val tts = if (segLang == "vi") viTts else enTts
                     tts ?: continue
-                    val audio = tts.generate(cleanText, 0)
+                    
+                    val textForTts = if (shouldAppendContinuation(segText)) {
+                        "$cleanText,"
+                    } else {
+                        cleanText
+                    }
+                    
+                    val audio = tts.generate(textForTts, 0)
                     if (audio.samples.isNotEmpty()) {
                         generatedChunks.add(Triple(audio.samples, audio.sampleRate, segText))
                     }
@@ -593,5 +600,12 @@ class AndroidTtsPlayer(
         val result = FloatArray(samples.size + silenceLength)
         System.arraycopy(samples, 0, result, 0, samples.size)
         return result
+    }
+
+    private fun shouldAppendContinuation(text: String): Boolean {
+        val trimmed = text.trim()
+        if (trimmed.isEmpty()) return false
+        val lastChar = trimmed.last()
+        return lastChar.isLetterOrDigit() || lastChar == '"' || lastChar == '\'' || lastChar == ')' || lastChar == ']'
     }
 }
