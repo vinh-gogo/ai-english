@@ -838,6 +838,7 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
     - Cấu hình chỉ thị AI **không sử dụng** bất kỳ ký tự định dạng markdown nào (`**`, `*`, `_`, `###`, `` ` ``) trong nội dung `text` để giải phóng hoàn toàn văn bản khỏi ký tự gây nhiễu, viết chữ trơn hoàn toàn (plain text) sử dụng `\n` và `-`.
     - Chỉ thị AI bắt buộc phân tách cực kỳ chi tiết các từ/cụm từ tiếng Anh lồng ghép trong câu tiếng Việt thành các đối tượng có `lang: "en"` riêng lẻ để có thể phát âm chuẩn xác từng chữ của nhiều ngôn ngữ trong cùng một câu/đoạn văn nhỏ.
     - Bổ sung yêu cầu bắt buộc AI **ở phần cuối cùng của lời giải thích phải liệt kê và giải thích các phương án dịch/cách diễn đạt thay thế khác (Alternatives)** hoặc phân tích tại sao một số cách dịch thông thường khác lại chưa phù hợp/chưa tự nhiên trong ngữ cảnh này để mở rộng tối đa kiến thức cho học sinh.
+    - Chỉ thị nghiêm ngặt yêu cầu AI **bắt buộc phải tách biệt hoàn toàn các chữ cái, từ vựng hoặc cụm từ tiếng Anh (ngôn ngữ mục tiêu) nằm bên trong dấu ngoặc đơn `()`** (ví dụ: `(apostrophe + s)`), dấu ngoặc kép `""` hoặc ngoặc đơn `''` thành các phân đoạn JSON có `"lang": "en"` riêng biệt (không gộp chung dấu ngoặc với các từ tiếng Việt xung quanh).
   - **SentenceExplanationDto.kt (DTO):**
     - Chuyển kiểu dữ liệu trường `explanation` từ `String` thành `JsonElement` để có thể nhận diện và phân tích cả mảng JSON mới và chuỗi văn bản cũ (đảm bảo tương thích ngược 100%).
   - **TeacherRepositoryImpl.kt (Repository):**
