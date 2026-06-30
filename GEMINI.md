@@ -908,6 +908,7 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
     - Nhập thêm thư viện `androidx.compose.ui.text.style.TextAlign`.
     - Điều chỉnh lại các component hiển thị văn bản giải thích gồm `Block.Paragraph`, `Block.Bullet` và `Block.Ordered`.
     - Thêm thuộc tính `textAlign = TextAlign.Justify` và cấu hình các modifier tương ứng (`Modifier.fillMaxWidth()` cho Paragraph, `Modifier.weight(1f)` cho Bullet/Ordered) giúp văn bản được căn đều đặn và phẳng phiu ở cả hai mép trái và phải của thẻ Card, tránh việc nhấp nhô lề phải khi hiển thị tiếng Việt và tiếng Anh lồng nhau.
+    - **Tối ưu hóa căn đều kiểu Word cho Bullet và List:** Thay vì sử dụng bố cục `Row` chia tách icon "•" (hoặc chỉ số) và `Text` nội dung riêng biệt (khiến việc căn đều `TextAlign.Justify` bị lỗi hoặc mất hiệu lực do chiều rộng động của modifier weight), hệ thống chuyển đổi Bullet và Ordered List thành **một thành phần `Text` duy nhất chiếm trọn chiều ngang (`fillMaxWidth()`)**. Icon "•" và chữ số được đính kèm trực tiếp vào đầu chuỗi `AnnotatedString` bằng kiểu dáng nổi bật, đảm bảo toàn bộ khối nội dung danh sách được căn đều phẳng lỳ ở cả hai bên lề chính xác 100% giống như định dạng văn bản Microsoft Word.
 
 ---
 
