@@ -867,6 +867,19 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 
 ---
 
+### 🟢 Session 66 (2026-06-30)
+
+- **Mục tiêu:** Cải thiện tốc độ phát giọng đọc tiếng Việt Adam offline (vốn đang bị quá chậm so với tiếng Anh).
+- **Hoạt động & Thay đổi:**
+  - **AndroidTtsPlayer.kt & DesktopTtsPlayer.kt (TTS engine):**
+    - Điều chỉnh lại speed profile `lengthScale` của tiếng Việt Adam cho tự nhiên và linh hoạt hơn:
+      * Tốc độ **Bình thường (Normal)**: Điều chỉnh `lengthScale` từ `1.3f` / `1.15f` xuống mức **`1.0f`** (tốc độ gốc chuẩn của model Adam, đọc lưu loát, tự nhiên).
+      * Tốc độ **Chậm (Slow)**: Thay đổi xuống **`1.25f`** (vừa đủ chậm để học viên nghe rõ âm, không bị rề rà).
+      * Tốc độ **Nhanh (Fast)**: Thay đổi xuống **`0.85f`**.
+    - Việc tăng tốc độ tiếng Việt Adam giúp cân bằng hoàn hảo trải nghiệm đọc song ngữ Anh - Việt, không tạo cảm giác lệch nhịp khi chuyển đổi ngôn ngữ.
+
+---
+
 > [!NOTE]
 > File này giúp duy trì tính liên tục của ngữ cảnh phát triển dự án khi chuyển đổi giữa các phiên chat hoặc khi cần xem lại các quyết định thiết kế quan trọng.
 
