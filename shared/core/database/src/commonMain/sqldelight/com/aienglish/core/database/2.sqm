@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS lesson_question_alternative (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    question_id INTEGER NOT NULL,
+    alternative TEXT NOT NULL,
+    FOREIGN KEY(question_id) REFERENCES lesson_question(id) ON DELETE CASCADE
+);

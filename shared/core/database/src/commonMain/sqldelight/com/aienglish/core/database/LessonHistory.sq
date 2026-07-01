@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS lesson_question (
     explanation TEXT,
     user_answer TEXT,
     ai_explanation TEXT,
-    alternatives_json TEXT,
+    alternatives_json TEXT, -- DEPRECATED: Do not use, use lesson_question_alternative table
     UNIQUE(history_id, sentence_index) ON CONFLICT REPLACE,
     FOREIGN KEY(history_id) REFERENCES lesson_history(id) ON DELETE CASCADE
 );
@@ -70,6 +70,13 @@ CREATE TABLE IF NOT EXISTS question_notes (
     FOREIGN KEY(question_id) REFERENCES lesson_question(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS lesson_question_alternative (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    question_id INTEGER NOT NULL,
+    alternative TEXT NOT NULL,
+    FOREIGN KEY(question_id) REFERENCES lesson_question(id) ON DELETE CASCADE
+);
+
 insertQuestion:
 INSERT OR REPLACE INTO lesson_question (history_id, sentence_index, vietnamese, english, explanation, user_answer, ai_explanation, alternatives_json)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?);
@@ -80,6 +87,16 @@ VALUES (?, ?, ?, ?);
 
 deleteTokensForQuestion:
 DELETE FROM lesson_question_token WHERE question_id = ?;
+
+insertAlternative:
+INSERT INTO lesson_question_alternative (question_id, alternative)
+VALUES (?, ?);
+
+getAlternativesForQuestion:
+SELECT alternative FROM lesson_question_alternative WHERE question_id = ?;
+
+deleteAlternativesForQuestion:
+DELETE FROM lesson_question_alternative WHERE question_id = ?;
 
 getQuestionId:
 SELECT id FROM lesson_question WHERE history_id = ? AND sentence_index = ?;

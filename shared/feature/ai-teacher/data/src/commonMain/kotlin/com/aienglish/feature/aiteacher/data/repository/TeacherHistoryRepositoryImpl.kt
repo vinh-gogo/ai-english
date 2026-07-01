@@ -67,9 +67,14 @@ class TeacherHistoryRepositoryImpl(
                         partOfSpeech = t.part_of_speech ?: ""
                     )
                 }
-                val alternatives = row.alternatives_json?.let {
-                    try { json.decodeFromString<List<String>>(it) } catch (_: Exception) { emptyList() }
-                } ?: emptyList()
+                val alternativesFromDb = queries.getAlternativesForQuestion(row.id).executeAsList()
+                val alternatives = if (alternativesFromDb.isNotEmpty()) {
+                    alternativesFromDb
+                } else {
+                    row.alternatives_json?.let {
+                        try { json.decodeFromString<List<String>>(it) } catch (_: Exception) { emptyList() }
+                    } ?: emptyList()
+                }
 
                 EnglishSentence(
                     vietnamese = row.vietnamese,
@@ -122,10 +127,6 @@ class TeacherHistoryRepositoryImpl(
         explanations: Map<Int, String>
     ) = withContext(dispatchers.io) {
         lesson.sentences.forEachIndexed { index, sentence ->
-            val alternativesJson = if (sentence.alternatives.isNotEmpty()) {
-                json.encodeToString(sentence.alternatives)
-            } else null
-
             queries.insertQuestion(
                 history_id = historyId,
                 sentence_index = index.toLong(),
@@ -134,11 +135,16 @@ class TeacherHistoryRepositoryImpl(
                 explanation = sentence.explanation.takeIf { it.isNotEmpty() },
                 user_answer = userAnswers[index],
                 ai_explanation = explanations[index],
-                alternatives_json = alternativesJson
+                alternatives_json = null
             )
 
             val questionId = queries.getQuestionId(historyId, index.toLong()).executeAsOne()
             queries.deleteTokensForQuestion(questionId)
+            queries.deleteAlternativesForQuestion(questionId)
+
+            sentence.alternatives.forEach { alternative ->
+                queries.insertAlternative(questionId, alternative)
+            }
 
             sentence.tokens.forEach { token ->
                 queries.insertToken(
