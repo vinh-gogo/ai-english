@@ -38,8 +38,8 @@ class TopicRepositoryImpl(
     private val dispatchers: AppDispatchers,
     private val jsonResourceReader: JsonResourceReader
 ) : TopicRepository {
-
     private val json = Json { ignoreUnknownKeys = true }
+    private val enTopicsCache = mutableMapOf<String, Map<Int, JsonTopicItem>>()
 
     override suspend fun getTopics(systemCode: String, levelCodes: List<String>): List<TopicItem> =
         withContext(dispatchers.io) {
@@ -50,14 +50,16 @@ class TopicRepositoryImpl(
             
             if (isEn && (systemCode == "TOPIK" || systemCode == "HSK" || systemCode == "JLPT" || systemCode == "VIET")) {
                 try {
-                    val enTopicsJson = when (systemCode) {
-                        "TOPIK" -> jsonResourceReader.readKoreanTopicsEnJson()
-                        "HSK" -> jsonResourceReader.readChineseTopicsEnJson()
-                        "VIET" -> jsonResourceReader.readVietnameseTopicsEnJson()
-                        else -> jsonResourceReader.readJapaneseTopicsEnJson()
+                    val enTopicsMap = enTopicsCache.getOrPut(systemCode) {
+                        val enTopicsJson = when (systemCode) {
+                            "TOPIK" -> jsonResourceReader.readKoreanTopicsEnJson()
+                            "HSK" -> jsonResourceReader.readChineseTopicsEnJson()
+                            "VIET" -> jsonResourceReader.readVietnameseTopicsEnJson()
+                            else -> jsonResourceReader.readJapaneseTopicsEnJson()
+                        }
+                        val enTopicsList = json.decodeFromString<List<JsonTopicItem>>(enTopicsJson.removeBom().trim())
+                        enTopicsList.associateBy { it.id }
                     }
-                    val enTopicsList = json.decodeFromString<List<JsonTopicItem>>(enTopicsJson.removeBom().trim())
-                    val enTopicsMap = enTopicsList.associateBy { it.id }
                     
                     dbTopics.map { row ->
                         val enTopic = enTopicsMap[row.topic_id.toInt()]

@@ -24,7 +24,8 @@ val teacherDataModule = module {
     single<TeacherHistoryRepository> {
         TeacherHistoryRepositoryImpl(
             historyRepository = get(),
-            database = get()
+            database = get(),
+            dispatchers = get()
         )
     }
 

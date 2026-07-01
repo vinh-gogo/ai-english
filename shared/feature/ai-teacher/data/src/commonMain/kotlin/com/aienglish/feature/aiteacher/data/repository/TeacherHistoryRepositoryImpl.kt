@@ -1,5 +1,5 @@
 package com.aienglish.feature.aiteacher.data.repository
-
+import com.aienglish.core.common.dispatchers.AppDispatchers
 import com.aienglish.core.database.AIEnglishDatabase
 import com.aienglish.feature.aiteacher.domain.model.EnglishFeedback
 import com.aienglish.feature.aiteacher.domain.model.EnglishLesson
@@ -11,10 +11,12 @@ import com.aienglish.feature.history.domain.repository.HistoryRepository
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.decodeFromString
+import kotlinx.coroutines.withContext
 
 class TeacherHistoryRepositoryImpl(
     private val historyRepository: HistoryRepository,
-    private val database: AIEnglishDatabase
+    private val database: AIEnglishDatabase,
+    private val dispatchers: AppDispatchers
 ) : TeacherHistoryRepository {
 
     private val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
@@ -52,10 +54,10 @@ class TeacherHistoryRepositoryImpl(
         saveQuestionsToDb(id, lesson, userAnswers, explanations)
     }
 
-    override suspend fun loadHistory(historyId: Long): TeacherLessonHistory? {
-        return try {
+    override suspend fun loadHistory(historyId: Long): TeacherLessonHistory? = withContext(dispatchers.io) {
+        return@withContext try {
             val questionRows = queries.getQuestionsForHistory(historyId).executeAsList()
-            if (questionRows.isEmpty()) return null
+            if (questionRows.isEmpty()) return@withContext null
 
             val sentences = questionRows.map { row ->
                 val tokens = queries.getTokensForQuestion(row.id).executeAsList().map { t ->
@@ -113,12 +115,12 @@ class TeacherHistoryRepositoryImpl(
         }
     }
 
-    private fun saveQuestionsToDb(
+    private suspend fun saveQuestionsToDb(
         historyId: Long,
         lesson: EnglishLesson,
         userAnswers: Map<Int, String>,
         explanations: Map<Int, String>
-    ) {
+    ) = withContext(dispatchers.io) {
         lesson.sentences.forEachIndexed { index, sentence ->
             val alternativesJson = if (sentence.alternatives.isNotEmpty()) {
                 json.encodeToString(sentence.alternatives)
@@ -150,8 +152,8 @@ class TeacherHistoryRepositoryImpl(
     }
 
     @OptIn(kotlin.uuid.ExperimentalUuidApi::class)
-    override suspend fun saveQuestionNote(historyId: Long, sentenceIndex: Int, note: String) {
-        val questionId = queries.getQuestionId(historyId, sentenceIndex.toLong()).executeAsOneOrNull() ?: return
+    override suspend fun saveQuestionNote(historyId: Long, sentenceIndex: Int, note: String) = withContext(dispatchers.io) {
+        val questionId = queries.getQuestionId(historyId, sentenceIndex.toLong()).executeAsOneOrNull() ?: return@withContext
         val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
         val guid = kotlin.uuid.Uuid.random().toString()
         queries.insertQuestionNote(
@@ -162,18 +164,22 @@ class TeacherHistoryRepositoryImpl(
         )
     }
 
-    override suspend fun getQuestionNotes(historyId: Long, sentenceIndex: Int): List<com.aienglish.feature.aiteacher.domain.model.QuestionNote> {
-        val questionId = queries.getQuestionId(historyId, sentenceIndex.toLong()).executeAsOneOrNull() ?: return emptyList()
-        return queries.getQuestionNotes(questionId).executeAsList().map { 
+    override suspend fun getQuestionNotes(historyId: Long, sentenceIndex: Int): List<com.aienglish.feature.aiteacher.domain.model.QuestionNote> = withContext(dispatchers.io) {
+        val questionId = queries.getQuestionId(historyId, sentenceIndex.toLong()).executeAsOneOrNull() ?: return@withContext emptyList()
+        queries.getQuestionNotes(questionId).executeAsList().map { 
             com.aienglish.feature.aiteacher.domain.model.QuestionNote(id = it.id, note = it.note)
         }
     }
 
     override suspend fun updateQuestionNote(noteId: String, newNote: String) {
-        queries.updateQuestionNote(note = newNote, id = noteId)
+        withContext(dispatchers.io) {
+            queries.updateQuestionNote(note = newNote, id = noteId)
+        }
     }
 
     override suspend fun deleteQuestionNote(noteId: String) {
-        queries.deleteQuestionNote(id = noteId)
+        withContext(dispatchers.io) {
+            queries.deleteQuestionNote(id = noteId)
+        }
     }
 }

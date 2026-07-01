@@ -174,6 +174,7 @@ class TeacherViewModel(
 
     // Track current lesson DB id for history update
     private var currentLessonHistoryId: Long? = null
+    private var isDatabaseSeeded = false
     private var loadTopicsJob: Job? = null
     private var lastTopicSelectionState: TopicSelectionState? = null
 
@@ -246,6 +247,7 @@ class TeacherViewModel(
     }
 
     private suspend fun ensureDatabaseSeeded() {
+        if (isDatabaseSeeded) return
         val currentTopics = topicRepository.getTopics("CEFR", listOf("A1"))
         val currentJapaneseTopics = topicRepository.getTopics("JLPT", listOf("N5"))
         val currentChineseTopics = topicRepository.getTopics("HSK", listOf("HSK1"))
@@ -263,6 +265,7 @@ class TeacherViewModel(
             currentVietTopics.size < 400) {
             topicRepository.seedDatabase()
         }
+        isDatabaseSeeded = true
     }
 
     private fun loadTopics(levelType: LevelType, levelCode: String, restoreTopicIndex: Int? = null) {
