@@ -5,7 +5,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
@@ -21,13 +20,15 @@ import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.AppColors
 import androidx.compose.material3.Surface
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.window.Popup
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+
 sealed interface Block {
     data class Heading(val level: Int, val text: String) : Block
     data class Paragraph(val text: String) : Block
@@ -302,6 +303,8 @@ private fun AnnotatedString.Builder.appendCharacter(
     }
 }
 
+data class PopupState(val text: String, val offset: IntOffset, val blockIndex: Int)
+
 @Composable
 fun MarkdownText(
     markdown: String,
@@ -316,8 +319,6 @@ fun MarkdownText(
             .replace("""(?<![\*_])\(([^)\n]{1,150})\)(?![\*_])""".toRegex(), "*($1)*")
     }
     val blocks = remember(processedMarkdown) { parseBlocks(processedMarkdown) }
-
-    data class PopupState(val text: String, val offset: IntOffset, val blockIndex: Int)
     val popupState = remember { mutableStateOf<PopupState?>(null) }
 
     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -349,44 +350,13 @@ fun MarkdownText(
                     }
                     is Block.Paragraph -> {
                         val annotated = remember<AnnotatedString>(block.text) { buildInlineAnnotatedString(block.text, colors) }
-                        if (onFormulaClick != null) {
-                            val textLayoutResult = remember { mutableStateOf<TextLayoutResult?>(null) }
-                            androidx.compose.foundation.text.ClickableText(
-                                text = annotated,
-                                style = androidx.compose.ui.text.TextStyle(
-                                    fontSize = 15.sp,
-                                    color = colors.mutedText,
-                                    lineHeight = 22.sp,
-                                    textAlign = TextAlign.Justify
-                                ),
-                                modifier = Modifier.fillMaxWidth(),
-                                onTextLayout = { textLayoutResult.value = it },
-                                onClick = { offset ->
-                                    val annotation = annotated.getStringAnnotations(tag = "formula", start = offset, end = offset).firstOrNull()
-                                    if (annotation != null) {
-                                        val box = textLayoutResult.value?.getBoundingBox(offset)
-                                        if (box != null) {
-                                            popupState.value = PopupState(
-                                                text = annotation.item,
-                                                offset = IntOffset(box.left.toInt(), (box.top.toInt() - 100).coerceAtLeast(0)),
-                                                blockIndex = index
-                                            )
-                                        }
-                                    } else {
-                                        popupState.value = null
-                                    }
-                                }
-                            )
-                        } else {
-                            Text(
-                                text = annotated,
-                                fontSize = 15.sp,
-                                color = colors.mutedText,
-                                lineHeight = 22.sp,
-                                textAlign = TextAlign.Justify,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
+                        MarkdownTextBlock(
+                            annotated = annotated,
+                            colors = colors,
+                            index = index,
+                            onFormulaClick = onFormulaClick,
+                            popupState = popupState
+                        )
                     }
                     is Block.Bullet -> {
                         val annotated = remember(block.text, colors) {
@@ -399,44 +369,13 @@ fun MarkdownText(
                                 }
                             }
                         }
-                        if (onFormulaClick != null) {
-                            val textLayoutResult = remember { mutableStateOf<TextLayoutResult?>(null) }
-                            androidx.compose.foundation.text.ClickableText(
-                                text = annotated,
-                                style = androidx.compose.ui.text.TextStyle(
-                                    fontSize = 15.sp,
-                                    color = colors.mutedText,
-                                    lineHeight = 22.sp,
-                                    textAlign = TextAlign.Justify
-                                ),
-                                modifier = Modifier.fillMaxWidth(),
-                                onTextLayout = { textLayoutResult.value = it },
-                                onClick = { offset ->
-                                    val annotation = annotated.getStringAnnotations(tag = "formula", start = offset, end = offset).firstOrNull()
-                                    if (annotation != null) {
-                                        val box = textLayoutResult.value?.getBoundingBox(offset)
-                                        if (box != null) {
-                                            popupState.value = PopupState(
-                                                text = annotation.item,
-                                                offset = IntOffset(box.left.toInt(), (box.top.toInt() - 100).coerceAtLeast(0)),
-                                                blockIndex = index
-                                            )
-                                        }
-                                    } else {
-                                        popupState.value = null
-                                    }
-                                }
-                            )
-                        } else {
-                            Text(
-                                text = annotated,
-                                fontSize = 15.sp,
-                                color = colors.mutedText,
-                                lineHeight = 22.sp,
-                                textAlign = TextAlign.Justify,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
+                        MarkdownTextBlock(
+                            annotated = annotated,
+                            colors = colors,
+                            index = index,
+                            onFormulaClick = onFormulaClick,
+                            popupState = popupState
+                        )
                     }
                     is Block.Ordered -> {
                         val annotated = remember(block.index, block.text, colors) {
@@ -449,87 +388,132 @@ fun MarkdownText(
                                 }
                             }
                         }
-                        if (onFormulaClick != null) {
-                            val textLayoutResult = remember { mutableStateOf<TextLayoutResult?>(null) }
-                            androidx.compose.foundation.text.ClickableText(
-                                text = annotated,
-                                style = androidx.compose.ui.text.TextStyle(
-                                    fontSize = 15.sp,
-                                    color = colors.mutedText,
-                                    lineHeight = 22.sp,
-                                    textAlign = TextAlign.Justify
-                                ),
-                                modifier = Modifier.fillMaxWidth(),
-                                onTextLayout = { textLayoutResult.value = it },
-                                onClick = { offset ->
-                                    val annotation = annotated.getStringAnnotations(tag = "formula", start = offset, end = offset).firstOrNull()
-                                    if (annotation != null) {
-                                        val box = textLayoutResult.value?.getBoundingBox(offset)
-                                        if (box != null) {
-                                            popupState.value = PopupState(
-                                                text = annotation.item,
-                                                offset = IntOffset(box.left.toInt(), (box.top.toInt() - 100).coerceAtLeast(0)),
-                                                blockIndex = index
-                                            )
-                                        }
-                                    } else {
-                                        popupState.value = null
-                                    }
-                                }
-                            )
-                        } else {
-                            Text(
-                                text = annotated,
-                                fontSize = 15.sp,
-                                color = colors.mutedText,
-                                lineHeight = 22.sp,
-                                textAlign = TextAlign.Justify,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
+                        MarkdownTextBlock(
+                            annotated = annotated,
+                            colors = colors,
+                            index = index,
+                            onFormulaClick = onFormulaClick,
+                            popupState = popupState
+                        )
                     }
                 }
 
-                val currentPopup = popupState.value
-                if (currentPopup?.blockIndex == index) {
+                if (popupState.value != null && popupState.value?.blockIndex == index) {
+                    val pState = popupState.value!!
                     Popup(
                         alignment = Alignment.TopStart,
-                        offset = currentPopup.offset,
+                        offset = pState.offset,
                         onDismissRequest = { popupState.value = null }
                     ) {
                         Surface(
-                            shape = RoundedCornerShape(16.dp),
+                            shape = RoundedCornerShape(12.dp),
                             color = colors.surfaceElevated,
                             shadowElevation = 8.dp,
-                            modifier = Modifier.padding(4.dp)
+                            modifier = Modifier.padding(8.dp).widthIn(max = 280.dp)
                         ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier
-                                    .clickable {
-                                        onFormulaClick?.invoke(currentPopup.text)
-                                        popupState.value = null
-                                    }
-                                    .padding(horizontal = 12.dp, vertical = 8.dp)
-                            ) {
-                                androidx.compose.material3.Icon(
-                                    imageVector = Icons.Default.Book,
-                                    contentDescription = "Save",
-                                    tint = colors.accent,
-                                    modifier = Modifier.size(16.dp)
-                                )
-                                Spacer(modifier = Modifier.width(6.dp))
+                            Column(modifier = Modifier.padding(16.dp)) {
                                 Text(
-                                    text = "Lưu cấu trúc",
-                                    fontSize = 13.sp,
-                                    fontWeight = FontWeight.Medium,
-                                    color = colors.mainText
+                                    text = "Lưu cấu trúc này?",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 14.sp,
+                                    color = colors.mainText,
+                                    modifier = Modifier.padding(bottom = 8.dp)
                                 )
+                                Surface(
+                                    color = colors.accent.copy(alpha = 0.1f),
+                                    shape = RoundedCornerShape(8.dp),
+                                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+                                ) {
+                                    Text(
+                                        text = pState.text,
+                                        fontSize = 14.sp,
+                                        color = colors.accent,
+                                        fontWeight = FontWeight.Medium,
+                                        modifier = Modifier.padding(12.dp)
+                                    )
+                                }
+                                Row(
+                                    horizontalArrangement = Arrangement.End,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    androidx.compose.material3.TextButton(
+                                        onClick = { popupState.value = null }
+                                    ) {
+                                        Text("Hủy", color = colors.mutedText)
+                                    }
+                                    Spacer(Modifier.width(8.dp))
+                                    androidx.compose.material3.Button(
+                                        onClick = {
+                                            onFormulaClick?.invoke(pState.text)
+                                            popupState.value = null
+                                        },
+                                        colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                                            containerColor = colors.accent,
+                                            contentColor = Color.White
+                                        )
+                                    ) {
+                                        androidx.compose.material3.Icon(
+                                            androidx.compose.material.icons.Icons.Default.Book,
+                                            contentDescription = null,
+                                            modifier = Modifier.size(16.dp).padding(end = 4.dp)
+                                        )
+                                        Text("Lưu sổ tay")
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         }
+    }
+}
+
+@Suppress("DEPRECATION")
+@Composable
+private fun MarkdownTextBlock(
+    annotated: AnnotatedString,
+    colors: AppColors,
+    index: Int,
+    onFormulaClick: ((String) -> Unit)?,
+    popupState: androidx.compose.runtime.MutableState<PopupState?>
+) {
+    if (onFormulaClick != null) {
+        val textLayoutResult = remember { mutableStateOf<TextLayoutResult?>(null) }
+        androidx.compose.foundation.text.ClickableText(
+            text = annotated,
+            style = androidx.compose.ui.text.TextStyle(
+                fontSize = 15.sp,
+                color = colors.mutedText,
+                lineHeight = 22.sp,
+                textAlign = TextAlign.Justify
+            ),
+            modifier = Modifier.fillMaxWidth(),
+            onTextLayout = { textLayoutResult.value = it },
+            onClick = { offset ->
+                val annotation = annotated.getStringAnnotations(tag = "formula", start = offset, end = offset).firstOrNull()
+                if (annotation != null) {
+                    val box = textLayoutResult.value?.getBoundingBox(offset)
+                    if (box != null) {
+                        popupState.value = PopupState(
+                            text = annotation.item,
+                            offset = IntOffset(box.left.toInt(), (box.top.toInt() - 100).coerceAtLeast(0)),
+                            blockIndex = index
+                        )
+                    }
+                } else {
+                    popupState.value = null
+                }
+            }
+        )
+    } else {
+        Text(
+            text = annotated,
+            fontSize = 15.sp,
+            color = colors.mutedText,
+            lineHeight = 22.sp,
+            textAlign = TextAlign.Justify,
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }

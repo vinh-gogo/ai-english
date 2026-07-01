@@ -3,27 +3,13 @@ package com.aienglish.feature.aiteacher.ui.screen
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChevronLeft
-import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.VolumeUp
-import androidx.compose.material.icons.rounded.AutoAwesome
-import androidx.compose.material.icons.rounded.School
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.material.icons.rounded.List
 import androidx.compose.material.icons.rounded.ArrowUpward
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import kotlinx.coroutines.launch
@@ -31,18 +17,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.AppColors
-import com.aienglish.feature.aiteacher.domain.model.TopicItem
-import com.aienglish.feature.aiteacher.domain.model.getCompatibleLevels
-import com.aienglish.feature.aiteacher.ui.viewmodel.LevelType
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherUiState
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
-
-
+import com.aienglish.feature.aiteacher.ui.screen.components.topic.TopicRowItem
+import com.aienglish.feature.aiteacher.ui.screen.components.topic.TopicSearchBar
+import com.aienglish.feature.aiteacher.ui.screen.components.topic.TopicActionHeader
+import com.aienglish.feature.aiteacher.ui.screen.components.topic.TopicGreetingHeader
+import com.aienglish.feature.aiteacher.ui.screen.components.topic.SaveTopicDialog
 
 @Composable
 fun TopicSelectionContent(
@@ -56,6 +43,7 @@ fun TopicSelectionContent(
     var isSearchFocused by remember { mutableStateOf(false) }
     var isCustomTopicFocused by remember { mutableStateOf(false) }
     var longPressedTopicId by remember { mutableStateOf<Int?>(null) }
+    val coroutineScope = rememberCoroutineScope()
 
     // Scroll to show custom topic card when focused
     LaunchedEffect(isCustomTopicFocused) {
@@ -112,37 +100,7 @@ fun TopicSelectionContent(
 
             // Header icon + title side-by-side
             item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.School,
-                        contentDescription = null,
-                        tint = colors.accent,
-                        modifier = Modifier.size(32.dp)
-                    )
-                    Spacer(Modifier.width(10.dp))
-                    val greetingText = when (state.targetLanguage) {
-                        "en" -> "Trợ lý Tiếng Anh"
-                        "ja" -> "Trợ lý Tiếng Nhật"
-                        "zh" -> "Trợ lý Tiếng Trung"
-                        "es" -> "Trợ lý Tiếng Tây Ban Nha"
-                        "hi" -> "Trợ lý Tiếng Hindi"
-                        "fr" -> "Trợ lý Tiếng Pháp"
-                        "de" -> "Trợ lý Tiếng Đức"
-                        "ko" -> "Trợ lý Tiếng Hàn"
-                        "vi" -> "Trợ lý Tiếng Việt"
-                        else -> "Trợ lý Tiếng Anh"
-                    }
-                    Text(
-                        greetingText,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = colors.mainText
-                    )
-                }
+                TopicGreetingHeader(state.targetLanguage, colors)
             }
 
             item {
@@ -177,61 +135,12 @@ fun TopicSelectionContent(
 
             // ── Search Bar (Custom compact styling) ──
             item {
-                BasicTextField(
-                    value = state.topicSearchQuery,
-                    onValueChange = { viewModel.onTopicSearchChange(it) },
-                    textStyle = androidx.compose.ui.text.TextStyle(
-                        color = colors.mainText,
-                        fontSize = 13.sp
-                    ),
-                    singleLine = true,
-                    cursorBrush = androidx.compose.ui.graphics.SolidColor(colors.accent),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(38.dp)
-                        .onFocusChanged { isSearchFocused = it.isFocused }
-                        .background(colors.surface, RoundedCornerShape(8.dp))
-                        .border(
-                            1.dp,
-                            if (isSearchFocused) colors.accent else colors.border,
-                            RoundedCornerShape(8.dp)
-                        ),
-                    decorationBox = { innerTextField ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(horizontal = 12.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = null,
-                                modifier = Modifier.size(16.dp),
-                                tint = colors.hintText
-                            )
-                            Spacer(Modifier.width(8.dp))
-                            Box(modifier = Modifier.weight(1f)) {
-                                if (state.topicSearchQuery.isEmpty()) {
-                                    Text(
-                                        text = "Tìm kiếm chủ đề...",
-                                        color = colors.hintText,
-                                        fontSize = 13.sp
-                                    )
-                                }
-                                innerTextField()
-                            }
-                            if (state.topicSearchQuery.isNotEmpty()) {
-                                Icon(
-                                    imageVector = Icons.Default.Close,
-                                    contentDescription = "Clear",
-                                    modifier = Modifier
-                                        .size(16.dp)
-                                        .clickable { viewModel.onTopicSearchChange("") },
-                                    tint = colors.hintText
-                                )
-                            }
-                        }
-                    }
+                TopicSearchBar(
+                    query = state.topicSearchQuery,
+                    isFocused = isSearchFocused,
+                    onQueryChange = { viewModel.onTopicSearchChange(it) },
+                    onFocusChanged = { isSearchFocused = it },
+                    colors = colors
                 )
             }
 
@@ -241,71 +150,18 @@ fun TopicSelectionContent(
 
             // Section Header: Title + Quick actions (Ngẫu nhiên & Switcher)
             item {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = if (state.isCustomTopicMode) "Nhập chủ đề tùy chỉnh"
-                        else if (state.topicSearchQuery.isEmpty()) "Các chủ đề"
-                        else "Kết quả tìm kiếm (${filteredTopics.size})",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = colors.mutedText
-                    )
-                    
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        if (!state.isCustomTopicMode && filteredTopics.isNotEmpty()) {
-                            Row(
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(6.dp))
-                                    .clickable { viewModel.onTopicIndexSelected(filteredTopics.random().first) }
-                                    .padding(horizontal = 6.dp, vertical = 4.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.AutoAwesome,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(13.dp),
-                                    tint = colors.accent
-                                )
-                                Spacer(Modifier.width(4.dp))
-                                Text(
-                                    text = "Ngẫu nhiên",
-                                    fontSize = 11.sp,
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = colors.accent
-                                )
-                            }
+                TopicActionHeader(
+                    isCustomTopicMode = state.isCustomTopicMode,
+                    topicSearchQuery = state.topicSearchQuery,
+                    filteredTopicsCount = filteredTopics.size,
+                    onRandomClick = {
+                        if (filteredTopics.isNotEmpty()) {
+                            viewModel.onTopicIndexSelected(filteredTopics.random().first)
                         }
-
-                        Row(
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(6.dp))
-                                .clickable { viewModel.setCustomTopicMode(!state.isCustomTopicMode) }
-                                .padding(horizontal = 6.dp, vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                imageVector = if (state.isCustomTopicMode) Icons.Rounded.List else Icons.Rounded.Edit,
-                                contentDescription = null,
-                                modifier = Modifier.size(13.dp),
-                                tint = colors.accent
-                            )
-                            Spacer(Modifier.width(4.dp))
-                            Text(
-                                text = if (state.isCustomTopicMode) "Chọn từ danh sách" else "Tự nhập",
-                                fontSize = 11.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                color = colors.accent
-                            )
-                        }
-                    }
-                }
+                    },
+                    onToggleCustomMode = { viewModel.setCustomTopicMode(!state.isCustomTopicMode) },
+                    colors = colors
+                )
             }
 
             item {
@@ -313,7 +169,7 @@ fun TopicSelectionContent(
             }
 
             if (!state.isCustomTopicMode) {
-                // ── Vertical list of topic cards (fixes truncation completely) ──
+                // ── Vertical list of topic cards ──
                 if (filteredTopics.isEmpty()) {
                     item {
                         Box(
@@ -398,231 +254,81 @@ fun TopicSelectionContent(
                 )
         )
 
-        // ── Pinned start button (styled with uniform Accent Color) ──
-        Button(
-            onClick = { viewModel.onStartLesson() },
-            enabled = isStartEnabled,
+        // ── Pinned Start Button at the Bottom ──
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
+                .padding(start = 16.dp, end = 16.dp)
                 .navigationBarsPadding()
-                .padding(horizontal = 16.dp)
                 .padding(bottom = 14.dp)
-                .height(48.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = colors.accent,
-                disabledContainerColor = colors.accent.copy(alpha = 0.5f)
-            ),
-            border = BorderStroke(2.dp, colors.border),
-            shape = CircleShape
         ) {
-            Icon(Icons.Default.PlayArrow, null, modifier = Modifier.size(20.dp))
-            Spacer(Modifier.width(8.dp))
-            Text("Bắt đầu bài học", fontSize = 16.sp, fontWeight = FontWeight.Bold)
-        }
-
-        val showScrollToTop by remember {
-            derivedStateOf {
-                lazyListState.firstVisibleItemIndex >= 10
+            Button(
+                onClick = {
+                    if (isStartEnabled) {
+                        viewModel.onStartLesson()
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (isStartEnabled) colors.accent else colors.mutedText.copy(alpha = 0.3f),
+                    contentColor = if (isStartEnabled) Color.White else colors.hintText
+                ),
+                shape = CircleShape,
+                enabled = isStartEnabled
+            ) {
+                Icon(
+                    imageVector = Icons.Default.PlayArrow,
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = "Bắt đầu học",
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold
+                )
             }
         }
-        val coroutineScope = rememberCoroutineScope()
+
+        // --- Nút Quay Lại Đầu Trang ---
+        val showScrollToTop by remember {
+            derivedStateOf {
+                lazyListState.firstVisibleItemIndex > 10
+            }
+        }
 
         if (showScrollToTop) {
-            SmallFloatingActionButton(
+            IconButton(
                 onClick = {
                     coroutineScope.launch {
-                        if (lazyListState.firstVisibleItemIndex > 10) {
-                            lazyListState.scrollToItem(10)
-                        }
                         lazyListState.animateScrollToItem(0)
                     }
                 },
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
+                    .padding(end = 16.dp, bottom = 80.dp)
                     .navigationBarsPadding()
-                    .padding(end = 16.dp, bottom = 76.dp),
-                containerColor = colors.accent,
-                contentColor = Color.White,
-                shape = CircleShape
+                    .size(40.dp)
+                    .background(colors.accent, CircleShape)
             ) {
                 Icon(
                     imageVector = Icons.Rounded.ArrowUpward,
                     contentDescription = "Scroll to top",
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(20.dp),
+                    tint = Color.White
                 )
             }
         }
 
-        if (state.showSaveToDbDialog) {
-            AlertDialog(
-                onDismissRequest = { viewModel.dismissSaveToDbDialog() },
-                title = { 
-                    Text(
-                        text = "Lưu chủ đề", 
-                        fontSize = 16.sp, 
-                        fontWeight = FontWeight.Bold,
-                        color = colors.mainText
-                    ) 
-                },
-                text = { 
-                    Text(
-                        text = "Bạn có muốn lưu chủ đề \"${state.customTopicInput}\" vào danh sách để sử dụng lại sau này không?",
-                        fontSize = 14.sp,
-                        color = colors.mainText
-                    ) 
-                },
-                confirmButton = {
-                    TextButton(
-                        onClick = { viewModel.saveCustomTopicToDb(state.customTopicInput) }
-                    ) {
-                        Text("Lưu", color = colors.accent, fontWeight = FontWeight.Bold)
-                    }
-                },
-                dismissButton = {
-                    TextButton(
-                        onClick = { viewModel.dismissSaveToDbDialog() }
-                    ) {
-                        Text("Hủy", color = colors.mutedText)
-                    }
-                },
-                containerColor = colors.surface,
-                textContentColor = colors.mainText,
-                titleContentColor = colors.mainText
-            )
-        }
-    }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-private fun TopicRowItem(
-    topic: TopicItem,
-    i: Int,
-    isSelected: Boolean,
-    isTtsLoading: Boolean,
-    isLongPressed: Boolean,
-    onClick: () -> Unit,
-    onLongClick: () -> Unit,
-    onDismissLongClick: () -> Unit,
-    onSpeak: () -> Unit,
-    onRemove: () -> Unit,
-    colors: AppColors
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp)
-            .clip(RoundedCornerShape(12.dp))
-            .combinedClickable(
-                onClick = onClick,
-                onLongClick = onLongClick
-            ),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) colors.surfaceElevated else colors.surface
-        ),
-        border = BorderStroke(
-            width = if (isSelected) 2.dp else 1.dp,
-            color = if (isSelected) colors.accent else colors.border
+        SaveTopicDialog(
+            showDialog = state.showSaveToDbDialog,
+            customTopicInput = state.customTopicInput,
+            onDismiss = { viewModel.dismissSaveToDbDialog() },
+            onSave = { viewModel.saveCustomTopicToDb(state.customTopicInput) },
+            colors = colors
         )
-    ) {
-        Box(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            // Rectangular index badge - goc tren-trai, hinh chu nhat nho
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = if (isSelected) colors.accent else colors.border.copy(alpha = 0.5f),
-                        shape = RoundedCornerShape(
-                            topStart = 12.dp,
-                            topEnd = 0.dp,
-                            bottomEnd = 4.dp,
-                            bottomStart = 0.dp
-                        )
-                    )
-                    .padding(horizontal = 6.dp, vertical = 2.dp)
-            ) {
-                Text(
-                    text = "${i + 1}",
-                    color = if (isSelected) Color.White else colors.mutedText,
-                    fontSize = 8.sp,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-
-            // Play audio button - spinner khi dang tai model
-            IconButton(
-                onClick = onSpeak,
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .padding(start = 12.dp)
-                    .size(28.dp)
-            ) {
-                if (isTtsLoading) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(14.dp),
-                        strokeWidth = 2.dp,
-                        color = if (isSelected) colors.accent else colors.mutedText
-                    )
-                } else {
-                    Icon(
-                        imageVector = Icons.Default.VolumeUp,
-                        contentDescription = "Nghe chu de",
-                        tint = if (isSelected) colors.accent else colors.mutedText,
-                        modifier = Modifier.size(16.dp)
-                    )
-                }
-            }
-
-            // Full topic name wrapping to multiple lines if needed (Padded to clear controls)
-            Text(
-                text = buildInlineAnnotatedString(topic.name, colors),
-                color = colors.mainText,
-                fontWeight = if (isSelected) FontWeight.Medium else FontWeight.Normal,
-                fontSize = 13.5.sp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 48.dp, end = 16.dp, top = 12.dp, bottom = 12.dp)
-            )
-
-            // Overlay with Remove button in the center
-            if (isLongPressed) {
-                Box(
-                    modifier = Modifier
-                        .matchParentSize()
-                        .background(colors.background.copy(alpha = 0.85f))
-                        .clickable { onDismissLongClick() },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Button(
-                        onClick = onRemove,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = colors.error
-                        ),
-                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
-                        shape = RoundedCornerShape(8.dp),
-                        modifier = Modifier.height(32.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "Remove",
-                            modifier = Modifier.size(16.dp),
-                            tint = Color.White
-                        )
-                        Spacer(Modifier.width(6.dp))
-                        Text(
-                            text = "Xóa",
-                            color = Color.White,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-            }
-        }
     }
 }
-
-

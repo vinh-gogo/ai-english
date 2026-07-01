@@ -40,7 +40,6 @@ CREATE TABLE IF NOT EXISTS lesson_question (
     explanation TEXT,
     user_answer TEXT,
     ai_explanation TEXT,
-    alternatives_json TEXT, -- DEPRECATED: Do not use, use lesson_question_alternative table
     UNIQUE(history_id, sentence_index) ON CONFLICT REPLACE,
     FOREIGN KEY(history_id) REFERENCES lesson_history(id) ON DELETE CASCADE
 );
@@ -78,8 +77,8 @@ CREATE TABLE IF NOT EXISTS lesson_question_alternative (
 );
 
 insertQuestion:
-INSERT OR REPLACE INTO lesson_question (history_id, sentence_index, vietnamese, english, explanation, user_answer, ai_explanation, alternatives_json)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+INSERT OR REPLACE INTO lesson_question (history_id, sentence_index, vietnamese, english, explanation, user_answer, ai_explanation)
+VALUES (?, ?, ?, ?, ?, ?, ?);
 
 insertToken:
 INSERT INTO lesson_question_token (question_id, word, phonetic, part_of_speech)

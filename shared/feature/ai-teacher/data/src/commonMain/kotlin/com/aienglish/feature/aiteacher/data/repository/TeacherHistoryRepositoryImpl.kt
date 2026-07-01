@@ -68,13 +68,7 @@ class TeacherHistoryRepositoryImpl(
                     )
                 }
                 val alternativesFromDb = queries.getAlternativesForQuestion(row.id).executeAsList()
-                val alternatives = if (alternativesFromDb.isNotEmpty()) {
-                    alternativesFromDb
-                } else {
-                    row.alternatives_json?.let {
-                        try { json.decodeFromString<List<String>>(it) } catch (_: Exception) { emptyList() }
-                    } ?: emptyList()
-                }
+                val alternatives = alternativesFromDb
 
                 EnglishSentence(
                     vietnamese = row.vietnamese,
@@ -134,8 +128,7 @@ class TeacherHistoryRepositoryImpl(
                 english = sentence.english,
                 explanation = sentence.explanation.takeIf { it.isNotEmpty() },
                 user_answer = userAnswers[index],
-                ai_explanation = explanations[index],
-                alternatives_json = null
+                ai_explanation = explanations[index]
             )
 
             val questionId = queries.getQuestionId(historyId, index.toLong()).executeAsOne()
@@ -160,6 +153,12 @@ class TeacherHistoryRepositoryImpl(
     @OptIn(kotlin.uuid.ExperimentalUuidApi::class)
     override suspend fun saveQuestionNote(historyId: Long, sentenceIndex: Int, note: String) = withContext(dispatchers.io) {
         val questionId = queries.getQuestionId(historyId, sentenceIndex.toLong()).executeAsOneOrNull() ?: return@withContext
+        
+        val existingNotes = queries.getQuestionNotes(questionId).executeAsList()
+        if (existingNotes.any { it.note == note }) {
+            return@withContext
+        }
+
         val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
         val guid = kotlin.uuid.Uuid.random().toString()
         queries.insertQuestionNote(

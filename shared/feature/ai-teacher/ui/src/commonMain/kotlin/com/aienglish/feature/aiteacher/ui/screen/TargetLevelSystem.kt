@@ -2,6 +2,7 @@ package com.aienglish.feature.aiteacher.ui.screen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -71,242 +72,188 @@ internal fun TargetLevelSystem(
         Spacer(Modifier.height(8.dp))
 
         when (state.levelType) {
-            LevelType.CEFR -> {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    listOf("A1", "A2", "B1", "B2", "C1", "C2").forEach { level ->
-                        LevelChip(
-                            text = level,
-                            count = state.topicCounts[level],
-                            isSelected = level == state.selectedCefrLevel,
-                            onClick = { viewModel.onCefrLevelSelected(level) },
-                            colors = colors
-                        )
+            LevelType.CEFR -> LevelSystemRow(
+                levels = listOf("A1", "A2", "B1", "B2", "C1", "C2"),
+                state = state, colors = colors,
+                isSelected = { it == state.selectedCefrLevel },
+                onClick = { viewModel.onCefrLevelSelected(it) },
+                spacing = 6.dp
+            )
+            LevelType.TOEIC -> LevelSystemRow(
+                levels = listOf("300", "500", "700", "900"),
+                state = state, colors = colors,
+                isSelected = { it == state.selectedToeicLevel },
+                onClick = { viewModel.onToeicLevelSelected(it) },
+                displayTransform = { if (it == "900") ">900" else it }
+            )
+            LevelType.JLPT -> LevelSystemRow(
+                levels = listOf("N5", "N4", "N3", "N2", "N1"),
+                state = state, colors = colors,
+                isSelected = { it == state.selectedJlptLevel },
+                onClick = { viewModel.onJlptLevelSelected(it) }
+            )
+            LevelType.HSK -> LevelSystemRow(
+                levels = listOf("HSK1", "HSK2", "HSK3", "HSK4", "HSK5", "HSK6"),
+                state = state, colors = colors,
+                isSelected = { it == state.selectedHskLevel },
+                onClick = { viewModel.onHskLevelSelected(it) },
+                displayTransform = { it.replace("HSK", "H") },
+                spacing = 6.dp, fontSize = 12.sp
+            )
+            LevelType.DELE -> LevelSystemRow(
+                levels = listOf("A1", "A2", "B1", "B2", "C1", "C2"),
+                state = state, colors = colors,
+                isSelected = { it == state.selectedDeleLevel },
+                onClick = { viewModel.onDeleLevelSelected(it) },
+                spacing = 6.dp
+            )
+            LevelType.SIELE -> LevelSystemRow(
+                levels = listOf("A1", "A2", "B1", "B2", "C1"),
+                state = state, colors = colors,
+                isSelected = { it == state.selectedSieleLevel },
+                onClick = { viewModel.onSieleLevelSelected(it) }
+            )
+            LevelType.HINDI -> LevelSystemRow(
+                levels = listOf("A1", "A2", "B1", "B2"),
+                state = state, colors = colors,
+                isSelected = { it == state.selectedHindiLevel },
+                onClick = { viewModel.onHindiLevelSelected(it) }
+            )
+            LevelType.DELF -> LevelSystemRow(
+                levels = listOf("A1", "A2", "B1", "B2"),
+                state = state, colors = colors,
+                isSelected = { it == state.selectedDelfLevel },
+                onClick = { viewModel.onDelfLevelSelected(it) }
+            )
+            LevelType.DALF -> LevelSystemRow(
+                levels = listOf("C1", "C2"),
+                state = state, colors = colors,
+                isSelected = { it == state.selectedDalfLevel },
+                onClick = { viewModel.onDalfLevelSelected(it) }
+            )
+            LevelType.GOETHE -> LevelSystemRow(
+                levels = listOf("A1", "A2", "B1", "B2", "C1", "C2"),
+                state = state, colors = colors,
+                isSelected = { it == state.selectedGoetheLevel },
+                onClick = { viewModel.onGoetheLevelSelected(it) },
+                spacing = 6.dp
+            )
+            LevelType.TESTDAF -> LevelSystemRow(
+                levels = listOf("TDN3", "TDN4", "TDN5"),
+                state = state, colors = colors,
+                isSelected = { it == state.selectedTestdafLevel },
+                onClick = { viewModel.onTestdafLevelSelected(it) },
+                displayTransform = { it.replace("TDN", "T") }
+            )
+            LevelType.TOPIK -> LevelSystemRow(
+                levels = listOf("TOPIK1", "TOPIK2", "TOPIK3", "TOPIK4", "TOPIK5", "TOPIK6"),
+                state = state, colors = colors,
+                isSelected = { it == state.selectedTopikLevel },
+                onClick = { viewModel.onTopikLevelSelected(it) },
+                displayTransform = { it.replace("TOPIK", "T") },
+                spacing = 6.dp, fontSize = 12.sp
+            )
+            LevelType.VIET -> LevelSystemRow(
+                levels = listOf("TIEU_HOC", "TRUNG_HOC", "DAI_HOC"),
+                state = state, colors = colors,
+                isSelected = { it == state.selectedVietLevel },
+                onClick = { viewModel.onVietLevelSelected(it) },
+                displayTransform = { 
+                    when(it) {
+                        "TIEU_HOC" -> "TH"
+                        "TRUNG_HOC" -> "THCS"
+                        "DAI_HOC" -> "ĐH"
+                        else -> it
                     }
                 }
-            }
-            LevelType.TOEIC -> {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf("300", "500", "700", "900").forEach { level ->
-                        LevelChip(
-                            text = if (level == "900") ">900" else level,
-                            count = state.topicCounts[level],
-                            isSelected = level == state.selectedToeicLevel,
-                            onClick = { viewModel.onToeicLevelSelected(level) },
-                            colors = colors
-                        )
-                    }
-                }
-            }
-            LevelType.JLPT -> {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf("N5", "N4", "N3", "N2", "N1").forEach { level ->
-                        LevelChip(
-                            text = level,
-                            count = state.topicCounts[level],
-                            isSelected = level == state.selectedJlptLevel,
-                            onClick = { viewModel.onJlptLevelSelected(level) },
-                            colors = colors
-                        )
-                    }
-                }
-            }
-            LevelType.HSK -> {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    listOf("HSK1", "HSK2", "HSK3", "HSK4", "HSK5", "HSK6").forEach { level ->
-                        LevelChip(
-                            text = level.replace("HSK", "H"),
-                            count = state.topicCounts[level],
-                            isSelected = level == state.selectedHskLevel,
-                            onClick = { viewModel.onHskLevelSelected(level) },
-                            colors = colors,
-                            fontSize = 12.sp
-                        )
-                    }
-                }
-            }
-            LevelType.DELE -> {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    listOf("A1", "A2", "B1", "B2", "C1", "C2").forEach { level ->
-                        LevelChip(
-                            text = level,
-                            count = state.topicCounts[level],
-                            isSelected = level == state.selectedDeleLevel,
-                            onClick = { viewModel.onDeleLevelSelected(level) },
-                            colors = colors
-                        )
-                    }
-                }
-            }
-            LevelType.SIELE -> {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf("A1", "A2", "B1", "B2", "C1").forEach { level ->
-                        LevelChip(
-                            text = level,
-                            count = state.topicCounts[level],
-                            isSelected = level == state.selectedSieleLevel,
-                            onClick = { viewModel.onSieleLevelSelected(level) },
-                            colors = colors
-                        )
-                    }
-                }
-            }
-            LevelType.HINDI -> {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf("A1", "A2", "B1", "B2").forEach { level ->
-                        LevelChip(
-                            text = level,
-                            count = state.topicCounts[level],
-                            isSelected = level == state.selectedHindiLevel,
-                            onClick = { viewModel.onHindiLevelSelected(level) },
-                            colors = colors
-                        )
-                    }
-                }
-            }
-            LevelType.DELF -> {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf("A1", "A2", "B1", "B2").forEach { level ->
-                        LevelChip(
-                            text = level,
-                            count = state.topicCounts[level],
-                            isSelected = level == state.selectedDelfLevel,
-                            onClick = { viewModel.onDelfLevelSelected(level) },
-                            colors = colors
-                        )
-                    }
-                }
-            }
-            LevelType.DALF -> {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf("C1", "C2").forEach { level ->
-                        LevelChip(
-                            text = level,
-                            count = state.topicCounts[level],
-                            isSelected = level == state.selectedDalfLevel,
-                            onClick = { viewModel.onDalfLevelSelected(level) },
-                            colors = colors
-                        )
-                    }
-                }
-            }
-            LevelType.GOETHE -> {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    listOf("A1", "A2", "B1", "B2", "C1", "C2").forEach { level ->
-                        LevelChip(
-                            text = level,
-                            count = state.topicCounts[level],
-                            isSelected = level == state.selectedGoetheLevel,
-                            onClick = { viewModel.onGoetheLevelSelected(level) },
-                            colors = colors
-                        )
-                    }
-                }
-            }
-            LevelType.TESTDAF -> {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf("TDN3", "TDN4", "TDN5").forEach { level ->
-                        LevelChip(
-                            text = level,
-                            count = state.topicCounts[level],
-                            isSelected = level == state.selectedTestdafLevel,
-                            onClick = { viewModel.onTestdafLevelSelected(level) },
-                            colors = colors
-                        )
-                    }
-                }
-            }
-            LevelType.TOPIK -> {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    listOf("TOPIK1", "TOPIK2", "TOPIK3", "TOPIK4", "TOPIK5", "TOPIK6").forEach { level ->
-                        LevelChip(
-                            text = level.replace("TOPIK", "T"),
-                            count = state.topicCounts[level],
-                            isSelected = level == state.selectedTopikLevel,
-                            onClick = { viewModel.onTopikLevelSelected(level) },
-                            colors = colors,
-                            fontSize = 11.sp
-                        )
-                    }
-                }
-            }
-            LevelType.VIET -> {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf(
-                        "TIEU_HOC" to "Tiểu học",
-                        "TRUNG_HOC" to "Trung học",
-                        "DAI_HOC" to "Đại học"
-                    ).forEach { (code, label) ->
-                        LevelChip(
-                            text = label,
-                            count = state.topicCounts[code],
-                            isSelected = code == state.selectedVietLevel,
-                            onClick = { viewModel.onVietLevelSelected(code) },
-                            colors = colors,
-                            fontSize = 10.sp
-                        )
-                    }
-                }
-            }
+            )
         }
     }
 }
 
 @Composable
-private fun SingleLevelSystemLabel(text: String, colors: AppColors) {
-    Surface(
-        shape = RoundedCornerShape(6.dp),
-        color = colors.accent
-    ) {
-        Text(
-            text = text,
-            fontSize = 11.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
-        )
+private fun LevelSystemRow(
+    levels: List<String>,
+    state: TeacherUiState,
+    colors: AppColors,
+    isSelected: (String) -> Boolean,
+    onClick: (String) -> Unit,
+    displayTransform: (String) -> String = { it },
+    spacing: androidx.compose.ui.unit.Dp = 8.dp,
+    fontSize: TextUnit = 13.sp
+) {
+    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(spacing)) {
+        levels.forEach { level ->
+            LevelChip(
+                text = displayTransform(level),
+                count = state.topicCounts[level],
+                isSelected = isSelected(level),
+                onClick = { onClick(level) },
+                colors = colors,
+                fontSize = fontSize
+            )
+        }
     }
 }
 
 @Composable
+private fun SingleLevelSystemLabel(label: String, colors: AppColors) {
+    Text(
+        text = label,
+        fontSize = 11.sp,
+        fontWeight = FontWeight.Medium,
+        color = colors.hintText,
+        modifier = Modifier
+            .background(colors.surfaceElevated, RoundedCornerShape(4.dp))
+            .border(1.dp, colors.border, RoundedCornerShape(4.dp))
+            .padding(horizontal = 8.dp, vertical = 2.dp)
+    )
+}
+
+@Composable
 private fun DualLevelSystemSelector(
-    type1: LevelType, name1: String,
-    type2: LevelType, name2: String,
-    currentType: LevelType,
+    sys1: LevelType, label1: String,
+    sys2: LevelType, label2: String,
+    currentSys: LevelType,
     viewModel: TeacherViewModel,
     colors: AppColors
 ) {
     Row(
         modifier = Modifier
-            .clip(RoundedCornerShape(8.dp))
-            .background(colors.surfaceElevated)
+            .background(colors.surfaceElevated, RoundedCornerShape(6.dp))
+            .border(1.dp, colors.border, RoundedCornerShape(6.dp))
             .padding(2.dp)
     ) {
-        LevelTypeSelectorOption(name1, currentType == type1, { viewModel.onLevelTypeSelected(type1) }, colors)
-        LevelTypeSelectorOption(name2, currentType == type2, { viewModel.onLevelTypeSelected(type2) }, colors)
-    }
-}
+        val isSys1 = currentSys == sys1
+        Box(
+            modifier = Modifier
+                .clip(RoundedCornerShape(4.dp))
+                .background(if (isSys1) colors.accent else Color.Transparent)
+                .clickable { viewModel.onLevelTypeSelected(sys1) }
+                .padding(horizontal = 10.dp, vertical = 4.dp)
+        ) {
+            Text(
+                label1,
+                fontSize = 10.sp,
+                fontWeight = if (isSys1) FontWeight.Bold else FontWeight.Medium,
+                color = if (isSys1) Color.White else colors.hintText
+            )
+        }
 
-@Composable
-private fun LevelTypeSelectorOption(
-    text: String,
-    isSelected: Boolean,
-    onClick: () -> Unit,
-    colors: AppColors
-) {
-    Box(
-        modifier = Modifier
-            .clip(RoundedCornerShape(6.dp))
-            .background(if (isSelected) colors.accent else Color.Transparent)
-            .clickable { onClick() }
-            .padding(horizontal = 12.dp, vertical = 4.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = text,
-            fontSize = 11.sp,
-            fontWeight = FontWeight.Bold,
-            color = if (isSelected) Color.White else colors.mutedText
-        )
+        Box(
+            modifier = Modifier
+                .clip(RoundedCornerShape(4.dp))
+                .background(if (!isSys1) colors.accent else Color.Transparent)
+                .clickable { viewModel.onLevelTypeSelected(sys2) }
+                .padding(horizontal = 10.dp, vertical = 4.dp)
+        ) {
+            Text(
+                label2,
+                fontSize = 10.sp,
+                fontWeight = if (!isSys1) FontWeight.Bold else FontWeight.Medium,
+                color = if (!isSys1) Color.White else colors.hintText
+            )
+        }
     }
 }
 
@@ -319,35 +266,36 @@ private fun RowScope.LevelChip(
     colors: AppColors,
     fontSize: TextUnit = 13.sp
 ) {
-    Surface(
+    val bgColor = if (isSelected) colors.accent else colors.surfaceElevated
+    val textColor = if (isSelected) Color.White else colors.mainText
+    val borderColor = if (isSelected) colors.accent else colors.border
+
+    Box(
         modifier = Modifier
             .weight(1f)
-            .clip(RoundedCornerShape(12.dp))
-            .clickable { onClick() },
-        shape = RoundedCornerShape(12.dp),
-        color = if (isSelected) colors.accent else colors.surface,
-        border = BorderStroke(1.dp, if (isSelected) colors.accent else colors.border)
+            .height(44.dp)
+            .background(bgColor, RoundedCornerShape(10.dp))
+            .border(BorderStroke(1.dp, borderColor), RoundedCornerShape(10.dp))
+            .clip(RoundedCornerShape(10.dp))
+            .clickable { onClick() }
+            .padding(horizontal = 4.dp),
+        contentAlignment = Alignment.Center
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 6.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
             Text(
                 text = text,
-                color = if (isSelected) Color.White else colors.mainText,
+                color = textColor,
                 fontSize = fontSize,
-                fontWeight = FontWeight.Bold
+                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium
             )
-            Spacer(Modifier.height(1.dp))
-            Text(
-                text = if (count != null) "$count" else "-",
-                color = if (isSelected) Color.White.copy(alpha = 0.8f) else colors.mutedText,
-                fontSize = 9.sp,
-                fontWeight = FontWeight.Normal
-            )
+            if (count != null && count > 0) {
+                Text(
+                    text = "$count",
+                    color = if (isSelected) Color.White.copy(alpha = 0.8f) else colors.mutedText,
+                    fontSize = 9.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            }
         }
     }
 }

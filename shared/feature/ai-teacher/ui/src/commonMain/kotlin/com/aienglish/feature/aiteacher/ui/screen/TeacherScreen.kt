@@ -44,6 +44,7 @@ import com.aienglish.feature.pro.ui.screen.VipSheet
 import com.aienglish.feature.pro.ui.viewmodel.ProViewModel
 import com.aienglish.feature.pro.ui.intent.ProIntent
 import com.aienglish.feature.history.domain.model.LessonHistory
+import com.aienglish.feature.aiteacher.ui.screen.components.teacher.TeacherTopNavigation
 import org.koin.compose.koinInject
 
 // ─────────────────────────────────────────────────────────────
@@ -172,159 +173,17 @@ fun TeacherScreen(
             )
 
             // Floating Top Groups
-            Row(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .fillMaxWidth()
-                    .statusBarsPadding()
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 18.dp, bottom = 12.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Group 1: Back and Title (Height 48dp)
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    if (state.lesson != null || state.feedback != null) {
-                        // Standalone Circular Back Button (Perfect 48x48 circle)
-                        Box(
-                            modifier = Modifier
-                                .size(48.dp)
-                                .clip(CircleShape)
-                                .background(colors.surface)
-                                .border(2.dp, colors.border, CircleShape)
-                                .clickable { viewModel.onReset() },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Back",
-                                tint = colors.mainText,
-                                modifier = Modifier.size(20.dp)
-                            )
-                        }
-                    } else {
-                        // Title Text only capsule (standard padding, height 48dp)
-                        Row(
-                            modifier = Modifier
-                                .height(48.dp)
-                                .background(colors.surface, CircleShape)
-                                .border(2.dp, colors.border, CircleShape)
-                                .padding(horizontal = 12.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "AI Lingua",
-                                fontSize = 15.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = colors.mainText
-                            )
-                        }
-                    }
-                }
-
-                // Group 2: History, Profile, Pro badge (Grouped inside a single 48dp capsule aligned to the right)
-                Row(
-                    modifier = Modifier
-                        .height(48.dp)
-                        .background(colors.surface, CircleShape)
-                        .border(2.dp, colors.border, CircleShape),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    // History Button (Rounded on the left, flat on the right)
-                    Box(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .width(48.dp)
-                            .clip(RoundedCornerShape(topStart = 100.dp, bottomStart = 100.dp))
-                            .clickable { showHistory = true },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            Icons.Rounded.History,
-                            contentDescription = "Lịch sử",
-                            tint = colors.mutedText,
-                            modifier = Modifier.size(20.dp)
-                        )
-                    }
-
-                    // Divider
-                    Box(
-                        modifier = Modifier
-                            .width(1.dp)
-                            .height(20.dp)
-                            .background(colors.border)
-                    )
-
-                    // Profile Button (Perfect rectangle/square click ripple in the middle)
-                    Box(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .width(48.dp)
-                            .clip(RoundedCornerShape(0.dp))
-                            .clickable { profileViewModel.showProfile() },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        if (profileState.isSignedIn && profileState.displayName != null) {
-                            Box(
-                                modifier = Modifier
-                                    .size(24.dp)
-                                    .clip(CircleShape)
-                                    .background(colors.accent),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    profileState.displayName!!.first().uppercase(),
-                                    color = Color.White,
-                                    fontSize = 11.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
-                        } else {
-                            Icon(
-                                Icons.Rounded.AccountCircle,
-                                contentDescription = "Profile",
-                                tint = colors.mutedText,
-                                modifier = Modifier.size(20.dp)
-                            )
-                        }
-                    }
-
-                    // Divider
-                    Box(
-                        modifier = Modifier
-                            .width(1.dp)
-                            .height(20.dp)
-                            .background(colors.border)
-                    )
-
-                    // PRO Button (Rounded on the right, flat on the left)
-                    Row(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .clip(RoundedCornerShape(topEnd = 100.dp, bottomEnd = 100.dp))
-                            .clickable { proViewModel.onIntent(ProIntent.ShowVip) }
-                            .padding(start = 12.dp, end = 16.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.WorkspacePremium,
-                            contentDescription = "PRO",
-                            tint = Color(0xFFFFB300),
-                            modifier = Modifier.size(18.dp)
-                        )
-                        Text(
-                            text = if (profileState.isPaid) "PRO" else "GET",
-                            fontSize = 13.sp,
-                            fontWeight = FontWeight.Bold,
-                            fontStyle = FontStyle.Italic,
-                            color = Color(0xFFFFB300)
-                        )
-                    }
-                }
-            }
+            TeacherTopNavigation(
+                showBackButton = state.lesson != null || state.feedback != null,
+                isSignedIn = profileState.isSignedIn,
+                displayName = profileState.displayName,
+                isPaid = profileState.isPaid,
+                onBackClick = { viewModel.onReset() },
+                onHistoryClick = { showHistory = true },
+                onProfileClick = { profileViewModel.showProfile() },
+                onProClick = { proViewModel.onIntent(ProIntent.ShowVip) },
+                colors = colors
+            )
 
             // Error snackbar
             val error = state.error

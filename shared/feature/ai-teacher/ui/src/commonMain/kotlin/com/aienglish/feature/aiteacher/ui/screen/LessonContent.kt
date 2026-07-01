@@ -46,6 +46,11 @@ import com.aienglish.core.designsystem.theme.AppColors
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherUiState
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
 import com.aienglish.feature.aiteacher.ui.viewmodel.LevelType
+import com.aienglish.feature.aiteacher.ui.screen.components.AnswerRow
+import com.aienglish.feature.aiteacher.ui.screen.components.LessonExplanationCard
+import com.aienglish.feature.aiteacher.ui.screen.components.VocabularyTokens
+import com.aienglish.feature.aiteacher.ui.screen.components.LessonActionButtons
+import com.aienglish.feature.aiteacher.ui.screen.components.highlightDifferences
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -251,198 +256,30 @@ fun LessonContent(
                 }
                 Spacer(Modifier.height(6.dp))
 
-                // Token chips in FlowRow (no cards/borders, clean wraps like Sensei AI)
-                // Filter out pure punctuation tokens (e.g. ",", ".", "!", "?") — they add no vocabulary value
-                val isPunctuation: (String) -> Boolean = { w ->
-                    w.all { c -> !c.isLetterOrDigit() } && w.isNotEmpty()
-                }
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = colors.surface.copy(alpha = 0.95f)),
-                    border = BorderStroke(1.dp, colors.border)
-                ) {
-                    FlowRow(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(14.dp),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                    val isJapanese = state.selectedLevelText.startsWith("N")
-                    val isChinese = state.selectedLevelText.startsWith("HSK")
-                    sentence.tokens
-                        .filter { !isPunctuation(it.word) }
-                        .forEachIndexed { tokenIndex, token ->
-                        val isDetailed = showDetailedTokens
-
-                        Column(
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                                .padding(horizontal = 6.dp, vertical = 4.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            if (isJapanese) {
-                                // Japanese layout: Furigana (Top), Kanji (Middle), Romaji (Bottom)
-                                if (isDetailed) {
-                                    Text(
-                                        text = token.partOfSpeech.ifEmpty { " " },
-                                        color = if (token.partOfSpeech.isEmpty()) Color.Transparent else colors.hintText,
-                                        fontSize = 10.sp,
-                                        fontWeight = FontWeight.Normal
-                                    )
-                                }
-                                Text(
-                                    text = token.word,
-                                    color = colors.mainText,
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                                if (isDetailed) {
-                                    Text(
-                                        text = token.phonetic.ifEmpty { " " },
-                                        color = if (token.phonetic.isEmpty()) Color.Transparent else colors.hintText,
-                                        fontSize = 11.sp,
-                                        fontWeight = FontWeight.Light
-                                    )
-                                }
-                            } else if (isChinese) {
-                                // Chinese layout: Pinyin (Top), Hanzi (Middle), Vietnamese Meaning/POS (Bottom)
-                                if (isDetailed) {
-                                    Text(
-                                        text = token.phonetic.ifEmpty { " " },
-                                        // IPA/phonetic as subtle supporting role, not competing with main word
-                                        color = if (token.phonetic.isEmpty()) Color.Transparent else colors.mutedText,
-                                        fontSize = 11.sp,
-                                        fontWeight = FontWeight.Normal
-                                    )
-                                }
-                                Text(
-                                    text = token.word,
-                                    color = colors.mainText,
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                                if (isDetailed) {
-                                    Text(
-                                        text = token.partOfSpeech.ifEmpty { " " },
-                                        color = if (token.partOfSpeech.isEmpty()) Color.Transparent else colors.hintText,
-                                        fontSize = 10.sp,
-                                        fontWeight = FontWeight.Normal
-                                    )
-                                }
-                            } else {
-                                // English layout: IPA (Top), Word (Middle), Part of Speech (Bottom)
-                                if (isDetailed) {
-                                    Text(
-                                        text = token.phonetic.ifEmpty { " " },
-                                        // IPA is supporting info — use muted tone so main word stays dominant
-                                        color = if (token.phonetic.isEmpty()) Color.Transparent else colors.mutedText,
-                                        fontSize = 11.sp
-                                    )
-                                }
-                                Text(
-                                    text = token.word,
-                                    color = colors.mainText,
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                                if (isDetailed) {
-                                    Text(
-                                        text = token.partOfSpeech.ifEmpty { " " },
-                                        color = if (token.partOfSpeech.isEmpty()) Color.Transparent else colors.hintText,
-                                        fontSize = 10.sp,
-                                        fontStyle = FontStyle.Italic
-                                    )
-                                }
-                            }
-                        }
-                    }
-                    }
-                }
-
-
+                // Token chips in FlowRow
+                val isJapanese = state.selectedLevelText.startsWith("N")
+                val isChinese = state.selectedLevelText.startsWith("HSK")
+                VocabularyTokens(
+                    tokens = sentence.tokens,
+                    isDetailed = showDetailedTokens,
+                    isJapanese = isJapanese,
+                    isChinese = isChinese,
+                    colors = colors
+                )
 
                 // Explanation card if available
                 if (hasChecked) {
+                    val isTtsLoading by viewModel.isTtsLoading.collectAsState()
                     val explanation = state.explanations[idx]
-                    if (state.explainingSentenceIndex == idx) {
-                        Spacer(Modifier.height(10.dp))
-                        ExplanationSkeleton(colors)
-                    } else if (explanation != null) {
-                        Spacer(Modifier.height(10.dp))
-                        Card(
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(12.dp),
-                            colors = CardDefaults.cardColors(containerColor = colors.surfaceElevated),
-                            border = BorderStroke(0.5.dp, colors.border)
-                        ) {
-                            Column(modifier = Modifier.padding(12.dp)) {
-                                // Header: nhan + nut audio
-                                val isTtsLoading by viewModel.isTtsLoading.collectAsState()
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Text(
-                                        "💡 Giải thích chi tiết:",
-                                        fontSize = 11.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        color = colors.accent
-                                    )
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        val clipboardManager = LocalClipboardManager.current
-                                        IconButton(
-                                            onClick = {
-                                                clipboardManager.setText(AnnotatedString(getDisplayExplanation(explanation, state.targetLanguage)))
-                                            },
-                                            modifier = Modifier.size(28.dp)
-                                        ) {
-                                            Icon(
-                                                imageVector = Icons.Default.ContentCopy,
-                                                contentDescription = "Sao chep giai thich",
-                                                tint = colors.accent,
-                                                modifier = Modifier.size(16.dp)
-                                            )
-                                        }
-                                        Spacer(Modifier.width(4.dp))
-                                        IconButton(
-                                            onClick = {
-                                                // speakExplanation tu dong detect ngon ngu tung cau
-                                                // va phat dung giong (Adam cho VI, Lessac cho EN)
-                                                viewModel.speakExplanation(explanation)
-                                            },
-                                            modifier = Modifier.size(28.dp)
-                                        ) {
-                                            if (isTtsLoading) {
-                                                CircularProgressIndicator(
-                                                    modifier = Modifier.size(14.dp),
-                                                    strokeWidth = 2.dp,
-                                                    color = colors.accent
-                                                )
-                                            } else {
-                                                Icon(
-                                                    imageVector = Icons.Default.VolumeUp,
-                                                    contentDescription = "Nghe giai thich",
-                                                    tint = colors.accent,
-                                                    modifier = Modifier.size(16.dp)
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-                                Spacer(Modifier.height(4.dp))
-                                MarkdownText(
-                                    markdown = getDisplayExplanation(explanation, state.targetLanguage),
-                                    colors = colors,
-                                    onFormulaClick = { formula ->
-                                        viewModel.saveQuestionNote(idx, formula)
-                                    }
-                                )
-                            }
-                        }
-                    }
+                    LessonExplanationCard(
+                        explanation = explanation,
+                        isExplaining = state.explainingSentenceIndex == idx,
+                        isTtsLoading = isTtsLoading,
+                        targetLanguage = state.targetLanguage,
+                        colors = colors,
+                        onPlayTts = { explanation?.let { viewModel.speakExplanation(it) } },
+                        onSaveNote = { formula -> viewModel.saveQuestionNote(idx, formula) }
+                    )
                 }
             }
 
@@ -477,137 +314,19 @@ fun LessonContent(
                 .padding(horizontal = 16.dp)
                 .padding(bottom = 14.dp)
         ) {
-            Column(
-                horizontalAlignment = Alignment.End,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                if (hasChecked) {
-                    IconButton(
-                        onClick = { viewModel.openSavedNotes(idx) },
-                        modifier = Modifier
-                            .background(colors.surfaceElevated, CircleShape)
-                            .border(1.dp, colors.border, CircleShape)
-                            .size(48.dp)
-                    ) {
-                        Icon(Icons.Default.Book, contentDescription = "Sổ tay", tint = colors.accent)
-                    }
-                    Spacer(Modifier.height(12.dp))
-                }
-
-                if (!hasChecked) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth().height(48.dp),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        if (idx > 0) {
-                            IconButton(
-                                onClick = { viewModel.onPreviousSentence() },
-                                modifier = Modifier
-                                    .size(48.dp)
-                                    .border(2.dp, colors.border, CircleShape)
-                                    .background(colors.surface, CircleShape)
-                            ) {
-                                Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
-                            }
-                        }
-                        // Check button
-                        Button(
-                            onClick = { viewModel.onCheckAnswer(idx) },
-                            colors = ButtonDefaults.buttonColors(containerColor = colors.accent),
-                            border = BorderStroke(2.dp, colors.border),
-                            shape = CircleShape,
-                            modifier = Modifier.weight(1f).height(48.dp)
-                        ) {
-                            Text("Kiểm tra", color = Color.White)
-                        }
-                    }
-                } else {
-                    val isExplaining = state.explainingSentenceIndex == idx
-                    if (idx < total - 1) {
-                        // Next sentence
-                        Row(
-                            modifier = Modifier.fillMaxWidth().height(48.dp),
-                            horizontalArrangement = Arrangement.spacedBy(10.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            if (idx > 0) {
-                                IconButton(
-                                    onClick = { viewModel.onPreviousSentence() },
-                                    modifier = Modifier
-                                        .size(48.dp)
-                                        .border(2.dp, colors.border, CircleShape)
-                                        .background(colors.surface, CircleShape)
-                                ) {
-                                    Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
-                                }
-                            }
-                            Button(
-                                onClick = { viewModel.onNextSentence() },
-                                enabled = !isExplaining,
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = colors.accent,
-                                    disabledContainerColor = colors.accent.copy(alpha = 0.5f)
-                                ),
-                                border = BorderStroke(2.dp, colors.border),
-                                shape = CircleShape,
-                                modifier = Modifier.weight(1f).fillMaxHeight()
-                            ) {
-                                if (isExplaining) {
-                                    CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
-                                    Spacer(Modifier.width(8.dp))
-                                    Text("AI đang giải thích...", color = Color.White)
-                                } else {
-                                    Text("Câu tiếp theo", color = Color.White)
-                                    Icon(Icons.Default.ChevronRight, null)
-                                }
-                            }
-                        }
-                    } else {
-                        // Last sentence — submit directly since explanation is auto-triggered
-                        Row(
-                            modifier = Modifier.fillMaxWidth().height(48.dp),
-                            horizontalArrangement = Arrangement.spacedBy(10.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            if (idx > 0) {
-                                IconButton(
-                                    onClick = { viewModel.onPreviousSentence() },
-                                    modifier = Modifier
-                                        .size(48.dp)
-                                        .border(2.dp, colors.border, CircleShape)
-                                        .background(colors.surface, CircleShape)
-                                ) {
-                                    Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
-                                }
-                            }
-                            Button(
-                                onClick = { viewModel.onSubmitLesson() },
-                                enabled = !isExplaining && !state.isEvaluating,
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = colors.correct,
-                                    disabledContainerColor = colors.correct.copy(alpha = 0.5f)
-                                ),
-                                border = BorderStroke(2.dp, colors.border),
-                                shape = CircleShape,
-                                modifier = Modifier.weight(1f).fillMaxHeight()
-                            ) {
-                                if (state.isEvaluating) {
-                                    CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
-                                    Spacer(Modifier.width(8.dp))
-                                    Text("Đang đánh giá...", color = Color.White)
-                                } else if (isExplaining) {
-                                    CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
-                                    Spacer(Modifier.width(8.dp))
-                                    Text("AI đang giải thích...", color = Color.White)
-                                } else {
-                                    Text("Xem đánh giá", color = Color.White, fontWeight = FontWeight.Bold)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            LessonActionButtons(
+                hasChecked = hasChecked,
+                idx = idx,
+                total = total,
+                isExplaining = state.explainingSentenceIndex == idx,
+                isEvaluating = state.isEvaluating,
+                colors = colors,
+                onCheckAnswer = { viewModel.onCheckAnswer(idx) },
+                onPreviousSentence = { viewModel.onPreviousSentence() },
+                onNextSentence = { viewModel.onNextSentence() },
+                onSubmitLesson = { viewModel.onSubmitLesson() },
+                onOpenNotes = { viewModel.openSavedNotes(idx) }
+            )
         }
     }
 
@@ -623,174 +342,4 @@ fun LessonContent(
     }
 }
 
-@Composable
-private fun ExplanationSkeleton(colors: AppColors) {
-    val transition = rememberInfiniteTransition()
-    val alpha by transition.animateFloat(
-        initialValue = 0.3f,
-        targetValue = 0.8f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 800, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse
-        )
-    )
 
-    Card(
-        modifier = Modifier.alpha(alpha).fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = colors.surfaceElevated),
-        border = BorderStroke(0.5.dp, colors.border)
-    ) {
-        Column(modifier = Modifier.padding(12.dp).fillMaxWidth()) {
-            Box(
-                modifier = Modifier
-                    .width(150.dp)
-                    .height(16.dp)
-                    .clip(RoundedCornerShape(4.dp))
-                    .background(colors.accent.copy(alpha = 0.3f))
-            )
-            Spacer(Modifier.height(10.dp))
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(0.9f)
-                    .height(12.dp)
-                    .clip(RoundedCornerShape(4.dp))
-                    .background(colors.border)
-            )
-            Spacer(Modifier.height(8.dp))
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(0.75f)
-                    .height(12.dp)
-                    .clip(RoundedCornerShape(4.dp))
-                    .background(colors.border)
-            )
-            Spacer(Modifier.height(8.dp))
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(0.85f)
-                    .height(12.dp)
-                    .clip(RoundedCornerShape(4.dp))
-                    .background(colors.border)
-            )
-        }
-    }
-}
-
-internal fun highlightDifferences(main: String, alt: String, colors: AppColors): AnnotatedString {
-    val mainWords = main.split(" ")
-    val altWords = alt.split(" ")
-    return buildAnnotatedString {
-        altWords.forEachIndexed { index, word ->
-            val cleanWord = word.trim(',', '.', '?', '!', ';', ':')
-            val isDifferent = mainWords.none { it.contains(cleanWord, ignoreCase = true) }
-            if (isDifferent) {
-                withStyle(SpanStyle(color = colors.accent, fontWeight = FontWeight.Bold)) {
-                    append(word)
-                }
-            } else {
-                withStyle(SpanStyle(color = colors.mainText)) {
-                    append(word)
-                }
-            }
-            if (index < altWords.size - 1) append(" ")
-        }
-    }
-}
-
-@Composable
-private fun AnswerRow(
-    number: Int,
-    text: AnnotatedString,
-    colors: AppColors,
-    clipboardManager: androidx.compose.ui.platform.ClipboardManager,
-    plainText: String,
-    onPlayTts: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.weight(1f)
-        ) {
-            Icon(
-                imageVector = Icons.Rounded.CheckCircle,
-                contentDescription = null,
-                tint = colors.correct,
-                modifier = Modifier.size(16.dp)
-            )
-            Spacer(Modifier.width(8.dp))
-            Text(
-                text = remember(number, text) {
-                    androidx.compose.ui.text.buildAnnotatedString {
-                        append("$number) ")
-                        append(text)
-                    }
-                },
-                fontSize = 15.sp,
-                fontWeight = FontWeight.Medium,
-                color = colors.mainText
-            )
-        }
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            IconButton(
-                onClick = onPlayTts,
-                modifier = Modifier.size(32.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.VolumeUp,
-                    contentDescription = "Nghe",
-                    tint = colors.mutedText,
-                    modifier = Modifier.size(18.dp)
-                )
-            }
-            IconButton(
-                onClick = { clipboardManager.setText(AnnotatedString(plainText)) },
-                modifier = Modifier.size(32.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ContentCopy,
-                    contentDescription = "Copy",
-                    tint = colors.mutedText,
-                    modifier = Modifier.size(16.dp)
-                )
-            }
-        }
-    }
-}
-
-private fun getDisplayExplanation(explanation: String, targetLanguage: String): String {
-    if (explanation.trim().startsWith("[") && explanation.trim().endsWith("]")) {
-        val list = mutableListOf<String>()
-        try {
-            val segments = ExplanationParser.parseSegments(explanation)
-            for ((text, lang) in segments) {
-                var textVal = text
-                // Neu la ngon ngu muc tieu thi boc trong ngoac kep va in dam
-                if (lang.lowercase() == targetLanguage.lowercase() && textVal.trim().isNotEmpty()) {
-                    val leadingSpaces = textVal.takeWhile { it.isWhitespace() }
-                    val trailingSpaces = textVal.takeLastWhile { it.isWhitespace() }
-                    val body = textVal.trim()
-                    val cleanBody = body.removeSurrounding("\"").removeSurrounding("'")
-                    textVal = "$leadingSpaces**\"$cleanBody\"**$trailingSpaces"
-                }
-                list.add(textVal)
-            }
-            if (list.isNotEmpty()) {
-                return list.joinToString("")
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-    return explanation
-}

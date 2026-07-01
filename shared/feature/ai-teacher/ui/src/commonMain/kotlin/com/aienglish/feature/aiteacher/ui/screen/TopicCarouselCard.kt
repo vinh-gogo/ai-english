@@ -48,75 +48,115 @@ internal fun TopicCarouselCard(
                 .padding(16.dp),
             verticalArrangement = Arrangement.Center
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "CHỦ ĐỀ ĐANG CHỌN",
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = colors.accent
-                )
-                if (state.isCustomTopicMode) {
-                    IconButton(
-                        onClick = onAddClick,
-                        modifier = Modifier.size(24.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Add,
-                            contentDescription = null,
-                            tint = if (isFocused) colors.accent else colors.hintText,
-                            modifier = Modifier.size(18.dp)
-                        )
-                    }
-                }
-            }
+            TopicCarouselHeader(
+                isCustomTopicMode = state.isCustomTopicMode,
+                isFocused = isFocused,
+                colors = colors,
+                onAddClick = onAddClick
+            )
 
             Spacer(Modifier.height(4.dp))
+            
             if (state.isCustomTopicMode) {
-                BasicTextField(
-                    value = state.customTopicInput,
-                    onValueChange = onCustomTopicInputChanged,
-                    textStyle = androidx.compose.ui.text.TextStyle(
-                        color = colors.mainText,
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Medium
-                    ),
-                    cursorBrush = SolidColor(colors.accent),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .onFocusChanged {
-                            isFocused = it.isFocused
-                            onFocusChanged(it.isFocused)
-                        },
-                    decorationBox = { innerTextField ->
-                        if (state.customTopicInput.isEmpty()) {
-                            Text(
-                                text = "Hãy nhập chủ đề tự do...",
-                                color = colors.hintText,
-                                fontSize = 15.sp,
-                                fontWeight = FontWeight.Medium
-                            )
-                        }
-                        innerTextField()
+                CustomTopicInput(
+                    input = state.customTopicInput,
+                    colors = colors,
+                    onInputChanged = onCustomTopicInputChanged,
+                    onFocusStateChanged = { 
+                        isFocused = it
+                        onFocusChanged(it)
                     }
                 )
             } else {
-                val topicNameText = currentTopic?.name ?: "Chưa chọn chủ đề"
-                Text(
-                    text = buildInlineAnnotatedString(topicNameText, colors),
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = colors.mainText,
-                    maxLines = 3
+                SelectedTopicDisplay(
+                    currentTopic = currentTopic,
+                    colors = colors
                 )
             }
         }
     }
 }
 
+@Composable
+private fun TopicCarouselHeader(
+    isCustomTopicMode: Boolean,
+    isFocused: Boolean,
+    colors: AppColors,
+    onAddClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "CHỦ ĐỀ ĐANG CHỌN",
+            fontSize = 10.sp,
+            fontWeight = FontWeight.Bold,
+            color = colors.accent
+        )
+        if (isCustomTopicMode) {
+            IconButton(
+                onClick = onAddClick,
+                modifier = Modifier.size(24.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Add,
+                    contentDescription = null,
+                    tint = if (isFocused) colors.accent else colors.hintText,
+                    modifier = Modifier.size(18.dp)
+                )
+            }
+        }
+    }
+}
 
+@Composable
+private fun CustomTopicInput(
+    input: String,
+    colors: AppColors,
+    onInputChanged: (String) -> Unit,
+    onFocusStateChanged: (Boolean) -> Unit
+) {
+    BasicTextField(
+        value = input,
+        onValueChange = onInputChanged,
+        textStyle = androidx.compose.ui.text.TextStyle(
+            color = colors.mainText,
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Medium
+        ),
+        cursorBrush = SolidColor(colors.accent),
+        modifier = Modifier
+            .fillMaxWidth()
+            .onFocusChanged {
+                onFocusStateChanged(it.isFocused)
+            },
+        decorationBox = { innerTextField ->
+            if (input.isEmpty()) {
+                Text(
+                    text = "Hãy nhập chủ đề tự do...",
+                    color = colors.hintText,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+            innerTextField()
+        }
+    )
+}
 
-
+@Composable
+private fun SelectedTopicDisplay(
+    currentTopic: TopicItem?,
+    colors: AppColors
+) {
+    val topicNameText = currentTopic?.name ?: "Chưa chọn chủ đề"
+    Text(
+        text = buildInlineAnnotatedString(topicNameText, colors),
+        fontSize = 15.sp,
+        fontWeight = FontWeight.Medium,
+        color = colors.mainText,
+        maxLines = 3
+    )
+}

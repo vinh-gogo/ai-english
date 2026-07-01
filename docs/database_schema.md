@@ -100,7 +100,6 @@ erDiagram
         TEXT explanation
         TEXT user_answer
         TEXT ai_explanation
-        TEXT alternatives_json "DEPRECATED"
     }
 
     lesson_question_alternative {
