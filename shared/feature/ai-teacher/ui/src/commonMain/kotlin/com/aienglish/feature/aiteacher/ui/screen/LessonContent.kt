@@ -612,127 +612,14 @@ fun LessonContent(
     }
 
     if (state.showSavedNotesBottomSheet) {
-        @OptIn(ExperimentalMaterial3Api::class)
-        ModalBottomSheet(
-            onDismissRequest = { viewModel.closeSavedNotes() },
-            containerColor = colors.surface,
-            contentColor = colors.mainText,
-            dragHandle = { BottomSheetDefaults.DragHandle(color = colors.mutedText.copy(alpha = 0.5f)) }
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .padding(bottom = 32.dp)
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Book,
-                        contentDescription = null,
-                        tint = colors.accent,
-                        modifier = Modifier.size(24.dp)
-                    )
-                    Spacer(Modifier.width(8.dp))
-                    Text(
-                        text = "Cấu trúc đã lưu",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = colors.mainText
-                    )
-                }
-
-                if (state.savedNotes.isEmpty()) {
-                    Box(modifier = Modifier.fillMaxWidth().padding(vertical = 32.dp), contentAlignment = Alignment.Center) {
-                        Text("Chưa có cấu trúc nào được lưu cho câu này.", color = colors.hintText, fontSize = 14.sp)
-                    }
-                } else {
-                    var editingNoteId by remember { mutableStateOf<String?>(null) }
-                    var editingNoteText by remember { mutableStateOf("") }
-                    state.savedNotes.forEachIndexed { i, note ->
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 6.dp),
-                            colors = CardDefaults.cardColors(containerColor = colors.background),
-                            shape = RoundedCornerShape(12.dp),
-                            border = BorderStroke(1.dp, colors.border)
-                        ) {
-                            if (editingNoteId == note.id) {
-                                Column(modifier = Modifier.padding(16.dp)) {
-                                    OutlinedTextField(
-                                        value = editingNoteText,
-                                        onValueChange = { editingNoteText = it },
-                                        modifier = Modifier.fillMaxWidth(),
-                                        colors = OutlinedTextFieldDefaults.colors(
-                                            focusedTextColor = colors.mainText,
-                                            unfocusedTextColor = colors.mainText,
-                                            focusedBorderColor = colors.accent,
-                                            unfocusedBorderColor = colors.border
-                                        )
-                                    )
-                                    Spacer(modifier = Modifier.height(8.dp))
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.End
-                                    ) {
-                                        IconButton(onClick = { editingNoteId = null }) {
-                                            Icon(Icons.Default.Close, null, tint = colors.mutedText, modifier = Modifier.size(20.dp))
-                                        }
-                                        IconButton(onClick = { 
-                                            viewModel.updateQuestionNote(note.id, state.currentSentenceIndex, editingNoteText)
-                                            editingNoteId = null 
-                                        }) {
-                                            Icon(Icons.Default.Check, null, tint = colors.accent, modifier = Modifier.size(20.dp))
-                                        }
-                                    }
-                                }
-                            } else {
-                                Row(
-                                    modifier = Modifier.padding(16.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Box(
-                                        modifier = Modifier
-                                            .size(28.dp)
-                                            .background(colors.accent.copy(alpha = 0.15f), CircleShape),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        Text(
-                                            text = "${i + 1}",
-                                            color = colors.accent,
-                                            fontWeight = FontWeight.Bold,
-                                            fontSize = 13.sp
-                                        )
-                                    }
-                                    Spacer(modifier = Modifier.width(12.dp))
-                                    Box(modifier = Modifier.weight(1f)) {
-                                        MarkdownText(markdown = note.note, colors = colors, onFormulaClick = null)
-                                    }
-                                    IconButton(
-                                        onClick = {
-                                            editingNoteId = note.id
-                                            editingNoteText = note.note
-                                        },
-                                        modifier = Modifier.size(32.dp)
-                                    ) {
-                                        Icon(Icons.Default.Edit, "Edit", tint = colors.mutedText, modifier = Modifier.size(16.dp))
-                                    }
-                                    IconButton(
-                                        onClick = { viewModel.deleteQuestionNote(note.id, state.currentSentenceIndex) },
-                                        modifier = Modifier.size(32.dp)
-                                    ) {
-                                        Icon(Icons.Default.Delete, "Delete", tint = colors.error, modifier = Modifier.size(16.dp))
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        NotesBottomSheet(
+            notes = state.savedNotes,
+            colors = colors,
+            sentenceIndex = idx,
+            onDismiss = { viewModel.closeSavedNotes() },
+            onDeleteNote = { id, index -> viewModel.deleteQuestionNote(id, index) },
+            onUpdateNote = { id, index, text -> viewModel.updateQuestionNote(id, index, text) }
+        )
     }
 }
 

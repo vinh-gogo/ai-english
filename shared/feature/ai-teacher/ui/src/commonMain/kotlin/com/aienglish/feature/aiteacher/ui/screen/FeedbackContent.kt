@@ -419,6 +419,18 @@ private fun SentenceReviewCard(
                         )
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             IconButton(
+                                onClick = { viewModel.openSavedNotes(index) },
+                                modifier = Modifier.size(28.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Book,
+                                    contentDescription = "Sổ tay",
+                                    tint = colors.accent,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                            }
+                            Spacer(Modifier.width(4.dp))
+                            IconButton(
                                 onClick = {
                                     clipboardManager.setText(AnnotatedString(getDisplayExplanation(explanation, state.targetLanguage)))
                                 },
@@ -474,6 +486,18 @@ private fun SentenceReviewCard(
                 }
             }
         }
+    }
+
+    if (state.showSavedNotesBottomSheet) {
+        val explainingIdx = state.explainingSentenceIndex ?: 0
+        NotesBottomSheet(
+            notes = state.savedNotes,
+            colors = colors,
+            sentenceIndex = explainingIdx,
+            onDismiss = { viewModel.closeSavedNotes() },
+            onDeleteNote = { id, index -> viewModel.deleteQuestionNote(id, index) },
+            onUpdateNote = { id, index, text -> viewModel.updateQuestionNote(id, index, text) }
+        )
     }
 }
 

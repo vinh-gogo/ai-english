@@ -4,3 +4,18 @@ CREATE TABLE IF NOT EXISTS lesson_question_alternative (
     alternative TEXT NOT NULL,
     FOREIGN KEY(question_id) REFERENCES lesson_question(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS question_notes_new (
+    id TEXT PRIMARY KEY,
+    question_id INTEGER NOT NULL,
+    note TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    UNIQUE(question_id, note),
+    FOREIGN KEY(question_id) REFERENCES lesson_question(id) ON DELETE CASCADE
+);
+
+INSERT OR IGNORE INTO question_notes_new (id, question_id, note, created_at)
+SELECT CAST(id AS TEXT), question_id, note, created_at FROM question_notes;
+
+DROP TABLE question_notes;
+ALTER TABLE question_notes_new RENAME TO question_notes;

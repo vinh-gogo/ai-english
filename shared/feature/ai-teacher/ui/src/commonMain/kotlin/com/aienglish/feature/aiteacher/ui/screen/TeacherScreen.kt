@@ -379,17 +379,16 @@ fun TeacherScreen(
                         .navigationBarsPadding()
                 ) {
                     Card(
-                        colors = CardDefaults.cardColors(containerColor = colors.surfaceElevated),
-                        shape = RoundedCornerShape(12.dp),
-                        border = BorderStroke(1.dp, colors.accent.copy(alpha = 0.5f))
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFF4CAF50)), // Green success color
+                        shape = RoundedCornerShape(12.dp)
                     ) {
                         Row(
                             modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(Icons.Default.CheckCircle, null, tint = colors.accent, modifier = Modifier.size(16.dp))
+                            Icon(Icons.Default.CheckCircle, null, tint = Color.White, modifier = Modifier.size(16.dp))
                             Spacer(Modifier.width(8.dp))
-                            Text(infoMessage, color = colors.mainText, fontSize = 13.sp)
+                            Text(infoMessage, color = Color.White, fontSize = 13.sp)
                         }
                     }
                 }
