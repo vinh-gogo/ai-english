@@ -65,10 +65,14 @@ data class TeacherUiState(
     // Explanation
     val explainingSentenceIndex: Int? = null,           // tracks which sentence index is currently loading its AI explanation
     val explanations: Map<Int, String> = emptyMap(),
-    val sentenceScores: Map<Int, Int> = emptyMap(),
+
+    // Notes
+    val showSavedNotesBottomSheet: Boolean = false,
+    val savedNotes: List<com.aienglish.feature.aiteacher.domain.model.QuestionNote> = emptyList(),
 
     // Error
-    val error: String? = null
+    val error: String? = null,
+    val infoMessage: String? = null
 ) {
     val selectedTopic: String get() = if (isCustomTopicMode) customTopicInput else topics.getOrNull(selectedTopicIndex)?.name ?: ""
     val currentLevelCode: String get() = when (levelType) {
@@ -516,8 +520,7 @@ class TeacherViewModel(
                     setState {
                         copy(
                             explainingSentenceIndex = null,
-                            explanations = explanations + (index to result.explanation),
-                            sentenceScores = sentenceScores + (index to 0)
+                            explanations = explanations + (index to result.explanation)
                         )
                     }
                     saveCurrentProgress()
@@ -584,8 +587,7 @@ class TeacherViewModel(
                     userAnswers = emptyMap(),
                     checkedAnswers = emptySet(),
                     currentSentenceIndex = 0,
-                    explanations = emptyMap(),
-                    sentenceScores = emptyMap()
+                    explanations = emptyMap()
                 )
             }
 
@@ -618,22 +620,16 @@ class TeacherViewModel(
             evaluateLesson("user", state.selectedTopic, answers, sentences, level).fold(
                 ifLeft = { err -> setState { copy(isEvaluating = false, error = err.message) } },
                 ifRight = { fb ->
-                    val sanitizedFb = fb.copy(
-                        score = 0,
-                        sentenceScores = emptyList()
-                    )
-
-                    setState { copy(isEvaluating = false, feedback = sanitizedFb) }
-                    // Update history to COMPLETED with score and structured data
+                    setState { copy(isEvaluating = false, feedback = fb) }
+                    // Update history to COMPLETED
                     currentLessonHistoryId?.let { id ->
                         try {
                             teacherHistoryRepository.completeLesson(
                                 id = id,
-                                score = sanitizedFb.score,
                                 lesson = lesson,
                                 userAnswers = state.userAnswers,
                                 explanations = state.explanations,
-                                feedback = sanitizedFb
+                                feedback = fb
                             )
                         } catch (e: Exception) { /* ignore */ }
                     }
@@ -672,14 +668,84 @@ class TeacherViewModel(
                     setState {
                         copy(
                             explainingSentenceIndex = null,
-                            explanations = explanations + (index to result.explanation),
-                            sentenceScores = sentenceScores + (index to result.score)
+                            explanations = explanations + (index to result.explanation)
                         )
                     }
                     saveCurrentProgress()
                 }
             )
         }
+    }
+
+    fun saveQuestionNote(index: Int, note: String) {
+        val historyId = currentLessonHistoryId ?: return
+        viewModelScope.launch {
+            try {
+                teacherHistoryRepository.saveQuestionNote(historyId, index, note)
+                setState { copy(infoMessage = "Đã lưu cấu trúc") }
+                
+                // Refresh list if it's currently open for the same sentence
+                if (currentState.showSavedNotesBottomSheet) {
+                    val notes = teacherHistoryRepository.getQuestionNotes(historyId, index)
+                    setState { copy(savedNotes = notes) }
+                }
+            } catch (e: Exception) {
+                // ignore
+            }
+        }
+    }
+
+    fun updateQuestionNote(noteId: String, sentenceIndex: Int, newNote: String) {
+        val historyId = currentLessonHistoryId ?: return
+        if (newNote.isBlank()) return
+        viewModelScope.launch {
+            try {
+                teacherHistoryRepository.updateQuestionNote(noteId, newNote)
+                setState { copy(infoMessage = "Đã cập nhật cấu trúc") }
+                val notes = teacherHistoryRepository.getQuestionNotes(historyId, sentenceIndex)
+                setState { copy(savedNotes = notes) }
+            } catch (e: Exception) {
+                // ignore
+            }
+        }
+    }
+
+    fun deleteQuestionNote(noteId: String, sentenceIndex: Int) {
+        val historyId = currentLessonHistoryId ?: return
+        viewModelScope.launch {
+            try {
+                teacherHistoryRepository.deleteQuestionNote(noteId)
+                setState { copy(infoMessage = "Đã xóa cấu trúc") }
+                val notes = teacherHistoryRepository.getQuestionNotes(historyId, sentenceIndex)
+                setState { copy(savedNotes = notes) }
+            } catch (e: Exception) {
+                // ignore
+            }
+        }
+    }
+
+    fun clearError() = setState { copy(error = null) }
+    fun clearInfoMessage() = setState { copy(infoMessage = null) }
+
+    fun openSavedNotes(index: Int) {
+        val historyId = currentLessonHistoryId ?: return
+        viewModelScope.launch {
+            try {
+                val notes = teacherHistoryRepository.getQuestionNotes(historyId, index)
+                setState { 
+                    copy(
+                        savedNotes = notes,
+                        showSavedNotesBottomSheet = true
+                    ) 
+                }
+            } catch (e: Exception) {
+                // ignore
+            }
+        }
+    }
+
+    fun closeSavedNotes() {
+        setState { copy(showSavedNotesBottomSheet = false, savedNotes = emptyList()) }
     }
 
     fun onReviewLesson(history: LessonHistory) {
@@ -964,8 +1030,7 @@ class TeacherViewModel(
                     id = id,
                     lesson = lesson,
                     userAnswers = currentState.userAnswers,
-                    explanations = currentState.explanations,
-                    sentenceScores = currentState.sentenceScores
+                    explanations = currentState.explanations
                 )
             } catch (e: Exception) { /* ignore */ }
         }
@@ -1031,7 +1096,6 @@ class TeacherViewModel(
                         lesson = teacherHistory.lesson,
                         userAnswers = teacherHistory.userAnswers,
                         explanations = teacherHistory.explanations,
-                        sentenceScores = teacherHistory.sentenceScores,
                         feedback = null,
                         currentSentenceIndex = nextIndex,
                         checkedAnswers = teacherHistory.explanations.keys

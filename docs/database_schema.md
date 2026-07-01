@@ -90,10 +90,6 @@ erDiagram
         TEXT status
         INTEGER created_at
         INTEGER completed_at
-        TEXT lesson_json
-        TEXT user_answers_json
-        TEXT explanations_json
-        TEXT feedback_json
     }
 
     lesson_question {
@@ -106,6 +102,7 @@ erDiagram
         TEXT user_answer
         INTEGER ai_score
         TEXT ai_explanation
+        TEXT alternatives_json
     }
 
     lesson_question_token {
@@ -114,6 +111,21 @@ erDiagram
         TEXT word
         TEXT phonetic
         TEXT part_of_speech
+    }
+
+    lesson_feedback {
+        INTEGER id PK
+        INTEGER history_id FK "UNIQUE"
+        INTEGER overall_score
+        TEXT review
+        TEXT sentence_scores_json
+    }
+
+    question_notes {
+        INTEGER id PK
+        INTEGER question_id FK
+        TEXT note
+        INTEGER created_at
     }
 
     %% Relationships
@@ -128,7 +140,9 @@ erDiagram
     i18n_keys ||--o{ i18n_translations : "defines"
 
     lesson_history ||--o{ lesson_question : "contains"
+    lesson_history ||--o| lesson_feedback : "receives"
     lesson_question ||--o{ lesson_question_token : "breaks down into"
+    lesson_question ||--o{ question_notes : "has saved"
 ```
 
 ---
@@ -152,5 +166,7 @@ erDiagram
 
 ### 4. Nhóm Tiến trình Bài học (Lesson History)
 * **`lesson_history`**: Lưu thông tin tổng quan của mỗi lượt học (Chủ đề, điểm số, trạng thái bài học hoàn thành hay đang tiến hành).
-* **`lesson_question`**: Chi tiết từng câu hỏi/câu luyện dịch trong bài học đó, kèm theo câu trả lời của học sinh và đánh giá chi tiết từ AI.
+* **`lesson_feedback`**: Lưu trữ kết quả đánh giá tổng quan từ AI cho toàn bộ bài học (nhận xét chung, điểm tổng).
+* **`lesson_question`**: Chi tiết từng câu hỏi/câu luyện dịch trong bài học đó, kèm theo câu trả lời của học sinh và đánh giá chi tiết, cũng như các phương án trả lời thay thế từ AI.
 * **`lesson_question_token`**: Phân tích cú pháp của câu (tokenization) bao gồm từ vựng, phiên âm IPA (hoặc Pinyin/Romaji), và từ loại/giải nghĩa tương ứng.
+* **`question_notes`**: Lưu trữ các công thức, cấu trúc ngữ pháp được người dùng lưu lại cho từng câu hỏi cụ thể, để tiện ôn tập.

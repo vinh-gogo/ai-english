@@ -16,6 +16,11 @@ import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -428,7 +433,13 @@ fun LessonContent(
                                     }
                                 }
                                 Spacer(Modifier.height(4.dp))
-                                MarkdownText(getDisplayExplanation(explanation, state.targetLanguage), colors)
+                                MarkdownText(
+                                    markdown = getDisplayExplanation(explanation, state.targetLanguage),
+                                    colors = colors,
+                                    onFormulaClick = { formula ->
+                                        viewModel.saveQuestionNote(idx, formula)
+                                    }
+                                )
                             }
                         }
                     }
@@ -466,38 +477,24 @@ fun LessonContent(
                 .padding(horizontal = 16.dp)
                 .padding(bottom = 14.dp)
         ) {
-            if (!hasChecked) {
-                Row(
-                    modifier = Modifier.fillMaxWidth().height(48.dp),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    if (idx > 0) {
-                        IconButton(
-                            onClick = { viewModel.onPreviousSentence() },
-                            modifier = Modifier
-                                .size(48.dp)
-                                .border(2.dp, colors.border, CircleShape)
-                                .background(colors.surface, CircleShape)
-                        ) {
-                            Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
-                        }
-                    }
-                    // Check button
-                    Button(
-                        onClick = { viewModel.onCheckAnswer(idx) },
-                        colors = ButtonDefaults.buttonColors(containerColor = colors.accent),
-                        border = BorderStroke(2.dp, colors.border),
-                        shape = CircleShape,
-                        modifier = Modifier.weight(1f).height(48.dp)
+            Column(
+                horizontalAlignment = Alignment.End,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                if (hasChecked) {
+                    IconButton(
+                        onClick = { viewModel.openSavedNotes(idx) },
+                        modifier = Modifier
+                            .background(colors.surfaceElevated, CircleShape)
+                            .border(1.dp, colors.border, CircleShape)
+                            .size(48.dp)
                     ) {
-                        Text("Kiểm tra", color = Color.White)
+                        Icon(Icons.Default.Book, contentDescription = "Sổ tay", tint = colors.accent)
                     }
+                    Spacer(Modifier.height(12.dp))
                 }
-            } else {
-                val isExplaining = state.explainingSentenceIndex == idx
-                if (idx < total - 1) {
-                    // Next sentence
+
+                if (!hasChecked) {
                     Row(
                         modifier = Modifier.fillMaxWidth().height(48.dp),
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -514,66 +511,222 @@ fun LessonContent(
                                 Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
                             }
                         }
+                        // Check button
                         Button(
-                            onClick = { viewModel.onNextSentence() },
-                            enabled = !isExplaining,
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = colors.accent,
-                                disabledContainerColor = colors.accent.copy(alpha = 0.5f)
-                            ),
+                            onClick = { viewModel.onCheckAnswer(idx) },
+                            colors = ButtonDefaults.buttonColors(containerColor = colors.accent),
                             border = BorderStroke(2.dp, colors.border),
                             shape = CircleShape,
-                            modifier = Modifier.weight(1f).fillMaxHeight()
+                            modifier = Modifier.weight(1f).height(48.dp)
                         ) {
-                            if (isExplaining) {
-                                CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
-                                Spacer(Modifier.width(8.dp))
-                                Text("AI đang giải thích...", color = Color.White)
-                            } else {
-                                Text("Câu tiếp theo", color = Color.White)
-                                Icon(Icons.Default.ChevronRight, null)
-                            }
+                            Text("Kiểm tra", color = Color.White)
                         }
                     }
                 } else {
-                    // Last sentence — submit directly since explanation is auto-triggered
-                    Row(
-                        modifier = Modifier.fillMaxWidth().height(48.dp),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        if (idx > 0) {
-                            IconButton(
-                                onClick = { viewModel.onPreviousSentence() },
-                                modifier = Modifier
-                                    .size(48.dp)
-                                    .border(2.dp, colors.border, CircleShape)
-                                    .background(colors.surface, CircleShape)
+                    val isExplaining = state.explainingSentenceIndex == idx
+                    if (idx < total - 1) {
+                        // Next sentence
+                        Row(
+                            modifier = Modifier.fillMaxWidth().height(48.dp),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            if (idx > 0) {
+                                IconButton(
+                                    onClick = { viewModel.onPreviousSentence() },
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .border(2.dp, colors.border, CircleShape)
+                                        .background(colors.surface, CircleShape)
+                                ) {
+                                    Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
+                                }
+                            }
+                            Button(
+                                onClick = { viewModel.onNextSentence() },
+                                enabled = !isExplaining,
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = colors.accent,
+                                    disabledContainerColor = colors.accent.copy(alpha = 0.5f)
+                                ),
+                                border = BorderStroke(2.dp, colors.border),
+                                shape = CircleShape,
+                                modifier = Modifier.weight(1f).fillMaxHeight()
                             ) {
-                                Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
+                                if (isExplaining) {
+                                    CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
+                                    Spacer(Modifier.width(8.dp))
+                                    Text("AI đang giải thích...", color = Color.White)
+                                } else {
+                                    Text("Câu tiếp theo", color = Color.White)
+                                    Icon(Icons.Default.ChevronRight, null)
+                                }
                             }
                         }
-                        Button(
-                            onClick = { viewModel.onSubmitLesson() },
-                            enabled = !isExplaining && !state.isEvaluating,
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = colors.correct,
-                                disabledContainerColor = colors.correct.copy(alpha = 0.5f)
-                            ),
-                            border = BorderStroke(2.dp, colors.border),
-                            shape = CircleShape,
-                            modifier = Modifier.weight(1f).fillMaxHeight()
+                    } else {
+                        // Last sentence — submit directly since explanation is auto-triggered
+                        Row(
+                            modifier = Modifier.fillMaxWidth().height(48.dp),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            if (state.isEvaluating) {
-                                CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
-                                Spacer(Modifier.width(8.dp))
-                                Text("Đang đánh giá...", color = Color.White)
-                            } else if (isExplaining) {
-                                CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
-                                Spacer(Modifier.width(8.dp))
-                                Text("AI đang giải thích...", color = Color.White)
+                            if (idx > 0) {
+                                IconButton(
+                                    onClick = { viewModel.onPreviousSentence() },
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .border(2.dp, colors.border, CircleShape)
+                                        .background(colors.surface, CircleShape)
+                                ) {
+                                    Icon(Icons.Default.ChevronLeft, "Quay lại", tint = colors.mainText)
+                                }
+                            }
+                            Button(
+                                onClick = { viewModel.onSubmitLesson() },
+                                enabled = !isExplaining && !state.isEvaluating,
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = colors.correct,
+                                    disabledContainerColor = colors.correct.copy(alpha = 0.5f)
+                                ),
+                                border = BorderStroke(2.dp, colors.border),
+                                shape = CircleShape,
+                                modifier = Modifier.weight(1f).fillMaxHeight()
+                            ) {
+                                if (state.isEvaluating) {
+                                    CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
+                                    Spacer(Modifier.width(8.dp))
+                                    Text("Đang đánh giá...", color = Color.White)
+                                } else if (isExplaining) {
+                                    CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
+                                    Spacer(Modifier.width(8.dp))
+                                    Text("AI đang giải thích...", color = Color.White)
+                                } else {
+                                    Text("Xem đánh giá", color = Color.White, fontWeight = FontWeight.Bold)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (state.showSavedNotesBottomSheet) {
+        @OptIn(ExperimentalMaterial3Api::class)
+        ModalBottomSheet(
+            onDismissRequest = { viewModel.closeSavedNotes() },
+            containerColor = colors.surface,
+            contentColor = colors.mainText,
+            dragHandle = { BottomSheetDefaults.DragHandle(color = colors.mutedText.copy(alpha = 0.5f)) }
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .padding(bottom = 32.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Book,
+                        contentDescription = null,
+                        tint = colors.accent,
+                        modifier = Modifier.size(24.dp)
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        text = "Cấu trúc đã lưu",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = colors.mainText
+                    )
+                }
+
+                if (state.savedNotes.isEmpty()) {
+                    Box(modifier = Modifier.fillMaxWidth().padding(vertical = 32.dp), contentAlignment = Alignment.Center) {
+                        Text("Chưa có cấu trúc nào được lưu cho câu này.", color = colors.hintText, fontSize = 14.sp)
+                    }
+                } else {
+                    var editingNoteId by remember { mutableStateOf<String?>(null) }
+                    var editingNoteText by remember { mutableStateOf("") }
+                    state.savedNotes.forEachIndexed { i, note ->
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 6.dp),
+                            colors = CardDefaults.cardColors(containerColor = colors.background),
+                            shape = RoundedCornerShape(12.dp),
+                            border = BorderStroke(1.dp, colors.border)
+                        ) {
+                            if (editingNoteId == note.id) {
+                                Column(modifier = Modifier.padding(16.dp)) {
+                                    OutlinedTextField(
+                                        value = editingNoteText,
+                                        onValueChange = { editingNoteText = it },
+                                        modifier = Modifier.fillMaxWidth(),
+                                        colors = OutlinedTextFieldDefaults.colors(
+                                            focusedTextColor = colors.mainText,
+                                            unfocusedTextColor = colors.mainText,
+                                            focusedBorderColor = colors.accent,
+                                            unfocusedBorderColor = colors.border
+                                        )
+                                    )
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.End
+                                    ) {
+                                        IconButton(onClick = { editingNoteId = null }) {
+                                            Icon(Icons.Default.Close, null, tint = colors.mutedText, modifier = Modifier.size(20.dp))
+                                        }
+                                        IconButton(onClick = { 
+                                            viewModel.updateQuestionNote(note.id, state.currentSentenceIndex, editingNoteText)
+                                            editingNoteId = null 
+                                        }) {
+                                            Icon(Icons.Default.Check, null, tint = colors.accent, modifier = Modifier.size(20.dp))
+                                        }
+                                    }
+                                }
                             } else {
-                                Text("Xem đánh giá", color = Color.White, fontWeight = FontWeight.Bold)
+                                Row(
+                                    modifier = Modifier.padding(16.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(28.dp)
+                                            .background(colors.accent.copy(alpha = 0.15f), CircleShape),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(
+                                            text = "${i + 1}",
+                                            color = colors.accent,
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 13.sp
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.width(12.dp))
+                                    Box(modifier = Modifier.weight(1f)) {
+                                        MarkdownText(markdown = note.note, colors = colors, onFormulaClick = null)
+                                    }
+                                    IconButton(
+                                        onClick = {
+                                            editingNoteId = note.id
+                                            editingNoteText = note.note
+                                        },
+                                        modifier = Modifier.size(32.dp)
+                                    ) {
+                                        Icon(Icons.Default.Edit, "Edit", tint = colors.mutedText, modifier = Modifier.size(16.dp))
+                                    }
+                                    IconButton(
+                                        onClick = { viewModel.deleteQuestionNote(note.id, state.currentSentenceIndex) },
+                                        modifier = Modifier.size(32.dp)
+                                    ) {
+                                        Icon(Icons.Default.Delete, "Delete", tint = colors.error, modifier = Modifier.size(16.dp))
+                                    }
+                                }
                             }
                         }
                     }

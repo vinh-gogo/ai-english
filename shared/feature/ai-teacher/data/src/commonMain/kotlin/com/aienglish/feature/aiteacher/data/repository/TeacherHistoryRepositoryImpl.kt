@@ -25,38 +25,31 @@ class TeacherHistoryRepositoryImpl(
 
     override suspend fun completeLesson(
         id: Long,
-        score: Int,
         lesson: EnglishLesson,
         userAnswers: Map<Int, String>,
         explanations: Map<Int, String>,
         feedback: EnglishFeedback
     ) {
         // 1. Save all structured question data
-        val sentenceScoresMap = feedback.sentenceScores
-            .mapIndexed { index, score -> index to score }
-            .toMap()
-        saveQuestionsToDb(id, lesson, userAnswers, explanations, sentenceScoresMap)
+        saveQuestionsToDb(id, lesson, userAnswers, explanations)
 
         // 2. Save feedback
         queries.insertOrReplaceFeedback(
             history_id = id,
-            overall_score = score.toLong(),
-            review = feedback.review,
-            sentence_scores_json = json.encodeToString(feedback.sentenceScores)
+            review = feedback.review
         )
 
-        // 3. Mark lesson as completed (status + score only)
-        historyRepository.completeLesson(id = id, score = score)
+        // 3. Mark lesson as completed
+        historyRepository.completeLesson(id = id)
     }
 
     override suspend fun updateLessonProgress(
         id: Long,
         lesson: EnglishLesson,
         userAnswers: Map<Int, String>,
-        explanations: Map<Int, String>,
-        sentenceScores: Map<Int, Int>
+        explanations: Map<Int, String>
     ) {
-        saveQuestionsToDb(id, lesson, userAnswers, explanations, sentenceScores)
+        saveQuestionsToDb(id, lesson, userAnswers, explanations)
     }
 
     override suspend fun loadHistory(historyId: Long): TeacherLessonHistory? {
@@ -97,21 +90,11 @@ class TeacherHistoryRepositoryImpl(
                 }
                 .toMap()
 
-            val sentenceScores = questionRows
-                .mapIndexedNotNull { index, row ->
-                    row.ai_score?.let { index to it.toInt() }
-                }
-                .toMap()
 
             val feedbackRow = queries.getFeedbackForHistory(historyId).executeAsOneOrNull()
             val feedback = feedbackRow?.let {
-                val scores = it.sentence_scores_json?.let { raw ->
-                    try { json.decodeFromString<List<Int>>(raw) } catch (_: Exception) { emptyList() }
-                } ?: emptyList()
                 EnglishFeedback(
-                    score = it.overall_score.toInt(),
-                    review = it.review,
-                    sentenceScores = scores
+                    review = it.review
                 )
             }
 
@@ -119,11 +102,9 @@ class TeacherHistoryRepositoryImpl(
                 id = historyId,
                 topic = "",
                 level = "",
-                score = feedback?.score,
                 lesson = EnglishLesson(sentences = sentences),
                 userAnswers = userAnswers,
                 explanations = explanations,
-                sentenceScores = sentenceScores,
                 feedback = feedback
             )
         } catch (e: Exception) {
@@ -136,8 +117,7 @@ class TeacherHistoryRepositoryImpl(
         historyId: Long,
         lesson: EnglishLesson,
         userAnswers: Map<Int, String>,
-        explanations: Map<Int, String>,
-        sentenceScores: Map<Int, Int>
+        explanations: Map<Int, String>
     ) {
         lesson.sentences.forEachIndexed { index, sentence ->
             val alternativesJson = if (sentence.alternatives.isNotEmpty()) {
@@ -151,7 +131,6 @@ class TeacherHistoryRepositoryImpl(
                 english = sentence.english,
                 explanation = sentence.explanation.takeIf { it.isNotEmpty() },
                 user_answer = userAnswers[index],
-                ai_score = sentenceScores[index]?.toLong(),
                 ai_explanation = explanations[index],
                 alternatives_json = alternativesJson
             )
@@ -168,5 +147,33 @@ class TeacherHistoryRepositoryImpl(
                 )
             }
         }
+    }
+
+    @OptIn(kotlin.uuid.ExperimentalUuidApi::class)
+    override suspend fun saveQuestionNote(historyId: Long, sentenceIndex: Int, note: String) {
+        val questionId = queries.getQuestionId(historyId, sentenceIndex.toLong()).executeAsOneOrNull() ?: return
+        val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+        val guid = kotlin.uuid.Uuid.random().toString()
+        queries.insertQuestionNote(
+            id = guid,
+            question_id = questionId,
+            note = note,
+            created_at = now
+        )
+    }
+
+    override suspend fun getQuestionNotes(historyId: Long, sentenceIndex: Int): List<com.aienglish.feature.aiteacher.domain.model.QuestionNote> {
+        val questionId = queries.getQuestionId(historyId, sentenceIndex.toLong()).executeAsOneOrNull() ?: return emptyList()
+        return queries.getQuestionNotes(questionId).executeAsList().map { 
+            com.aienglish.feature.aiteacher.domain.model.QuestionNote(id = it.id, note = it.note)
+        }
+    }
+
+    override suspend fun updateQuestionNote(noteId: String, newNote: String) {
+        queries.updateQuestionNote(note = newNote, id = noteId)
+    }
+
+    override suspend fun deleteQuestionNote(noteId: String) {
+        queries.deleteQuestionNote(id = noteId)
     }
 }

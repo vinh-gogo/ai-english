@@ -85,11 +85,10 @@ class HistoryRepositoryImpl(
             queries.getLastInsertId().executeAsOne()
         }
 
-    override suspend fun completeLesson(id: Long, score: Int) {
+    override suspend fun completeLesson(id: Long) {
         withContext(dispatchers.io) {
             val now = Clock.System.now().toEpochMilliseconds()
             queries.updateLessonCompleted(
-                score = score.toLong(),
                 completed_at = now,
                 id = id
             )
@@ -115,7 +114,6 @@ class HistoryRepositoryImpl(
                             id = row.id,
                             topic = row.topic,
                             level = row.level,
-                            score = row.score?.toInt(),
                             status = HistoryStatus.from(row.status),
                             createdAt = row.created_at,
                             completedAt = row.completed_at,

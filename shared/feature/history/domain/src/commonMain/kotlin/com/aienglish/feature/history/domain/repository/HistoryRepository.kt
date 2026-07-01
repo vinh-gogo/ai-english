@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface HistoryRepository {
     suspend fun startLesson(topic: String, level: String): Long
-    suspend fun completeLesson(id: Long, score: Int)
+    suspend fun completeLesson(id: Long)
     fun getAllHistory(): Flow<List<LessonHistory>>
     suspend fun clearHistory(ids: List<Long>)
 }

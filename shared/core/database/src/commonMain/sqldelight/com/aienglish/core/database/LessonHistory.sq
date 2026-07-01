@@ -3,7 +3,6 @@ CREATE TABLE IF NOT EXISTS lesson_history (
     user_id TEXT NOT NULL DEFAULT '0000000000000000',
     topic TEXT NOT NULL,
     level TEXT NOT NULL,
-    score INTEGER,
     status TEXT NOT NULL DEFAULT 'IN_PROGRESS',
     created_at INTEGER NOT NULL,
     completed_at INTEGER,
@@ -19,7 +18,7 @@ SELECT last_insert_rowid();
 
 updateLessonCompleted:
 UPDATE lesson_history
-SET status = 'COMPLETED', score = ?, completed_at = ?
+SET status = 'COMPLETED', completed_at = ?
 WHERE id = ?;
 
 getAllHistory:
@@ -40,7 +39,6 @@ CREATE TABLE IF NOT EXISTS lesson_question (
     english TEXT NOT NULL,
     explanation TEXT,
     user_answer TEXT,
-    ai_score INTEGER,
     ai_explanation TEXT,
     alternatives_json TEXT,
     UNIQUE(history_id, sentence_index) ON CONFLICT REPLACE,
@@ -59,15 +57,22 @@ CREATE TABLE IF NOT EXISTS lesson_question_token (
 CREATE TABLE IF NOT EXISTS lesson_feedback (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     history_id INTEGER NOT NULL UNIQUE,
-    overall_score INTEGER NOT NULL DEFAULT 0,
     review TEXT NOT NULL DEFAULT '',
-    sentence_scores_json TEXT,
     FOREIGN KEY(history_id) REFERENCES lesson_history(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS question_notes (
+    id TEXT PRIMARY KEY,
+    question_id INTEGER NOT NULL,
+    note TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    UNIQUE(question_id, note),
+    FOREIGN KEY(question_id) REFERENCES lesson_question(id) ON DELETE CASCADE
+);
+
 insertQuestion:
-INSERT OR REPLACE INTO lesson_question (history_id, sentence_index, vietnamese, english, explanation, user_answer, ai_score, ai_explanation, alternatives_json)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+INSERT OR REPLACE INTO lesson_question (history_id, sentence_index, vietnamese, english, explanation, user_answer, ai_explanation, alternatives_json)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 
 insertToken:
 INSERT INTO lesson_question_token (question_id, word, phonetic, part_of_speech)
@@ -86,18 +91,30 @@ getTokensForQuestion:
 SELECT * FROM lesson_question_token WHERE question_id = ?;
 
 insertOrReplaceFeedback:
-INSERT OR REPLACE INTO lesson_feedback (history_id, overall_score, review, sentence_scores_json)
-VALUES (?, ?, ?, ?);
+INSERT OR REPLACE INTO lesson_feedback (history_id, review)
+VALUES (?, ?);
 
 getFeedbackForHistory:
 SELECT * FROM lesson_feedback WHERE history_id = ?;
+
+insertQuestionNote:
+INSERT OR IGNORE INTO question_notes (id, question_id, note, created_at)
+VALUES (?, ?, ?, ?);
+
+getQuestionNotes:
+SELECT * FROM question_notes WHERE question_id = ? ORDER BY created_at DESC;
+
+deleteQuestionNote:
+DELETE FROM question_notes WHERE id = ?;
+
+updateQuestionNote:
+UPDATE question_notes SET note = ? WHERE id = ?;
 
 getAllHistoryWithCounts:
 SELECT
     h.id,
     h.topic,
     h.level,
-    h.score,
     h.status,
     h.created_at,
     h.completed_at,

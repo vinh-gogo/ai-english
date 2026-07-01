@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS question_notes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    question_id INTEGER NOT NULL,
+    note TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    FOREIGN KEY(question_id) REFERENCES lesson_question(id) ON DELETE CASCADE
+);

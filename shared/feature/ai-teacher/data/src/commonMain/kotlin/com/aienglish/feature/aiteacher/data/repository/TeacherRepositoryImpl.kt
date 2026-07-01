@@ -65,8 +65,7 @@ class TeacherRepositoryImpl(
         } catch (_: Exception) { /* fall through to manual extraction */ }
 
         // Extract score (always a simple number, no risk)
-        val scoreRegex = Regex("\"score\"\\s*:\\s*(\\d+(?:\\.\\d+)?)")  
-        val score = scoreRegex.find(cleaned)?.groupValues?.get(1)?.toFloatOrNull()?.toInt() ?: 0
+        val score = 0
 
         val arrayMatch = Regex("\"explanation\"\\s*:\\s*\\[").find(cleaned)
         val stringMatch = Regex("\"explanation\"\\s*:\\s*\"").find(cleaned)
@@ -107,7 +106,6 @@ class TeacherRepositoryImpl(
         }
 
         return com.aienglish.feature.aiteacher.data.model.SentenceExplanationDto(
-            score = score,
             explanation = explanationElement
         )
     }

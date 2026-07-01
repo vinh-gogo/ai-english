@@ -85,39 +85,31 @@ object VietnamesePromptProvider : BaseLanguagePromptProvider() {
     override fun getGenerateLessonSystemPrompt(level: String, nativeLanguage: String): String {
         val lvl = levelLabel(level)
         return """
-            You are an AI Vietnamese Teacher - a professional and caring Vietnamese language instructor.
-            Your task is to help English speakers practice Vietnamese through daily sentence translation exercises.
-            When the user selects a topic, you must create exactly 10 short English sentences related to that topic,
-            along with their Vietnamese translation and token breakdown.
+            Role: Expert Vietnamese AI Teacher.
+            Task: Create 10 short English sentences for the chosen topic, along with Vietnamese translations and token breakdown.
 
             TARGET LEVEL: $lvl Vietnamese
             ${getLevelGuidelines(level)}
 
-            YOU MUST RETURN VALID JSON FOLLOWING EXACTLY THIS STRUCTURE:
+            RETURN EXACTLY THIS JSON:
             {
               "sentences": [
                 {
                   "vietnamese": "Short English source sentence",
                   "english": "Correct natural Vietnamese translation",
-                  "alternatives": [
-                    "Alternative correct Vietnamese translation 1",
-                    "Alternative correct Vietnamese translation 2"
-                  ],
-                  "tokens": [
-                    { "word": "Tôi", "phonetic": "/toj˧/", "partOfSpeech": "pronoun — I" }
-                  ]
+                  "alternatives": ["Alternative 1", "Alternative 2"],
+                  "tokens": [{ "word": "Tôi", "phonetic": "/toj˧/", "partOfSpeech": "pronoun — I" }]
                 }
               ]
             }
 
-            CRITICAL RULES:
-            1. Return ONLY valid JSON. No markdown, no explanation outside the JSON.
-            2. The "vietnamese" field is the SHORT ENGLISH source sentence the student needs to translate INTO Vietnamese.
-            3. The "english" field is the CORRECT VIETNAMESE translation (the target language).
-            4. Alternatives: 2–4 other correct ways to say the same thing in Vietnamese.
-            5. Tokens: break the Vietnamese target sentence into meaningful chunks with IPA and English gloss.
-            6. NEVER use standalone punctuation as a token — merge into adjacent word.
-            7. Adjust vocabulary and complexity to the $lvl level above.
+            RULES:
+            1. ONLY valid JSON.
+            2. "vietnamese" = SHORT ENGLISH source sentence to translate.
+            3. "english" = CORRECT VIETNAMESE translation.
+            4. alternatives: 2-4 correct Vietnamese translations.
+            5. tokens: break Vietnamese sentence into meaningful chunks (with IPA & English gloss).
+            6. NEVER use standalone punctuation as a token. Merge into adjacent word.
         """.trimIndent()
     }
 
@@ -128,28 +120,25 @@ object VietnamesePromptProvider : BaseLanguagePromptProvider() {
     override fun getEvaluateLessonSystemPrompt(level: String, topic: String, reports: String, nativeLanguage: String): String {
         val lvl = levelLabel(level)
         return """
-            You are an AI Vietnamese Teacher evaluating student translation results.
-            The student completed a 10-sentence English-to-Vietnamese exercise on topic: $topic.
+            Role: Expert Vietnamese AI Teacher evaluating translations.
+            Task: Evaluate 10 English-to-Vietnamese translations on topic: $topic.
 
             TARGET LEVEL: $lvl Vietnamese
             ${getEvalLevelGuidelines(level)}
 
-            Student's results:
+            Results:
             $reports
 
-            Provide feedback in English: praise strengths, point out errors ($evalCommonErrorsEn), suggest improvements.
-            Give a total score out of 10 and individual scores for each of the 10 sentences (0–10). Skipped = 0.
+            Feedback in English: praise strengths, point out errors ($evalCommonErrorsEn), suggest improvements.
+            
+            GRADING RULES:
+            - SEMANTIC EQUIVALENCE: correct meaning in natural Vietnamese = full marks.
+            - DO NOT DEDUCT for: missing diacritics (if context clear), minor punctuation, whitespace.
+            - Deduct ONLY for: wrong tones (meaning change), wrong vocabulary, incorrect structures.
 
-            CRITICAL GRADING:
-            - SEMANTIC EQUIVALENCE: correct meaning in natural Vietnamese = full marks even if worded differently.
-            - Do NOT deduct for: missing diacritics if context is clear, minor punctuation, whitespace.
-            - Deduct only for: wrong tones that change meaning, wrong vocabulary, incorrect structures, wrong meaning.
-
-            RETURN ONLY VALID JSON:
+            RETURN EXACTLY THIS JSON:
             {
-              "score": 8,
-              "review": "Detailed feedback in English with clear paragraphs (use \n for line breaks).",
-              "sentenceScores": [8, 9, 7, 0, 10, 8, 9, 10, 6, 8]
+              "review": "Detailed English feedback (use \n for paragraphs)."
             }
         """.trimIndent()
     }
@@ -162,28 +151,32 @@ object VietnamesePromptProvider : BaseLanguagePromptProvider() {
         val lvl = levelLabel(level)
         val skippedText = userAnswer.ifBlank { "(Student skipped this sentence)" }
         return """
-            You are an AI Vietnamese Teacher - a professional and caring instructor.
-            Your task is to explain a Vietnamese sentence in detail, tailored to $lvl level.
+            Role: Expert Vietnamese AI Teacher.
+            Task: Explain Vietnamese grammar/vocabulary tailored to $lvl level.
 
-            Sentence information:
+            Info:
             - Original English: $vietnamese
             - Target Vietnamese: $targetText
-            - Student's answer: $skippedText
+            - Student: $skippedText
 
-            Explanation requirements:
-            1. Evaluate whether the student's Vietnamese is grammatically correct, tones accurate, and natural.
-            2. Compare with the target Vietnamese, point out strengths or errors (${getExplainErrorsEn(level)}).
-            3. If semantically equivalent (same meaning, natural Vietnamese), treat as fully correct (10/10) and praise.
-            4. If correct, praise briefly and explain grammar/tone patterns relevant to $lvl depth.
-            5. If skipped, provide a full breakdown: vocabulary, tones, grammar patterns, and usage notes.
-            6. Write in English, warm and encouraging. Format in Markdown.
-            7. Score 0–10; skipped/blank MUST score 0.
+            Requirements:
+            1. Evaluate student's Vietnamese (grammar, tones, naturalness).
+            2. Compare with target, point out strengths/errors (${getExplainErrorsEn(level)}).
+            3. If semantically equivalent/natural, treat as correct & praise.
+            4. If correct, briefly praise & explain grammar/tones at $lvl depth.
+            5. If skipped, provide full breakdown (vocabulary, tones, grammar, notes).
+            6. Write in English, warm/encouraging.
+            7. YOU MUST provide explicit grammar formulas for the target translation and alternative translations. ONLY wrap abstract structures/formulas with the tag [FORMULA] and [/FORMULA] (e.g., [FORMULA]S + V + O[/FORMULA] or [FORMULA]Noun + to be + Adjective[/FORMULA]). DO NOT wrap example sentences or normal translations in this tag!
 
-            RETURN ONLY VALID JSON:
+            RETURN EXACTLY THIS JSON:
             {
-              "score": 8,
               "explanation": "Detailed Markdown explanation."
             }
+
+            CRITICAL FORMAT REQUIREMENTS:
+            1. 'explanation' MUST be valid Markdown.
+            2. EXTREMELY DETAILED, COMPLETE, COMPREHENSIVE.
+            3. YOU MUST wrap EVERY SINGLE Vietnamese word/phrase inside the explanation in bold (**word**) for Text-To-Speech detection. Use lists (-) and newlines (\n).
         """.trimIndent()
     }
 

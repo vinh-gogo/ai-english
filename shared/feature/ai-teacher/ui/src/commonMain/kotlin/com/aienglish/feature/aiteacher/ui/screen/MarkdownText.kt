@@ -19,7 +19,15 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.AppColors
-
+import androidx.compose.material3.Surface
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.clickable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Book
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.window.Popup
 sealed interface Block {
     data class Heading(val level: Int, val text: String) : Block
     data class Paragraph(val text: String) : Block
@@ -232,15 +240,37 @@ private fun AnnotatedString.Builder.appendFormattedText(
                     i++
                 }
             }
+            text.startsWith("[FORMULA]", i) -> {
+                val close = text.indexOf("[/FORMULA]", i + 9)
+                if (close != -1) {
+                    val formulaText = text.substring(i + 9, close)
+                    pushStringAnnotation(tag = "formula", annotation = formulaText)
+                    withStyle(SpanStyle(
+                        color = colors.accent,
+                        fontWeight = FontWeight.Bold,
+                        background = colors.accent.copy(alpha = 0.15f)
+                    )) {
+                        append(" ")
+                        appendFormattedText(formulaText, colors, outerBold = true, outerItalic = outerItalic)
+                        append(" ")
+                    }
+                    pop()
+                    i = close + 10
+                } else {
+                    appendCharacter(text[i], outerBold, outerItalic, colors)
+                    i++
+                }
+            }
             text.startsWith("`", i) -> {
                 val close = text.indexOf("`", i + 1)
                 if (close != -1) {
+                    val codeText = text.substring(i + 1, close)
                     withStyle(SpanStyle(
                         color = colors.accent,
                         fontWeight = if (outerBold) FontWeight.Bold else FontWeight.Medium,
                         fontStyle = if (outerItalic) FontStyle.Italic else FontStyle.Normal
                     )) {
-                        append(text.substring(i + 1, close))
+                        append(codeText)
                     }
                     i = close + 1
                 } else {
@@ -275,7 +305,8 @@ private fun AnnotatedString.Builder.appendCharacter(
 @Composable
 fun MarkdownText(
     markdown: String,
-    colors: AppColors
+    colors: AppColors,
+    onFormulaClick: ((String) -> Unit)? = null
 ) {
     val processedMarkdown = remember(markdown) {
         markdown
@@ -286,82 +317,217 @@ fun MarkdownText(
     }
     val blocks = remember(processedMarkdown) { parseBlocks(processedMarkdown) }
 
+    data class PopupState(val text: String, val offset: IntOffset, val blockIndex: Int)
+    val popupState = remember { mutableStateOf<PopupState?>(null) }
+
     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        for (block in blocks) {
-            when (block) {
-                is Block.Divider -> {
-                    HorizontalDivider(
-                        thickness = 0.5.dp,
-                        color = colors.border,
-                        modifier = Modifier.padding(vertical = 4.dp)
-                    )
-                }
-                is Block.Heading -> {
-                    val annotated = remember<AnnotatedString>(block.text) { buildInlineAnnotatedString(block.text, colors) }
-                    val hSize = when (block.level) {
-                        1 -> 18.sp
-                        2 -> 16.sp
-                        else -> 15.sp
+        blocks.forEachIndexed { index, block ->
+            Box {
+                when (block) {
+                    is Block.Divider -> {
+                        HorizontalDivider(
+                            thickness = 0.5.dp,
+                            color = colors.border,
+                            modifier = Modifier.padding(vertical = 4.dp)
+                        )
                     }
-                    Text(
-                        text = annotated,
-                        fontSize = hSize,
-                        color = colors.mainText,
-                        lineHeight = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(top = 6.dp, bottom = 2.dp)
-                    )
-                }
-                is Block.Paragraph -> {
-                    val annotated = remember<AnnotatedString>(block.text) { buildInlineAnnotatedString(block.text, colors) }
-                    Text(
-                        text = annotated,
-                        fontSize = 15.sp,
-                        color = colors.mutedText,
-                        lineHeight = 22.sp,
-                        textAlign = TextAlign.Justify,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-                is Block.Bullet -> {
-                    val annotated = remember(block.text, colors) {
-                        buildAnnotatedString {
-                            withStyle(ParagraphStyle(textIndent = TextIndent(firstLine = 0.sp, restLine = 16.sp))) {
-                                withStyle(SpanStyle(color = colors.accent, fontWeight = FontWeight.Bold)) {
-                                    append("•\u00A0\u00A0\u00A0")
+                    is Block.Heading -> {
+                        val annotated = remember<AnnotatedString>(block.text) { buildInlineAnnotatedString(block.text, colors) }
+                        val hSize = when (block.level) {
+                            1 -> 18.sp
+                            2 -> 16.sp
+                            else -> 15.sp
+                        }
+                        Text(
+                            text = annotated,
+                            fontSize = hSize,
+                            color = colors.mainText,
+                            lineHeight = 24.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(top = 6.dp, bottom = 2.dp)
+                        )
+                    }
+                    is Block.Paragraph -> {
+                        val annotated = remember<AnnotatedString>(block.text) { buildInlineAnnotatedString(block.text, colors) }
+                        if (onFormulaClick != null) {
+                            val textLayoutResult = remember { mutableStateOf<TextLayoutResult?>(null) }
+                            androidx.compose.foundation.text.ClickableText(
+                                text = annotated,
+                                style = androidx.compose.ui.text.TextStyle(
+                                    fontSize = 15.sp,
+                                    color = colors.mutedText,
+                                    lineHeight = 22.sp,
+                                    textAlign = TextAlign.Justify
+                                ),
+                                modifier = Modifier.fillMaxWidth(),
+                                onTextLayout = { textLayoutResult.value = it },
+                                onClick = { offset ->
+                                    val annotation = annotated.getStringAnnotations(tag = "formula", start = offset, end = offset).firstOrNull()
+                                    if (annotation != null) {
+                                        val box = textLayoutResult.value?.getBoundingBox(offset)
+                                        if (box != null) {
+                                            popupState.value = PopupState(
+                                                text = annotation.item,
+                                                offset = IntOffset(box.left.toInt(), (box.top.toInt() - 100).coerceAtLeast(0)),
+                                                blockIndex = index
+                                            )
+                                        }
+                                    } else {
+                                        popupState.value = null
+                                    }
                                 }
-                                append(buildInlineAnnotatedString(block.text, colors))
+                            )
+                        } else {
+                            Text(
+                                text = annotated,
+                                fontSize = 15.sp,
+                                color = colors.mutedText,
+                                lineHeight = 22.sp,
+                                textAlign = TextAlign.Justify,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
+                    is Block.Bullet -> {
+                        val annotated = remember(block.text, colors) {
+                            buildAnnotatedString {
+                                withStyle(ParagraphStyle(textIndent = TextIndent(firstLine = 0.sp, restLine = 16.sp))) {
+                                    withStyle(SpanStyle(color = colors.accent, fontWeight = FontWeight.Bold)) {
+                                        append("•\u00A0\u00A0\u00A0")
+                                    }
+                                    append(buildInlineAnnotatedString(block.text, colors))
+                                }
+                            }
+                        }
+                        if (onFormulaClick != null) {
+                            val textLayoutResult = remember { mutableStateOf<TextLayoutResult?>(null) }
+                            androidx.compose.foundation.text.ClickableText(
+                                text = annotated,
+                                style = androidx.compose.ui.text.TextStyle(
+                                    fontSize = 15.sp,
+                                    color = colors.mutedText,
+                                    lineHeight = 22.sp,
+                                    textAlign = TextAlign.Justify
+                                ),
+                                modifier = Modifier.fillMaxWidth(),
+                                onTextLayout = { textLayoutResult.value = it },
+                                onClick = { offset ->
+                                    val annotation = annotated.getStringAnnotations(tag = "formula", start = offset, end = offset).firstOrNull()
+                                    if (annotation != null) {
+                                        val box = textLayoutResult.value?.getBoundingBox(offset)
+                                        if (box != null) {
+                                            popupState.value = PopupState(
+                                                text = annotation.item,
+                                                offset = IntOffset(box.left.toInt(), (box.top.toInt() - 100).coerceAtLeast(0)),
+                                                blockIndex = index
+                                            )
+                                        }
+                                    } else {
+                                        popupState.value = null
+                                    }
+                                }
+                            )
+                        } else {
+                            Text(
+                                text = annotated,
+                                fontSize = 15.sp,
+                                color = colors.mutedText,
+                                lineHeight = 22.sp,
+                                textAlign = TextAlign.Justify,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
+                    is Block.Ordered -> {
+                        val annotated = remember(block.index, block.text, colors) {
+                            buildAnnotatedString {
+                                withStyle(ParagraphStyle(textIndent = TextIndent(firstLine = 0.sp, restLine = 24.sp))) {
+                                    withStyle(SpanStyle(color = colors.accent, fontWeight = FontWeight.Bold)) {
+                                        append("${block.index}\u00A0\u00A0")
+                                    }
+                                    append(buildInlineAnnotatedString(block.text, colors))
+                                }
+                            }
+                        }
+                        if (onFormulaClick != null) {
+                            val textLayoutResult = remember { mutableStateOf<TextLayoutResult?>(null) }
+                            androidx.compose.foundation.text.ClickableText(
+                                text = annotated,
+                                style = androidx.compose.ui.text.TextStyle(
+                                    fontSize = 15.sp,
+                                    color = colors.mutedText,
+                                    lineHeight = 22.sp,
+                                    textAlign = TextAlign.Justify
+                                ),
+                                modifier = Modifier.fillMaxWidth(),
+                                onTextLayout = { textLayoutResult.value = it },
+                                onClick = { offset ->
+                                    val annotation = annotated.getStringAnnotations(tag = "formula", start = offset, end = offset).firstOrNull()
+                                    if (annotation != null) {
+                                        val box = textLayoutResult.value?.getBoundingBox(offset)
+                                        if (box != null) {
+                                            popupState.value = PopupState(
+                                                text = annotation.item,
+                                                offset = IntOffset(box.left.toInt(), (box.top.toInt() - 100).coerceAtLeast(0)),
+                                                blockIndex = index
+                                            )
+                                        }
+                                    } else {
+                                        popupState.value = null
+                                    }
+                                }
+                            )
+                        } else {
+                            Text(
+                                text = annotated,
+                                fontSize = 15.sp,
+                                color = colors.mutedText,
+                                lineHeight = 22.sp,
+                                textAlign = TextAlign.Justify,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
+                }
+
+                val currentPopup = popupState.value
+                if (currentPopup?.blockIndex == index) {
+                    Popup(
+                        alignment = Alignment.TopStart,
+                        offset = currentPopup.offset,
+                        onDismissRequest = { popupState.value = null }
+                    ) {
+                        Surface(
+                            shape = RoundedCornerShape(16.dp),
+                            color = colors.surfaceElevated,
+                            shadowElevation = 8.dp,
+                            modifier = Modifier.padding(4.dp)
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier
+                                    .clickable {
+                                        onFormulaClick?.invoke(currentPopup.text)
+                                        popupState.value = null
+                                    }
+                                    .padding(horizontal = 12.dp, vertical = 8.dp)
+                            ) {
+                                androidx.compose.material3.Icon(
+                                    imageVector = Icons.Default.Book,
+                                    contentDescription = "Save",
+                                    tint = colors.accent,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text(
+                                    text = "Lưu cấu trúc",
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Medium,
+                                    color = colors.mainText
+                                )
                             }
                         }
                     }
-                    Text(
-                        text = annotated,
-                        fontSize = 15.sp,
-                        color = colors.mutedText,
-                        lineHeight = 22.sp,
-                        textAlign = TextAlign.Justify,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-                is Block.Ordered -> {
-                    val annotated = remember(block.index, block.text, colors) {
-                        buildAnnotatedString {
-                            withStyle(ParagraphStyle(textIndent = TextIndent(firstLine = 0.sp, restLine = 24.sp))) {
-                                withStyle(SpanStyle(color = colors.accent, fontWeight = FontWeight.Bold)) {
-                                    append("${block.index}\u00A0\u00A0")
-                                }
-                                append(buildInlineAnnotatedString(block.text, colors))
-                            }
-                        }
-                    }
-                    Text(
-                        text = annotated,
-                        fontSize = 15.sp,
-                        color = colors.mutedText,
-                        lineHeight = 22.sp,
-                        textAlign = TextAlign.Justify,
-                        modifier = Modifier.fillMaxWidth()
-                    )
                 }
             }
         }

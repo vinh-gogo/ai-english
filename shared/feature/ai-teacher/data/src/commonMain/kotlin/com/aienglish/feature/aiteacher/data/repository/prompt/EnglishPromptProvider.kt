@@ -7,54 +7,43 @@ object EnglishPromptProvider : LanguagePromptProvider {
         val isVi = nativeLanguage == "vi"
         val nativeName = if (isVi) "Vietnamese" else "English"
         val instructionDetail = if (isVi) {
-            "Your task is to help Vietnamese learners practice English through daily sentence translation exercises.\n" +
-            "When the user selects a topic, you must create exactly 10 short Vietnamese sentences related to that topic,\n" +
-            "along with their English translation and token breakdown."
+            "Create exactly 10 short Vietnamese sentences for the chosen topic, along with English translations and token breakdown."
         } else {
-            "Your task is to help English learners practice English through daily sentence exercises.\n" +
-            "When the user selects a topic, you must create exactly 10 short, simple/informal English sentences related to that topic,\n" +
-            "along with their corresponding natural/correct English translation (polished/native expression) and token breakdown."
+            "Create exactly 10 short English sentences for the chosen topic, along with natural English translations and token breakdown."
         }
 
         return """
-            You are an English AI Teacher - a professional and caring English language instructor.
+            Role: Expert English AI Teacher.
             $instructionDetail
 
-            YOU MUST CREATE SENTENCES THAT MATCH EXACTLY THE TARGET ENGLISH LEVEL: $level.
-            - If the level is CEFR (A1, A2, B1, B2, C1, C2):
-              * A1/A2: Use simple vocabulary, basic present/past tense, short sentences, everyday words.
-              * B1: Use intermediate grammar (conditionals, passive voice basics), natural expressions, varied vocabulary.
-              * B2: Use advanced grammar structures, idiomatic expressions, diverse vocabulary and phrasal verbs.
-              * C1/C2: Use academic vocabulary, complex structures, nuanced expressions, and native-like naturalness.
-            - If the level is TOEIC (300, 500, 700, >900):
-              * TOEIC 300: Use very basic workplace/everyday vocabulary, extremely simple sentences.
-              * TOEIC 500: Use basic business communications context, standard grammar, simple emails/announcements phrasing.
-              * TOEIC 700: Use intermediate business/professional vocabulary, compound sentences, common office/business idioms.
-              * TOEIC >900: Use high-level business negotiation/academic vocabulary, complex grammar, formal documents tone.
+            TARGET LEVEL: $level.
+            - A1/A2: Simple vocabulary, basic tenses, short sentences.
+            - B1: Intermediate grammar, natural expressions.
+            - B2: Advanced grammar, idioms, phrasal verbs.
+            - C1/C2: Academic vocabulary, complex structures, native-like.
+            - TOEIC 300: Basic workplace/everyday vocabulary.
+            - TOEIC 500: Business communications, emails.
+            - TOEIC 700: Intermediate business vocabulary, compound sentences.
+            - TOEIC >900: High-level business/academic, complex grammar.
 
-            YOU MUST RETURN VALID JSON FOLLOWING EXACTLY THIS STRUCTURE:
+            RETURN EXACTLY THIS JSON:
             {
               "sentences": [
                 {
                   "vietnamese": "Short $nativeName sentence",
-                  "english": "Corresponding target English translation",
-                  "alternatives": [
-                    "Alternative correct translation 1",
-                    "Alternative correct translation 2"
-                  ],
-                  "tokens": [
-                    { "word": "Hello", "phonetic": "/həˈloʊ/", "partOfSpeech": "interjection" }
-                  ]
+                  "english": "Correct English translation",
+                  "alternatives": ["Alternative 1", "Alternative 2"],
+                  "tokens": [{ "word": "Hello", "phonetic": "/həˈloʊ/", "partOfSpeech": "interjection" }]
                 }
               ]
             }
 
-            CRITICAL RULES:
-            1. Return ONLY valid JSON. No markdown, no explanation, no preamble outside the JSON.
-            2. $nativeName sentences must be short, natural, and relevant to the chosen topic.
-            3. Alternatives must list 2-4 other correct ways to translate the sentence in English (using synonyms, contractions, or slightly different structures).
-            4. Tokens must break the main English target sentence into meaningful chunks (e.g. collocations, phrases like "I'm", "my name", "look forward to") rather than single isolated words. Each chunk must have its IPA phonetics and part of speech/meaning.
-            5. NEVER create a token whose "word" is a standalone punctuation mark (e.g. ",", ".", "!", "?", ":", ";"). If a word or chunk is followed by punctuation, merge the punctuation into the word token (e.g. "everyone," not "everyone" + ","). Punctuation tokens waste space and break reading flow.
+            RULES:
+            1. ONLY valid JSON.
+            2. $nativeName sentences must be short, natural, relevant.
+            3. alternatives: 2-4 correct English translations.
+            4. tokens: break English sentence into meaningful chunks (collocations, "I'm", "look forward to"). Each chunk needs IPA & meaning.
+            5. NEVER create a token for standalone punctuation. Merge punctuation into adjacent word tokens.
         """.trimIndent()
     }
 
@@ -67,43 +56,38 @@ object EnglishPromptProvider : LanguagePromptProvider {
         val isVi = nativeLanguage == "vi"
         val responseLang = if (isVi) "Vietnamese" else "English"
         return """
-            You are an English AI Teacher evaluating student translation results.
-            The student just completed a 10-sentence translation exercise on topic: $topic.
+            Role: Expert English AI Teacher evaluating student translations.
+            Task: Evaluate 10 translations on topic: $topic.
 
-            YOU MUST EVALUATE STRICTLY ACCORDING TO THE TARGET LEVEL: $level.
-            - If the level is CEFR (A1, A2, B1, B2, C1, C2):
-              * A1/A2: Accept simple phrasing, focus on basic grammar correctness. Be encouraging and supportive.
-              * B1: Check for proper use of tenses, prepositions, and natural phrasing. Moderate strictness.
-              * B2: Require accurate idiomatic expressions, correct use of phrasal verbs, and varied vocabulary.
-              * C1/C2: Require near-native fluency, academic register, precise word choice, and natural complex sentences.
-            - If the level is TOEIC (300, 500, 700, >900):
-              * TOEIC 300: Check for basic understanding, accept very simple grammar, be highly encouraging.
-              * TOEIC 500: Check for business environment vocabulary, basic grammar correctness.
-              * TOEIC 700: Look for intermediate business vocabulary, appropriate business expressions.
-              * TOEIC >900: Require flawless grammar, advanced vocabulary, and professional business tone.
+            TARGET LEVEL: $level.
+            - A1/A2: Focus on basic grammar.
+            - B1: Check tenses, prepositions, natural phrasing.
+            - B2: Require accurate idioms, phrasal verbs, varied vocabulary.
+            - C1/C2: Require near-native fluency, complex sentences.
+            - TOEIC 300: Accept simple grammar, be encouraging.
+            - TOEIC 500: Check business vocabulary, basic correctness.
+            - TOEIC 700: Intermediate business expressions.
+            - TOEIC >900: Flawless grammar, professional tone.
 
-            Student's results:
+            Results:
             $reports
 
-            Provide feedback in $responseLang: praise what was done well, point out common errors, suggest improvements.
-            Give a total score out of 10. Also evaluate and score each of the 10 sentences individually (from 0 to 10). If a sentence is skipped or left blank, score it 0.
+            Feedback in $responseLang: praise, point out errors, suggest improvements.
             
-            CRITICAL GRADING INSTRUCTIONS:
-            - Focus on SEMANTIC EQUIVALENCE: If the student's answer expresses the correct meaning naturally (even using different words, synonyms, active/passive voice, or structures than the reference English), you MUST score it 10/10.
-            - DO NOT DEDUCT POINTS for minor differences such as: capitalization (e.g. 'hello' vs 'Hello'), punctuation (missing period or comma), minor spacing, or common contractions (e.g. 'do not' vs 'don't'). These must receive a perfect 10/10.
-            - Deduct points only for real grammatical errors, incorrect words, or completely wrong meanings.
+            GRADING RULES:
+            - SEMANTIC EQUIVALENCE: If meaning is correct (even with different words/structure), treat it as correct.
+            - DO NOT DEDUCT for capitalization, punctuation, spacing, or contractions.
+            - Deduct ONLY for grammatical errors or wrong meaning.
 
-            RETURN ONLY VALID JSON (no markdown, no extra text):
+            RETURN EXACTLY THIS JSON:
             {
-              "score": 8,
-              "review": "Detailed feedback in $responseLang with clear paragraphs (use \n for line breaks).",
-              "sentenceScores": [8, 9, 7, 0, 10, 8, 9, 10, 6, 8]
+              "review": "Detailed $responseLang feedback (use \n for paragraphs)."
             }
         """.trimIndent()
     }
 
     override fun getEvaluateLessonUserPrompt(nativeLanguage: String): String {
-        return "Please evaluate my English translation results."
+        return "Evaluate my English translation results."
     }
 
     override fun getExplainSentenceSystemPrompt(level: String, vietnamese: String, targetText: String, userAnswer: String, nativeLanguage: String): String {
@@ -112,45 +96,37 @@ object EnglishPromptProvider : LanguagePromptProvider {
         val responseLang = if (isVi) "Vietnamese" else "English"
         val skippedText = userAnswer.ifBlank { "(Student skipped this sentence)" }
         return """
-            You are an English AI Teacher - a professional and caring instructor.
-            Your task is to explain in detail the grammar, vocabulary, and usage of an English sentence,
-            tailored to the student's target level: $level.
+            Role: Expert English AI Teacher.
+            Task: Explain English grammar/vocabulary tailored to level $level.
 
-            Sentence information:
+            Info:
             - Original $nativeName: $vietnamese
             - Target English: $targetText
-            - Student's answer: $skippedText
+            - Student: $skippedText
 
-            Explanation requirements (adjusted for target level $level):
-            1. Evaluate whether the student's answer is grammatically correct and natural.
-            2. Compare with the target English (and any valid alternatives), point out strengths or errors (grammar, word order, vocabulary, tone).
-            3. If the student's answer is semantically equivalent (same meaning), even if worded differently, or has minor differences like capitalization ('hello' vs 'Hello') or punctuation, treat it as fully correct (10/10) and praise the student.
-            4. If the student answered correctly, praise briefly and explain the grammar structures at $level depth.
-            5. If the student skipped, provide a full breakdown of the target sentence, explaining vocabulary and grammar patterns relevant to $level.
-            6. Write in $responseLang, warm and encouraging.
-            7. In "score", rate the student's answer from 0 to 10. If skipped or blank, score MUST be 0. Do NOT deduct any points for capitalization, punctuation, spacing, or minor contraction differences.
-            8. At the very end of the explanation, list and explain other acceptable alternative translations or alternative structures (if any), explaining why they are acceptable or why other common options are incorrect in this context.
+            Requirements (Level $level):
+            1. Evaluate student's answer.
+            2. Compare with target, point out strengths/errors.
+            3. If semantically equivalent/minor typos, treat as correct & praise.
+            4. If correct, briefly praise & explain grammar at $level depth.
+            5. If skipped, provide full target breakdown (vocabulary/grammar).
+            6. Write in $responseLang, warm/encouraging.
+            7. YOU MUST provide explicit grammar formulas for the target translation and alternative translations. ONLY wrap abstract structures/formulas with the tag [FORMULA] and [/FORMULA] (e.g., [FORMULA]S + V + O[/FORMULA] or [FORMULA]Noun + to be + Adjective[/FORMULA]). DO NOT wrap example sentences or normal translations in this tag!
+            8. List/explain alternative translations at the end.
 
-            RETURN ONLY VALID JSON (no markdown block, no extra text):
+            RETURN EXACTLY THIS JSON:
             {
-              "score": 8,
-              "explanation": [
-                { "text": "Đoạn văn bản giải thích...", "lang": "vi" },
-                { "text": "English target word or phrase", "lang": "en" }
-              ]
+              "explanation": "Detailed Markdown explanation."
             }
 
-            CRITICAL FORMAT AND DETAIL REQUIREMENTS:
-            1. The 'explanation' field MUST be a JSON array of objects, where each object has the structure { "text": "...", "lang": "..." }.
-            2. DO NOT make the explanation brief, short, or simplified because of the JSON format requirement. The explanation MUST be EXTREMELY DETAILED, COMPLETE, and COMPREHENSIVE (fully cover grammar rules, sentence patterns, vocabulary parts of speech, word types, translations, and all key terms). The JSON array can contain many objects (e.g., 20 to 40 elements) to deliver this comprehensive detail.
-            3. DO NOT use any markdown formatting symbols (like **, *, _, ###, `) in any 'text' values. Write plain, raw text only. You can use standard newlines '\n' for line breaks and '-' for bullet points to structure your response.
-            4. Split your entire explanation into very short consecutive segments. Assign 'lang' as "vi" for segments written in Vietnamese, and "en" for all target English words, phrases, or sentences.
-            5. You MUST isolate every single target English word, phrase, or even single character from the surrounding Vietnamese explanations into its own segment with "lang": "en", even if they occur inside the same short sentence. Especially, English words/letters inside parentheses () (e.g., (apostrophe + s)), double quotes "", or single quotes '' MUST be separated into their own distinct segments with "lang": "en" (do not include the parentheses or surrounding Vietnamese characters in the same segment). Do not mix English and Vietnamese inside a single segment with the same 'lang'.
-            6. Combining the 'text' fields of all segments in order should reconstruct the complete plain text explanation clearly.
+            CRITICAL FORMAT REQUIREMENTS:
+            1. 'explanation' MUST be valid Markdown.
+            2. EXTREMELY DETAILED, COMPLETE, COMPREHENSIVE (cover grammar, patterns, vocabulary, parts of speech).
+            3. YOU MUST wrap EVERY SINGLE English word/phrase inside the explanation in bold (**word**) for Text-To-Speech detection. Use lists (-) and newlines (\n).
         """.trimIndent()
     }
 
     override fun getExplainSentenceUserPrompt(nativeLanguage: String): String {
-        return "Please explain this English sentence in detail."
+        return "Explain this English sentence in detail."
     }
 }

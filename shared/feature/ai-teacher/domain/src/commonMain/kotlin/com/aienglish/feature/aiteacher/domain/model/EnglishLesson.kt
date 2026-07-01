@@ -19,12 +19,9 @@ data class EnglishToken(
 )
 
 data class EnglishFeedback(
-    val score: Int,
-    val review: String,
-    val sentenceScores: List<Int> = emptyList()
+    val review: String
 )
 
 data class SentenceExplanation(
-    val score: Int,
     val explanation: String
 )

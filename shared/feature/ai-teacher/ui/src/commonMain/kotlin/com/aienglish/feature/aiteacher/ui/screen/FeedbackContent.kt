@@ -290,7 +290,6 @@ private fun SentenceReviewCard(
     var isExpanded by remember { mutableStateOf(false) }
     var showAlternatives by remember { mutableStateOf(false) }
     val clipboardManager = LocalClipboardManager.current
-
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = colors.surface),
@@ -463,7 +462,13 @@ private fun SentenceReviewCard(
                         border = BorderStroke(0.5.dp, colors.border)
                     ) {
                         Column(modifier = Modifier.padding(10.dp)) {
-                            MarkdownText(getDisplayExplanation(explanation, state.targetLanguage), colors)
+                            MarkdownText(
+                                markdown = getDisplayExplanation(explanation, state.targetLanguage),
+                                colors = colors,
+                                onFormulaClick = { formula ->
+                                    viewModel.saveQuestionNote(index, formula)
+                                }
+                            )
                         }
                     }
                 }

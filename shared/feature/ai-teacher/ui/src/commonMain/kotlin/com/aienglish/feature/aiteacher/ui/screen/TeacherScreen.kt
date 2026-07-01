@@ -14,6 +14,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
@@ -359,6 +360,36 @@ fun TeacherScreen(
                             IconButton(onClick = { viewModel.onDismissError() }, modifier = Modifier.size(24.dp)) {
                                 Icon(Icons.Default.Close, null, tint = Color.White, modifier = Modifier.size(14.dp))
                             }
+                        }
+                    }
+                }
+            }
+
+            // Info snackbar
+            val infoMessage = state.infoMessage
+            if (infoMessage != null) {
+                LaunchedEffect(infoMessage) {
+                    kotlinx.coroutines.delay(2000)
+                    viewModel.clearInfoMessage()
+                }
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(16.dp)
+                        .navigationBarsPadding()
+                ) {
+                    Card(
+                        colors = CardDefaults.cardColors(containerColor = colors.surfaceElevated),
+                        shape = RoundedCornerShape(12.dp),
+                        border = BorderStroke(1.dp, colors.accent.copy(alpha = 0.5f))
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(Icons.Default.CheckCircle, null, tint = colors.accent, modifier = Modifier.size(16.dp))
+                            Spacer(Modifier.width(8.dp))
+                            Text(infoMessage, color = colors.mainText, fontSize = 13.sp)
                         }
                     }
                 }

@@ -69,6 +69,38 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 60** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Tối ưu hóa hiệu năng render danh sách chủ đề bằng cách cô lập recomposition cho từng row riêng biệt. | Hoàn thành |
 | **Session 61** | 2026-06-30 | Antigravity | `e0b16657-3637-4bdc-88bb-05f12457c6a7` | Khắc phục lỗi phát âm đè lên nhau (overlapping audio) khi chuyển nhanh giữa các chủ đề. | Hoàn thành |
 | **Session 62** | 2026-06-30 | Antigravity | `b933a38c-5ae1-4304-a547-bc73e4226c01` | Thêm cài đặt lựa chọn nền tảng giọng đọc (Google TTS vs ONNX) và giọng đọc Tiếng Anh (Amy vs Lessac) dưới phần Cài đặt ngôn ngữ. | Hoàn thành |
+| **Session 63** | 2026-07-01 | Antigravity | `799e2971-3590-4cbf-9e01-ad03f674e145` | Cải thiện cấu trúc trả về giải thích từ vựng AI, chuyển từ mảng JSON phức tạp sang Markdown string để khắc phục lỗi không hiển thị và lỗi mất định dạng xuống dòng. | Hoàn thành |
+| **Session 64** | 2026-07-01 | Antigravity | `799e2971-3590-4cbf-9e01-ad03f674e145` | Cấu hình lưu cấu trúc / công thức ngữ pháp (dạng `[FORMULA]`) vào CSDL `question_notes`. Thêm UI hiển thị danh sách dạng Modal Bottom Sheet mượt mà khi bấm icon sổ tay ở màn hình bài học. | Hoàn thành |
+---
+
+### 🟢 Session 64 (2026-07-01)
+
+- **Mục tiêu:** Cấu hình lưu cấu trúc và công thức ngữ pháp vào cơ sở dữ liệu `question_notes` và hiển thị trên giao diện UI tinh tế (Modal Bottom Sheet).
+- **Hoạt động & Thay đổi:**
+  - **TeacherHistoryRepository.kt** & **TeacherHistoryRepositoryImpl.kt**: Cập nhật hàm `getQuestionNotes` để truy vấn CSDL và lấy danh sách các cấu trúc/notes đã được lưu theo từng câu hỏi.
+  - **TeacherUiState.kt** & **TeacherViewModel.kt**: Bổ sung biến trạng thái `showSavedNotesBottomSheet` và mảng `savedNotes` để quản lý việc hiển thị modal. Thêm các hàm `openSavedNotes(index: Int)` và `closeSavedNotes()`.
+  - **LessonContent.kt**: Thay đổi nút bấm hiển thị icon "Sổ tay" ở góc phải bên dưới của mỗi câu hỏi sau khi chấm điểm. Gắn sự kiện `onClick` gọi hàm mở danh sách `savedNotes` của ViewModel.
+  - Thêm một thành phần UI `ModalBottomSheet` (với drag handle, màu nền background color, title và layout card bao bọc nội dung) để hiển thị danh sách các cấu trúc đã lưu hoặc hiển thị tin nhắn rỗng một cách tinh tế.
+- **Ghi chú kỹ thuật:**
+  - Việc lưu và hiển thị cấu trúc ngữ pháp hoạt động mượt mà mà không làm gián đoạn trải nghiệm học tập của người dùng. Chỉnh sửa một lỗi nhỏ về tham chiếu Query `getNotesForQuestion` thành `getQuestionNotes` và build thành công. 
+  - Đã cài đặt thành công lên thiết bị Android.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 63 (2026-07-01)
+
+- **Mục tiêu:** Khắc phục lỗi JSON parsing khi AI giải thích từ vựng và xử lý lỗi không hiển thị xuống dòng của câu hỏi/giải thích trên giao diện.
+- **Hoạt động & Thay đổi:**
+  - **BaseLanguagePromptProvider.kt** & **EnglishPromptProvider.kt**: Thay đổi yêu cầu output của AI từ một mảng JSON phức tạp `[{"text": "...", "lang": "vi"}]` sang một trường `"explanation"` duy nhất định dạng Markdown.
+  - **LessonContent.kt**: Giữ nguyên `ExplanationParser.parseSegments` để đảm bảo tính tương thích ngược cho các bài học cũ trong lịch sử. Với dữ liệu mới (không đóng khung trong ngoặc vuông), kết quả được trả về nguyên bản dưới dạng chuỗi Markdown và hiển thị nguyên vẹn lên `MarkdownText`.
+  - Nhờ chuỗi trả về chuẩn Markdown, các ký tự xuống dòng `\n` và định dạng in đậm không còn bị tước bỏ khi gộp chuỗi, triệt để khắc phục hiện tượng "dồn toàn bộ giải thích vào 1 dòng chữ".
+  - Không cần sửa code TTS vì hàm `splitByLanguage` vốn dĩ đã có khả năng tách các khối văn bản đa ngôn ngữ rất hiệu quả từ chuỗi thô.
+- **Ghi chú kỹ thuật:**
+  - Biên dịch ứng dụng thành công và đã cài đặt lên thiết bị bằng công cụ ADB.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
 
 ---
 

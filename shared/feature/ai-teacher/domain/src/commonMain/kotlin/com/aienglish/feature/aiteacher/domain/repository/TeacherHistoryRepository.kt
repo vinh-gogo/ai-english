@@ -9,7 +9,6 @@ interface TeacherHistoryRepository {
 
     suspend fun completeLesson(
         id: Long,
-        score: Int,
         lesson: EnglishLesson,
         userAnswers: Map<Int, String>,
         explanations: Map<Int, String>,
@@ -20,10 +19,14 @@ interface TeacherHistoryRepository {
         id: Long,
         lesson: EnglishLesson,
         userAnswers: Map<Int, String>,
-        explanations: Map<Int, String>,
-        sentenceScores: Map<Int, Int>
+        explanations: Map<Int, String>
     )
 
+    suspend fun saveQuestionNote(historyId: Long, sentenceIndex: Int, note: String)
+    suspend fun getQuestionNotes(historyId: Long, sentenceIndex: Int): List<com.aienglish.feature.aiteacher.domain.model.QuestionNote>
+    suspend fun updateQuestionNote(noteId: String, newNote: String)
+    suspend fun deleteQuestionNote(noteId: String)
+    
     /** Load full lesson detail from structured DB tables (no JSON parsing). */
     suspend fun loadHistory(historyId: Long): TeacherLessonHistory?
 }

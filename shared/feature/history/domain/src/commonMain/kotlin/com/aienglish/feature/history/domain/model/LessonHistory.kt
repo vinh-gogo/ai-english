@@ -4,7 +4,6 @@ data class LessonHistory(
     val id: Long,
     val topic: String,
     val level: String,
-    val score: Int?,
     val status: HistoryStatus,
     val createdAt: Long,
     val completedAt: Long?,
