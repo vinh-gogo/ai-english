@@ -22,6 +22,8 @@ import com.aienglish.feature.aiteacher.ui.viewmodel.LevelType
 import com.aienglish.feature.aiteacher.ui.screen.components.SentenceReviewCard
 import com.aienglish.feature.aiteacher.ui.screen.components.feedback.FeedbackHeaderChips
 import com.aienglish.feature.aiteacher.ui.screen.components.feedback.FeedbackActionButtons
+import com.aienglish.feature.aiteacher.ui.screen.components.feedback.FeedbackReviewCard
+import com.aienglish.feature.aiteacher.ui.viewmodel.getDisplayLevel
 
 @Composable
 fun FeedbackContent(
@@ -33,42 +35,7 @@ fun FeedbackContent(
     val lesson = state.lesson
 
     val levelSystemAndValue = remember(state.levelType, state) {
-        val system = when (state.levelType) {
-            LevelType.CEFR -> "CEFR"
-            LevelType.TOEIC -> "TOEIC"
-            LevelType.JLPT -> "JLPT"
-            LevelType.HSK -> "HSK"
-            LevelType.DELE -> "DELE"
-            LevelType.SIELE -> "SIELE"
-            LevelType.HINDI -> "Hindi"
-            LevelType.DELF -> "DELF"
-            LevelType.DALF -> "DALF"
-            LevelType.GOETHE -> "Goethe"
-            LevelType.TESTDAF -> "TestDaF"
-            LevelType.TOPIK -> "TOPIK"
-            LevelType.VIET -> "VIET"
-        }
-        val value = when (state.levelType) {
-            LevelType.CEFR -> state.selectedCefrLevel
-            LevelType.TOEIC -> state.selectedToeicLevel
-            LevelType.JLPT -> state.selectedJlptLevel
-            LevelType.HSK -> state.selectedHskLevel.removePrefix("HSK")
-            LevelType.DELE -> state.selectedDeleLevel
-            LevelType.SIELE -> state.selectedSieleLevel
-            LevelType.HINDI -> state.selectedHindiLevel
-            LevelType.DELF -> state.selectedDelfLevel
-            LevelType.DALF -> state.selectedDalfLevel
-            LevelType.GOETHE -> state.selectedGoetheLevel
-            LevelType.TESTDAF -> state.selectedTestdafLevel
-            LevelType.TOPIK -> state.selectedTopikLevel.removePrefix("TOPIK")
-            LevelType.VIET -> when (state.selectedVietLevel) {
-                "TIEU_HOC" -> "Tiểu học"
-                "TRUNG_HOC" -> "Trung học"
-                "DAI_HOC" -> "Đại học"
-                else -> state.selectedVietLevel
-            }
-        }
-        Pair(system, value)
+        getDisplayLevel(state)
     }
 
     Box(
@@ -104,18 +71,7 @@ fun FeedbackContent(
             Spacer(Modifier.height(24.dp))
 
             // Review card
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = colors.surface),
-                shape = RoundedCornerShape(14.dp),
-                border = BorderStroke(1.dp, colors.border)
-            ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text("Nhận xét từ AI Lingua", color = colors.accent, fontSize = 13.sp, fontWeight = FontWeight.Bold)
-                    Spacer(Modifier.height(8.dp))
-                    MarkdownText(feedback.review, colors)
-                }
-            }
+            FeedbackReviewCard(review = feedback.review, colors = colors)
 
             // Per-sentence review
             if (lesson != null) {

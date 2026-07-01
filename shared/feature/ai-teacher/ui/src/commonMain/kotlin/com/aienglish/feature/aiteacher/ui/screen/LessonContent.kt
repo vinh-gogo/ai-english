@@ -46,11 +46,13 @@ import com.aienglish.core.designsystem.theme.AppColors
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherUiState
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
 import com.aienglish.feature.aiteacher.ui.viewmodel.LevelType
-import com.aienglish.feature.aiteacher.ui.screen.components.AnswerRow
 import com.aienglish.feature.aiteacher.ui.screen.components.LessonExplanationCard
 import com.aienglish.feature.aiteacher.ui.screen.components.VocabularyTokens
 import com.aienglish.feature.aiteacher.ui.screen.components.LessonActionButtons
-import com.aienglish.feature.aiteacher.ui.screen.components.highlightDifferences
+import com.aienglish.feature.aiteacher.ui.screen.components.lesson.LessonProgressRow
+import com.aienglish.feature.aiteacher.ui.screen.components.lesson.LessonPromptCard
+import com.aienglish.feature.aiteacher.ui.screen.components.lesson.LessonInputField
+import com.aienglish.feature.aiteacher.ui.screen.components.lesson.LessonAlternativesCard
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -98,71 +100,35 @@ fun LessonContent(
                 .padding(horizontal = 16.dp)
         ) {
             Spacer(Modifier.height(78.dp)) // 18dp top pad + 48dp header + 12dp bottom gap = 78dp
-            // Progress row (giống Sensei AI)
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    "CÂU HỎI ${idx + 1} / $total",
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = colors.accent
-                )
-                LinearProgressIndicator(
-                    progress = { (idx + 1).toFloat() / total },
-                    modifier = Modifier.width(120.dp).height(6.dp).clip(CircleShape),
-                    color = colors.accent,
-                    trackColor = colors.border
-                )
-            }
+            // Progress row
+            LessonProgressRow(
+                currentIndex = idx,
+                total = total,
+                colors = colors
+            )
 
             Spacer(Modifier.height(12.dp))
 
             // Prompt card
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = colors.surface),
-                border = BorderStroke(1.dp, colors.border)
-            ) {
-                Column(modifier = Modifier.padding(14.dp)) {
-                    Text(
-                        sentence.vietnamese,
-                        fontSize = 17.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = colors.mainText,
-                        lineHeight = 24.sp
-                    )
-                }
-            }
+            LessonPromptCard(
+                promptText = sentence.vietnamese,
+                colors = colors
+            )
 
             Spacer(Modifier.height(12.dp))
 
-            // Input field (OutlinedTextField like Sensei AI)
-            OutlinedTextField(
+            // Input field
+            LessonInputField(
                 value = userAnswer,
-                onValueChange = { if (!hasChecked) viewModel.onAnswerChanged(idx, it) },
-                placeholder = { Text("Nhập câu dịch $languageLabel của bạn...", color = colors.hintText, fontSize = 13.sp) },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = colors.accent,
-                    unfocusedBorderColor = colors.border,
-                    cursorColor = colors.accent,
-                    focusedContainerColor = colors.surface,
-                    unfocusedContainerColor = colors.surface
-                ),
-                singleLine = false,
-                maxLines = 3,
-                enabled = !hasChecked
+                onValueChange = { viewModel.onAnswerChanged(idx, it) },
+                languageLabel = languageLabel,
+                hasChecked = hasChecked,
+                colors = colors
             )
 
             // After checking — show answer and tokens
             if (hasChecked) {
                 Spacer(Modifier.height(12.dp))
-                var showAlternatives by remember { mutableStateOf(false) }
                 val clipboardManager = LocalClipboardManager.current
 
                 Text(
@@ -172,59 +138,15 @@ fun LessonContent(
                     color = colors.mutedText
                 )
                 Spacer(Modifier.height(6.dp))
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = colors.surface),
-                    border = BorderStroke(1.dp, colors.border)
-                ) {
-                    Column(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
-                        AnswerRow(
-                            number = 1,
-                            text = AnnotatedString(sentence.english),
-                            colors = colors,
-                            clipboardManager = clipboardManager,
-                            plainText = sentence.english,
-                            onPlayTts = { viewModel.speak(sentence.english, state.targetLanguage) },
-                            modifier = Modifier.padding(horizontal = 16.dp)
-                        )
-
-                        if (sentence.alternatives.isNotEmpty()) {
-                            HorizontalDivider(color = colors.border, thickness = 0.5.dp)
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clickable { showAlternatives = !showAlternatives }
-                                    .padding(vertical = 10.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    text = if (showAlternatives) "Thu gọn" else "+ Xem thêm ${sentence.alternatives.size} cách diễn đạt khác",
-                                    fontSize = 13.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = colors.accent
-                                )
-                            }
-
-                            if (showAlternatives) {
-                                sentence.alternatives.forEachIndexed { altIndex, alt ->
-                                    val annotatedAlt = remember(sentence.english, alt, colors) {
-                                        highlightDifferences(sentence.english, alt, colors)
-                                    }
-                                    AnswerRow(
-                                        number = altIndex + 2,
-                                        text = annotatedAlt,
-                                        colors = colors,
-                                        clipboardManager = clipboardManager,
-                                        plainText = alt,
-                                        onPlayTts = { viewModel.speak(alt, state.targetLanguage) },
-                                        modifier = Modifier.padding(horizontal = 16.dp)
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
+                
+                LessonAlternativesCard(
+                    english = sentence.english,
+                    alternatives = sentence.alternatives,
+                    targetLanguage = state.targetLanguage,
+                    colors = colors,
+                    clipboardManager = clipboardManager,
+                    onSpeak = { text, lang -> viewModel.speak(text, lang) }
+                )
                 
                 Spacer(Modifier.height(14.dp))
                 Row(
