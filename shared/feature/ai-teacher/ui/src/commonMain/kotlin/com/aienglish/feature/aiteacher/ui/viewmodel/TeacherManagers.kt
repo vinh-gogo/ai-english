@@ -114,7 +114,8 @@ class TopicManager(
                 val grouped = rawList.groupBy { it.levelCode }
                 val sortedList = compatible.reversed().flatMap { lvl ->
                     val topicsInLvl = grouped[lvl] ?: emptyList()
-                    topicsInLvl.shuffled()
+                    val (aiTopics, normalTopics) = topicsInLvl.partition { it.isAiRecommended }
+                    aiTopics.shuffled() + normalTopics.shuffled()
                 }
 
                 val allLevels = levelType.levels
@@ -158,7 +159,7 @@ class TopicManager(
 
     fun onTopicSearchChange(query: String) = updater.updateState { copy(topicSearchQuery = query) }
 
-    fun onRemoveTopic(id: Int) {
+    fun onRemoveTopic(id: String) {
         val systemCode = updater.currentUiState.levelType.systemCode
         scope.launch {
             topicRepository.deleteTopic(id, systemCode)
@@ -610,7 +611,7 @@ class HistoryManager(
         scope.launch {
             try {
                 topicManager.ensureDatabaseSeeded()
-                val (expectedType, levelValue) = parseLevelTypeAndValue(history.level)
+                val (expectedType, levelValue) = LevelType.parseLevelTypeAndValue(history.level)
                 val systemCode = expectedType.systemCode
                 val compatible = getCompatibleLevels(levelValue)
                 val list = topicRepository.getTopics(systemCode, compatible)
@@ -657,7 +658,7 @@ class HistoryManager(
             try {
                 topicManager.ensureDatabaseSeeded()
 
-                val (expectedType, levelValue) = parseLevelTypeAndValue(history.level)
+                val (expectedType, levelValue) = LevelType.parseLevelTypeAndValue(history.level)
                 val systemCode = expectedType.systemCode
                 val compatible = getCompatibleLevels(levelValue)
                 val list = topicRepository.getTopics(systemCode, compatible)
@@ -709,7 +710,7 @@ class HistoryManager(
 
     fun onReTestLesson(history: LessonHistory) {
         sharedContext.saveTopicSelectionSnapshot()
-        val (expectedType, levelValue) = parseLevelTypeAndValue(history.level)
+        val (expectedType, levelValue) = LevelType.parseLevelTypeAndValue(history.level)
         scope.launch {
             try {
                 topicManager.ensureDatabaseSeeded()

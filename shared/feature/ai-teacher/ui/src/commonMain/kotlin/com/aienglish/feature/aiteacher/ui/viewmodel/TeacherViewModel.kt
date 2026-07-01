@@ -82,7 +82,7 @@ class TeacherViewModel(
     // ── Topic Selection ──
     fun onTopicIndexSelected(index: Int) = topicManager.onTopicIndexSelected(index)
     fun onTopicSearchChange(query: String) = topicManager.onTopicSearchChange(query)
-    fun onRemoveTopic(id: Int) = topicManager.onRemoveTopic(id)
+    fun onRemoveTopic(id: String) = topicManager.onRemoveTopic(id)
     fun onLevelTypeSelected(type: LevelType) = topicManager.onLevelTypeSelected(type)
     fun onLevelSelected(level: String) = topicManager.onLevelSelected(level)
     fun setCustomTopicMode(enabled: Boolean) = topicManager.setCustomTopicMode(enabled)

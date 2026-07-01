@@ -23,7 +23,7 @@ import com.aienglish.feature.aiteacher.ui.screen.components.SentenceReviewCard
 import com.aienglish.feature.aiteacher.ui.screen.components.feedback.FeedbackHeaderChips
 import com.aienglish.feature.aiteacher.ui.screen.components.feedback.FeedbackActionButtons
 import com.aienglish.feature.aiteacher.ui.screen.components.feedback.FeedbackReviewCard
-import com.aienglish.feature.aiteacher.ui.viewmodel.getDisplayLevel
+
 
 @Composable
 fun FeedbackContent(
@@ -35,7 +35,7 @@ fun FeedbackContent(
     val lesson = state.lesson
 
     val levelSystemAndValue = remember(state.levelType, state) {
-        getDisplayLevel(state)
+        LevelType.getDisplayLevel(state)
     }
 
     Box(
@@ -74,8 +74,12 @@ fun FeedbackContent(
             FeedbackReviewCard(
                 review = feedback.review, 
                 colors = colors,
+                addedTopics = state.topics.map { it.name },
                 onAddTopic = { topicName -> 
                     viewModel.saveRecommendedTopicToDb(topicName)
+                },
+                onRetry = {
+                    viewModel.onSubmitLesson()
                 }
             )
 

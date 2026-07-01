@@ -135,10 +135,18 @@ object VietnamesePromptProvider : BaseLanguagePromptProvider() {
             - SEMANTIC EQUIVALENCE: correct meaning in natural Vietnamese = full marks.
             - DO NOT DEDUCT for: missing diacritics (if context clear), minor punctuation, whitespace.
             - Deduct ONLY for: wrong tones (meaning change), wrong vocabulary, incorrect structures.
+            - TOPIC RECOMMENDATION (MANDATORY): You MUST ALWAYS generate exactly 5 highly specific and concrete topics for the student to practice next. DO NOT suggest general categories. They MUST be highly specific sub-topics related to the current topic '$topic' (e.g. instead of 'Business', suggest 'Writing follow-up emails after a business meeting'). If the student made mistakes, tailor them to those weaknesses. YOU ARE STRICTLY FORBIDDEN from omitting the `recommended_topics` array in your JSON output.
 
             RETURN EXACTLY THIS JSON:
             {
-              "review": "Detailed English feedback (use \n for paragraphs)."
+              "review": "Detailed English feedback (use \n for paragraphs).",
+              "recommended_topics": [
+                "Specific Topic 1",
+                "Specific Topic 2",
+                "Specific Topic 3",
+                "Specific Topic 4",
+                "Specific Topic 5"
+              ]
             }
         """.trimIndent()
     }

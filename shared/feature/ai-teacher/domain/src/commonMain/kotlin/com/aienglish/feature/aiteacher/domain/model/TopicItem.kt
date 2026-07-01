@@ -1,9 +1,10 @@
 package com.aienglish.feature.aiteacher.domain.model
 
 data class TopicItem(
-    val id: Int,
+    val id: String,
     val name: String,
-    val levelCode: String
+    val levelCode: String,
+    val isAiRecommended: Boolean = false
 )
 
 fun getCompatibleLevels(activeLevel: String): List<String> {

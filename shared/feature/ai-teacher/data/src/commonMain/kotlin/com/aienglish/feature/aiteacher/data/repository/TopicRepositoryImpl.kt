@@ -3,6 +3,7 @@ package com.aienglish.feature.aiteacher.data.repository
 import com.aienglish.core.common.dispatchers.AppDispatchers
 import com.aienglish.core.common.prefs.AppPreferences
 import com.aienglish.core.database.AIEnglishDatabase
+import com.aienglish.feature.aiteacher.data.database.AiTeacherDatabase
 import com.aienglish.feature.aiteacher.domain.model.TopicItem
 import com.aienglish.feature.aiteacher.domain.repository.TopicRepository
 import com.aienglish.feature.aiteacher.domain.resource.JsonResourceReader
@@ -33,7 +34,8 @@ private data class JsonTopicItem(
 )
 
 class TopicRepositoryImpl(
-    private val database: AIEnglishDatabase,
+    private val coreDatabase: AIEnglishDatabase,
+    private val aiTeacherDatabase: AiTeacherDatabase,
     private val prefs: AppPreferences,
     private val dispatchers: AppDispatchers,
     private val jsonResourceReader: JsonResourceReader
@@ -43,7 +45,7 @@ class TopicRepositoryImpl(
 
     override suspend fun getTopics(systemCode: String, levelCodes: List<String>): List<TopicItem> =
         withContext(dispatchers.io) {
-            val dbTopics = database.userSchemaQueries.getTopicsForLevels(systemCode, levelCodes)
+            val dbTopics = aiTeacherDatabase.aiTeacherDatabaseQueries.getTopicsForLevels(systemCode, levelCodes)
                 .executeAsList()
             
             val isEn = prefs.getLanguageNative() == "en"
@@ -62,28 +64,31 @@ class TopicRepositoryImpl(
                     }
                     
                     dbTopics.map { row ->
-                        val enTopic = enTopicsMap[row.topic_id.toInt()]
+                        val enTopic = row.topic_id.toIntOrNull()?.let { enTopicsMap[it] }
                         TopicItem(
-                            id = row.topic_id.toInt(),
+                            id = row.topic_id,
                             name = enTopic?.name ?: row.name,
-                            levelCode = row.level_code
+                            levelCode = row.level_code,
+                            isAiRecommended = row.is_ai_recommended == 1L
                         )
                     }
                 } catch (e: Exception) {
                     dbTopics.map {
                         TopicItem(
-                            id = it.topic_id.toInt(),
+                            id = it.topic_id,
                             name = it.name,
-                            levelCode = it.level_code
+                            levelCode = it.level_code,
+                            isAiRecommended = it.is_ai_recommended == 1L
                         )
                     }
                 }
             } else {
                 dbTopics.map {
                     TopicItem(
-                        id = it.topic_id.toInt(),
+                        id = it.topic_id,
                         name = it.name,
-                        levelCode = it.level_code
+                        levelCode = it.level_code,
+                        isAiRecommended = it.is_ai_recommended == 1L
                     )
                 }
             }
@@ -106,7 +111,7 @@ class TopicRepositoryImpl(
             val koreanTopicsJson = jsonResourceReader.readKoreanTopicsJson()
             val vietnameseTopicsEnJson = jsonResourceReader.readVietnameseTopicsEnJson()
 
-            database.transaction {
+            aiTeacherDatabase.transaction {
                 try {
                     val systems = json.decodeFromString<List<JsonLearningSystem>>(systemsJson.removeBom().trim())
                     val levels = json.decodeFromString<List<JsonLearningLevel>>(levelsJson.removeBom().trim())
@@ -121,11 +126,11 @@ class TopicRepositoryImpl(
                     val vietnameseTopics = json.decodeFromString<List<JsonTopicItem>>(vietnameseTopicsEnJson.removeBom().trim())
                     
                     // 0. Clear old topics
-                    database.userSchemaQueries.deleteAllTopics()
+                    aiTeacherDatabase.aiTeacherDatabaseQueries.deleteAllTopics()
                     
                     // 1. Insert Systems
                     systems.forEach { sys ->
-                        database.userSchemaQueries.insertLearningSystem(
+                        coreDatabase.userSchemaQueries.insertLearningSystem(
                             system_code = sys.systemCode,
                             name = sys.name,
                             description = sys.description
@@ -134,7 +139,7 @@ class TopicRepositoryImpl(
                     
                     // 2. Insert Levels
                     levels.forEach { lvl ->
-                        database.userSchemaQueries.insertLearningLevel(
+                        coreDatabase.userSchemaQueries.insertLearningLevel(
                             system_code = lvl.systemCode,
                             level_code = lvl.levelCode,
                             name = lvl.name
@@ -143,8 +148,8 @@ class TopicRepositoryImpl(
                     
                     // 3. Insert English Topics
                     englishTopics.forEach { topic ->
-                        database.userSchemaQueries.insertTopic(
-                            topic_id = topic.id.toLong(),
+                        aiTeacherDatabase.aiTeacherDatabaseQueries.insertTopic(
+                            topic_id = topic.id.toString(),
                             name = topic.name,
                             system_code = topic.systemCode,
                             level_code = topic.levelCode,
@@ -155,8 +160,8 @@ class TopicRepositoryImpl(
 
                     // 4. Insert Japanese Topics
                     japaneseTopics.forEach { topic ->
-                        database.userSchemaQueries.insertTopic(
-                            topic_id = topic.id.toLong(),
+                        aiTeacherDatabase.aiTeacherDatabaseQueries.insertTopic(
+                            topic_id = topic.id.toString(),
                             name = topic.name,
                             system_code = topic.systemCode,
                             level_code = topic.levelCode,
@@ -167,8 +172,8 @@ class TopicRepositoryImpl(
 
                     // 5. Insert Chinese Topics
                     chineseTopics.forEach { topic ->
-                        database.userSchemaQueries.insertTopic(
-                            topic_id = topic.id.toLong(),
+                        aiTeacherDatabase.aiTeacherDatabaseQueries.insertTopic(
+                            topic_id = topic.id.toString(),
                             name = topic.name,
                             system_code = topic.systemCode,
                             level_code = topic.levelCode,
@@ -179,8 +184,8 @@ class TopicRepositoryImpl(
 
                     // 6. Insert Spanish Topics
                     spanishTopics.forEach { topic ->
-                        database.userSchemaQueries.insertTopic(
-                            topic_id = topic.id.toLong(),
+                        aiTeacherDatabase.aiTeacherDatabaseQueries.insertTopic(
+                            topic_id = topic.id.toString(),
                             name = topic.name,
                             system_code = topic.systemCode,
                             level_code = topic.levelCode,
@@ -191,8 +196,8 @@ class TopicRepositoryImpl(
 
                     // 7. Insert Hindi Topics
                     hindiTopics.forEach { topic ->
-                        database.userSchemaQueries.insertTopic(
-                            topic_id = topic.id.toLong(),
+                        aiTeacherDatabase.aiTeacherDatabaseQueries.insertTopic(
+                            topic_id = topic.id.toString(),
                             name = topic.name,
                             system_code = topic.systemCode,
                             level_code = topic.levelCode,
@@ -203,8 +208,8 @@ class TopicRepositoryImpl(
 
                     // 8. Insert French Topics
                     frenchTopics.forEach { topic ->
-                        database.userSchemaQueries.insertTopic(
-                            topic_id = topic.id.toLong(),
+                        aiTeacherDatabase.aiTeacherDatabaseQueries.insertTopic(
+                            topic_id = topic.id.toString(),
                             name = topic.name,
                             system_code = topic.systemCode,
                             level_code = topic.levelCode,
@@ -215,8 +220,8 @@ class TopicRepositoryImpl(
 
                     // 9. Insert German Topics
                     germanTopics.forEach { topic ->
-                        database.userSchemaQueries.insertTopic(
-                            topic_id = topic.id.toLong(),
+                        aiTeacherDatabase.aiTeacherDatabaseQueries.insertTopic(
+                            topic_id = topic.id.toString(),
                             name = topic.name,
                             system_code = topic.systemCode,
                             level_code = topic.levelCode,
@@ -227,8 +232,8 @@ class TopicRepositoryImpl(
 
                     // 10. Insert Korean Topics
                     koreanTopics.forEach { topic ->
-                        database.userSchemaQueries.insertTopic(
-                            topic_id = topic.id.toLong(),
+                        aiTeacherDatabase.aiTeacherDatabaseQueries.insertTopic(
+                            topic_id = topic.id.toString(),
                             name = topic.name,
                             system_code = topic.systemCode,
                             level_code = topic.levelCode,
@@ -239,8 +244,8 @@ class TopicRepositoryImpl(
 
                     // 11. Insert Vietnamese Topics (EN locale)
                     vietnameseTopics.forEach { topic ->
-                        database.userSchemaQueries.insertTopic(
-                            topic_id = topic.id.toLong(),
+                        aiTeacherDatabase.aiTeacherDatabaseQueries.insertTopic(
+                            topic_id = topic.id.toString(),
                             name = topic.name,
                             system_code = topic.systemCode,
                             level_code = topic.levelCode,
@@ -255,13 +260,12 @@ class TopicRepositoryImpl(
             }
         }
 
+    @OptIn(kotlin.uuid.ExperimentalUuidApi::class)
     override suspend fun addCustomTopic(name: String, systemCode: String, levelCode: String, isAiRecommended: Boolean): Unit =
         withContext(dispatchers.io) {
             try {
-                val allTopics = database.userSchemaQueries.getAllTopics().executeAsList()
-                val maxId = allTopics.filter { it.system_code == systemCode }.maxOfOrNull { it.topic_id } ?: 10000L
-                val newId = maxId + 1
-                database.userSchemaQueries.insertTopic(
+                val newId = kotlin.uuid.Uuid.random().toString()
+                aiTeacherDatabase.aiTeacherDatabaseQueries.insertTopic(
                     topic_id = newId,
                     name = name,
                     system_code = systemCode,
@@ -274,12 +278,12 @@ class TopicRepositoryImpl(
             }
         }
 
-    override suspend fun deleteTopic(id: Int, systemCode: String): Unit =
+    override suspend fun deleteTopic(id: String, systemCode: String): Unit =
         withContext(dispatchers.io) {
             try {
-                database.userSchemaQueries.deleteTopic(
+                aiTeacherDatabase.aiTeacherDatabaseQueries.deleteTopic(
                     system_code = systemCode,
-                    topic_id = id.toLong()
+                    topic_id = id
                 )
             } catch (e: Exception) {
                 println("Error deleting topic in TopicRepositoryImpl: ${e.message}")

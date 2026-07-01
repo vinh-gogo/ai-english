@@ -18,13 +18,14 @@ class GeminiDailyQuotaExhaustedException :
 // Expanded model priority chain - identical to mainichi-app-v2 to maximize quota pools
 val GEMINI_MODEL_CHAIN = listOf(
     "gemini-2.5-flash",
+    "gemini-2.0-flash",
+    "gemini-2.0-flash-lite",
+    "gemini-1.5-flash",
     "gemini-2.5-flash-lite",
     "gemini-3.1-flash-lite",
     "gemini-2.5-pro",
     "gemini-3.1-flash",
     "gemini-3.1-pro",
-    "gemini-2.0-flash",
-    "gemini-2.0-flash-lite"
 )
 
 class GeminiClient(private val httpClient: HttpClient) {
@@ -115,6 +116,7 @@ class GeminiClient(private val httpClient: HttpClient) {
             putJsonObject("generationConfig") {
                 put("temperature", 0.7)
                 put("topP", 0.9)
+                put("responseMimeType", "application/json")
                 // Disable thinking mode — ensures clean structured output (no thinking part mixing)
                 putJsonObject("thinkingConfig") {
                     put("thinkingBudget", 0)

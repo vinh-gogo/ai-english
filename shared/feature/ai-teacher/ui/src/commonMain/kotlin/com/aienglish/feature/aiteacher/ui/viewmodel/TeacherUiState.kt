@@ -32,6 +32,70 @@ enum class LevelType(val systemCode: String, val levels: List<String>, val defau
             "vi" -> VIET
             else -> CEFR
         }
+
+        fun parseLevelTypeAndValue(level: String): Pair<LevelType, String> {
+            val isToeic = level.startsWith("TOEIC")
+            val isJlpt = level.startsWith("N")
+            val isHsk = level.startsWith("HSK")
+            val isDele = level.startsWith("DELE")
+            val isSiele = level.startsWith("SIELE")
+            val isHindi = level.startsWith("Hindi")
+            val isDelf = level.startsWith("DELF")
+            val isDalf = level.startsWith("DALF")
+            val isGoethe = level.startsWith("Goethe")
+            val isTestdaf = level.startsWith("TestDaF")
+            val isTopik = level.startsWith("TOPIK")
+            
+            val expectedType = when {
+                isToeic -> TOEIC
+                isJlpt -> JLPT
+                isHsk -> HSK
+                isDele -> DELE
+                isSiele -> SIELE
+                isHindi -> HINDI
+                isDelf -> DELF
+                isDalf -> DALF
+                isGoethe -> GOETHE
+                isTestdaf -> TESTDAF
+                isTopik -> TOPIK
+                level == "TIEU_HOC" || level == "TRUNG_HOC" || level == "DAI_HOC" -> VIET
+                else -> CEFR
+            }
+            val levelValue = when {
+                isToeic -> level.removePrefix("TOEIC ").trim()
+                isDele -> level.removePrefix("DELE ").trim()
+                isSiele -> level.removePrefix("SIELE ").trim()
+                isHindi -> level.removePrefix("Hindi ").trim()
+                isDelf -> level.removePrefix("DELF ").trim()
+                isDalf -> level.removePrefix("DALF ").trim()
+                isGoethe -> level.removePrefix("Goethe ").trim()
+                isTestdaf -> level.removePrefix("TestDaF ").trim()
+                else -> level
+            }
+            return expectedType to levelValue
+        }
+
+        fun getDisplayLevel(state: TeacherUiState): Pair<String, String> {
+            val system = if (state.levelType == JLPT) "JLPT" 
+                else if (state.levelType == HINDI) "Hindi"
+                else if (state.levelType == GOETHE) "Goethe"
+                else if (state.levelType == TESTDAF) "TestDaF"
+                else state.levelType.systemCode
+
+            val currentLevel = state.selectedLevels[state.levelType] ?: state.levelType.defaultLevel
+            val value = when (state.levelType) {
+                HSK -> currentLevel.removePrefix("HSK")
+                TOPIK -> currentLevel.removePrefix("TOPIK")
+                VIET -> when (currentLevel) {
+                    "TIEU_HOC" -> "Tiểu học"
+                    "TRUNG_HOC" -> "Trung học"
+                    "DAI_HOC" -> "Đại học"
+                    else -> currentLevel
+                }
+                else -> currentLevel
+            }
+            return Pair(system, value)
+        }
     }
 }
 

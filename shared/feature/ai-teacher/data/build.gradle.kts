@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     id("com.android.kotlin.multiplatform.library")
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -25,6 +26,15 @@ kotlin {
             implementation(project(":shared:core:database"))
             implementation(project(":shared:feature:ai-teacher:domain"))
             implementation(project(":shared:feature:history:domain"))
+        }
+    }
+}
+
+sqldelight {
+    databases {
+        create("AiTeacherDatabase") {
+            packageName.set("com.aienglish.feature.aiteacher.data.database")
+            srcDirs.setFrom("src/commonMain/sqldelight")
         }
     }
 }

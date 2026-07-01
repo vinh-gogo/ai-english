@@ -72,6 +72,206 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 63** | 2026-07-01 | Antigravity | `799e2971-3590-4cbf-9e01-ad03f674e145` | Cải thiện cấu trúc trả về giải thích từ vựng AI, chuyển từ mảng JSON phức tạp sang Markdown string để khắc phục lỗi không hiển thị và lỗi mất định dạng xuống dòng. | Hoàn thành |
 | **Session 64** | 2026-07-01 | Antigravity | `799e2971-3590-4cbf-9e01-ad03f674e145` | Cấu hình lưu cấu trúc / công thức ngữ pháp (dạng `[FORMULA]`) vào CSDL `question_notes`. Thêm UI hiển thị danh sách dạng Modal Bottom Sheet mượt mà khi bấm icon sổ tay ở màn hình bài học. | Hoàn thành |
 | **Session 65** | 2026-07-01 | Antigravity | `65f83b0a-060a-4595-bc98-c0ec1b11f838` | Refactor TeacherViewModel, TargetLevelSystem, LevelType: Loại bỏ các biến chọn cấp độ riêng lẻ cồng kềnh, cấu hình bản đồ `selectedLevels`, và thay thế conditional statement (when) bằng tính đa hình (Polymorphism) theo chuẩn system-design-refactoring. | Hoàn thành |
+| **Session 66** | 2026-07-02 | Antigravity | `65f83b0a-060a-4595-bc98-c0ec1b11f838` | Phân tách Database (Vertical Slicing) với SQLDelight: Di dời bảng `learning_topics` khỏi core database sang tính năng `ai-teacher`, dùng chung một SqlDriver. | Hoàn thành |
+| **Session 67** | 2026-07-02 | Antigravity | `65f83b0a-060a-4595-bc98-c0ec1b11f838` | Chỉnh sửa System Prompt của AI Lingua: Bắt buộc (MANDATORY) trả về 3 đề xuất chủ đề kèm theo thẻ [TOPIC_RECOMMEND] ở phần nhận xét để khắc phục lỗi AI bỏ qua đề xuất. | Hoàn thành |
+| **Session 68** | 2026-07-02 | Antigravity | `65f83b0a-060a-4595-bc98-c0ec1b11f838` | Sửa lỗi Regex không bóc tách được tag đề xuất (thêm DOT_MATCHES_ALL và IGNORE_CASE). Thêm nút Đánh giá lại (Refresh) để chấm điểm lại bài học nhanh hơn. | Hoàn thành |
+| **Session 69** | 2026-07-02 | Antigravity | `65f83b0a-060a-4595-bc98-c0ec1b11f838` | Di chuyển lệnh MANDATORY tạo thẻ [TOPIC_RECOMMEND] ra khỏi chuỗi JSON schema vào phần GRADING RULES để ép LLM tuân thủ nghiêm ngặt. | Hoàn thành |
+| **Session 70** | 2026-07-02 | Antigravity | `4fbf31bd-b41c-4047-8b1f-7c0f6480f5dd` | Sửa lại system prompt để bắt buộc LLM xuất trực tiếp các thẻ `[TOPIC_RECOMMEND]` ngay bên trong trường `review` với định dạng chính xác. | Hoàn thành |
+| **Session 71** | 2026-07-02 | Antigravity | `4fbf31bd-b41c-4047-8b1f-7c0f6480f5dd` | Tách biệt `review` và `recommended_topics` trong JSON schema theo yêu cầu của user, sửa DTO để tránh double-wrap tag. | Hoàn thành |
+| **Session 72** | 2026-07-02 | Antigravity | `4fbf31bd-b41c-4047-8b1f-7c0f6480f5dd` | Khôi phục logic tự động bọc thẻ `[TOPIC_RECOMMEND]` trong DTO để UI có thể parse và hiển thị đúng định dạng Chips. | Hoàn thành |
+| **Session 73** | 2026-07-02 | Antigravity | `4fbf31bd-b41c-4047-8b1f-7c0f6480f5dd` | Bắt buộc LLM phải luôn xuất mảng `recommended_topics` ngay cả khi học viên bỏ trống toàn bộ bài (skipped), khắc phục lỗi LLM tự ý bỏ qua trường này trong JSON. | Hoàn thành |
+| **Session 74** | 2026-07-02 | Antigravity | `4fbf31bd-b41c-4047-8b1f-7c0f6480f5dd` | Đơn giản hóa JSON schema: Gỡ bỏ các thẻ `[TOPIC_RECOMMEND]` khỏi prompt để tương thích với các model nhỏ (như Llama-3.1-8b). Việc bọc thẻ được giao hoàn toàn cho tầng DTO xử lý. | Hoàn thành |
+| **Session 75** | 2026-07-02 | Antigravity | `4fbf31bd-b41c-4047-8b1f-7c0f6480f5dd` | Khắc phục lỗi AI không trả về `recommended_topics` cho Tiếng Anh/Tiếng Việt bằng cách đồng bộ hóa JSON schema trực tiếp vào `EnglishPromptProvider` và `VietnamesePromptProvider` (do các class này không kế thừa từ `BaseLanguagePromptProvider`). | Hoàn thành |
+| **Session 76** | 2026-07-02 | Antigravity | `4fbf31bd-b41c-4047-8b1f-7c0f6480f5dd` | Cải tiến Prompt Đề xuất chủ đề: Tăng số lượng từ 3 lên 5 chủ đề, bắt buộc AI phải sinh ra các chủ đề cụ thể (specific sub-topics) bám sát ngữ cảnh của chủ đề hiện tại thay vì đưa ra các danh mục chung chung. | Hoàn thành |
+| **Session 77** | 2026-07-02 | Antigravity | `4fbf31bd-b41c-4047-8b1f-7c0f6480f5dd` | Gỡ bỏ chuỗi log `[DEBUG RAW JSON]` khỏi màn hình nhận xét (TeacherRepositoryImpl) sau khi đã fix xong tính năng gợi ý chủ đề. | Hoàn thành |
+| **Session 78** | 2026-07-02 | Antigravity | `4fbf31bd-b41c-4047-8b1f-7c0f6480f5dd` | Cải tiến tính năng chọn chủ đề: Tự động sắp xếp ưu tiên đẩy các chủ đề do AI đề xuất (`is_ai_recommended = true`) lên đầu danh sách hiển thị của từng cấp độ, giúp người dùng dễ dàng tìm và học các chủ đề bổ trợ mà không cần phải cuộn tìm. | Hoàn thành |
+| **Session 79** | 2026-07-02 | Antigravity | `4fbf31bd-b41c-4047-8b1f-7c0f6480f5dd` | Bổ sung trường `isAiRecommended` vào data model `TopicItem` và map giá trị từ DB để fix lỗi compile do thuật toán sắp xếp ở Session 78 thiếu data model. | Hoàn thành |
+| **Session 80** | 2026-07-02 | Antigravity | `4fbf31bd-b41c-4047-8b1f-7c0f6480f5dd` | Thêm icon lấp lánh (AutoAwesome) cực nhỏ bên cạnh số thứ tự (index tag) của các thẻ chủ đề do AI đề xuất để làm nổi bật và dễ nhận diện hơn. | Hoàn thành |
+| **Session 82** | 2026-07-02 | Antigravity | `4fbf31bd-b41c-4047-8b1f-7c0f6480f5dd` | Refactor toàn bộ `topic_id` của `learning_topics` và `TopicItem` từ `Int` sang `String` (GUID) để tránh xung đột ID khi tạo chủ đề custom. | Hoàn thành |
+| **Session 81** | 2026-07-02 | Antigravity | `4fbf31bd-b41c-4047-8b1f-7c0f6480f5dd` | Cải thiện UI Thẻ Nhận xét: Hiển thị trạng thái "Đã thêm" (biểu tượng Check) cho các chủ đề đề xuất mà người dùng đã từng lưu vào cơ sở dữ liệu, giúp dễ dàng nhận biết khi xem lại Lịch sử. | Hoàn thành |
+---
+
+### 🟢 Session 82 (2026-07-02)
+
+- **Mục tiêu:** Xử lý triệt để khả năng xung đột ID (conflict GUID) giữa các chủ đề tuỳ chỉnh và chủ đề gốc bằng cách chuyển đổi hoàn toàn khóa chính `topic_id` từ số nguyên sang UUID.
+- **Hoạt động & Thay đổi:**
+  - **Refactoring:** Chuyển đổi thuộc tính `id` trong `TopicItem` từ kiểu `Int` sang `String`. Sửa đổi Interface `TopicRepository.kt` và ViewModel để hàm xoá (`deleteTopic`) nhận tham số `String`.
+  - **Database Migration:** Đổi kiểu dữ liệu cột `topic_id` trong file cấu trúc `AiTeacherDatabase.sq` từ `INTEGER` sang `TEXT`. Do dự án đang dùng mô hình squash migrations vào base schema, thao tác này yêu cầu người dùng xóa dữ liệu (Clear Data) để SQLite tự tạo bảng mới.
+  - **Logic Xử Lý:** Trong `TopicRepositoryImpl`, cập nhật thao tác ánh xạ (mapping) cơ sở dữ liệu và thêm lệnh `row.topic_id.toIntOrNull()` để lấy thông tin các topic tiếng Anh mặc định. Sửa lại hàm `addCustomTopic` để sử dụng `kotlin.uuid.Uuid.random().toString()` thay cho thuật toán tăng dần ID (`maxId + 1`) vốn dễ gây xung đột. Thêm annotaion `@OptIn(kotlin.uuid.ExperimentalUuidApi::class)` để hỗ trợ Experimental UUID API.
+  - **Kiểm thử:** Xóa hoàn toàn dữ liệu ứng dụng bằng `adb uninstall` và cài đặt lại bản build Debug mới nhất để xác nhận bảng dữ liệu được tạo chính xác mà không gặp crash.
+
+---
+
+### 🟢 Session 81 (2026-07-02)
+
+- **Mục tiêu:** Giúp người dùng phân biệt được chủ đề do AI đề xuất nào đã được thêm vào cơ sở dữ liệu và chủ đề nào chưa khi xem lại Lịch sử Bài học (History).
+- **Hoạt động & Thay đổi:**
+  - **Logic:** Truyền danh sách các chủ đề hiện có của người dùng (`addedTopics = state.topics.map { it.name }`) từ `FeedbackContent.kt` vào `FeedbackReviewCard.kt`.
+  - **Cập nhật UI:** Tại `FeedbackReviewCard.kt`, kiểm tra nếu tên chủ đề đã nằm trong danh sách được truyền vào (`isAdded`), thay đổi nút bấm từ dạng Icon (+) sang Icon (Check), đổi màu chữ/viền sang dạng mờ (muted), và vô hiệu hóa sự kiện `onClick`.
+  - **Biên dịch:** Build và chạy lại ứng dụng trên thiết bị thật.
+
+---
+
+### 🟢 Session 80 (2026-07-02)
+
+- **Mục tiêu:** Giúp người dùng dễ dàng phân biệt các chủ đề do AI đề xuất thông qua nhận diện thị giác (visual cue) nhỏ trên thẻ.
+- **Hoạt động & Thay đổi:**
+  - **Cập nhật UI:** Chỉnh sửa file `TopicRowItem.kt`. Bên trong huy hiệu hình chữ nhật đánh số thứ tự (index tag), nếu chủ đề có cờ `isAiRecommended = true`, thêm một icon lấp lánh (`Icons.Rounded.AutoAwesome`) cỡ nhỏ (8.dp) ngay bên phải con số. Icon có màu trùng với chữ hiển thị để hài hòa không gian thiết kế.
+  - **Biên dịch:** Build và chạy lại ứng dụng trên thiết bị thật.
+
+---
+
+### 🟢 Session 79 (2026-07-02)
+
+- **Mục tiêu:** Bổ sung trường `isAiRecommended` vào model `TopicItem` để thuật toán sắp xếp (ở Session 78) có thể hoạt động chính xác.
+- **Hoạt động & Thay đổi:**
+  - **Data Model:** Khai báo thêm thuộc tính `val isAiRecommended: Boolean = false` vào data class `TopicItem` ở lớp Domain.
+  - **Database Mapping:** Cập nhật logic ánh xạ dữ liệu (mapping) trong hàm `getTopics` của `TopicRepositoryImpl` để lấy giá trị `row.is_ai_recommended == 1L` từ SQL truyền vào model.
+  - **Biên dịch:** Khắc phục thành công lỗi compile (Unresolved reference) và cài đặt lại app.
+
+---
+
+### 🟢 Session 78 (2026-07-02)
+
+- **Mục tiêu:** Ưu tiên hiển thị các chủ đề được AI đề xuất (`isAiRecommended == true`) lên trên cùng của danh sách để người dùng có thể luyện tập bổ trợ nhanh chóng thay vì phải lướt tìm ở cuối.
+- **Hoạt động & Thay đổi:**
+  - **Logic Sắp Xếp (Sorting):** Sửa đổi hàm `loadTopics` trong `TeacherManagers.kt`. Thay vì `shuffled()` ngẫu nhiên toàn bộ danh sách, tiến hành phân loại (`partition`) thành nhóm chủ đề AI đề xuất và nhóm chủ đề thường. Sau đó đưa nhóm AI lên trước rồi mới trộn chung kết quả.
+  - **Biên dịch:** Build lại ứng dụng Android và cài đặt qua `adb`.
+
+---
+
+### 🟢 Session 77 (2026-07-02)
+
+- **Mục tiêu:** Dọn dẹp giao diện, tắt chế độ debug JSON thô (raw JSON) trên màn hình kết quả sau khi đã fix thành công lỗi AI bỏ qua thẻ `[TOPIC_RECOMMEND]`.
+- **Hoạt động & Thay đổi:**
+  - **Sửa code:** Loại bỏ đoạn nối chuỗi `[DEBUG RAW JSON]` vào thuộc tính `review` trong file `TeacherRepositoryImpl.kt`.
+  - **Biên dịch:** Build lại ứng dụng Android và cài đặt qua `adb`.
+
+---
+
+### 🟢 Session 76 (2026-07-02)
+
+- **Mục tiêu:** Nâng cấp chất lượng của các chủ đề đề xuất. Thay vì AI đưa ra các chủ đề chung chung (ví dụ: "Business"), yêu cầu AI đưa ra 5 chủ đề rất cụ thể và phải liên quan chặt chẽ đến ngữ cảnh của chủ đề đang học.
+- **Hoạt động & Thay đổi:**
+  - **Prompt Engineering:** Cập nhật quy tắc `TOPIC RECOMMENDATION` trên cả 3 file (`BaseLanguagePromptProvider`, `EnglishPromptProvider`, `VietnamesePromptProvider`).
+  - **Cụ thể hóa:** Đổi số lượng từ 3 thành 5. Thêm hướng dẫn bắt buộc AI tạo các chủ đề phụ cụ thể (highly specific sub-topics) tham chiếu đến chủ đề hiện tại (sử dụng biến `$topic` trong chuỗi prompt).
+  - **Biên dịch:** Build lại ứng dụng Android và cài đặt qua `adb`.
+
+---
+
+### 🟢 Session 75 (2026-07-02)
+
+- **Mục tiêu:** Sửa lỗi nghiêm trọng khiến mảng `recommended_topics` luôn bị khuyết thiếu trên các bài học Tiếng Anh và Tiếng Việt, bất kể các cập nhật prompt trước đó.
+- **Phân tích:** Phát hiện ra rằng trong quá trình tái cấu trúc ở Session 13, `EnglishPromptProvider` và `VietnamesePromptProvider` không được chuyển sang kế thừa từ `BaseLanguagePromptProvider`. Do đó, chúng vẫn dùng chuỗi System Prompt cũ kỹ mã hóa cứng (hardcode) chỉ yêu cầu mỗi trường `"review"` trong JSON. Toàn bộ các nỗ lực tinh chỉnh ở Session 70-74 đều rơi vào hư vô đối với 2 ngôn ngữ này.
+- **Hoạt động & Thay đổi:**
+  - Sao chép toàn bộ logic `TOPIC RECOMMENDATION` và cấu trúc JSON schema mới nhất (với mảng chuỗi `recommended_topics` thuần túy) đắp trực tiếp vào hàm `getEvaluateLessonSystemPrompt` của cả `EnglishPromptProvider.kt` và `VietnamesePromptProvider.kt`.
+  - **Biên dịch:** Build lại ứng dụng Android và cài đặt qua `adb`.
+
+---
+
+### 🟢 Session 74 (2026-07-02)
+
+- **Mục tiêu:** Khắc phục lỗi LLM (đặc biệt là các model nhỏ như Llama-3.1-8b) tiếp tục phớt lờ mảng `recommended_topics` do bị nhiễu bởi các thẻ UI (`[TOPIC_RECOMMEND]`) nằm ngay bên trong cấu trúc JSON mẫu.
+- **Hoạt động & Thay đổi:**
+  - **Prompt Engineering:** Xóa bỏ toàn bộ yêu cầu về thẻ `[TOPIC_RECOMMEND]` khỏi `BaseLanguagePromptProvider.kt`. Trả lại mảng JSON về dạng mảng string thuần túy: `["Topic 1", "Topic 2"]`.
+  - **Kiến trúc:** Việc bọc thẻ `[TOPIC_RECOMMEND]` đã được cấu hình từ Session 72 nằm hoàn toàn ở `EnglishLessonDto.kt`, nên LLM chỉ cần trả về plain text là đủ.
+  - **Biên dịch:** Build lại ứng dụng Android và cài đặt qua `adb`.
+
+---
+
+### 🟢 Session 73 (2026-07-02)
+
+- **Mục tiêu:** Khắc phục lỗi LLM "thông minh quá mức", tự ý xóa bỏ toàn bộ mảng `recommended_topics` khỏi JSON khi học viên không làm bài (skipped toàn bộ).
+- **Hoạt động & Thay đổi:**
+  - **Prompt Engineering:** Sửa đổi mục tiêu `TOPIC RECOMMENDATION (MANDATORY)` trong `BaseLanguagePromptProvider.kt` thành mệnh lệnh tuyệt đối. Thêm hướng dẫn cụ thể: "Nếu học viên không làm bài hoặc không có lỗi, hãy đề xuất các chủ đề nâng cao liên quan. NGHIÊM CẤM (STRICTLY FORBIDDEN) việc bỏ sót mảng `recommended_topics` trong JSON đầu ra."
+  - **Biên dịch:** Build lại ứng dụng Android và cài đặt qua `adb`.
+
+---
+
+### 🟢 Session 72 (2026-07-02)
+
+- **Mục tiêu:** Sửa lỗi giao diện hiển thị các chủ đề đề xuất ở dạng chuỗi văn bản thô (raw string) thay vì các Chips (nút bấm) do lỗi tháo gỡ bọc thẻ ở phiên làm việc trước.
+- **Hoạt động & Thay đổi:**
+  - **Khôi phục DTO:** Cập nhật lại hàm `toDomain()` trong `EnglishLessonDto.kt` để tự động bọc (hoặc bọc lại) thẻ `[TOPIC_RECOMMEND]` cho các phần tử trong mảng `recommended_topics`.
+  - **Xử lý chuỗi thông minh:** Thêm Regex dọn dẹp các thẻ nếu AI lỡ sinh ra thẻ thừa bên trong mảng, đảm bảo không bao giờ bị tình trạng double-wrap `[TOPIC_RECOMMEND][TOPIC_RECOMMEND]`. Cơ chế này giữ cho UI (`FeedbackReviewCard`) hoạt động trơn tru với regex tách mảng vốn có và không yêu cầu thay đổi cấu trúc bảng `lesson_feedback` trong DB.
+  - **Biên dịch:** Build lại ứng dụng Android và cài đặt qua `adb`.
+
+---
+
+### 🟢 Session 71 (2026-07-02)
+
+- **Mục tiêu:** Tách biệt trường `review` và `recommended_topics` trong JSON trả về để duy trì tính độc lập (separation of concerns), đồng thời vẫn đảm bảo AI xuất được các thẻ `[TOPIC_RECOMMEND]`.
+- **Hoạt động & Thay đổi:**
+  - **Prompt Engineering:** Phục hồi lại trường `"recommended_topics"` dạng mảng (array) trong JSON schema. Đưa thẳng cấu trúc `[TOPIC_RECOMMEND] Suggested Topic 1 [/TOPIC_RECOMMEND]` vào làm phần tử của mảng này để AI thấy cấu trúc cụ thể.
+  - **DTO Refactoring:** Sửa lại hàm `toDomain()` trong `EnglishLessonDto.kt`, bỏ lệnh bọc tag (joinToString với `[TOPIC_RECOMMEND]`) vì AI sẽ trả về tag chuẩn 100% trong array.
+  - **Biên dịch:** Build lại ứng dụng Android và cài đặt qua `adb`.
+
+---
+
+### 🟢 Session 70 (2026-07-02)
+
+- **Mục tiêu:** Cập nhật lại Evaluate System Prompt để đảm bảo AI sinh ra chính xác cấu trúc thẻ `[TOPIC_RECOMMEND]` mà người dùng mong muốn trực tiếp trong văn bản phản hồi.
+- **Hoạt động & Thay đổi:**
+  - **Prompt Engineering:** Thay đổi quy tắc `TOPIC RECOMMENDATION` trong `BaseLanguagePromptProvider.kt`. Thay vì yêu cầu LLM trả về mảng `recommended_topics` trong JSON (có thể khiến một số mô hình gặp lỗi hoặc bỏ qua định dạng thẻ), prompt mới yêu cầu LLM gắn trực tiếp các thẻ `[TOPIC_RECOMMEND] topic name [/TOPIC_RECOMMEND]` vào cuối nội dung của trường `review`.
+  - Cung cấp một ví dụ minh họa chính xác về cấu trúc cần tạo (explicit formatting) ngay trong phần quy tắc để ép LLM tuân thủ nghiêm ngặt.
+  - **Cập nhật:** Sửa lại JSON payload mẫu (example schema) để chứa trực tiếp các thẻ `[TOPIC_RECOMMEND]` bên trong trường `"review"`. Việc trực quan hóa cấu trúc đích ngay trong chuỗi JSON giúp LLM hiểu chính xác định dạng đầu ra thay vì chỉ đọc lý thuyết.
+  - **Biên dịch:** Build lại ứng dụng Android để kiểm thử bằng `./gradlew :androidApp:assembleDebug`.
+- **Ghi chú kỹ thuật:**
+  - Logic trích xuất từ regex trong `FeedbackReviewCard.kt` đã sẵn sàng hỗ trợ định dạng này vì nó thực hiện quét toàn bộ chuỗi `review`. Khi mảng `recommended_topics` trả về rỗng (empty array default trong DTO), ứng dụng vẫn sẽ lấy được đề xuất từ nội dung `review`.
+
+---
+
+### 🟢 Session 69 (2026-07-02)
+
+- **Mục tiêu:** Ép LLM (AI Lingua) phải tuân thủ việc sinh ra các tag `[TOPIC_RECOMMEND]` mà trước đó nó đã bỏ qua do bị nhầm lẫn với mô tả chuỗi JSON.
+- **Hoạt động & Thay đổi:**
+  - **Prompt Engineering:** Di chuyển toàn bộ cấu trúc lệnh bắt buộc (MANDATORY) liên quan đến việc đề xuất 3 chủ đề học tập ra khỏi placeholder giá trị `"review"` của khối `RETURN EXACTLY THIS JSON:`.
+  - Thay vào đó, đặt lệnh này trở thành một trong các quy tắc ở mục `GRADING RULES:` (được nhấn mạnh bằng chữ in hoa). Điều này tuân thủ nguyên tắc viết prompt hiệu quả: không đặt các rule/instruction phức tạp vào bên trong string payload của cấu trúc dữ liệu JSON cần trả về.
+  - **Biên dịch & Cài đặt:** Build lại APK và cài đặt tự động.
+
+---
+
+### 🟢 Session 68 (2026-07-02)
+
+- **Mục tiêu:** Sửa lỗi Regex bắt tag `[TOPIC_RECOMMEND]` và thêm tiện ích Đánh giá lại nhanh.
+- **Hoạt động & Thay đổi:**
+  - **Sửa Regex:** Thay vì dùng Regex mặc định, bổ sung options `setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)` để tránh lỗi LLM chèn ký tự newline (`\n`) vào giữa cặp tag hoặc dùng chữ thường/hoa lẫn lộn.
+  - **Cải thiện UI:** Thêm icon button 🔄 (Refresh) vào góc trên cùng bên phải thẻ "Nhận xét từ AI Lingua" ở màn hình Xem kết quả để gọi lại hàm `onSubmitLesson()` đánh giá lại bài làm ngay lập tức.
+  - **Biên dịch & Cài đặt:** Build lại ứng dụng với `./gradlew :androidApp:assembleDebug` và triển khai tự động lên thiết bị qua ADB.
+- **Ghi chú kỹ thuật:**
+  - Cần hết sức lưu ý tính linh hoạt (permissive) khi dùng Regex với dữ liệu trả về từ LLM (vốn không thể đoán trước 100% định dạng newline hay khoảng trắng).
+
+---
+
+### 🟢 Session 67 (2026-07-02)
+
+- **Mục tiêu:** Khắc phục lỗi AI Lingua không đề xuất chủ đề học tiếp theo ở màn hình Nhận xét từ AI.
+- **Hoạt động & Thay đổi:**
+  - **Prompt Engineering:** Truy cập `BaseLanguagePromptProvider.kt` và cập nhật biến `review` của prompt hướng dẫn đánh giá (Evaluate Lesson System Prompt).
+  - Thay vì hướng dẫn "(if any)", giờ đây prompt đã được thiết lập quy tắc bắt buộc (MANDATORY): AI bắt buộc phải trả về chính xác 3 chủ đề cần luyện tập và bọc trong các thẻ `[TOPIC_RECOMMEND]Topic Name[/TOPIC_RECOMMEND]`.
+  - **Biên dịch & Cài đặt:** Build lại ứng dụng với `./gradlew :androidApp:assembleDebug` và triển khai tự động lên thiết bị qua ADB.
+- **Ghi chú kỹ thuật:**
+  - `FeedbackReviewCard.kt` đã có sẵn logic trích xuất Regex. Lỗi hoàn toàn nằm ở Prompt cũ quá lỏng lẻo với LLM.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
+---
+
+### 🟢 Session 66 (2026-07-02)
+
+- **Mục tiêu:** Thực hiện **Bước 4 (Phân tách SQLDelight)** theo chuẩn architecture, chia nhỏ Database khổng lồ của ứng dụng thành các Database riêng biệt theo tính năng (Vertical Slicing) nhưng vẫn giữ tính toàn vẹn của file dữ liệu.
+- **Hoạt động & Thay đổi:**
+  - **Di dời Schema:** Xóa bảng `learning_topics` và các query liên quan khỏi `UserSchema.sq` (ở `:core:database`) và đưa vào file mới `AiTeacherDatabase.sq` (ở `:feature:ai-teacher:data`).
+  - **Modular SQLDelight:** Cấu hình `build.gradle.kts` của module `ai-teacher:data` để SQLDelight tự khởi tạo lớp `AiTeacherDatabase` độc lập mà không phụ thuộc trực tiếp vào schema của `core:database`.
+  - **Share SqlDriver:** Trong `TeacherDataModule.kt` (Koin DI), tiêm (inject) `AiTeacherDatabase` sử dụng chung instance `SqlDriver` do `core:database` cung cấp. Do đó, hai database abstraction sẽ cùng ghi dữ liệu vào một file vật lý `ai_english.db`.
+  - **Auto Table Creation:** Cấu hình tự động gọi `AiTeacherDatabase.Schema.create(driver)` khi module khởi chạy, nhằm tạo các bảng tính năng một cách an toàn mà không bị lỗi crash migration.
+  - **TopicRepositoryImpl:** Refactor để nhận cả hai dependencies `AiTeacherDatabase` (cho topics) và `AIEnglishDatabase` (cho users/levels), dùng đúng `aiTeacherDatabase.transaction` để thao tác DB.
+- **Ghi chú kỹ thuật:**
+  - Kỹ thuật dùng chung một `SqlDriver` cho nhiều `Schema` SQLDelight riêng biệt là một kiến trúc sáng tạo, đáp ứng hoàn hảo yêu cầu Vertical Slicing KMP mà không cần thiết lập nhiều file `.db` hoặc bận tâm đến SQLite cross-database foreign keys.
+  - Biên dịch toàn bộ Desktop app (`:composeApp:compileKotlinDesktop` và `:feature:ai-teacher:data:compileKotlinDesktop`) thành công rực rỡ, không phát sinh bất kỳ lỗi `Unresolved reference` nào.
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
 ---
 
 ### 🟢 Session 65 (2026-07-01)

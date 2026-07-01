@@ -213,8 +213,9 @@ class TeacherRepositoryImpl(
             }
 
             val cleanedJson = sanitizeJson(rawResponse)
-            val feedback = json.decodeFromString<EnglishFeedbackDto>(cleanedJson).toDomain()
-            Either.Right(feedback)
+            val feedbackDto = json.decodeFromString<EnglishFeedbackDto>(cleanedJson)
+            val domainFeedback = feedbackDto.toDomain()
+            Either.Right(domainFeedback)
         } catch (e: Exception) {
             Either.Left(AppError.Network(friendlyError(e.message)))
         }

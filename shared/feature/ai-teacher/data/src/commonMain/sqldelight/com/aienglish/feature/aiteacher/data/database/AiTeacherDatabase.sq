@@ -1,0 +1,24 @@
+CREATE TABLE IF NOT EXISTS learning_topics (
+    topic_id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    system_code TEXT NOT NULL,
+    level_code TEXT NOT NULL,
+    updated_at INTEGER NOT NULL DEFAULT 0,
+    is_ai_recommended INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (system_code, topic_id)
+);
+
+insertTopic:
+INSERT OR REPLACE INTO learning_topics (topic_id, name, system_code, level_code, updated_at, is_ai_recommended) VALUES (?, ?, ?, ?, ?, ?);
+
+getAllTopics:
+SELECT * FROM learning_topics;
+
+getTopicsForLevels:
+SELECT * FROM learning_topics WHERE system_code = ? AND level_code IN ?;
+
+deleteAllTopics:
+DELETE FROM learning_topics;
+
+deleteTopic:
+DELETE FROM learning_topics WHERE system_code = ? AND topic_id = ?;

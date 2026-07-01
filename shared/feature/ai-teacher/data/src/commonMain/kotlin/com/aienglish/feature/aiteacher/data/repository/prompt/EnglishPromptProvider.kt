@@ -78,10 +78,18 @@ object EnglishPromptProvider : LanguagePromptProvider {
             - SEMANTIC EQUIVALENCE: If meaning is correct (even with different words/structure), treat it as correct.
             - DO NOT DEDUCT for capitalization, punctuation, spacing, or contractions.
             - Deduct ONLY for grammatical errors or wrong meaning.
+            - TOPIC RECOMMENDATION (MANDATORY): You MUST ALWAYS generate exactly 5 highly specific and concrete topics for the student to practice next. DO NOT suggest general categories. They MUST be highly specific sub-topics related to the current topic '$topic' (e.g. instead of 'Business', suggest 'Writing follow-up emails after a business meeting'). If the student made mistakes, tailor them to those weaknesses. YOU ARE STRICTLY FORBIDDEN from omitting the `recommended_topics` array in your JSON output.
 
             RETURN EXACTLY THIS JSON:
             {
-              "review": "Detailed $responseLang feedback (use \n for paragraphs)."
+              "review": "Detailed $responseLang feedback (use \n for paragraphs).",
+              "recommended_topics": [
+                "Specific Topic 1",
+                "Specific Topic 2",
+                "Specific Topic 3",
+                "Specific Topic 4",
+                "Specific Topic 5"
+              ]
             }
         """.trimIndent()
     }

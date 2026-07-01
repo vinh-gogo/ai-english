@@ -12,9 +12,20 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val teacherDataModule = module {
+    single {
+        val driver = get<app.cash.sqldelight.db.SqlDriver>()
+        try {
+            com.aienglish.feature.aiteacher.data.database.AiTeacherDatabase.Schema.create(driver)
+        } catch (e: Exception) {
+            // Ignored if already created
+        }
+        com.aienglish.feature.aiteacher.data.database.AiTeacherDatabase(driver)
+    }
+
     single<TopicRepository> {
         TopicRepositoryImpl(
-            database = get(),
+            coreDatabase = get(),
+            aiTeacherDatabase = get(),
             prefs = get(),
             dispatchers = get(),
             jsonResourceReader = get()

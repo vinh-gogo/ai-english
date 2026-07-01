@@ -42,7 +42,7 @@ fun TopicSelectionContent(
     val isTtsLoading by viewModel.isTtsLoading.collectAsState()
     var isSearchFocused by remember { mutableStateOf(false) }
     var isCustomTopicFocused by remember { mutableStateOf(false) }
-    var longPressedTopicId by remember { mutableStateOf<Int?>(null) }
+    var longPressedTopicId by remember { mutableStateOf<String?>(null) }
     val coroutineScope = rememberCoroutineScope()
 
     // Scroll to show custom topic card when focused

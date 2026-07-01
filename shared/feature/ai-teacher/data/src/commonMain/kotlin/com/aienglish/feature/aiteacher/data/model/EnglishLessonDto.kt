@@ -52,12 +52,20 @@ data class EnglishTokenDto(
 @Serializable
 data class EnglishFeedbackDto(
     val review: String,
-    val score: Int = 0
+    val score: Int = 0,
+    val recommended_topics: List<String> = emptyList()
 ) {
-    fun toDomain(): EnglishFeedback = EnglishFeedback(
-        review = review,
-        score = score
-    )
+    fun toDomain(): EnglishFeedback {
+        val topicString = recommended_topics.joinToString("\n") { 
+            val clean = it.replace(Regex("\\[/?TOPIC_RECOMMEND\\]", RegexOption.IGNORE_CASE), "").trim()
+            "[TOPIC_RECOMMEND]$clean[/TOPIC_RECOMMEND]" 
+        }
+        val fullReview = if (topicString.isNotEmpty()) "$review\n\n$topicString" else review
+        return EnglishFeedback(
+            review = fullReview,
+            score = score
+        )
+    }
 }
 
 @Serializable

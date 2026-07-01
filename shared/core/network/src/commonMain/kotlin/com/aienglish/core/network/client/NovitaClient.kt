@@ -85,6 +85,9 @@ class NovitaClient(private val httpClient: HttpClient) {
                 }
             }
             put("temperature", 0.7)
+            putJsonObject("response_format") {
+                put("type", "json_object")
+            }
         }.toString()
 
         val response: HttpResponse = httpClient.post(

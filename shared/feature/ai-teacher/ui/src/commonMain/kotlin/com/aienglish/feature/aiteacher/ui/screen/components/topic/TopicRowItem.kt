@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -69,12 +70,23 @@ fun TopicRowItem(
                     )
                     .padding(horizontal = 6.dp, vertical = 2.dp)
             ) {
-                Text(
-                    text = "${i + 1}",
-                    color = if (isSelected) Color.White else colors.mutedText,
-                    fontSize = 8.sp,
-                    fontWeight = FontWeight.Medium
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "${i + 1}",
+                        color = if (isSelected) Color.White else colors.mutedText,
+                        fontSize = 8.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                    if (topic.isAiRecommended) {
+                        Spacer(modifier = Modifier.width(2.dp))
+                        Icon(
+                            imageVector = Icons.Rounded.AutoAwesome,
+                            contentDescription = "AI Suggested",
+                            tint = if (isSelected) Color.White else colors.accent,
+                            modifier = Modifier.size(8.dp)
+                        )
+                    }
+                }
             }
 
             // Play audio button
