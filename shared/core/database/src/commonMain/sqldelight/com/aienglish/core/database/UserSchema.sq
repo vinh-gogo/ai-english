@@ -85,6 +85,8 @@ CREATE TABLE IF NOT EXISTS learning_topics (
     name TEXT NOT NULL,
     system_code TEXT NOT NULL,
     level_code TEXT NOT NULL,
+    updated_at INTEGER NOT NULL DEFAULT 0,
+    is_ai_recommended INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY (system_code, topic_id),
     FOREIGN KEY (system_code, level_code) REFERENCES learning_levels(system_code, level_code) ON DELETE CASCADE
 );
@@ -132,7 +134,7 @@ SELECT * FROM learning_levels WHERE system_code = ?;
 
 -- Topic queries
 insertTopic:
-INSERT OR REPLACE INTO learning_topics (topic_id, name, system_code, level_code) VALUES (?, ?, ?, ?);
+INSERT OR REPLACE INTO learning_topics (topic_id, name, system_code, level_code, updated_at, is_ai_recommended) VALUES (?, ?, ?, ?, ?, ?);
 
 getAllTopics:
 SELECT * FROM learning_topics;

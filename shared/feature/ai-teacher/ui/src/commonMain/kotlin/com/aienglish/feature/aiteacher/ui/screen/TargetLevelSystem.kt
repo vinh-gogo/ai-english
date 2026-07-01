@@ -71,103 +71,30 @@ internal fun TargetLevelSystem(
 
         Spacer(Modifier.height(8.dp))
 
-        when (state.levelType) {
-            LevelType.CEFR -> LevelSystemRow(
-                levels = listOf("A1", "A2", "B1", "B2", "C1", "C2"),
-                state = state, colors = colors,
-                isSelected = { it == state.selectedCefrLevel },
-                onClick = { viewModel.onCefrLevelSelected(it) },
-                spacing = 6.dp
-            )
-            LevelType.TOEIC -> LevelSystemRow(
-                levels = listOf("300", "500", "700", "900"),
-                state = state, colors = colors,
-                isSelected = { it == state.selectedToeicLevel },
-                onClick = { viewModel.onToeicLevelSelected(it) },
-                displayTransform = { if (it == "900") ">900" else it }
-            )
-            LevelType.JLPT -> LevelSystemRow(
-                levels = listOf("N5", "N4", "N3", "N2", "N1"),
-                state = state, colors = colors,
-                isSelected = { it == state.selectedJlptLevel },
-                onClick = { viewModel.onJlptLevelSelected(it) }
-            )
-            LevelType.HSK -> LevelSystemRow(
-                levels = listOf("HSK1", "HSK2", "HSK3", "HSK4", "HSK5", "HSK6"),
-                state = state, colors = colors,
-                isSelected = { it == state.selectedHskLevel },
-                onClick = { viewModel.onHskLevelSelected(it) },
-                displayTransform = { it.replace("HSK", "H") },
-                spacing = 6.dp, fontSize = 12.sp
-            )
-            LevelType.DELE -> LevelSystemRow(
-                levels = listOf("A1", "A2", "B1", "B2", "C1", "C2"),
-                state = state, colors = colors,
-                isSelected = { it == state.selectedDeleLevel },
-                onClick = { viewModel.onDeleLevelSelected(it) },
-                spacing = 6.dp
-            )
-            LevelType.SIELE -> LevelSystemRow(
-                levels = listOf("A1", "A2", "B1", "B2", "C1"),
-                state = state, colors = colors,
-                isSelected = { it == state.selectedSieleLevel },
-                onClick = { viewModel.onSieleLevelSelected(it) }
-            )
-            LevelType.HINDI -> LevelSystemRow(
-                levels = listOf("A1", "A2", "B1", "B2"),
-                state = state, colors = colors,
-                isSelected = { it == state.selectedHindiLevel },
-                onClick = { viewModel.onHindiLevelSelected(it) }
-            )
-            LevelType.DELF -> LevelSystemRow(
-                levels = listOf("A1", "A2", "B1", "B2"),
-                state = state, colors = colors,
-                isSelected = { it == state.selectedDelfLevel },
-                onClick = { viewModel.onDelfLevelSelected(it) }
-            )
-            LevelType.DALF -> LevelSystemRow(
-                levels = listOf("C1", "C2"),
-                state = state, colors = colors,
-                isSelected = { it == state.selectedDalfLevel },
-                onClick = { viewModel.onDalfLevelSelected(it) }
-            )
-            LevelType.GOETHE -> LevelSystemRow(
-                levels = listOf("A1", "A2", "B1", "B2", "C1", "C2"),
-                state = state, colors = colors,
-                isSelected = { it == state.selectedGoetheLevel },
-                onClick = { viewModel.onGoetheLevelSelected(it) },
-                spacing = 6.dp
-            )
-            LevelType.TESTDAF -> LevelSystemRow(
-                levels = listOf("TDN3", "TDN4", "TDN5"),
-                state = state, colors = colors,
-                isSelected = { it == state.selectedTestdafLevel },
-                onClick = { viewModel.onTestdafLevelSelected(it) },
-                displayTransform = { it.replace("TDN", "T") }
-            )
-            LevelType.TOPIK -> LevelSystemRow(
-                levels = listOf("TOPIK1", "TOPIK2", "TOPIK3", "TOPIK4", "TOPIK5", "TOPIK6"),
-                state = state, colors = colors,
-                isSelected = { it == state.selectedTopikLevel },
-                onClick = { viewModel.onTopikLevelSelected(it) },
-                displayTransform = { it.replace("TOPIK", "T") },
-                spacing = 6.dp, fontSize = 12.sp
-            )
-            LevelType.VIET -> LevelSystemRow(
-                levels = listOf("TIEU_HOC", "TRUNG_HOC", "DAI_HOC"),
-                state = state, colors = colors,
-                isSelected = { it == state.selectedVietLevel },
-                onClick = { viewModel.onVietLevelSelected(it) },
-                displayTransform = { 
-                    when(it) {
+        val currentType = state.levelType
+        LevelSystemRow(
+            levels = currentType.levels,
+            state = state, colors = colors,
+            isSelected = { it == (state.selectedLevels[currentType] ?: currentType.defaultLevel) },
+            onClick = { viewModel.onLevelSelected(it) },
+            displayTransform = { 
+                when (currentType) {
+                    LevelType.TOEIC -> if (it == "900") ">900" else it
+                    LevelType.HSK -> it.replace("HSK", "H")
+                    LevelType.TESTDAF -> it.replace("TDN", "T")
+                    LevelType.TOPIK -> it.replace("TOPIK", "T")
+                    LevelType.VIET -> when(it) {
                         "TIEU_HOC" -> "TH"
                         "TRUNG_HOC" -> "THCS"
                         "DAI_HOC" -> "ĐH"
                         else -> it
                     }
+                    else -> it
                 }
-            )
-        }
+            },
+            spacing = if (currentType == LevelType.CEFR || currentType == LevelType.HSK || currentType == LevelType.DELE || currentType == LevelType.GOETHE || currentType == LevelType.TOPIK) 6.dp else 8.dp,
+            fontSize = if (currentType == LevelType.HSK || currentType == LevelType.TOPIK) 12.sp else 13.sp
+        )
     }
 }
 

@@ -38,7 +38,8 @@ class TeacherHistoryRepositoryImpl(
         // 2. Save feedback
         queries.insertOrReplaceFeedback(
             history_id = id,
-            review = feedback.review
+            review = feedback.review,
+            score = feedback.score.toLong()
         )
 
         // 3. Mark lesson as completed
@@ -95,7 +96,8 @@ class TeacherHistoryRepositoryImpl(
             val feedbackRow = queries.getFeedbackForHistory(historyId).executeAsOneOrNull()
             val feedback = feedbackRow?.let {
                 EnglishFeedback(
-                    review = it.review
+                    review = it.review,
+                    score = it.score.toInt()
                 )
             }
 

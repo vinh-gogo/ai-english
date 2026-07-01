@@ -113,7 +113,8 @@ abstract class BaseLanguagePromptProvider : LanguagePromptProvider {
 
             RETURN EXACTLY THIS JSON:
             {
-              "review": "Detailed $responseLang feedback (use \n for paragraphs)."
+              "score": <score out of 100 based on the translation quality>,
+              "review": "Detailed $responseLang feedback (use \n for paragraphs). At the end of the advice, recommend exactly 3 topics to practice to fix current mistakes (if any), each wrapped in [TOPIC_RECOMMEND]topic name[/TOPIC_RECOMMEND]."
             }
         """.trimIndent()
     }

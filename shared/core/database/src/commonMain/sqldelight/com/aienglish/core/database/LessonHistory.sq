@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS lesson_feedback (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     history_id INTEGER NOT NULL UNIQUE,
     review TEXT NOT NULL DEFAULT '',
+    score INTEGER NOT NULL DEFAULT 0,
     FOREIGN KEY(history_id) REFERENCES lesson_history(id) ON DELETE CASCADE
 );
 
@@ -107,8 +108,8 @@ getTokensForQuestion:
 SELECT * FROM lesson_question_token WHERE question_id = ?;
 
 insertOrReplaceFeedback:
-INSERT OR REPLACE INTO lesson_feedback (history_id, review)
-VALUES (?, ?);
+INSERT OR REPLACE INTO lesson_feedback (history_id, review, score)
+VALUES (?, ?, ?);
 
 getFeedbackForHistory:
 SELECT * FROM lesson_feedback WHERE history_id = ?;

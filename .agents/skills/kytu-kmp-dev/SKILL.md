@@ -13,14 +13,13 @@ description: >
    - developer experience
 ---
 
-Dưới đây là phiên bản enterprise prompt dành riêng cho Kotlin Multiplatform engineering để build đa nền tảng:
+Dưới đây là phiên bản enterprise prompt dành riêng cho Kotlin Multiplatform engineering để build đa nền tảng theo chuẩn modern scalable architecture:
 
 - Windows
 - macOS
 - Android
 - Web
 
-theo chuẩn modern scalable architecture.
 
 # ROLE
 
@@ -33,7 +32,7 @@ Your task is to transform the entire project into a modern Kotlin Multiplatform 
 - Android
 - Web
 
-while preserving business behavior and significantly improving:
+While preserving business behavior and significantly improving:
 
 - scalability
 - maintainability
@@ -126,6 +125,14 @@ Avoid:
 
 # ARCHITECTURE RULES
 
+The solution is organized using Clean Architecture principles to ensure scalability, maintainability, and ease of collaboration. The project must strictly follow this 5-layer structure:
+
+1. **Domain Layer**: Contains the core business logic, entities, and interfaces.
+2. **Application Layer**: Contains use cases, services, and view models.
+3. **Infrastructure Layer**: Handles data access, database implementations, and external integrations.
+4. **UI Layer**: The Compose-based cross-platform user interface.
+5. **Tests Layer**: Kotlin Test-based unit tests for all layers.
+
 Dependency direction must always be:
 
 UI
@@ -191,10 +198,10 @@ The Application layer handles:
 
 - Use cases
 - CQRS orchestration
+- Services
+- ViewModels & State orchestration (MVI/MVVM)
 - Validation
 - DTO mapping
-- Application services
-- State orchestration
 
 Structure:
 
@@ -203,6 +210,7 @@ Structure:
 /command
 /query
 /usecase
+/viewmodel
 /dto
 /mapper
 /validator
@@ -259,29 +267,26 @@ Requirements:
 
 # 4. UI ARCHITECTURE RULES
 
-Use Compose Multiplatform.
+Use Compose Multiplatform for the cross-platform user interface.
 
 Structure:
 /composeApp
 /feature
 /screen
 /component
-/state
-/intent
-/event
-/viewmodel
+/theme
 
 Requirements:
 
-- Strict MVVM or MVI
-- Unidirectional data flow
-- Immutable UI state
+- Strict separation between UI and Application state
+- Unidirectional data flow (consuming States and dispatching Intents to ViewModels)
+- Immutable UI state consumption
 - Reactive rendering
 - Small composables
 - Reusable components
 - No business logic inside composables
 
-ViewModels communicate ONLY through use cases.
+UI layers communicate ONLY with ViewModels (which reside in the Application layer).
 
 Avoid:
 
@@ -417,18 +422,19 @@ Avoid:
 
 # 9. TESTING REQUIREMENTS
 
-The project must become highly testable.
+The project must become highly testable across all layers.
 
 Use:
 
-- Kotlin Test
-- JUnit
+- Kotlin Test (for cross-platform tests across all layers)
+- JUnit (Android/Desktop specifics)
 - MockK
 - Turbine
 - Coroutine testing utilities
 
 Structure:
 
+/tests (or respective module tests)
 /shared/test
 /androidTest
 /desktopTest

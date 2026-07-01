@@ -19,7 +19,8 @@ data class EnglishToken(
 )
 
 data class EnglishFeedback(
-    val review: String
+    val review: String,
+    val score: Int = 0
 )
 
 data class SentenceExplanation(

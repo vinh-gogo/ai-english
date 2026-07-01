@@ -71,6 +71,25 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 62** | 2026-06-30 | Antigravity | `b933a38c-5ae1-4304-a547-bc73e4226c01` | Thêm cài đặt lựa chọn nền tảng giọng đọc (Google TTS vs ONNX) và giọng đọc Tiếng Anh (Amy vs Lessac) dưới phần Cài đặt ngôn ngữ. | Hoàn thành |
 | **Session 63** | 2026-07-01 | Antigravity | `799e2971-3590-4cbf-9e01-ad03f674e145` | Cải thiện cấu trúc trả về giải thích từ vựng AI, chuyển từ mảng JSON phức tạp sang Markdown string để khắc phục lỗi không hiển thị và lỗi mất định dạng xuống dòng. | Hoàn thành |
 | **Session 64** | 2026-07-01 | Antigravity | `799e2971-3590-4cbf-9e01-ad03f674e145` | Cấu hình lưu cấu trúc / công thức ngữ pháp (dạng `[FORMULA]`) vào CSDL `question_notes`. Thêm UI hiển thị danh sách dạng Modal Bottom Sheet mượt mà khi bấm icon sổ tay ở màn hình bài học. | Hoàn thành |
+| **Session 65** | 2026-07-01 | Antigravity | `65f83b0a-060a-4595-bc98-c0ec1b11f838` | Refactor TeacherViewModel, TargetLevelSystem, LevelType: Loại bỏ các biến chọn cấp độ riêng lẻ cồng kềnh, cấu hình bản đồ `selectedLevels`, và thay thế conditional statement (when) bằng tính đa hình (Polymorphism) theo chuẩn system-design-refactoring. | Hoàn thành |
+---
+
+### 🟢 Session 65 (2026-07-01)
+
+- **Mục tiêu:** Áp dụng các mẫu thiết kế từ `system-design-refactoring-cheatsheet.md` để tái cấu trúc `TeacherViewModel.kt`, xử lý triệt để code smell (các biến trùng lặp và các lệnh `when` rườm rà).
+- **Hoạt động & Thay đổi:**
+  - **LevelType**: Bổ sung siêu dữ liệu (metadata) trực tiếp vào enum bao gồm: `systemCode`, `levels`, `defaultLevel`, `uiPrefix`, cùng hàm tĩnh `fromTargetLanguage` (Thay thế conditional statements bằng Polymorphism).
+  - **TeacherUiState** / **TopicSelectionState**: Xóa bỏ 13 trường lưu trữ riêng biệt (như `selectedCefrLevel`, `selectedToeicLevel`,...) và thay bằng `val selectedLevels: Map<LevelType, String>`.
+  - **TeacherViewModel**:
+    - Loại bỏ 13 hàm `onXxxLevelSelected` bị trùng lặp chức năng, gom lại thành một hàm duy nhất `onLevelSelected(level: String)`.
+    - Lược bỏ hoàn toàn các khối mã `when (type) { ... }` dài lê thê hàng chục dòng trong các hàm `init`, `loadTopics`, `onResumeLesson`, `onReTestLesson`, `onReviewLesson`, v.v... bằng cách tái sử dụng siêu dữ liệu của enum.
+  - **TargetLevelSystem** & **LevelUtils**: Xóa bỏ các khối UI/logic cấu hình lặp đi lặp lại riêng cho từng cấp độ hệ thống, chuyển sang dùng vòng lặp và logic điều kiện tùy biến nội tuyến nhẹ nhàng.
+- **Ghi chú kỹ thuật:**
+  - Giảm được đáng kể số dòng code ở `TeacherViewModel` và tăng tính dễ bảo trì. Việc thêm ngôn ngữ/hệ thống đánh giá cấp độ mới trong tương lai sẽ rất dễ dàng (chỉ cần thêm 1 entry vào LevelType).
+  - Khởi chạy Gradle compilation `:shared:feature:ai-teacher:ui:compileKotlinDesktop` và Build thành công (không có lỗi).
+- **Kế hoạch tiếp theo (Next Steps):**
+  - Chờ yêu cầu tiếp theo từ người dùng.
+
 ---
 
 ### 🟢 Session 64 (2026-07-01)

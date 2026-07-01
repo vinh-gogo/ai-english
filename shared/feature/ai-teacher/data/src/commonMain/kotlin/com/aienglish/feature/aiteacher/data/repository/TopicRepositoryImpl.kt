@@ -147,7 +147,9 @@ class TopicRepositoryImpl(
                             topic_id = topic.id.toLong(),
                             name = topic.name,
                             system_code = topic.systemCode,
-                            level_code = topic.levelCode
+                            level_code = topic.levelCode,
+                            updated_at = 0L,
+                            is_ai_recommended = 0L
                         )
                     }
 
@@ -157,7 +159,9 @@ class TopicRepositoryImpl(
                             topic_id = topic.id.toLong(),
                             name = topic.name,
                             system_code = topic.systemCode,
-                            level_code = topic.levelCode
+                            level_code = topic.levelCode,
+                            updated_at = 0L,
+                            is_ai_recommended = 0L
                         )
                     }
 
@@ -167,7 +171,9 @@ class TopicRepositoryImpl(
                             topic_id = topic.id.toLong(),
                             name = topic.name,
                             system_code = topic.systemCode,
-                            level_code = topic.levelCode
+                            level_code = topic.levelCode,
+                            updated_at = 0L,
+                            is_ai_recommended = 0L
                         )
                     }
 
@@ -177,7 +183,9 @@ class TopicRepositoryImpl(
                             topic_id = topic.id.toLong(),
                             name = topic.name,
                             system_code = topic.systemCode,
-                            level_code = topic.levelCode
+                            level_code = topic.levelCode,
+                            updated_at = 0L,
+                            is_ai_recommended = 0L
                         )
                     }
 
@@ -187,7 +195,9 @@ class TopicRepositoryImpl(
                             topic_id = topic.id.toLong(),
                             name = topic.name,
                             system_code = topic.systemCode,
-                            level_code = topic.levelCode
+                            level_code = topic.levelCode,
+                            updated_at = 0L,
+                            is_ai_recommended = 0L
                         )
                     }
 
@@ -197,7 +207,9 @@ class TopicRepositoryImpl(
                             topic_id = topic.id.toLong(),
                             name = topic.name,
                             system_code = topic.systemCode,
-                            level_code = topic.levelCode
+                            level_code = topic.levelCode,
+                            updated_at = 0L,
+                            is_ai_recommended = 0L
                         )
                     }
 
@@ -207,7 +219,9 @@ class TopicRepositoryImpl(
                             topic_id = topic.id.toLong(),
                             name = topic.name,
                             system_code = topic.systemCode,
-                            level_code = topic.levelCode
+                            level_code = topic.levelCode,
+                            updated_at = 0L,
+                            is_ai_recommended = 0L
                         )
                     }
 
@@ -217,7 +231,9 @@ class TopicRepositoryImpl(
                             topic_id = topic.id.toLong(),
                             name = topic.name,
                             system_code = topic.systemCode,
-                            level_code = topic.levelCode
+                            level_code = topic.levelCode,
+                            updated_at = 0L,
+                            is_ai_recommended = 0L
                         )
                     }
 
@@ -227,7 +243,9 @@ class TopicRepositoryImpl(
                             topic_id = topic.id.toLong(),
                             name = topic.name,
                             system_code = topic.systemCode,
-                            level_code = topic.levelCode
+                            level_code = topic.levelCode,
+                            updated_at = 0L,
+                            is_ai_recommended = 0L
                         )
                     }
                 } catch (e: Exception) {
@@ -237,7 +255,7 @@ class TopicRepositoryImpl(
             }
         }
 
-    override suspend fun addCustomTopic(name: String, systemCode: String, levelCode: String): Unit =
+    override suspend fun addCustomTopic(name: String, systemCode: String, levelCode: String, isAiRecommended: Boolean): Unit =
         withContext(dispatchers.io) {
             try {
                 val allTopics = database.userSchemaQueries.getAllTopics().executeAsList()
@@ -247,7 +265,9 @@ class TopicRepositoryImpl(
                     topic_id = newId,
                     name = name,
                     system_code = systemCode,
-                    level_code = levelCode
+                    level_code = levelCode,
+                    updated_at = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
+                    is_ai_recommended = if (isAiRecommended) 1L else 0L
                 )
             } catch (e: Exception) {
                 println("Error inserting custom topic in TopicRepositoryImpl: ${e.message}")

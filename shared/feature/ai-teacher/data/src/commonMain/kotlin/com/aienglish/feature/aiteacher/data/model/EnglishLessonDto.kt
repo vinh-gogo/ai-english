@@ -51,10 +51,12 @@ data class EnglishTokenDto(
 
 @Serializable
 data class EnglishFeedbackDto(
-    val review: String
+    val review: String,
+    val score: Int = 0
 ) {
     fun toDomain(): EnglishFeedback = EnglishFeedback(
-        review = review
+        review = review,
+        score = score
     )
 }
 
@@ -94,5 +96,6 @@ fun EnglishToken.toDto(): EnglishTokenDto = EnglishTokenDto(
 )
 
 fun EnglishFeedback.toDto(): EnglishFeedbackDto = EnglishFeedbackDto(
-    review = review
+    review = review,
+    score = score
 )

@@ -71,7 +71,13 @@ fun FeedbackContent(
             Spacer(Modifier.height(24.dp))
 
             // Review card
-            FeedbackReviewCard(review = feedback.review, colors = colors)
+            FeedbackReviewCard(
+                review = feedback.review, 
+                colors = colors,
+                onAddTopic = { topicName -> 
+                    viewModel.saveRecommendedTopicToDb(topicName)
+                }
+            )
 
             // Per-sentence review
             if (lesson != null) {
