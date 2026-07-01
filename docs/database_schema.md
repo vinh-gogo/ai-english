@@ -86,7 +86,6 @@ erDiagram
         TEXT user_id FK
         TEXT topic
         TEXT level
-        INTEGER score
         TEXT status
         INTEGER created_at
         INTEGER completed_at
@@ -100,9 +99,14 @@ erDiagram
         TEXT english
         TEXT explanation
         TEXT user_answer
-        INTEGER ai_score
         TEXT ai_explanation
-        TEXT alternatives_json
+        TEXT alternatives_json "DEPRECATED"
+    }
+
+    lesson_question_alternative {
+        INTEGER id PK
+        INTEGER question_id FK
+        TEXT alternative
     }
 
     lesson_question_token {
@@ -116,13 +120,11 @@ erDiagram
     lesson_feedback {
         INTEGER id PK
         INTEGER history_id FK "UNIQUE"
-        INTEGER overall_score
         TEXT review
-        TEXT sentence_scores_json
     }
 
     question_notes {
-        INTEGER id PK
+        TEXT id PK
         INTEGER question_id FK
         TEXT note
         INTEGER created_at
@@ -142,6 +144,7 @@ erDiagram
     lesson_history ||--o{ lesson_question : "contains"
     lesson_history ||--o| lesson_feedback : "receives"
     lesson_question ||--o{ lesson_question_token : "breaks down into"
+    lesson_question ||--o{ lesson_question_alternative : "has"
     lesson_question ||--o{ question_notes : "has saved"
 ```
 
@@ -165,8 +168,9 @@ erDiagram
 * **`i18n_translations`**: Bản dịch tương ứng cho từng key và từng locale.
 
 ### 4. Nhóm Tiến trình Bài học (Lesson History)
-* **`lesson_history`**: Lưu thông tin tổng quan của mỗi lượt học (Chủ đề, điểm số, trạng thái bài học hoàn thành hay đang tiến hành).
-* **`lesson_feedback`**: Lưu trữ kết quả đánh giá tổng quan từ AI cho toàn bộ bài học (nhận xét chung, điểm tổng).
-* **`lesson_question`**: Chi tiết từng câu hỏi/câu luyện dịch trong bài học đó, kèm theo câu trả lời của học sinh và đánh giá chi tiết, cũng như các phương án trả lời thay thế từ AI.
+* **`lesson_history`**: Lưu thông tin tổng quan của mỗi lượt học (Chủ đề, trạng thái bài học hoàn thành hay đang tiến hành).
+* **`lesson_feedback`**: Lưu trữ kết quả nhận xét tổng quan từ AI cho toàn bộ bài học.
+* **`lesson_question`**: Chi tiết từng câu hỏi/câu luyện dịch trong bài học đó, kèm theo câu trả lời của học sinh và giải thích chi tiết từ AI.
+* **`lesson_question_alternative`**: Bảng quan hệ 1-N lưu trữ độc lập từng phương án dịch thay thế chuẩn xác khác cho câu hỏi.
 * **`lesson_question_token`**: Phân tích cú pháp của câu (tokenization) bao gồm từ vựng, phiên âm IPA (hoặc Pinyin/Romaji), và từ loại/giải nghĩa tương ứng.
-* **`question_notes`**: Lưu trữ các công thức, cấu trúc ngữ pháp được người dùng lưu lại cho từng câu hỏi cụ thể, để tiện ôn tập.
+* **`question_notes`**: Lưu trữ các công thức, cấu trúc ngữ pháp (sử dụng ID định dạng GUID) được người dùng lưu lại cho từng câu hỏi cụ thể, để tiện ôn tập.
