@@ -1,5 +1,6 @@
 package com.aienglish.feature.aiteacher.ui.screen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
@@ -400,69 +401,15 @@ fun MarkdownText(
 
                 if (popupState.value != null && popupState.value?.blockIndex == index) {
                     val pState = popupState.value!!
-                    Popup(
-                        alignment = Alignment.TopStart,
+                    com.aienglish.feature.aiteacher.ui.screen.components.SaveActionTooltip(
                         offset = pState.offset,
+                        colors = colors,
+                        onSave = {
+                            onFormulaClick?.invoke(pState.text)
+                            popupState.value = null
+                        },
                         onDismissRequest = { popupState.value = null }
-                    ) {
-                        Surface(
-                            shape = RoundedCornerShape(12.dp),
-                            color = colors.surfaceElevated,
-                            shadowElevation = 8.dp,
-                            modifier = Modifier.padding(8.dp).widthIn(max = 280.dp)
-                        ) {
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                Text(
-                                    text = "Lưu cấu trúc này?",
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 14.sp,
-                                    color = colors.mainText,
-                                    modifier = Modifier.padding(bottom = 8.dp)
-                                )
-                                Surface(
-                                    color = colors.accent.copy(alpha = 0.1f),
-                                    shape = RoundedCornerShape(8.dp),
-                                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
-                                ) {
-                                    Text(
-                                        text = pState.text,
-                                        fontSize = 14.sp,
-                                        color = colors.accent,
-                                        fontWeight = FontWeight.Medium,
-                                        modifier = Modifier.padding(12.dp)
-                                    )
-                                }
-                                Row(
-                                    horizontalArrangement = Arrangement.End,
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    androidx.compose.material3.TextButton(
-                                        onClick = { popupState.value = null }
-                                    ) {
-                                        Text("Hủy", color = colors.mutedText)
-                                    }
-                                    Spacer(Modifier.width(8.dp))
-                                    androidx.compose.material3.Button(
-                                        onClick = {
-                                            onFormulaClick?.invoke(pState.text)
-                                            popupState.value = null
-                                        },
-                                        colors = androidx.compose.material3.ButtonDefaults.buttonColors(
-                                            containerColor = colors.accent,
-                                            contentColor = Color.White
-                                        )
-                                    ) {
-                                        androidx.compose.material3.Icon(
-                                            androidx.compose.material.icons.Icons.Default.Book,
-                                            contentDescription = null,
-                                            modifier = Modifier.size(16.dp).padding(end = 4.dp)
-                                        )
-                                        Text("Lưu sổ tay")
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    )
                 }
             }
         }

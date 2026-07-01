@@ -41,7 +41,7 @@ fun NotesBottomSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = 16.dp)
                 .padding(bottom = 32.dp)
         ) {
             NotesHeader(colors)
@@ -127,7 +127,7 @@ private fun NoteItemCard(
         shape = RoundedCornerShape(12.dp),
         border = BorderStroke(1.dp, colors.border.copy(alpha = 0.5f))
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(12.dp)) {
             if (editingNoteId == note.id) {
                 NoteEditForm(
                     editingNoteText = editingNoteText,
@@ -194,7 +194,7 @@ private fun NoteContentView(
     onDeleteClick: () -> Unit
 ) {
     Row(
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
@@ -214,7 +214,7 @@ private fun NoteContentView(
         Box(modifier = Modifier.weight(1f)) {
             MarkdownText(markdown = note.note, colors = colors, onFormulaClick = null)
         }
-        Row(modifier = Modifier.padding(start = 8.dp)) {
+        Column(modifier = Modifier.padding(start = 8.dp)) {
             IconButton(
                 onClick = onEditClick,
                 modifier = Modifier.size(32.dp)

@@ -69,6 +69,7 @@ data class TeacherUiState(
     // Notes
     val showSavedNotesBottomSheet: Boolean = false,
     val savedNotes: List<com.aienglish.feature.aiteacher.domain.model.QuestionNote> = emptyList(),
+    val savedNoteCounts: Map<Int, Int> = emptyMap(),
 
     // Error
     val error: String? = null,
@@ -685,12 +686,17 @@ class TeacherViewModel(
         viewModelScope.launch {
             try {
                 teacherHistoryRepository.saveQuestionNote(historyId, index, note)
-                setState { copy(infoMessage = "Đã lưu cấu trúc") }
                 
-                // Refresh list if it's currently open for the same sentence
-                if (currentState.showSavedNotesBottomSheet) {
-                    val notes = teacherHistoryRepository.getQuestionNotes(historyId, index)
-                    setState { copy(savedNotes = notes) }
+                val notes = teacherHistoryRepository.getQuestionNotes(historyId, index)
+                val newCounts = currentState.savedNoteCounts.toMutableMap()
+                newCounts[index] = notes.size
+                
+                setState { 
+                    copy(
+                        infoMessage = "Đã lưu cấu trúc",
+                        savedNoteCounts = newCounts,
+                        savedNotes = if (showSavedNotesBottomSheet) notes else savedNotes
+                    ) 
                 }
             } catch (e: Exception) {
                 // ignore
@@ -718,9 +724,18 @@ class TeacherViewModel(
         viewModelScope.launch {
             try {
                 teacherHistoryRepository.deleteQuestionNote(noteId)
-                setState { copy(infoMessage = "Đã xóa cấu trúc") }
+                
                 val notes = teacherHistoryRepository.getQuestionNotes(historyId, sentenceIndex)
-                setState { copy(savedNotes = notes) }
+                
+                val newCounts = currentState.savedNoteCounts.toMutableMap()
+                newCounts[sentenceIndex] = notes.size
+                
+                setState { 
+                    copy(
+                        savedNotes = notes,
+                        savedNoteCounts = newCounts
+                    ) 
+                }
             } catch (e: Exception) {
                 // ignore
             }
@@ -808,6 +823,15 @@ class TeacherViewModel(
                         checkedAnswers = teacherHistory.userAnswers.keys
                     )
                 }
+
+                // Load saved note counts
+                val newCounts = mutableMapOf<Int, Int>()
+                val sentenceCount = teacherHistory.lesson?.sentences?.size ?: 0
+                for (i in 0 until sentenceCount) {
+                    val c = teacherHistoryRepository.getQuestionNotes(history.id, i).size
+                    if (c > 0) newCounts[i] = c
+                }
+                setState { copy(savedNoteCounts = newCounts) }
             } catch (e: Exception) {
                 setState { copy(error = "Không thể tải lại lịch sử bài học: ${e.message}") }
             }
@@ -1104,6 +1128,15 @@ class TeacherViewModel(
                         checkedAnswers = teacherHistory.explanations.keys
                     )
                 }
+
+                // Load saved note counts
+                val newCounts = mutableMapOf<Int, Int>()
+                val sentenceCount = teacherHistory.lesson?.sentences?.size ?: 0
+                for (i in 0 until sentenceCount) {
+                    val c = teacherHistoryRepository.getQuestionNotes(history.id, i).size
+                    if (c > 0) newCounts[i] = c
+                }
+                setState { copy(savedNoteCounts = newCounts) }
             } catch (e: Exception) {
                 setState { copy(error = "Không thể tiếp tục bài học dở dang: ${e.message}") }
             }

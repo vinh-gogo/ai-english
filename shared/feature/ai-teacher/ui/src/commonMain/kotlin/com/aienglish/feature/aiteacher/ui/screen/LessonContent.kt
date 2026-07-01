@@ -325,7 +325,8 @@ fun LessonContent(
                 onPreviousSentence = { viewModel.onPreviousSentence() },
                 onNextSentence = { viewModel.onNextSentence() },
                 onSubmitLesson = { viewModel.onSubmitLesson() },
-                onOpenNotes = { viewModel.openSavedNotes(idx) }
+                onOpenNotes = { viewModel.openSavedNotes(idx) },
+                noteCount = state.savedNoteCounts[idx] ?: 0
             )
         }
     }

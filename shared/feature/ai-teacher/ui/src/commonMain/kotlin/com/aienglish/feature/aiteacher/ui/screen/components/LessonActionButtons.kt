@@ -10,12 +10,17 @@ import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.Spring
 import com.aienglish.core.designsystem.theme.AppColors
 
 @Composable
@@ -30,21 +35,55 @@ fun LessonActionButtons(
     onPreviousSentence: () -> Unit,
     onNextSentence: () -> Unit,
     onSubmitLesson: () -> Unit,
-    onOpenNotes: () -> Unit
+    onOpenNotes: () -> Unit,
+    noteCount: Int = 0
 ) {
     Column(
         horizontalAlignment = Alignment.End,
         modifier = Modifier.fillMaxWidth()
     ) {
         if (hasChecked) {
-            IconButton(
-                onClick = onOpenNotes,
-                modifier = Modifier
-                    .background(colors.surfaceElevated, CircleShape)
-                    .border(1.dp, colors.border, CircleShape)
-                    .size(48.dp)
-            ) {
-                Icon(Icons.Default.Book, contentDescription = "Sổ tay", tint = colors.accent)
+            Box {
+                IconButton(
+                    onClick = onOpenNotes,
+                    modifier = Modifier
+                        .background(colors.surfaceElevated, CircleShape)
+                        .border(1.dp, colors.border, CircleShape)
+                        .size(48.dp)
+                ) {
+                    Icon(Icons.Default.Book, contentDescription = "Sổ tay", tint = colors.accent)
+                }
+                
+                if (noteCount > 0) {
+                    var targetCount by remember { mutableStateOf(noteCount) }
+                    val bounceScale by animateFloatAsState(
+                        targetValue = if (targetCount != noteCount) 1.5f else 1f,
+                        animationSpec = spring(dampingRatio = Spring.DampingRatioHighBouncy),
+                        finishedListener = { targetCount = noteCount }
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .offset(x = 4.dp, y = (-4).dp)
+                            .graphicsLayer {
+                                scaleX = bounceScale
+                                scaleY = bounceScale
+                            }
+                            .background(Color.Red, CircleShape)
+                            .defaultMinSize(minWidth = 16.dp, minHeight = 16.dp)
+                            .padding(horizontal = 4.dp, vertical = 2.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = noteCount.toString(),
+                            color = Color.White,
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold,
+                            lineHeight = 10.sp
+                        )
+                    }
+                }
             }
             Spacer(Modifier.height(12.dp))
         }
