@@ -243,7 +243,11 @@ class GrammarGraphViewModel(
                 }
                 
                 setState {
-                    val updatedNodes = nodes.filter { it.id != nodeId }
+                    val updatedNodes = if (selected == "Tất cả") {
+                        nodes.filter { it.id != nodeId }
+                    } else {
+                        nodes
+                    }
                     val updatedEdges = edges.filter { it.fromGrammarId != nodeId && it.toGrammarId != nodeId }
                     val updatedPositions = nodePositions - nodeId
                     copy(
