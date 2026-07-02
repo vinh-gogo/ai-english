@@ -5,5 +5,5 @@ import com.aienglish.feature.grammargraph.domain.repository.GrammarGraphReposito
 import org.koin.dsl.module
 
 val grammarGraphDataModule = module {
-    single<GrammarGraphRepository> { GrammarGraphRepositoryImpl(get()) }
+    single<GrammarGraphRepository> { GrammarGraphRepositoryImpl(get(), get()) }
 }

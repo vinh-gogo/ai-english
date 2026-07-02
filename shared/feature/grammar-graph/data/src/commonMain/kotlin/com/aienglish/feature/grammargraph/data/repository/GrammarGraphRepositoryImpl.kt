@@ -1,5 +1,6 @@
 package com.aienglish.feature.grammargraph.data.repository
 
+import app.cash.sqldelight.db.SqlDriver
 import com.aienglish.core.database.AIEnglishDatabase
 import com.aienglish.feature.grammargraph.domain.model.GrammarEdge
 import com.aienglish.feature.grammargraph.domain.model.GrammarNode
@@ -10,52 +11,86 @@ import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 
 class GrammarGraphRepositoryImpl(
-    private val database: AIEnglishDatabase
+    private val database: AIEnglishDatabase,
+    private val driver: SqlDriver
 ) : GrammarGraphRepository {
 
     private val queries = database.lessonHistoryQueries
 
     @OptIn(kotlin.uuid.ExperimentalUuidApi::class)
     private suspend fun checkAndSeedDatabase() = withContext(Dispatchers.IO) {
+        // Safe check to verify that all columns (like example and level) and tables exist
+        try {
+            queries.getAllGrammarStructures().executeAsList()
+            queries.getAllGrammarEdges().executeAsList()
+            queries.getAllGrammarGroups().executeAsList()
+        } catch (e: Exception) {
+            // Recreate grammar tables if there is a schema mismatch
+            try {
+                database.transaction {
+                    driver.execute(null, "DROP TABLE IF EXISTS grammar_edges", 0)
+                    driver.execute(null, "DROP TABLE IF EXISTS grammar_structures", 0)
+                    driver.execute(null, "DROP TABLE IF EXISTS grammar_groups", 0)
+                    
+                    // Recreate tables with correct latest schema
+                    AIEnglishDatabase.Schema.create(driver)
+                }
+            } catch (ex: Exception) {
+                // Ignore failure
+            }
+        }
+
         // 1. Seed grammar structures (nodes) if empty
-        val existingNodes = queries.getAllGrammarStructures().executeAsList()
+        val existingNodes = try { queries.getAllGrammarStructures().executeAsList() } catch (e: Exception) { emptyList() }
         if (existingNodes.isEmpty()) {
             defaultPredefinedNodes.forEach { node ->
-                queries.insertGrammarStructure(
-                    id = node.id,
-                    pattern = node.pattern,
-                    meaning_key = node.meaning,
-                    explanation_key = node.explanation,
-                    example = node.example,
-                    level = node.level,
-                    created_at = Clock.System.now().toEpochMilliseconds()
-                )
+                try {
+                    queries.insertGrammarStructure(
+                        id = node.id,
+                        pattern = node.pattern,
+                        meaning_key = node.meaning,
+                        explanation_key = node.explanation,
+                        example = node.example,
+                        level = node.level,
+                        created_at = Clock.System.now().toEpochMilliseconds()
+                    )
+                } catch (e: Exception) {
+                    // Ignore
+                }
             }
         }
 
         // 2. Seed grammar edges if empty
-        val existingEdges = queries.getAllGrammarEdges().executeAsList()
+        val existingEdges = try { queries.getAllGrammarEdges().executeAsList() } catch (e: Exception) { emptyList() }
         if (existingEdges.isEmpty()) {
             defaultPredefinedEdges.forEach { edge ->
-                queries.insertGrammarEdge(
-                    id = edge.id,
-                    from_grammar_id = edge.fromGrammarId,
-                    to_grammar_id = edge.toGrammarId,
-                    edge_type = edge.edgeType,
-                    created_at = Clock.System.now().toEpochMilliseconds()
-                )
+                try {
+                    queries.insertGrammarEdge(
+                        id = edge.id,
+                        from_grammar_id = edge.fromGrammarId,
+                        to_grammar_id = edge.toGrammarId,
+                        edge_type = edge.edgeType,
+                        created_at = Clock.System.now().toEpochMilliseconds()
+                    )
+                } catch (e: Exception) {
+                    // Ignore
+                }
             }
         }
 
         // 3. Seed grammar groups if empty
-        val existingGroups = queries.getAllGrammarGroups().executeAsList()
+        val existingGroups = try { queries.getAllGrammarGroups().executeAsList() } catch (e: Exception) { emptyList() }
         if (existingGroups.isEmpty()) {
             listOf("Tất cả", "Cơ bản", "Nâng cao").forEachIndexed { index, groupName ->
-                queries.insertGrammarGroup(
-                    id = kotlin.uuid.Uuid.random().toString(),
-                    name = groupName,
-                    created_at = Clock.System.now().toEpochMilliseconds() + index
-                )
+                try {
+                    queries.insertGrammarGroup(
+                        id = kotlin.uuid.Uuid.random().toString(),
+                        name = groupName,
+                        created_at = Clock.System.now().toEpochMilliseconds() + index
+                    )
+                } catch (e: Exception) {
+                    // Ignore
+                }
             }
         }
     }
