@@ -16,7 +16,7 @@ data class GrammarGraphUiState(
     val focusedConnections: Set<String> = emptySet(),
     val nodePositions: Map<String, Offset> = emptyMap(),
     val selectedGroup: String = "Tất cả",
-    val groups: List<String> = listOf("Tất cả", "Cơ bản", "Nâng cao"),
+    val groups: List<String> = listOf("Tất cả"),
     val editingGroup: String? = null,
     val allSavedNodes: List<GrammarNode> = emptyList(),
     val isConfigMode: Boolean = false,
@@ -125,7 +125,7 @@ class GrammarGraphViewModel(
                 // Load custom group mappings from DB
                 val groupNodeIdsMap = mutableMapOf<String, List<String>>()
                 groups.forEach { group ->
-                    if (group != "Tất cả" && group != "Cơ bản" && group != "Nâng cao") {
+                    if (group != "Tất cả") {
                         val nodeIds = repository.getNodesForGroup(group)
                         groupNodeIdsMap[group] = nodeIds
                     }
@@ -190,7 +190,7 @@ class GrammarGraphViewModel(
         viewModelScope.launch {
             try {
                 // If it is a custom group, save mapping to database
-                if (selected != "Tất cả" && selected != "Cơ bản" && selected != "Nâng cao") {
+                if (selected != "Tất cả") {
                     repository.addNodeToGroup(selected, node.id)
                 }
                 
@@ -201,7 +201,7 @@ class GrammarGraphViewModel(
                 }
                 
                 // Update local map state
-                val updatedGroupNodeIds = if (selected != "Tất cả" && selected != "Cơ bản" && selected != "Nâng cao") {
+                val updatedGroupNodeIds = if (selected != "Tất cả") {
                     val currentIds = currentState.groupNodeIds[selected] ?: emptyList()
                     currentState.groupNodeIds + (selected to (currentIds + node.id).distinct())
                 } else {
@@ -226,11 +226,11 @@ class GrammarGraphViewModel(
         val selected = currentState.selectedGroup
         viewModelScope.launch {
             try {
-                if (selected != "Tất cả" && selected != "Cơ bản" && selected != "Nâng cao") {
+                if (selected != "Tất cả") {
                     repository.removeNodeFromGroup(selected, nodeId)
                 }
                 
-                val updatedGroupNodeIds = if (selected != "Tất cả" && selected != "Cơ bản" && selected != "Nâng cao") {
+                val updatedGroupNodeIds = if (selected != "Tất cả") {
                     val currentIds = currentState.groupNodeIds[selected] ?: emptyList()
                     currentState.groupNodeIds + (selected to currentIds.filter { it != nodeId })
                 } else {

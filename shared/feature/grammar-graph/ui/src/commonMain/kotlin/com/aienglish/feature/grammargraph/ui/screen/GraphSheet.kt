@@ -123,8 +123,6 @@ fun GraphSheet(
             val filteredNodes = remember(state.nodes, state.selectedGroup, state.groupNodeIds) {
                 state.nodes.filter { node ->
                     when (state.selectedGroup) {
-                        "Cơ bản" -> node.isSaved && node.level in listOf("A1", "A2")
-                        "Nâng cao" -> node.isSaved && node.level in listOf("B1", "B2")
                         "Tất cả" -> node.isSaved
                         else -> {
                             val mappedIds = state.groupNodeIds[state.selectedGroup] ?: emptyList()
@@ -360,9 +358,7 @@ fun GraphSheet(
 
                 // Fixed floating action (+) button in the top-right corner of the viewport
                 var showAddSavedDropdown by remember { mutableStateOf(false) }
-                val availableSavedNodes = remember(state.nodes, filteredNodes) {
-                    state.nodes.filter { node -> filteredNodes.none { it.id == node.id } }
-                }
+                val availableSavedNodes = state.nodes
 
                 Box(
                     modifier = Modifier

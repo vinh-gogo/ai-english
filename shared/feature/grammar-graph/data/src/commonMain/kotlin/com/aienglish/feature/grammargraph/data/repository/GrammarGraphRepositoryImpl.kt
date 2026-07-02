@@ -26,10 +26,12 @@ class GrammarGraphRepositoryImpl(
             queries.getAllGrammarGroups().executeAsList()
             queries.getNodesForGroupName("Tất cả").executeAsList()
             
-            // If database contains old Vietnamese nodes, force recreate tables to clean them up
+            // If database contains old Vietnamese nodes or legacy groups, force recreate tables to clean them up
             val hasVietnamese = allStructures.any { it.id == "MUST_PHAI" || it.id == "S_COCOP" }
-            if (hasVietnamese) {
-                throw IllegalStateException("Purging legacy Vietnamese predefined structures.")
+            val allGroups = queries.getAllGrammarGroups().executeAsList()
+            val hasLegacyGroups = allGroups.any { it.name == "Cơ bản" || it.name == "Nâng cao" }
+            if (hasVietnamese || hasLegacyGroups) {
+                throw IllegalStateException("Purging legacy database structures.")
             }
         } catch (e: Exception) {
             // Recreate grammar tables if there is a schema mismatch
@@ -89,7 +91,7 @@ class GrammarGraphRepositoryImpl(
         // 3. Seed grammar groups if empty
         val existingGroups = try { queries.getAllGrammarGroups().executeAsList() } catch (e: Exception) { emptyList() }
         if (existingGroups.isEmpty()) {
-            listOf("Tất cả", "Cơ bản", "Nâng cao").forEachIndexed { index, groupName ->
+            listOf("Tất cả").forEachIndexed { index, groupName ->
                 try {
                     queries.insertGrammarGroup(
                         id = kotlin.uuid.Uuid.random().toString(),
