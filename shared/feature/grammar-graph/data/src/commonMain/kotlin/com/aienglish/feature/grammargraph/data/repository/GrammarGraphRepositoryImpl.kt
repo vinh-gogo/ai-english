@@ -143,22 +143,22 @@ class GrammarGraphRepositoryImpl(
         }
     }
 
-    override suspend fun addNodeToGroup(groupName: String, grammarId: String): Unit = withContext(Dispatchers.IO) {
+    override suspend fun addNodeToGroup(groupName: String, node: GrammarNode): Unit = withContext(Dispatchers.IO) {
         try {
             val allStructures = queries.getAllGrammarStructures().executeAsList()
-            val exists = allStructures.any { it.id == grammarId }
+            val exists = allStructures.any { it.id == node.id }
             if (!exists) {
                 queries.insertGrammarStructure(
-                    id = grammarId,
-                    pattern = grammarId,
-                    meaning_key = "Cấu trúc đã lưu",
-                    explanation_key = "Cấu trúc ngữ pháp đã lưu từ lịch sử bài học của bạn.",
-                    example = "Nhấp để chọn và học cấu trúc này.",
-                    level = "B1",
+                    id = node.id,
+                    pattern = node.pattern,
+                    meaning_key = node.meaning,
+                    explanation_key = node.explanation,
+                    example = node.example,
+                    level = node.level,
                     created_at = Clock.System.now().toEpochMilliseconds()
                 )
             }
-            queries.insertGroupNodeMapByName(groupName = groupName, grammarId = grammarId)
+            queries.insertGroupNodeMapByName(groupName = groupName, grammarId = node.id)
         } catch (e: Exception) {
             // Ignore
         }

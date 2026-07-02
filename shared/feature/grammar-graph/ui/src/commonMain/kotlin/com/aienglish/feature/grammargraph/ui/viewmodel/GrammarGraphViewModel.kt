@@ -192,7 +192,7 @@ class GrammarGraphViewModel(
             try {
                 // If it is a custom group, save mapping to database
                 if (selected != "Tất cả") {
-                    repository.addNodeToGroup(selected, node.id)
+                    repository.addNodeToGroup(selected, node)
                 }
                 
                 val allEdges = getGrammarGraph.getEdges()
