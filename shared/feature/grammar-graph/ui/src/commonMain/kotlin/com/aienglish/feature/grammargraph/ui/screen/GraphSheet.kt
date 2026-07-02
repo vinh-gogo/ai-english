@@ -397,7 +397,7 @@ fun GraphSheet(
                         }
                         
                         FloatingActionButton(
-                            onClick = { /* TODO: Implement AI Assistant action */ },
+                            onClick = { viewModel.generateAiGraphForCurrentGroup() },
                             containerColor = colors.accent,
                             contentColor = colors.surface,
                             shape = CircleShape,
@@ -475,6 +475,59 @@ fun GraphSheet(
                         onDeleteClick = { viewModel.removeNodeFromGraph(node.id) }
                     )
                 }
+            }
+            }
+            
+            // AI Loading Overlay
+            if (state.isGeneratingAi) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.5f))
+                        .pointerInput(Unit) { detectTapGestures { } }, // intercept taps
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        CircularProgressIndicator(color = colors.accent)
+                        Text(
+                            text = "AI đang phân tích và tạo graph...",
+                            color = Color.White,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+            }
+
+            // AI Error Dialog
+            state.aiErrorMessage?.let { errorMsg ->
+                AlertDialog(
+                    onDismissRequest = { viewModel.clearAiError() },
+                    title = {
+                        Text(
+                            text = "AI Error",
+                            color = colors.mainText,
+                            fontWeight = FontWeight.Bold
+                        )
+                    },
+                    text = {
+                        Text(
+                            text = errorMsg,
+                            color = colors.mutedText
+                        )
+                    },
+                    confirmButton = {
+                        TextButton(onClick = { viewModel.clearAiError() }) {
+                            Text("Đóng", color = colors.accent)
+                        }
+                    },
+                    containerColor = colors.surface,
+                    titleContentColor = colors.mainText,
+                    textContentColor = colors.mutedText
+                )
             }
         }
     }

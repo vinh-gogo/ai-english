@@ -20,7 +20,9 @@ data class GrammarGraphUiState(
     val editingGroup: String? = null,
     val allSavedNodes: List<GrammarNode> = emptyList(),
     val isConfigMode: Boolean = false,
-    val groupNodeIds: Map<String, List<String>> = emptyMap()
+    val groupNodeIds: Map<String, List<String>> = emptyMap(),
+    val isGeneratingAi: Boolean = false,
+    val aiErrorMessage: String? = null
 )
 
 class GrammarGraphViewModel(
@@ -273,5 +275,45 @@ class GrammarGraphViewModel(
                 focusedConnections = connectedIds
             )
         }
+    }
+    
+    fun generateAiGraphForCurrentGroup() {
+        val group = currentState.selectedGroup
+        if (group == "Tất cả") {
+            setState { copy(aiErrorMessage = "Tính năng sinh AI chỉ hỗ trợ cho Custom Group để tránh quá tải.") }
+            return
+        }
+        
+        val groupNodeIds = currentState.groupNodeIds[group] ?: emptyList()
+        val nodesToProcess = currentState.nodes.filter { it.id in groupNodeIds }
+        
+        if (nodesToProcess.isEmpty()) {
+            setState { copy(aiErrorMessage = "Nhóm này chưa có kiến thức nào để phân tích.") }
+            return
+        }
+        
+        if (nodesToProcess.size > 20) {
+            setState { copy(aiErrorMessage = "Nhóm có quá nhiều kiến thức (>20). Vui lòng chia nhỏ để AI phân tích chính xác hơn.") }
+            return
+        }
+        
+        viewModelScope.launch {
+            setState { copy(isGeneratingAi = true, aiErrorMessage = null) }
+            try {
+                val aiResponse = repository.generateAiGraph(nodesToProcess)
+                repository.saveAiGeneratedGraph(aiResponse, nodesToProcess, group)
+                
+                // Reload graph
+                loadGraph()
+            } catch (e: Exception) {
+                setState { copy(aiErrorMessage = "Lỗi khi phân tích bằng AI: ${e.message}") }
+            } finally {
+                setState { copy(isGeneratingAi = false) }
+            }
+        }
+    }
+
+    fun clearAiError() {
+        setState { copy(aiErrorMessage = null) }
     }
 }

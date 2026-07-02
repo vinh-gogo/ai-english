@@ -9,11 +9,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
+import com.aienglish.core.network.client.GeminiClient
+import com.aienglish.core.common.prefs.AppPreferences
+import com.aienglish.core.network.client.GEMINI_MODEL_CHAIN
+import com.aienglish.feature.grammargraph.domain.model.AiGraphResponse
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.encodeToString
 
 class GrammarGraphRepositoryImpl(
     private val database: AIEnglishDatabase,
-    private val driver: SqlDriver
+    private val driver: SqlDriver,
+    private val geminiClient: GeminiClient,
+    private val prefs: AppPreferences,
+    private val fallbackApiKey: String
 ) : GrammarGraphRepository {
+
+    private val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
 
     private val queries = database.lessonHistoryQueries
 
@@ -172,6 +183,120 @@ class GrammarGraphRepositoryImpl(
             // Ignore
         }
         Unit
+    }
+
+    override suspend fun generateAiGraph(nodes: List<GrammarNode>): AiGraphResponse = withContext(Dispatchers.IO) {
+        val apiKey = prefs.getApiKey().ifBlank { fallbackApiKey }
+        if (apiKey.isBlank()) throw Exception("Chưa có API Key. Vào Profile → cài Gemini API Key để bắt đầu.")
+
+        val systemPrompt = """Bạn là một chuyên gia biên soạn giáo trình ngữ pháp tiếng Anh (TOEIC, CEFR: A1–C2), có nhiệm vụ chuyển một **danh sách cấu trúc ngữ pháp thô** (chỉ có câu ví dụ/pattern) thành một **graph học tập** hoàn chỉnh, giúp người học nhìn vào là hiểu được:
+- Từng cấu trúc là gì, dùng khi nào, vì sao dùng như vậy.
+- Các cấu trúc liên quan đến nhau ra sao (dễ nhầm, mở rộng, tiền đề...), để người học học theo **cụm/nhóm** thay vì học rời rạc.
+
+## QUY TẮC TÁCH NODE (SPLITTING)
+Nếu một `pattern` đầu vào quá phức tạp, gộp nhiều ý ngữ pháp khác nhau, hoặc có nhiều biến thể quan trọng (khẳng định/phủ định/nghi vấn, hoặc nhiều cách dùng khác hẳn nhau), hãy **tách thành nhiều node con** để dễ học hơn, thay vì nhồi hết vào 1 node.
+Quy tắc đặt id cho node tách: Node gốc giữ nguyên `id` ban đầu (số nguyên). Node tách thêm dùng id dạng thập phân nối tiếp: `1.1`, `1.2`, ... Luôn tạo edge nối node gốc với các node tách.
+
+## ĐỊNH DẠNG ĐẦU RA (BẮT BUỘC)
+Chỉ trả về **duy nhất một khối JSON hợp lệ**, không kèm giải thích. Schema:
+{
+  "nodes": [
+    {
+      "id": "1",
+      "pattern": "S + have/has + been + V-ing + for/since + ...",
+      "meaning": "...",
+      "explanation": "...",
+      "example": "..."
+    }
+  ],
+  "edges": [
+    {
+      "from": "1",
+      "to": "2",
+      "relation": "contrast",
+      "note": "Phân biệt với thì quá khứ đơn vì nhấn mạnh tính tiếp diễn đến hiện tại"
+    }
+  ]
+}"""
+
+        val inputList = nodes.mapIndexed { index, node -> 
+            mapOf("id" to (index + 1).toString(), "pattern" to node.pattern)
+        }
+        val userPrompt = json.encodeToString(mapOf("nodes" to inputList))
+
+        val rawResponse = geminiClient.generateContent(
+            apiKey = apiKey,
+            systemPrompt = systemPrompt,
+            userPrompt = userPrompt,
+            model = GEMINI_MODEL_CHAIN.first()
+        )
+
+        val cleanedJson = rawResponse.trim()
+            .removePrefix("```json").removePrefix("```")
+            .removeSuffix("```")
+            .trim()
+            
+        json.decodeFromString<AiGraphResponse>(cleanedJson)
+    }
+
+    @OptIn(kotlin.uuid.ExperimentalUuidApi::class)
+    override suspend fun saveAiGeneratedGraph(response: AiGraphResponse, originalNodes: List<GrammarNode>, groupName: String) = withContext(Dispatchers.IO) {
+        val idMap = mutableMapOf<String, String>()
+        
+        queries.transaction {
+            response.nodes.forEach { aiNode ->
+                val isSplitNode = aiNode.id.contains(".")
+                
+                if (!isSplitNode) {
+                    val originalIndex = aiNode.id.toIntOrNull()?.minus(1) ?: return@forEach
+                    val originalNode = originalNodes.getOrNull(originalIndex) ?: return@forEach
+                    
+                    idMap[aiNode.id] = originalNode.id
+                    
+                    queries.insertGrammarStructure(
+                        id = originalNode.id,
+                        pattern = aiNode.pattern,
+                        meaning_key = aiNode.meaning,
+                        explanation_key = aiNode.explanation,
+                        example = aiNode.example,
+                        level = originalNode.level,
+                        created_at = Clock.System.now().toEpochMilliseconds()
+                    )
+                } else {
+                    val newUuid = kotlin.uuid.Uuid.random().toString()
+                    idMap[aiNode.id] = newUuid
+                    
+                    val parentId = aiNode.id.split(".")[0]
+                    val parentIndex = parentId.toIntOrNull()?.minus(1)
+                    val parentLevel = parentIndex?.let { originalNodes.getOrNull(it)?.level } ?: "B1"
+
+                    queries.insertGrammarStructure(
+                        id = newUuid,
+                        pattern = aiNode.pattern,
+                        meaning_key = aiNode.meaning,
+                        explanation_key = aiNode.explanation,
+                        example = aiNode.example,
+                        level = parentLevel,
+                        created_at = Clock.System.now().toEpochMilliseconds()
+                    )
+                    
+                    queries.insertGroupNodeMapByName(groupName = groupName, grammarId = newUuid)
+                }
+            }
+            
+            response.edges.forEach { edge ->
+                val fromUuid = idMap[edge.from] ?: return@forEach
+                val toUuid = idMap[edge.to] ?: return@forEach
+                
+                queries.insertGrammarEdge(
+                    id = kotlin.uuid.Uuid.random().toString(),
+                    from_grammar_id = fromUuid,
+                    to_grammar_id = toUuid,
+                    edge_type = edge.relation,
+                    created_at = Clock.System.now().toEpochMilliseconds()
+                )
+            }
+        }
     }
 
     companion object {
