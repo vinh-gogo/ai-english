@@ -438,12 +438,22 @@ fun GraphSheet(
                                                 fontWeight = FontWeight.Bold,
                                                 color = colors.mainText
                                             )
-                                            Text(
-                                                text = node.meaning,
-                                                fontSize = 11.sp,
-                                                color = colors.mutedText,
-                                                maxLines = 1
-                                            )
+                                            Box(
+                                                modifier = Modifier
+                                                    .padding(top = 4.dp)
+                                                    .background(
+                                                        color = colors.accent.copy(alpha = 0.15f),
+                                                        shape = RoundedCornerShape(4.dp)
+                                                    )
+                                                    .padding(horizontal = 6.dp, vertical = 2.dp)
+                                            ) {
+                                                Text(
+                                                    text = node.meaning,
+                                                    fontSize = 10.sp,
+                                                    color = colors.accent,
+                                                    maxLines = 1
+                                                )
+                                            }
                                         }
                                     },
                                     onClick = {

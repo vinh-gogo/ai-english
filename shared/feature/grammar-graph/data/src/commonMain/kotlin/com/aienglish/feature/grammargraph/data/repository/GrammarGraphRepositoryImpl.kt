@@ -77,7 +77,7 @@ class GrammarGraphRepositoryImpl(
             GrammarNode(
                 id = row.id,
                 pattern = row.note,
-                meaning = "Cấu trúc đã lưu",
+                meaning = "Bài học #${row.history_id}",
                 explanation = "Cấu trúc ngữ pháp đã lưu từ lịch sử bài học của bạn.",
                 example = "Nhấp để chọn và học cấu trúc này.",
                 level = row.level,
