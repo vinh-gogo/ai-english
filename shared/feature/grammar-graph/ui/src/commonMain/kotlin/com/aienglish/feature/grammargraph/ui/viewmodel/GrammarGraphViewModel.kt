@@ -119,8 +119,9 @@ class GrammarGraphViewModel(
         setState { copy(isLoading = true) }
         viewModelScope.launch {
             try {
-                // Get dynamic groups list from DB
-                val groups = repository.getGrammarGroups()
+                // Get dynamic groups list from DB, ensure "Tất cả" is always present
+                val dbGroups = repository.getGrammarGroups()
+                val groups = if (dbGroups.contains("Tất cả")) dbGroups else listOf("Tất cả") + dbGroups
 
                 // Load custom group mappings from DB
                 val groupNodeIdsMap = mutableMapOf<String, List<String>>()
