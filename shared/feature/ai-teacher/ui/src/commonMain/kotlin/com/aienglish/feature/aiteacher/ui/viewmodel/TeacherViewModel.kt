@@ -113,6 +113,7 @@ class TeacherViewModel(
     fun onReviewLesson(history: LessonHistory) = historyManager.onReviewLesson(history)
     fun onReTestLesson(history: LessonHistory) = historyManager.onReTestLesson(history)
     fun onResumeLesson(history: LessonHistory) = historyManager.onResumeLesson(history)
+    fun setGraphSheetVisible(visible: Boolean) = setState { copy(showGraphSheet = visible) }
 
     // ── Utilities ──
     fun clearError() = setState { copy(error = null) }

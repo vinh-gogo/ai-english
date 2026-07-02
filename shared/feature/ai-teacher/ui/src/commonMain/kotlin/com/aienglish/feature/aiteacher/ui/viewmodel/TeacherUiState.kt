@@ -134,7 +134,10 @@ data class TeacherUiState(
 
     // Error
     val error: String? = null,
-    val infoMessage: String? = null
+    val infoMessage: String? = null,
+
+    // Graph Sheet state
+    val showGraphSheet: Boolean = false
 ) {
     val selectedTopic: String get() = if (isCustomTopicMode) customTopicInput else topics.getOrNull(selectedTopicIndex)?.name ?: ""
     val selectedTopicId: String? get() = if (isCustomTopicMode) null else topics.getOrNull(selectedTopicIndex)?.id

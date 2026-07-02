@@ -21,6 +21,9 @@ import com.aienglish.feature.history.application.di.historyApplicationModule
 import com.aienglish.feature.pro.data.di.proDataModule
 import com.aienglish.feature.pro.ui.di.proUiModule
 import com.aienglish.feature.pro.application.di.proApplicationModule
+import com.aienglish.feature.grammargraph.data.di.grammarGraphDataModule
+import com.aienglish.feature.grammargraph.application.di.grammarGraphApplicationModule
+import com.aienglish.feature.grammargraph.ui.di.grammarGraphUiModule
 import com.aienglish.feature.aiteacher.domain.resource.JsonResourceReader
 import com.aienglish.app.resource.AndroidJsonResourceReader
 import org.koin.android.ext.koin.androidContext
@@ -49,6 +52,8 @@ class AIEnglishApplication : Application() {
                 historyApplicationModule,
                 proDataModule,
                 proApplicationModule,
+                grammarGraphDataModule,
+                grammarGraphApplicationModule,
                 module {
                     single(named("fallback_api_key")) { buildConfigApiKey }
                     single<JsonResourceReader> { AndroidJsonResourceReader(androidContext()) }
@@ -56,7 +61,8 @@ class AIEnglishApplication : Application() {
                 teacherUiModule,
                 profileUiModule,
                 historyUiModule,
-                proUiModule
+                proUiModule,
+                grammarGraphUiModule
             )
         }
     }

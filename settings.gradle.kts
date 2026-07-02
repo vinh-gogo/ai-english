@@ -57,6 +57,12 @@ include(":shared:feature:pro:application")
 include(":shared:feature:pro:data")
 include(":shared:feature:pro:ui")
 
+// ── shared:feature:grammar-graph ──
+include(":shared:feature:grammar-graph:domain")
+include(":shared:feature:grammar-graph:application")
+include(":shared:feature:grammar-graph:data")
+include(":shared:feature:grammar-graph:ui")
+
 // ── shared:feature:settings ── (add later if needed)
 // include(":shared:feature:settings:domain")
 // include(":shared:feature:settings:ui")

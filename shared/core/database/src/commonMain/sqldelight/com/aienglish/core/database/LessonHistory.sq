@@ -218,3 +218,13 @@ UPDATE lesson_history SET user_id = '0000000000000000' WHERE user_id = 'guest@ai
 
 getHistoryTopicId:
 SELECT topic_id FROM lesson_history WHERE id = ?;
+
+-- Grammar Graph Queries
+getAllGrammarStructures:
+SELECT * FROM grammar_structures;
+
+getAllGrammarEdges:
+SELECT * FROM grammar_edges;
+
+getAllSavedQuestionNotes:
+SELECT * FROM question_notes;

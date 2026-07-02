@@ -41,6 +41,10 @@ kotlin {
                 implementation(project(":shared:feature:pro:application"))
                 implementation(project(":shared:feature:pro:data"))
                 implementation(project(":shared:feature:pro:ui"))
+                implementation(project(":shared:feature:grammar-graph:domain"))
+                implementation(project(":shared:feature:grammar-graph:application"))
+                implementation(project(":shared:feature:grammar-graph:data"))
+                implementation(project(":shared:feature:grammar-graph:ui"))
             }
         }
     }
