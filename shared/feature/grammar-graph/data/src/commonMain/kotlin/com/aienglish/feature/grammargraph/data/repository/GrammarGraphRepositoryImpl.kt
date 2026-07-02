@@ -175,12 +175,18 @@ class GrammarGraphRepositoryImpl(
 
     override suspend fun renameGrammarGroup(oldName: String, newName: String): Unit = withContext(Dispatchers.IO) {
         checkAndSeedDatabase()
-        
         try {
-            val group = queries.getAllGrammarGroups().executeAsList().find { it.name == oldName }
-            if (group != null) {
-                queries.updateGrammarGroupName(newName, group.id)
-            }
+            queries.updateGrammarGroupName(newName = newName, oldName = oldName)
+        } catch (e: Exception) {
+            // Ignore error
+        }
+        Unit
+    }
+
+    override suspend fun deleteGrammarGroup(name: String): Unit = withContext(Dispatchers.IO) {
+        checkAndSeedDatabase()
+        try {
+            queries.deleteGrammarGroup(name)
         } catch (e: Exception) {
             // Ignore error
         }

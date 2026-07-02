@@ -9,4 +9,5 @@ interface GrammarGraphRepository {
     suspend fun getGrammarGroups(): List<String>
     suspend fun addGrammarGroup(name: String)
     suspend fun renameGrammarGroup(oldName: String, newName: String)
+    suspend fun deleteGrammarGroup(name: String)
 }

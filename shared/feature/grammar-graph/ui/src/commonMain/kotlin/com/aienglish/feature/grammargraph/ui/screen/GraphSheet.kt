@@ -112,7 +112,9 @@ fun GraphSheet(
                 onAddGroup = { viewModel.addGroup() },
                 onStartEditingGroup = { viewModel.startEditingGroup(it) },
                 onRenameGroup = { oldName, newName -> viewModel.renameGroup(oldName, newName) },
-                onConfigClick = { /* Can show configuration/settings dialog in future */ }
+                onConfigClick = { viewModel.toggleConfigMode() },
+                isConfigMode = state.isConfigMode,
+                onDeleteGroup = { viewModel.deleteGroup(it) }
             )
 
             val density = LocalDensity.current

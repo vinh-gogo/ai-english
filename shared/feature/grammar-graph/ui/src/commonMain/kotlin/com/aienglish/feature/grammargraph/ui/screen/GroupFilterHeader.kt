@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.Hub
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -50,6 +51,8 @@ internal fun GroupFilterHeader(
     onStartEditingGroup: (String) -> Unit,
     onRenameGroup: (String, String) -> Unit,
     onConfigClick: () -> Unit = {},
+    isConfigMode: Boolean = false,
+    onDeleteGroup: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -96,7 +99,7 @@ internal fun GroupFilterHeader(
                 Icon(
                     imageVector = Icons.Rounded.Settings,
                     contentDescription = "Configuration",
-                    tint = colors.mutedText,
+                    tint = if (isConfigMode) colors.accent else colors.mutedText,
                     modifier = Modifier.size(20.dp)
                 )
             }
@@ -118,85 +121,108 @@ internal fun GroupFilterHeader(
                 val isPlus = groupName == "+"
                 val isEditing = editingGroup == groupName
                 
-                Surface(
-                    modifier = if (isPlus) {
-                        Modifier.clickable { onAddGroup() }
-                    } else if (isEditing) {
-                        Modifier
-                    } else {
-                        Modifier.combinedClickable(
-                            onClick = { onSelectGroup(groupName) },
-                            onLongClick = { onStartEditingGroup(groupName) }
-                        )
-                    },
-                    shape = RoundedCornerShape(16.dp),
-                    color = if (isSelected) colors.accent.copy(alpha = 0.12f) else colors.background,
-                    border = BorderStroke(
-                        width = 1.dp,
-                        color = if (isSelected) colors.accent else colors.border.copy(alpha = 0.5f)
-                    )
+                Box(
+                    modifier = Modifier.padding(top = 4.dp, end = 4.dp)
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .height(28.dp)
-                            .padding(horizontal = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = when {
-                                isPlus -> Icons.Rounded.Add
-                                groupName == "Cơ bản" -> Icons.Rounded.AutoAwesome
-                                else -> Icons.Rounded.Hub
-                            },
-                            contentDescription = null,
-                            tint = if (isSelected) colors.accent else colors.mutedText,
-                            modifier = Modifier.size(14.dp)
+                    Surface(
+                        modifier = if (isPlus) {
+                            Modifier.clickable { onAddGroup() }
+                        } else if (isEditing) {
+                            Modifier
+                        } else {
+                            Modifier.combinedClickable(
+                                onClick = { onSelectGroup(groupName) },
+                                onLongClick = { onStartEditingGroup(groupName) }
+                            )
+                        },
+                        shape = RoundedCornerShape(16.dp),
+                        color = if (isSelected) colors.accent.copy(alpha = 0.12f) else colors.background,
+                        border = BorderStroke(
+                            width = 1.dp,
+                            color = if (isSelected) colors.accent else colors.border.copy(alpha = 0.5f)
                         )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        
-                        if (isEditing) {
-                            var editName by remember { mutableStateOf(groupName) }
-                            val focusRequester = remember { FocusRequester() }
-                            var hasBeenFocused by remember { mutableStateOf(false) }
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .height(28.dp)
+                                .padding(horizontal = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = when {
+                                    isPlus -> Icons.Rounded.Add
+                                    groupName == "Cơ bản" -> Icons.Rounded.AutoAwesome
+                                    else -> Icons.Rounded.Hub
+                                },
+                                contentDescription = null,
+                                tint = if (isSelected) colors.accent else colors.mutedText,
+                                modifier = Modifier.size(14.dp)
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
                             
-                            LaunchedEffect(Unit) {
-                                focusRequester.requestFocus()
-                            }
-                            
-                            BasicTextField(
-                                value = editName,
-                                onValueChange = { editName = it },
-                                textStyle = androidx.compose.ui.text.TextStyle(
-                                    color = colors.accent,
-                                    fontSize = 12.sp,
-                                    fontWeight = FontWeight.Bold
-                                ),
-                                cursorBrush = SolidColor(colors.accent),
-                                modifier = Modifier
-                                    .width(IntrinsicSize.Min)
-                                    .widthIn(min = 60.dp, max = 150.dp)
-                                    .focusRequester(focusRequester)
-                                    .onFocusChanged { 
-                                        if (it.isFocused) {
-                                            hasBeenFocused = true
-                                        } else if (hasBeenFocused) {
+                            if (isEditing) {
+                                var editName by remember { mutableStateOf(groupName) }
+                                val focusRequester = remember { FocusRequester() }
+                                var hasBeenFocused by remember { mutableStateOf(false) }
+                                
+                                LaunchedEffect(Unit) {
+                                    focusRequester.requestFocus()
+                                }
+                                
+                                BasicTextField(
+                                    value = editName,
+                                    onValueChange = { editName = it },
+                                    textStyle = androidx.compose.ui.text.TextStyle(
+                                        color = colors.accent,
+                                        fontSize = 12.sp,
+                                        fontWeight = FontWeight.Bold
+                                    ),
+                                    cursorBrush = SolidColor(colors.accent),
+                                    modifier = Modifier
+                                        .width(IntrinsicSize.Min)
+                                        .widthIn(min = 60.dp, max = 150.dp)
+                                        .focusRequester(focusRequester)
+                                        .onFocusChanged { 
+                                            if (it.isFocused) {
+                                                hasBeenFocused = true
+                                            } else if (hasBeenFocused) {
+                                                onRenameGroup(groupName, editName)
+                                            }
+                                        },
+                                    singleLine = true,
+                                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                                    keyboardActions = KeyboardActions(
+                                        onDone = {
                                             onRenameGroup(groupName, editName)
                                         }
-                                    },
-                                singleLine = true,
-                                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                                keyboardActions = KeyboardActions(
-                                    onDone = {
-                                        onRenameGroup(groupName, editName)
-                                    }
+                                    )
                                 )
-                            )
-                        } else {
-                            Text(
-                                text = groupName,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = if (isSelected) colors.accent else colors.mainText
+                            } else {
+                                Text(
+                                    text = groupName,
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = if (isSelected) colors.accent else colors.mainText
+                                )
+                            }
+                        }
+                    }
+                    
+                    if (isConfigMode && !isPlus && groupName != "Tất cả") {
+                        Box(
+                            modifier = Modifier
+                                .size(16.dp)
+                                .background(colors.error, CircleShape)
+                                .align(Alignment.TopEnd)
+                                .offset(x = 4.dp, y = (-4).dp)
+                                .clickable { onDeleteGroup(groupName) },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Close,
+                                contentDescription = "Delete group",
+                                tint = colors.surface,
+                                modifier = Modifier.size(10.dp)
                             )
                         }
                     }

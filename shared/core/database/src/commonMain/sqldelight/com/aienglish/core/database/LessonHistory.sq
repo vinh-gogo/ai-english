@@ -254,7 +254,7 @@ INSERT OR REPLACE INTO grammar_groups (id, name, created_at)
 VALUES (?, ?, ?);
 
 updateGrammarGroupName:
-UPDATE grammar_groups SET name = ? WHERE id = ?;
+UPDATE grammar_groups SET name = :newName WHERE name = :oldName;
 
 deleteGrammarGroup:
-DELETE FROM grammar_groups WHERE id = ?;
+DELETE FROM grammar_groups WHERE name = ?;

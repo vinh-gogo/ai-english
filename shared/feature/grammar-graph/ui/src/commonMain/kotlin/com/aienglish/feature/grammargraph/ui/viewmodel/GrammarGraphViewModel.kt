@@ -18,7 +18,8 @@ data class GrammarGraphUiState(
     val selectedGroup: String = "Tất cả",
     val groups: List<String> = listOf("Tất cả", "Cơ bản", "Nâng cao"),
     val editingGroup: String? = null,
-    val allSavedNodes: List<GrammarNode> = emptyList()
+    val allSavedNodes: List<GrammarNode> = emptyList(),
+    val isConfigMode: Boolean = false
 )
 
 class GrammarGraphViewModel(
@@ -83,6 +84,24 @@ class GrammarGraphViewModel(
 
     fun cancelEditing() {
         setState { copy(editingGroup = null) }
+    }
+
+    fun toggleConfigMode() {
+        setState { copy(isConfigMode = !isConfigMode) }
+    }
+
+    fun deleteGroup(name: String) {
+        viewModelScope.launch {
+            repository.deleteGrammarGroup(name)
+            val updatedGroups = repository.getGrammarGroups()
+            val nextSelectedGroup = if (currentState.selectedGroup == name) "Tất cả" else currentState.selectedGroup
+            setState {
+                copy(
+                    groups = updatedGroups,
+                    selectedGroup = nextSelectedGroup
+                )
+            }
+        }
     }
 
     fun loadGraph(targetLanguage: String) {
