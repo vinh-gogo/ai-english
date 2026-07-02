@@ -54,41 +54,36 @@ internal fun GroupFilterHeader(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 10.dp, bottom = 4.dp),
+                .padding(vertical = 10.dp),
             contentAlignment = Alignment.Center
         ) {
             Box(
                 modifier = Modifier
-                    .size(width = 36.dp, height = 4.dp)
-                    .background(colors.mutedText.copy(alpha = 0.35f), RoundedCornerShape(2.dp))
+                    .size(width = 40.dp, height = 4.dp)
+                    .background(colors.border, CircleShape)
             )
         }
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 6.dp),
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
-                modifier = Modifier
-                    .size(32.dp)
-                    .background(colors.accent.copy(alpha = 0.15f), CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Hub,
-                    contentDescription = null,
-                    tint = colors.accent,
-                    modifier = Modifier.size(16.dp)
-                )
-            }
-            Spacer(Modifier.width(10.dp))
+            Icon(
+                imageVector = Icons.Rounded.Hub,
+                contentDescription = null,
+                tint = colors.accent,
+                modifier = Modifier.size(20.dp)
+            )
+            Spacer(Modifier.width(8.dp))
             Text(
                 text = "Đồ thị Ngữ pháp",
-                fontSize = 17.sp,
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = colors.mainText
+                color = colors.mainText,
+                modifier = Modifier.weight(1f)
             )
         }
 
