@@ -26,6 +26,9 @@ erDiagram
     topic_questions ||--o{ question_grammar_map : "has grammar note"
     grammar_structures ||--o{ grammar_edges : "acts as from_node"
     grammar_structures ||--o{ grammar_edges : "acts as to_node"
+    grammar_groups ||--o{ grammar_group_node_map : "has"
+    grammar_structures ||--o{ grammar_group_node_map : "mapped"
+    lesson_question ||--o{ question_notes : "has"
 
     %% TẦNG TIẾN TRÌNH LUYỆN TẬP ĐỘNG (User Attempts)
     users ||--o{ payments : "makes"
@@ -129,6 +132,26 @@ erDiagram
         TEXT pattern UK
         TEXT meaning_key FK "References i18n_keys"
         TEXT explanation_key FK "References i18n_keys"
+        TEXT example
+        TEXT level
+        INTEGER created_at
+    }
+
+    grammar_groups {
+        TEXT id PK "GUID"
+        TEXT name UK
+        INTEGER created_at
+    }
+
+    grammar_group_node_map {
+        TEXT group_id PK "FK"
+        TEXT grammar_id PK "FK"
+    }
+
+    question_notes {
+        TEXT id PK "GUID"
+        INTEGER question_id FK
+        TEXT note
         INTEGER created_at
     }
 
@@ -210,9 +233,12 @@ erDiagram
   * *Chỉ mục duy nhất:* `UNIQUE(topic_id, sentence_index)` đảm bảo cấu trúc vị trí câu hỏi không đổi.
 * **`question_alternatives`**: Lưu trữ các đáp án thay thế hợp lệ cho một câu hỏi nhất định.
 * **`question_tokens`**: Chứa phân tích chi tiết của từng từ (IPA, từ loại) trong câu hỏi.
-* **`grammar_structures`**: Từ điển lưu các cấu trúc ngữ pháp dùng chung toàn hệ thống. Ý nghĩa và giải thích chi tiết được lưu dạng key dịch (`meaning_key`, `explanation_key`) để hỗ trợ học viên đa quốc gia.
+* **`grammar_structures`**: Từ điển lưu các cấu trúc ngữ pháp dùng chung toàn hệ thống. Ý nghĩa và giải thích chi tiết được lưu dạng key dịch (`meaning_key`, `explanation_key`) để hỗ trợ học viên đa quốc gia, đi kèm các cột `example` (câu ví dụ mẫu) và `level` (trình độ như A1, B2).
+* **`grammar_groups`**: Lưu trữ các nhóm lọc/danh mục của đồ thị cấu trúc ngữ pháp (như "Tất cả", "Cơ bản", "Nâng cao" hoặc các nhóm tự tạo của học viên).
+* **`grammar_group_node_map`**: Bảng trung gian ánh xạ quan hệ nhiều-nhiều giữa các nhóm tự chọn (`grammar_groups`) và các nút cấu trúc ngữ pháp (`grammar_structures`) hiển thị trên Canvas.
 * **`grammar_edges`**: Lưu vết các mối quan hệ cạnh đồ thị (đồ thị mạng tri thức) giữa các cấu trúc ngữ pháp (ví dụ: `PREREQUISITE` - tiên quyết, `SIMILAR` - tương đồng, `CONTRAST` - trái ngược, `DERIVED` - biến thể).
 * **`question_grammar_map`**: Liên kết các câu hỏi tĩnh với cấu trúc ngữ pháp tương ứng, kèm theo ghi chú tùy biến riêng của học sinh (`user_custom_note`).
+* **`question_notes`**: Lưu trữ các ghi chú/bookmarks tùy chọn của học viên từ bài học sinh ra bởi AI Teacher để phục vụ cho việc tạo node động tùy chỉnh trên đồ thị.
 
 ### 3.4 Nhóm Lịch sử Luyện tập Động (User Attempt Data)
 * **`lesson_history`**: Đầu mục lịch sử luyện tập của người dùng, liên kết trực tiếp với mã chủ đề `topic_id`.
