@@ -69,7 +69,7 @@ class HistoryRepositoryImpl(
         }
     }
 
-    override suspend fun startLesson(topic: String, level: String): Long =
+    override suspend fun startLesson(topic: String, level: String, topicId: String?): Long =
         withContext(dispatchers.io) {
             checkAndMigrateGuestData()
             val now = Clock.System.now().toEpochMilliseconds()
@@ -81,7 +81,7 @@ class HistoryRepositoryImpl(
                 created_at = now,
                 updated_at = now
             )
-            queries.insertLesson(userId, topic, level, now)
+            queries.insertLesson(userId, topic, level, now, topicId)
             queries.getLastInsertId().executeAsOne()
         }
 
@@ -118,7 +118,8 @@ class HistoryRepositoryImpl(
                             createdAt = row.created_at,
                             completedAt = row.completed_at,
                             completedCount = row.completed_count.toInt(),
-                            totalCount = row.total_count.toInt()
+                            totalCount = row.total_count.toInt(),
+                            topicId = row.topic_id
                         )
                     }
                 }

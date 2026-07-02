@@ -22,8 +22,8 @@ class TeacherHistoryRepositoryImpl(
     private val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
     private val queries get() = database.lessonHistoryQueries
 
-    override suspend fun startLesson(topic: String, level: String): Long =
-        historyRepository.startLesson(topic, level)
+    override suspend fun startLesson(topic: String, level: String, topicId: String?): Long =
+        historyRepository.startLesson(topic, level, topicId)
 
     override suspend fun completeLesson(
         id: Long,
@@ -61,14 +61,14 @@ class TeacherHistoryRepositoryImpl(
             if (questionRows.isEmpty()) return@withContext null
 
             val sentences = questionRows.map { row ->
-                val tokens = queries.getTokensForQuestion(row.id).executeAsList().map { t ->
+                val tokens = queries.getTokensForStaticQuestion(row.static_question_id).executeAsList().map { t ->
                     EnglishToken(
                         word = t.word,
                         phonetic = t.phonetic ?: "",
                         partOfSpeech = t.part_of_speech ?: ""
                     )
                 }
-                val alternativesFromDb = queries.getAlternativesForQuestion(row.id).executeAsList()
+                val alternativesFromDb = queries.getAlternativesForStaticQuestion(row.static_question_id).executeAsList()
                 val alternatives = alternativesFromDb
 
                 EnglishSentence(
@@ -91,7 +91,6 @@ class TeacherHistoryRepositoryImpl(
                     row.ai_explanation?.let { index to it }
                 }
                 .toMap()
-
 
             val feedbackRow = queries.getFeedbackForHistory(historyId).executeAsOneOrNull()
             val feedback = feedbackRow?.let {
@@ -116,37 +115,71 @@ class TeacherHistoryRepositoryImpl(
         }
     }
 
+    @OptIn(kotlin.uuid.ExperimentalUuidApi::class)
     private suspend fun saveQuestionsToDb(
         historyId: Long,
         lesson: EnglishLesson,
         userAnswers: Map<Int, String>,
         explanations: Map<Int, String>
     ) = withContext(dispatchers.io) {
+        val topicId = queries.getHistoryTopicId(historyId).executeAsOneOrNull()?.topic_id ?: ""
+
         lesson.sentences.forEachIndexed { index, sentence ->
-            queries.insertQuestion(
-                history_id = historyId,
-                sentence_index = index.toLong(),
-                vietnamese = sentence.vietnamese,
-                english = sentence.english,
-                explanation = sentence.explanation.takeIf { it.isNotEmpty() },
-                user_answer = userAnswers[index],
-                ai_explanation = explanations[index]
-            )
+            val staticQuestion = queries.getStaticQuestionsForTopic(topicId).executeAsList()
+                .firstOrNull { it.sentence_index == index.toLong() }
+            
+            val staticQuestionId = if (staticQuestion != null) {
+                staticQuestion.id
+            } else {
+                val newGuid = kotlin.uuid.Uuid.random().toString()
+                val promptKey = "topic_question_prompt_${newGuid}"
+                val explanationKey = "topic_question_explanation_${newGuid}"
+                
+                database.userSchemaQueries.insertTranslationKey(promptKey, "curriculum")
+                database.userSchemaQueries.insertTranslation(promptKey, "vi", sentence.vietnamese)
+                
+                if (sentence.explanation.isNotEmpty()) {
+                    database.userSchemaQueries.insertTranslationKey(explanationKey, "curriculum")
+                    database.userSchemaQueries.insertTranslation(explanationKey, "vi", sentence.explanation)
+                }
 
-            val questionId = queries.getQuestionId(historyId, index.toLong()).executeAsOne()
-            queries.deleteTokensForQuestion(questionId)
-            queries.deleteAlternativesForQuestion(questionId)
+                queries.insertTopicQuestion(
+                    id = newGuid,
+                    topic_id = topicId,
+                    sentence_index = index.toLong(),
+                    native_prompt_key = promptKey,
+                    english = sentence.english,
+                    explanation_key = if (sentence.explanation.isNotEmpty()) explanationKey else null
+                )
 
-            sentence.alternatives.forEach { alternative ->
-                queries.insertAlternative(questionId, alternative)
+                sentence.alternatives.forEach { alternative ->
+                    queries.insertQuestionAlternative(newGuid, alternative)
+                }
+
+                sentence.tokens.forEach { token ->
+                    queries.insertQuestionToken(
+                        question_id = newGuid,
+                        word = token.word,
+                        phonetic = token.phonetic.takeIf { it.isNotEmpty() },
+                        part_of_speech = token.partOfSpeech.takeIf { it.isNotEmpty() }
+                    )
+                }
+                newGuid
             }
 
-            sentence.tokens.forEach { token ->
-                queries.insertToken(
-                    question_id = questionId,
-                    word = token.word,
-                    phonetic = token.phonetic.takeIf { it.isNotEmpty() },
-                    part_of_speech = token.partOfSpeech.takeIf { it.isNotEmpty() }
+            val attemptId = queries.getQuestionId(historyId, index.toLong()).executeAsOneOrNull()
+            if (attemptId != null) {
+                queries.updateQuestionAttempt(
+                    user_answer = userAnswers[index],
+                    ai_explanation = explanations[index],
+                    id = attemptId
+                )
+            } else {
+                queries.insertQuestion(
+                    history_id = historyId,
+                    question_id = staticQuestionId,
+                    user_answer = userAnswers[index],
+                    ai_explanation = explanations[index]
                 )
             }
         }
@@ -174,7 +207,10 @@ class TeacherHistoryRepositoryImpl(
     override suspend fun getQuestionNotes(historyId: Long, sentenceIndex: Int): List<com.aienglish.feature.aiteacher.domain.model.QuestionNote> = withContext(dispatchers.io) {
         val questionId = queries.getQuestionId(historyId, sentenceIndex.toLong()).executeAsOneOrNull() ?: return@withContext emptyList()
         queries.getQuestionNotes(questionId).executeAsList().map { 
-            com.aienglish.feature.aiteacher.domain.model.QuestionNote(id = it.id, note = it.note)
+            com.aienglish.feature.aiteacher.domain.model.QuestionNote(
+                id = it.id,
+                note = it.note
+            )
         }
     }
 

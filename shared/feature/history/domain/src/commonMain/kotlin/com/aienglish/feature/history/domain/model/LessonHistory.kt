@@ -8,7 +8,8 @@ data class LessonHistory(
     val createdAt: Long,
     val completedAt: Long?,
     val completedCount: Int = 0,
-    val totalCount: Int = 0
+    val totalCount: Int = 0,
+    val topicId: String? = null
 )
 
 enum class HistoryStatus {

@@ -89,6 +89,31 @@ Tài liệu này lưu trữ lịch sử các phiên làm việc (chat sessions) 
 | **Session 80** | 2026-07-02 | Antigravity | `4fbf31bd-b41c-4047-8b1f-7c0f6480f5dd` | Thêm icon lấp lánh (AutoAwesome) cực nhỏ bên cạnh số thứ tự (index tag) của các thẻ chủ đề do AI đề xuất để làm nổi bật và dễ nhận diện hơn. | Hoàn thành |
 | **Session 82** | 2026-07-02 | Antigravity | `4fbf31bd-b41c-4047-8b1f-7c0f6480f5dd` | Refactor toàn bộ `topic_id` của `learning_topics` và `TopicItem` từ `Int` sang `String` (GUID) để tránh xung đột ID khi tạo chủ đề custom. | Hoàn thành |
 | **Session 81** | 2026-07-02 | Antigravity | `4fbf31bd-b41c-4047-8b1f-7c0f6480f5dd` | Cải thiện UI Thẻ Nhận xét: Hiển thị trạng thái "Đã thêm" (biểu tượng Check) cho các chủ đề đề xuất mà người dùng đã từng lưu vào cơ sở dữ liệu, giúp dễ dàng nhận biết khi xem lại Lịch sử. | Hoàn thành |
+| **Session 83** | 2026-07-02 | Antigravity | `c4921740-6aad-4c1d-8b92-7ce5fe309154` | Tái cấu trúc CSDL chuẩn hóa 3NF: Tách biệt kho câu hỏi tĩnh khỏi attempts của học sinh, tích hợp i18n động & Graph ngữ pháp. | Hoàn thành |
+| **Session 84** | 2026-07-02 | Antigravity | `c4921740-6aad-4c1d-8b92-7ce5fe309154` | Cập nhật nhãn thương hiệu chào mừng AI Lingua và thay đổi icon Hub kết nối đồ thị tri thức. | Hoàn thành |
+---
+
+### 🟢 Session 84 (2026-07-02)
+
+- **Mục tiêu:** Đồng bộ nhãn tiêu đề chào mừng thành AI Lingua và tích hợp nút Graph Node (Hub) tinh tế lên thanh điều hướng trên cùng.
+- **Hoạt động & Thay đổi:**
+  - **Cập nhật UI chào mừng:** Sửa đổi `TopicGreetingHeader.kt`, gỡ bỏ hoàn toàn logic `when(targetLanguage)` và đặt cứng nhãn tiêu đề là `"AI Lingua"`. Đồng thời loại bỏ hoàn toàn biểu tượng School/Hub ở phần lời chào này để giao diện thoáng đãng hơn.
+  - **Tích hợp Graph Button ở header trên cùng:** Chỉnh sửa `TeacherTopNavigation.kt`, thay thế capsule tiêu đề cũ bằng nút bấm `Icons.Rounded.Hub` (Mạng kết nối/Đồ thị tri thức) dưới dạng hình tròn độc lập (size 48x48) đối xứng hoàn hảo với nút Back, loại bỏ phần chữ "AI Lingua" ở header để thanh điều hướng tối giản và hiện đại.
+  - **Biên dịch:** Hoàn thành build KMP Desktop và cài đặt Android APK thành công qua Gradle `:androidApp:installDebug`.
+
+---
+
+### 🟢 Session 83 (2026-07-02)
+
+- **Mục tiêu:** Tái cấu trúc cơ sở dữ liệu sang dạng 3NF chuẩn hóa, hỗ trợ đa ngôn ngữ động (i18n) và đồ thị ngữ pháp không có trọng số.
+- **Hoạt động & Thay đổi:**
+  - **Database Migration:** Định nghĩa các bảng tĩnh mới (`topic_questions`, `question_alternatives`, `question_tokens`, `grammar_structures`, `grammar_edges`, `question_grammar_map`) trong `LessonHistory.sq`. Rút gọn bảng `lesson_question` chỉ lưu trữ kết quả thực tế luyện tập động của người dùng, liên kết qua khóa ngoại trỏ đến `topic_questions`.
+  - **Tích hợp i18n động:** Sử dụng `LEFT JOIN` với bảng `i18n_translations` và `COALESCE` để tự động fallback khi dữ liệu bản dịch chưa sẵn sàng, giữ vững tính ổn định của ứng dụng.
+  - **Repository Layer:** Cập nhật `TeacherHistoryRepositoryImpl.kt` để thực hiện tách biệt ghi câu hỏi tĩnh khi chưa tồn tại, lưu trữ attempt động của học sinh, và xây dựng lại đối tượng domain đầy đủ khi tải lịch sử.
+  - **UI & ViewModel Flow:** Cập nhật `HistoryRepositoryImpl.kt`, `TeacherUiState.kt` và `TeacherManagers.kt` để tự động truyền nhận thuộc tính `topicId` từ màn hình chọn chủ đề vào lịch sử bài học.
+  - **Khắc phục lỗi Lưu Notes (SQLite Dialect 3.18 & Cascade Delete):** Do dialect giới hạn ở SQLite 3.18, câu lệnh Upsert (`ON CONFLICT DO UPDATE`) không được hỗ trợ và `INSERT OR REPLACE` gây xóa-ghi-lại làm cascade delete các note con liên quan. Hệ thống được cập nhật sang cơ chế kiểm tra và cập nhật thủ công trong Kotlin nhắm trực tiếp vào Primary Key của attempt, giúp bảo toàn dữ liệu notes hoàn hảo.
+  - **Biên dịch:** Hoàn thành build KMP Kotlin Desktop và cài đặt Android APK thành công qua Gradle `:androidApp:installDebug`.
+
 ---
 
 ### 🟢 Session 82 (2026-07-02)

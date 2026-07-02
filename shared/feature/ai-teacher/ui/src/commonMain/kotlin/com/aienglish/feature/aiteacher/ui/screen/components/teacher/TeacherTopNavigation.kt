@@ -11,7 +11,9 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.WorkspacePremium
+import androidx.compose.material.icons.rounded.Hub
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,7 +36,8 @@ fun TeacherTopNavigation(
     onHistoryClick: () -> Unit,
     onProfileClick: () -> Unit,
     onProClick: () -> Unit,
-    colors: AppColors
+    colors: AppColors,
+    onGraphClick: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier
@@ -68,20 +71,21 @@ fun TeacherTopNavigation(
                     )
                 }
             } else {
-                // Title Text only capsule (standard padding, height 48dp)
-                Row(
+                // Standalone Circular Graph Node Button (Perfect 48x48 circle)
+                Box(
                     modifier = Modifier
-                        .height(48.dp)
-                        .background(colors.surface, CircleShape)
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(colors.surface)
                         .border(2.dp, colors.border, CircleShape)
-                        .padding(horizontal = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                        .clickable { onGraphClick() },
+                    contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = "AI Lingua",
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = colors.mainText
+                    Icon(
+                        imageVector = Icons.Rounded.Hub,
+                        contentDescription = "Knowledge Graph",
+                        tint = colors.accent,
+                        modifier = Modifier.size(24.dp)
                     )
                 }
             }

@@ -137,6 +137,7 @@ data class TeacherUiState(
     val infoMessage: String? = null
 ) {
     val selectedTopic: String get() = if (isCustomTopicMode) customTopicInput else topics.getOrNull(selectedTopicIndex)?.name ?: ""
+    val selectedTopicId: String? get() = if (isCustomTopicMode) null else topics.getOrNull(selectedTopicIndex)?.id
     val currentLevelCode: String get() = selectedLevels[levelType] ?: levelType.defaultLevel
     val selectedLevelText: String get() = levelType.uiPrefix + currentLevelCode
 }

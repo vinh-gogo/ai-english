@@ -374,8 +374,9 @@ class LessonExecutionManager(
                 )
             }
 
+            val topicId = updater.currentUiState.selectedTopicId
             sharedContext.currentLessonHistoryId = try {
-                teacherHistoryRepository.startLesson(topic, level)
+                teacherHistoryRepository.startLesson(topic, level, topicId)
             } catch (e: Exception) { null }
 
             generateLesson("user", topic, level).fold(

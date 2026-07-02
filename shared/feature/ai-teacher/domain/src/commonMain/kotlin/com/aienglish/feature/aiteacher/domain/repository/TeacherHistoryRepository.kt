@@ -5,7 +5,7 @@ import com.aienglish.feature.aiteacher.domain.model.EnglishLesson
 import com.aienglish.feature.aiteacher.domain.model.TeacherLessonHistory
 
 interface TeacherHistoryRepository {
-    suspend fun startLesson(topic: String, level: String): Long
+    suspend fun startLesson(topic: String, level: String, topicId: String? = null): Long
 
     suspend fun completeLesson(
         id: Long,
