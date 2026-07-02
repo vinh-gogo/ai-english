@@ -41,6 +41,8 @@ CREATE TABLE IF NOT EXISTS grammar_structures (
     pattern TEXT NOT NULL UNIQUE,
     meaning_key TEXT NOT NULL,
     explanation_key TEXT NOT NULL,
+    example TEXT NOT NULL,
+    level TEXT NOT NULL,
     created_at INTEGER NOT NULL
 );
 
@@ -92,6 +94,12 @@ CREATE TABLE IF NOT EXISTS question_notes (
     created_at INTEGER NOT NULL,
     UNIQUE(question_id, note),
     FOREIGN KEY(question_id) REFERENCES lesson_question(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS grammar_groups (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE,
+    created_at INTEGER NOT NULL
 );
 
 -- Queries
@@ -223,8 +231,30 @@ SELECT topic_id FROM lesson_history WHERE id = ?;
 getAllGrammarStructures:
 SELECT * FROM grammar_structures;
 
+insertGrammarStructure:
+INSERT OR REPLACE INTO grammar_structures (id, pattern, meaning_key, explanation_key, example, level, created_at)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
 getAllGrammarEdges:
 SELECT * FROM grammar_edges;
 
+insertGrammarEdge:
+INSERT OR REPLACE INTO grammar_edges (id, from_grammar_id, to_grammar_id, edge_type, created_at)
+VALUES (?, ?, ?, ?, ?);
+
 getAllSavedQuestionNotes:
 SELECT * FROM question_notes;
+
+-- Grammar groups queries
+getAllGrammarGroups:
+SELECT * FROM grammar_groups ORDER BY created_at ASC;
+
+insertGrammarGroup:
+INSERT OR REPLACE INTO grammar_groups (id, name, created_at)
+VALUES (?, ?, ?);
+
+updateGrammarGroupName:
+UPDATE grammar_groups SET name = ? WHERE id = ?;
+
+deleteGrammarGroup:
+DELETE FROM grammar_groups WHERE id = ?;

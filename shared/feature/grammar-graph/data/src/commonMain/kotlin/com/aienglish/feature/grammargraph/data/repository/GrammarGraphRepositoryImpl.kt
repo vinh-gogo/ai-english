@@ -7,6 +7,7 @@ import com.aienglish.feature.grammargraph.domain.repository.GrammarGraphReposito
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Clock
 
 class GrammarGraphRepositoryImpl(
     private val database: AIEnglishDatabase
@@ -14,16 +15,63 @@ class GrammarGraphRepositoryImpl(
 
     private val queries = database.lessonHistoryQueries
 
+    @OptIn(kotlin.uuid.ExperimentalUuidApi::class)
+    private suspend fun checkAndSeedDatabase() = withContext(Dispatchers.IO) {
+        // 1. Seed grammar structures (nodes) if empty
+        val existingNodes = queries.getAllGrammarStructures().executeAsList()
+        if (existingNodes.isEmpty()) {
+            defaultPredefinedNodes.forEach { node ->
+                queries.insertGrammarStructure(
+                    id = node.id,
+                    pattern = node.pattern,
+                    meaning_key = node.meaning,
+                    explanation_key = node.explanation,
+                    example = node.example,
+                    level = node.level,
+                    created_at = Clock.System.now().toEpochMilliseconds()
+                )
+            }
+        }
+
+        // 2. Seed grammar edges if empty
+        val existingEdges = queries.getAllGrammarEdges().executeAsList()
+        if (existingEdges.isEmpty()) {
+            defaultPredefinedEdges.forEach { edge ->
+                queries.insertGrammarEdge(
+                    id = edge.id,
+                    from_grammar_id = edge.fromGrammarId,
+                    to_grammar_id = edge.toGrammarId,
+                    edge_type = edge.edgeType,
+                    created_at = Clock.System.now().toEpochMilliseconds()
+                )
+            }
+        }
+
+        // 3. Seed grammar groups if empty
+        val existingGroups = queries.getAllGrammarGroups().executeAsList()
+        if (existingGroups.isEmpty()) {
+            listOf("Tất cả", "Cơ bản", "Nâng cao").forEachIndexed { index, groupName ->
+                queries.insertGrammarGroup(
+                    id = kotlin.uuid.Uuid.random().toString(),
+                    name = groupName,
+                    created_at = Clock.System.now().toEpochMilliseconds() + index
+                )
+            }
+        }
+    }
+
     override suspend fun getGrammarNodes(): List<GrammarNode> = withContext(Dispatchers.IO) {
+        checkAndSeedDatabase()
+        
         val dbNodes = try {
             queries.getAllGrammarStructures().executeAsList().map {
                 GrammarNode(
                     id = it.id,
                     pattern = it.pattern,
-                    meaning = "", // Fallback
-                    explanation = "",
-                    example = "",
-                    level = "B1",
+                    meaning = it.meaning_key,
+                    explanation = it.explanation_key,
+                    example = it.example,
+                    level = it.level,
                     isSaved = false
                 )
             }
@@ -31,22 +79,14 @@ class GrammarGraphRepositoryImpl(
             emptyList()
         }
 
-        // Saved notes from DB
+        // Saved notes from DB to check if bookmarked
         val savedNotes = try {
             queries.getAllSavedQuestionNotes().executeAsList().map { it.note }
         } catch (e: Exception) {
             emptyList()
         }
 
-        // Combine DB nodes with default predefined nodes
-        val allNodes = if (dbNodes.isEmpty()) {
-            defaultPredefinedNodes
-        } else {
-            dbNodes
-        }
-
-        // Map isSaved state
-        allNodes.map { node ->
+        dbNodes.map { node ->
             val isSaved = savedNotes.any { note -> 
                 note.contains(node.pattern, ignoreCase = true) || 
                 note.contains(node.id, ignoreCase = true)
@@ -56,7 +96,9 @@ class GrammarGraphRepositoryImpl(
     }
 
     override suspend fun getGrammarEdges(): List<GrammarEdge> = withContext(Dispatchers.IO) {
-        val dbEdges = try {
+        checkAndSeedDatabase()
+        
+        try {
             queries.getAllGrammarEdges().executeAsList().map {
                 GrammarEdge(
                     id = it.id,
@@ -68,12 +110,46 @@ class GrammarGraphRepositoryImpl(
         } catch (e: Exception) {
             emptyList()
         }
+    }
 
-        if (dbEdges.isEmpty()) {
-            defaultPredefinedEdges
-        } else {
-            dbEdges
+    override suspend fun getGrammarGroups(): List<String> = withContext(Dispatchers.IO) {
+        checkAndSeedDatabase()
+        
+        try {
+            queries.getAllGrammarGroups().executeAsList().map { it.name }
+        } catch (e: Exception) {
+            listOf("Tất cả", "Cơ bản", "Nâng cao")
         }
+    }
+
+    @OptIn(kotlin.uuid.ExperimentalUuidApi::class)
+    override suspend fun addGrammarGroup(name: String): Unit = withContext(Dispatchers.IO) {
+        checkAndSeedDatabase()
+        
+        try {
+            queries.insertGrammarGroup(
+                id = kotlin.uuid.Uuid.random().toString(),
+                name = name,
+                created_at = Clock.System.now().toEpochMilliseconds()
+            )
+        } catch (e: Exception) {
+            // Ignore duplicate insert errors
+        }
+        Unit
+    }
+
+    override suspend fun renameGrammarGroup(oldName: String, newName: String): Unit = withContext(Dispatchers.IO) {
+        checkAndSeedDatabase()
+        
+        try {
+            val group = queries.getAllGrammarGroups().executeAsList().find { it.name == oldName }
+            if (group != null) {
+                queries.updateGrammarGroupName(newName, group.id)
+            }
+        } catch (e: Exception) {
+            // Ignore error
+        }
+        Unit
     }
 
     companion object {

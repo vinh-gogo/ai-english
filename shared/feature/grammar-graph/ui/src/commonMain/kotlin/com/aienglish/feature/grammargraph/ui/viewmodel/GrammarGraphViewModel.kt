@@ -5,6 +5,7 @@ import com.aienglish.core.common.viewmodel.BaseViewModel
 import com.aienglish.feature.grammargraph.application.usecase.GetGrammarGraphUseCase
 import com.aienglish.feature.grammargraph.domain.model.GrammarEdge
 import com.aienglish.feature.grammargraph.domain.model.GrammarNode
+import com.aienglish.feature.grammargraph.domain.repository.GrammarGraphRepository
 import kotlinx.coroutines.launch
 
 data class GrammarGraphUiState(
@@ -20,7 +21,8 @@ data class GrammarGraphUiState(
 )
 
 class GrammarGraphViewModel(
-    private val getGrammarGraph: GetGrammarGraphUseCase
+    private val getGrammarGraph: GetGrammarGraphUseCase,
+    private val repository: GrammarGraphRepository
 ) : BaseViewModel<GrammarGraphUiState>(GrammarGraphUiState()) {
 
     fun selectGroup(group: String) {
@@ -36,14 +38,18 @@ class GrammarGraphViewModel(
 
     fun addGroup() {
         val newGroupName = "Nhóm mới ${currentState.groups.size - 1}"
-        setState {
-            copy(
-                groups = groups + newGroupName,
-                selectedGroup = newGroupName,
-                selectedNode = null,
-                focusedConnections = emptySet(),
-                editingGroup = newGroupName
-            )
+        viewModelScope.launch {
+            repository.addGrammarGroup(newGroupName)
+            val updatedGroups = repository.getGrammarGroups()
+            setState {
+                copy(
+                    groups = updatedGroups,
+                    selectedGroup = newGroupName,
+                    selectedNode = null,
+                    focusedConnections = emptySet(),
+                    editingGroup = newGroupName
+                )
+            }
         }
     }
 
@@ -60,14 +66,17 @@ class GrammarGraphViewModel(
             setState { copy(editingGroup = null) }
             return
         }
-        val updatedGroups = currentState.groups.map { if (it == oldName) trimmed else it }
-        val updatedSelected = if (currentState.selectedGroup == oldName) trimmed else currentState.selectedGroup
-        setState {
-            copy(
-                groups = updatedGroups,
-                selectedGroup = updatedSelected,
-                editingGroup = null
-            )
+        viewModelScope.launch {
+            repository.renameGrammarGroup(oldName, trimmed)
+            val updatedGroups = repository.getGrammarGroups()
+            val updatedSelected = if (currentState.selectedGroup == oldName) trimmed else currentState.selectedGroup
+            setState {
+                copy(
+                    groups = updatedGroups,
+                    selectedGroup = updatedSelected,
+                    editingGroup = null
+                )
+            }
         }
     }
 
@@ -91,6 +100,9 @@ class GrammarGraphViewModel(
                     nodes.any { it.id == edge.fromGrammarId } && nodes.any { it.id == edge.toGrammarId }
                 }
 
+                // Get dynamic groups list from DB
+                val groups = repository.getGrammarGroups()
+
                 // Layout initial coordinates nicely
                 val positions = nodes.mapIndexed { index, node ->
                     val x = 100f + (index % 2) * 420f + (if (index % 3 == 0) 40f else 0f)
@@ -105,7 +117,8 @@ class GrammarGraphViewModel(
                         edges = edges,
                         nodePositions = positions,
                         selectedNode = null,
-                        focusedConnections = emptySet()
+                        focusedConnections = emptySet(),
+                        groups = groups
                     )
                 }
             } catch (e: Exception) {

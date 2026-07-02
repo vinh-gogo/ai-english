@@ -4,5 +4,5 @@ import com.aienglish.feature.grammargraph.ui.viewmodel.GrammarGraphViewModel
 import org.koin.dsl.module
 
 val grammarGraphUiModule = module {
-    factory { GrammarGraphViewModel(get()) }
+    factory { GrammarGraphViewModel(get(), get()) }
 }
