@@ -57,8 +57,9 @@ class GrammarGraphRepositoryImpl(
 
         val mappedNodes = dbNodes.map { node ->
             val matchingRow = savedNoteRows.firstOrNull { row -> 
+                row.id.toString() == node.id ||
                 row.note.contains(node.pattern, ignoreCase = true) || 
-                row.note.contains(node.id, ignoreCase = true)
+                node.pattern.contains(row.note, ignoreCase = true)
             }
             node.copy(
                 isSaved = matchingRow != null,
