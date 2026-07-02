@@ -121,13 +121,37 @@ class GrammarGraphRepositoryImpl(
             emptyList()
         }
 
-        dbNodes.map { node ->
+        val mappedNodes = dbNodes.map { node ->
             val isSaved = savedNotes.any { note -> 
                 note.contains(node.pattern, ignoreCase = true) || 
                 note.contains(node.id, ignoreCase = true)
             }
             node.copy(isSaved = isSaved)
         }
+
+        // Filter out saved notes that do not match any pre-seeded structures
+        val unmatchedNotes = savedNotes.filter { note ->
+            mappedNodes.none { node ->
+                note.contains(node.pattern, ignoreCase = true) || 
+                note.contains(node.id, ignoreCase = true) ||
+                node.pattern.contains(note, ignoreCase = true)
+            }
+        }.distinct()
+
+        // Dynamically synthesize nodes for custom saved structures so they can be added to the graph
+        val dynamicNodes = unmatchedNotes.map { note ->
+            GrammarNode(
+                id = note,
+                pattern = note,
+                meaning = "Cấu trúc đã lưu",
+                explanation = "Cấu trúc ngữ pháp đã lưu từ lịch sử bài học của bạn.",
+                example = "Nhấp để chọn và học cấu trúc này.",
+                level = "B1",
+                isSaved = true
+            )
+        }
+
+        mappedNodes + dynamicNodes
     }
 
     override suspend fun getGrammarEdges(): List<GrammarEdge> = withContext(Dispatchers.IO) {
