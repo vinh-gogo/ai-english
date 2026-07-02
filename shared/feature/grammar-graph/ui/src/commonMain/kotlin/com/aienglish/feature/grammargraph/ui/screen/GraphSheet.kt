@@ -358,7 +358,9 @@ fun GraphSheet(
 
                 // Fixed floating action (+) button in the top-right corner of the viewport
                 var showAddSavedDropdown by remember { mutableStateOf(false) }
-                val availableSavedNodes = state.nodes
+                val availableSavedNodes = remember(state.nodes, filteredNodes) {
+                    state.nodes.filter { node -> filteredNodes.none { it.id == node.id } }
+                }
 
                 Box(
                     modifier = Modifier
