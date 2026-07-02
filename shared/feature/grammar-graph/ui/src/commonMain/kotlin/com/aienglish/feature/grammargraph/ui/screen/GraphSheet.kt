@@ -123,9 +123,9 @@ fun GraphSheet(
             val filteredNodes = remember(state.nodes, state.selectedGroup, state.groupNodeIds) {
                 state.nodes.filter { node ->
                     when (state.selectedGroup) {
-                        "Cơ bản" -> node.level in listOf("A1", "A2")
-                        "Nâng cao" -> node.level in listOf("B1", "B2")
-                        "Tất cả" -> true
+                        "Cơ bản" -> node.isSaved && node.level in listOf("A1", "A2")
+                        "Nâng cao" -> node.isSaved && node.level in listOf("B1", "B2")
+                        "Tất cả" -> node.isSaved
                         else -> {
                             val mappedIds = state.groupNodeIds[state.selectedGroup] ?: emptyList()
                             node.id in mappedIds

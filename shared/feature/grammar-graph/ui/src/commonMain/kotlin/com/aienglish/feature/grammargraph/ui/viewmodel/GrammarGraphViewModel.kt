@@ -135,8 +135,8 @@ class GrammarGraphViewModel(
                 // Map of all custom node IDs currently assigned to any group
                 val customGroupMappedIds = groupNodeIdsMap.values.flatten().toSet()
 
-                // Combined nodes list that must be available in memory (default ones + any nodes mapped to user groups)
-                val nodes = (defaultNodes + allDbNodes.filter { it.id in customGroupMappedIds }).distinctBy { it.id }
+                // Combined nodes list that must be available in memory (default ones + any nodes mapped to user groups + all saved nodes)
+                val nodes = (defaultNodes + allDbNodes.filter { it.id in customGroupMappedIds } + savedNodes).distinctBy { it.id }
 
                 val edges = getGrammarGraph.getEdges().filter { edge ->
                     nodes.any { it.id == edge.fromGrammarId } && nodes.any { it.id == edge.toGrammarId }
