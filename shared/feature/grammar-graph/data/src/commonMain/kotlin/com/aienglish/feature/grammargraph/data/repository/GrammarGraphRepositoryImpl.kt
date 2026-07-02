@@ -38,34 +38,34 @@ class GrammarGraphRepositoryImpl(
         }
 
         // Saved notes from DB to check if bookmarked
-        val savedNotes = try {
-            queries.getAllSavedQuestionNotes().executeAsList().map { it.note }
+        val savedNoteRows = try {
+            queries.getAllSavedQuestionNotes().executeAsList()
         } catch (e: Exception) {
             emptyList()
         }
 
         val mappedNodes = dbNodes.map { node ->
-            val isSaved = savedNotes.any { note -> 
-                note.contains(node.pattern, ignoreCase = true) || 
-                note.contains(node.id, ignoreCase = true)
+            val isSaved = savedNoteRows.any { row -> 
+                row.note.contains(node.pattern, ignoreCase = true) || 
+                row.note.contains(node.id, ignoreCase = true)
             }
             node.copy(isSaved = isSaved)
         }
 
         // Filter out saved notes that do not match any pre-seeded structures
-        val unmatchedNotes = savedNotes.filter { note ->
+        val unmatchedNoteRows = savedNoteRows.filter { row ->
             mappedNodes.none { node ->
-                note.contains(node.pattern, ignoreCase = true) || 
-                note.contains(node.id, ignoreCase = true) ||
-                node.pattern.contains(note, ignoreCase = true)
+                row.note.contains(node.pattern, ignoreCase = true) || 
+                row.note.contains(node.id, ignoreCase = true) ||
+                node.pattern.contains(row.note, ignoreCase = true)
             }
-        }.distinct()
+        }.distinctBy { it.note }
 
         // Dynamically synthesize nodes for custom saved structures so they can be added to the graph
-        val dynamicNodes = unmatchedNotes.map { note ->
+        val dynamicNodes = unmatchedNoteRows.map { row ->
             GrammarNode(
-                id = note,
-                pattern = note,
+                id = row.id,
+                pattern = row.note,
                 meaning = "Cấu trúc đã lưu",
                 explanation = "Cấu trúc ngữ pháp đã lưu từ lịch sử bài học của bạn.",
                 example = "Nhấp để chọn và học cấu trúc này.",
