@@ -125,11 +125,7 @@ class GrammarGraphViewModel(
                 val savedNodes = allDbNodes.filter { it.isSaved }
 
                 val defaultNodes = allDbNodes.filter {
-                    if (targetLanguage == "vi") {
-                        it.id in listOf("S_COCOP", "PAST_DA", "FUTURE_SE", "MUST_PHAI", "COND_NEU")
-                    } else {
-                        it.id in listOf("S_V_O", "S_V_ADJ", "PRES_PERF", "MODAL", "COND_1", "USED_TO", "WISH_PAST")
-                    }
+                    it.id in listOf("S_V_O", "S_V_ADJ", "PRES_PERF", "MODAL", "COND_1", "USED_TO", "WISH_PAST")
                 }
 
                 // Map of all custom node IDs currently assigned to any group

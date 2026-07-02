@@ -21,10 +21,16 @@ class GrammarGraphRepositoryImpl(
     private suspend fun checkAndSeedDatabase() = withContext(Dispatchers.IO) {
         // Safe check to verify that all columns (like example and level) and tables exist
         try {
-            queries.getAllGrammarStructures().executeAsList()
+            val allStructures = queries.getAllGrammarStructures().executeAsList()
             queries.getAllGrammarEdges().executeAsList()
             queries.getAllGrammarGroups().executeAsList()
             queries.getNodesForGroupName("Tất cả").executeAsList()
+            
+            // If database contains old Vietnamese nodes, force recreate tables to clean them up
+            val hasVietnamese = allStructures.any { it.id == "MUST_PHAI" || it.id == "S_COCOP" }
+            if (hasVietnamese) {
+                throw IllegalStateException("Purging legacy Vietnamese predefined structures.")
+            }
         } catch (e: Exception) {
             // Recreate grammar tables if there is a schema mismatch
             try {
@@ -306,48 +312,6 @@ class GrammarGraphRepositoryImpl(
                 explanation = "Diễn tả mong muốn trái ngược với thực tế ở hiện tại.",
                 example = "I wish I had more free time.",
                 level = "B2"
-            ),
-            
-            // Vietnamese default nodes
-            GrammarNode(
-                id = "S_COCOP",
-                pattern = "S + là + Noun/Adj",
-                meaning = "Cấu trúc định nghĩa hệ từ 'là'.",
-                explanation = "Liên kết chủ ngữ với danh từ hoặc tính từ để giới thiệu hoặc miêu tả danh tính.",
-                example = "Anh ấy là kỹ sư.",
-                level = "A1"
-            ),
-            GrammarNode(
-                id = "PAST_DA",
-                pattern = "S + đã + V",
-                meaning = "Trạng thái quá khứ.",
-                explanation = "Thêm từ chỉ thời gian 'đã' trước động từ để diễn tả hành động đã xảy ra.",
-                example = "Chúng tôi đã hoàn thành bài tập.",
-                level = "A1"
-            ),
-            GrammarNode(
-                id = "FUTURE_SE",
-                pattern = "S + sẽ + V",
-                meaning = "Trạng thái tương lai.",
-                explanation = "Thêm từ 'sẽ' trước động từ để chỉ một dự định hoặc kế hoạch trong tương lai.",
-                example = "Ngày mai tôi sẽ đi Hà Nội.",
-                level = "A2"
-            ),
-            GrammarNode(
-                id = "MUST_PHAI",
-                pattern = "S + phải + V",
-                meaning = "Cấu trúc bắt buộc.",
-                explanation = "Biểu thị bổn phận, trách nhiệm bắt buộc phải thực hiện hành động.",
-                example = "Bạn phải làm bài tập về nhà.",
-                level = "A2"
-            ),
-            GrammarNode(
-                id = "COND_NEU",
-                pattern = "Nếu + S + V, thì + S + V",
-                meaning = "Câu điều kiện.",
-                explanation = "Diễn tả mối quan hệ nguyên nhân - kết quả, giả thiết - hệ quả.",
-                example = "Nếu trời mưa thì tôi nghỉ học.",
-                level = "B1"
             )
         )
 
@@ -357,14 +321,7 @@ class GrammarGraphRepositoryImpl(
             GrammarEdge("e3", "MODAL", "COND_1"),
             GrammarEdge("e4", "S_V_O", "S_V_ADJ"),
             GrammarEdge("e5", "PRES_PERF", "USED_TO"),
-            GrammarEdge("e6", "COND_1", "WISH_PAST"),
-            
-            // Vietnamese Edges
-            GrammarEdge("e7", "S_V_O", "PAST_DA"),
-            GrammarEdge("e8", "S_V_O", "FUTURE_SE"),
-            GrammarEdge("e9", "S_V_O", "S_COCOP"),
-            GrammarEdge("e10", "FUTURE_SE", "COND_NEU"),
-            GrammarEdge("e11", "PAST_DA", "MUST_PHAI")
+            GrammarEdge("e6", "COND_1", "WISH_PAST")
         )
     }
 }
