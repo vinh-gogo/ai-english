@@ -42,10 +42,13 @@ class GrammarGraphViewModel(
     }
 
     fun addGroup() {
-        val newGroupName = "Nhóm mới ${currentState.groups.size - 1}"
+        val nextId = currentState.groups
+            .mapNotNull { it.removePrefix("Nhóm mới ").trim().toIntOrNull() }
+            .maxOrNull()?.plus(1) ?: 1
+        val newGroupName = "Nhóm mới $nextId"
         viewModelScope.launch {
             repository.addGrammarGroup(newGroupName)
-            val updatedGroups = repository.getGrammarGroups()
+            val updatedGroups = fetchGroupsWithAll()
             val updatedGroupNodeIds = currentState.groupNodeIds + (newGroupName to emptyList())
             setState {
                 copy(
@@ -58,6 +61,11 @@ class GrammarGraphViewModel(
                 )
             }
         }
+    }
+
+    private suspend fun fetchGroupsWithAll(): List<String> {
+        val dbGroups = repository.getGrammarGroups()
+        return if (dbGroups.contains("Tất cả")) dbGroups else listOf("Tất cả") + dbGroups
     }
 
     fun startEditingGroup(group: String) {
@@ -75,7 +83,7 @@ class GrammarGraphViewModel(
         }
         viewModelScope.launch {
             repository.renameGrammarGroup(oldName, trimmed)
-            val updatedGroups = repository.getGrammarGroups()
+            val updatedGroups = fetchGroupsWithAll()
             val updatedSelected = if (currentState.selectedGroup == oldName) trimmed else currentState.selectedGroup
             val updatedGroupNodeIds = currentState.groupNodeIds.toMutableMap()
             val existingIds = updatedGroupNodeIds.remove(oldName)
@@ -104,7 +112,7 @@ class GrammarGraphViewModel(
     fun deleteGroup(name: String) {
         viewModelScope.launch {
             repository.deleteGrammarGroup(name)
-            val updatedGroups = repository.getGrammarGroups()
+            val updatedGroups = fetchGroupsWithAll()
             val nextSelectedGroup = if (currentState.selectedGroup == name) "Tất cả" else currentState.selectedGroup
             val updatedGroupNodeIds = currentState.groupNodeIds - name
             setState {
