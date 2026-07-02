@@ -24,7 +24,7 @@ class GrammarGraphRepositoryImpl(
     private val fallbackApiKey: String
 ) : GrammarGraphRepository {
 
-    private val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
+    private val json = Json { ignoreUnknownKeys = true; coerceInputValues = true; isLenient = true }
 
     private val queries = database.lessonHistoryQueries
 
@@ -338,7 +338,13 @@ Lưu ý:
             .removeSuffix("```")
             .trim()
             
-        json.decodeFromString<AiGraphResponse>(cleanedJson)
+        try {
+            json.decodeFromString<AiGraphResponse>(cleanedJson)
+        } catch (e: Exception) {
+            println("GrammarGraphAI: JSON Parse Error: ${e.message}")
+            println("GrammarGraphAI: Raw Response: $cleanedJson")
+            throw Exception("AI trả về dữ liệu lỗi định dạng. Vui lòng thử lại. Chi tiết: ${e.message}")
+        }
     }
 
     @OptIn(kotlin.uuid.ExperimentalUuidApi::class)
