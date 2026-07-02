@@ -47,6 +47,9 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.AutoAwesome
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
@@ -374,19 +377,39 @@ fun GraphSheet(
                         .align(Alignment.TopEnd)
                         .padding(16.dp)
                 ) {
-                    FloatingActionButton(
-                        onClick = { showAddSavedDropdown = true },
-                        containerColor = colors.accent,
-                        contentColor = colors.surface,
-                        shape = CircleShape,
-                        modifier = Modifier.size(40.dp),
-                        elevation = FloatingActionButtonDefaults.elevation(4.dp)
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        horizontalAlignment = Alignment.End
                     ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Add,
-                            contentDescription = "Add saved structure",
-                            modifier = Modifier.size(24.dp)
-                        )
+                        FloatingActionButton(
+                            onClick = { showAddSavedDropdown = true },
+                            containerColor = colors.accent,
+                            contentColor = colors.surface,
+                            shape = CircleShape,
+                            modifier = Modifier.size(40.dp),
+                            elevation = FloatingActionButtonDefaults.elevation(4.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.Add,
+                                contentDescription = "Add saved structure",
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                        
+                        FloatingActionButton(
+                            onClick = { /* TODO: Implement AI Assistant action */ },
+                            containerColor = colors.accent,
+                            contentColor = colors.surface,
+                            shape = CircleShape,
+                            modifier = Modifier.size(40.dp),
+                            elevation = FloatingActionButtonDefaults.elevation(4.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.AutoAwesome,
+                                contentDescription = "AI Assistant",
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
                     }
 
                     DropdownMenu(
