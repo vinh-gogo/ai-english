@@ -67,6 +67,7 @@ internal fun GroupFilterHeader(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .heightIn(min = 48.dp)
                 .padding(horizontal = 20.dp)
                 .padding(bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically
