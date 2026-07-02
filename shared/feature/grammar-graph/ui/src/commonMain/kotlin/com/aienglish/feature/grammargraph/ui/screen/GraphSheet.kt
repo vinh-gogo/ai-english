@@ -123,7 +123,10 @@ fun GraphSheet(
             val filteredNodes = remember(state.nodes, state.selectedGroup, state.groupNodeIds) {
                 state.nodes.filter { node ->
                     when (state.selectedGroup) {
-                        "Tất cả" -> node.isSaved
+                        "Tất cả" -> {
+                            val allMappedIds = state.groupNodeIds.values.flatten().toSet()
+                            node.isSaved || node.id in allMappedIds
+                        }
                         else -> {
                             val mappedIds = state.groupNodeIds[state.selectedGroup] ?: emptyList()
                             node.id in mappedIds
