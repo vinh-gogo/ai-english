@@ -185,6 +185,21 @@ class GrammarGraphViewModel(
         }
     }
 
+    fun removeNodeFromGraph(nodeId: String) {
+        setState {
+            val updatedNodes = nodes.filter { it.id != nodeId }
+            val updatedEdges = edges.filter { it.fromGrammarId != nodeId && it.toGrammarId != nodeId }
+            val updatedPositions = nodePositions - nodeId
+            copy(
+                nodes = updatedNodes,
+                edges = updatedEdges,
+                nodePositions = updatedPositions,
+                selectedNode = null,
+                focusedConnections = emptySet()
+            )
+        }
+    }
+
     fun selectNode(node: GrammarNode?) {
         if (node == null) {
             setState { copy(selectedNode = null, focusedConnections = emptySet()) }

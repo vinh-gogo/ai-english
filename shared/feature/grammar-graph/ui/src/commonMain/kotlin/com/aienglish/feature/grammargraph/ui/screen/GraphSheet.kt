@@ -634,7 +634,8 @@ fun GraphSheet(
                         node = node,
                         colors = colors,
                         onDismiss = { viewModel.selectNode(null) },
-                        onSpeak = onSpeak
+                        onSpeak = onSpeak,
+                        onDeleteClick = { viewModel.removeNodeFromGraph(node.id) }
                     )
                 }
             }
