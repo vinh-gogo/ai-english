@@ -459,9 +459,18 @@ private fun HistoryItem(
         // Action Buttons
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            Text(
+                text = "#${itemState.id}",
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                color = colors.hintText,
+                modifier = Modifier.padding(start = 4.dp)
+            )
+
+            Spacer(Modifier.weight(1f))
+
             // Action buttons on the right
             if (itemState.status == HistoryStatus.IN_PROGRESS && itemState.hasLessonData) {
                 Box(
