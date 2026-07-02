@@ -414,6 +414,7 @@ fun GraphSheet(
                         modifier = Modifier
                             .background(colors.surface)
                             .widthIn(max = 240.dp)
+                            .heightIn(max = 500.dp)
                     ) {
                         if (availableSavedNodes.isEmpty()) {
                             DropdownMenuItem(
