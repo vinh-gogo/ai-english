@@ -1,3 +1,8 @@
-ALTER TABLE lesson_feedback ADD COLUMN score INTEGER NOT NULL DEFAULT 0;
-ALTER TABLE learning_topics ADD COLUMN updated_at INTEGER NOT NULL DEFAULT 0;
-ALTER TABLE learning_topics ADD COLUMN is_ai_recommended INTEGER NOT NULL DEFAULT 0;
+CREATE TABLE IF NOT EXISTS grammar_groups (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE,
+    created_at INTEGER NOT NULL
+);
+
+ALTER TABLE grammar_structures ADD COLUMN example TEXT NOT NULL DEFAULT '';
+ALTER TABLE grammar_structures ADD COLUMN level TEXT NOT NULL DEFAULT 'B1';
