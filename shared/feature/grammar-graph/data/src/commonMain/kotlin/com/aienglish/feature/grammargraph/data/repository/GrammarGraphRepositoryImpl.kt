@@ -37,9 +37,9 @@ class GrammarGraphRepositoryImpl(
             emptyList()
         }
 
-        // Saved notes from DB to check if bookmarked
+        // Saved notes from DB with level info
         val savedNoteRows = try {
-            queries.getAllSavedQuestionNotes().executeAsList()
+            queries.getAllSavedQuestionNotesWithLevel().executeAsList()
         } catch (e: Exception) {
             emptyList()
         }
@@ -69,7 +69,7 @@ class GrammarGraphRepositoryImpl(
                 meaning = "Cấu trúc đã lưu",
                 explanation = "Cấu trúc ngữ pháp đã lưu từ lịch sử bài học của bạn.",
                 example = "Nhấp để chọn và học cấu trúc này.",
-                level = "B1",
+                level = row.level,
                 isSaved = true
             )
         }

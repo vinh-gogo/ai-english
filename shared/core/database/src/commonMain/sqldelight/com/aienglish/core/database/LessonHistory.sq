@@ -253,6 +253,12 @@ VALUES (?, ?, ?, ?, ?);
 getAllSavedQuestionNotes:
 SELECT * FROM question_notes;
 
+getAllSavedQuestionNotesWithLevel:
+SELECT qn.id, qn.question_id, qn.note, qn.created_at, lh.level
+FROM question_notes qn
+JOIN lesson_question lq ON qn.question_id = lq.id
+JOIN lesson_history lh ON lq.history_id = lh.id;
+
 -- Grammar groups queries
 getAllGrammarGroups:
 SELECT * FROM grammar_groups ORDER BY created_at ASC;
