@@ -4,6 +4,8 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -34,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.AppColors
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun GroupFilterHeader(
     groups: List<String>,
@@ -101,12 +104,10 @@ internal fun GroupFilterHeader(
                     } else if (isEditing) {
                         Modifier
                     } else {
-                        Modifier.pointerInput(groupName) {
-                            detectTapGestures(
-                                onTap = { onSelectGroup(groupName) },
-                                onLongPress = { onStartEditingGroup(groupName) }
-                            )
-                        }
+                        Modifier.combinedClickable(
+                            onClick = { onSelectGroup(groupName) },
+                            onLongClick = { onStartEditingGroup(groupName) }
+                        )
                     },
                     shape = RoundedCornerShape(16.dp),
                     color = if (isSelected) colors.accent.copy(alpha = 0.12f) else colors.background,
@@ -134,6 +135,7 @@ internal fun GroupFilterHeader(
                         if (isEditing) {
                             var editName by remember { mutableStateOf(groupName) }
                             val focusRequester = remember { FocusRequester() }
+                            var hasBeenFocused by remember { mutableStateOf(false) }
                             
                             LaunchedEffect(Unit) {
                                 focusRequester.requestFocus()
@@ -153,7 +155,9 @@ internal fun GroupFilterHeader(
                                     .widthIn(min = 60.dp, max = 150.dp)
                                     .focusRequester(focusRequester)
                                     .onFocusChanged { 
-                                        if (!it.isFocused) {
+                                        if (it.isFocused) {
+                                            hasBeenFocused = true
+                                        } else if (hasBeenFocused) {
                                             onRenameGroup(groupName, editName)
                                         }
                                     },
