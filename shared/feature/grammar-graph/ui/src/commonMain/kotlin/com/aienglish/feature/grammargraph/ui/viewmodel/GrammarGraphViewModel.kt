@@ -44,13 +44,15 @@ class GrammarGraphViewModel(
         viewModelScope.launch {
             repository.addGrammarGroup(newGroupName)
             val updatedGroups = repository.getGrammarGroups()
+            val updatedGroupNodeIds = currentState.groupNodeIds + (newGroupName to emptyList())
             setState {
                 copy(
                     groups = updatedGroups,
                     selectedGroup = newGroupName,
                     selectedNode = null,
                     focusedConnections = emptySet(),
-                    editingGroup = newGroupName
+                    editingGroup = newGroupName,
+                    groupNodeIds = updatedGroupNodeIds
                 )
             }
         }
@@ -73,11 +75,17 @@ class GrammarGraphViewModel(
             repository.renameGrammarGroup(oldName, trimmed)
             val updatedGroups = repository.getGrammarGroups()
             val updatedSelected = if (currentState.selectedGroup == oldName) trimmed else currentState.selectedGroup
+            val updatedGroupNodeIds = currentState.groupNodeIds.toMutableMap()
+            val existingIds = updatedGroupNodeIds.remove(oldName)
+            if (existingIds != null) {
+                updatedGroupNodeIds[trimmed] = existingIds
+            }
             setState {
                 copy(
                     groups = updatedGroups,
                     selectedGroup = updatedSelected,
-                    editingGroup = null
+                    editingGroup = null,
+                    groupNodeIds = updatedGroupNodeIds
                 )
             }
         }
@@ -96,10 +104,12 @@ class GrammarGraphViewModel(
             repository.deleteGrammarGroup(name)
             val updatedGroups = repository.getGrammarGroups()
             val nextSelectedGroup = if (currentState.selectedGroup == name) "Tất cả" else currentState.selectedGroup
+            val updatedGroupNodeIds = currentState.groupNodeIds - name
             setState {
                 copy(
                     groups = updatedGroups,
-                    selectedGroup = nextSelectedGroup
+                    selectedGroup = nextSelectedGroup,
+                    groupNodeIds = updatedGroupNodeIds
                 )
             }
         }
