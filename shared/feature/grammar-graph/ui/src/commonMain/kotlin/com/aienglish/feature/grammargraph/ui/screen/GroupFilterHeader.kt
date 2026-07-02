@@ -50,15 +50,29 @@ internal fun GroupFilterHeader(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
+        // Custom Drag Handle at the top of the header
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp, bottom = 4.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(width = 36.dp, height = 4.dp)
+                    .background(colors.mutedText.copy(alpha = 0.35f), RoundedCornerShape(2.dp))
+            )
+        }
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                .padding(horizontal = 16.dp, vertical = 6.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier = Modifier
-                    .size(36.dp)
+                    .size(32.dp)
                     .background(colors.accent.copy(alpha = 0.15f), CircleShape),
                 contentAlignment = Alignment.Center
             ) {
@@ -66,21 +80,17 @@ internal fun GroupFilterHeader(
                     imageVector = Icons.Rounded.Hub,
                     contentDescription = null,
                     tint = colors.accent,
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(16.dp)
                 )
             }
-            Spacer(Modifier.width(12.dp))
-            Column {
-                Text(
-                    text = "Đồ thị Ngữ pháp",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = colors.mainText
-                )
-            }
+            Spacer(Modifier.width(10.dp))
+            Text(
+                text = "Đồ thị Ngữ pháp",
+                fontSize = 17.sp,
+                fontWeight = FontWeight.Bold,
+                color = colors.mainText
+            )
         }
-
-        HorizontalDivider(color = colors.border.copy(alpha = 0.5f), thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
 
         // Carousel to categorize grammar groups
         Row(
@@ -183,7 +193,8 @@ internal fun GroupFilterHeader(
                 }
             }
         }
-
-        Spacer(modifier = Modifier.height(4.dp))
+        
+        Spacer(modifier = Modifier.height(6.dp))
+        HorizontalDivider(color = colors.border.copy(alpha = 0.35f), thickness = 1.dp)
     }
 }

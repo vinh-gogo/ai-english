@@ -94,7 +94,7 @@ fun GraphSheet(
         onDismissRequest = onDismiss,
         containerColor = colors.surface,
         contentColor = colors.mainText,
-        dragHandle = { BottomSheetDefaults.DragHandle(color = colors.mutedText.copy(alpha = 0.5f)) }
+        dragHandle = null
     ) {
         Column(
             modifier = Modifier
