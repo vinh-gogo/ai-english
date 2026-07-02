@@ -56,11 +56,14 @@ class GrammarGraphRepositoryImpl(
         }
 
         val mappedNodes = dbNodes.map { node ->
-            val isSaved = savedNoteRows.any { row -> 
+            val matchingRow = savedNoteRows.firstOrNull { row -> 
                 row.note.contains(node.pattern, ignoreCase = true) || 
                 row.note.contains(node.id, ignoreCase = true)
             }
-            node.copy(isSaved = isSaved)
+            node.copy(
+                isSaved = matchingRow != null,
+                historyId = matchingRow?.history_id?.toString()
+            )
         }
 
         // Filter out saved notes that do not match any pre-seeded structures
@@ -77,11 +80,12 @@ class GrammarGraphRepositoryImpl(
             GrammarNode(
                 id = row.id,
                 pattern = row.note,
-                meaning = "Bài học #${row.history_id}",
+                meaning = "Cấu trúc đã lưu",
                 explanation = "Cấu trúc ngữ pháp đã lưu từ lịch sử bài học của bạn.",
                 example = "Nhấp để chọn và học cấu trúc này.",
                 level = row.level,
-                isSaved = true
+                isSaved = true,
+                historyId = row.history_id.toString()
             )
         }
 

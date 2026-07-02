@@ -10,5 +10,6 @@ data class GrammarNode(
     val explanation: String,
     val example: String,
     val level: String = "B1",
-    val isSaved: Boolean = false
+    val isSaved: Boolean = false,
+    val historyId: String? = null
 )

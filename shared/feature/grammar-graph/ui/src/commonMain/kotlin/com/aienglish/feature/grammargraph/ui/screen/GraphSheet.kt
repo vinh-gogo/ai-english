@@ -438,19 +438,28 @@ fun GraphSheet(
                                                 fontWeight = FontWeight.Bold,
                                                 color = colors.mainText
                                             )
-                                            Box(
-                                                modifier = Modifier
-                                                    .padding(top = 4.dp)
-                                                    .background(
-                                                        color = colors.accent.copy(alpha = 0.15f),
-                                                        shape = RoundedCornerShape(4.dp)
+                                            if (node.historyId != null) {
+                                                Box(
+                                                    modifier = Modifier
+                                                        .padding(top = 4.dp)
+                                                        .background(
+                                                            color = colors.accent.copy(alpha = 0.15f),
+                                                            shape = RoundedCornerShape(4.dp)
+                                                        )
+                                                        .padding(horizontal = 6.dp, vertical = 2.dp)
+                                                ) {
+                                                    Text(
+                                                        text = "Bài học #${node.historyId}",
+                                                        fontSize = 10.sp,
+                                                        color = colors.accent,
+                                                        maxLines = 1
                                                     )
-                                                    .padding(horizontal = 6.dp, vertical = 2.dp)
-                                            ) {
+                                                }
+                                            } else {
                                                 Text(
                                                     text = node.meaning,
-                                                    fontSize = 10.sp,
-                                                    color = colors.accent,
+                                                    fontSize = 11.sp,
+                                                    color = colors.mutedText,
                                                     maxLines = 1
                                                 )
                                             }
