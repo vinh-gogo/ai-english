@@ -189,6 +189,15 @@ class GrammarGraphRepositoryImpl(
         Unit
     }
 
+    override suspend fun removeEdgesForNode(nodeId: String): Unit = withContext(Dispatchers.IO) {
+        try {
+            queries.deleteEdgesForNode(nodeId = nodeId)
+        } catch (e: Exception) {
+            // Ignore
+        }
+        Unit
+    }
+
     override suspend fun generateAiGraph(nodes: List<GrammarNode>): AiGraphResponse = withContext(Dispatchers.IO) {
         val apiKey = prefs.getApiKey().ifBlank { fallbackApiKey }
         if (apiKey.isBlank()) throw Exception("Chưa có API Key. Vào Profile → cài Gemini API Key để bắt đầu.")

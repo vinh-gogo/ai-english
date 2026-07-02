@@ -14,6 +14,7 @@ interface GrammarGraphRepository {
     suspend fun getNodesForGroup(groupName: String): List<String>
     suspend fun addNodeToGroup(groupName: String, node: GrammarNode)
     suspend fun removeNodeFromGroup(groupName: String, grammarId: String)
+    suspend fun removeEdgesForNode(nodeId: String)
     suspend fun generateAiGraph(nodes: List<GrammarNode>): AiGraphResponse
     suspend fun saveAiGeneratedGraph(response: AiGraphResponse, originalNodes: List<GrammarNode>, groupName: String)
 }

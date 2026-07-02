@@ -250,6 +250,9 @@ insertGrammarEdge:
 INSERT OR REPLACE INTO grammar_edges (id, from_grammar_id, to_grammar_id, edge_type, created_at)
 VALUES (?, ?, ?, ?, ?);
 
+deleteEdgesForNode:
+DELETE FROM grammar_edges WHERE from_grammar_id = :nodeId OR to_grammar_id = :nodeId;
+
 getAllSavedQuestionNotes:
 SELECT * FROM question_notes;
 

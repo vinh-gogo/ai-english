@@ -224,6 +224,7 @@ class GrammarGraphViewModel(
             try {
                 if (selected != "Tất cả") {
                     repository.removeNodeFromGroup(selected, nodeId)
+                    repository.removeEdgesForNode(nodeId)
                 }
                 
                 val updatedGroupNodeIds = if (selected != "Tất cả") {
