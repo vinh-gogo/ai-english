@@ -20,6 +20,7 @@ kotlin {
             implementation(libs.sqldelight.coroutines)
             implementation(libs.datetime)
             implementation(project(":shared:core:common"))
+            implementation(project(":shared:core:network"))
             implementation(project(":shared:core:database"))
             implementation(project(":shared:feature:grammar-graph:domain"))
         }

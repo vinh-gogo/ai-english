@@ -397,7 +397,7 @@ fun GraphSheet(
                         }
                         
                         FloatingActionButton(
-                            onClick = { viewModel.generateAiGraphForCurrentGroup() },
+                            onClick = { viewModel.generateAiGraphForCurrentGroup(targetLanguage) },
                             containerColor = colors.accent,
                             contentColor = colors.surface,
                             shape = CircleShape,
@@ -475,7 +475,6 @@ fun GraphSheet(
                         onDeleteClick = { viewModel.removeNodeFromGraph(node.id) }
                     )
                 }
-            }
             }
             
             // AI Loading Overlay

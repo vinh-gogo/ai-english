@@ -277,7 +277,7 @@ class GrammarGraphViewModel(
         }
     }
     
-    fun generateAiGraphForCurrentGroup() {
+    fun generateAiGraphForCurrentGroup(targetLanguage: String) {
         val group = currentState.selectedGroup
         if (group == "Tất cả") {
             setState { copy(aiErrorMessage = "Tính năng sinh AI chỉ hỗ trợ cho Custom Group để tránh quá tải.") }
@@ -304,7 +304,7 @@ class GrammarGraphViewModel(
                 repository.saveAiGeneratedGraph(aiResponse, nodesToProcess, group)
                 
                 // Reload graph
-                loadGraph()
+                loadGraph(targetLanguage)
             } catch (e: Exception) {
                 setState { copy(aiErrorMessage = "Lỗi khi phân tích bằng AI: ${e.message}") }
             } finally {
