@@ -18,6 +18,7 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.Hub
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -27,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -211,18 +213,17 @@ internal fun GroupFilterHeader(
                     if (isConfigMode && !isPlus && groupName != "Tất cả") {
                         Box(
                             modifier = Modifier
-                                .size(16.dp)
-                                .background(colors.error, CircleShape)
-                                .align(Alignment.TopEnd)
-                                .offset(x = 4.dp, y = (-4).dp)
+                                .matchParentSize()
+                                .clip(RoundedCornerShape(16.dp))
+                                .background(colors.error.copy(alpha = 0.15f))
                                 .clickable { onDeleteGroup(groupName) },
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Close,
+                                imageVector = Icons.Rounded.Delete,
                                 contentDescription = "Delete group",
-                                tint = colors.surface,
-                                modifier = Modifier.size(10.dp)
+                                tint = colors.error,
+                                modifier = Modifier.size(16.dp)
                             )
                         }
                     }
