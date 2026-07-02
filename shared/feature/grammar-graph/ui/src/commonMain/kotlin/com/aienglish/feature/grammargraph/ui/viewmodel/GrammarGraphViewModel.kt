@@ -195,12 +195,6 @@ class GrammarGraphViewModel(
                     repository.addNodeToGroup(selected, node)
                 }
                 
-                val allEdges = getGrammarGraph.getEdges()
-                val newEdges = allEdges.filter { edge ->
-                    ((edge.fromGrammarId == node.id && currentState.nodes.any { it.id == edge.toGrammarId }) ||
-                     (edge.toGrammarId == node.id && currentState.nodes.any { it.id == edge.fromGrammarId }))
-                }
-                
                 // Update local map state
                 val updatedGroupNodeIds = if (selected != "Tất cả") {
                     val currentIds = currentState.groupNodeIds[selected] ?: emptyList()
@@ -212,7 +206,6 @@ class GrammarGraphViewModel(
                 setState {
                     copy(
                         nodes = if (nodes.any { it.id == node.id }) nodes else nodes + node,
-                        edges = edges + newEdges,
                         nodePositions = nodePositions + (node.id to Offset(x, y)),
                         groupNodeIds = updatedGroupNodeIds
                     )

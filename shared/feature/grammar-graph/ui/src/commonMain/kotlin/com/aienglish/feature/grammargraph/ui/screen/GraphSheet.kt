@@ -135,10 +135,14 @@ fun GraphSheet(
                 }
             }
 
-            val filteredEdges = remember(state.edges, filteredNodes) {
-                state.edges.filter { edge ->
-                    filteredNodes.any { it.id == edge.fromGrammarId } &&
-                    filteredNodes.any { it.id == edge.toGrammarId }
+            val filteredEdges = remember(state.edges, filteredNodes, state.selectedGroup) {
+                if (state.selectedGroup != "Tất cả") {
+                    emptyList()
+                } else {
+                    state.edges.filter { edge ->
+                        filteredNodes.any { it.id == edge.fromGrammarId } &&
+                        filteredNodes.any { it.id == edge.toGrammarId }
+                    }
                 }
             }
 
