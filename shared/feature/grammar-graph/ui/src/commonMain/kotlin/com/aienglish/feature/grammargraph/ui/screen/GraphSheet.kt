@@ -222,137 +222,13 @@ fun GraphSheet(
                 ) {
                     // Physics Simulation Loop (decoupled from screen bounds, using virtual DP coordinates)
                     LaunchedEffect(physicsNodes, triggerSimCount) {
-                         var kineticEnergy = 100f
-                          val repelConstant = 90000f // Balanced repulsion to prevent overlap
-                          val attractConstant = 0.06f // Soft elastic springs
-                          val gravityConstant = 0.01f // Centered gravity pull
-                          val damping = 0.82f // Slightly slower deceleration to allow settling
-
-                        val centerX = 1000f
-                        val centerY = 800f
-
-                        // Run physics steps until kinetic energy drops below threshold
+                        var kineticEnergy = 100f
                         while (kineticEnergy > 0.01f) {
-                            // 1. Repulsion forces (avoid node overlapping)
-                            for (i in physicsNodes.indices) {
-                                val u = physicsNodes[i]
-                                var fx = 0f
-                                var fy = 0f
-                                
-                                for (j in physicsNodes.indices) {
-                                    if (i == j) continue
-                                    val v = physicsNodes[j]
-                                    val dx = u.x - v.x
-                                    val dy = u.y - v.y
-                                    val distSq = dx * dx + dy * dy + 1f
-                                    val dist = sqrt(distSq)
-                                    
-                                    val force = repelConstant / distSq
-                                    fx += (dx / dist) * force
-                                    fy += (dy / dist) * force
-                                }
-
-                                // Attraction pull towards center of workspace
-                                val centerDx = centerX - u.x - u.widthDp / 2f
-                                val centerDy = centerY - u.y - u.heightDp / 2f
-                                fx += centerDx * gravityConstant
-                                fy += centerDy * gravityConstant
-
-                                // Apply forces to velocity
-                                if (!u.isBeingDragged) {
-                                    u.vx = (u.vx + fx) * damping
-                                    u.vy = (u.vy + fy) * damping
-                                }
-                            }
-
-                            // 2. Attraction spring forces (along connections/edges)
-                            filteredEdges.forEach { edge ->
-                                val u = physicsNodes.find { it.id == edge.fromGrammarId }
-                                val v = physicsNodes.find { it.id == edge.toGrammarId }
-                                if (u != null && v != null) {
-                                    val dx = v.x - u.x
-                                    val dy = v.y - u.y
-                                    val dist = sqrt(dx * dx + dy * dy) + 1f
-                                    
-                                    // Stable randomized link length based on edge hashes to break symmetry (ranging from 100 to 140 DP)
-                                    val stableRandomOffset = abs(edge.fromGrammarId.hashCode() + edge.toGrammarId.hashCode()) % 40
-                                    val restLength = 100f + stableRandomOffset
-
-                                    val force = attractConstant * (dist - restLength)
-                                    val fx = (dx / dist) * force
-                                    val fy = (dy / dist) * force
-                                    
-                                    if (!u.isBeingDragged) {
-                                        u.vx += fx
-                                        u.vy += fy
-                                    }
-                                    if (!v.isBeingDragged) {
-                                        v.vx -= fx
-                                        v.vy -= fy
-                                    }
-                                }
-                            }
-
-                            // 3. Move nodes slightly
-                            physicsNodes.forEach { u ->
-                                if (!u.isBeingDragged) {
-                                    u.x += u.vx
-                                    u.y += u.vy
-                                }
-                            }
-
-                            // 4. Strict Overlap/Collision Resolution (Adaptive Capsule checks in DP)
-                            val padX = 24f
-                            val padY = 10f
-                            repeat(3) {
-                                for (i in physicsNodes.indices) {
-                                    val u = physicsNodes[i]
-                                    for (j in i + 1 until physicsNodes.size) {
-                                        val v = physicsNodes[j]
-                                        val dx = v.x - u.x
-                                        val dy = v.y - u.y
-                                        
-                                        val spacingX = (u.widthDp + v.widthDp) / 2f + padX
-                                        val spacingY = (u.heightDp + v.heightDp) / 2f + padY
-                                        
-                                        val overlapX = spacingX - abs(dx)
-                                        val overlapY = spacingY - abs(dy)
-                                        
-                                        if (overlapX > 0 && overlapY > 0) {
-                                            val pushFactor = if (u.isBeingDragged || v.isBeingDragged) 0.8f else 0.5f
-                                            if (overlapX < overlapY) {
-                                                val pushX = overlapX * pushFactor
-                                                if (dx > 0) {
-                                                    if (!u.isBeingDragged) u.x -= pushX
-                                                    if (!v.isBeingDragged) v.x += pushX
-                                                } else {
-                                                    if (!u.isBeingDragged) u.x += pushX
-                                                    if (!v.isBeingDragged) v.x -= pushX
-                                                }
-                                                u.vx *= 0.5f
-                                                v.vx *= 0.5f
-                                            } else {
-                                                val pushY = overlapY * pushFactor
-                                                if (dy > 0) {
-                                                    if (!u.isBeingDragged) u.y -= pushY
-                                                    if (!v.isBeingDragged) v.y += pushY
-                                                } else {
-                                                    if (!u.isBeingDragged) u.y += pushY
-                                                    if (!v.isBeingDragged) v.y -= pushY
-                                                }
-                                                u.vy *= 0.5f
-                                                v.vy *= 0.5f
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                            // 5. Boundaries locks & energy check
+                            PhysicsSimulator.step(physicsNodes, filteredEdges)
+                            
+                            // Check total kinetic energy/speed
                             var totalSpeed = 0f
                             physicsNodes.forEach { u ->
-                                u.x = u.x.coerceIn(20f, 2000f - u.widthDp - 20f)
-                                u.y = u.y.coerceIn(20f, 1600f - u.heightDp - 20f)
                                 totalSpeed += u.vx * u.vx + u.vy * u.vy
                             }
                             kineticEnergy = totalSpeed
@@ -447,177 +323,113 @@ fun GraphSheet(
                         val offset = nodePositions[node.id] ?: Offset.Zero
                         val isSelected = state.selectedNode?.id == node.id
                         val isFocused = state.selectedNode == null || state.focusedConnections.contains(node.id)
-                        val alpha = if (isFocused) 1f else 0.3f
                         
-                        val charCount = node.pattern.length
-                        val estWidthDp = ((charCount * 5.8f) + (if (node.isSaved) 28f else 20f)).coerceIn(50f, 240f)
-                        val estHeightDp = 34f
-
-                        Box(
-                            modifier = Modifier
-                                .offset(offset.x.dp, offset.y.dp)
-                                .width(estWidthDp.dp)
-                                .height(estHeightDp.dp)
-                                .shadow(
-                                    elevation = if (isSelected) 8.dp else 2.dp,
-                                    shape = RoundedCornerShape(18.dp),
-                                    ambientColor = if (isSelected) colors.accent else Color.Black,
-                                    spotColor = if (isSelected) colors.accent else Color.Black
-                                )
-                                .pointerInput(node.id) {
-                                    detectTapGestures {
-                                        viewModel.selectNode(if (isSelected) null else node)
-                                    }
+                        GraphNodeView(
+                            node = node,
+                            offset = offset,
+                            isSelected = isSelected,
+                            isFocused = isFocused,
+                            colors = colors,
+                            density = density.density,
+                            scale = scale,
+                            onSelect = { viewModel.selectNode(if (isSelected) null else node) },
+                            onDragStart = {
+                                val u = physicsNodes.find { it.id == node.id }
+                                u?.isBeingDragged = true
+                                u?.vx = 0f
+                                u?.vy = 0f
+                            },
+                            onDragEnd = {
+                                val u = physicsNodes.find { it.id == node.id }
+                                u?.isBeingDragged = false
+                                triggerSimCount++
+                            },
+                            onDrag = { dragAmount ->
+                                val u = physicsNodes.find { it.id == node.id }
+                                if (u != null) {
+                                    u.x += dragAmount.x
+                                    u.y += dragAmount.y
+                                    u.x = u.x.coerceIn(20f, 2000f - u.widthDp - 20f)
+                                    u.y = u.y.coerceIn(20f, 1600f - u.heightDp - 20f)
+                                    triggerSimCount++
                                 }
-                                .pointerInput(node.id) {
-                                    detectDragGestures(
-                                        onDragStart = {
-                                            val u = physicsNodes.find { it.id == node.id }
-                                            u?.isBeingDragged = true
-                                            u?.vx = 0f
-                                            u?.vy = 0f
-                                        },
-                                        onDragEnd = {
-                                            val u = physicsNodes.find { it.id == node.id }
-                                            u?.isBeingDragged = false
-                                            triggerSimCount++
-                                        },
-                                        onDragCancel = {
-                                            val u = physicsNodes.find { it.id == node.id }
-                                            u?.isBeingDragged = false
-                                            triggerSimCount++
-                                        },
-                                        onDrag = { change, dragAmount ->
-                                            change.consume()
-                                            val u = physicsNodes.find { it.id == node.id }
-                                            if (u != null) {
-                                                // Convert drag pixels to DP and compensate for zoom scale
-                                                val dragDpX = (dragAmount.x / density.density) / scale
-                                                val dragDpY = (dragAmount.y / density.density) / scale
-                                                
-                                                u.x += dragDpX
-                                                u.y += dragDpY
-                                                
-                                                u.x = u.x.coerceIn(20f, 2000f - u.widthDp - 20f)
-                                                u.y = u.y.coerceIn(20f, 1600f - u.heightDp - 20f)
-                                                
-                                                triggerSimCount++
-                                            }
-                                        }
-                                    )
-                                }
-                                .border(
-                                    width = if (isSelected) 2.dp else 1.25.dp,
-                                    color = if (isSelected) colors.accent else colors.border.copy(alpha = alpha),
-                                    shape = RoundedCornerShape(18.dp)
-                                )
-                                .clip(RoundedCornerShape(18.dp))
-                                .background(
-                                    Brush.horizontalGradient(
-                                        listOf(
-                                            if (isSelected) colors.accent.copy(alpha = 0.25f) else colors.surface,
-                                            colors.surface
-                                        )
-                                    )
-                                )
-                                .padding(horizontal = 8.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                if (node.isSaved) {
-                                    Icon(
-                                        imageVector = Icons.Rounded.AutoAwesome,
-                                        contentDescription = "Saved structure",
-                                        tint = colors.accent,
-                                        modifier = Modifier.size(10.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(4.dp))
-                                }
-                                Text(
-                                    text = node.pattern,
-                                    fontSize = 11.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = colors.mainText.copy(alpha = alpha),
-                                    maxLines = 1,
-                                    textAlign = TextAlign.Center
-                                )
                             }
-                        }
-                    }
-                }
-
-                // Fixed floating action (+) button in the top-right corner of the viewport
-                var showAddSavedDropdown by remember { mutableStateOf(false) }
-                val availableSavedNodes = remember(state.allSavedNodes, state.nodes) {
-                    state.allSavedNodes.filter { savedNode -> state.nodes.none { it.id == savedNode.id } }
-                }
-
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(16.dp)
-                ) {
-                    FloatingActionButton(
-                        onClick = { showAddSavedDropdown = true },
-                        containerColor = colors.accent,
-                        contentColor = colors.surface,
-                        shape = CircleShape,
-                        modifier = Modifier.size(40.dp),
-                        elevation = FloatingActionButtonDefaults.elevation(4.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Add,
-                            contentDescription = "Add saved structure",
-                            modifier = Modifier.size(24.dp)
                         )
                     }
+                }
 
-                    DropdownMenu(
-                        expanded = showAddSavedDropdown,
-                        onDismissRequest = { showAddSavedDropdown = false },
+                // Fixed floating action (+) button in the top-right corner of the viewport (only shown in custom groups)
+                val isCustomGroup = state.selectedGroup !in listOf("Tất cả", "Cơ bản", "Nâng cao")
+                var showAddSavedDropdown by remember { mutableStateOf(false) }
+                val availableSavedNodes = remember(state.allSavedNodes, filteredNodes) {
+                    state.allSavedNodes.filter { savedNode -> filteredNodes.none { it.id == savedNode.id } }
+                }
+
+                if (isCustomGroup) {
+                    Box(
                         modifier = Modifier
-                            .background(colors.surface)
-                            .widthIn(max = 240.dp)
+                            .align(Alignment.TopEnd)
+                            .padding(16.dp)
                     ) {
-                        if (availableSavedNodes.isEmpty()) {
-                            DropdownMenuItem(
-                                text = { 
-                                    Text(
-                                        text = "Không có cấu trúc đã lưu mới", 
-                                        fontSize = 13.sp,
-                                        color = colors.hintText
-                                    ) 
-                                },
-                                onClick = { showAddSavedDropdown = false },
-                                enabled = false
+                        FloatingActionButton(
+                            onClick = { showAddSavedDropdown = true },
+                            containerColor = colors.accent,
+                            contentColor = colors.surface,
+                            shape = CircleShape,
+                            modifier = Modifier.size(40.dp),
+                            elevation = FloatingActionButtonDefaults.elevation(4.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.Add,
+                                contentDescription = "Add saved structure",
+                                modifier = Modifier.size(24.dp)
                             )
-                        } else {
-                            availableSavedNodes.forEach { node ->
+                        }
+
+                        DropdownMenu(
+                            expanded = showAddSavedDropdown,
+                            onDismissRequest = { showAddSavedDropdown = false },
+                            modifier = Modifier
+                                .background(colors.surface)
+                                .widthIn(max = 240.dp)
+                        ) {
+                            if (availableSavedNodes.isEmpty()) {
                                 DropdownMenuItem(
-                                    text = {
-                                        Column {
-                                            Text(
-                                                text = node.pattern,
-                                                fontSize = 13.sp,
-                                                fontWeight = FontWeight.Bold,
-                                                color = colors.mainText
-                                            )
-                                            Text(
-                                                text = node.meaning,
-                                                fontSize = 11.sp,
-                                                color = colors.mutedText,
-                                                maxLines = 1
-                                            )
-                                        }
+                                    text = { 
+                                        Text(
+                                            text = "Không có cấu trúc đã lưu mới", 
+                                            fontSize = 13.sp,
+                                            color = colors.hintText
+                                        ) 
                                     },
-                                    onClick = {
-                                        showAddSavedDropdown = false
-                                        viewModel.addSavedNodeToGraph(node)
-                                    }
+                                    onClick = { showAddSavedDropdown = false },
+                                    enabled = false
                                 )
+                            } else {
+                                availableSavedNodes.forEach { node ->
+                                    DropdownMenuItem(
+                                        text = {
+                                            Column {
+                                                Text(
+                                                    text = node.pattern,
+                                                    fontSize = 13.sp,
+                                                    fontWeight = FontWeight.Bold,
+                                                    color = colors.mainText
+                                                )
+                                                Text(
+                                                    text = node.meaning,
+                                                    fontSize = 11.sp,
+                                                    color = colors.mutedText,
+                                                    maxLines = 1
+                                                )
+                                            }
+                                        },
+                                        onClick = {
+                                            showAddSavedDropdown = false
+                                            viewModel.addSavedNodeToGraph(node)
+                                        }
+                                    )
+                                }
                             }
                         }
                     }
