@@ -24,10 +24,12 @@ class GrammarGraphRepositoryImpl(
             queries.getAllGrammarStructures().executeAsList()
             queries.getAllGrammarEdges().executeAsList()
             queries.getAllGrammarGroups().executeAsList()
+            queries.getNodesForGroupName("Tất cả").executeAsList()
         } catch (e: Exception) {
             // Recreate grammar tables if there is a schema mismatch
             try {
                 database.transaction {
+                    driver.execute(null, "DROP TABLE IF EXISTS grammar_group_node_map", 0)
                     driver.execute(null, "DROP TABLE IF EXISTS grammar_edges", 0)
                     driver.execute(null, "DROP TABLE IF EXISTS grammar_structures", 0)
                     driver.execute(null, "DROP TABLE IF EXISTS grammar_groups", 0)
@@ -213,6 +215,35 @@ class GrammarGraphRepositoryImpl(
             queries.deleteGrammarGroup(name)
         } catch (e: Exception) {
             // Ignore error
+        }
+        Unit
+    }
+
+    override suspend fun getNodesForGroup(groupName: String): List<String> = withContext(Dispatchers.IO) {
+        checkAndSeedDatabase()
+        try {
+            queries.getNodesForGroupName(groupName).executeAsList()
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    override suspend fun addNodeToGroup(groupName: String, grammarId: String): Unit = withContext(Dispatchers.IO) {
+        checkAndSeedDatabase()
+        try {
+            queries.insertGroupNodeMapByName(groupName = groupName, grammarId = grammarId)
+        } catch (e: Exception) {
+            // Ignore
+        }
+        Unit
+    }
+
+    override suspend fun removeNodeFromGroup(groupName: String, grammarId: String): Unit = withContext(Dispatchers.IO) {
+        checkAndSeedDatabase()
+        try {
+            queries.deleteGroupNodeMapByName(groupName = groupName, grammarId = grammarId)
+        } catch (e: Exception) {
+            // Ignore
         }
         Unit
     }

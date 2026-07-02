@@ -120,15 +120,15 @@ fun GraphSheet(
             val density = LocalDensity.current
 
             // Filter nodes and edges based on selected group
-            val filteredNodes = remember(state.nodes, state.selectedGroup) {
+            val filteredNodes = remember(state.nodes, state.selectedGroup, state.groupNodeIds) {
                 state.nodes.filter { node ->
                     when (state.selectedGroup) {
                         "Cơ bản" -> node.level in listOf("A1", "A2")
                         "Nâng cao" -> node.level in listOf("B1", "B2")
                         "Tất cả" -> true
                         else -> {
-                            val saved = state.nodes.filter { it.isSaved }
-                            if (saved.isNotEmpty()) node.isSaved else true
+                            val mappedIds = state.groupNodeIds[state.selectedGroup] ?: emptyList()
+                            node.id in mappedIds
                         }
                     }
                 }

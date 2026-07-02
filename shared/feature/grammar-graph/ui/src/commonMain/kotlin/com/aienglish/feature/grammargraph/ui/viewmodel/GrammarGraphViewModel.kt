@@ -19,7 +19,8 @@ data class GrammarGraphUiState(
     val groups: List<String> = listOf("Tất cả", "Cơ bản", "Nâng cao"),
     val editingGroup: String? = null,
     val allSavedNodes: List<GrammarNode> = emptyList(),
-    val isConfigMode: Boolean = false
+    val isConfigMode: Boolean = false,
+    val groupNodeIds: Map<String, List<String>> = emptyMap()
 )
 
 class GrammarGraphViewModel(
@@ -108,30 +109,45 @@ class GrammarGraphViewModel(
         setState { copy(isLoading = true) }
         viewModelScope.launch {
             try {
-                val nodes = getGrammarGraph.getNodes().filter {
+                // Get dynamic groups list from DB
+                val groups = repository.getGrammarGroups()
+
+                // Load custom group mappings from DB
+                val groupNodeIdsMap = mutableMapOf<String, List<String>>()
+                groups.forEach { group ->
+                    if (group != "Tất cả" && group != "Cơ bản" && group != "Nâng cao") {
+                        val nodeIds = repository.getNodesForGroup(group)
+                        groupNodeIdsMap[group] = nodeIds
+                    }
+                }
+
+                val allDbNodes = getGrammarGraph.getNodes()
+                val savedNodes = allDbNodes.filter { it.isSaved }
+
+                val defaultNodes = allDbNodes.filter {
                     if (targetLanguage == "vi") {
                         it.id in listOf("S_COCOP", "PAST_DA", "FUTURE_SE", "MUST_PHAI", "COND_NEU")
                     } else {
                         it.id in listOf("S_V_O", "S_V_ADJ", "PRES_PERF", "MODAL", "COND_1", "USED_TO", "WISH_PAST")
                     }
                 }
-                
+
+                // Map of all custom node IDs currently assigned to any group
+                val customGroupMappedIds = groupNodeIdsMap.values.flatten().toSet()
+
+                // Combined nodes list that must be available in memory (default ones + any nodes mapped to user groups)
+                val nodes = (defaultNodes + allDbNodes.filter { it.id in customGroupMappedIds }).distinctBy { it.id }
+
                 val edges = getGrammarGraph.getEdges().filter { edge ->
                     nodes.any { it.id == edge.fromGrammarId } && nodes.any { it.id == edge.toGrammarId }
                 }
 
-                // Get dynamic groups list from DB
-                val groups = repository.getGrammarGroups()
-
-                // Layout initial coordinates nicely
+                // Layout coordinates nicely. If a node position is already saved/known keep it, otherwise compute a layout slot.
                 val positions = nodes.mapIndexed { index, node ->
                     val x = 100f + (index % 2) * 420f + (if (index % 3 == 0) 40f else 0f)
                     val y = 80f + (index / 2) * 300f
-                    node.id to Offset(x, y)
+                    node.id to (currentState.nodePositions[node.id] ?: Offset(x, y))
                 }.toMap()
-
-                val allDbNodes = getGrammarGraph.getNodes()
-                val savedNodes = allDbNodes.filter { it.isSaved }
 
                 setState {
                     copy(
@@ -142,7 +158,8 @@ class GrammarGraphViewModel(
                         selectedNode = null,
                         focusedConnections = emptySet(),
                         groups = groups,
-                        allSavedNodes = savedNodes
+                        allSavedNodes = savedNodes,
+                        groupNodeIds = groupNodeIdsMap
                     )
                 }
             } catch (e: Exception) {
@@ -158,7 +175,7 @@ class GrammarGraphViewModel(
     }
 
     fun addSavedNodeToGraph(node: GrammarNode) {
-        if (currentState.nodes.any { it.id == node.id }) return
+        val selected = currentState.selectedGroup
         
         // Compute layout coordinates relative to center of virtual workspace
         val x = 1000f + (kotlin.random.Random.nextFloat() - 0.5f) * 200f
@@ -166,17 +183,31 @@ class GrammarGraphViewModel(
         
         viewModelScope.launch {
             try {
+                // If it is a custom group, save mapping to database
+                if (selected != "Tất cả" && selected != "Cơ bản" && selected != "Nâng cao") {
+                    repository.addNodeToGroup(selected, node.id)
+                }
+                
                 val allEdges = getGrammarGraph.getEdges()
                 val newEdges = allEdges.filter { edge ->
-                    (edge.fromGrammarId == node.id && currentState.nodes.any { it.id == edge.toGrammarId }) ||
-                    (edge.toGrammarId == node.id && currentState.nodes.any { it.id == edge.fromGrammarId })
+                    ((edge.fromGrammarId == node.id && currentState.nodes.any { it.id == edge.toGrammarId }) ||
+                     (edge.toGrammarId == node.id && currentState.nodes.any { it.id == edge.fromGrammarId }))
+                }
+                
+                // Update local map state
+                val updatedGroupNodeIds = if (selected != "Tất cả" && selected != "Cơ bản" && selected != "Nâng cao") {
+                    val currentIds = currentState.groupNodeIds[selected] ?: emptyList()
+                    currentState.groupNodeIds + (selected to (currentIds + node.id).distinct())
+                } else {
+                    currentState.groupNodeIds
                 }
                 
                 setState {
                     copy(
-                        nodes = nodes + node,
+                        nodes = if (nodes.any { it.id == node.id }) nodes else nodes + node,
                         edges = edges + newEdges,
-                        nodePositions = nodePositions + (node.id to Offset(x, y))
+                        nodePositions = nodePositions + (node.id to Offset(x, y)),
+                        groupNodeIds = updatedGroupNodeIds
                     )
                 }
             } catch (e: Exception) {
@@ -186,17 +217,36 @@ class GrammarGraphViewModel(
     }
 
     fun removeNodeFromGraph(nodeId: String) {
-        setState {
-            val updatedNodes = nodes.filter { it.id != nodeId }
-            val updatedEdges = edges.filter { it.fromGrammarId != nodeId && it.toGrammarId != nodeId }
-            val updatedPositions = nodePositions - nodeId
-            copy(
-                nodes = updatedNodes,
-                edges = updatedEdges,
-                nodePositions = updatedPositions,
-                selectedNode = null,
-                focusedConnections = emptySet()
-            )
+        val selected = currentState.selectedGroup
+        viewModelScope.launch {
+            try {
+                if (selected != "Tất cả" && selected != "Cơ bản" && selected != "Nâng cao") {
+                    repository.removeNodeFromGroup(selected, nodeId)
+                }
+                
+                val updatedGroupNodeIds = if (selected != "Tất cả" && selected != "Cơ bản" && selected != "Nâng cao") {
+                    val currentIds = currentState.groupNodeIds[selected] ?: emptyList()
+                    currentState.groupNodeIds + (selected to currentIds.filter { it != nodeId })
+                } else {
+                    currentState.groupNodeIds
+                }
+                
+                setState {
+                    val updatedNodes = nodes.filter { it.id != nodeId }
+                    val updatedEdges = edges.filter { it.fromGrammarId != nodeId && it.toGrammarId != nodeId }
+                    val updatedPositions = nodePositions - nodeId
+                    copy(
+                        nodes = updatedNodes,
+                        edges = updatedEdges,
+                        nodePositions = updatedPositions,
+                        selectedNode = null,
+                        focusedConnections = emptySet(),
+                        groupNodeIds = updatedGroupNodeIds
+                    )
+                }
+            } catch (e: Exception) {
+                // Ignore
+            }
         }
     }
 

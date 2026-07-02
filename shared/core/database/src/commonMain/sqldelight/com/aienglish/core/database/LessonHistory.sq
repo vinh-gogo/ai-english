@@ -102,6 +102,14 @@ CREATE TABLE IF NOT EXISTS grammar_groups (
     created_at INTEGER NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS grammar_group_node_map (
+    group_id TEXT NOT NULL,
+    grammar_id TEXT NOT NULL,
+    PRIMARY KEY(group_id, grammar_id),
+    FOREIGN KEY(group_id) REFERENCES grammar_groups(id) ON DELETE CASCADE,
+    FOREIGN KEY(grammar_id) REFERENCES grammar_structures(id) ON DELETE CASCADE
+);
+
 -- Queries
 
 insertLesson:
@@ -258,3 +266,19 @@ UPDATE grammar_groups SET name = :newName WHERE name = :oldName;
 
 deleteGrammarGroup:
 DELETE FROM grammar_groups WHERE name = ?;
+
+-- Group node map queries
+getNodesForGroupName:
+SELECT m.grammar_id 
+FROM grammar_group_node_map m
+JOIN grammar_groups g ON m.group_id = g.id
+WHERE g.name = ?;
+
+insertGroupNodeMapByName:
+INSERT OR IGNORE INTO grammar_group_node_map (group_id, grammar_id)
+SELECT id, :grammarId FROM grammar_groups WHERE name = :groupName;
+
+deleteGroupNodeMapByName:
+DELETE FROM grammar_group_node_map
+WHERE grammar_id = :grammarId 
+AND group_id = (SELECT id FROM grammar_groups WHERE name = :groupName);
