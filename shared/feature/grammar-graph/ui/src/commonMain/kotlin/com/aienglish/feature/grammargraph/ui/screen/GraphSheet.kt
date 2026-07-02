@@ -111,7 +111,8 @@ fun GraphSheet(
                 onSelectGroup = { viewModel.selectGroup(it) },
                 onAddGroup = { viewModel.addGroup() },
                 onStartEditingGroup = { viewModel.startEditingGroup(it) },
-                onRenameGroup = { oldName, newName -> viewModel.renameGroup(oldName, newName) }
+                onRenameGroup = { oldName, newName -> viewModel.renameGroup(oldName, newName) },
+                onConfigClick = { /* Can show configuration/settings dialog in future */ }
             )
 
             val density = LocalDensity.current
@@ -546,6 +547,79 @@ fun GraphSheet(
                     }
                 }
 
+                // Fixed floating action (+) button in the top-right corner of the viewport
+                var showAddSavedDropdown by remember { mutableStateOf(false) }
+                val availableSavedNodes = remember(state.allSavedNodes, state.nodes) {
+                    state.allSavedNodes.filter { savedNode -> state.nodes.none { it.id == savedNode.id } }
+                }
+
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(16.dp)
+                ) {
+                    FloatingActionButton(
+                        onClick = { showAddSavedDropdown = true },
+                        containerColor = colors.accent,
+                        contentColor = colors.surface,
+                        shape = CircleShape,
+                        modifier = Modifier.size(40.dp),
+                        elevation = FloatingActionButtonDefaults.elevation(4.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Add,
+                            contentDescription = "Add saved structure",
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+
+                    DropdownMenu(
+                        expanded = showAddSavedDropdown,
+                        onDismissRequest = { showAddSavedDropdown = false },
+                        modifier = Modifier
+                            .background(colors.surface)
+                            .widthIn(max = 240.dp)
+                    ) {
+                        if (availableSavedNodes.isEmpty()) {
+                            DropdownMenuItem(
+                                text = { 
+                                    Text(
+                                        text = "Không có cấu trúc đã lưu mới", 
+                                        fontSize = 13.sp,
+                                        color = colors.hintText
+                                    ) 
+                                },
+                                onClick = { showAddSavedDropdown = false },
+                                enabled = false
+                            )
+                        } else {
+                            availableSavedNodes.forEach { node ->
+                                DropdownMenuItem(
+                                    text = {
+                                        Column {
+                                            Text(
+                                                text = node.pattern,
+                                                fontSize = 13.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                color = colors.mainText
+                                            )
+                                            Text(
+                                                text = node.meaning,
+                                                fontSize = 11.sp,
+                                                color = colors.mutedText,
+                                                maxLines = 1
+                                            )
+                                        }
+                                    },
+                                    onClick = {
+                                        showAddSavedDropdown = false
+                                        viewModel.addSavedNodeToGraph(node)
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
             }
 
             AnimatedVisibility(

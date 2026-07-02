@@ -17,7 +17,8 @@ data class GrammarGraphUiState(
     val nodePositions: Map<String, Offset> = emptyMap(),
     val selectedGroup: String = "Tất cả",
     val groups: List<String> = listOf("Tất cả", "Cơ bản", "Nâng cao"),
-    val editingGroup: String? = null
+    val editingGroup: String? = null,
+    val allSavedNodes: List<GrammarNode> = emptyList()
 )
 
 class GrammarGraphViewModel(
@@ -110,6 +111,9 @@ class GrammarGraphViewModel(
                     node.id to Offset(x, y)
                 }.toMap()
 
+                val allDbNodes = getGrammarGraph.getNodes()
+                val savedNodes = allDbNodes.filter { it.isSaved }
+
                 setState {
                     copy(
                         isLoading = false,
@@ -118,7 +122,8 @@ class GrammarGraphViewModel(
                         nodePositions = positions,
                         selectedNode = null,
                         focusedConnections = emptySet(),
-                        groups = groups
+                        groups = groups,
+                        allSavedNodes = savedNodes
                     )
                 }
             } catch (e: Exception) {
@@ -130,6 +135,34 @@ class GrammarGraphViewModel(
     fun updateNodePosition(nodeId: String, offset: Offset) {
         setState {
             copy(nodePositions = nodePositions + (nodeId to offset))
+        }
+    }
+
+    fun addSavedNodeToGraph(node: GrammarNode) {
+        if (currentState.nodes.any { it.id == node.id }) return
+        
+        // Compute layout coordinates relative to center of virtual workspace
+        val x = 1000f + (kotlin.random.Random.nextFloat() - 0.5f) * 200f
+        val y = 800f + (kotlin.random.Random.nextFloat() - 0.5f) * 200f
+        
+        viewModelScope.launch {
+            try {
+                val allEdges = getGrammarGraph.getEdges()
+                val newEdges = allEdges.filter { edge ->
+                    (edge.fromGrammarId == node.id && currentState.nodes.any { it.id == edge.toGrammarId }) ||
+                    (edge.toGrammarId == node.id && currentState.nodes.any { it.id == edge.fromGrammarId })
+                }
+                
+                setState {
+                    copy(
+                        nodes = nodes + node,
+                        edges = edges + newEdges,
+                        nodePositions = nodePositions + (node.id to Offset(x, y))
+                    )
+                }
+            } catch (e: Exception) {
+                // Ignore
+            }
         }
     }
 

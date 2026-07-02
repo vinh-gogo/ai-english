@@ -17,8 +17,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.Hub
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -47,6 +49,7 @@ internal fun GroupFilterHeader(
     onAddGroup: () -> Unit,
     onStartEditingGroup: (String) -> Unit,
     onRenameGroup: (String, String) -> Unit,
+    onConfigClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -86,6 +89,17 @@ internal fun GroupFilterHeader(
                 color = colors.mainText,
                 modifier = Modifier.weight(1f)
             )
+            IconButton(
+                onClick = onConfigClick,
+                modifier = Modifier.size(24.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Settings,
+                    contentDescription = "Configuration",
+                    tint = colors.mutedText,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
         }
 
         // Carousel to categorize grammar groups
