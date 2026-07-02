@@ -44,7 +44,10 @@ internal fun NodeDetailsCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.weight(1f)
+                ) {
                     Box(
                         modifier = Modifier
                             .background(colors.accent.copy(alpha = 0.12f), RoundedCornerShape(6.dp))
@@ -62,9 +65,11 @@ internal fun NodeDetailsCard(
                         text = node.pattern,
                         fontSize = 15.sp,
                         fontWeight = FontWeight.ExtraBold,
-                        color = colors.mainText
+                        color = colors.mainText,
+                        modifier = Modifier.weight(1f)
                     )
                 }
+                Spacer(modifier = Modifier.width(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     IconButton(
                         onClick = onDeleteClick,
