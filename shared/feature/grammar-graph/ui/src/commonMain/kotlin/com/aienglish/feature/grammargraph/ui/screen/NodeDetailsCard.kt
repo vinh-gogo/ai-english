@@ -70,19 +70,7 @@ internal fun NodeDetailsCard(
                     )
                 }
                 Spacer(modifier = Modifier.width(8.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(
-                        onClick = onDeleteClick,
-                        modifier = Modifier.size(24.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Delete,
-                            contentDescription = "Delete node",
-                            tint = colors.error,
-                            modifier = Modifier.size(16.dp)
-                        )
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     IconButton(
                         onClick = onDismiss,
                         modifier = Modifier.size(24.dp)
@@ -91,6 +79,18 @@ internal fun NodeDetailsCard(
                             imageVector = Icons.Default.Close,
                             contentDescription = "Deselect",
                             tint = colors.mutedText,
+                            modifier = Modifier.size(16.dp)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(12.dp))
+                    IconButton(
+                        onClick = onDeleteClick,
+                        modifier = Modifier.size(24.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Delete,
+                            contentDescription = "Delete node",
+                            tint = colors.error,
                             modifier = Modifier.size(16.dp)
                         )
                     }
