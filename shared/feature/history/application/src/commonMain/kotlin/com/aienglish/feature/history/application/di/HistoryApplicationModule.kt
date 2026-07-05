@@ -7,4 +7,5 @@ import org.koin.dsl.module
 val historyApplicationModule = module {
     factory { GetAllHistoryUseCase(get()) }
     factory { ClearHistoryUseCase(get()) }
+    factory { com.aienglish.feature.history.application.usecase.UpdateLessonTopicUseCase(get()) }
 }

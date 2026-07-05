@@ -8,6 +8,7 @@ val historyUiModule = module {
         HistoryViewModel(
             getAllHistoryUseCase = get(),
             clearHistoryUseCase = get(),
+            updateLessonTopicUseCase = get(),
             prefs = get()
         )
     }

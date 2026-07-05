@@ -1,13 +1,20 @@
+-- 3NF refactored: topic/level denormalized columns removed.
+-- topic_id now INTEGER NOT NULL (references learning_topics),
+-- system_code references learning_systems,
+-- level_code stores raw level code (e.g. 'B1', '500', 'N5').
 CREATE TABLE IF NOT EXISTS lesson_history (
     id INTEGER PRIMARY KEY,
     user_id TEXT NOT NULL DEFAULT '0000000000000000',
-    topic TEXT NOT NULL,
-    level TEXT NOT NULL,
+    system_code TEXT NOT NULL DEFAULT 'CEFR',
+    topic_id INTEGER NOT NULL DEFAULT 0,
+    level_code TEXT NOT NULL DEFAULT 'B1',
     status TEXT NOT NULL DEFAULT 'IN_PROGRESS',
     created_at INTEGER NOT NULL,
     completed_at INTEGER,
-    topic_id TEXT,
-    FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
+    attempt_count INTEGER NOT NULL DEFAULT 0,
+    updated_at INTEGER NOT NULL DEFAULT 0,
+    FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY(system_code, topic_id) REFERENCES learning_topics(system_code, topic_id) ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS topic_questions (
@@ -113,19 +120,30 @@ CREATE TABLE IF NOT EXISTS grammar_group_node_map (
 -- Queries
 
 insertLesson:
-INSERT INTO lesson_history (user_id, topic, level, status, created_at, topic_id)
-VALUES (?, ?, ?, 'IN_PROGRESS', ?, ?);
+-- 3NF: truyền systemCode, topicId (INTEGER), levelCode thay vì topic/level strings
+INSERT INTO lesson_history (user_id, system_code, topic_id, level_code, status, created_at, updated_at)
+VALUES (?, ?, ?, ?, 'IN_PROGRESS', ?, ?);
 
 getLastInsertId:
 SELECT last_insert_rowid();
 
 updateLessonCompleted:
 UPDATE lesson_history
-SET status = 'COMPLETED', completed_at = ?
+SET status = 'COMPLETED', completed_at = ?, updated_at = ?, attempt_count = attempt_count + 1
 WHERE id = ?;
 
-getAllHistory:
-SELECT * FROM lesson_history WHERE user_id = ? ORDER BY created_at DESC;
+incrementLessonAttempt:
+UPDATE lesson_history
+SET updated_at = ?, status = 'IN_PROGRESS', completed_at = NULL
+WHERE id = ?;
+
+-- 3NF: không update lesson_history.topic nữa, update learning_topics.name cho custom topic
+updateCustomTopicName:
+UPDATE learning_topics
+SET name = ?
+WHERE system_code = 'custom' AND topic_id = ?;
+
+-- getAllHistory removed: dùng getAllHistoryWithCounts thay thế (có JOIN với learning_topics)
 
 clearHistory:
 DELETE FROM lesson_history;
@@ -164,6 +182,15 @@ updateQuestionAttempt:
 UPDATE lesson_question
 SET user_answer = ?, ai_explanation = ?
 WHERE id = ?;
+
+resetLessonProgress:
+UPDATE lesson_question
+SET user_answer = NULL, ai_explanation = NULL
+WHERE history_id = ?;
+
+deleteLessonFeedback:
+DELETE FROM lesson_feedback
+WHERE history_id = ?;
 
 getQuestionId:
 SELECT q.id 
@@ -211,18 +238,23 @@ DELETE FROM question_notes WHERE id = ?;
 updateQuestionNote:
 UPDATE question_notes SET note = ? WHERE id = ?;
 
+-- 3NF: JOIN với learning_topics để lấy topic name (không còn denormalized topic column)
 getAllHistoryWithCounts:
 SELECT
     h.id,
-    h.topic,
-    h.level,
+    lt.name AS topic,
+    h.system_code,
+    h.topic_id,
+    h.level_code,
     h.status,
     h.created_at,
     h.completed_at,
-    h.topic_id,
+    h.attempt_count,
+    h.updated_at,
     (SELECT COUNT(*) FROM lesson_question q WHERE q.history_id = h.id) AS total_count,
     (SELECT COUNT(q.ai_explanation) FROM lesson_question q WHERE q.history_id = h.id) AS completed_count
 FROM lesson_history h
+JOIN learning_topics lt ON h.system_code = lt.system_code AND h.topic_id = lt.topic_id
 WHERE h.user_id = ?
 ORDER BY h.created_at DESC;
 
@@ -232,8 +264,9 @@ UPDATE lesson_history SET user_id = '0000000000000000' WHERE user_id = 'guest';
 migrateGuestEmailHistory:
 UPDATE lesson_history SET user_id = '0000000000000000' WHERE user_id = 'guest@aienglish.com';
 
+-- 3NF: trả về system_code, topic_id và level_code
 getHistoryTopicId:
-SELECT topic_id FROM lesson_history WHERE id = ?;
+SELECT system_code, topic_id, level_code FROM lesson_history WHERE id = ?;
 
 -- Grammar Graph Queries
 getAllGrammarStructures:
@@ -256,8 +289,9 @@ DELETE FROM grammar_edges WHERE from_grammar_id = :nodeId OR to_grammar_id = :no
 getAllSavedQuestionNotes:
 SELECT * FROM question_notes;
 
+-- 3NF: dùng level_code thay vì level (đã bị xóa khỏi lesson_history)
 getAllSavedQuestionNotesWithLevel:
-SELECT qn.id, qn.question_id, qn.note, qn.created_at, lh.level, lh.id AS history_id
+SELECT qn.id, qn.question_id, qn.note, qn.created_at, lh.level_code AS level, lh.id AS history_id
 FROM question_notes qn
 JOIN lesson_question lq ON qn.question_id = lq.id
 JOIN lesson_history lh ON lq.history_id = lh.id;

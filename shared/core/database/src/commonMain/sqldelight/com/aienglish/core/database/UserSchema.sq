@@ -94,6 +94,22 @@ CREATE TABLE IF NOT EXISTS learning_topics (
 
 -- Queries
 
+-- Custom topic helpers (for 3NF refactor of lesson_history)
+insertCustomSystemIfNeeded:
+INSERT OR IGNORE INTO learning_systems (system_code, name, description)
+VALUES ('custom', 'Custom', 'User-defined custom topics');
+
+insertCustomLevelIfNeeded:
+INSERT OR IGNORE INTO learning_levels (system_code, level_code, name)
+VALUES ('custom', 'custom', 'Custom');
+
+insertCustomTopic:
+INSERT OR IGNORE INTO learning_topics (topic_id, name, system_code, level_code, updated_at, is_ai_recommended)
+VALUES (?, ?, 'custom', 'custom', ?, 0);
+
+getOrCreateCustomTopicId:
+SELECT topic_id FROM learning_topics WHERE system_code = 'custom' AND name = ? LIMIT 1;
+
 -- Locale queries
 
 insertLocale:

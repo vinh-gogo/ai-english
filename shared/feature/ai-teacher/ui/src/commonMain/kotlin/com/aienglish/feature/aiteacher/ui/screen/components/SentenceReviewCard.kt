@@ -1,6 +1,7 @@
 package com.aienglish.feature.aiteacher.ui.screen.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -167,16 +168,38 @@ fun SentenceReviewCard(
                             color = colors.accent
                         )
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            IconButton(
-                                onClick = { viewModel.openSavedNotes(index) },
-                                modifier = Modifier.size(28.dp)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Book,
-                                    contentDescription = "Sổ tay",
-                                    tint = colors.accent,
-                                    modifier = Modifier.size(16.dp)
-                                )
+                            Box {
+                                IconButton(
+                                    onClick = { viewModel.openSavedNotes() },
+                                    modifier = Modifier.size(28.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Book,
+                                        contentDescription = "Sổ tay",
+                                        tint = colors.accent,
+                                        modifier = Modifier.size(16.dp)
+                                    )
+                                }
+                                val totalNotes = state.savedNoteCounts.values.sum()
+                                if (totalNotes > 0) {
+                                    Box(
+                                        modifier = Modifier
+                                            .align(Alignment.TopEnd)
+                                            .offset(x = 2.dp, y = (-2).dp)
+                                            .background(androidx.compose.ui.graphics.Color.Red, androidx.compose.foundation.shape.CircleShape)
+                                            .defaultMinSize(minWidth = 14.dp, minHeight = 14.dp)
+                                            .padding(horizontal = 3.dp, vertical = 1.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(
+                                            text = totalNotes.toString(),
+                                            color = androidx.compose.ui.graphics.Color.White,
+                                            fontSize = 9.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            lineHeight = 9.sp
+                                        )
+                                    }
+                                }
                             }
                             Spacer(Modifier.width(4.dp))
                             IconButton(

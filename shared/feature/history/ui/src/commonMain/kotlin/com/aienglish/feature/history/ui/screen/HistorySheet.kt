@@ -36,6 +36,8 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectTapGestures
 
 @androidx.compose.runtime.Immutable
 data class HistoryItemState(
@@ -47,7 +49,11 @@ data class HistoryItemState(
     val completedCount: Int,
     val totalCount: Int,
     val formattedDate: String,
+    val formattedUpdateDate: String,
+    val attemptCount: Int,
     val hasLessonData: Boolean,
+    val systemCode: String = "CEFR",   // NEW: for edit button guard (custom only)
+    val topicId: Long = 0L,             // NEW: for updateCustomTopicName call
     val rawItem: LessonHistory
 )
 
@@ -84,6 +90,8 @@ fun HistorySheet(
     val colors = LocalAppColors.current
     var showClearDialog by remember { mutableStateOf(false) }
     var isAnimationFinished by remember { mutableStateOf(false) }
+    var editTopicItem by remember { mutableStateOf<LessonHistory?>(null) }
+    var editTopicText by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         delay(250) // wait 250ms for sheet slide-up animation
@@ -194,7 +202,11 @@ fun HistorySheet(
                                 completedCount = item.completedCount,
                                 totalCount = item.totalCount,
                                 formattedDate = formatDate(item.createdAt),
+                                formattedUpdateDate = formatDate(item.updatedAt),
+                                attemptCount = item.attemptCount,
                                 hasLessonData = item.totalCount > 0,
+                                systemCode = item.systemCode,
+                                topicId = item.topicId,
                                 rawItem = item
                             )
                             if (item.status == HistoryStatus.COMPLETED) {
@@ -269,7 +281,12 @@ fun HistorySheet(
                                         colors = colors,
                                         onReview = handleReview,
                                         onReTest = handleReTest,
-                                        onContinue = handleContinue
+                                        onContinue = handleContinue,
+                                        onEditClick = {
+                                            editTopicText = it.topic.replace("**", "")
+                                            editTopicItem = it
+                                        },
+                                        onDelete = { historyViewModel.deleteHistoryItem(it.id) }
                                     )
                                 }
                             }
@@ -312,6 +329,47 @@ fun HistorySheet(
             }
         )
     }
+
+    editTopicItem?.let { item ->
+        AlertDialog(
+            onDismissRequest = { editTopicItem = null },
+            containerColor = colors.surface,
+            title = {
+                Text("Đổi tên bài học", color = colors.mainText, fontWeight = FontWeight.Bold)
+            },
+            text = {
+                OutlinedTextField(
+                    value = editTopicText,
+                    onValueChange = { editTopicText = it },
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = colors.mainText,
+                        unfocusedTextColor = colors.mainText,
+                        focusedBorderColor = colors.accent,
+                        unfocusedBorderColor = colors.border
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    if (editTopicText.isNotBlank()) {
+                        // 3NF: dùng item.topicId (Long) thay vì item.id (historyId)
+                        // custom topics: topicId là âm ID, được update trong learning_topics
+                        historyViewModel.updateTopic(item.topicId, editTopicText)
+                    }
+                    editTopicItem = null
+                }) {
+                    Text("Lưu", color = colors.accent, fontWeight = FontWeight.Bold)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { editTopicItem = null }) {
+                    Text("Hủy", color = colors.mutedText)
+                }
+            }
+        )
+    }
 }
 
 @Composable
@@ -339,21 +397,34 @@ private fun HistoryItem(
     colors: AppColors,
     onReview: (LessonHistory) -> Unit,
     onReTest: (LessonHistory) -> Unit,
-    onContinue: (LessonHistory) -> Unit
+    onContinue: (LessonHistory) -> Unit,
+    onEditClick: (LessonHistory) -> Unit,
+    onDelete: (LessonHistory) -> Unit
 ) {
     val item = itemState.rawItem
     val isCompleted = itemState.status == HistoryStatus.COMPLETED
     val completed = itemState.completedCount
     val total = itemState.totalCount
+    var showDeleteOverlay by remember { mutableStateOf(false) }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(colors.surface)
-            .border(1.dp, colors.border, RoundedCornerShape(12.dp))
-            .padding(12.dp)
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onLongPress = { showDeleteOverlay = true },
+                    onTap = { showDeleteOverlay = false }
+                )
+            }
     ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(colors.surface)
+                .border(1.dp, colors.border, RoundedCornerShape(12.dp))
+                .padding(12.dp)
+        ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -396,7 +467,7 @@ private fun HistoryItem(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        text = itemState.topic,
+                        text = itemState.topic.replace("**", ""),
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp,
                         color = colors.mainText,
@@ -404,19 +475,19 @@ private fun HistoryItem(
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.weight(1f)
                     )
-                    // Level badge
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(colors.accent.copy(0.15f))
-                            .padding(horizontal = 7.dp, vertical = 2.dp)
-                    ) {
-                        Text(
-                            text = itemState.level,
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = colors.accent
-                        )
+                    // 3NF: chỉ custom topics (systemCode == "custom") mới có thể đổi tên
+                    if (item.systemCode == "custom") {
+                        IconButton(
+                            onClick = { onEditClick(item) },
+                            modifier = Modifier.size(24.dp)
+                        ) {
+                            Icon(
+                                Icons.Rounded.Edit,
+                                contentDescription = "Edit topic",
+                                tint = colors.hintText,
+                                modifier = Modifier.size(14.dp)
+                            )
+                        }
                     }
                 }
 
@@ -426,16 +497,18 @@ private fun HistoryItem(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                    val statusText = if (isCompleted) "✓ Hoàn thành" else "⏳ Đang học ($completed/$total câu)"
-                    Text(
-                        text = statusText,
-                        fontSize = 12.sp,
-                        color = iconColor,
-                        fontWeight = FontWeight.Medium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    Text("·", fontSize = 12.sp, color = colors.border)
+                    if (!isCompleted) {
+                        Text(
+                            text = "$completed/$total câu",
+                            fontSize = 12.sp,
+                            color = iconColor,
+                            fontWeight = FontWeight.Medium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        Text("·", fontSize = 12.sp, color = colors.border)
+                    }
+                    
                     Text(
                         text = itemState.formattedDate,
                         fontSize = 12.sp,
@@ -443,6 +516,16 @@ private fun HistoryItem(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
+                    if (isCompleted) {
+                        Text("·", fontSize = 12.sp, color = colors.border)
+                        Text(
+                            text = "Cập nhật: ${itemState.formattedUpdateDate}",
+                            fontSize = 12.sp,
+                            color = colors.hintText,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
                 }
             }
         }
@@ -468,6 +551,33 @@ private fun HistoryItem(
                 color = colors.hintText,
                 modifier = Modifier.padding(start = 4.dp)
             )
+
+            Spacer(Modifier.width(8.dp))
+            Text(
+                text = "${itemState.attemptCount} lần",
+                fontSize = 10.sp,
+                fontWeight = FontWeight.Bold,
+                color = colors.accent,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(colors.accent.copy(alpha = 0.1f))
+                    .padding(horizontal = 6.dp, vertical = 2.dp)
+            )
+
+            Spacer(Modifier.width(8.dp))
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(colors.accent.copy(0.15f))
+                    .padding(horizontal = 6.dp, vertical = 2.dp)
+            ) {
+                Text(
+                    text = itemState.level,
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = colors.accent
+                )
+            }
 
             Spacer(Modifier.weight(1f))
 
@@ -514,26 +624,56 @@ private fun HistoryItem(
                 Spacer(Modifier.width(8.dp))
             }
 
+            if (itemState.status != HistoryStatus.COMPLETED) {
+                Box(
+                    modifier = Modifier
+                        .height(32.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(colors.accent.copy(alpha = 0.08f))
+                        .clickable { onReTest(item) }
+                        .padding(horizontal = 10.dp, vertical = 4.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Icon(Icons.Rounded.Replay, null, modifier = Modifier.size(14.dp), tint = colors.accent)
+                        Spacer(Modifier.width(4.dp))
+                        Text(
+                            text = "Làm lại",
+                            fontSize = 12.sp,
+                            color = colors.accent,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+            }
+        }
+    } // Close Column
+
+    if (showDeleteOverlay) {
             Box(
                 modifier = Modifier
-                    .height(32.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(colors.accent.copy(alpha = 0.08f))
-                    .clickable { onReTest(item) }
-                    .padding(horizontal = 10.dp, vertical = 4.dp),
+                    .matchParentSize()
+                    .background(colors.background.copy(alpha = 0.7f))
+                    .clickable { showDeleteOverlay = false },
                 contentAlignment = Alignment.Center
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                IconButton(
+                    onClick = { 
+                        showDeleteOverlay = false
+                        onDelete(item) 
+                    },
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(colors.error.copy(alpha = 0.1f))
                 ) {
-                    Icon(Icons.Rounded.Replay, null, modifier = Modifier.size(14.dp), tint = colors.accent)
-                    Spacer(Modifier.width(4.dp))
-                    Text(
-                        text = if (itemState.status == HistoryStatus.COMPLETED) "Luyện tập lại" else "Làm lại",
-                        fontSize = 12.sp,
-                        color = colors.accent,
-                        fontWeight = FontWeight.Bold
+                    Icon(
+                        Icons.Rounded.DeleteOutline,
+                        contentDescription = "Delete",
+                        tint = colors.error
                     )
                 }
             }

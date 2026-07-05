@@ -247,8 +247,8 @@ fun LessonContent(
                 onPreviousSentence = { viewModel.onPreviousSentence() },
                 onNextSentence = { viewModel.onNextSentence() },
                 onSubmitLesson = { viewModel.onSubmitLesson() },
-                onOpenNotes = { viewModel.openSavedNotes(idx) },
-                noteCount = state.savedNoteCounts[idx] ?: 0
+                onOpenNotes = { viewModel.openSavedNotes() },
+                noteCount = state.savedNoteCounts.values.sum()
             )
         }
     }
@@ -257,7 +257,6 @@ fun LessonContent(
         NotesBottomSheet(
             notes = state.savedNotes,
             colors = colors,
-            sentenceIndex = idx,
             onDismiss = { viewModel.closeSavedNotes() },
             onDeleteNote = { id, index -> viewModel.deleteQuestionNote(id, index) },
             onUpdateNote = { id, index, text -> viewModel.updateQuestionNote(id, index, text) }

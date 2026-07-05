@@ -21,6 +21,7 @@ data class HistoryState(
 class HistoryViewModel(
     private val getAllHistoryUseCase: GetAllHistoryUseCase,
     private val clearHistoryUseCase: ClearHistoryUseCase,
+    private val updateLessonTopicUseCase: com.aienglish.feature.history.application.usecase.UpdateLessonTopicUseCase,
     private val prefs: AppPreferences
 ) : BaseViewModel<HistoryState>(HistoryState()) {
 
@@ -69,6 +70,26 @@ class HistoryViewModel(
                 setState { copy(error = null) }
             } catch (e: Exception) {
                 setState { copy(error = "Không thể xóa lịch sử: ${e.message}") }
+            }
+        }
+    }
+
+    fun deleteHistoryItem(id: Long) {
+        viewModelScope.launch {
+            try {
+                clearHistoryUseCase(listOf(id))
+            } catch (e: Exception) {
+                setState { copy(error = "Không thể xóa: ${e.message}") }
+            }
+        }
+    }
+
+    fun updateTopic(id: Long, newTopic: String) {
+        viewModelScope.launch {
+            try {
+                updateLessonTopicUseCase(id, newTopic)
+            } catch (e: Exception) {
+                setState { copy(error = "Không thể đổi tên bài học: ${e.message}") }
             }
         }
     }

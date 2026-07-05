@@ -2,17 +2,47 @@
 
 Tài liệu này đặc tả thiết kế cơ sở dữ liệu cục bộ (SQLite) được chuẩn hóa theo dạng chuẩn 3 (3NF - Third Normal Form) nhằm tối ưu dung lượng đĩa, tránh dư thừa thông tin tĩnh, tăng hiệu năng truy vấn và sẵn sàng vận hành sản phẩm (Production-ready).
 
+> **Phiên bản DB hiện tại:** `6`  
+> **Lần cập nhật tài liệu cuối:** 2026-07-05
+
 ---
 
-## 1. Điểm Cải tiến cốt lõi so với Phiên bản cũ
+## 1. Lịch sử Migration
+
+| Version | Migration file | Nội dung |
+|---------|---------------|---------|
+| 1 → 2 | `1.sqm` | Tạo bảng `question_notes` |
+| 2 → 3 | `2.sqm` | Tạo các bảng grammar graph, feedback |
+| 3 → 4 | `3.sqm` | Thêm `attempt_count`, `updated_at` vào `lesson_history` |
+| 4 → 5 | `4.sqm` | Fix `attempt_count` default (0 thay vì 1) cho existing data |
+| 5 → 6 | `5.sqm` | **3NF refactor**: xóa `topic TEXT` + `level TEXT` khỏi `lesson_history`, thêm `system_code`, `topic_id INTEGER NOT NULL`, `level_code`; custom topics được insert vào `learning_topics` |
+
+---
+
+## 2. Điểm Cải tiến cốt lõi so với Phiên bản cũ
+
+### 2.1 Tách Static vs Dynamic (từ đầu)
 
 Trong phiên bản cũ, thông tin câu hỏi tĩnh (câu dịch gốc, đáp án đúng, phiên âm và giải nghĩa) được lưu lặp lại trực tiếp trong mỗi lượt làm bài của người dùng. Thiết kế 3NF mới đã giải quyết triệt để vấn đề này bằng cách tách thành hai tầng độc lập:
+
 * **Tầng Dữ liệu Tĩnh (Static Database):** Chỉ lưu trữ 1 lần duy nhất danh sách câu hỏi của các chủ đề (`topic_questions`), các đáp án thay thế tĩnh (`question_alternatives`), phân tích cú pháp tĩnh (`question_tokens`), và từ điển ngữ pháp tĩnh (`grammar_structures`).
-* **Tầng Tiến trình Động (Dynamic Attempt Database):** Chỉ lưu trữ lịch sử lượt học (`lesson_history`), câu trả lời thực tế của người dùng cùng đánh giá tương ứng từ AI (`lesson_question_attempts`), và nhận xét tổng quan (`lesson_feedback`).
+* **Tầng Tiến trình Động (Dynamic Attempt Database):** Chỉ lưu trữ lịch sử lượt học (`lesson_history`), câu trả lời thực tế của người dùng cùng đánh giá tương ứng từ AI (`lesson_question`), và nhận xét tổng quan (`lesson_feedback`).
+
+### 2.2 3NF refactor `lesson_history` (Migration 5 → 6)
+
+Vi phạm 3NF đã được xử lý trong `lesson_history`:
+
+| Vấn đề trước | Giải pháp sau |
+|---|---|
+| `topic TEXT NOT NULL` — phụ thuộc bắc cầu: `id → topic_id → topic` | **Xóa** — tên topic lấy từ `JOIN learning_topics.name` |
+| `level TEXT NOT NULL` — dư thừa với `learning_topics.level_code` | **Xóa** — tách thành `level_code TEXT` (mã thuần, không prefix) |
+| `topic_id TEXT` nullable — FK không hợp lệ với composite PK `(system_code, topic_id INTEGER)` | **Đổi** thành `topic_id INTEGER NOT NULL` + `system_code TEXT NOT NULL` + FK đúng chuẩn |
+
+**Custom topics** (người dùng tự nhập) trước đây chỉ tồn tại trong `lesson_history.topic`. Nay được insert vào `learning_topics` với `system_code = 'custom'` trước khi tạo lesson → đảm bảo toàn vẹn tham chiếu.
 
 ---
 
-## 2. Sơ đồ Quan hệ Thực thể (Mermaid ERD)
+## 3. Sơ đồ Quan hệ Thực thể (Mermaid ERD)
 
 ```mermaid
 erDiagram
@@ -34,15 +64,15 @@ erDiagram
     users ||--o{ payments : "makes"
     quota ||--o{ users : "bounds"
     users ||--o{ lesson_history : "performs"
-    
-    lesson_history ||--o{ lesson_question_attempts : "contains"
+    learning_topics ||--o{ lesson_history : "referenced by (system_code+topic_id FK)"
+
+    lesson_history ||--o{ lesson_question : "contains"
     lesson_history ||--o| lesson_feedback : "receives"
-    topic_questions ||--o{ lesson_question_attempts : "referenced in"
+    topic_questions ||--o{ lesson_question : "referenced in"
 
     %% ĐA NGÔN NGỮ (Localization)
     i18n_locales ||--o{ i18n_translations : "localizes"
     i18n_keys ||--o{ i18n_translations : "defines"
-    i18n_keys ||--o{ learning_topics : "translates name"
     i18n_keys ||--o{ topic_questions : "translates prompt"
     i18n_keys ||--o{ grammar_structures : "translates meaning/explanation"
 
@@ -52,12 +82,14 @@ erDiagram
         TEXT display_name
         TEXT email
         TEXT password_hash
+        TEXT salt
         TEXT avatar_path
         TEXT google_id
         TEXT auth_provider
-        TEXT learning_system
-        TEXT learning_level
-        TEXT mastery_rank
+        TEXT language_native
+        TEXT language_target
+        TEXT learning_system_code FK
+        TEXT learning_level_code FK
         INTEGER created_at
         INTEGER updated_at
         INTEGER deleted_at
@@ -80,6 +112,7 @@ erDiagram
         TEXT currency
         TEXT status
         TEXT payment_method
+        TEXT transaction_ref
         INTEGER created_at
     }
 
@@ -90,16 +123,16 @@ erDiagram
     }
 
     learning_levels {
-        TEXT system_code PK "FK"
+        TEXT system_code PK "FK → learning_systems"
         TEXT level_code PK
         TEXT name
     }
 
     learning_topics {
-        TEXT topic_id PK "GUID"
-        TEXT name_key FK "References i18n_keys"
-        TEXT system_code FK
-        TEXT level_code FK
+        INTEGER topic_id PK "Composite PK"
+        TEXT system_code PK "FK → learning_systems"
+        TEXT name
+        TEXT level_code FK "→ learning_levels"
         INTEGER updated_at
         INTEGER is_ai_recommended
     }
@@ -173,25 +206,27 @@ erDiagram
 
     lesson_history {
         INTEGER id PK "AUTOINCREMENT"
-        TEXT user_id FK
-        TEXT topic_id FK
-        TEXT level
-        TEXT status
+        TEXT user_id FK "→ users"
+        TEXT system_code FK "→ learning_topics composite PK"
+        INTEGER topic_id FK "→ learning_topics composite PK"
+        TEXT level_code "Raw level code: B1, N5, 500..."
+        TEXT status "IN_PROGRESS | COMPLETED"
         INTEGER created_at
         INTEGER completed_at
+        INTEGER attempt_count
+        INTEGER updated_at
     }
 
-    lesson_question_attempts {
+    lesson_question {
         INTEGER id PK "AUTOINCREMENT"
-        INTEGER history_id FK
-        TEXT question_id FK
+        INTEGER history_id FK "→ lesson_history"
+        TEXT question_id FK "→ topic_questions"
         TEXT user_answer
         TEXT ai_explanation
     }
 
     lesson_feedback {
-        INTEGER id PK "AUTOINCREMENT"
-        INTEGER history_id FK "UNIQUE"
+        INTEGER history_id PK "FK → lesson_history (UNIQUE)"
         TEXT review
         INTEGER score
     }
@@ -199,117 +234,185 @@ erDiagram
     i18n_locales {
         TEXT locale_code PK
         TEXT name
+        INTEGER is_default
     }
 
     i18n_keys {
-        TEXT key_code PK
+        TEXT key_id PK
+        TEXT category
     }
 
     i18n_translations {
-        TEXT key_code PK "FK"
+        TEXT key_id PK "FK"
         TEXT locale_code PK "FK"
-        TEXT translation_value
+        TEXT translation_text
     }
 ```
 
 ---
 
-## 3. Chi tiết Bảng và Thuộc tính (Chuẩn hóa 3NF)
+## 4. Chi tiết Bảng và Thuộc tính (Chuẩn hóa 3NF)
 
-### 3.1 Nhóm Người dùng & Hạn mức (Users, Quota & Payments)
+### 4.1 Nhóm Người dùng & Hạn mức (Users, Quota & Payments)
 * **`users`**: Quản lý thông tin tài khoản người học. Cột `email` và `google_id` không cài đặt ràng buộc `UNIQUE` ở mức cột để hỗ trợ **Soft Delete** (xóa mềm), thay vào đó dùng chỉ mục có điều kiện.
 * **`quota`**: Hạn ngạch sử dụng học tập (VIP, Free, Guest).
 * **`payments`**: Lưu nhật ký các giao dịch thanh toán.
 
-### 3.2 Nhóm Bản đồ Học tập & Đa ngôn ngữ (Roadmaps & Localization)
-* **`learning_systems`**, **`learning_levels`**: Quản lý cấu trúc lộ trình và các trình độ tương ứng (ví dụ: TOEIC 300, JLPT N5).
-* **`learning_topics`**: Lưu các chủ đề học tập. Tên chủ đề được dịch đa ngôn ngữ thông qua `name_key` liên kết sang bảng dịch thuật.
-* **`i18n_locales`**, **`i18n_keys`**, **`i18n_translations`**: Lưu trữ mã ngôn ngữ, key dịch và bảng dịch thuật hỗ trợ đa ngôn ngữ động cho cả UI tĩnh và nội dung học trình tĩnh.
+### 4.2 Nhóm Bản đồ Học tập & Đa ngôn ngữ (Roadmaps & Localization)
+* **`learning_systems`**: Các hệ thống học tập (CEFR, TOEIC, JLPT, HSK, ...) và hệ thống đặc biệt `'custom'` dành cho chủ đề người dùng tự nhập.
+* **`learning_levels`**: Các cấp độ tương ứng với từng hệ thống (ví dụ: TOEIC/500, JLPT/N5). Bao gồm cấp độ `('custom', 'custom')` cho custom topics.
+* **`learning_topics`**: Lưu các chủ đề học tập.
+  * Predefined topics: `system_code ∈ {CEFR, TOEIC, JLPT, ...}`, được seed từ server.
+  * **Custom topics**: `system_code = 'custom'`, `topic_id` = timestamp khi tạo (âm trong migration), được insert trước khi tạo lesson.
+  * Edit topic name chỉ hỗ trợ cho custom topics (`system_code = 'custom'`).
+* **`i18n_locales`**, **`i18n_keys`**, **`i18n_translations`**: Lưu trữ mã ngôn ngữ, key dịch và bảng dịch thuật hỗ trợ đa ngôn ngữ động.
 
-### 3.3 Nhóm Kho câu hỏi Tĩnh (Static Question Bank)
+### 4.3 Nhóm Kho câu hỏi Tĩnh (Static Question Bank)
 * **`topic_questions`**: Chứa thông tin tĩnh của câu hỏi.
-  * `native_prompt_key`: Key dịch thuật của câu gợi ý dịch gốc (Ví dụ: "Gọi món ăn" trong tiếng Việt hoặc "注文する" trong tiếng Nhật).
+  * `native_prompt_key`: Key dịch thuật của câu gợi ý dịch gốc.
   * `explanation_key`: Key giải thích từ vựng/cấu trúc chung của câu.
-  * *Chỉ mục duy nhất:* `UNIQUE(topic_id, sentence_index)` đảm bảo cấu trúc vị trí câu hỏi không đổi.
-* **`question_alternatives`**: Lưu trữ các đáp án thay thế hợp lệ cho một câu hỏi nhất định.
+* **`question_alternatives`**: Lưu trữ các đáp án thay thế hợp lệ cho một câu hỏi.
 * **`question_tokens`**: Chứa phân tích chi tiết của từng từ (IPA, từ loại) trong câu hỏi.
-* **`grammar_structures`**: Từ điển lưu các cấu trúc ngữ pháp dùng chung toàn hệ thống. Ý nghĩa và giải thích chi tiết được lưu dạng key dịch (`meaning_key`, `explanation_key`) để hỗ trợ học viên đa quốc gia, đi kèm các cột `example` (câu ví dụ mẫu) và `level` (trình độ như A1, B2).
-* **`grammar_groups`**: Lưu trữ các nhóm lọc/danh mục của đồ thị cấu trúc ngữ pháp (như "Tất cả", "Cơ bản", "Nâng cao" hoặc các nhóm tự tạo của học viên).
-* **`grammar_group_node_map`**: Bảng trung gian ánh xạ quan hệ nhiều-nhiều giữa các nhóm tự chọn (`grammar_groups`) và các nút cấu trúc ngữ pháp (`grammar_structures`) hiển thị trên Canvas.
-* **`grammar_edges`**: Lưu vết các mối quan hệ cạnh đồ thị (đồ thị mạng tri thức) giữa các cấu trúc ngữ pháp (ví dụ: `PREREQUISITE` - tiên quyết, `SIMILAR` - tương đồng, `CONTRAST` - trái ngược, `DERIVED` - biến thể).
-* **`question_grammar_map`**: Liên kết các câu hỏi tĩnh với cấu trúc ngữ pháp tương ứng, kèm theo ghi chú tùy biến riêng của học sinh (`user_custom_note`).
-* **`question_notes`**: Lưu trữ các ghi chú/bookmarks tùy chọn của học viên từ bài học sinh ra bởi AI Teacher để phục vụ cho việc tạo node động tùy chỉnh trên đồ thị.
+* **`grammar_structures`**: Từ điển lưu các cấu trúc ngữ pháp dùng chung toàn hệ thống.
+* **`grammar_groups`**: Các nhóm lọc/danh mục của đồ thị cấu trúc ngữ pháp.
+* **`grammar_group_node_map`**: Bảng trung gian ánh xạ nhiều-nhiều giữa nhóm và cấu trúc ngữ pháp.
+* **`grammar_edges`**: Các cạnh đồ thị tri thức ngữ pháp (`PREREQUISITE`, `SIMILAR`, `CONTRAST`, `DERIVED`).
+* **`question_grammar_map`**: Liên kết câu hỏi tĩnh với cấu trúc ngữ pháp.
+* **`question_notes`**: Ghi chú/bookmarks của học viên từ bài học AI Teacher.
 
-### 3.4 Nhóm Lịch sử Luyện tập Động (User Attempt Data)
-* **`lesson_history`**: Đầu mục lịch sử luyện tập của người dùng, liên kết trực tiếp với mã chủ đề `topic_id`.
-* **`lesson_question_attempts`**: Chỉ lưu câu trả lời thực tế của người dùng và nhận xét động từ AI cho câu trả lời đó. Hoàn toàn không lưu lại đề bài tĩnh.
-* **`lesson_feedback`**: Lưu điểm số tổng hợp và nhận xét toàn bộ bài tập của AI cho attempt đó.
+### 4.4 Nhóm Lịch sử Luyện tập Động (User Attempt Data)
+
+#### `lesson_history`
+
+Đầu mục lịch sử luyện tập, được chuẩn hóa 3NF hoàn toàn từ version 6:
+
+| Cột | Kiểu | Mô tả |
+|-----|------|-------|
+| `id` | `INTEGER PK` | ID auto |
+| `user_id` | `TEXT FK → users` | Người học |
+| `system_code` | `TEXT NOT NULL` | Hệ thống học: `'CEFR'`, `'TOEIC'`, `'JLPT'`, ..., `'custom'` |
+| `topic_id` | `INTEGER NOT NULL` | FK vào `learning_topics(system_code, topic_id)` |
+| `level_code` | `TEXT NOT NULL` | Mã cấp độ thuần, không có prefix: `'B1'`, `'500'`, `'N5'` |
+| `status` | `TEXT` | `'IN_PROGRESS'` hoặc `'COMPLETED'` |
+| `created_at` | `INTEGER` | Epoch ms — thời điểm tạo |
+| `completed_at` | `INTEGER` | Epoch ms — thời điểm hoàn thành lần cuối |
+| `attempt_count` | `INTEGER DEFAULT 0` | Số lần đã hoàn thành (tăng khi nhấn "Xem đánh giá") |
+| `updated_at` | `INTEGER` | Epoch ms — thời điểm cập nhật mới nhất |
+
+> **Lưu ý:** `level` dạng formatted string (ví dụ: `"TOEIC 500"`) được reconstruct trong tầng application bằng cách ghép `uiPrefix + level_code` — không lưu trong DB.
+
+#### `lesson_question`
+Chỉ lưu câu trả lời thực tế và đánh giá AI cho từng câu trong một bài. Không lưu lại đề bài tĩnh.
+
+#### `lesson_feedback`
+Lưu điểm số tổng hợp và nhận xét toàn bộ bài tập từ AI.
 
 ---
 
-## 4. Chỉ mục & Tối ưu hóa hiệu năng (Indexes & Performance Optimizations)
+## 5. Chỉ mục & Tối ưu hóa hiệu năng (Indexes & Performance Optimizations)
 
-Để đạt hiệu năng 60 FPS trên thiết bị di động/desktop, hệ cơ sở dữ liệu cấu hình các chỉ mục sau:
-
-### 4.1 Chỉ mục Duy nhất có điều kiện (Soft Delete Uniqueness)
-* **`idx_users_email_unique`**: `UNIQUE(email) WHERE deleted_at IS NULL` - Cho phép đăng ký lại bằng email cũ sau khi tài khoản đã bị xóa mềm.
+### 5.1 Chỉ mục Duy nhất có điều kiện (Soft Delete Uniqueness)
+* **`idx_users_email_unique`**: `UNIQUE(email) WHERE deleted_at IS NULL`
 * **`idx_users_google_id_unique`**: `UNIQUE(google_id) WHERE deleted_at IS NULL AND google_id IS NOT NULL`
 
-### 4.2 Chỉ mục Khóa ngoại & Lọc tìm kiếm (Performance Indices)
+### 5.2 Chỉ mục Khóa ngoại & Lọc tìm kiếm (Performance Indices)
 * **`idx_users_deleted_at`**: `users(deleted_at)`
-* **`idx_users_learning_system_level`**: `users(learning_system, learning_level)`
 * **`idx_learning_topics_system_level`**: `learning_topics(system_code, level_code)`
-* **`idx_topic_questions_topic_id`**: `topic_questions(topic_id)` - Tăng tốc truy vấn bộ câu hỏi của chủ đề.
+* **`idx_topic_questions_topic_id`**: `topic_questions(topic_id)`
 * **`idx_question_alternatives_question_id`**: `question_alternatives(question_id)`
 * **`idx_question_tokens_question_id`**: `question_tokens(question_id)`
 * **`idx_question_grammar_map_question_id`**: `question_grammar_map(question_id)`
-* **`idx_question_grammar_map_grammar_id`**: `question_grammar_map(grammar_id)` - Tăng tốc truy vấn chéo tìm các ví dụ mẫu chứa cấu trúc ngữ pháp.
-* **`idx_grammar_edges_from`**: `grammar_edges(from_grammar_id)` - Tăng tốc duyệt đồ thị xuôi (tìm nút liên quan/nút con).
-* **`idx_grammar_edges_to`**: `grammar_edges(to_grammar_id)` - Tăng tốc duyệt đồ thị ngược (tìm điều kiện tiên quyết).
+* **`idx_question_grammar_map_grammar_id`**: `question_grammar_map(grammar_id)`
+* **`idx_grammar_edges_from`**: `grammar_edges(from_grammar_id)`
+* **`idx_grammar_edges_to`**: `grammar_edges(to_grammar_id)`
 * **`idx_lesson_history_user_id`**: `lesson_history(user_id)`
-* **`idx_lesson_question_attempts_history_id`**: `lesson_question_attempts(history_id)` - Tăng tốc hiển thị màn hình Xem lại kết quả.
-* **`idx_lesson_question_attempts_question_id`**: `lesson_question_attempts(question_id)`
+* **`idx_lesson_question_history_id`**: `lesson_question(history_id)`
+* **`idx_lesson_question_question_id`**: `lesson_question(question_id)`
 
 ---
 
-## 5. Kiến trúc Đa ngôn ngữ Động (Dynamic Multilingual / i18n Integration)
+## 6. Kiến trúc Đa ngôn ngữ Động (Dynamic Multilingual / i18n Integration)
 
-Bằng cách loại bỏ hoàn toàn các trường văn bản cứng (hardcode) bằng một ngôn ngữ cụ thể ở các bảng tĩnh và thay thế bằng các liên kết khóa ngoại tới `i18n_keys`, hệ thống dễ dàng cấu hình và phân phối nội dung đa ngôn ngữ:
+Bằng cách thay thế các trường text cứng bằng liên kết khóa ngoại tới `i18n_keys`, hệ thống phân phối nội dung đa ngôn ngữ:
 
-### 5.1 Luồng truy xuất bản dịch giao diện (Static UI localization)
-Khi ứng dụng khởi tạo, toàn bộ nhãn tĩnh (UI Labels) thuộc ngôn ngữ mẹ đẻ của người dùng (`users.language_native`) được tải lên bộ nhớ đệm dạng `Map<String, String>` giúp truy xuất tức thời:
+### 6.1 Luồng truy xuất bản dịch giao diện (Static UI localization)
+
+Khi ứng dụng khởi tạo, toàn bộ nhãn tĩnh theo ngôn ngữ mẹ đẻ (`users.language_native`) được tải vào cache:
+
 ```sql
-SELECT key_code, translation_value 
+SELECT key_id, translation_text 
 FROM i18n_translations 
 WHERE locale_code = ?;
 ```
 
-### 5.2 Truy vấn học trình bản địa hóa (Dynamic Curriculum Translation)
-Khi người dùng duyệt danh sách chủ đề hoặc làm bài học, hệ thống thực hiện phép `JOIN` dựa trên ngôn ngữ mẹ đẻ của họ để kết xuất giao diện học trực quan:
+### 6.2 Truy vấn học trình bản địa hóa (Dynamic Curriculum Translation)
 
 ```sql
--- Lấy câu gợi ý dịch tĩnh và giải thích tĩnh theo ngôn ngữ mẹ đẻ của học viên
+-- Lấy câu gợi ý dịch tĩnh và giải thích theo ngôn ngữ mẹ đẻ của học viên
 SELECT 
     q.id AS question_id,
     q.sentence_index,
     q.english AS correct_answer,
-    tp.translation_value AS localized_prompt, -- Đề bài dịch bản địa hóa
-    te.translation_value AS localized_explanation -- Giải thích ngữ pháp bản địa hóa
+    COALESCE(tp.translation_text, q.native_prompt_key) AS localized_prompt,
+    COALESCE(te.translation_text, q.explanation_key) AS localized_explanation
 FROM topic_questions q
-INNER JOIN i18n_translations tp ON q.native_prompt_key = tp.key_code AND tp.locale_code = :user_native_language
-LEFT JOIN i18n_translations te ON q.explanation_key = te.key_code AND te.locale_code = :user_native_language
+LEFT JOIN i18n_translations tp ON q.native_prompt_key = tp.key_id AND tp.locale_code = :user_native_language
+LEFT JOIN i18n_translations te ON q.explanation_key = te.key_id AND te.locale_code = :user_native_language
 WHERE q.topic_id = :topic_id
 ORDER BY q.sentence_index ASC;
 ```
 
-### 5.3 Kiến trúc Đồ thị Ngữ pháp (Grammar Knowledge Graph Integration)
-Mô hình Graph được triển khai qua mối liên kết giữa `grammar_structures` (Nodes) và `grammar_edges` (Edges). Cấu trúc kề này cho phép hệ thống thực thi các thuật toán duyệt đồ thị ngữ pháp linh hoạt:
+### 6.3 Truy vấn lịch sử luyện tập (3NF — JOIN lấy tên topic)
+
+```sql
+-- getAllHistoryWithCounts: JOIN với learning_topics để lấy tên topic
+SELECT
+    h.id,
+    lt.name AS topic,          -- tên topic từ learning_topics (không còn denormalized)
+    h.system_code,
+    h.topic_id,
+    h.level_code,              -- mã cấp độ thuần (B1, N5, 500...)
+    h.status,
+    h.created_at,
+    h.completed_at,
+    h.attempt_count,
+    h.updated_at,
+    COUNT(q.id)            AS total_count,
+    COUNT(q.ai_explanation) AS completed_count
+FROM lesson_history h
+JOIN learning_topics lt ON h.system_code = lt.system_code AND h.topic_id = lt.topic_id
+LEFT JOIN lesson_question q ON q.history_id = h.id
+WHERE h.user_id = ?
+GROUP BY h.id
+ORDER BY h.created_at DESC;
+```
+
+### 6.4 Kiến trúc Đồ thị Ngữ pháp (Grammar Knowledge Graph Integration)
 
 ```sql
 -- Tìm tất cả các cấu trúc ngữ pháp "tiên quyết" (Prerequisites) cần học trước
-SELECT g_source.pattern, tm.translation_value AS localized_meaning
+SELECT g_source.pattern, tm.translation_text AS localized_meaning
 FROM grammar_edges e
 INNER JOIN grammar_structures g_source ON e.from_grammar_id = g_source.id
-INNER JOIN i18n_translations tm ON g_source.meaning_key = tm.key_code AND tm.locale_code = :user_native_language
+INNER JOIN i18n_translations tm ON g_source.meaning_key = tm.key_id AND tm.locale_code = :user_native_language
 WHERE e.to_grammar_id = :current_grammar_id AND e.edge_type = 'PREREQUISITE';
 ```
+
+---
+
+## 7. Convention Custom Topics
+
+Custom topics (người dùng tự nhập chủ đề bài học) tuân theo convention sau:
+
+| Thuộc tính | Giá trị |
+|---|---|
+| `learning_topics.system_code` | `'custom'` |
+| `learning_topics.level_code` | `'custom'` |
+| `learning_topics.is_ai_recommended` | `0` |
+| `lesson_history.system_code` | `'custom'` |
+| `lesson_history.topic_id` | Timestamp (ms) khi tạo — đảm bảo unique |
+| `lesson_history.level_code` | Level code thực tế người dùng đang luyện (e.g. `'B1'`) |
+
+**Lưu ý migration:** Trong migration 5→6, custom topics cũ (có `topic_id IS NULL`) được migrate với `topic_id = -id` (âm của `lesson_history.id`) để đảm bảo unique và không conflict với predefined topic IDs dương.
+
+Chỉ custom topics mới có thể chỉnh sửa tên (nút ✏️ ẩn với predefined topics).

@@ -69,7 +69,7 @@ class HistoryRepositoryImpl(
         }
     }
 
-    override suspend fun startLesson(topic: String, level: String, topicId: String?): Long =
+    override suspend fun startLesson(systemCode: String, topicId: Long, levelCode: String): Long =
         withContext(dispatchers.io) {
             checkAndMigrateGuestData()
             val now = Clock.System.now().toEpochMilliseconds()
@@ -81,7 +81,8 @@ class HistoryRepositoryImpl(
                 created_at = now,
                 updated_at = now
             )
-            queries.insertLesson(userId, topic, level, now, topicId)
+            // 3NF: truyền systemCode, topicId (INTEGER), levelCode
+            queries.insertLesson(userId, systemCode, topicId, levelCode, now, now)
             queries.getLastInsertId().executeAsOne()
         }
 
@@ -90,9 +91,30 @@ class HistoryRepositoryImpl(
             val now = Clock.System.now().toEpochMilliseconds()
             queries.updateLessonCompleted(
                 completed_at = now,
+                updated_at = now,
                 id = id
             )
         }
+    }
+
+    /**
+     * Reconstruct formatted level string từ systemCode + levelCode.
+     * Mirror logic của LevelType.uiPrefix để maintain backward compat với UI.
+     */
+    private fun reconstructLevel(systemCode: String, levelCode: String): String {
+        if (systemCode == "custom") return levelCode
+        val prefix = when (systemCode) {
+            "TOEIC"   -> "TOEIC "
+            "DELE"    -> "DELE "
+            "SIELE"   -> "SIELE "
+            "HINDI"   -> "Hindi "
+            "DELF"    -> "DELF "
+            "DALF"    -> "DALF "
+            "GOETHE"  -> "Goethe "
+            "TESTDAF" -> "TestDaF "
+            else      -> ""  // CEFR, JLPT, HSK, TOPIK, VIET: no prefix
+        }
+        return prefix + levelCode
     }
 
     @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
@@ -112,14 +134,18 @@ class HistoryRepositoryImpl(
                     rows.map { row ->
                         LessonHistory(
                             id = row.id,
-                            topic = row.topic,
-                            level = row.level,
+                            topic = row.topic,       // từ JOIN với learning_topics
+                            systemCode = row.system_code,
+                            topicId = row.topic_id,  // INTEGER NOT NULL
+                            levelCode = row.level_code,
+                            level = reconstructLevel(row.system_code, row.level_code),
                             status = HistoryStatus.from(row.status),
                             createdAt = row.created_at,
                             completedAt = row.completed_at,
                             completedCount = row.completed_count.toInt(),
                             totalCount = row.total_count.toInt(),
-                            topicId = row.topic_id
+                            attemptCount = row.attempt_count.toInt(),
+                            updatedAt = row.updated_at
                         )
                     }
                 }
@@ -128,6 +154,26 @@ class HistoryRepositoryImpl(
     override suspend fun clearHistory(ids: List<Long>) {
         withContext(dispatchers.io) {
             queries.deleteHistoryByIds(ids)
+        }
+    }
+
+    override suspend fun incrementAttempt(id: Long) {
+        withContext(dispatchers.io) {
+            val now = Clock.System.now().toEpochMilliseconds()
+            queries.incrementLessonAttempt(
+                updated_at = now,
+                id = id
+            )
+        }
+    }
+
+    override suspend fun updateCustomTopicName(topicId: Long, newName: String) {
+        withContext(dispatchers.io) {
+            // 3NF: update tên custom topic trong learning_topics, không còn update lesson_history.topic
+            queries.updateCustomTopicName(
+                name = newName,
+                topic_id = topicId
+            )
         }
     }
 }

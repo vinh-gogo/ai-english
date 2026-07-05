@@ -108,7 +108,7 @@ class TeacherViewModel(
     fun saveQuestionNote(index: Int, note: String) = historyManager.saveQuestionNote(index, note)
     fun updateQuestionNote(noteId: String, sentenceIndex: Int, newNote: String) = historyManager.updateQuestionNote(noteId, sentenceIndex, newNote)
     fun deleteQuestionNote(noteId: String, sentenceIndex: Int) = historyManager.deleteQuestionNote(noteId, sentenceIndex)
-    fun openSavedNotes(index: Int) = historyManager.openSavedNotes(index)
+    fun openSavedNotes() = historyManager.openSavedNotes()
     fun closeSavedNotes() = historyManager.closeSavedNotes()
     fun onReviewLesson(history: LessonHistory) = historyManager.onReviewLesson(history)
     fun onReTestLesson(history: LessonHistory) = historyManager.onReTestLesson(history)

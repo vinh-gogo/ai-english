@@ -139,7 +139,6 @@ fun FeedbackContent(
         NotesBottomSheet(
             notes = state.savedNotes,
             colors = colors,
-            sentenceIndex = explainingIdx,
             onDismiss = { viewModel.closeSavedNotes() },
             onDeleteNote = { id, index -> viewModel.deleteQuestionNote(id, index) },
             onUpdateNote = { id, index, text -> viewModel.updateQuestionNote(id, index, text) }

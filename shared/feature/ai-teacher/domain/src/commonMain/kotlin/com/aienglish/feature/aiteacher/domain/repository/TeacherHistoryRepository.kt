@@ -5,7 +5,14 @@ import com.aienglish.feature.aiteacher.domain.model.EnglishLesson
 import com.aienglish.feature.aiteacher.domain.model.TeacherLessonHistory
 
 interface TeacherHistoryRepository {
-    suspend fun startLesson(topic: String, level: String, topicId: String? = null): Long
+    /** 3NF: dùng systemCode + topicId (INTEGER) + levelCode cho predefined topics */
+    suspend fun startLesson(systemCode: String, topicId: Long, levelCode: String): Long
+    /**
+     * 3NF: Tạo custom topic trong learning_topics (nếu chưa có) rồi start lesson.
+     * Custom topics được lưu với system_code='custom'.
+     */
+    suspend fun ensureCustomTopicAndStart(topicName: String, levelCode: String): Long
+    suspend fun resetLessonProgress(id: Long)
 
     suspend fun completeLesson(
         id: Long,

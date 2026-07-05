@@ -27,7 +27,6 @@ import com.aienglish.feature.aiteacher.domain.model.QuestionNote
 fun NotesBottomSheet(
     notes: List<QuestionNote>,
     colors: AppColors,
-    sentenceIndex: Int,
     onDismiss: () -> Unit,
     onDeleteNote: (String, Int) -> Unit,
     onUpdateNote: (String, Int, String) -> Unit
@@ -57,7 +56,7 @@ fun NotesBottomSheet(
                         note = note,
                         index = i,
                         colors = colors,
-                        sentenceIndex = sentenceIndex,
+                        sentenceIndex = note.sentenceIndex,
                         editingNoteId = editingNoteId,
                         editingNoteText = editingNoteText,
                         onEditingStateChange = { id, text -> 
@@ -204,7 +203,7 @@ private fun NoteContentView(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "${index + 1}",
+                text = "${note.sentenceIndex + 1}",
                 color = colors.accent,
                 fontWeight = FontWeight.Bold,
                 fontSize = 13.sp

@@ -1,0 +1,93 @@
+-- Migration 5→6: 3NF refactor - lesson_history removes topic/level denormalized columns
+-- Thay thế: topic TEXT + level TEXT + topic_id TEXT?
+-- Bằng: system_code TEXT + topic_id INTEGER NOT NULL + level_code TEXT
+--
+-- QUAN TRỌNG: Dùng RENAME thay vì DROP để tránh mất data trong lesson_question/lesson_feedback
+-- (lesson_question.history_id REFERENCES lesson_history ON DELETE CASCADE)
+
+-- Step 1: Đảm bảo 'custom' system và level tồn tại
+INSERT OR IGNORE INTO learning_systems (system_code, name, description)
+    VALUES ('custom', 'Custom', 'User-defined custom topics');
+INSERT OR IGNORE INTO learning_levels (system_code, level_code, name)
+    VALUES ('custom', 'custom', 'Custom');
+
+-- Step 2: Insert custom topics từ lesson_history vào learning_topics
+-- Custom topics cũ: topic_id IS NULL, topic = user text
+-- Dùng -id (âm của history id) làm unique topic_id trong bảng learning_topics
+INSERT OR IGNORE INTO learning_topics (topic_id, name, system_code, level_code, updated_at, is_ai_recommended)
+SELECT -id, topic, 'custom', 'custom', 0, 0
+FROM lesson_history
+WHERE topic_id IS NULL;
+
+-- Step 3: Đổi tên bảng cũ (giữ nguyên records, lesson_question FK vẫn hợp lệ)
+ALTER TABLE lesson_history RENAME TO lesson_history_v5;
+
+-- Step 4: Tạo bảng mới với schema 3NF
+-- NOTE: Bỏ FK constraint đến learning_topics vì predefined topics có thể chưa được seed.
+-- FK sẽ được added khi fresh install (có trong DDL của LessonHistory.sq).
+CREATE TABLE lesson_history (
+    id INTEGER PRIMARY KEY,
+    user_id TEXT NOT NULL DEFAULT '0000000000000000',
+    system_code TEXT NOT NULL DEFAULT 'CEFR',
+    topic_id INTEGER NOT NULL DEFAULT 0,
+    level_code TEXT NOT NULL DEFAULT 'B1',
+    status TEXT NOT NULL DEFAULT 'IN_PROGRESS',
+    created_at INTEGER NOT NULL,
+    completed_at INTEGER,
+    attempt_count INTEGER NOT NULL DEFAULT 0,
+    updated_at INTEGER NOT NULL DEFAULT 0,
+    FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+-- Step 5: Migrate dữ liệu từ bảng cũ sang bảng mới
+-- lesson_question.history_id vẫn reference "lesson_history" (theo tên), sẽ hợp lệ với bảng mới
+INSERT INTO lesson_history (id, user_id, system_code, topic_id, level_code, status, created_at, completed_at, attempt_count, updated_at)
+SELECT
+    id,
+    user_id,
+    -- Parse system_code từ level string (mirror LevelType.systemCode mapping)
+    CASE
+        WHEN topic_id IS NOT NULL THEN
+            CASE
+                WHEN level LIKE 'TOEIC%' THEN 'TOEIC'
+                WHEN level LIKE 'N_' AND length(level) = 2 THEN 'JLPT'
+                WHEN level LIKE 'HSK%' THEN 'HSK'
+                WHEN level LIKE 'DELE %' THEN 'DELE'
+                WHEN level LIKE 'SIELE %' THEN 'SIELE'
+                WHEN level LIKE 'Hindi %' THEN 'HINDI'
+                WHEN level LIKE 'DELF %' THEN 'DELF'
+                WHEN level LIKE 'DALF %' THEN 'DALF'
+                WHEN level LIKE 'Goethe %' THEN 'GOETHE'
+                WHEN level LIKE 'TestDaF %' THEN 'TESTDAF'
+                WHEN level LIKE 'TOPIK%' THEN 'TOPIK'
+                WHEN level IN ('TIEU_HOC','TRUNG_HOC','DAI_HOC') THEN 'VIET'
+                ELSE 'CEFR'
+            END
+        ELSE 'custom'
+    END AS system_code,
+    -- topic_id: predefined → CAST sang INTEGER, custom → -id (negative id từ step 2)
+    CASE
+        WHEN topic_id IS NOT NULL THEN CAST(topic_id AS INTEGER)
+        ELSE -id
+    END AS topic_id,
+    -- Parse level_code: bỏ uiPrefix nếu có
+    CASE
+        WHEN level LIKE 'TOEIC %' THEN replace(level, 'TOEIC ', '')
+        WHEN level LIKE 'DELE %'  THEN replace(level, 'DELE ', '')
+        WHEN level LIKE 'SIELE %' THEN replace(level, 'SIELE ', '')
+        WHEN level LIKE 'Hindi %' THEN replace(level, 'Hindi ', '')
+        WHEN level LIKE 'DELF %'  THEN replace(level, 'DELF ', '')
+        WHEN level LIKE 'DALF %'  THEN replace(level, 'DALF ', '')
+        WHEN level LIKE 'Goethe %'  THEN replace(level, 'Goethe ', '')
+        WHEN level LIKE 'TestDaF %' THEN replace(level, 'TestDaF ', '')
+        ELSE level
+    END AS level_code,
+    status,
+    created_at,
+    completed_at,
+    attempt_count,
+    updated_at
+FROM lesson_history_v5;
+
+-- Step 6: Xóa bảng cũ (lesson_question vẫn reference "lesson_history" theo tên → OK)
+DROP TABLE lesson_history_v5;

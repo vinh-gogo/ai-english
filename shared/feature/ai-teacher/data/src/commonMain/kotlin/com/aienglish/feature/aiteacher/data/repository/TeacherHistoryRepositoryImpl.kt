@@ -8,10 +8,8 @@ import com.aienglish.feature.aiteacher.domain.model.EnglishToken
 import com.aienglish.feature.aiteacher.domain.model.TeacherLessonHistory
 import com.aienglish.feature.aiteacher.domain.repository.TeacherHistoryRepository
 import com.aienglish.feature.history.domain.repository.HistoryRepository
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.decodeFromString
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Clock
 
 class TeacherHistoryRepositoryImpl(
     private val historyRepository: HistoryRepository,
@@ -19,11 +17,33 @@ class TeacherHistoryRepositoryImpl(
     private val dispatchers: AppDispatchers
 ) : TeacherHistoryRepository {
 
-    private val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
     private val queries get() = database.lessonHistoryQueries
 
-    override suspend fun startLesson(topic: String, level: String, topicId: String?): Long =
-        historyRepository.startLesson(topic, level, topicId)
+    override suspend fun startLesson(systemCode: String, topicId: Long, levelCode: String): Long =
+        historyRepository.startLesson(systemCode, topicId, levelCode)
+
+    override suspend fun ensureCustomTopicAndStart(topicName: String, levelCode: String): Long =
+        withContext(dispatchers.io) {
+            val now = Clock.System.now().toEpochMilliseconds()
+            // Ensure custom system/level entries exist (idempotent)
+            database.userSchemaQueries.insertCustomSystemIfNeeded()
+            database.userSchemaQueries.insertCustomLevelIfNeeded()
+            // Insert custom topic nếu chưa tồn tại (topic_id = timestamp làm unique ID)
+            database.userSchemaQueries.insertCustomTopic(now, topicName, now)
+            // Lấy topic_id vừa insert hoặc đã tồn tại
+            val topicId = database.userSchemaQueries
+                .getOrCreateCustomTopicId(topicName)
+                .executeAsOneOrNull() ?: now
+            historyRepository.startLesson("custom", topicId, levelCode)
+        }
+
+    override suspend fun resetLessonProgress(id: Long) {
+        withContext(dispatchers.io) {
+            queries.resetLessonProgress(id)
+            queries.deleteLessonFeedback(id)
+            historyRepository.incrementAttempt(id)
+        }
+    }
 
     override suspend fun completeLesson(
         id: Long,
@@ -32,17 +52,27 @@ class TeacherHistoryRepositoryImpl(
         explanations: Map<Int, String>,
         feedback: EnglishFeedback
     ) {
-        // 1. Save all structured question data
-        saveQuestionsToDb(id, lesson, userAnswers, explanations)
+        // 1. Save all structured question data (best-effort — không block attempt_count)
+        try {
+            saveQuestionsToDb(id, lesson, userAnswers, explanations)
+        } catch (e: Exception) {
+            println("[completeLesson] saveQuestionsToDb failed for history $id: ${e.message}")
+        }
 
-        // 2. Save feedback
-        queries.insertOrReplaceFeedback(
-            history_id = id,
-            review = feedback.review,
-            score = feedback.score.toLong()
-        )
+        // 2. Save feedback (best-effort)
+        try {
+            withContext(dispatchers.io) {
+                queries.insertOrReplaceFeedback(
+                    history_id = id,
+                    review = feedback.review,
+                    score = feedback.score.toLong()
+                )
+            }
+        } catch (e: Exception) {
+            println("[completeLesson] insertOrReplaceFeedback failed for history $id: ${e.message}")
+        }
 
-        // 3. Mark lesson as completed
+        // 3. LUÔN tăng attempt_count — đây là nguồn sự thật duy nhất của số lần hoàn thành
         historyRepository.completeLesson(id = id)
     }
 
@@ -122,7 +152,10 @@ class TeacherHistoryRepositoryImpl(
         userAnswers: Map<Int, String>,
         explanations: Map<Int, String>
     ) = withContext(dispatchers.io) {
-        val topicId = queries.getHistoryTopicId(historyId).executeAsOneOrNull()?.topic_id ?: ""
+        // 3NF: getHistoryTopicId giờ trả về (system_code, topic_id: Long, level_code)
+        // topic_questions.topic_id vẫn là TEXT, nên convert Long → String
+        val historyInfo = queries.getHistoryTopicId(historyId).executeAsOneOrNull()
+        val topicId = historyInfo?.topic_id?.toString() ?: ""
 
         lesson.sentences.forEachIndexed { index, sentence ->
             val staticQuestion = queries.getStaticQuestionsForTopic(topicId).executeAsList()
@@ -209,7 +242,8 @@ class TeacherHistoryRepositoryImpl(
         queries.getQuestionNotes(questionId).executeAsList().map { 
             com.aienglish.feature.aiteacher.domain.model.QuestionNote(
                 id = it.id,
-                note = it.note
+                note = it.note,
+                sentenceIndex = sentenceIndex
             )
         }
     }

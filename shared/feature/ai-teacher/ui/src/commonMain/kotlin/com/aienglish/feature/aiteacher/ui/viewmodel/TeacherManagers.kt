@@ -8,6 +8,7 @@ import com.aienglish.feature.aiteacher.application.usecase.GenerateEnglishLesson
 import com.aienglish.feature.aiteacher.domain.model.getCompatibleLevels
 import com.aienglish.feature.aiteacher.domain.repository.TeacherHistoryRepository
 import com.aienglish.feature.aiteacher.domain.repository.TopicRepository
+import com.aienglish.feature.history.domain.model.HistoryStatus
 import com.aienglish.feature.history.domain.model.LessonHistory
 import com.aienglish.feature.history.domain.repository.HistoryRepository
 import kotlinx.coroutines.CoroutineScope
@@ -374,9 +375,21 @@ class LessonExecutionManager(
                 )
             }
 
-            val topicId = updater.currentUiState.selectedTopicId
+            val isCustom = updater.currentUiState.isCustomTopicMode
+            val systemCode = updater.currentUiState.levelType.systemCode
+            val levelCode = updater.currentUiState.currentLevelCode
+            val topicName = updater.currentUiState.selectedTopic
+            // selectedTopicId là String? (số string từ DB), cần convert sang Long
+            val predefinedTopicId = updater.currentUiState.selectedTopicId?.toLongOrNull() ?: 0L
+
             sharedContext.currentLessonHistoryId = try {
-                teacherHistoryRepository.startLesson(topic, level, topicId)
+                if (isCustom) {
+                    // 3NF: tạo custom topic entry trong learning_topics rồi start lesson
+                    teacherHistoryRepository.ensureCustomTopicAndStart(topicName, levelCode)
+                } else {
+                    // 3NF: dùng systemCode + topicId (Long) + levelCode thay vì topic String + level String
+                    teacherHistoryRepository.startLesson(systemCode, predefinedTopicId, levelCode)
+                }
             } catch (e: Exception) { null }
 
             generateLesson("user", topic, level).fold(
@@ -391,26 +404,40 @@ class LessonExecutionManager(
 
     fun onSubmitLesson() {
         val state = updater.currentUiState
-        val lesson = state.lesson ?: return
+        val lesson = state.lesson ?: run {
+            println("[SUBMIT] lesson = null → return early")
+            return
+        }
         val level = state.selectedLevelText
         val answers = lesson.sentences.mapIndexed { i, s -> (state.userAnswers[i] ?: "") to s.english }
         val sentences = lesson.sentences.map { it.vietnamese }
+        println("[SUBMIT] called, historyId=${sharedContext.currentLessonHistoryId}, sentences=${lesson.sentences.size}")
         updater.updateState { copy(isEvaluating = true, error = null) }
         scope.launch {
             evaluateLesson("user", state.selectedTopic, answers, sentences, level).fold(
-                ifLeft = { err -> updater.updateState { copy(isEvaluating = false, error = err.message) } },
+                ifLeft = { err ->
+                    println("[SUBMIT] evaluateLesson FAILED: ${err.message}")
+                    updater.updateState { copy(isEvaluating = false, error = err.message) }
+                },
                 ifRight = { fb ->
                     updater.updateState { copy(isEvaluating = false, feedback = fb) }
-                    sharedContext.currentLessonHistoryId?.let { id ->
+                    val histId = sharedContext.currentLessonHistoryId
+                    println("[SUBMIT] evaluateLesson OK, historyId=$histId")
+                    if (histId != null) {
                         try {
                             teacherHistoryRepository.completeLesson(
-                                id = id,
+                                id = histId,
                                 lesson = lesson,
                                 userAnswers = state.userAnswers,
                                 explanations = state.explanations,
                                 feedback = fb
                             )
-                        } catch (e: Exception) { /* ignore */ }
+                            println("[SUBMIT] completeLesson DONE for historyId=$histId")
+                        } catch (e: Exception) {
+                            println("[SUBMIT] completeLesson ERROR: ${e.message}")
+                        }
+                    } else {
+                        println("[SUBMIT] historyId=null → skip completeLesson!")
                     }
                 }
             )
@@ -457,14 +484,22 @@ class LessonExecutionManager(
     }
 
     fun onRetryCurrentLesson() {
-        updater.updateState {
-            copy(
-                userAnswers = emptyMap(),
-                checkedAnswers = emptySet(),
-                currentSentenceIndex = 0,
-                feedback = null,
-                error = null
-            )
+        val historyId = sharedContext.currentLessonHistoryId
+        scope.launch {
+            if (historyId != null) {
+                try {
+                    teacherHistoryRepository.resetLessonProgress(historyId)
+                } catch (e: Exception) { /* ignore */ }
+            }
+            updater.updateState {
+                copy(
+                    userAnswers = emptyMap(),
+                    checkedAnswers = emptySet(),
+                    currentSentenceIndex = 0,
+                    feedback = null,
+                    error = null
+                )
+            }
         }
     }
 
@@ -546,6 +581,15 @@ class HistoryManager(
     private val topicManager: TopicManager,
     private val lessonManager: LessonExecutionManager
 ) {
+    private suspend fun reloadAllNotes(historyId: Long) {
+        val allNotes = mutableListOf<com.aienglish.feature.aiteacher.domain.model.QuestionNote>()
+        val size = updater.currentUiState.lesson?.sentences?.size ?: 0
+        for (i in 0 until size) {
+            allNotes.addAll(teacherHistoryRepository.getQuestionNotes(historyId, i))
+        }
+        updater.updateState { copy(savedNotes = allNotes) }
+    }
+
     fun saveQuestionNote(index: Int, note: String) {
         val historyId = sharedContext.currentLessonHistoryId ?: return
         scope.launch {
@@ -557,9 +601,11 @@ class HistoryManager(
                 updater.updateState { 
                     copy(
                         infoMessage = "Đã lưu cấu trúc",
-                        savedNoteCounts = newCounts,
-                        savedNotes = if (showSavedNotesBottomSheet) notes else savedNotes
+                        savedNoteCounts = newCounts
                     ) 
+                }
+                if (updater.currentUiState.showSavedNotesBottomSheet) {
+                    reloadAllNotes(historyId)
                 }
             } catch (e: Exception) { /* ignore */ }
         }
@@ -572,8 +618,9 @@ class HistoryManager(
             try {
                 teacherHistoryRepository.updateQuestionNote(noteId, newNote)
                 updater.updateState { copy(infoMessage = "Đã cập nhật cấu trúc") }
-                val notes = teacherHistoryRepository.getQuestionNotes(historyId, sentenceIndex)
-                updater.updateState { copy(savedNotes = notes) }
+                if (updater.currentUiState.showSavedNotesBottomSheet) {
+                    reloadAllNotes(historyId)
+                }
             } catch (e: Exception) { /* ignore */ }
         }
     }
@@ -587,18 +634,21 @@ class HistoryManager(
                 val newCounts = updater.currentUiState.savedNoteCounts.toMutableMap()
                 newCounts[sentenceIndex] = notes.size
                 updater.updateState { 
-                    copy(savedNotes = notes, savedNoteCounts = newCounts) 
+                    copy(savedNoteCounts = newCounts) 
+                }
+                if (updater.currentUiState.showSavedNotesBottomSheet) {
+                    reloadAllNotes(historyId)
                 }
             } catch (e: Exception) { /* ignore */ }
         }
     }
 
-    fun openSavedNotes(index: Int) {
+    fun openSavedNotes() {
         val historyId = sharedContext.currentLessonHistoryId ?: return
+        updater.updateState { copy(showSavedNotesBottomSheet = true) }
         scope.launch {
             try {
-                val notes = teacherHistoryRepository.getQuestionNotes(historyId, index)
-                updater.updateState { copy(savedNotes = notes, showSavedNotesBottomSheet = true) }
+                reloadAllNotes(historyId)
             } catch (e: Exception) { /* ignore */ }
         }
     }
@@ -729,7 +779,12 @@ class HistoryManager(
                         selectedLevels = newMap
                     )
                 }
-                lessonManager.onStartLesson()
+                
+                // Dù bài đang IN_PROGRESS hay COMPLETED, luôn reset bài cũ và làm lại
+                // để số lần thi (attempt_count) được cập nhật đúng trên cùng 1 row lịch sử
+                sharedContext.currentLessonHistoryId = history.id
+                teacherHistoryRepository.resetLessonProgress(history.id)
+                onResumeLesson(history)
             } catch (e: Exception) {
                 updater.updateState { copy(error = "Không thể thi lại bài học: ${e.message}") }
             }
