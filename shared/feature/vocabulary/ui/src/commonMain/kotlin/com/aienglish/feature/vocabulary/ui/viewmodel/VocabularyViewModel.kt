@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.aienglish.feature.vocabulary.application.usecase.AddVocabularyItemUseCase
 import com.aienglish.feature.vocabulary.application.usecase.DeleteVocabularyItemUseCase
 import com.aienglish.feature.vocabulary.application.usecase.GetVocabularyListUseCase
+import com.aienglish.feature.vocabulary.domain.model.VocabularyCategory
 import com.aienglish.feature.vocabulary.domain.model.VocabularyItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,7 +32,7 @@ class VocabularyViewModel(
                 _state.update { current ->
                     current.copy(
                         items = list,
-                        filteredItems = filterList(list, current.searchQuery),
+                        filteredItems = filterList(list, current.selectedCategory),
                         isLoading = false
                     )
                 }
@@ -39,11 +40,12 @@ class VocabularyViewModel(
         }
     }
 
-    fun onSearchQueryChanged(query: String) {
+    fun onCategorySelected(category: VocabularyCategory?) {
         _state.update { current ->
+            val nextCategory = if (current.selectedCategory == category) null else category
             current.copy(
-                searchQuery = query,
-                filteredItems = filterList(current.items, query)
+                selectedCategory = nextCategory,
+                filteredItems = filterList(current.items, nextCategory)
             )
         }
     }
@@ -56,7 +58,13 @@ class VocabularyViewModel(
         _state.update { it.copy(showAddDialog = false) }
     }
 
-    fun onAddWord(word: String, phonetic: String, meaning: String, example: String) {
+    fun onAddWord(
+        word: String,
+        phonetic: String,
+        meaning: String,
+        example: String,
+        category: VocabularyCategory = VocabularyCategory.GENERAL
+    ) {
         if (word.isBlank() || meaning.isBlank()) return
         viewModelScope.launch {
             val newItem = VocabularyItem(
@@ -65,6 +73,7 @@ class VocabularyViewModel(
                 phonetic = phonetic.trim(),
                 meaning = meaning.trim(),
                 example = example.trim(),
+                category = category,
                 createdAt = 0L
             )
             addVocabularyItemUseCase(newItem)
@@ -78,12 +87,14 @@ class VocabularyViewModel(
         }
     }
 
-    private fun filterList(list: List<VocabularyItem>, query: String): List<VocabularyItem> {
-        if (query.isBlank()) return list
-        return list.filter {
-            it.word.contains(query, ignoreCase = true) ||
-            it.meaning.contains(query, ignoreCase = true) ||
-            it.example.contains(query, ignoreCase = true)
+    private fun filterList(
+        list: List<VocabularyItem>,
+        category: VocabularyCategory?
+    ): List<VocabularyItem> {
+        return if (category == null) {
+            list
+        } else {
+            list.filter { it.category == category }
         }
     }
 }

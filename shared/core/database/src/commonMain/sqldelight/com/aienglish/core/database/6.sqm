@@ -1,6 +1,0 @@
--- Migration 6→7: Drop knowledge graph tables
-DROP TABLE IF EXISTS grammar_group_node_map;
-DROP TABLE IF EXISTS grammar_groups;
-DROP TABLE IF EXISTS question_grammar_map;
-DROP TABLE IF EXISTS grammar_edges;
-DROP TABLE IF EXISTS grammar_structures;

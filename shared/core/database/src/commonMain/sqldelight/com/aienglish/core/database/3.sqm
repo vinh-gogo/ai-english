@@ -1,8 +1,0 @@
-CREATE TABLE IF NOT EXISTS grammar_groups (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL UNIQUE,
-    created_at INTEGER NOT NULL
-);
-
-ALTER TABLE grammar_structures ADD COLUMN example TEXT NOT NULL DEFAULT '';
-ALTER TABLE grammar_structures ADD COLUMN level TEXT NOT NULL DEFAULT 'B1';

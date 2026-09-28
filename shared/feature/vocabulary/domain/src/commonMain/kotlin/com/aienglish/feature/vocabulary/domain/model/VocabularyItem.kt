@@ -11,5 +11,6 @@ data class VocabularyItem(
     val example: String = "",
     val note: String = "",
     val language: String = "en",
+    val category: VocabularyCategory = VocabularyCategory.GENERAL,
     val createdAt: Long = 0L
 )

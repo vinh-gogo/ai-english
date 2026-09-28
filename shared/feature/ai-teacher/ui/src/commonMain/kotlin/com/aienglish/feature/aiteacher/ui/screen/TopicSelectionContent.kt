@@ -26,7 +26,6 @@ import com.aienglish.core.designsystem.theme.AppColors
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherUiState
 import com.aienglish.feature.aiteacher.ui.viewmodel.TeacherViewModel
 import com.aienglish.feature.aiteacher.ui.screen.components.topic.TopicRowItem
-import com.aienglish.feature.aiteacher.ui.screen.components.topic.TopicSearchBar
 import com.aienglish.feature.aiteacher.ui.screen.components.topic.TopicActionHeader
 import com.aienglish.feature.aiteacher.ui.screen.components.topic.TopicGreetingHeader
 import com.aienglish.feature.aiteacher.ui.screen.components.topic.SaveTopicDialog
@@ -40,7 +39,6 @@ fun TopicSelectionContent(
     val lazyListState = rememberLazyListState()
     val selectedIdx = state.selectedTopicIndex
     val isTtsLoading by viewModel.isTtsLoading.collectAsState()
-    var isSearchFocused by remember { mutableStateOf(false) }
     var isCustomTopicFocused by remember { mutableStateOf(false) }
     var longPressedTopicId by remember { mutableStateOf<String?>(null) }
     val coroutineScope = rememberCoroutineScope()
@@ -52,19 +50,9 @@ fun TopicSelectionContent(
         }
     }
 
-    // Scroll to show search bar when search is focused
-    LaunchedEffect(isSearchFocused) {
-        if (isSearchFocused) {
-            lazyListState.animateScrollToItem(index = 1)
-        }
-    }
-
-    // Filter topics: show topics containing search query (pre-filtered by compatible levels in ViewModel)
-    val filteredTopics = remember(state.topics, state.topicSearchQuery) {
+    // List of topics with indices
+    val topicsWithIndex = remember(state.topics) {
         state.topics.mapIndexed { i, t -> i to t }
-            .filter { pair ->
-                pair.second.name.contains(state.topicSearchQuery, ignoreCase = true)
-            }
     }
 
     // Determine current selected topic details
@@ -133,30 +121,14 @@ fun TopicSelectionContent(
                 Spacer(Modifier.height(16.dp))
             }
 
-            // ── Search Bar (Custom compact styling) ──
-            item {
-                TopicSearchBar(
-                    query = state.topicSearchQuery,
-                    isFocused = isSearchFocused,
-                    onQueryChange = { viewModel.onTopicSearchChange(it) },
-                    onFocusChanged = { isSearchFocused = it },
-                    colors = colors
-                )
-            }
-
-            item {
-                Spacer(Modifier.height(8.dp))
-            }
-
             // Section Header: Title + Quick actions (Ngẫu nhiên & Switcher)
             item {
                 TopicActionHeader(
                     isCustomTopicMode = state.isCustomTopicMode,
-                    topicSearchQuery = state.topicSearchQuery,
-                    filteredTopicsCount = filteredTopics.size,
+                    filteredTopicsCount = topicsWithIndex.size,
                     onRandomClick = {
-                        if (filteredTopics.isNotEmpty()) {
-                            viewModel.onTopicIndexSelected(filteredTopics.random().first)
+                        if (topicsWithIndex.isNotEmpty()) {
+                            viewModel.onTopicIndexSelected(topicsWithIndex.random().first)
                         }
                     },
                     onToggleCustomMode = { viewModel.setCustomTopicMode(!state.isCustomTopicMode) },
@@ -170,18 +142,18 @@ fun TopicSelectionContent(
 
             if (!state.isCustomTopicMode) {
                 // ── Vertical list of topic cards ──
-                if (filteredTopics.isEmpty()) {
+                if (topicsWithIndex.isEmpty()) {
                     item {
                         Box(
                             modifier = Modifier.fillMaxWidth().height(48.dp),
                             contentAlignment = Alignment.CenterStart
                         ) {
-                            Text("Không tìm thấy chủ đề phù hợp.", color = colors.hintText, fontSize = 13.sp)
+                            Text("Chưa có chủ đề nào.", color = colors.hintText, fontSize = 13.sp)
                         }
                     }
                 } else {
                     itemsIndexed(
-                        items = filteredTopics,
+                        items = topicsWithIndex,
                         key = { _, pair -> pair.second.name }
                     ) { i, pair ->
                         val idx = pair.first

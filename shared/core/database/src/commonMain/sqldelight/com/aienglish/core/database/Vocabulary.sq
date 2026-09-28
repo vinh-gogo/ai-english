@@ -1,0 +1,113 @@
+CREATE TABLE IF NOT EXISTS vocabulary_items (
+    id TEXT PRIMARY KEY,
+    user_id TEXT,
+    category_code TEXT NOT NULL DEFAULT 'GENERAL',
+    word TEXT NOT NULL,
+    phonetic TEXT,
+    meaning TEXT NOT NULL,
+    example TEXT,
+    note TEXT,
+    language TEXT NOT NULL DEFAULT 'en',
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_vocabulary_user_id ON vocabulary_items(user_id);
+CREATE INDEX IF NOT EXISTS idx_vocabulary_category ON vocabulary_items(category_code);
+CREATE INDEX IF NOT EXISTS idx_vocabulary_word ON vocabulary_items(word);
+CREATE INDEX IF NOT EXISTS idx_vocabulary_created_at ON vocabulary_items(created_at);
+
+-- Queries
+
+getAllVocabulary:
+SELECT * FROM vocabulary_items
+ORDER BY created_at DESC;
+
+getVocabularyByUser:
+SELECT * FROM vocabulary_items
+WHERE user_id = :userId
+ORDER BY created_at DESC;
+
+getGuestVocabulary:
+SELECT * FROM vocabulary_items
+WHERE user_id IS NULL
+ORDER BY created_at DESC;
+
+getVocabularyByCategory:
+SELECT * FROM vocabulary_items
+WHERE category_code = :categoryCode
+ORDER BY created_at DESC;
+
+getVocabularyByUserAndCategory:
+SELECT * FROM vocabulary_items
+WHERE user_id = :userId AND category_code = :categoryCode
+ORDER BY created_at DESC;
+
+getGuestVocabularyByCategory:
+SELECT * FROM vocabulary_items
+WHERE user_id IS NULL AND category_code = :categoryCode
+ORDER BY created_at DESC;
+
+getVocabularyById:
+SELECT * FROM vocabulary_items
+WHERE id = :id;
+
+searchVocabulary:
+SELECT * FROM vocabulary_items
+WHERE word LIKE ('%' || :query || '%') OR meaning LIKE ('%' || :query || '%')
+ORDER BY created_at DESC;
+
+insertVocabulary:
+INSERT OR REPLACE INTO vocabulary_items (
+    id,
+    user_id,
+    category_code,
+    word,
+    phonetic,
+    meaning,
+    example,
+    note,
+    language,
+    created_at,
+    updated_at
+) VALUES (
+    :id,
+    :userId,
+    :categoryCode,
+    :word,
+    :phonetic,
+    :meaning,
+    :example,
+    :note,
+    :language,
+    :createdAt,
+    :updatedAt
+);
+
+updateVocabulary:
+UPDATE vocabulary_items
+SET category_code = :categoryCode,
+    word = :word,
+    phonetic = :phonetic,
+    meaning = :meaning,
+    example = :example,
+    note = :note,
+    language = :language,
+    updated_at = :updatedAt
+WHERE id = :id;
+
+deleteVocabulary:
+DELETE FROM vocabulary_items
+WHERE id = :id;
+
+deleteVocabularyByUser:
+DELETE FROM vocabulary_items
+WHERE user_id = :userId;
+
+countVocabulary:
+SELECT COUNT(*) FROM vocabulary_items;
+
+countVocabularyByCategory:
+SELECT COUNT(*) FROM vocabulary_items
+WHERE category_code = :categoryCode;

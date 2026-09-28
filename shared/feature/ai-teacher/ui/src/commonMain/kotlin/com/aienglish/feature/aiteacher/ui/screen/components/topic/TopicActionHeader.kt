@@ -21,8 +21,8 @@ import com.aienglish.core.designsystem.theme.AppColors
 @Composable
 fun TopicActionHeader(
     isCustomTopicMode: Boolean,
-    topicSearchQuery: String,
-    filteredTopicsCount: Int,
+    topicSearchQuery: String = "",
+    filteredTopicsCount: Int = 0,
     onRandomClick: () -> Unit,
     onToggleCustomMode: () -> Unit,
     colors: AppColors

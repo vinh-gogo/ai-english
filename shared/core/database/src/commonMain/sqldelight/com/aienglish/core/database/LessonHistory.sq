@@ -71,6 +71,13 @@ CREATE TABLE IF NOT EXISTS question_notes (
     FOREIGN KEY(question_id) REFERENCES lesson_question(id) ON DELETE CASCADE
 );
 
+CREATE INDEX IF NOT EXISTS idx_topic_questions_topic_id ON topic_questions(topic_id);
+CREATE INDEX IF NOT EXISTS idx_question_alternatives_question_id ON question_alternatives(question_id);
+CREATE INDEX IF NOT EXISTS idx_question_tokens_question_id ON question_tokens(question_id);
+CREATE INDEX IF NOT EXISTS idx_lesson_history_user_id ON lesson_history(user_id);
+CREATE INDEX IF NOT EXISTS idx_lesson_question_history_id ON lesson_question(history_id);
+CREATE INDEX IF NOT EXISTS idx_lesson_question_question_id ON lesson_question(question_id);
+
 -- Queries
 
 insertLesson:

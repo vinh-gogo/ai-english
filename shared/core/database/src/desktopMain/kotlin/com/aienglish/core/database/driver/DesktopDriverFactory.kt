@@ -58,6 +58,10 @@ fun createDesktopDriver(): SqlDriver {
             } finally {
                 driver.execute(null, "PRAGMA foreign_keys = ON", 0)
             }
+        } else {
+            // Đảm bảo mọi bảng và chỉ mục mới nhất đều tồn tại (CREATE TABLE/INDEX IF NOT EXISTS an toàn và idempotent)
+            AIEnglishDatabase.Schema.create(driver)
+            driver.execute(null, "PRAGMA user_version = $targetVersion", 0)
         }
     }
 

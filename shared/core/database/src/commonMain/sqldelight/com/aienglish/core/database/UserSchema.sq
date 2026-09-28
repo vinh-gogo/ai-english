@@ -91,6 +91,10 @@ CREATE TABLE IF NOT EXISTS learning_topics (
     FOREIGN KEY (system_code, level_code) REFERENCES learning_levels(system_code, level_code) ON DELETE CASCADE
 );
 
+CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email_unique ON users(email) WHERE deleted_at IS NULL;
+CREATE UNIQUE INDEX IF NOT EXISTS idx_users_google_id_unique ON users(google_id) WHERE deleted_at IS NULL AND google_id IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_users_deleted_at ON users(deleted_at);
+CREATE INDEX IF NOT EXISTS idx_learning_topics_system_level ON learning_topics(system_code, level_code);
 
 -- Queries
 

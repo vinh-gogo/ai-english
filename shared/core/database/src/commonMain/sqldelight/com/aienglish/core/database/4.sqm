@@ -1,9 +1,0 @@
--- Fix attempt_count: các bài đã COMPLETED nhưng chưa từng làm lại đang bị đếm 2x
--- vì DEFAULT 1 + updateLessonCompleted luôn +1
--- Sửa về đúng: bài đã COMPLETED thì attempt_count = (số lần reset + 1)
--- Cách đơn giản: lấy attempt_count hiện tại chia 2 + phần dư để đưa về gần đúng.
--- Thực tế: bài chưa làm lại lần nào thì attempt_count đang = 2 (1 default + 1 complete), sửa về 1.
--- Bài đã làm lại 1 lần (incremented once) = 3, sửa về 2. v.v.
-UPDATE lesson_history
-SET attempt_count = attempt_count - 1
-WHERE status = 'COMPLETED' AND attempt_count > 1;

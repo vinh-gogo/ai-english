@@ -2,22 +2,21 @@
 
 Tài liệu này đặc tả thiết kế cơ sở dữ liệu cục bộ (SQLite) được chuẩn hóa theo dạng chuẩn 3 (3NF - Third Normal Form) nhằm tối ưu dung lượng đĩa, tránh dư thừa thông tin tĩnh, tăng hiệu năng truy vấn và sẵn sàng vận hành sản phẩm (Production-ready).
 
-> **Phiên bản DB hiện tại:** `7` (Kế hoạch nâng cấp: `8`)  
+> **Phiên bản DB hiện tại:** `1` (Baseline Schema v1 — Toàn bộ các migration trung gian v1..v8 đã được hợp nhất thành Version 1 duy nhất)  
 > **Lần cập nhật tài liệu cuối:** 2026-09-28
 
 ---
 
-## 1. Lịch sử Migration
+## 1. Trạng thái Schema Version 1 (Baseline Consolidation)
 
-| Version | Migration file | Nội dung |
-|---------|---------------|---------|
-| 1 → 2 | `1.sqm` | Tạo bảng `question_notes` |
-| 2 → 3 | `2.sqm` | Tạo các bảng grammar graph, feedback |
-| 3 → 4 | `3.sqm` | Thêm `attempt_count`, `updated_at` vào `lesson_history` |
-| 4 → 5 | `4.sqm` | Fix `attempt_count` default (0 thay vì 1) cho existing data |
-| 5 → 6 | `5.sqm` | **3NF refactor**: xóa `topic TEXT` + `level TEXT` khỏi `lesson_history`, thêm `system_code`, `topic_id INTEGER NOT NULL`, `level_code`; custom topics được insert vào `learning_topics` |
-| 6 → 7 | `6.sqm` | Loại bỏ các bảng grammar graph (`grammar_structures`, `grammar_edges`, `grammar_groups`, `grammar_group_node_map`, `question_grammar_map`) |
-| 7 → 8 | `7.sqm` | Tạo bảng `vocabulary_items` (Sổ ghi chú từ vựng cá nhân của học viên) |
+Toàn bộ các bước phát triển và tinh chỉnh schema trước đây (từ các migration `1.sqm` đến `7.sqm`) đã được **gom gọn (squashed) thành 1 phiên bản Schema v1 duy nhất** để quản lý và kiểm soát chất lượng chuẩn xác nhất.
+
+| File Schema (.sq) | Nhóm chức năng | Các bảng quản lý |
+|---|---|---|
+| [`UserSchema.sq`](file:///D:/ai-english/shared/core/database/src/commonMain/sqldelight/com/aienglish/core/database/UserSchema.sq) | Người dùng, Hạn mức, i18n, Lộ trình học | `users`, `quota`, `payments`, `learning_systems`, `learning_levels`, `learning_topics`, `i18n_locales`, `i18n_keys`, `i18n_translations` |
+| [`LessonHistory.sq`](file:///D:/ai-english/shared/core/database/src/commonMain/sqldelight/com/aienglish/core/database/LessonHistory.sq) | Ngân hàng câu hỏi tĩnh & Lịch sử học động (3NF) | `topic_questions`, `question_alternatives`, `question_tokens`, `lesson_history`, `lesson_question`, `lesson_feedback`, `question_notes` |
+| [`Vocabulary.sq`](file:///D:/ai-english/shared/core/database/src/commonMain/sqldelight/com/aienglish/core/database/Vocabulary.sq) | Sổ tay từ vựng & Phân loại lĩnh vực | `vocabulary_items` |
+
 
 ---
 
@@ -193,6 +192,7 @@ erDiagram
     vocabulary_items {
         TEXT id PK "GUID / UUID"
         TEXT user_id FK "→ users"
+        TEXT category_code "Enum: IT, MARKETING, HR, PSYCHOLOGY, AGRICULTURE, FOOD_BEVERAGE..."
         TEXT word "Từ vựng"
         TEXT phonetic "Phiên âm IPA"
         TEXT meaning "Nghĩa tiếng Việt"
@@ -284,6 +284,7 @@ Bảng lưu trữ danh sách từ vựng, phiên âm, nghĩa tiếng Việt, câ
 |-----|------|-----------|-------|
 | `id` | `TEXT` | `PRIMARY KEY` | Định danh duy nhất (UUID) |
 | `user_id` | `TEXT` | `FK → users(user_id) ON DELETE CASCADE` | ID người dùng sở hữu (nullable khi học ở chế độ guest/local) |
+| `category_code` | `TEXT` | `NOT NULL DEFAULT 'GENERAL'` | Mã phân loại lĩnh vực: `'IT'`, `'MARKETING'`, `'HR'`, `'PSYCHOLOGY'`, `'AGRICULTURE'`, `'FOOD_BEVERAGE'`, `'BUSINESS'`, `'HEALTHCARE'`, `'DAILY_LIFE'`, `'GENERAL'`... |
 | `word` | `TEXT` | `NOT NULL` | Từ vựng hoặc cụm từ được lưu (ví dụ: *"Meticulous"*) |
 | `phonetic` | `TEXT` | | Phiên âm quốc tế IPA (ví dụ: *"/məˈtɪkjələs/"*) |
 | `meaning` | `TEXT` | `NOT NULL` | Nghĩa giải thích tiếng Việt |
@@ -311,6 +312,7 @@ Bảng lưu trữ danh sách từ vựng, phiên âm, nghĩa tiếng Việt, câ
 * **`idx_lesson_question_history_id`**: `lesson_question(history_id)`
 * **`idx_lesson_question_question_id`**: `lesson_question(question_id)`
 * **`idx_vocabulary_user_id`**: `vocabulary_items(user_id)`
+* **`idx_vocabulary_category`**: `vocabulary_items(category_code)`
 * **`idx_vocabulary_word`**: `vocabulary_items(word)`
 * **`idx_vocabulary_created_at`**: `vocabulary_items(created_at)`
 

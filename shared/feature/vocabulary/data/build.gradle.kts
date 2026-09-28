@@ -17,7 +17,9 @@ kotlin {
             implementation(libs.coroutines.core)
             implementation(libs.koin.core)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.sqldelight.coroutines)
             implementation(project(":shared:core:common"))
+            implementation(project(":shared:core:database"))
             implementation(project(":shared:feature:vocabulary:domain"))
         }
     }
