@@ -41,6 +41,10 @@ kotlin {
                 implementation(project(":shared:feature:pro:application"))
                 implementation(project(":shared:feature:pro:data"))
                 implementation(project(":shared:feature:pro:ui"))
+                implementation(project(":shared:feature:vocabulary:domain"))
+                implementation(project(":shared:feature:vocabulary:application"))
+                implementation(project(":shared:feature:vocabulary:data"))
+                implementation(project(":shared:feature:vocabulary:ui"))
             }
         }
     }

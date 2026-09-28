@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.MenuBook
 import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.WorkspacePremium
@@ -32,6 +33,7 @@ fun TeacherTopNavigation(
     displayName: String?,
     isPaid: Boolean,
     onBackClick: () -> Unit,
+    onVocabularyClick: () -> Unit = {},
     onHistoryClick: () -> Unit,
     onProfileClick: () -> Unit,
     onProClick: () -> Unit,
@@ -73,7 +75,7 @@ fun TeacherTopNavigation(
             }
         }
 
-        // Group 2: History, Profile, Pro badge (Grouped inside a single 48dp capsule aligned to the right)
+        // Group 2: Vocabulary, History, Profile, Pro badge (Grouped inside a single 48dp capsule aligned to the right)
         Row(
             modifier = Modifier
                 .height(48.dp)
@@ -81,12 +83,37 @@ fun TeacherTopNavigation(
                 .border(2.dp, colors.border, CircleShape),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // History Button (Rounded on the left, flat on the right)
+            // Vocabulary Button (Rounded on the left, flat on the right)
             Box(
                 modifier = Modifier
                     .fillMaxHeight()
                     .width(48.dp)
                     .clip(RoundedCornerShape(topStart = 100.dp, bottomStart = 100.dp))
+                    .clickable { onVocabularyClick() },
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    Icons.AutoMirrored.Rounded.MenuBook,
+                    contentDescription = "Từ vựng",
+                    tint = colors.mutedText,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+
+            // Divider
+            Box(
+                modifier = Modifier
+                    .width(1.dp)
+                    .height(20.dp)
+                    .background(colors.border)
+            )
+
+            // History Button (Flat on both sides)
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(48.dp)
+                    .clip(RoundedCornerShape(0.dp))
                     .clickable { onHistoryClick() },
                 contentAlignment = Alignment.Center
             ) {

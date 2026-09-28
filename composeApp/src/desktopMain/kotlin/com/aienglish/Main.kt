@@ -29,6 +29,9 @@ import com.aienglish.feature.history.application.di.historyApplicationModule
 import com.aienglish.feature.pro.data.di.proDataModule
 import com.aienglish.feature.pro.ui.di.proUiModule
 import com.aienglish.feature.pro.application.di.proApplicationModule
+import com.aienglish.feature.vocabulary.data.di.vocabularyDataModule
+import com.aienglish.feature.vocabulary.application.di.vocabularyApplicationModule
+import com.aienglish.feature.vocabulary.ui.di.vocabularyUiModule
 import com.aienglish.feature.aiteacher.domain.resource.JsonResourceReader
 import com.aienglish.resource.DesktopJsonResourceReader
 import org.koin.core.context.startKoin
@@ -63,6 +66,8 @@ fun main() {
             historyApplicationModule,
             proDataModule,
             proApplicationModule,
+            vocabularyDataModule,
+            vocabularyApplicationModule,
             module {
                 single(named("fallback_api_key")) { apiKey }
                 single<JsonResourceReader> { DesktopJsonResourceReader() }
@@ -70,7 +75,8 @@ fun main() {
             teacherUiModule,
             profileUiModule,
             historyUiModule,
-            proUiModule
+            proUiModule,
+            vocabularyUiModule
         )
     }
 

@@ -57,6 +57,13 @@ include(":shared:feature:pro:application")
 include(":shared:feature:pro:data")
 include(":shared:feature:pro:ui")
 
+// ── shared:feature:vocabulary ──
+include(":shared:feature:vocabulary:domain")
+include(":shared:feature:vocabulary:application")
+include(":shared:feature:vocabulary:data")
+include(":shared:feature:vocabulary:ui")
+
 // ── shared:feature:settings ── (add later if needed)
 // include(":shared:feature:settings:domain")
 // include(":shared:feature:settings:ui")
+

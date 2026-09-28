@@ -45,6 +45,7 @@ import com.aienglish.feature.pro.ui.viewmodel.ProViewModel
 import com.aienglish.feature.pro.ui.intent.ProIntent
 import com.aienglish.feature.history.domain.model.LessonHistory
 import com.aienglish.feature.aiteacher.ui.screen.components.teacher.TeacherTopNavigation
+import com.aienglish.feature.vocabulary.ui.screen.VocabularyScreen
 import org.koin.compose.koinInject
 
 // ─────────────────────────────────────────────────────────────
@@ -65,6 +66,7 @@ fun TeacherScreen(
     val proState by proViewModel.state.collectAsState()
     val colors = LocalAppColors.current
     var showHistory by remember { mutableStateOf(false) }
+    var showVocabulary by remember { mutableStateOf(false) }
 
     LaunchedEffect(profileState.showProfile, proState.showVip, state.lesson, state.feedback) {
         if (profileState.showProfile || proState.showVip) {
@@ -125,6 +127,7 @@ fun TeacherScreen(
             }
             AnimatedContent(
                 targetState = when {
+                    showVocabulary -> "vocabulary"
                     state.feedback != null -> "feedback"
                     state.lesson != null -> "lesson"
                     else -> "topic"
@@ -132,28 +135,31 @@ fun TeacherScreen(
                 transitionSpec = { fadeIn(tween(300)) togetherWith fadeOut(tween(200)) }
             ) { screen ->
                 when (screen) {
+                    "vocabulary" -> VocabularyScreen(onBack = { showVocabulary = false }, colors = colors)
                     "feedback" -> FeedbackContent(state, viewModel, colors)
                     "lesson" -> LessonContent(state, viewModel, colors)
                     else -> TopicSelectionContent(state, viewModel, colors)
                 }
             }
 
-            // ── Top Gradient Overlay behind the header ──
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(110.dp)
-                    .align(Alignment.TopCenter)
-                    .background(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(
-                                colors.background,
-                                colors.background.copy(alpha = 0.8f),
-                                Color.Transparent
+            if (!showVocabulary) {
+                // ── Top Gradient Overlay behind the header ──
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(110.dp)
+                        .align(Alignment.TopCenter)
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    colors.background,
+                                    colors.background.copy(alpha = 0.8f),
+                                    Color.Transparent
+                                )
                             )
                         )
-                    )
-            )
+                )
+            }
 
             // Status bar background spacer (Black)
             Spacer(
@@ -172,18 +178,21 @@ fun TeacherScreen(
                     .align(Alignment.BottomCenter)
             )
 
-            // Floating Top Groups
-            TeacherTopNavigation(
-                showBackButton = state.lesson != null || state.feedback != null,
-                isSignedIn = profileState.isSignedIn,
-                displayName = profileState.displayName,
-                isPaid = profileState.isPaid,
-                onBackClick = { viewModel.onReset() },
-                onHistoryClick = { showHistory = true },
-                onProfileClick = { profileViewModel.showProfile() },
-                onProClick = { proViewModel.onIntent(ProIntent.ShowVip) },
-                colors = colors
-            )
+            if (!showVocabulary) {
+                // Floating Top Groups
+                TeacherTopNavigation(
+                    showBackButton = state.lesson != null || state.feedback != null,
+                    isSignedIn = profileState.isSignedIn,
+                    displayName = profileState.displayName,
+                    isPaid = profileState.isPaid,
+                    onBackClick = { viewModel.onReset() },
+                    onVocabularyClick = { showVocabulary = true },
+                    onHistoryClick = { showHistory = true },
+                    onProfileClick = { profileViewModel.showProfile() },
+                    onProClick = { proViewModel.onIntent(ProIntent.ShowVip) },
+                    colors = colors
+                )
+            }
 
             // Error snackbar
             val error = state.error

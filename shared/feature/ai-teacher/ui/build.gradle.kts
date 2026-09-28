@@ -35,6 +35,8 @@ kotlin {
             implementation(project(":shared:feature:history:ui"))
             implementation(project(":shared:feature:history:domain"))
             implementation(project(":shared:feature:pro:ui"))
+            implementation(project(":shared:feature:vocabulary:ui"))
+            implementation(project(":shared:feature:vocabulary:domain"))
             implementation(libs.datetime)
         }
         androidMain.dependencies {
