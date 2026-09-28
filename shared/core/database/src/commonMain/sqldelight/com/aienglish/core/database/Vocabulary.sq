@@ -3,8 +3,10 @@ CREATE TABLE IF NOT EXISTS vocabulary_items (
     user_id TEXT,
     category_code TEXT NOT NULL DEFAULT 'GENERAL',
     word TEXT NOT NULL,
+    part_of_speech TEXT,
     phonetic TEXT,
     meaning TEXT NOT NULL,
+    collocations TEXT,
     example TEXT,
     note TEXT,
     language TEXT NOT NULL DEFAULT 'en',
@@ -53,19 +55,16 @@ getVocabularyById:
 SELECT * FROM vocabulary_items
 WHERE id = :id;
 
-searchVocabulary:
-SELECT * FROM vocabulary_items
-WHERE word LIKE ('%' || :query || '%') OR meaning LIKE ('%' || :query || '%')
-ORDER BY created_at DESC;
-
 insertVocabulary:
 INSERT OR REPLACE INTO vocabulary_items (
     id,
     user_id,
     category_code,
     word,
+    part_of_speech,
     phonetic,
     meaning,
+    collocations,
     example,
     note,
     language,
@@ -76,8 +75,10 @@ INSERT OR REPLACE INTO vocabulary_items (
     :userId,
     :categoryCode,
     :word,
+    :partOfSpeech,
     :phonetic,
     :meaning,
+    :collocations,
     :example,
     :note,
     :language,
@@ -89,8 +90,10 @@ updateVocabulary:
 UPDATE vocabulary_items
 SET category_code = :categoryCode,
     word = :word,
+    part_of_speech = :partOfSpeech,
     phonetic = :phonetic,
     meaning = :meaning,
+    collocations = :collocations,
     example = :example,
     note = :note,
     language = :language,

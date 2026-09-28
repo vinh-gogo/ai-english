@@ -2,6 +2,7 @@ package com.aienglish.feature.vocabulary.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aienglish.core.common.tts.TtsPlayer
 import com.aienglish.feature.vocabulary.application.usecase.AddVocabularyItemUseCase
 import com.aienglish.feature.vocabulary.application.usecase.DeleteVocabularyItemUseCase
 import com.aienglish.feature.vocabulary.application.usecase.GetVocabularyListUseCase
@@ -16,11 +17,14 @@ import kotlinx.coroutines.launch
 class VocabularyViewModel(
     private val getVocabularyListUseCase: GetVocabularyListUseCase,
     private val addVocabularyItemUseCase: AddVocabularyItemUseCase,
-    private val deleteVocabularyItemUseCase: DeleteVocabularyItemUseCase
+    private val deleteVocabularyItemUseCase: DeleteVocabularyItemUseCase,
+    private val ttsPlayer: TtsPlayer
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(VocabularyUiState(isLoading = true))
     val state: StateFlow<VocabularyUiState> = _state.asStateFlow()
+
+    val isTtsLoading: StateFlow<Boolean> = ttsPlayer.isLoading
 
     init {
         loadVocabulary()
@@ -50,6 +54,12 @@ class VocabularyViewModel(
         }
     }
 
+    fun playTts(text: String, languageCode: String = "en") {
+        if (text.isNotBlank()) {
+            ttsPlayer.play(text, languageCode)
+        }
+    }
+
     fun onOpenAddDialog() {
         _state.update { it.copy(showAddDialog = true) }
     }
@@ -60,8 +70,10 @@ class VocabularyViewModel(
 
     fun onAddWord(
         word: String,
+        partOfSpeech: String,
         phonetic: String,
         meaning: String,
+        collocations: List<String>,
         example: String,
         category: VocabularyCategory = VocabularyCategory.GENERAL
     ) {
@@ -70,8 +82,10 @@ class VocabularyViewModel(
             val newItem = VocabularyItem(
                 id = "${kotlin.random.Random.nextLong()}",
                 word = word.trim(),
+                partOfSpeech = partOfSpeech.trim(),
                 phonetic = phonetic.trim(),
                 meaning = meaning.trim(),
+                collocations = collocations.map { it.trim() }.filter { it.isNotBlank() },
                 example = example.trim(),
                 category = category,
                 createdAt = 0L

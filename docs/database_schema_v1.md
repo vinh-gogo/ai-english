@@ -194,8 +194,10 @@ erDiagram
         TEXT user_id FK "→ users"
         TEXT category_code "Enum: IT, MARKETING, HR, PSYCHOLOGY, AGRICULTURE, FOOD_BEVERAGE..."
         TEXT word "Từ vựng"
+        TEXT part_of_speech "Loại từ: noun, verb, adj, adv, phrase..."
         TEXT phonetic "Phiên âm IPA"
         TEXT meaning "Nghĩa tiếng Việt"
+        TEXT collocations "Cụm từ thường đi kèm, cách nhau bởi dấu phẩy"
         TEXT example "Câu ví dụ"
         TEXT note "Ghi chú thêm"
         TEXT language "en, ja, zh..."
@@ -286,8 +288,10 @@ Bảng lưu trữ danh sách từ vựng, phiên âm, nghĩa tiếng Việt, câ
 | `user_id` | `TEXT` | `FK → users(user_id) ON DELETE CASCADE` | ID người dùng sở hữu (nullable khi học ở chế độ guest/local) |
 | `category_code` | `TEXT` | `NOT NULL DEFAULT 'GENERAL'` | Mã phân loại lĩnh vực: `'IT'`, `'MARKETING'`, `'HR'`, `'PSYCHOLOGY'`, `'AGRICULTURE'`, `'FOOD_BEVERAGE'`, `'BUSINESS'`, `'HEALTHCARE'`, `'DAILY_LIFE'`, `'GENERAL'`... |
 | `word` | `TEXT` | `NOT NULL` | Từ vựng hoặc cụm từ được lưu (ví dụ: *"Meticulous"*) |
+| `part_of_speech` | `TEXT` | | Loại từ: `'noun'`, `'verb'`, `'adj'`, `'adv'`, `'phrase'`, `'prep'`... |
 | `phonetic` | `TEXT` | | Phiên âm quốc tế IPA (ví dụ: *"/məˈtɪkjələs/"*) |
 | `meaning` | `TEXT` | `NOT NULL` | Nghĩa giải thích tiếng Việt |
+| `collocations` | `TEXT` | | Các cụm từ thường đi kèm / collocations (ví dụ: *"CI pipeline, seamless integration"*) |
 | `example` | `TEXT` | | Câu văn ví dụ minh họa ngữ cảnh sử dụng |
 | `note` | `TEXT` | | Ghi chú thêm của học viên |
 | `language` | `TEXT` | `NOT NULL DEFAULT 'en'` | Mã ngôn ngữ của từ (`'en'`, `'ja'`, `'zh'`...) |

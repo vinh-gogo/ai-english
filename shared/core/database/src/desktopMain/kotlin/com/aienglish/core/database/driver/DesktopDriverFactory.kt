@@ -63,6 +63,14 @@ fun createDesktopDriver(): SqlDriver {
             AIEnglishDatabase.Schema.create(driver)
             driver.execute(null, "PRAGMA user_version = $targetVersion", 0)
         }
+
+        // Bổ sung các cột mới nếu bảng vocabulary_items đã tồn tại từ schema cũ
+        try {
+            driver.execute(null, "ALTER TABLE vocabulary_items ADD COLUMN part_of_speech TEXT", 0)
+        } catch (_: Exception) {}
+        try {
+            driver.execute(null, "ALTER TABLE vocabulary_items ADD COLUMN collocations TEXT", 0)
+        } catch (_: Exception) {}
     }
 
     return driver

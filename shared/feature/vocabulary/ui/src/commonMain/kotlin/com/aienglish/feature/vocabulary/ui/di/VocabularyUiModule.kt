@@ -8,7 +8,8 @@ val vocabularyUiModule = module {
         VocabularyViewModel(
             getVocabularyListUseCase = get(),
             addVocabularyItemUseCase = get(),
-            deleteVocabularyItemUseCase = get()
+            deleteVocabularyItemUseCase = get(),
+            ttsPlayer = get()
         )
     }
 }

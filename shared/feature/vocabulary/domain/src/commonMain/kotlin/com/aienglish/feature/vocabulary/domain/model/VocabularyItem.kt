@@ -6,8 +6,10 @@ import kotlinx.serialization.Serializable
 data class VocabularyItem(
     val id: String,
     val word: String,
+    val partOfSpeech: String = "",
     val phonetic: String = "",
     val meaning: String,
+    val collocations: List<String> = emptyList(),
     val example: String = "",
     val note: String = "",
     val language: String = "en",
