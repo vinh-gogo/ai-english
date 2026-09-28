@@ -33,11 +33,9 @@ import androidx.compose.material.icons.rounded.SpaceBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -67,7 +65,7 @@ import kotlinx.coroutines.launch
 /**
  * Interactive Handwriting Input Pad for vocabulary input.
  *
- * Employs local $P Point-Cloud geometric recognition & offline Trie dictionary autocomplete.
+ * Employs local multi-feature geometric recognition & offline Trie dictionary autocomplete.
  * 0 Token cost • 100% Offline • Zero LLM latency.
  */
 @Composable
@@ -81,6 +79,7 @@ fun HandwritingPad(
     var strokes by remember { mutableStateOf<List<List<Point2D>>>(emptyList()) }
     var currentStroke by remember { mutableStateOf<List<Point2D>>(emptyList()) }
     var candidateResults by remember { mutableStateOf<List<RecognitionResult>>(emptyList()) }
+    var livePreviewResult by remember { mutableStateOf<RecognitionResult?>(null) }
     var lastAddedChar by remember { mutableStateOf<String?>(null) }
     var debounceJob by remember { mutableStateOf<Job?>(null) }
 
@@ -97,11 +96,12 @@ fun HandwritingPad(
         }
     }
 
-    // Process recognition on strokes
+    // Process recognition and commit candidate to buffer
     fun performRecognition() {
-        if (strokes.isEmpty() && currentStroke.isEmpty()) return
         val allStrokes = if (currentStroke.isNotEmpty()) strokes + listOf(currentStroke) else strokes
-        val results = recognizer.recognize(allStrokes)
+        if (allStrokes.isEmpty()) return
+
+        val results = recognizer.recognize(allStrokes, topN = 5)
         if (results.isNotEmpty()) {
             candidateResults = results
             val topMatch = results.first()
@@ -118,24 +118,37 @@ fun HandwritingPad(
                     lastAddedChar = " "
                 }
                 else -> {
-                    // Append top candidate
                     val charToAppend = topMatch.character
                     buffer += charToAppend
                     lastAddedChar = charToAppend
                 }
             }
         }
-        // Clear canvas strokes after character is committed
+        // Reset strokes and live preview
         strokes = emptyList()
         currentStroke = emptyList()
+        livePreviewResult = null
     }
 
-    // Schedule auto-recognition 650ms after user lifts pen/mouse
+    // Schedule auto-recognition 1100ms after user finishes stroke
     fun scheduleAutoRecognition() {
         debounceJob?.cancel()
         debounceJob = coroutineScope.launch {
-            delay(650L)
+            delay(1100L)
             performRecognition()
+        }
+    }
+
+    // Run quick live recognition to show real-time preview of what's being drawn
+    fun updateLivePreview(newStrokes: List<List<Point2D>>) {
+        if (newStrokes.isEmpty()) {
+            livePreviewResult = null
+            return
+        }
+        val live = recognizer.recognize(newStrokes, topN = 4)
+        livePreviewResult = live.firstOrNull()
+        if (live.isNotEmpty()) {
+            candidateResults = live
         }
     }
 
@@ -236,7 +249,9 @@ fun HandwritingPad(
                                 strokes = emptyList()
                                 currentStroke = emptyList()
                                 candidateResults = emptyList()
+                                livePreviewResult = null
                                 lastAddedChar = null
+                                debounceJob?.cancel()
                             },
                         contentAlignment = Alignment.Center
                     ) {
@@ -255,7 +270,7 @@ fun HandwritingPad(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(180.dp)
+                .height(185.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .background(colors.surfaceContainer.copy(alpha = 0.85f))
                 .border(1.dp, colors.border.copy(alpha = 0.6f), RoundedCornerShape(12.dp))
@@ -282,8 +297,10 @@ fun HandwritingPad(
                             },
                             onDragEnd = {
                                 if (currentStroke.isNotEmpty()) {
-                                    strokes = strokes + listOf(currentStroke)
+                                    val updatedStrokes = strokes + listOf(currentStroke)
+                                    strokes = updatedStrokes
                                     currentStroke = emptyList()
+                                    updateLivePreview(updatedStrokes)
                                     scheduleAutoRecognition()
                                 }
                             },
@@ -296,10 +313,10 @@ fun HandwritingPad(
                 val w = size.width
                 val h = size.height
 
-                // Draw ruled handwriting guide lines
+                // Handwriting guidelines (Rule of thirds)
                 // 1. Top ascender line (25%)
                 drawLine(
-                    color = Color.Gray.copy(alpha = 0.2f),
+                    color = Color.Gray.copy(alpha = 0.18f),
                     start = Offset(0f, h * 0.25f),
                     end = Offset(w, h * 0.25f),
                     strokeWidth = 1f
@@ -328,40 +345,46 @@ fun HandwritingPad(
                     join = StrokeJoin.Round
                 )
 
-                // Draw completed strokes
-                for (stroke in strokes) {
-                    if (stroke.size >= 2) {
+                // Helper for smooth quadratic bezier curve rendering
+                fun drawSmooth(strokePoints: List<Point2D>) {
+                    if (strokePoints.size >= 3) {
                         val path = Path().apply {
-                            moveTo(stroke.first().x, stroke.first().y)
-                            for (i in 1 until stroke.size) {
-                                lineTo(stroke[i].x, stroke[i].y)
+                            moveTo(strokePoints[0].x, strokePoints[0].y)
+                            for (i in 1 until strokePoints.size - 1) {
+                                val p0 = strokePoints[i]
+                                val p1 = strokePoints[i + 1]
+                                val midX = (p0.x + p1.x) / 2f
+                                val midY = (p0.y + p1.y) / 2f
+                                quadraticTo(p0.x, p0.y, midX, midY)
                             }
+                            lineTo(strokePoints.last().x, strokePoints.last().y)
                         }
                         drawPath(path, color = colors.accent, style = strokeStyle)
-                    } else if (stroke.size == 1) {
+                    } else if (strokePoints.size == 2) {
+                        drawLine(
+                            color = colors.accent,
+                            start = Offset(strokePoints[0].x, strokePoints[0].y),
+                            end = Offset(strokePoints[1].x, strokePoints[1].y),
+                            strokeWidth = 4.5.dp.toPx(),
+                            cap = StrokeCap.Round
+                        )
+                    } else if (strokePoints.size == 1) {
                         drawCircle(
                             color = colors.accent,
-                            radius = 3.dp.toPx(),
-                            center = Offset(stroke.first().x, stroke.first().y)
+                            radius = 3.5.dp.toPx(),
+                            center = Offset(strokePoints[0].x, strokePoints[0].y)
                         )
                     }
                 }
 
-                // Draw currently active stroke
-                if (currentStroke.size >= 2) {
-                    val path = Path().apply {
-                        moveTo(currentStroke.first().x, currentStroke.first().y)
-                        for (i in 1 until currentStroke.size) {
-                            lineTo(currentStroke[i].x, currentStroke[i].y)
-                        }
-                    }
-                    drawPath(path, color = colors.accent, style = strokeStyle)
-                } else if (currentStroke.size == 1) {
-                    drawCircle(
-                        color = colors.accent,
-                        radius = 3.dp.toPx(),
-                        center = Offset(currentStroke.first().x, currentStroke.first().y)
-                    )
+                // Render completed strokes
+                for (stroke in strokes) {
+                    drawSmooth(stroke)
+                }
+
+                // Render active stroke
+                if (currentStroke.isNotEmpty()) {
+                    drawSmooth(currentStroke)
                 }
             }
 
@@ -372,7 +395,7 @@ fun HandwritingPad(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "✍️ Vẽ từng ký tự (A-Z, a-z) hoặc số (0-9)\nVuốt ngang ➔ sang phải: Dấu cách | ⬅ sang trái: Xóa",
+                        text = "✍️ Viết từng chữ cái (A-Z, a-z) hoặc số (0-9)\nVuốt ngang ➔ phải: Dấu cách | ⬅ trái: Xóa lùi",
                         fontSize = 11.5.sp,
                         fontStyle = FontStyle.Italic,
                         color = colors.mutedText.copy(alpha = 0.55f),
@@ -382,7 +405,42 @@ fun HandwritingPad(
                 }
             }
 
-            // Quick Canvas Controls on bottom right: "Nhận diện ngay" & "Xóa nét"
+            // Live Preview Status Pill on Top-Left
+            if (livePreviewResult != null) {
+                Surface(
+                    shape = RoundedCornerShape(12.dp),
+                    color = colors.accent.copy(alpha = 0.15f),
+                    border = BorderStroke(1.dp, colors.accent.copy(alpha = 0.4f)),
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(8.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        Text(
+                            text = "Nhận diện:",
+                            fontSize = 10.5.sp,
+                            color = colors.mutedText
+                        )
+                        Text(
+                            text = livePreviewResult!!.character,
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = colors.accent
+                        )
+                        Text(
+                            text = "${(livePreviewResult!!.score * 100).toInt()}%",
+                            fontSize = 10.sp,
+                            color = colors.accent.copy(alpha = 0.8f)
+                        )
+                    }
+                }
+            }
+
+            // Quick Canvas Controls on bottom right: "Nhận diện ngay" & "Vẽ lại nét"
             Row(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
@@ -391,10 +449,10 @@ fun HandwritingPad(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (strokes.isNotEmpty() || currentStroke.isNotEmpty()) {
-                    // Button "Xóa nét vừa vẽ"
+                    // Button "Vẽ lại nét" (clear only current stroke)
                     Surface(
                         shape = CircleShape,
-                        color = colors.surface.copy(alpha = 0.9f),
+                        color = colors.surface.copy(alpha = 0.92f),
                         border = BorderStroke(1.dp, colors.border.copy(alpha = 0.4f)),
                         modifier = Modifier
                             .size(30.dp)
@@ -402,6 +460,7 @@ fun HandwritingPad(
                                 debounceJob?.cancel()
                                 strokes = emptyList()
                                 currentStroke = emptyList()
+                                livePreviewResult = null
                             }
                     ) {
                         Box(contentAlignment = Alignment.Center) {
@@ -424,7 +483,7 @@ fun HandwritingPad(
                         }
                     ) {
                         Row(
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                            modifier = Modifier.padding(horizontal = 9.dp, vertical = 5.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(3.dp)
                         ) {
@@ -454,7 +513,7 @@ fun HandwritingPad(
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 Text(
-                    text = "Ký tự nhận diện:",
+                    text = "Gợi ý nét:",
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Medium,
                     color = colors.mutedText
@@ -477,7 +536,7 @@ fun HandwritingPad(
                                 if (isSelected) colors.accent else colors.border.copy(alpha = 0.4f)
                             ),
                             modifier = Modifier.clickable {
-                                // Replace last character with this alternative
+                                // Replace last character with this chosen alternative
                                 if (lastAddedChar != null && buffer.endsWith(lastAddedChar!!)) {
                                     buffer = buffer.dropLast(lastAddedChar!!.length) + candidate.character
                                 } else {
@@ -493,7 +552,7 @@ fun HandwritingPad(
                             ) {
                                 Text(
                                     text = candidate.character,
-                                    fontSize = 12.sp,
+                                    fontSize = 12.5.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = if (isSelected) colors.accent else colors.mainText
                                 )
@@ -527,7 +586,7 @@ fun HandwritingPad(
                         color = colors.accent
                     )
                     Text(
-                        text = "Tự động hoàn thành",
+                        text = "Chọn từ để điền",
                         fontSize = 10.sp,
                         color = colors.mutedText.copy(alpha = 0.7f)
                     )
@@ -605,7 +664,7 @@ fun HandwritingPad(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "⚡ Thuật toán hình học \$P Point-Cloud • 100% Offline • 0 AI tokens",
+                text = "⚡ Thuật toán đa đặc trưng (Zoning + Tangent + \$P) • 100% Offline • 0 AI tokens",
                 fontSize = 10.sp,
                 fontStyle = FontStyle.Italic,
                 color = colors.mutedText.copy(alpha = 0.7f)
