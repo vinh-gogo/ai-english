@@ -26,7 +26,7 @@ Tài liệu này đặc tả thiết kế cơ sở dữ liệu cục bộ (SQLit
 
 Trong phiên bản cũ, thông tin câu hỏi tĩnh (câu dịch gốc, đáp án đúng, phiên âm và giải nghĩa) được lưu lặp lại trực tiếp trong mỗi lượt làm bài của người dùng. Thiết kế 3NF mới đã giải quyết triệt để vấn đề này bằng cách tách thành hai tầng độc lập:
 
-* **Tầng Dữ liệu Tĩnh (Static Database):** Chỉ lưu trữ 1 lần duy nhất danh sách câu hỏi của các chủ đề (`topic_questions`), các đáp án thay thế tĩnh (`question_alternatives`), phân tích cú pháp tĩnh (`question_tokens`), và từ điển ngữ pháp tĩnh (`grammar_structures`).
+* **Tầng Dữ liệu Tĩnh (Static Database):** Chỉ lưu trữ 1 lần duy nhất danh sách câu hỏi của các chủ đề (`topic_questions`), các đáp án thay thế tĩnh (`question_alternatives`), và phân tích cú pháp tĩnh (`question_tokens`).
 * **Tầng Tiến trình Động (Dynamic Attempt Database):** Chỉ lưu trữ lịch sử lượt học (`lesson_history`), câu trả lời thực tế của người dùng cùng đánh giá tương ứng từ AI (`lesson_question`), và nhận xét tổng quan (`lesson_feedback`).
 
 ### 2.2 3NF refactor `lesson_history` (Migration 5 → 6)
@@ -53,12 +53,6 @@ erDiagram
     learning_topics ||--o{ topic_questions : "contains"
     topic_questions ||--o{ question_alternatives : "has alternative"
     topic_questions ||--o{ question_tokens : "has word breakdown"
-    grammar_structures ||--o{ question_grammar_map : "referenced in"
-    topic_questions ||--o{ question_grammar_map : "has grammar note"
-    grammar_structures ||--o{ grammar_edges : "acts as from_node"
-    grammar_structures ||--o{ grammar_edges : "acts as to_node"
-    grammar_groups ||--o{ grammar_group_node_map : "has"
-    grammar_structures ||--o{ grammar_group_node_map : "mapped"
     lesson_question ||--o{ question_notes : "has"
 
     %% TẦNG TIẾN TRÌNH LUYỆN TẬP ĐỘNG (User Attempts)
@@ -75,7 +69,6 @@ erDiagram
     i18n_locales ||--o{ i18n_translations : "localizes"
     i18n_keys ||--o{ i18n_translations : "defines"
     i18n_keys ||--o{ topic_questions : "translates prompt"
-    i18n_keys ||--o{ grammar_structures : "translates meaning/explanation"
 
     %% THỰC THỂ CHI TIẾT
     users {
@@ -161,47 +154,10 @@ erDiagram
         TEXT part_of_speech
     }
 
-    grammar_structures {
-        TEXT id PK "GUID"
-        TEXT pattern UK
-        TEXT meaning_key FK "References i18n_keys"
-        TEXT explanation_key FK "References i18n_keys"
-        TEXT example
-        TEXT level
-        INTEGER created_at
-    }
-
-    grammar_groups {
-        TEXT id PK "GUID"
-        TEXT name UK
-        INTEGER created_at
-    }
-
-    grammar_group_node_map {
-        TEXT group_id PK "FK"
-        TEXT grammar_id PK "FK"
-    }
-
     question_notes {
         TEXT id PK "GUID"
         INTEGER question_id FK
         TEXT note
-        INTEGER created_at
-    }
-
-    grammar_edges {
-        TEXT id PK "GUID"
-        TEXT from_grammar_id FK "References grammar_structures"
-        TEXT to_grammar_id FK "References grammar_structures"
-        TEXT edge_type
-        INTEGER created_at
-    }
-
-    question_grammar_map {
-        TEXT id PK "GUID"
-        TEXT question_id FK
-        TEXT grammar_id FK
-        TEXT user_custom_note
         INTEGER created_at
     }
 
@@ -274,11 +230,6 @@ erDiagram
   * `explanation_key`: Key giải thích từ vựng/cấu trúc chung của câu.
 * **`question_alternatives`**: Lưu trữ các đáp án thay thế hợp lệ cho một câu hỏi.
 * **`question_tokens`**: Chứa phân tích chi tiết của từng từ (IPA, từ loại) trong câu hỏi.
-* **`grammar_structures`**: Từ điển lưu các cấu trúc ngữ pháp dùng chung toàn hệ thống.
-* **`grammar_groups`**: Các nhóm lọc/danh mục của đồ thị cấu trúc ngữ pháp.
-* **`grammar_group_node_map`**: Bảng trung gian ánh xạ nhiều-nhiều giữa nhóm và cấu trúc ngữ pháp.
-* **`grammar_edges`**: Các cạnh đồ thị tri thức ngữ pháp (`PREREQUISITE`, `SIMILAR`, `CONTRAST`, `DERIVED`).
-* **`question_grammar_map`**: Liên kết câu hỏi tĩnh với cấu trúc ngữ pháp.
 * **`question_notes`**: Ghi chú/bookmarks của học viên từ bài học AI Teacher.
 
 ### 4.4 Nhóm Lịch sử Luyện tập Động (User Attempt Data)
@@ -322,10 +273,6 @@ Lưu điểm số tổng hợp và nhận xét toàn bộ bài tập từ AI.
 * **`idx_topic_questions_topic_id`**: `topic_questions(topic_id)`
 * **`idx_question_alternatives_question_id`**: `question_alternatives(question_id)`
 * **`idx_question_tokens_question_id`**: `question_tokens(question_id)`
-* **`idx_question_grammar_map_question_id`**: `question_grammar_map(question_id)`
-* **`idx_question_grammar_map_grammar_id`**: `question_grammar_map(grammar_id)`
-* **`idx_grammar_edges_from`**: `grammar_edges(from_grammar_id)`
-* **`idx_grammar_edges_to`**: `grammar_edges(to_grammar_id)`
 * **`idx_lesson_history_user_id`**: `lesson_history(user_id)`
 * **`idx_lesson_question_history_id`**: `lesson_question(history_id)`
 * **`idx_lesson_question_question_id`**: `lesson_question(question_id)`
@@ -386,17 +333,6 @@ LEFT JOIN lesson_question q ON q.history_id = h.id
 WHERE h.user_id = ?
 GROUP BY h.id
 ORDER BY h.created_at DESC;
-```
-
-### 6.4 Kiến trúc Đồ thị Ngữ pháp (Grammar Knowledge Graph Integration)
-
-```sql
--- Tìm tất cả các cấu trúc ngữ pháp "tiên quyết" (Prerequisites) cần học trước
-SELECT g_source.pattern, tm.translation_text AS localized_meaning
-FROM grammar_edges e
-INNER JOIN grammar_structures g_source ON e.from_grammar_id = g_source.id
-INNER JOIN i18n_translations tm ON g_source.meaning_key = tm.key_id AND tm.locale_code = :user_native_language
-WHERE e.to_grammar_id = :current_grammar_id AND e.edge_type = 'PREREQUISITE';
 ```
 
 ---
