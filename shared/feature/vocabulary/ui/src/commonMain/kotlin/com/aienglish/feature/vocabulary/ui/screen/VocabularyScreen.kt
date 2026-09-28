@@ -41,6 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
 import com.aienglish.core.designsystem.theme.AppColors
 import com.aienglish.feature.vocabulary.domain.model.PartOfSpeech
 import com.aienglish.feature.vocabulary.domain.model.VocabularyCategory
@@ -347,37 +348,6 @@ private fun CategoryCarousel(
             }
         }
     }
-}
-
-/**
- * Modifier hỗ trợ cả KÉO chuột/chạm tay và CUỘN con lăn chuột (cho cả desktop và mobile).
- */
-private fun Modifier.carouselScrollAndDrag(scrollState: ScrollState): Modifier {
-    return this
-        .pointerInput(scrollState) {
-            detectHorizontalDragGestures { change, dragAmount ->
-                change.consume()
-                scrollState.dispatchRawDelta(-dragAmount)
-            }
-        }
-        .pointerInput(scrollState) {
-            awaitPointerEventScope {
-                while (true) {
-                    val event = awaitPointerEvent()
-                    if (event.type == PointerEventType.Scroll) {
-                        val change = event.changes.firstOrNull()
-                        if (change != null) {
-                            val delta = change.scrollDelta
-                            val scrollAmount = if (delta.x != 0f) delta.x else delta.y
-                            if (scrollAmount != 0f) {
-                                change.consume()
-                                scrollState.dispatchRawDelta(scrollAmount * 35f)
-                            }
-                        }
-                    }
-                }
-            }
-        }
 }
 
 @Composable
@@ -790,15 +760,21 @@ private fun AddVocabularyDialog(
     var selectedCategory by remember { mutableStateOf(initialCategory) }
     var isHandwritingMode by remember { mutableStateOf(false) }
     var handwritingTargetField by remember { mutableStateOf(HandwritingTargetField.WORD) }
+    var showOptionalFieldsInHandwriting by remember { mutableStateOf(false) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = colors.surface,
+        properties = DialogProperties(usePlatformDefaultWidth = false),
+        modifier = Modifier
+            .fillMaxWidth(0.95f)
+            .widthIn(max = 520.dp)
+            .padding(vertical = 12.dp),
         title = {
             Text(
                 text = "Thêm từ vựng mới",
                 fontWeight = FontWeight.Bold,
-                fontSize = 17.sp,
+                fontSize = 16.5.sp,
                 color = colors.mainText
             )
         },
@@ -806,14 +782,14 @@ private fun AddVocabularyDialog(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(max = 500.dp)
+                    .heightIn(max = 560.dp)
                     .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 // Category Picker
                 Text(
                     text = "Lĩnh vực phân loại:",
-                    fontSize = 12.sp,
+                    fontSize = 11.5.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = colors.mutedText
                 )
@@ -834,14 +810,14 @@ private fun AddVocabularyDialog(
                             modifier = Modifier.clickable { selectedCategory = cat }
                         ) {
                             Row(
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 5.dp),
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
                                 Text(cat.iconEmoji, fontSize = 11.sp)
                                 Text(
                                     cat.displayName,
-                                    fontSize = 11.5.sp,
+                                    fontSize = 11.sp,
                                     fontWeight = if (isCatSelected) FontWeight.Bold else FontWeight.Normal,
                                     color = if (isCatSelected) Color.White else colors.mainText
                                 )
@@ -850,17 +826,17 @@ private fun AddVocabularyDialog(
                     }
                 }
 
-                // Part of Speech Picker (FlowRow: all options directly visible on small screens)
+                // Part of Speech Picker
                 Text(
                     text = "Loại từ:",
-                    fontSize = 12.sp,
+                    fontSize = 11.5.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = colors.mutedText
                 )
                 FlowRow(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                    horizontalArrangement = Arrangement.spacedBy(5.dp),
+                    verticalArrangement = Arrangement.spacedBy(5.dp)
                 ) {
                     PartOfSpeech.entries.filter { it != PartOfSpeech.OTHER }.forEach { pos ->
                         val isPosSelected = selectedPartOfSpeech == pos
@@ -872,16 +848,16 @@ private fun AddVocabularyDialog(
                         ) {
                             Text(
                                 text = "${pos.shortName} ${pos.displayName}",
-                                fontSize = 11.sp,
+                                fontSize = 10.5.sp,
                                 fontWeight = if (isPosSelected) FontWeight.Bold else FontWeight.Normal,
                                 color = if (isPosSelected) Color.White else colors.mainText,
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                modifier = Modifier.padding(horizontal = 7.dp, vertical = 3.dp)
                             )
                         }
                     }
                 }
 
-                Spacer(Modifier.height(2.dp))
+                Spacer(Modifier.height(1.dp))
 
                 // Input Mode Toggle: ⌨️ Bàn phím vs ✍️ Viết tay (0 AI)
                 Row(
@@ -900,13 +876,13 @@ private fun AddVocabularyDialog(
                             .clickable { isHandwritingMode = false }
                     ) {
                         Row(
-                            modifier = Modifier.padding(vertical = 6.dp),
+                            modifier = Modifier.padding(vertical = 5.dp),
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "⌨️ Nhập phím",
-                                fontSize = 11.5.sp,
+                                text = "⌨️ Bàn phím",
+                                fontSize = 11.sp,
                                 fontWeight = if (!isHandwritingMode) FontWeight.Bold else FontWeight.Medium,
                                 color = if (!isHandwritingMode) Color.White else colors.mutedText
                             )
@@ -921,13 +897,13 @@ private fun AddVocabularyDialog(
                             .clickable { isHandwritingMode = true }
                     ) {
                         Row(
-                            modifier = Modifier.padding(vertical = 6.dp),
+                            modifier = Modifier.padding(vertical = 5.dp),
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
                                 text = "✍️ Viết tay (0 AI)",
-                                fontSize = 11.5.sp,
+                                fontSize = 11.sp,
                                 fontWeight = if (isHandwritingMode) FontWeight.Bold else FontWeight.Medium,
                                 color = if (isHandwritingMode) Color.White else colors.mutedText
                             )
@@ -935,50 +911,75 @@ private fun AddVocabularyDialog(
                     }
                 }
 
-                // Handwriting Canvas Pad (0 Token AI, Local Geometric Algorithm + Trie Autocomplete)
+                // Handwriting Canvas Pad vs Keyboard Fields
                 if (isHandwritingMode) {
-                    // Handwriting Target Field Selector: [ 🔤 Từ vựng (EN) ] vs [ 🇻🇳 Nghĩa tiếng Việt (VI) ]
+                    // Two side-by-side interactive target cards showing live word and meaning
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(6.dp)
                     ) {
-                        Text(
-                            text = "Mục điền:",
-                            fontSize = 11.5.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = colors.mutedText
-                        )
+                        // Word Target Card
                         Surface(
-                            shape = RoundedCornerShape(14.dp),
-                            color = if (handwritingTargetField == HandwritingTargetField.WORD) colors.accent.copy(alpha = 0.15f) else colors.surfaceContainer,
-                            border = BorderStroke(1.dp, if (handwritingTargetField == HandwritingTargetField.WORD) colors.accent else colors.border.copy(alpha = 0.4f)),
-                            modifier = Modifier.clickable { handwritingTargetField = HandwritingTargetField.WORD }
-                        ) {
-                            Text(
-                                text = "🔤 Từ vựng (EN)",
-                                fontSize = 11.sp,
-                                fontWeight = if (handwritingTargetField == HandwritingTargetField.WORD) FontWeight.Bold else FontWeight.Normal,
-                                color = if (handwritingTargetField == HandwritingTargetField.WORD) colors.accent else colors.mutedText,
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                            modifier = Modifier
+                                .weight(1f)
+                                .clickable { handwritingTargetField = HandwritingTargetField.WORD },
+                            shape = RoundedCornerShape(9.dp),
+                            color = if (handwritingTargetField == HandwritingTargetField.WORD) colors.accent.copy(alpha = 0.12f) else colors.surfaceContainer,
+                            border = BorderStroke(
+                                if (handwritingTargetField == HandwritingTargetField.WORD) 1.5.dp else 1.dp,
+                                if (handwritingTargetField == HandwritingTargetField.WORD) colors.accent else colors.border.copy(alpha = 0.35f)
                             )
+                        ) {
+                            Column(modifier = Modifier.padding(horizontal = 9.dp, vertical = 6.dp)) {
+                                Text(
+                                    text = "🔤 Từ vựng (EN) *",
+                                    fontSize = 10.5.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = if (handwritingTargetField == HandwritingTargetField.WORD) colors.accent else colors.mutedText
+                                )
+                                Text(
+                                    text = if (word.isBlank()) "(Chạm để vẽ)" else word,
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = if (word.isBlank()) colors.mutedText.copy(alpha = 0.5f) else colors.mainText,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
                         }
+
+                        // Meaning Target Card
                         Surface(
-                            shape = RoundedCornerShape(14.dp),
-                            color = if (handwritingTargetField == HandwritingTargetField.MEANING) colors.accent.copy(alpha = 0.15f) else colors.surfaceContainer,
-                            border = BorderStroke(1.dp, if (handwritingTargetField == HandwritingTargetField.MEANING) colors.accent else colors.border.copy(alpha = 0.4f)),
-                            modifier = Modifier.clickable { handwritingTargetField = HandwritingTargetField.MEANING }
-                        ) {
-                            Text(
-                                text = "🇻🇳 Nghĩa tiếng Việt (VI)",
-                                fontSize = 11.sp,
-                                fontWeight = if (handwritingTargetField == HandwritingTargetField.MEANING) FontWeight.Bold else FontWeight.Normal,
-                                color = if (handwritingTargetField == HandwritingTargetField.MEANING) colors.accent else colors.mutedText,
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                            modifier = Modifier
+                                .weight(1f)
+                                .clickable { handwritingTargetField = HandwritingTargetField.MEANING },
+                            shape = RoundedCornerShape(9.dp),
+                            color = if (handwritingTargetField == HandwritingTargetField.MEANING) colors.accent.copy(alpha = 0.12f) else colors.surfaceContainer,
+                            border = BorderStroke(
+                                if (handwritingTargetField == HandwritingTargetField.MEANING) 1.5.dp else 1.dp,
+                                if (handwritingTargetField == HandwritingTargetField.MEANING) colors.accent else colors.border.copy(alpha = 0.35f)
                             )
+                        ) {
+                            Column(modifier = Modifier.padding(horizontal = 9.dp, vertical = 6.dp)) {
+                                Text(
+                                    text = "🇻🇳 Nghĩa tiếng Việt *",
+                                    fontSize = 10.5.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = if (handwritingTargetField == HandwritingTargetField.MEANING) colors.accent else colors.mutedText
+                                )
+                                Text(
+                                    text = if (meaning.isBlank()) "(Chạm để vẽ)" else meaning,
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = if (meaning.isBlank()) colors.mutedText.copy(alpha = 0.5f) else colors.mainText,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
                         }
                     }
 
+                    // Handwriting Pad
                     key(handwritingTargetField) {
                         if (handwritingTargetField == HandwritingTargetField.WORD) {
                             HandwritingPad(
@@ -995,54 +996,110 @@ private fun AddVocabularyDialog(
                                 currentWord = meaning,
                                 colors = colors,
                                 initialLanguage = HandwritingLanguage.VIETNAMESE,
-                                targetFieldLabel = "Nghĩa tiếng Việt (VI)",
+                                targetFieldLabel = "Nghĩa tiếng Việt",
                                 onWordCommitted = { committedMeaning ->
                                     meaning = committedMeaning
                                 }
                             )
                         }
                     }
-                }
 
-                OutlinedTextField(
-                    value = word,
-                    onValueChange = { word = it },
-                    label = { Text("Từ vựng *") },
-                    placeholder = { Text("Ví dụ: Integration") },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                OutlinedTextField(
-                    value = phonetic,
-                    onValueChange = { phonetic = it },
-                    label = { Text("Phiên âm IPA (tùy chọn)") },
-                    placeholder = { Text("Ví dụ: /ˌɪntɪˈɡreɪʃn/") },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                OutlinedTextField(
-                    value = meaning,
-                    onValueChange = { meaning = it },
-                    label = { Text("Nghĩa tiếng Việt *") },
-                    placeholder = { Text("Ví dụ: Sự tích hợp, hợp nhất") },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                OutlinedTextField(
-                    value = collocationsInput,
-                    onValueChange = { collocationsInput = it },
-                    label = { Text("Collocations (tùy chọn, cách bởi dấu phẩy)") },
-                    placeholder = { Text("Ví dụ: CI pipeline, seamless integration") },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                OutlinedTextField(
-                    value = example,
-                    onValueChange = { example = it },
-                    label = { Text("Câu ví dụ (tùy chọn)") },
-                    placeholder = { Text("Ví dụ: Our team sets up automated testing.") },
-                    modifier = Modifier.fillMaxWidth()
-                )
+                    // Collapsible accordion for optional details in handwriting mode
+                    Surface(
+                        shape = RoundedCornerShape(8.dp),
+                        color = colors.surfaceContainer.copy(alpha = 0.55f),
+                        border = BorderStroke(1.dp, colors.border.copy(alpha = 0.3f)),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { showOptionalFieldsInHandwriting = !showOptionalFieldsInHandwriting }
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 7.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = if (showOptionalFieldsInHandwriting) "Ẩn các mục bổ sung" else "+ Thêm phiên âm IPA, ví dụ (tùy chọn)",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Medium,
+                                color = colors.accent
+                            )
+                            Icon(
+                                imageVector = if (showOptionalFieldsInHandwriting) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                                contentDescription = null,
+                                tint = colors.accent,
+                                modifier = Modifier.size(15.dp)
+                            )
+                        }
+                    }
+
+                    if (showOptionalFieldsInHandwriting) {
+                        OutlinedTextField(
+                            value = phonetic,
+                            onValueChange = { phonetic = it },
+                            label = { Text("Phiên âm IPA (tùy chọn)") },
+                            placeholder = { Text("Ví dụ: /ˌɪntɪˈɡreɪʃn/") },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        OutlinedTextField(
+                            value = collocationsInput,
+                            onValueChange = { collocationsInput = it },
+                            label = { Text("Collocations (tùy chọn, cách bởi dấu phẩy)") },
+                            placeholder = { Text("Ví dụ: CI pipeline, seamless integration") },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        OutlinedTextField(
+                            value = example,
+                            onValueChange = { example = it },
+                            label = { Text("Câu ví dụ (tùy chọn)") },
+                            placeholder = { Text("Ví dụ: Our team sets up automated testing.") },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                } else {
+                    // Standard Keyboard Input Mode: All Fields Open
+                    OutlinedTextField(
+                        value = word,
+                        onValueChange = { word = it },
+                        label = { Text("Từ vựng *") },
+                        placeholder = { Text("Ví dụ: Integration") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    OutlinedTextField(
+                        value = phonetic,
+                        onValueChange = { phonetic = it },
+                        label = { Text("Phiên âm IPA (tùy chọn)") },
+                        placeholder = { Text("Ví dụ: /ˌɪntɪˈɡreɪʃn/") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    OutlinedTextField(
+                        value = meaning,
+                        onValueChange = { meaning = it },
+                        label = { Text("Nghĩa tiếng Việt *") },
+                        placeholder = { Text("Ví dụ: Sự tích hợp, hợp nhất") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    OutlinedTextField(
+                        value = collocationsInput,
+                        onValueChange = { collocationsInput = it },
+                        label = { Text("Collocations (tùy chọn, cách bởi dấu phẩy)") },
+                        placeholder = { Text("Ví dụ: CI pipeline, seamless integration") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    OutlinedTextField(
+                        value = example,
+                        onValueChange = { example = it },
+                        label = { Text("Câu ví dụ (tùy chọn)") },
+                        placeholder = { Text("Ví dụ: Our team sets up automated testing.") },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
         },
         confirmButton = {

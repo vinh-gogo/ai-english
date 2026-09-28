@@ -56,9 +56,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.AppColors
+import com.aienglish.feature.vocabulary.ui.screen.carouselScrollAndDrag
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -75,7 +77,7 @@ enum class HandwritingLanguage(val label: String, val icon: String) {
  * Interactive Handwriting Input Pad for vocabulary input.
  *
  * Employs local multi-feature geometric recognition & offline Trie dictionary autocomplete.
- * Supports both English and accented Vietnamese handwriting (tones & diacritic composition).
+ * Fully optimized for both small vertical (phone) screens and large desktop displays.
  * 0 Token cost • 100% Offline • Zero LLM latency.
  */
 @Composable
@@ -182,59 +184,81 @@ fun HandwritingPad(
 
     Column(
         modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
-        // --- 1. Buffer & Language Mode Row ---
+        // --- 1. Buffer & Language Mode Card (Responsive 2-Row Layout) ---
         Surface(
             shape = RoundedCornerShape(10.dp),
             color = colors.surfaceContainer,
             border = BorderStroke(1.dp, colors.border.copy(alpha = 0.5f)),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Row(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 10.dp, vertical = 6.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .padding(horizontal = 10.dp, vertical = 7.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                // Word buffer display
+                // Line 1: Buffer text display + Target Field Badge
                 Row(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(
-                        text = "Văn bản:",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = colors.mutedText
-                    )
-                    Text(
-                        text = if (buffer.isEmpty()) "(vẽ chữ hoặc dấu bên dưới...)" else buffer,
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = FontFamily.Monospace,
-                        color = if (buffer.isEmpty()) colors.mutedText.copy(alpha = 0.6f) else colors.mainText
-                    )
+                    Row(
+                        modifier = Modifier.weight(1f),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Text(
+                            text = "Văn bản:",
+                            fontSize = 11.5.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colors.mutedText
+                        )
+                        Text(
+                            text = if (buffer.isEmpty()) "(vẽ chữ hoặc dấu...)" else buffer,
+                            fontSize = 14.5.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = FontFamily.Monospace,
+                            color = if (buffer.isEmpty()) colors.mutedText.copy(alpha = 0.5f) else colors.mainText,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+
+                    // Target indicator badge
+                    Surface(
+                        shape = RoundedCornerShape(6.dp),
+                        color = colors.accent.copy(alpha = 0.12f),
+                        border = BorderStroke(1.dp, colors.accent.copy(alpha = 0.35f))
+                    ) {
+                        Text(
+                            text = targetFieldLabel,
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colors.accent,
+                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                        )
+                    }
                 }
 
-                // Language Mode Toggle & Quick actions
+                // Line 2: Language switcher + Quick editing buttons
                 Row(
+                    modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     // Language Switcher Toggle: EN / VI
                     Surface(
-                        shape = RoundedCornerShape(14.dp),
+                        shape = RoundedCornerShape(12.dp),
                         color = colors.surface,
-                        border = BorderStroke(1.dp, colors.border.copy(alpha = 0.5f)),
-                        modifier = Modifier.padding(end = 4.dp)
+                        border = BorderStroke(1.dp, colors.border.copy(alpha = 0.45f))
                     ) {
                         Row(modifier = Modifier.padding(2.dp)) {
                             // English button
                             Surface(
-                                shape = RoundedCornerShape(12.dp),
+                                shape = RoundedCornerShape(10.dp),
                                 color = if (languageMode == HandwritingLanguage.ENGLISH) colors.accent else Color.Transparent,
                                 modifier = Modifier.clickable {
                                     languageMode = HandwritingLanguage.ENGLISH
@@ -242,15 +266,15 @@ fun HandwritingPad(
                             ) {
                                 Text(
                                     text = "🔤 EN",
-                                    fontSize = 11.sp,
-                                    fontWeight = if (languageMode == HandwritingLanguage.ENGLISH) FontWeight.Bold else FontWeight.Normal,
+                                    fontSize = 10.5.sp,
+                                    fontWeight = if (languageMode == HandwritingLanguage.ENGLISH) FontWeight.Bold else FontWeight.Medium,
                                     color = if (languageMode == HandwritingLanguage.ENGLISH) Color.White else colors.mutedText,
-                                    modifier = Modifier.padding(horizontal = 7.dp, vertical = 3.dp)
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
                                 )
                             }
                             // Vietnamese button
                             Surface(
-                                shape = RoundedCornerShape(12.dp),
+                                shape = RoundedCornerShape(10.dp),
                                 color = if (languageMode == HandwritingLanguage.VIETNAMESE) colors.accent else Color.Transparent,
                                 modifier = Modifier.clickable {
                                     languageMode = HandwritingLanguage.VIETNAMESE
@@ -258,64 +282,86 @@ fun HandwritingPad(
                             ) {
                                 Text(
                                     text = "🇻🇳 VI",
-                                    fontSize = 11.sp,
-                                    fontWeight = if (languageMode == HandwritingLanguage.VIETNAMESE) FontWeight.Bold else FontWeight.Normal,
+                                    fontSize = 10.5.sp,
+                                    fontWeight = if (languageMode == HandwritingLanguage.VIETNAMESE) FontWeight.Bold else FontWeight.Medium,
                                     color = if (languageMode == HandwritingLanguage.VIETNAMESE) Color.White else colors.mutedText,
-                                    modifier = Modifier.padding(horizontal = 7.dp, vertical = 3.dp)
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
                                 )
                             }
                         }
                     }
 
-                    // Space button
-                    Box(
-                        modifier = Modifier
-                            .size(28.dp)
-                            .clip(CircleShape)
-                            .background(colors.surface)
-                            .clickable {
+                    // Quick editing buttons: Space, Backspace, Clear all
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        // Space button
+                        Surface(
+                            shape = RoundedCornerShape(6.dp),
+                            color = colors.surface,
+                            border = BorderStroke(1.dp, colors.border.copy(alpha = 0.4f)),
+                            modifier = Modifier.clickable {
                                 buffer += " "
                                 lastAddedChar = " "
-                            },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.SpaceBar,
-                            contentDescription = "Khoảng trắng",
-                            tint = colors.mutedText,
-                            modifier = Modifier.size(15.dp)
-                        )
-                    }
+                            }
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(2.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.SpaceBar,
+                                    contentDescription = "Khoảng trắng",
+                                    tint = colors.mutedText,
+                                    modifier = Modifier.size(13.dp)
+                                )
+                                Text(
+                                    text = "Cách",
+                                    fontSize = 10.sp,
+                                    color = colors.mutedText
+                                )
+                            }
+                        }
 
-                    // Backspace button
-                    Box(
-                        modifier = Modifier
-                            .size(28.dp)
-                            .clip(CircleShape)
-                            .background(colors.surface)
-                            .clickable {
+                        // Backspace button
+                        Surface(
+                            shape = RoundedCornerShape(6.dp),
+                            color = colors.surface,
+                            border = BorderStroke(1.dp, colors.border.copy(alpha = 0.4f)),
+                            modifier = Modifier.clickable {
                                 if (buffer.isNotEmpty()) {
                                     buffer = buffer.dropLast(1)
                                     lastAddedChar = null
                                 }
-                            },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Rounded.Backspace,
-                            contentDescription = "Xóa 1 ký tự",
-                            tint = colors.mutedText,
-                            modifier = Modifier.size(14.dp)
-                        )
-                    }
+                            }
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(2.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Rounded.Backspace,
+                                    contentDescription = "Xóa 1 ký tự",
+                                    tint = colors.mutedText,
+                                    modifier = Modifier.size(12.dp)
+                                )
+                                Text(
+                                    text = "Xóa",
+                                    fontSize = 10.sp,
+                                    color = colors.mutedText
+                                )
+                            }
+                        }
 
-                    // Clear all button
-                    Box(
-                        modifier = Modifier
-                            .size(28.dp)
-                            .clip(CircleShape)
-                            .background(colors.surface)
-                            .clickable {
+                        // Clear all button
+                        Surface(
+                            shape = RoundedCornerShape(6.dp),
+                            color = colors.surface,
+                            border = BorderStroke(1.dp, colors.border.copy(alpha = 0.4f)),
+                            modifier = Modifier.clickable {
                                 buffer = ""
                                 strokes = emptyList()
                                 currentStroke = emptyList()
@@ -323,25 +369,25 @@ fun HandwritingPad(
                                 livePreviewResult = null
                                 lastAddedChar = null
                                 debounceJob?.cancel()
-                            },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.DeleteOutline,
-                            contentDescription = "Xóa hết",
-                            tint = colors.mutedText,
-                            modifier = Modifier.size(15.dp)
-                        )
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.DeleteOutline,
+                                contentDescription = "Xóa hết",
+                                tint = colors.mutedText,
+                                modifier = Modifier.padding(4.dp).size(14.dp)
+                            )
+                        }
                     }
                 }
             }
         }
 
-        // --- 2. Interactive Handwriting Canvas ---
+        // --- 2. Interactive Handwriting Canvas (Optimized 140dp height for portrait screens) ---
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(185.dp)
+                .height(140.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .background(colors.surfaceContainer.copy(alpha = 0.85f))
                 .border(1.dp, colors.border.copy(alpha = 0.6f), RoundedCornerShape(12.dp))
@@ -411,7 +457,7 @@ fun HandwritingPad(
                 )
 
                 val strokeStyle = Stroke(
-                    width = 4.5.dp.toPx(),
+                    width = 4.2.dp.toPx(),
                     cap = StrokeCap.Round,
                     join = StrokeJoin.Round
                 )
@@ -436,7 +482,7 @@ fun HandwritingPad(
                             color = colors.accent,
                             start = Offset(strokePoints[0].x, strokePoints[0].y),
                             end = Offset(strokePoints[1].x, strokePoints[1].y),
-                            strokeWidth = 4.5.dp.toPx(),
+                            strokeWidth = 4.2.dp.toPx(),
                             cap = StrokeCap.Round
                         )
                     } else if (strokePoints.size == 1) {
@@ -466,18 +512,18 @@ fun HandwritingPad(
                     contentAlignment = Alignment.Center
                 ) {
                     val hintText = if (languageMode == HandwritingLanguage.VIETNAMESE) {
-                        "✍️ Viết chữ cái tiếng Việt (ă, â, đ, ê, ô, ơ, ư) hoặc vẽ nét dấu (sắc /, huyền \\, hỏi ?, ngã ~, nặng ., mũ ^, móc ’)\nVuốt ngang dài ➔ phải: Dấu cách | ⬅ trái: Xóa lùi"
+                        "✍️ Viết chữ tiếng Việt hoặc nét dấu (/ \\ ? ~ . ^ ’ ˘ -)\nVuốt ngang dài ➔ phải: Dấu cách | ⬅ trái: Xóa lùi"
                     } else {
-                        "✍️ Viết từng chữ cái (A-Z, a-z) hoặc số (0-9)\nVuốt ngang dài ➔ phải: Dấu cách | ⬅ trái: Xóa lùi"
+                        "✍️ Viết chữ cái (A-Z, a-z) hoặc số (0-9)\nVuốt ngang dài ➔ phải: Dấu cách | ⬅ trái: Xóa lùi"
                     }
                     Text(
                         text = hintText,
-                        fontSize = 11.5.sp,
+                        fontSize = 11.sp,
                         fontStyle = FontStyle.Italic,
                         color = colors.mutedText.copy(alpha = 0.55f),
                         textAlign = TextAlign.Center,
-                        lineHeight = 17.sp,
-                        modifier = Modifier.padding(horizontal = 16.dp)
+                        lineHeight = 16.sp,
+                        modifier = Modifier.padding(horizontal = 12.dp)
                     )
                 }
             }
@@ -486,32 +532,32 @@ fun HandwritingPad(
             if (livePreviewResult != null) {
                 val displayChar = VietnameseDiacritics.formatDisplaySymbol(livePreviewResult!!.character)
                 Surface(
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(10.dp),
                     color = colors.accent.copy(alpha = 0.15f),
                     border = BorderStroke(1.dp, colors.accent.copy(alpha = 0.4f)),
                     modifier = Modifier
                         .align(Alignment.TopStart)
-                        .padding(8.dp)
+                        .padding(6.dp)
                 ) {
                     Row(
-                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
+                        modifier = Modifier.padding(horizontal = 7.dp, vertical = 2.5.dp),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        horizontalArrangement = Arrangement.spacedBy(3.dp)
                     ) {
                         Text(
                             text = "Nhận diện:",
-                            fontSize = 10.5.sp,
+                            fontSize = 10.sp,
                             color = colors.mutedText
                         )
                         Text(
                             text = displayChar,
-                            fontSize = 13.sp,
+                            fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
                             color = colors.accent
                         )
                         Text(
                             text = "${(livePreviewResult!!.score * 100).toInt()}%",
-                            fontSize = 10.sp,
+                            fontSize = 9.5.sp,
                             color = colors.accent.copy(alpha = 0.8f)
                         )
                     }
@@ -522,18 +568,18 @@ fun HandwritingPad(
             Row(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(8.dp),
+                    .padding(6.dp),
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (strokes.isNotEmpty() || currentStroke.isNotEmpty()) {
-                    // Button "Vẽ lại nét" (clear only current stroke)
+                    // Button "Vẽ lại nét"
                     Surface(
                         shape = CircleShape,
-                        color = colors.surface.copy(alpha = 0.92f),
+                        color = colors.surface.copy(alpha = 0.94f),
                         border = BorderStroke(1.dp, colors.border.copy(alpha = 0.4f)),
                         modifier = Modifier
-                            .size(30.dp)
+                            .size(28.dp)
                             .clickable {
                                 debounceJob?.cancel()
                                 strokes = emptyList()
@@ -546,14 +592,14 @@ fun HandwritingPad(
                                 imageVector = Icons.Rounded.Refresh,
                                 contentDescription = "Vẽ lại nét",
                                 tint = colors.mutedText,
-                                modifier = Modifier.size(16.dp)
+                                modifier = Modifier.size(15.dp)
                             )
                         }
                     }
 
                     // Button "Nhận diện ngay ⚡"
                     Surface(
-                        shape = RoundedCornerShape(16.dp),
+                        shape = RoundedCornerShape(14.dp),
                         color = colors.accent,
                         modifier = Modifier.clickable {
                             debounceJob?.cancel()
@@ -561,7 +607,7 @@ fun HandwritingPad(
                         }
                     ) {
                         Row(
-                            modifier = Modifier.padding(horizontal = 9.dp, vertical = 5.dp),
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(3.dp)
                         ) {
@@ -569,11 +615,11 @@ fun HandwritingPad(
                                 imageVector = Icons.Rounded.ElectricBolt,
                                 contentDescription = null,
                                 tint = Color.White,
-                                modifier = Modifier.size(13.dp)
+                                modifier = Modifier.size(12.dp)
                             )
                             Text(
                                 text = "Nhận diện",
-                                fontSize = 11.sp,
+                                fontSize = 10.5.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.White
                             )
@@ -583,7 +629,7 @@ fun HandwritingPad(
             }
         }
 
-        // --- 2.5 Quick Vietnamese Diacritics Helper Toolbar ---
+        // --- 2.5 Quick Vietnamese Diacritics Helper Toolbar (Carousel draggable) ---
         if (languageMode == HandwritingLanguage.VIETNAMESE) {
             val quickTones = listOf(
                 Pair("́", "sắc (/)"),
@@ -600,21 +646,22 @@ fun HandwritingPad(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .carouselScrollAndDrag(toneScrollState)
                     .horizontalScroll(toneScrollState),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(5.dp)
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Text(
                     text = "Dấu:",
-                    fontSize = 11.sp,
-                    fontWeight = FontWeight.Medium,
+                    fontSize = 10.5.sp,
+                    fontWeight = FontWeight.SemiBold,
                     color = colors.mutedText
                 )
                 quickTones.forEach { (mark, label) ->
                     Surface(
                         shape = RoundedCornerShape(6.dp),
                         color = colors.surfaceContainer,
-                        border = BorderStroke(1.dp, colors.border.copy(alpha = 0.5f)),
+                        border = BorderStroke(1.dp, colors.border.copy(alpha = 0.45f)),
                         modifier = Modifier.clickable {
                             val composed = VietnameseDiacritics.composeDiacritic(buffer, mark)
                             if (composed != buffer) {
@@ -625,27 +672,27 @@ fun HandwritingPad(
                     ) {
                         Text(
                             text = label,
-                            fontSize = 11.sp,
+                            fontSize = 10.5.sp,
                             fontWeight = FontWeight.Medium,
                             color = colors.mainText,
-                            modifier = Modifier.padding(horizontal = 7.dp, vertical = 3.dp)
+                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.5.dp)
                         )
                     }
                 }
             }
         }
 
-        // --- 3. Recognized Candidate Alternatives Row ---
+        // --- 3. Recognized Candidate Alternatives Row (Carousel draggable) ---
         if (candidateResults.isNotEmpty()) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(6.dp)
+                horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 Text(
-                    text = "Gợi ý nét:",
-                    fontSize = 11.sp,
-                    fontWeight = FontWeight.Medium,
+                    text = "Gợi ý:",
+                    fontSize = 10.5.sp,
+                    fontWeight = FontWeight.SemiBold,
                     color = colors.mutedText
                 )
 
@@ -653,8 +700,9 @@ fun HandwritingPad(
                 Row(
                     modifier = Modifier
                         .weight(1f)
+                        .carouselScrollAndDrag(altScrollState)
                         .horizontalScroll(altScrollState),
-                    horizontalArrangement = Arrangement.spacedBy(5.dp)
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     candidateResults.forEachIndexed { index, candidate ->
                         val isSelected = index == 0
@@ -664,7 +712,7 @@ fun HandwritingPad(
                             color = if (isSelected) colors.accent.copy(alpha = 0.18f) else colors.surfaceContainer,
                             border = BorderStroke(
                                 1.dp,
-                                if (isSelected) colors.accent else colors.border.copy(alpha = 0.4f)
+                                if (isSelected) colors.accent else colors.border.copy(alpha = 0.35f)
                             ),
                             modifier = Modifier.clickable {
                                 if (VietnameseDiacritics.isDiacritic(candidate.character)) {
@@ -685,19 +733,19 @@ fun HandwritingPad(
                             }
                         ) {
                             Row(
-                                modifier = Modifier.padding(horizontal = 7.dp, vertical = 3.dp),
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.5.dp),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(3.dp)
                             ) {
                                 Text(
                                     text = displayCandidate,
-                                    fontSize = 12.5.sp,
+                                    fontSize = 11.5.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = if (isSelected) colors.accent else colors.mainText
                                 )
                                 Text(
                                     text = "${(candidate.score * 100).toInt()}%",
-                                    fontSize = 9.5.sp,
+                                    fontSize = 9.sp,
                                     color = colors.mutedText
                                 )
                             }
@@ -707,11 +755,11 @@ fun HandwritingPad(
             }
         }
 
-        // --- 4. Autocomplete Suggestions (Offline Dictionary Trie) ---
+        // --- 4. Autocomplete Suggestions (Offline Dictionary Trie, Carousel draggable) ---
         if (suggestions.isNotEmpty()) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(3.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -725,13 +773,13 @@ fun HandwritingPad(
                     }
                     Text(
                         text = suggestionTitle,
-                        fontSize = 11.5.sp,
+                        fontSize = 11.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = colors.accent
                     )
                     Text(
-                        text = "Chọn từ để điền",
-                        fontSize = 10.sp,
+                        text = "Chạm để điền",
+                        fontSize = 9.5.sp,
                         color = colors.mutedText.copy(alpha = 0.7f)
                     )
                 }
@@ -740,27 +788,28 @@ fun HandwritingPad(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .carouselScrollAndDrag(sugScrollState)
                         .horizontalScroll(sugScrollState),
-                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    horizontalArrangement = Arrangement.spacedBy(5.dp)
                 ) {
                     suggestions.forEach { word ->
                         Surface(
-                            shape = RoundedCornerShape(8.dp),
+                            shape = RoundedCornerShape(7.dp),
                             color = colors.accent.copy(alpha = 0.12f),
-                            border = BorderStroke(1.dp, colors.accent.copy(alpha = 0.45f)),
+                            border = BorderStroke(1.dp, colors.accent.copy(alpha = 0.4f)),
                             modifier = Modifier.clickable {
                                 buffer = word
                                 onWordCommitted(word)
                             }
                         ) {
                             Row(
-                                modifier = Modifier.padding(horizontal = 9.dp, vertical = 5.dp),
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                horizontalArrangement = Arrangement.spacedBy(3.dp)
                             ) {
                                 Text(
                                     text = word,
-                                    fontSize = 12.sp,
+                                    fontSize = 11.5.sp,
                                     fontWeight = FontWeight.SemiBold,
                                     color = colors.accent
                                 )
@@ -768,7 +817,7 @@ fun HandwritingPad(
                                     imageVector = Icons.Rounded.Check,
                                     contentDescription = "Chọn từ",
                                     tint = colors.accent,
-                                    modifier = Modifier.size(13.dp)
+                                    modifier = Modifier.size(12.dp)
                                 )
                             }
                         }
@@ -789,14 +838,16 @@ fun HandwritingPad(
                     imageVector = Icons.Rounded.Check,
                     contentDescription = null,
                     tint = Color.White,
-                    modifier = Modifier.size(16.dp)
+                    modifier = Modifier.size(15.dp)
                 )
-                Spacer(Modifier.width(6.dp))
+                Spacer(Modifier.width(5.dp))
                 Text(
                     text = "Áp dụng vào $targetFieldLabel: \"${buffer.trim()}\"",
-                    fontSize = 13.sp,
+                    fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = Color.White,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
         }
@@ -808,10 +859,10 @@ fun HandwritingPad(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "⚡ Đa đặc trưng (Zoning + Tangent + \$P) • Ghép dấu Tiếng Việt tự động • 100% Offline • 0 AI tokens",
-                fontSize = 10.sp,
+                text = "⚡ Đa đặc trưng (Zoning + Tangent + \$P) • Ghép dấu Tiếng Việt • 100% Offline • 0 AI tokens",
+                fontSize = 9.5.sp,
                 fontStyle = FontStyle.Italic,
-                color = colors.mutedText.copy(alpha = 0.7f)
+                color = colors.mutedText.copy(alpha = 0.65f)
             )
         }
     }
