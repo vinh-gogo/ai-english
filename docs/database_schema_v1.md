@@ -2,7 +2,7 @@
 
 Tài liệu này đặc tả thiết kế cơ sở dữ liệu cục bộ (SQLite) được chuẩn hóa theo dạng chuẩn 3 (3NF - Third Normal Form) nhằm tối ưu dung lượng đĩa, tránh dư thừa thông tin tĩnh, tăng hiệu năng truy vấn và sẵn sàng vận hành sản phẩm (Production-ready).
 
-> **Phiên bản DB hiện tại:** `7`  
+> **Phiên bản DB hiện tại:** `7` (Kế hoạch nâng cấp: `8`)  
 > **Lần cập nhật tài liệu cuối:** 2026-09-28
 
 ---
@@ -17,6 +17,7 @@ Tài liệu này đặc tả thiết kế cơ sở dữ liệu cục bộ (SQLit
 | 4 → 5 | `4.sqm` | Fix `attempt_count` default (0 thay vì 1) cho existing data |
 | 5 → 6 | `5.sqm` | **3NF refactor**: xóa `topic TEXT` + `level TEXT` khỏi `lesson_history`, thêm `system_code`, `topic_id INTEGER NOT NULL`, `level_code`; custom topics được insert vào `learning_topics` |
 | 6 → 7 | `6.sqm` | Loại bỏ các bảng grammar graph (`grammar_structures`, `grammar_edges`, `grammar_groups`, `grammar_group_node_map`, `question_grammar_map`) |
+| 7 → 8 | `7.sqm` | Tạo bảng `vocabulary_items` (Sổ ghi chú từ vựng cá nhân của học viên) |
 
 ---
 
@@ -27,7 +28,7 @@ Tài liệu này đặc tả thiết kế cơ sở dữ liệu cục bộ (SQLit
 Trong phiên bản cũ, thông tin câu hỏi tĩnh (câu dịch gốc, đáp án đúng, phiên âm và giải nghĩa) được lưu lặp lại trực tiếp trong mỗi lượt làm bài của người dùng. Thiết kế 3NF mới đã giải quyết triệt để vấn đề này bằng cách tách thành hai tầng độc lập:
 
 * **Tầng Dữ liệu Tĩnh (Static Database):** Chỉ lưu trữ 1 lần duy nhất danh sách câu hỏi của các chủ đề (`topic_questions`), các đáp án thay thế tĩnh (`question_alternatives`), và phân tích cú pháp tĩnh (`question_tokens`).
-* **Tầng Tiến trình Động (Dynamic Attempt Database):** Chỉ lưu trữ lịch sử lượt học (`lesson_history`), câu trả lời thực tế của người dùng cùng đánh giá tương ứng từ AI (`lesson_question`), và nhận xét tổng quan (`lesson_feedback`).
+* **Tầng Tiến trình Động & Dữ liệu Cá nhân (Dynamic Attempt & Personal Notes):** Chỉ lưu trữ lịch sử lượt học (`lesson_history`), câu trả lời thực tế của người dùng cùng đánh giá tương ứng từ AI (`lesson_question`), nhận xét tổng quan (`lesson_feedback`), và sổ từ vựng cá nhân (`vocabulary_items`).
 
 ### 2.2 3NF refactor `lesson_history` (Migration 5 → 6)
 
@@ -55,10 +56,11 @@ erDiagram
     topic_questions ||--o{ question_tokens : "has word breakdown"
     lesson_question ||--o{ question_notes : "has"
 
-    %% TẦNG TIẾN TRÌNH LUYỆN TẬP ĐỘNG (User Attempts)
+    %% TẦNG TIẾN TRÌNH LUYỆN TẬP ĐỘNG & CÁ NHÂN (User Attempts & Notes)
     users ||--o{ payments : "makes"
     quota ||--o{ users : "bounds"
     users ||--o{ lesson_history : "performs"
+    users ||--o{ vocabulary_items : "saves"
     learning_topics ||--o{ lesson_history : "referenced by (system_code+topic_id FK)"
 
     lesson_history ||--o{ lesson_question : "contains"
@@ -188,6 +190,19 @@ erDiagram
         INTEGER score
     }
 
+    vocabulary_items {
+        TEXT id PK "GUID / UUID"
+        TEXT user_id FK "→ users"
+        TEXT word "Từ vựng"
+        TEXT phonetic "Phiên âm IPA"
+        TEXT meaning "Nghĩa tiếng Việt"
+        TEXT example "Câu ví dụ"
+        TEXT note "Ghi chú thêm"
+        TEXT language "en, ja, zh..."
+        INTEGER created_at
+        INTEGER updated_at
+    }
+
     i18n_locales {
         TEXT locale_code PK
         TEXT name
@@ -259,6 +274,25 @@ Chỉ lưu câu trả lời thực tế và đánh giá AI cho từng câu trong
 #### `lesson_feedback`
 Lưu điểm số tổng hợp và nhận xét toàn bộ bài tập từ AI.
 
+### 4.5 Nhóm Sổ từ vựng Cá nhân (User Vocabulary & Personal Notes)
+
+#### `vocabulary_items`
+
+Bảng lưu trữ danh sách từ vựng, phiên âm, nghĩa tiếng Việt, câu ví dụ và ghi chú cá nhân mà học viên lưu lại trong quá trình học hoặc tạo thủ công:
+
+| Cột | Kiểu | Ràng buộc | Mô tả |
+|-----|------|-----------|-------|
+| `id` | `TEXT` | `PRIMARY KEY` | Định danh duy nhất (UUID) |
+| `user_id` | `TEXT` | `FK → users(user_id) ON DELETE CASCADE` | ID người dùng sở hữu (nullable khi học ở chế độ guest/local) |
+| `word` | `TEXT` | `NOT NULL` | Từ vựng hoặc cụm từ được lưu (ví dụ: *"Meticulous"*) |
+| `phonetic` | `TEXT` | | Phiên âm quốc tế IPA (ví dụ: *"/məˈtɪkjələs/"*) |
+| `meaning` | `TEXT` | `NOT NULL` | Nghĩa giải thích tiếng Việt |
+| `example` | `TEXT` | | Câu văn ví dụ minh họa ngữ cảnh sử dụng |
+| `note` | `TEXT` | | Ghi chú thêm của học viên |
+| `language` | `TEXT` | `NOT NULL DEFAULT 'en'` | Mã ngôn ngữ của từ (`'en'`, `'ja'`, `'zh'`...) |
+| `created_at` | `INTEGER` | `NOT NULL` | Thời điểm tạo (Epoch ms) |
+| `updated_at` | `INTEGER` | | Thời điểm cập nhật lần cuối (Epoch ms) |
+
 ---
 
 ## 5. Chỉ mục & Tối ưu hóa hiệu năng (Indexes & Performance Optimizations)
@@ -276,6 +310,9 @@ Lưu điểm số tổng hợp và nhận xét toàn bộ bài tập từ AI.
 * **`idx_lesson_history_user_id`**: `lesson_history(user_id)`
 * **`idx_lesson_question_history_id`**: `lesson_question(history_id)`
 * **`idx_lesson_question_question_id`**: `lesson_question(question_id)`
+* **`idx_vocabulary_user_id`**: `vocabulary_items(user_id)`
+* **`idx_vocabulary_word`**: `vocabulary_items(word)`
+* **`idx_vocabulary_created_at`**: `vocabulary_items(created_at)`
 
 ---
 
