@@ -1,5 +1,6 @@
 package com.aienglish.feature.vocabulary.ui.screen
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,6 +18,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.automirrored.rounded.MenuBook
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.DeleteOutline
 import androidx.compose.material.icons.rounded.Link
@@ -295,11 +298,11 @@ private fun PartOfSpeechBadge(
         color = badgeBg
     ) {
         Text(
-            text = pos.shortName,
-            fontSize = 11.sp,
+            text = "${pos.shortName} ${pos.displayName}",
+            fontSize = 11.5.sp,
             fontWeight = FontWeight.Bold,
             color = badgeText,
-            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+            modifier = Modifier.padding(horizontal = 7.dp, vertical = 2.5.dp)
         )
     }
 }
@@ -312,19 +315,24 @@ private fun VocabularyCard(
     onPlayTts: (String) -> Unit,
     onDelete: () -> Unit
 ) {
+    var isExpanded by remember { mutableStateOf(false) }
+
     Surface(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { isExpanded = !isExpanded },
         shape = RoundedCornerShape(16.dp),
         color = colors.surface.copy(alpha = 0.90f),
-        border = BorderStroke(1.dp, colors.border.copy(alpha = 0.45f))
+        border = BorderStroke(1.dp, if (isExpanded) colors.accent.copy(alpha = 0.45f) else colors.border.copy(alpha = 0.35f))
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(14.dp),
+                .padding(14.dp)
+                .animateContentSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // Row 1: Top Meta Bar (Category badge on Left, Delete button on Right)
+            // Row 1: Top Meta Bar (Category badge on Left, Action buttons on Right: Expand Chevron + Delete)
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -350,31 +358,53 @@ private fun VocabularyCard(
                     }
                 }
 
-                // Delete Button (Accessible & neat)
-                Box(
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clip(CircleShape)
-                        .clickable { onDelete() },
-                    contentAlignment = Alignment.Center
+                // Right Actions: Nút mở rộng/thu gọn + Nút xóa từ
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Rounded.DeleteOutline,
-                        contentDescription = "Xóa từ",
-                        tint = colors.mutedText.copy(alpha = 0.65f),
-                        modifier = Modifier.size(17.dp)
-                    )
+                    // Nút mở rộng / thu gọn
+                    Box(
+                        modifier = Modifier
+                            .size(28.dp)
+                            .clip(CircleShape)
+                            .background(if (isExpanded) colors.accent.copy(alpha = 0.15f) else colors.surfaceContainer)
+                            .clickable { isExpanded = !isExpanded },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = if (isExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                            contentDescription = if (isExpanded) "Thu gọn" else "Mở rộng",
+                            tint = if (isExpanded) colors.accent else colors.mutedText,
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
+
+                    // Nút xóa từ
+                    Box(
+                        modifier = Modifier
+                            .size(28.dp)
+                            .clip(CircleShape)
+                            .clickable { onDelete() },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.DeleteOutline,
+                            contentDescription = "Xóa từ",
+                            tint = colors.mutedText.copy(alpha = 0.65f),
+                            modifier = Modifier.size(17.dp)
+                        )
+                    }
                 }
             }
 
-            // Row 2: Word Block using FlowRow (Word + Speaker + Part of Speech + IPA)
-            // On a narrow screen (360dp width), long words or IPA wrap smoothly without collision!
+            // Row 2: Word Block (Từ chính + Loa phát âm + Loại từ)
             FlowRow(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                // Word text
+                // Word text (Từ chính)
                 Text(
                     text = item.word,
                     fontSize = 17.5.sp,
@@ -399,23 +429,22 @@ private fun VocabularyCard(
                     )
                 }
 
-                // Part of speech badge (e.g. n., v., adj.)
-                if (item.partOfSpeech.isNotBlank()) {
-                    PartOfSpeechBadge(item.partOfSpeech, colors)
-                }
-
-                // IPA phonetic
-                if (item.phonetic.isNotBlank()) {
-                    Text(
-                        text = item.phonetic,
-                        fontSize = 12.5.sp,
-                        fontStyle = FontStyle.Italic,
-                        color = colors.accent
-                    )
-                }
+                // Loại từ (Luôn hiển thị: n. Danh từ, v. Động từ, etc.)
+                PartOfSpeechBadge(item.partOfSpeech, colors)
             }
 
-            // Row 3: Vietnamese Meaning
+            // Row 3: IPA PHIÊN ÂM XẾP NGAY BÊN DƯỚI TỪ CHÍNH
+            if (item.phonetic.isNotBlank()) {
+                Text(
+                    text = item.phonetic,
+                    fontSize = 13.sp,
+                    fontStyle = FontStyle.Italic,
+                    color = colors.accent,
+                    modifier = Modifier.padding(start = 2.dp)
+                )
+            }
+
+            // Row 4: Nghĩa tiếng Việt
             Text(
                 text = item.meaning,
                 fontSize = 14.sp,
@@ -424,106 +453,154 @@ private fun VocabularyCard(
                 lineHeight = 20.sp
             )
 
-            // Row 4: Collocations Section using FlowRow (Naturally wraps on small screens)
-            if (item.collocations.isNotEmpty()) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(5.dp)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Link,
-                            contentDescription = null,
-                            tint = colors.accent,
-                            modifier = Modifier.size(13.dp)
-                        )
-                        Text(
-                            text = "Collocations:",
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = colors.mutedText
-                        )
-                    }
-
-                    FlowRow(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        verticalArrangement = Arrangement.spacedBy(6.dp)
-                    ) {
-                        item.collocations.forEach { col ->
-                            Surface(
-                                shape = RoundedCornerShape(8.dp),
-                                color = colors.surfaceContainer.copy(alpha = 0.65f),
-                                border = BorderStroke(1.dp, colors.border.copy(alpha = 0.35f)),
-                                modifier = Modifier.clickable { onPlayTts(col) }
-                            ) {
-                                Row(
-                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(4.dp)
-                                ) {
-                                    Text(
-                                        text = col,
-                                        fontSize = 11.5.sp,
-                                        fontWeight = FontWeight.Medium,
-                                        color = colors.mainText
-                                    )
-                                    Icon(
-                                        imageVector = Icons.AutoMirrored.Filled.VolumeUp,
-                                        contentDescription = "Nghe collocation",
-                                        tint = colors.accent.copy(alpha = 0.8f),
-                                        modifier = Modifier.size(11.dp)
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
+            // Row 5: Nút nhấn mở rộng / thu gọn đầy đủ thông tin ở chân card
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(6.dp))
+                    .clickable { isExpanded = !isExpanded }
+                    .padding(vertical = 2.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = if (isExpanded) "Thu gọn chi tiết" else "Mở rộng chi tiết (collocations, ví dụ)",
+                    fontSize = 11.5.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = colors.accent
+                )
+                Icon(
+                    imageVector = if (isExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                    contentDescription = null,
+                    tint = colors.accent,
+                    modifier = Modifier.size(16.dp)
+                )
             }
 
-            // Row 5: Example Sentence Section
-            if (item.example.isNotBlank()) {
-                Surface(
-                    shape = RoundedCornerShape(8.dp),
-                    color = colors.surfaceContainer.copy(alpha = 0.45f),
-                    border = BorderStroke(1.dp, colors.border.copy(alpha = 0.25f)),
-                    modifier = Modifier.fillMaxWidth()
+            // Row 6: Phần mở rộng đầy đủ thông tin (AnimatedVisibility)
+            AnimatedVisibility(
+                visible = isExpanded,
+                enter = expandVertically() + fadeIn(),
+                exit = shrinkVertically() + fadeOut()
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 4.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp, vertical = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
+                    HorizontalDivider(color = colors.border.copy(alpha = 0.35f))
+
+                    // Collocations Section
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(5.dp)
                     ) {
-                        Text(
-                            text = "\"${item.example}\"",
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Italic,
-                            color = colors.mutedText,
-                            lineHeight = 17.sp,
-                            modifier = Modifier.weight(1f)
-                        )
-
-                        Spacer(Modifier.width(8.dp))
-
-                        Box(
-                            modifier = Modifier
-                                .size(24.dp)
-                                .clip(CircleShape)
-                                .background(colors.accent.copy(alpha = 0.08f))
-                                .clickable { onPlayTts(item.example) },
-                            contentAlignment = Alignment.Center
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
                             Icon(
-                                imageVector = Icons.AutoMirrored.Filled.VolumeUp,
-                                contentDescription = "Đọc câu ví dụ",
+                                imageVector = Icons.Rounded.Link,
+                                contentDescription = null,
                                 tint = colors.accent,
                                 modifier = Modifier.size(13.dp)
                             )
+                            Text(
+                                text = "Collocations:",
+                                fontSize = 11.5.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = colors.mutedText
+                            )
+                        }
+
+                        if (item.collocations.isNotEmpty()) {
+                            FlowRow(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                verticalArrangement = Arrangement.spacedBy(6.dp)
+                            ) {
+                                item.collocations.forEach { col ->
+                                    Surface(
+                                        shape = RoundedCornerShape(8.dp),
+                                        color = colors.surfaceContainer.copy(alpha = 0.65f),
+                                        border = BorderStroke(1.dp, colors.border.copy(alpha = 0.35f)),
+                                        modifier = Modifier.clickable { onPlayTts(col) }
+                                    ) {
+                                        Row(
+                                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                        ) {
+                                            Text(
+                                                text = col,
+                                                fontSize = 11.5.sp,
+                                                fontWeight = FontWeight.Medium,
+                                                color = colors.mainText
+                                            )
+                                            Icon(
+                                                imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                                                contentDescription = "Nghe collocation",
+                                                tint = colors.accent.copy(alpha = 0.8f),
+                                                modifier = Modifier.size(11.dp)
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            Text(
+                                text = "Chưa có collocation cho từ này",
+                                fontSize = 12.sp,
+                                fontStyle = FontStyle.Italic,
+                                color = colors.mutedText.copy(alpha = 0.7f),
+                                modifier = Modifier.padding(start = 4.dp)
+                            )
+                        }
+                    }
+
+                    // Example Sentence Section
+                    if (item.example.isNotBlank()) {
+                        Surface(
+                            shape = RoundedCornerShape(8.dp),
+                            color = colors.surfaceContainer.copy(alpha = 0.45f),
+                            border = BorderStroke(1.dp, colors.border.copy(alpha = 0.25f)),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 10.dp, vertical = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(
+                                    text = "\"${item.example}\"",
+                                    fontSize = 12.sp,
+                                    fontStyle = FontStyle.Italic,
+                                    color = colors.mutedText,
+                                    lineHeight = 17.sp,
+                                    modifier = Modifier.weight(1f)
+                                )
+
+                                Spacer(Modifier.width(8.dp))
+
+                                Box(
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .clip(CircleShape)
+                                        .background(colors.accent.copy(alpha = 0.08f))
+                                        .clickable { onPlayTts(item.example) },
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                                        contentDescription = "Đọc câu ví dụ",
+                                        tint = colors.accent,
+                                        modifier = Modifier.size(13.dp)
+                                    )
+                                }
+                            }
                         }
                     }
                 }

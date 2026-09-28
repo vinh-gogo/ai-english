@@ -71,6 +71,12 @@ fun createDesktopDriver(): SqlDriver {
         try {
             driver.execute(null, "ALTER TABLE vocabulary_items ADD COLUMN collocations TEXT", 0)
         } catch (_: Exception) {}
+        try {
+            driver.execute(null, "UPDATE vocabulary_items SET part_of_speech = 'noun' WHERE part_of_speech IS NULL OR part_of_speech = ''", 0)
+        } catch (_: Exception) {}
+        try {
+            driver.execute(null, "UPDATE vocabulary_items SET collocations = '' WHERE collocations IS NULL", 0)
+        } catch (_: Exception) {}
     }
 
     return driver

@@ -19,9 +19,12 @@ enum class PartOfSpeech(
     companion object {
         fun fromCode(code: String?): PartOfSpeech {
             if (code.isNullOrBlank()) return NOUN
+            val clean = code.trim().lowercase().removeSuffix(".")
             return entries.firstOrNull { 
-                it.code.equals(code, ignoreCase = true) || 
-                it.shortName.equals(code, ignoreCase = true) 
+                it.code.equals(clean, ignoreCase = true) || 
+                it.shortName.removeSuffix(".").equals(clean, ignoreCase = true) ||
+                it.displayName.equals(code.trim(), ignoreCase = true) ||
+                it.name.equals(clean, ignoreCase = true)
             } ?: NOUN
         }
     }
