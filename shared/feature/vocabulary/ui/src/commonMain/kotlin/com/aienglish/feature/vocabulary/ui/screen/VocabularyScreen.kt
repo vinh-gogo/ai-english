@@ -398,50 +398,64 @@ private fun VocabularyCard(
                 }
             }
 
-            // Row 2: Word Block (Từ chính + Loa phát âm + Loại từ)
-            FlowRow(
+            // Row 2: Khối Từ vựng & IPA (gom chung để khoảng cách giữa từ và IPA cực kỳ khít và tự nhiên)
+            Column(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(1.5.dp)
             ) {
-                // Word text (Từ chính)
-                Text(
-                    text = item.word,
-                    fontSize = 17.5.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = colors.mainText
-                )
-
-                // Speaker Button for word pronunciation
-                Box(
-                    modifier = Modifier
-                        .size(26.dp)
-                        .clip(CircleShape)
-                        .background(colors.accent.copy(alpha = 0.12f))
-                        .clickable { onPlayTts(item.word) },
-                    contentAlignment = Alignment.Center
+                // Từ chính căn lề trái, Loại từ căn lề phải
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.VolumeUp,
-                        contentDescription = "Phát âm từ",
-                        tint = colors.accent,
-                        modifier = Modifier.size(15.dp)
-                    )
+                    // Từ chính căn lề trái cùng loa phát âm
+                    Row(
+                        modifier = Modifier.weight(1f, fill = false),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = item.word,
+                            fontSize = 17.5.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = colors.mainText
+                        )
+
+                        // Speaker Button for word pronunciation
+                        Box(
+                            modifier = Modifier
+                                .size(24.dp)
+                                .clip(CircleShape)
+                                .background(colors.accent.copy(alpha = 0.12f))
+                                .clickable { onPlayTts(item.word) },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                                contentDescription = "Phát âm từ",
+                                tint = colors.accent,
+                                modifier = Modifier.size(14.dp)
+                            )
+                        }
+                    }
+
+                    Spacer(Modifier.width(8.dp))
+
+                    // Label loại từ căn lề phải
+                    PartOfSpeechBadge(item.partOfSpeech, colors)
                 }
 
-                // Loại từ (Luôn hiển thị: n. Danh từ, v. Động từ, etc.)
-                PartOfSpeechBadge(item.partOfSpeech, colors)
-            }
-
-            // Row 3: IPA PHIÊN ÂM XẾP NGAY BÊN DƯỚI TỪ CHÍNH
-            if (item.phonetic.isNotBlank()) {
-                Text(
-                    text = item.phonetic,
-                    fontSize = 13.sp,
-                    fontStyle = FontStyle.Italic,
-                    color = colors.accent,
-                    modifier = Modifier.padding(start = 2.dp)
-                )
+                // IPA phiên âm xếp ngay bên dưới từ chính (khoảng cách 1.5dp siêu khít)
+                if (item.phonetic.isNotBlank()) {
+                    Text(
+                        text = item.phonetic,
+                        fontSize = 12.5.sp,
+                        fontStyle = FontStyle.Italic,
+                        color = colors.accent,
+                        modifier = Modifier.padding(start = 1.dp)
+                    )
+                }
             }
 
             // Row 4: Nghĩa tiếng Việt
