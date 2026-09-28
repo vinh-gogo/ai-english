@@ -31,6 +31,9 @@ kotlin {
             implementation(project(":shared:feature:vocabulary:domain"))
             implementation(project(":shared:feature:vocabulary:application"))
         }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
         androidMain.dependencies {
             implementation(libs.koin.android)
         }

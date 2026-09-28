@@ -45,6 +45,8 @@ import com.aienglish.core.designsystem.theme.AppColors
 import com.aienglish.feature.vocabulary.domain.model.PartOfSpeech
 import com.aienglish.feature.vocabulary.domain.model.VocabularyCategory
 import com.aienglish.feature.vocabulary.domain.model.VocabularyItem
+import com.aienglish.feature.vocabulary.ui.handwriting.EnglishDictionaryTrie
+import com.aienglish.feature.vocabulary.ui.handwriting.HandwritingPad
 import com.aienglish.feature.vocabulary.ui.viewmodel.VocabularyViewModel
 import org.koin.compose.koinInject
 
@@ -55,6 +57,12 @@ fun VocabularyScreen(
     viewModel: VocabularyViewModel = koinInject()
 ) {
     val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(state.items) {
+        if (state.items.isNotEmpty()) {
+            EnglishDictionaryTrie.DEFAULT.insertAll(state.items.map { it.word })
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -774,6 +782,7 @@ private fun AddVocabularyDialog(
     var collocationsInput by remember { mutableStateOf("") }
     var example by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf(initialCategory) }
+    var isHandwritingMode by remember { mutableStateOf(false) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -790,7 +799,7 @@ private fun AddVocabularyDialog(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(max = 420.dp)
+                    .heightIn(max = 500.dp)
                     .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
@@ -866,6 +875,69 @@ private fun AddVocabularyDialog(
                 }
 
                 Spacer(Modifier.height(2.dp))
+
+                // Input Mode Toggle: ⌨️ Bàn phím vs ✍️ Viết tay (0 AI)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(colors.surfaceContainer)
+                        .padding(3.dp),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Surface(
+                        shape = RoundedCornerShape(6.dp),
+                        color = if (!isHandwritingMode) colors.accent else Color.Transparent,
+                        modifier = Modifier
+                            .weight(1f)
+                            .clickable { isHandwritingMode = false }
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(vertical = 6.dp),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "⌨️ Nhập phím",
+                                fontSize = 11.5.sp,
+                                fontWeight = if (!isHandwritingMode) FontWeight.Bold else FontWeight.Medium,
+                                color = if (!isHandwritingMode) Color.White else colors.mutedText
+                            )
+                        }
+                    }
+
+                    Surface(
+                        shape = RoundedCornerShape(6.dp),
+                        color = if (isHandwritingMode) colors.accent else Color.Transparent,
+                        modifier = Modifier
+                            .weight(1f)
+                            .clickable { isHandwritingMode = true }
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(vertical = 6.dp),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "✍️ Viết tay (0 AI)",
+                                fontSize = 11.5.sp,
+                                fontWeight = if (isHandwritingMode) FontWeight.Bold else FontWeight.Medium,
+                                color = if (isHandwritingMode) Color.White else colors.mutedText
+                            )
+                        }
+                    }
+                }
+
+                // Handwriting Canvas Pad (0 Token AI, Local Geometric Algorithm + Trie Autocomplete)
+                if (isHandwritingMode) {
+                    HandwritingPad(
+                        currentWord = word,
+                        colors = colors,
+                        onWordCommitted = { committedWord ->
+                            word = committedWord
+                        }
+                    )
+                }
 
                 OutlinedTextField(
                     value = word,
