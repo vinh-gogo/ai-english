@@ -131,11 +131,49 @@ class GeometricRecognizerTest {
     }
 
     @Test
-    fun recognize_emptyOrTooFewPoints_returnsEmpty() {
+    fun recognize_emptyPoints_returnsEmpty() {
         val emptyStrokes = emptyList<List<Point2D>>()
         assertTrue(recognizer.recognize(emptyStrokes).isEmpty())
+    }
 
-        val tinyStroke = listOf(listOf(Point2D(10f, 10f, 0)))
-        assertTrue(recognizer.recognize(tinyStroke).isEmpty())
+    @Test
+    fun recognize_singleTapDot_recognizesAsDotOrNang() {
+        val tapStroke = listOf(listOf(Point2D(50f, 80f, 0)))
+        val results = recognizer.recognize(tapStroke, topN = 3)
+        assertTrue(results.isNotEmpty(), "Single tap should be recognized as dot or heavy mark")
+        val top = results.first().character
+        assertTrue(top == "̣" || top == "." || results.any { it.character == "̣" }, "Top results should include dot or nặng")
+    }
+
+    @Test
+    fun recognize_acuteSlash_returnsAcute() {
+        // Dấu sắc (slash from bottom-left to top-right)
+        val acuteStroke = listOf(
+            listOf(
+                Point2D(25f, 85f, 0),
+                Point2D(50f, 50f, 0),
+                Point2D(75f, 15f, 0)
+            )
+        )
+        val results = recognizer.recognize(acuteStroke, topN = 3)
+        assertTrue(results.isNotEmpty())
+        val topChars = results.map { it.character }
+        assertTrue(topChars.contains("́") || results.any { it.label.contains("dấu_sắc") })
+    }
+
+    @Test
+    fun recognize_circumflex_returnsCircumflex() {
+        // Dấu mũ (^)
+        val circumflexStroke = listOf(
+            listOf(
+                Point2D(20f, 75f, 0),
+                Point2D(50f, 20f, 0),
+                Point2D(80f, 75f, 0)
+            )
+        )
+        val results = recognizer.recognize(circumflexStroke, topN = 3)
+        assertTrue(results.isNotEmpty())
+        val topChars = results.map { it.character }
+        assertTrue(topChars.contains("^") || results.any { it.label.contains("dấu_mũ") })
     }
 }

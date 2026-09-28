@@ -260,7 +260,7 @@ class GeometricRecognizer(
      */
     fun recognize(rawStrokes: List<List<Point2D>>, topN: Int = 5): List<RecognitionResult> {
         val flattened = rawStrokes.flatten()
-        if (flattened.size < 3) return emptyList()
+        if (flattened.isEmpty()) return emptyList()
 
         // 1. Check for quick single-stroke directional gestures (Space, Backspace)
         val gestureResult = detectDirectionalGesture(rawStrokes)
@@ -268,21 +268,45 @@ class GeometricRecognizer(
             return listOf(gestureResult)
         }
 
-        // 2. Preprocess candidate points
-        val resampled = resample(flattened, RESAMPLE_POINTS)
-        if (resampled.size < RESAMPLE_POINTS) return emptyList()
-
-        val normalizedCandidate = normalize(resampled)
-        val candidateZoning = computeZoning(flattened)
-        val candidateTangents = computeTangents(resampled)
-        val isCandidateClosed = detectClosedLoop(rawStrokes)
-
         val minX = flattened.minOf { it.x }
         val maxX = flattened.maxOf { it.x }
         val minY = flattened.minOf { it.y }
         val maxY = flattened.maxOf { it.y }
-        val candWidth = max(1f, maxX - minX)
-        val candHeight = max(1f, maxY - minY)
+        val rawWidth = maxX - minX
+        val rawHeight = maxY - minY
+
+        // 2. Quick single tap / tiny dot detection (dấu nặng or period)
+        if (rawStrokes.size == 1 && (flattened.size <= 2 || (rawWidth < 15f && rawHeight < 15f && flattened.size <= 6))) {
+            return listOf(
+                RecognitionResult(character = "̣", score = 0.98f, label = "dấu_nặng"),
+                RecognitionResult(character = ".", score = 0.95f, label = "chấm")
+            )
+        }
+
+        // Handle single tap / dot point expansion
+        val effectiveFlattened = if (flattened.size < 3) {
+            val p0 = flattened.first()
+            val pLast = flattened.last()
+            listOf(
+                p0,
+                Point2D((p0.x + pLast.x) / 2f, (p0.y + pLast.y) / 2f + 0.5f, p0.strokeId),
+                Point2D(pLast.x, pLast.y + 1f, pLast.strokeId)
+            )
+        } else {
+            flattened
+        }
+
+        // 2. Preprocess candidate points
+        val resampled = resample(effectiveFlattened, RESAMPLE_POINTS)
+        if (resampled.size < RESAMPLE_POINTS) return emptyList()
+
+        val normalizedCandidate = normalize(resampled)
+        val candidateZoning = computeZoning(effectiveFlattened)
+        val candidateTangents = computeTangents(resampled)
+        val isCandidateClosed = detectClosedLoop(rawStrokes)
+
+        val candWidth = max(1f, rawWidth)
+        val candHeight = max(1f, rawHeight)
         val candAspectRatio = candHeight / candWidth
 
         // 3. Match against all templates using multi-feature composite scoring
@@ -404,8 +428,8 @@ class GeometricRecognizer(
         val width = maxX - minX
         val height = maxY - minY
 
-        // A horizontal swipe must be wide and flat (width >= 2.5 * height and width >= 55px)
-        if (width >= 55f && width >= 2.5f * height && abs(dx) > width * 0.65f) {
+        // A horizontal swipe must be wide and flat (width >= 85px and width >= 2.5 * height and abs(dx) > width * 0.65f)
+        if (width >= 85f && width >= 2.5f * height && abs(dx) > width * 0.65f) {
             return if (dx > 0) {
                 RecognitionResult(GESTURE_SPACE, 0.96f, "Space")
             } else {

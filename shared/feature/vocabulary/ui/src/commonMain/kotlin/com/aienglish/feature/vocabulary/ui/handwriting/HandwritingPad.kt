@@ -55,6 +55,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aienglish.core.designsystem.theme.AppColors
@@ -63,9 +64,18 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
+ * Supported handwriting language input modes.
+ */
+enum class HandwritingLanguage(val label: String, val icon: String) {
+    ENGLISH("Tiếng Anh", "🔤"),
+    VIETNAMESE("Tiếng Việt", "🇻🇳")
+}
+
+/**
  * Interactive Handwriting Input Pad for vocabulary input.
  *
  * Employs local multi-feature geometric recognition & offline Trie dictionary autocomplete.
+ * Supports both English and accented Vietnamese handwriting (tones & diacritic composition).
  * 0 Token cost • 100% Offline • Zero LLM latency.
  */
 @Composable
@@ -73,9 +83,12 @@ fun HandwritingPad(
     currentWord: String,
     colors: AppColors,
     modifier: Modifier = Modifier,
+    initialLanguage: HandwritingLanguage = HandwritingLanguage.ENGLISH,
+    targetFieldLabel: String = "Từ vựng",
     onWordCommitted: (String) -> Unit
 ) {
     var buffer by remember { mutableStateOf(currentWord) }
+    var languageMode by remember(initialLanguage) { mutableStateOf(initialLanguage) }
     var strokes by remember { mutableStateOf<List<List<Point2D>>>(emptyList()) }
     var currentStroke by remember { mutableStateOf<List<Point2D>>(emptyList()) }
     var candidateResults by remember { mutableStateOf<List<RecognitionResult>>(emptyList()) }
@@ -85,12 +98,17 @@ fun HandwritingPad(
 
     val coroutineScope = rememberCoroutineScope()
     val recognizer = remember { GeometricRecognizer() }
-    val trie = remember { EnglishDictionaryTrie.DEFAULT }
+    val englishTrie = remember { EnglishDictionaryTrie.DEFAULT }
+    val vietnameseTrie = remember { VietnameseDictionaryTrie.DEFAULT }
 
-    // Query Trie for word completions based on current buffer prefix
-    val suggestions = remember(buffer) {
+    // Query appropriate Trie for word completions based on current language mode
+    val suggestions = remember(buffer, languageMode) {
         if (buffer.isNotBlank()) {
-            trie.searchPrefix(buffer, limit = 10)
+            if (languageMode == HandwritingLanguage.VIETNAMESE) {
+                vietnameseTrie.searchPrefix(buffer, limit = 10)
+            } else {
+                englishTrie.searchPrefix(buffer, limit = 10)
+            }
         } else {
             emptyList()
         }
@@ -106,16 +124,26 @@ fun HandwritingPad(
             candidateResults = results
             val topMatch = results.first()
 
-            when (topMatch.character) {
-                GeometricRecognizer.GESTURE_BACKSPACE -> {
+            when {
+                topMatch.character == GeometricRecognizer.GESTURE_BACKSPACE -> {
                     if (buffer.isNotEmpty()) {
                         buffer = buffer.dropLast(1)
                     }
                     lastAddedChar = null
                 }
-                GeometricRecognizer.GESTURE_SPACE -> {
+                topMatch.character == GeometricRecognizer.GESTURE_SPACE -> {
                     buffer += " "
                     lastAddedChar = " "
+                }
+                VietnameseDiacritics.isDiacritic(topMatch.character) -> {
+                    val composed = VietnameseDiacritics.composeDiacritic(buffer, topMatch.character)
+                    if (composed != buffer) {
+                        buffer = composed
+                        lastAddedChar = topMatch.character
+                    } else if (topMatch.character == "-" || topMatch.character == ".") {
+                        buffer += topMatch.character
+                        lastAddedChar = topMatch.character
+                    }
                 }
                 else -> {
                     val charToAppend = topMatch.character
@@ -156,7 +184,7 @@ fun HandwritingPad(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // --- 1. Buffer & Control Row ---
+        // --- 1. Buffer & Language Mode Row ---
         Surface(
             shape = RoundedCornerShape(10.dp),
             color = colors.surfaceContainer,
@@ -183,7 +211,7 @@ fun HandwritingPad(
                         color = colors.mutedText
                     )
                     Text(
-                        text = if (buffer.isEmpty()) "(vẽ chữ cái bên dưới...)" else buffer,
+                        text = if (buffer.isEmpty()) "(vẽ chữ hoặc dấu bên dưới...)" else buffer,
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = FontFamily.Monospace,
@@ -191,11 +219,54 @@ fun HandwritingPad(
                     )
                 }
 
-                // Quick manipulation buttons: Backspace, Space, Clear all
+                // Language Mode Toggle & Quick actions
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
+                    // Language Switcher Toggle: EN / VI
+                    Surface(
+                        shape = RoundedCornerShape(14.dp),
+                        color = colors.surface,
+                        border = BorderStroke(1.dp, colors.border.copy(alpha = 0.5f)),
+                        modifier = Modifier.padding(end = 4.dp)
+                    ) {
+                        Row(modifier = Modifier.padding(2.dp)) {
+                            // English button
+                            Surface(
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (languageMode == HandwritingLanguage.ENGLISH) colors.accent else Color.Transparent,
+                                modifier = Modifier.clickable {
+                                    languageMode = HandwritingLanguage.ENGLISH
+                                }
+                            ) {
+                                Text(
+                                    text = "🔤 EN",
+                                    fontSize = 11.sp,
+                                    fontWeight = if (languageMode == HandwritingLanguage.ENGLISH) FontWeight.Bold else FontWeight.Normal,
+                                    color = if (languageMode == HandwritingLanguage.ENGLISH) Color.White else colors.mutedText,
+                                    modifier = Modifier.padding(horizontal = 7.dp, vertical = 3.dp)
+                                )
+                            }
+                            // Vietnamese button
+                            Surface(
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (languageMode == HandwritingLanguage.VIETNAMESE) colors.accent else Color.Transparent,
+                                modifier = Modifier.clickable {
+                                    languageMode = HandwritingLanguage.VIETNAMESE
+                                }
+                            ) {
+                                Text(
+                                    text = "🇻🇳 VI",
+                                    fontSize = 11.sp,
+                                    fontWeight = if (languageMode == HandwritingLanguage.VIETNAMESE) FontWeight.Bold else FontWeight.Normal,
+                                    color = if (languageMode == HandwritingLanguage.VIETNAMESE) Color.White else colors.mutedText,
+                                    modifier = Modifier.padding(horizontal = 7.dp, vertical = 3.dp)
+                                )
+                            }
+                        }
+                    }
+
                     // Space button
                     Box(
                         modifier = Modifier
@@ -345,7 +416,7 @@ fun HandwritingPad(
                     join = StrokeJoin.Round
                 )
 
-                // Helper for smooth quadratic bezier curve rendering
+                // Smooth quadratic bezier curve rendering
                 fun drawSmooth(strokePoints: List<Point2D>) {
                     if (strokePoints.size >= 3) {
                         val path = Path().apply {
@@ -394,19 +465,26 @@ fun HandwritingPad(
                     modifier = Modifier.matchParentSize(),
                     contentAlignment = Alignment.Center
                 ) {
+                    val hintText = if (languageMode == HandwritingLanguage.VIETNAMESE) {
+                        "✍️ Viết chữ cái tiếng Việt (ă, â, đ, ê, ô, ơ, ư) hoặc vẽ nét dấu (sắc /, huyền \\, hỏi ?, ngã ~, nặng ., mũ ^, móc ’)\nVuốt ngang dài ➔ phải: Dấu cách | ⬅ trái: Xóa lùi"
+                    } else {
+                        "✍️ Viết từng chữ cái (A-Z, a-z) hoặc số (0-9)\nVuốt ngang dài ➔ phải: Dấu cách | ⬅ trái: Xóa lùi"
+                    }
                     Text(
-                        text = "✍️ Viết từng chữ cái (A-Z, a-z) hoặc số (0-9)\nVuốt ngang ➔ phải: Dấu cách | ⬅ trái: Xóa lùi",
+                        text = hintText,
                         fontSize = 11.5.sp,
                         fontStyle = FontStyle.Italic,
                         color = colors.mutedText.copy(alpha = 0.55f),
-                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                        lineHeight = 17.sp
+                        textAlign = TextAlign.Center,
+                        lineHeight = 17.sp,
+                        modifier = Modifier.padding(horizontal = 16.dp)
                     )
                 }
             }
 
             // Live Preview Status Pill on Top-Left
             if (livePreviewResult != null) {
+                val displayChar = VietnameseDiacritics.formatDisplaySymbol(livePreviewResult!!.character)
                 Surface(
                     shape = RoundedCornerShape(12.dp),
                     color = colors.accent.copy(alpha = 0.15f),
@@ -426,7 +504,7 @@ fun HandwritingPad(
                             color = colors.mutedText
                         )
                         Text(
-                            text = livePreviewResult!!.character,
+                            text = displayChar,
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold,
                             color = colors.accent
@@ -505,6 +583,58 @@ fun HandwritingPad(
             }
         }
 
+        // --- 2.5 Quick Vietnamese Diacritics Helper Toolbar ---
+        if (languageMode == HandwritingLanguage.VIETNAMESE) {
+            val quickTones = listOf(
+                Pair("́", "sắc (/)"),
+                Pair("̀", "huyền (\\)"),
+                Pair("̉", "hỏi (?)"),
+                Pair("̃", "ngã (~)"),
+                Pair("̣", "nặng (.)"),
+                Pair("^", "mũ (^)"),
+                Pair("˘", "trăng (˘)"),
+                Pair("’", "móc (’)"),
+                Pair("-", "gạch đ (-)")
+            )
+            val toneScrollState = rememberScrollState()
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(toneScrollState),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(5.dp)
+            ) {
+                Text(
+                    text = "Dấu:",
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = colors.mutedText
+                )
+                quickTones.forEach { (mark, label) ->
+                    Surface(
+                        shape = RoundedCornerShape(6.dp),
+                        color = colors.surfaceContainer,
+                        border = BorderStroke(1.dp, colors.border.copy(alpha = 0.5f)),
+                        modifier = Modifier.clickable {
+                            val composed = VietnameseDiacritics.composeDiacritic(buffer, mark)
+                            if (composed != buffer) {
+                                buffer = composed
+                                lastAddedChar = mark
+                            }
+                        }
+                    ) {
+                        Text(
+                            text = label,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = colors.mainText,
+                            modifier = Modifier.padding(horizontal = 7.dp, vertical = 3.dp)
+                        )
+                    }
+                }
+            }
+        }
+
         // --- 3. Recognized Candidate Alternatives Row ---
         if (candidateResults.isNotEmpty()) {
             Row(
@@ -528,6 +658,7 @@ fun HandwritingPad(
                 ) {
                     candidateResults.forEachIndexed { index, candidate ->
                         val isSelected = index == 0
+                        val displayCandidate = VietnameseDiacritics.formatDisplaySymbol(candidate.character)
                         Surface(
                             shape = RoundedCornerShape(6.dp),
                             color = if (isSelected) colors.accent.copy(alpha = 0.18f) else colors.surfaceContainer,
@@ -536,13 +667,21 @@ fun HandwritingPad(
                                 if (isSelected) colors.accent else colors.border.copy(alpha = 0.4f)
                             ),
                             modifier = Modifier.clickable {
-                                // Replace last character with this chosen alternative
-                                if (lastAddedChar != null && buffer.endsWith(lastAddedChar!!)) {
-                                    buffer = buffer.dropLast(lastAddedChar!!.length) + candidate.character
+                                if (VietnameseDiacritics.isDiacritic(candidate.character)) {
+                                    val composed = VietnameseDiacritics.composeDiacritic(buffer, candidate.character)
+                                    if (composed != buffer) {
+                                        buffer = composed
+                                        lastAddedChar = candidate.character
+                                    }
                                 } else {
-                                    buffer += candidate.character
+                                    // Replace last character with this chosen alternative
+                                    if (lastAddedChar != null && buffer.endsWith(lastAddedChar!!)) {
+                                        buffer = buffer.dropLast(lastAddedChar!!.length) + candidate.character
+                                    } else {
+                                        buffer += candidate.character
+                                    }
+                                    lastAddedChar = candidate.character
                                 }
-                                lastAddedChar = candidate.character
                             }
                         ) {
                             Row(
@@ -551,7 +690,7 @@ fun HandwritingPad(
                                 horizontalArrangement = Arrangement.spacedBy(3.dp)
                             ) {
                                 Text(
-                                    text = candidate.character,
+                                    text = displayCandidate,
                                     fontSize = 12.5.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = if (isSelected) colors.accent else colors.mainText
@@ -579,8 +718,13 @@ fun HandwritingPad(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    val suggestionTitle = if (languageMode == HandwritingLanguage.VIETNAMESE) {
+                        "💡 Gợi ý từ tiếng Việt:"
+                    } else {
+                        "💡 Gợi ý từ tiếng Anh hoàn chỉnh:"
+                    }
                     Text(
-                        text = "💡 Gợi ý từ tiếng Anh hoàn chỉnh:",
+                        text = suggestionTitle,
                         fontSize = 11.5.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = colors.accent
@@ -649,7 +793,7 @@ fun HandwritingPad(
                 )
                 Spacer(Modifier.width(6.dp))
                 Text(
-                    text = "Áp dụng từ: \"${buffer.trim()}\"",
+                    text = "Áp dụng vào $targetFieldLabel: \"${buffer.trim()}\"",
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
@@ -664,7 +808,7 @@ fun HandwritingPad(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "⚡ Thuật toán đa đặc trưng (Zoning + Tangent + \$P) • 100% Offline • 0 AI tokens",
+                text = "⚡ Đa đặc trưng (Zoning + Tangent + \$P) • Ghép dấu Tiếng Việt tự động • 100% Offline • 0 AI tokens",
                 fontSize = 10.sp,
                 fontStyle = FontStyle.Italic,
                 color = colors.mutedText.copy(alpha = 0.7f)

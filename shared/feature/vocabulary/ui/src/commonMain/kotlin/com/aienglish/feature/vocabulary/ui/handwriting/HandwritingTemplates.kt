@@ -455,6 +455,150 @@ object HandwritingTemplates {
             ), isClosed = true),
             createTemplate("9", "9", listOf(
                 listOf(50f to 50f, 25f to 40f, 25f to 20f, 50f to 0f, 75f to 25f, 75f to 70f, 50f to 100f, 25f to 90f)
+            )),
+
+            // === VIETNAMESE TONE MARKS & DIACRITICS (STANDALONE GESTURES) ===
+            // Dấu sắc (Acute /): chéo từ dưới-trái lên trên-phải
+            createTemplate("́", "dấu_sắc", listOf(
+                listOf(25f to 85f, 75f to 15f)
+            )),
+            // Dấu sắc (Acute /): chéo từ trên-phải xuống dưới-trái
+            createTemplate("́", "dấu_sắc_xuống", listOf(
+                listOf(75f to 15f, 25f to 85f)
+            )),
+            // Dấu huyền (Grave \): chéo từ trên-trái xuống dưới-phải
+            createTemplate("̀", "dấu_huyền", listOf(
+                listOf(25f to 15f, 75f to 85f)
+            )),
+            // Dấu huyền (Grave \): chéo từ dưới-phải lên trên-trái
+            createTemplate("̀", "dấu_huyền_lên", listOf(
+                listOf(75f to 85f, 25f to 15f)
+            )),
+            // Dấu hỏi (Hook ?): móc cong hỏi
+            createTemplate("̉", "dấu_hỏi", listOf(
+                listOf(30f to 35f, 65f to 20f, 70f to 50f, 50f to 65f, 50f to 90f)
+            )),
+            // Dấu ngã (Tilde ~): lượn sóng
+            createTemplate("̃", "dấu_ngã", listOf(
+                listOf(15f to 60f, 35f to 25f, 65f to 75f, 85f to 40f)
+            )),
+            // Dấu nặng (Dot .): chấm dưới
+            createTemplate("̣", "dấu_nặng", listOf(
+                listOf(50f to 70f, 50f to 90f)
+            )),
+            // Dấu mũ (^): nón ngược (1 nét)
+            createTemplate("^", "dấu_mũ", listOf(
+                listOf(20f to 75f, 50f to 20f, 80f to 75f)
+            )),
+            // Dấu mũ (^): 2 nét
+            createTemplate("^", "dấu_mũ_2stroke", listOf(
+                listOf(20f to 75f, 50f to 20f),
+                listOf(50f to 20f, 80f to 75f)
+            )),
+            // Dấu trăng (˘): trăng khuyết
+            createTemplate("˘", "dấu_trăng", listOf(
+                listOf(20f to 25f, 50f to 75f, 80f to 25f)
+            )),
+            // Dấu râu / móc (’):
+            createTemplate("’", "dấu_móc", listOf(
+                listOf(60f to 25f, 80f to 40f, 70f to 75f)
+            )),
+            // Dấu gạch ngang Đ/đ (-): trái sang phải
+            createTemplate("-", "gạch_ngang_đ", listOf(
+                listOf(15f to 50f, 85f to 50f)
+            )),
+            // Dấu gạch ngang Đ/đ (-): phải sang trái
+            createTemplate("-", "gạch_ngang_đ_phải_sang_trái", listOf(
+                listOf(85f to 50f, 15f to 50f)
+            )),
+
+            // === VIETNAMESE ACCENTED LETTERS (DIRECT COMPOSITES) ===
+            // 'Đ' - in hoa (3-stroke)
+            createTemplate("Đ", "Đ_3stroke", listOf(
+                listOf(20f to 0f, 20f to 100f),
+                listOf(20f to 0f, 65f to 0f, 80f to 50f, 65f to 100f, 20f to 100f),
+                listOf(10f to 45f, 50f to 45f)
+            ), isClosed = true),
+            // 'Đ' - in hoa (2-stroke)
+            createTemplate("Đ", "Đ_2stroke", listOf(
+                listOf(20f to 0f, 20f to 100f, 20f to 0f, 65f to 0f, 80f to 50f, 65f to 100f, 20f to 100f),
+                listOf(10f to 45f, 50f to 45f)
+            ), isClosed = true),
+            // 'đ' - thường (3-stroke)
+            createTemplate("đ", "đ_3stroke", listOf(
+                listOf(75f to 50f, 50f to 35f, 25f to 50f, 25f to 85f, 50f to 100f, 75f to 95f),
+                listOf(75f to 0f, 75f to 100f),
+                listOf(55f to 30f, 95f to 30f)
+            )),
+            // 'đ' - thường (2-stroke)
+            createTemplate("đ", "đ_2stroke", listOf(
+                listOf(75f to 0f, 75f to 50f, 50f to 35f, 25f to 50f, 25f to 85f, 50f to 100f, 75f to 95f, 75f to 100f),
+                listOf(55f to 30f, 95f to 30f)
+            )),
+            // 'Â' - in hoa
+            createTemplate("Â", "Â", listOf(
+                listOf(15f to 100f, 50f to 25f, 85f to 100f),
+                listOf(30f to 70f, 70f to 70f),
+                listOf(35f to 20f, 50f to 0f, 65f to 20f)
+            )),
+            // 'â' - thường
+            createTemplate("â", "â", listOf(
+                listOf(75f to 45f, 50f to 30f, 25f to 50f, 25f to 75f, 50f to 95f, 75f to 85f, 75f to 35f, 75f to 100f),
+                listOf(40f to 20f, 55f to 5f, 70f to 20f)
+            )),
+            // 'Ă' - in hoa
+            createTemplate("Ă", "Ă", listOf(
+                listOf(15f to 100f, 50f to 25f, 85f to 100f),
+                listOf(30f to 70f, 70f to 70f),
+                listOf(35f to 5f, 50f to 20f, 65f to 5f)
+            )),
+            // 'ă' - thường
+            createTemplate("ă", "ă", listOf(
+                listOf(75f to 45f, 50f to 30f, 25f to 50f, 25f to 75f, 50f to 95f, 75f to 85f, 75f to 35f, 75f to 100f),
+                listOf(40f to 5f, 55f to 20f, 70f to 5f)
+            )),
+            // 'Ê' - in hoa
+            createTemplate("Ê", "Ê", listOf(
+                listOf(25f to 25f, 25f to 100f),
+                listOf(25f to 25f, 75f to 25f),
+                listOf(25f to 60f, 65f to 60f),
+                listOf(25f to 100f, 75f to 100f),
+                listOf(35f to 18f, 50f to 0f, 65f to 18f)
+            )),
+            // 'ê' - thường
+            createTemplate("ê", "ê", listOf(
+                listOf(25f to 70f, 75f to 70f, 75f to 45f, 50f to 30f, 25f to 50f, 25f to 85f, 50f to 100f, 75f to 90f),
+                listOf(40f to 20f, 55f to 5f, 70f to 20f)
+            )),
+            // 'Ô' - in hoa
+            createTemplate("Ô", "Ô", listOf(
+                listOf(50f to 25f, 20f to 45f, 20f to 85f, 50f to 100f, 80f to 85f, 80f to 45f, 50f to 25f),
+                listOf(35f to 18f, 50f to 0f, 65f to 18f)
+            ), isClosed = true),
+            // 'ô' - thường
+            createTemplate("ô", "ô", listOf(
+                listOf(50f to 45f, 25f to 60f, 25f to 85f, 50f to 100f, 75f to 85f, 75f to 60f, 50f to 45f),
+                listOf(40f to 25f, 55f to 10f, 70f to 25f)
+            ), isClosed = true),
+            // 'Ơ' - in hoa
+            createTemplate("Ơ", "Ơ", listOf(
+                listOf(50f to 0f, 20f to 25f, 20f to 75f, 50f to 100f, 80f to 75f, 80f to 25f, 50f to 0f),
+                listOf(75f to 15f, 90f to 25f, 80f to 45f)
+            ), isClosed = true),
+            // 'ơ' - thường
+            createTemplate("ơ", "ơ", listOf(
+                listOf(50f to 30f, 25f to 50f, 25f to 80f, 50f to 100f, 75f to 80f, 75f to 50f, 50f to 30f),
+                listOf(70f to 25f, 85f to 35f, 75f to 50f)
+            ), isClosed = true),
+            // 'Ư' - in hoa
+            createTemplate("Ư", "Ư", listOf(
+                listOf(20f to 0f, 20f to 70f, 50f to 100f, 80f to 70f, 80f to 0f),
+                listOf(75f to 15f, 90f to 25f, 80f to 45f)
+            )),
+            // 'ư' - thường
+            createTemplate("ư", "ư", listOf(
+                listOf(25f to 35f, 25f to 80f, 50f to 100f, 75f to 80f, 75f to 35f, 75f to 100f),
+                listOf(70f to 25f, 85f to 35f, 75f to 50f)
             ))
         )
     }

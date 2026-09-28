@@ -46,6 +46,7 @@ import com.aienglish.feature.vocabulary.domain.model.PartOfSpeech
 import com.aienglish.feature.vocabulary.domain.model.VocabularyCategory
 import com.aienglish.feature.vocabulary.domain.model.VocabularyItem
 import com.aienglish.feature.vocabulary.ui.handwriting.EnglishDictionaryTrie
+import com.aienglish.feature.vocabulary.ui.handwriting.HandwritingLanguage
 import com.aienglish.feature.vocabulary.ui.handwriting.HandwritingPad
 import com.aienglish.feature.vocabulary.ui.viewmodel.VocabularyViewModel
 import org.koin.compose.koinInject
@@ -759,6 +760,11 @@ private fun VocabularyCard(
     }
 }
 
+private enum class HandwritingTargetField(val label: String) {
+    WORD("Từ vựng (EN)"),
+    MEANING("Nghĩa tiếng Việt (VI)")
+}
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun AddVocabularyDialog(
@@ -783,6 +789,7 @@ private fun AddVocabularyDialog(
     var example by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf(initialCategory) }
     var isHandwritingMode by remember { mutableStateOf(false) }
+    var handwritingTargetField by remember { mutableStateOf(HandwritingTargetField.WORD) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -930,13 +937,71 @@ private fun AddVocabularyDialog(
 
                 // Handwriting Canvas Pad (0 Token AI, Local Geometric Algorithm + Trie Autocomplete)
                 if (isHandwritingMode) {
-                    HandwritingPad(
-                        currentWord = word,
-                        colors = colors,
-                        onWordCommitted = { committedWord ->
-                            word = committedWord
+                    // Handwriting Target Field Selector: [ 🔤 Từ vựng (EN) ] vs [ 🇻🇳 Nghĩa tiếng Việt (VI) ]
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Text(
+                            text = "Mục điền:",
+                            fontSize = 11.5.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = colors.mutedText
+                        )
+                        Surface(
+                            shape = RoundedCornerShape(14.dp),
+                            color = if (handwritingTargetField == HandwritingTargetField.WORD) colors.accent.copy(alpha = 0.15f) else colors.surfaceContainer,
+                            border = BorderStroke(1.dp, if (handwritingTargetField == HandwritingTargetField.WORD) colors.accent else colors.border.copy(alpha = 0.4f)),
+                            modifier = Modifier.clickable { handwritingTargetField = HandwritingTargetField.WORD }
+                        ) {
+                            Text(
+                                text = "🔤 Từ vựng (EN)",
+                                fontSize = 11.sp,
+                                fontWeight = if (handwritingTargetField == HandwritingTargetField.WORD) FontWeight.Bold else FontWeight.Normal,
+                                color = if (handwritingTargetField == HandwritingTargetField.WORD) colors.accent else colors.mutedText,
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                            )
                         }
-                    )
+                        Surface(
+                            shape = RoundedCornerShape(14.dp),
+                            color = if (handwritingTargetField == HandwritingTargetField.MEANING) colors.accent.copy(alpha = 0.15f) else colors.surfaceContainer,
+                            border = BorderStroke(1.dp, if (handwritingTargetField == HandwritingTargetField.MEANING) colors.accent else colors.border.copy(alpha = 0.4f)),
+                            modifier = Modifier.clickable { handwritingTargetField = HandwritingTargetField.MEANING }
+                        ) {
+                            Text(
+                                text = "🇻🇳 Nghĩa tiếng Việt (VI)",
+                                fontSize = 11.sp,
+                                fontWeight = if (handwritingTargetField == HandwritingTargetField.MEANING) FontWeight.Bold else FontWeight.Normal,
+                                color = if (handwritingTargetField == HandwritingTargetField.MEANING) colors.accent else colors.mutedText,
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                            )
+                        }
+                    }
+
+                    key(handwritingTargetField) {
+                        if (handwritingTargetField == HandwritingTargetField.WORD) {
+                            HandwritingPad(
+                                currentWord = word,
+                                colors = colors,
+                                initialLanguage = HandwritingLanguage.ENGLISH,
+                                targetFieldLabel = "Từ vựng (EN)",
+                                onWordCommitted = { committedWord ->
+                                    word = committedWord
+                                }
+                            )
+                        } else {
+                            HandwritingPad(
+                                currentWord = meaning,
+                                colors = colors,
+                                initialLanguage = HandwritingLanguage.VIETNAMESE,
+                                targetFieldLabel = "Nghĩa tiếng Việt (VI)",
+                                onWordCommitted = { committedMeaning ->
+                                    meaning = committedMeaning
+                                }
+                            )
+                        }
+                    }
                 }
 
                 OutlinedTextField(
