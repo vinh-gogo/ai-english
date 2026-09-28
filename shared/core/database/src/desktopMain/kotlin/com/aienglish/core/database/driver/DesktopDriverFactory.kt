@@ -47,8 +47,17 @@ fun createDesktopDriver(): SqlDriver {
 
         val targetVersion = AIEnglishDatabase.Schema.version
         if (currentVersion < targetVersion) {
-            AIEnglishDatabase.Schema.migrate(driver, currentVersion, targetVersion)
-            driver.execute(null, "PRAGMA user_version = $targetVersion", 0)
+            try {
+                driver.execute(null, "PRAGMA foreign_keys = OFF", 0)
+                AIEnglishDatabase.Schema.migrate(driver, currentVersion, targetVersion)
+                driver.execute(null, "PRAGMA user_version = $targetVersion", 0)
+            } catch (e: Exception) {
+                println("Database migration failed: ${e.message}. Ensuring all tables exist...")
+                AIEnglishDatabase.Schema.create(driver)
+                driver.execute(null, "PRAGMA user_version = $targetVersion", 0)
+            } finally {
+                driver.execute(null, "PRAGMA foreign_keys = ON", 0)
+            }
         }
     }
 

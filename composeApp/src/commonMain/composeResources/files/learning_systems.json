@@ -58,5 +58,10 @@
         "systemCode": "VIET",
         "description": "Vietnamese Language Proficiency by School Level",
         "name": "Tiếng Việt"
+    },
+    {
+        "systemCode": "HINDI",
+        "description": "Hindi Language Proficiency Levels",
+        "name": "Hindi"
     }
 ]

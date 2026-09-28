@@ -11,7 +11,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.WorkspacePremium
-import androidx.compose.material.icons.rounded.Hub
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -36,8 +35,7 @@ fun TeacherTopNavigation(
     onHistoryClick: () -> Unit,
     onProfileClick: () -> Unit,
     onProClick: () -> Unit,
-    colors: AppColors,
-    onGraphClick: () -> Unit = {}
+    colors: AppColors
 ) {
     Row(
         modifier = Modifier
@@ -48,7 +46,7 @@ fun TeacherTopNavigation(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Group 1: Back and Title (Height 48dp)
+        // Group 1: Back Button (Height 48dp)
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -71,23 +69,7 @@ fun TeacherTopNavigation(
                     )
                 }
             } else {
-                // Standalone Circular Graph Node Button (Perfect 48x48 circle)
-                Box(
-                    modifier = Modifier
-                        .size(48.dp)
-                        .clip(CircleShape)
-                        .background(colors.surface)
-                        .border(2.dp, colors.border, CircleShape)
-                        .clickable { onGraphClick() },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.Hub,
-                        contentDescription = "Knowledge Graph",
-                        tint = colors.accent,
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
+                Spacer(modifier = Modifier.size(48.dp))
             }
         }
 

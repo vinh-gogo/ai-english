@@ -9,3 +9,11 @@ plugins {
     // ksp — not currently used; add back when needed
     // alias(libs.plugins.ksp) apply false
 }
+
+allprojects {
+    configurations.all {
+        resolutionStrategy {
+            force("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
+        }
+    }
+}

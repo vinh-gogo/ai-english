@@ -43,38 +43,6 @@ CREATE TABLE IF NOT EXISTS question_tokens (
     FOREIGN KEY(question_id) REFERENCES topic_questions(id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS grammar_structures (
-    id TEXT PRIMARY KEY,
-    pattern TEXT NOT NULL UNIQUE,
-    meaning_key TEXT NOT NULL,
-    explanation_key TEXT NOT NULL,
-    example TEXT NOT NULL,
-    level TEXT NOT NULL,
-    created_at INTEGER NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS grammar_edges (
-    id TEXT PRIMARY KEY,
-    from_grammar_id TEXT NOT NULL,
-    to_grammar_id TEXT NOT NULL,
-    edge_type TEXT NOT NULL,
-    created_at INTEGER NOT NULL,
-    UNIQUE(from_grammar_id, to_grammar_id, edge_type),
-    FOREIGN KEY(from_grammar_id) REFERENCES grammar_structures(id) ON DELETE CASCADE,
-    FOREIGN KEY(to_grammar_id) REFERENCES grammar_structures(id) ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS question_grammar_map (
-    id TEXT PRIMARY KEY,
-    question_id TEXT NOT NULL,
-    grammar_id TEXT NOT NULL,
-    user_custom_note TEXT,
-    created_at INTEGER NOT NULL,
-    UNIQUE(question_id, grammar_id),
-    FOREIGN KEY(question_id) REFERENCES topic_questions(id) ON DELETE CASCADE,
-    FOREIGN KEY(grammar_id) REFERENCES grammar_structures(id) ON DELETE CASCADE
-);
-
 CREATE TABLE IF NOT EXISTS lesson_question (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     history_id INTEGER NOT NULL,
@@ -101,20 +69,6 @@ CREATE TABLE IF NOT EXISTS question_notes (
     created_at INTEGER NOT NULL,
     UNIQUE(question_id, note),
     FOREIGN KEY(question_id) REFERENCES lesson_question(id) ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS grammar_groups (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL UNIQUE,
-    created_at INTEGER NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS grammar_group_node_map (
-    group_id TEXT NOT NULL,
-    grammar_id TEXT NOT NULL,
-    PRIMARY KEY(group_id, grammar_id),
-    FOREIGN KEY(group_id) REFERENCES grammar_groups(id) ON DELETE CASCADE,
-    FOREIGN KEY(grammar_id) REFERENCES grammar_structures(id) ON DELETE CASCADE
 );
 
 -- Queries
@@ -268,60 +222,5 @@ UPDATE lesson_history SET user_id = '0000000000000000' WHERE user_id = 'guest@ai
 getHistoryTopicId:
 SELECT system_code, topic_id, level_code FROM lesson_history WHERE id = ?;
 
--- Grammar Graph Queries
-getAllGrammarStructures:
-SELECT * FROM grammar_structures;
-
-insertGrammarStructure:
-INSERT OR REPLACE INTO grammar_structures (id, pattern, meaning_key, explanation_key, example, level, created_at)
-VALUES (?, ?, ?, ?, ?, ?, ?);
-
-getAllGrammarEdges:
-SELECT * FROM grammar_edges;
-
-insertGrammarEdge:
-INSERT OR REPLACE INTO grammar_edges (id, from_grammar_id, to_grammar_id, edge_type, created_at)
-VALUES (?, ?, ?, ?, ?);
-
-deleteEdgesForNode:
-DELETE FROM grammar_edges WHERE from_grammar_id = :nodeId OR to_grammar_id = :nodeId;
-
 getAllSavedQuestionNotes:
 SELECT * FROM question_notes;
-
--- 3NF: dùng level_code thay vì level (đã bị xóa khỏi lesson_history)
-getAllSavedQuestionNotesWithLevel:
-SELECT qn.id, qn.question_id, qn.note, qn.created_at, lh.level_code AS level, lh.id AS history_id
-FROM question_notes qn
-JOIN lesson_question lq ON qn.question_id = lq.id
-JOIN lesson_history lh ON lq.history_id = lh.id;
-
--- Grammar groups queries
-getAllGrammarGroups:
-SELECT * FROM grammar_groups ORDER BY created_at ASC;
-
-insertGrammarGroup:
-INSERT OR REPLACE INTO grammar_groups (id, name, created_at)
-VALUES (?, ?, ?);
-
-updateGrammarGroupName:
-UPDATE grammar_groups SET name = :newName WHERE name = :oldName;
-
-deleteGrammarGroup:
-DELETE FROM grammar_groups WHERE name = ?;
-
--- Group node map queries
-getNodesForGroupName:
-SELECT m.grammar_id 
-FROM grammar_group_node_map m
-JOIN grammar_groups g ON m.group_id = g.id
-WHERE g.name = ?;
-
-insertGroupNodeMapByName:
-INSERT OR IGNORE INTO grammar_group_node_map (group_id, grammar_id)
-SELECT id, :grammarId FROM grammar_groups WHERE name = :groupName;
-
-deleteGroupNodeMapByName:
-DELETE FROM grammar_group_node_map
-WHERE grammar_id = :grammarId 
-AND group_id = (SELECT id FROM grammar_groups WHERE name = :groupName);

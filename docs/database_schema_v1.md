@@ -2,8 +2,8 @@
 
 Tài liệu này đặc tả thiết kế cơ sở dữ liệu cục bộ (SQLite) được chuẩn hóa theo dạng chuẩn 3 (3NF - Third Normal Form) nhằm tối ưu dung lượng đĩa, tránh dư thừa thông tin tĩnh, tăng hiệu năng truy vấn và sẵn sàng vận hành sản phẩm (Production-ready).
 
-> **Phiên bản DB hiện tại:** `6`  
-> **Lần cập nhật tài liệu cuối:** 2026-07-05
+> **Phiên bản DB hiện tại:** `7`  
+> **Lần cập nhật tài liệu cuối:** 2026-09-28
 
 ---
 
@@ -16,6 +16,7 @@ Tài liệu này đặc tả thiết kế cơ sở dữ liệu cục bộ (SQLit
 | 3 → 4 | `3.sqm` | Thêm `attempt_count`, `updated_at` vào `lesson_history` |
 | 4 → 5 | `4.sqm` | Fix `attempt_count` default (0 thay vì 1) cho existing data |
 | 5 → 6 | `5.sqm` | **3NF refactor**: xóa `topic TEXT` + `level TEXT` khỏi `lesson_history`, thêm `system_code`, `topic_id INTEGER NOT NULL`, `level_code`; custom topics được insert vào `learning_topics` |
+| 6 → 7 | `6.sqm` | Loại bỏ các bảng grammar graph (`grammar_structures`, `grammar_edges`, `grammar_groups`, `grammar_group_node_map`, `question_grammar_map`) |
 
 ---
 

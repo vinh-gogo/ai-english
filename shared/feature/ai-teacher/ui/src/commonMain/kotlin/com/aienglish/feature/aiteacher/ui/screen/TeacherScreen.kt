@@ -45,7 +45,6 @@ import com.aienglish.feature.pro.ui.viewmodel.ProViewModel
 import com.aienglish.feature.pro.ui.intent.ProIntent
 import com.aienglish.feature.history.domain.model.LessonHistory
 import com.aienglish.feature.aiteacher.ui.screen.components.teacher.TeacherTopNavigation
-import com.aienglish.feature.grammargraph.ui.screen.GraphSheet
 import org.koin.compose.koinInject
 
 // ─────────────────────────────────────────────────────────────
@@ -183,19 +182,8 @@ fun TeacherScreen(
                 onHistoryClick = { showHistory = true },
                 onProfileClick = { profileViewModel.showProfile() },
                 onProClick = { proViewModel.onIntent(ProIntent.ShowVip) },
-                onGraphClick = { viewModel.setGraphSheetVisible(true) },
                 colors = colors
             )
-
-            // Grammar Graph Sheet
-            if (state.showGraphSheet) {
-                GraphSheet(
-                    targetLanguage = state.targetLanguage,
-                    colors = colors,
-                    onDismiss = { viewModel.setGraphSheetVisible(false) },
-                    onSpeak = { text -> viewModel.speak(text, state.targetLanguage) }
-                )
-            }
 
             // Error snackbar
             val error = state.error

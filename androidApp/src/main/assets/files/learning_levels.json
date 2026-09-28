@@ -278,5 +278,25 @@
         "systemCode": "VIET",
         "levelCode": "DAI_HOC",
         "name": "Đại học"
+    },
+    {
+        "systemCode": "HINDI",
+        "levelCode": "A1",
+        "name": "Hindi A1"
+    },
+    {
+        "systemCode": "HINDI",
+        "levelCode": "A2",
+        "name": "Hindi A2"
+    },
+    {
+        "systemCode": "HINDI",
+        "levelCode": "B1",
+        "name": "Hindi B1"
+    },
+    {
+        "systemCode": "HINDI",
+        "levelCode": "B2",
+        "name": "Hindi B2"
     }
 ]

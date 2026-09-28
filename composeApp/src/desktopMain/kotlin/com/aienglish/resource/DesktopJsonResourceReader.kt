@@ -22,8 +22,31 @@ class DesktopJsonResourceReader : JsonResourceReader {
     override suspend fun readVietnameseTopicsEnJson(): String = readResource("composeResources/files/en/vietnamese_topics.json")
 
     private suspend fun readResource(path: String): String = withContext(Dispatchers.IO) {
-        val stream = Thread.currentThread().contextClassLoader.getResourceAsStream(path)
-            ?: throw FileNotFoundException("Resource not found in classpath: $path")
-        stream.bufferedReader().use { it.readText() }
+        val cleanPath = path.removePrefix("/")
+        val stripped = cleanPath.removePrefix("composeResources/").removePrefix("/")
+        val candidates = listOf(
+            "composeResources/ai_english.composeapp.generated.resources/$stripped",
+            cleanPath,
+            "composeResources/$stripped",
+            stripped
+        ).distinct()
+
+        val classLoaders = listOfNotNull(
+            Thread.currentThread().contextClassLoader,
+            DesktopJsonResourceReader::class.java.classLoader,
+            ClassLoader.getSystemClassLoader()
+        )
+
+        for (candidate in candidates) {
+            for (cl in classLoaders) {
+                val stream = cl.getResourceAsStream(candidate)
+                    ?: cl.getResourceAsStream("/$candidate")
+                if (stream != null) {
+                    return@withContext stream.bufferedReader().use { it.readText() }
+                }
+            }
+        }
+
+        throw FileNotFoundException("Resource not found in classpath: $path (checked: $candidates)")
     }
 }

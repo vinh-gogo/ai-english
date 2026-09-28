@@ -125,9 +125,6 @@ class TopicRepositoryImpl(
                     val koreanTopics = json.decodeFromString<List<JsonTopicItem>>(koreanTopicsJson.removeBom().trim())
                     val vietnameseTopics = json.decodeFromString<List<JsonTopicItem>>(vietnameseTopicsEnJson.removeBom().trim())
                     
-                    // 0. Clear old topics
-                    aiTeacherDatabase.aiTeacherDatabaseQueries.deleteAllTopics()
-                    
                     // 1. Insert Systems
                     systems.forEach { sys ->
                         coreDatabase.userSchemaQueries.insertLearningSystem(
