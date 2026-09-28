@@ -77,6 +77,15 @@ fun createDesktopDriver(): SqlDriver {
         try {
             driver.execute(null, "UPDATE vocabulary_items SET collocations = '' WHERE collocations IS NULL", 0)
         } catch (_: Exception) {}
+        try {
+            driver.execute(null, "UPDATE vocabulary_items SET word = 'Integration', phonetic = '/ˌɪntɪˈɡreɪʃn/', part_of_speech = 'noun', meaning = 'Sự tích hợp, hợp nhất — quá trình kết hợp các thành phần phần mềm hoặc hệ thống vào một thể thống nhất.', collocations = 'continuous integration, system integration, seamless integration, CI pipeline', example = 'Our IT team implements continuous integration to deploy bug-free builds automatically.' WHERE id = '1' OR word = 'Continuous Integration'", 0)
+        } catch (_: Exception) {}
+        try {
+            driver.execute(null, "UPDATE vocabulary_items SET word = 'Acquisition', phonetic = '/ˌækwɪˈzɪʃn/', part_of_speech = 'noun', meaning = 'Sự thu nạp, tiếp nhận hoặc mua lại (trong nhân sự: thu hút nhân tài; trong kinh doanh: sáp nhập doanh nghiệp).', collocations = 'talent acquisition, customer acquisition, acquisition strategy', example = 'Our HR department is revamping its talent acquisition strategy to attract top engineers.' WHERE id = '3' OR word = 'Talent Acquisition'", 0)
+        } catch (_: Exception) {}
+        try {
+            driver.execute(null, "UPDATE vocabulary_items SET word = 'Bias', phonetic = '/ˈbaɪəs/', part_of_speech = 'noun', meaning = 'Thiên kiến, định kiến — xu hướng phán đoán hoặc đánh giá thiên lệch làm sai lệch nhận thức.', collocations = 'cognitive bias, confirmation bias, unconscious bias', example = 'Psychologists study how cognitive bias influences consumer purchasing decisions.' WHERE id = '4' OR word = 'Cognitive Bias'", 0)
+        } catch (_: Exception) {}
     }
 
     return driver
